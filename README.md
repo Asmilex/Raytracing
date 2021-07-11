@@ -1,5 +1,5 @@
 # TFG_RT_VkRay
-Implementación del ray-tracer de Peter Shirley en VkRay para el Trabajo de Fin de Grado de mi doble grado en Ingeniería Informática y Matemáticas en la UGR. 
+Implementación del ray-tracer de Peter Shirley en VkRay para el Trabajo de Fin de Grado de mi doble grado en Ingeniería Informática y Matemáticas en la UGR.
 
 ## Enlaces de interés
 
@@ -12,3 +12,30 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 - [Libro de Shirley implementado en NvVkRay](https://github.com/GPSnoopy/RayTracingInVulkan)
 - [Métodos de Monte Carlo](http://statweb.stanford.edu/~owen/mc/)
 - [Physically Based Rendering](http://www.pbr-book.org/)
+- [Template de Latex ClassicThesis](https://bitbucket.org/amiede/classicthesis/downloads)
+- [Lista con recursos de RT](https://www.realtimerendering.com/raytracing.html)
+- [Tutorial de Vulkan](https://vulkan-tutorial.com/Introduction)
+- [Vulkan con CMake](https://vulkan.lunarg.com/doc/view/1.1.108.0/windows/getting_started.html)
+
+## Log
+
+### Día 2021/07/11
+
+- Implemento proyecto basándome en Cmake y vcpkg:
+  - Lista de recursos:
+    - [Tutorial pequeño](https://www.40tude.fr/how-to-use-vcpkg-with-vscode-and-cmake/)
+    - [Sistema automatizado](https://cpptruths.blogspot.com/2019/03/bootstrapping-vcpkg-based-cmake-project.html)
+    - [Blog 101](https://gamefromscratch.com/vcpkg-cpp-easy-mode-step-by-step-tutorial/)
+    - [Otro blog 101](https://sam.elborai.me/blog/vscode-cpp-dev-environment-2020)
+  - Requisitos:
+    - Microsoft compiler CL (build tools) (https://visualstudio.microsoft.com/es/downloads/)
+    - Git
+    - Cmake (https://cmake.org/)
+  - Creo proyecto que automatiza la descarga de vcpkg, basándome en el tutorial del sistema automatizado.
+
+FIXME terminar documentación
+- Entorno de desarrollo basándose en el tutorial de Vulkan
+  - VS2019 https://visualstudio.microsoft.com/es/
+  - Vulkan SDK https://vulkan.lunarg.com/ instaladas en C:\V
+  - GLFW https://www.glfw.org/download.html binarios precompilados, ubicados en User\Documentos\Visual Studio 2019\Libraries\GLFW
+  - GLM https://github.com/g-truc/glm ubicado en User\Documentos\Visual Studio 2019\Libraries\GLM
