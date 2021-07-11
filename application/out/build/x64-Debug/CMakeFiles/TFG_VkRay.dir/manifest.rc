@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+1 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "C:/Users/Andre/Repositorios/TFG_RT_VkRay/application/out/build/x64-Debug/CMakeFiles/TFG_VkRay.dir/embed.manifest"
