@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Andre\Repositorios\TFG_RT_VkRay\RT_in_one_weekend\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Andre\Repositorios\TFG_RT_VkRay\RT_in_one_weekend\build\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{195F3668-D3A3-3B7D-8408-FD990797BE6A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

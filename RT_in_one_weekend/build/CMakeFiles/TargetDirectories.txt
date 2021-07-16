@@ -1,0 +1,3 @@
+C:/Users/Andre/Repositorios/TFG_RT_VkRay/RT_in_one_weekend/build/CMakeFiles/RT_in_one_weekend.dir
+C:/Users/Andre/Repositorios/TFG_RT_VkRay/RT_in_one_weekend/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Andre/Repositorios/TFG_RT_VkRay/RT_in_one_weekend/build/CMakeFiles/ZERO_CHECK.dir
