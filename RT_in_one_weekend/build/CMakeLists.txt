@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.7)
 project(RT_in_one_weekend)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 include_directories(${PROJECT_SOURCE_DIR}/src)
