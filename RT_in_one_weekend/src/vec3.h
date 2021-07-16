@@ -7,6 +7,24 @@
 using std::sqrt;
 
 //
+// ──────────────────────────────────────────────────────────────── CABECERAS ─────
+//
+
+class vec3;
+using point3 = vec3;
+using color = vec3;
+
+inline std::ostream& operator<<(std::ostream& os, const vec3& v);
+inline vec3 operator+(const vec3& v1, const vec3& v2);
+inline vec3 operator-(const vec3& v1, const vec3& v2);
+inline vec3 operator*(const vec3& v1, const vec3& v2);
+inline vec3 operator*(const vec3& v1, const double d);
+inline vec3 operator*(const double d, const vec3& v1);
+inline vec3 operator/(const vec3& v1, const double d);
+inline double dot(const vec3& v1, const vec3& v2);
+inline vec3 cross(const vec3& v1, const vec3& v2);
+
+//
 // ────────────────────────────────────────────────────────── CLASE PRINCIPAL ─────
 //
 
@@ -51,12 +69,13 @@ class vec3 {
             return sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]);
         }
 
+        vec3 normalize() const {
+            return *this/length();
+        }
+
     public:
         double e[3];
 };
-
-using point3 = vec3;
-using color = vec3;
 
 //
 // ─────────────────────────────────────────────────────────────── UTILIDADES ─────
@@ -100,7 +119,5 @@ inline vec3 cross(const vec3& v1, const vec3& v2) {
                 v1.x() * v2.y() - v1.y() * v2.x()
             );
 }
-
-
 
 #endif
