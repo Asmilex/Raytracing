@@ -1,0 +1,33 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(Debug) RT in one weekend",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/RT_in_one_weekend/build/bin/Debug/RT_in_one_weekend.exe.",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "Compile debug RT in one weekend"
+        },
+        {
+            "name": "(Release) RT in one weekend",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/RT_in_one_weekend/build/bin/Release/RT_in_one_weekend.exe.",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "Compile release RT in one weekend"
+
+        }
+    ]
+}
