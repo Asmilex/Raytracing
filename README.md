@@ -19,7 +19,20 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 
 ## Log
 
-### Día 2021/07/11
+TODO:
+- Añadir clave git permanentemente en Windows.
+- Terminar de configurar el proyecto.
+
+### 2021/07/16
+- Inicio desarrollo de RT in one weekend.
+
+### 2021/07/12
+
+- Intento finalizar el cmake
+  - Hace falta compilar con `cmake -A x64` para las builds de 64, o usar desde la línea de comandos `cmake --build .`. (https://vulkan.lunarg.com/doc/view/1.1.108.0/windows/getting_started.html)
+- Día poco productivo; me estanco con la creación del proyecto de Vulkan.
+
+### 2021/07/11
 
 - Implemento proyecto basándome en Cmake y vcpkg:
   - Lista de recursos:
