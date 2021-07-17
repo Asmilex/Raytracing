@@ -5,12 +5,40 @@
 
 using namespace std;
 
+//
+// ─────────────────────────────────────────────────────────────── UTILIDADES ─────
+//
+
+bool hit_sphere (const point3& center, double radius, const Ray& ray) {
+    // Resolvemos ecuación de forma que, dado un cierto rayo P(t) con centro A, dirección b,
+    // y una esfera de centro `center`, radio `radius`, hayamos si ha impactado.
+    // Se trata de ver si (P(t) - A) = radius^2 <=> t^2 * b + 2tb * (A - center) + (A - center)^2 - radius^2 = 0
+    vec3 d = ray.origin() - center;
+
+    auto a = dot(ray.direction(), ray.direction());
+    auto b = 2.0 * dot(d, ray.direction());
+    auto c = dot(d, d) - radius * radius;
+
+    auto discriminant = b * b - 4.0 * a * c;
+
+    return discriminant >= 0.0;
+}
+
 
 color ray_color(const Ray& ray) {
+    if (hit_sphere(point3(0, 0, -1), 0.5, ray)) {
+        return color(1, 0, 0);
+    }
+
     vec3 direction = ray.direction().normalize();
     auto t = 0.5 * (1.0 + direction.y());
     return (1.0 - t) * color(1.0, 1.0, 1.0) + t * color(0.5, 0.7, 1.0);
 }
+
+//
+// ───────────────────────────────────────────────────────────────────── MAIN ─────
+//
+
 
 int main() {
     //
@@ -44,10 +72,10 @@ int main() {
         cerr << "\rLíneas restantes: " << j << ' ' << flush;
 
         for (int i = 0; i < image_width; ++i) {
-            auto u = double(i)/image_width-1;
-            auto v = double(j)/image_height-1;
+            auto u = double(i)/(image_width-1);
+            auto v = double(j)/(image_height-1);
 
-            Ray r (origin, lower_left_corner + u*horizontal + v*vertical - origin);
+            Ray r (origin, lower_left_corner + u * horizontal + v * vertical - origin);
 
             color pixel_color = ray_color(r);
 
