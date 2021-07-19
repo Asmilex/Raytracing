@@ -9,29 +9,39 @@ using namespace std;
 // ─────────────────────────────────────────────────────────────── UTILIDADES ─────
 //
 
-bool hit_sphere (const point3& center, double radius, const Ray& ray) {
+double hit_sphere (const point3& center, double radius, const Ray& ray) {
     // Resolvemos ecuación de forma que, dado un cierto rayo P(t) con centro A, dirección b,
     // y una esfera de centro `center`, radio `radius`, hayamos si ha impactado.
     // Se trata de ver si (P(t) - A) = radius^2 <=> t^2 * b + 2tb * (A - center) + (A - center)^2 - radius^2 = 0
+    // Se puede simplificar usando b = 2h.
     vec3 d = ray.origin() - center;
 
-    auto a = dot(ray.direction(), ray.direction());
-    auto b = 2.0 * dot(d, ray.direction());
-    auto c = dot(d, d) - radius * radius;
+    auto a = ray.direction().length_squared();
+    auto half_b = dot(d, ray.direction());
+    auto c = d.length_squared() - radius * radius;
 
-    auto discriminant = b * b - 4.0 * a * c;
+    auto discriminant = half_b * half_b - a * c;
 
-    return discriminant >= 0.0;
+    if (discriminant < 0.0) {
+        return -1.0;
+    }
+    else {
+        return (-half_b - sqrt(discriminant)) / a;
+    }
 }
 
 
 color ray_color(const Ray& ray) {
-    if (hit_sphere(point3(0, 0, -1), 0.5, ray)) {
-        return color(1, 0, 0);
+    auto t = hit_sphere(point3(0.0, 0.0, -1.0), 0.5, ray);
+
+    if (t > 0.0) {
+        vec3 N = (ray.at(t) - vec3(0, 0, -1)).normalize();
+        return 0.5 * color(N.x() + 1, N.y() + 1, N.z() + 1);
     }
 
-    vec3 direction = ray.direction().normalize();
-    auto t = 0.5 * (1.0 + direction.y());
+    vec3 unit_direction = ray.direction().normalize();
+
+    t = 0.5 * (1.0 + unit_direction.y());
     return (1.0 - t) * color(1.0, 1.0, 1.0) + t * color(0.5, 0.7, 1.0);
 }
 
