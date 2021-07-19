@@ -19,10 +19,6 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 
 ## Log
 
-TODO:
-- Añadir clave git permanentemente en Windows.
-- Terminar de configurar el proyecto.
-
 ### 2021/07/16
 - Inicio desarrollo de RT in one weekend.
 
