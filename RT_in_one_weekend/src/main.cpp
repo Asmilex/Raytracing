@@ -1,6 +1,8 @@
+#include "utilities.h"
+#include "hittable_list.h"
+#include "sphere.h"
 #include "color.h"
-#include "vec3.h"
-#include "ray.h"
+
 #include <iostream>
 
 using namespace std;
@@ -9,46 +11,23 @@ using namespace std;
 // ─────────────────────────────────────────────────────────────── UTILIDADES ─────
 //
 
-double hit_sphere (const point3& center, double radius, const Ray& ray) {
-    // Resolvemos ecuación de forma que, dado un cierto rayo P(t) con centro A, dirección b,
-    // y una esfera de centro `center`, radio `radius`, hayamos si ha impactado.
-    // Se trata de ver si (P(t) - A) = radius^2 <=> t^2 * b + 2tb * (A - center) + (A - center)^2 - radius^2 = 0
-    // Se puede simplificar usando b = 2h.
-    vec3 d = ray.origin() - center;
+color ray_color(const Ray& ray, const hittable& world) {
+    hit_record rec;
 
-    auto a = ray.direction().length_squared();
-    auto half_b = dot(d, ray.direction());
-    auto c = d.length_squared() - radius * radius;
-
-    auto discriminant = half_b * half_b - a * c;
-
-    if (discriminant < 0.0) {
-        return -1.0;
-    }
-    else {
-        return (-half_b - sqrt(discriminant)) / a;
-    }
-}
-
-
-color ray_color(const Ray& ray) {
-    auto t = hit_sphere(point3(0.0, 0.0, -1.0), 0.5, ray);
-
-    if (t > 0.0) {
-        vec3 N = (ray.at(t) - vec3(0, 0, -1)).normalize();
-        return 0.5 * color(N.x() + 1, N.y() + 1, N.z() + 1);
+    if (world.hit(ray, 0, infinity, rec)) {
+        return 0.5 * (rec.normal + color(1, 1, 1));
     }
 
     vec3 unit_direction = ray.direction().normalize();
+    auto t = 0.5 * (unit_direction.y() + 1.0);
 
-    t = 0.5 * (1.0 + unit_direction.y());
-    return (1.0 - t) * color(1.0, 1.0, 1.0) + t * color(0.5, 0.7, 1.0);
+    return (1.0 - t) * color (1.0, 1.0, 1.0) + t * color(0.5, 0.7, 1.0);
 }
+
 
 //
 // ───────────────────────────────────────────────────────────────────── MAIN ─────
 //
-
 
 int main() {
     //
@@ -56,8 +35,16 @@ int main() {
     //
 
     const auto aspect_ratio = 16.0 / 9.0;
-    const int image_width = 400;
+    const int image_width = 800;
     const int image_height = static_cast<int>(image_width/aspect_ratio);
+
+    //
+    // ──────────────────────────────────────────────────────────────────── MUNDO ─────
+    //
+
+    hittable_list world;
+    world.add(make_shared<sphere>(point3(0, 0, -1), 0.5));
+    world.add(make_shared<sphere>(point3(0, -100.5, -1), 100));
 
     //
     // ─────────────────────────────────────────────────────────────────── CAMARA ─────
@@ -87,7 +74,7 @@ int main() {
 
             Ray r (origin, lower_left_corner + u * horizontal + v * vertical - origin);
 
-            color pixel_color = ray_color(r);
+            color pixel_color = ray_color(r, world);
 
             write_color(std::cout, pixel_color);
         }
