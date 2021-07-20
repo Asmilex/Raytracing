@@ -100,7 +100,10 @@ int main() {
     // ─────────────────────────────────────────────────────────────────── CAMARA ─────
     //
 
-    Camera camara;
+    point3 lookfrom = point3(-2, 2, 1);
+    point3 lookat = point3(0, 0, -1);
+    point3 vup = vec3(0, 1, 0);
+    Camera camara(lookfrom, lookat, vup, 40.0, aspect_ratio);
 
     //
     // ─────────────────────────────────────────────────────────────────── RENDER ─────
