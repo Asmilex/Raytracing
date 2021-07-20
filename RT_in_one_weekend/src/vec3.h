@@ -168,4 +168,11 @@ vec3 random_in_hemisphere (const vec3& normal) {
 vec3 reflect(const vec3& v, const vec3& normal) {
     return v - 2.0 * dot(v, normal) * normal;
 }
+
+vec3 refract(const vec3& uv, const vec3& normal, double etai_over_etat) {
+    auto cos_theta = fmin(dot(-uv, normal), 1.0);
+    vec3 r_out_perp = etai_over_etat * (uv + cos_theta * normal);
+    vec3 r_out_parallel = -sqrt(fabs(1.0 - r_out_perp.length_squared())) * normal;
+    return r_out_parallel + r_out_perp;
+}
 #endif
