@@ -4,6 +4,7 @@
 #include "color.h"
 #include "camera.h"
 #include "random.h"
+#include "material.h"
 
 #include <iostream>
 
@@ -22,7 +23,7 @@ color ray_color(const Ray& ray, const hittable& world, int depth) {
     }
 
     if (world.hit(ray, 0.00001, infinity, rec)) {
-        /*  NOTE
+        /*  NOTE capítulo 8
             Podemos usar diferentes modelos de difusión para esta función.
 
             (1) El primero tiene mayor probailidad de que se difusen los rayos alrededor de la normal, y más baja en los extremos.
@@ -39,13 +40,20 @@ color ray_color(const Ray& ray, const hittable& world, int depth) {
                 point3 target = rec.p + random_in_hemisphere(rec.normal);
 
             Es recomendable variar entre uno y otro, para ver cómo quedan finalmente las escenas.
+
+            Código del capítulo 8:
+                point3 target = rec.p + rec.normal + random_in_unit_sphere();   // Ver dibujo de la sección 8
+                return 0.5 * ray_color(Ray(rec.p, target - rec.p), world, depth-1);
         */
 
-        point3 target = rec.p + rec.normal + random_in_unit_sphere();   // Ver dibujo de la sección 8
+        Ray scattered;
+        color attenuation;
 
-        return 0.5 * ray_color(
-            Ray(rec.p, target - rec.p), world, depth-1
-        );
+        if (rec.mat_ptr->scatter(ray, rec, attenuation, scattered)) {
+            return attenuation * ray_color(scattered, world, depth-1);
+        }
+
+        return color(0, 0, 0);
     }
 
     vec3 unit_direction = ray.direction().normalize();
@@ -75,9 +83,16 @@ int main() {
     //
 
     hittable_list world;
-    world.add(make_shared<sphere>(point3(0, 0, -1), 0.5));
-    world.add(make_shared<sphere>(point3(0, -100.5, -1), 100));
 
+    auto material_ground = make_shared<lambertian>(color(0.66, 0.84, 0.39));
+    auto material_center = make_shared<lambertian>(color(1, 0.32, 0.32));
+    auto material_left   = make_shared<metal>(color(0.24, 0.39, 0.51), 0.3);
+    auto material_right  = make_shared<metal>(color(0.51, 0.24, 0.39), 1.0);       // Color generado por Copilot, a ver qué da :)
+
+    world.add(make_shared<sphere>(point3( 0.0, -100.5, -1.0), 100, material_ground));
+    world.add(make_shared<sphere>(point3( 0.0, 0.0, -3.0), 0.6, material_center));
+    world.add(make_shared<sphere>(point3(-1.2, 0.0, -1.0), 0.4, material_left));
+    world.add(make_shared<sphere>(point3( 1.0, 0.0, -1.0), 0.5, material_right));
     //
     // ─────────────────────────────────────────────────────────────────── CAMARA ─────
     //

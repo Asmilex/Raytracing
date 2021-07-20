@@ -86,6 +86,12 @@ class vec3 {
             return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
         }
 
+        bool near_zero() const {
+            const auto epsilon = 1e-10;
+
+            return (fabs(e[0]) < epsilon && fabs(e[1]) < epsilon && fabs(e[2]) < epsilon);
+        }
+
     public:
         double e[3];
 };
@@ -159,4 +165,7 @@ vec3 random_in_hemisphere (const vec3& normal) {
     }
 }
 
+vec3 reflect(const vec3& v, const vec3& normal) {
+    return v - 2.0 * dot(v, normal) * normal;
+}
 #endif
