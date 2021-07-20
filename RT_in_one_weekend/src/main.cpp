@@ -22,7 +22,27 @@ color ray_color(const Ray& ray, const hittable& world, int depth) {
     }
 
     if (world.hit(ray, 0.00001, infinity, rec)) {
+        /*  NOTE
+            Podemos usar diferentes modelos de difusión para esta función.
+
+            (1) El primero tiene mayor probailidad de que se difusen los rayos alrededor de la normal, y más baja en los extremos.
+            La distribución es cos(phi^3), con phi el ángulo de la normal.
+            Se debe usar la siguiente línea:
+                point3 target = rec.p + rec.normal + random_in_unit_sphere();   // Ver dibujo de la sección 8
+
+            (2) Para la distribución lambertiana, necesitamos cos(phi). Corregimos el anterior haciéndolo unitario:
+                point3 target = rec.p + rec.normal + random_unit_vector();
+            No es totalmente correcto. Para ello, se puede usar la siguiente versión.
+
+            (3) La opción presentada en RT in one weekend no es correcta del todo (ver 8.6). Para hacerlo intuitivo,
+            se puede hacer una difusión de los rayos uniforme, independientemente de la normal.
+                point3 target = rec.p + random_in_hemisphere(rec.normal);
+
+            Es recomendable variar entre uno y otro, para ver cómo quedan finalmente las escenas.
+        */
+
         point3 target = rec.p + rec.normal + random_in_unit_sphere();   // Ver dibujo de la sección 8
+
         return 0.5 * ray_color(
             Ray(rec.p, target - rec.p), world, depth-1
         );
