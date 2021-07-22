@@ -13,7 +13,7 @@ class BVH_node : public hittable {
         BVH_node(const hittable_list& list, double time0, double time1)
             : BVH_node(list.objects, 0, list.objects.size(), time0, time1) {}
 
-        BVH_node(std::vector<shared_ptr<hittable>>& src_objects, int start, int end, double time0, double time1);
+        BVH_node(const std::vector<shared_ptr<hittable>>& src_objects, int start, int end, double time0, double time1);
 
         virtual bool hit(const Ray& r, double t_min, double t_max, hit_record& rec) const override;
 
