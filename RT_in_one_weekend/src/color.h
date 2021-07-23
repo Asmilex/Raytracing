@@ -1,6 +1,9 @@
 #ifndef COLOR_H
 #define COLOR_H
 
+// Espacio de colores que usamos: CMY
+// Utilidad para convertir entre hexa y CMY: https://convertingcolors.com/hex-color-86735F.html
+
 #include "vec3.h"
 
 #include <iostream>

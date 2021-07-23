@@ -16,6 +16,23 @@ class sphere: public hittable {
         point3 center;
         double radius;
         shared_ptr<material> mat_ptr;
+
+    private:
+        static void get_sphere_uv(const point3& p, double& u, double& v) {
+            // p: punto de la esfera de radio 1, centrada en el origen
+            // u: valor de retorno en [0, 1] del ángulo alrededor del eje y de x = -1
+            // v: valor de retorno en [0, 1] del ángulo de y = -1 a y = 1.
+            // Ejemplos:
+            //   (1, 0, 0) |-> (0.5, 0.5)       (-1, 0, 0) |-> (0.0, 0.5)
+            //   (0, 1, 0) |-> (0.5, 1.0)       (0, -1, 0) |-> (0.5, 0.0)
+            //   (0, 0, 1) |-> (0.25, 0.5)      (0, 0, -1) |-> (0.75, 0.5)
+
+            auto theta = acos(-p.y());
+            auto phi = atan2(-p.z(), p.x()) + pi;
+
+            u = phi/(2*pi);
+            v = theta/(pi);
+        }
 };
 
 // Devuelve si un rayo alcanza a la esfera dentro del intervalo [t_min, t_max]. De ser así,
@@ -51,6 +68,7 @@ bool sphere::hit(const Ray& ray, double t_min, double t_max, hit_record& rec) co
     vec3 outward_normal = (rec.p - center)/radius;
     rec.set_face_normal(ray, outward_normal);
     rec.mat_ptr = mat_ptr;
+    get_sphere_uv(outward_normal, rec.u, rec.v);
 
     return true;
 }

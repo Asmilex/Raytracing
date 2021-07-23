@@ -63,11 +63,12 @@ color ray_color(const Ray& ray, const hittable& world, int depth) {
     return (1.0 - t) * color (1.0, 1.0, 1.0) + t * color(0.5, 0.7, 1.0);
 }
 
+
 hittable_list random_scene() {
     hittable_list world;
 
-    auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
-    world.add(make_shared<sphere>(point3(0,-1000,0), 1000, ground_material));
+    auto ground_texture = make_shared<checkerboard>(color(0.4745, 0.5490, 0.6275), color(0.1765, 0.1765, 0.1765));
+    world.add(make_shared<sphere>(point3(0,-1000,0), 1000, make_shared<lambertian>(ground_texture)));
 
     for (int a = -11; a < 11; a++) {
         for (int b = -11; b < 11; b++) {
@@ -111,6 +112,7 @@ hittable_list random_scene() {
     return world;
 }
 
+
 hittable_list my_scene() {
     hittable_list world;
 
@@ -128,6 +130,19 @@ hittable_list my_scene() {
 
     return world;
 }
+
+
+hittable_list two_spheres() {
+    hittable_list objects;
+
+    auto checker = make_shared<checkerboard>(color(0.2, 0.3, 0.1), color(0.9, 0.9, 0.9));
+
+    objects.add(make_shared<sphere>(point3(0,-10, 0), 10, make_shared<lambertian>(checker)));
+    objects.add(make_shared<sphere>(point3(0, 10, 0), 10, make_shared<lambertian>(checker)));
+
+    return objects;
+}
+
 
 //
 // ───────────────────────────────────────────────────────────────────── MAIN ─────
@@ -148,35 +163,48 @@ int main() {
     // ──────────────────────────────────────────────────────────────────── MUNDO ─────
     //
 
-    const bool use_random_scene = true;
 
     hittable_list world;
     point3 lookfrom;
     point3 lookat;
-    point3 vup;
-    double dist_to_focus;
+    point3 vup = point3(0,1,0);
+    double dist_to_focus = 10;
     double aperture;
     double fovy = 20.0;
 
-    if (use_random_scene) {
-        world = random_scene();
+    const int scene = 2;
 
-        lookfrom = point3(13,2,3);
-        lookat = point3(0,0,0);
-        vup = point3(0,1,0);
-        dist_to_focus = 10.0;
-        aperture = 0.1;
+    switch (scene) {
+        case 0:
+            world = random_scene();
 
+            lookfrom = point3(13,2,3);
+            lookat = point3(0,0,0);
+            aperture = 0.1;
+
+            break;
+
+        case 1:
+            world = my_scene();
+
+            lookfrom = point3(-2, 2, 1);
+            lookat = point3(0, 0, -1);
+            aperture = 0.1;
+
+            break;
+
+        default:
+        case 2:
+            world = two_spheres();
+
+            lookfrom = point3(13,2,3);
+            lookat = point3(0,0,0);
+            fovy = 20.0;
+            aperture = 0.0;
+
+            break;
     }
-    else {
-        world = my_scene();
 
-        lookfrom = point3(-2, 2, 1);
-        lookat = point3(0, 0, -1);
-        vup = vec3(0, 1, 0);
-        dist_to_focus = 10.0;
-        aperture = 0.1;
-    }
 
     Camera camara(lookfrom, lookat, vup, fovy, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
 
