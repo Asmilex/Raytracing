@@ -61,8 +61,10 @@ class noise_texture : public texture {
         noise_texture(double _scale) : scale(_scale) {}
 
         virtual color value(double u, double v, const point3& p) const override {
-            return color(1, 1, 1) * noise.noise(scale * p);
+            //return color(1, 1, 1) * 0.5 * (1.0 + noise.noise(scale * p));
+            return color(1, 1, 1) * 0.5 * (1 + sin(scale*p.z() + 50*noise.turbulence(p)));
         }
+
     public:
         perlin noise;
         double scale = 1;
