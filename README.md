@@ -16,6 +16,12 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 - [Lista con recursos de RT](https://www.realtimerendering.com/raytracing.html)
 - [Tutorial de Vulkan](https://vulkan-tutorial.com/Introduction)
 - [Vulkan con CMake](https://vulkan.lunarg.com/doc/view/1.1.108.0/windows/getting_started.html)
+- [Explicación interesante sobre GI](https://www.youtube.com/watch?v=yEkryaaAsBU)
+
+## Temas de interés e investigación
+
+- Ruido Perlin.
+- Estructura Bounding Volume Hierarchy.
 
 ## Log
 
