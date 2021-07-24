@@ -58,12 +58,14 @@ class checkerboard : public texture {
 class noise_texture : public texture {
     public:
         noise_texture() {}
+        noise_texture(double _scale) : scale(_scale) {}
 
         virtual color value(double u, double v, const point3& p) const override {
-            return color(1, 1, 1) * noise.noise(p);
+            return color(1, 1, 1) * noise.noise(scale * p);
         }
     public:
         perlin noise;
+        double scale = 1;
 };
 
 

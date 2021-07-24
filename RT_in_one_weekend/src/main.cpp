@@ -147,7 +147,7 @@ hittable_list two_spheres() {
 hittable_list two_perlin_spheres() {
     hittable_list objects;
 
-    auto perlin_texture = make_shared<noise_texture>();
+    auto perlin_texture = make_shared<noise_texture>(8);
     objects.add(make_shared<sphere>(point3(0,-1000,0), 1000, make_shared<lambertian>(perlin_texture)));
     objects.add(make_shared<sphere>(point3(0, 2, 0), 2, make_shared<lambertian>(perlin_texture)));
 
@@ -233,7 +233,7 @@ int main() {
     cout << "P3\n" << image_width << " " << image_height << "\n255\n";
 
     for (int j = image_height - 1; j >= 0; --j) {
-        cerr << "\rLíneas restantes: " << j << ' ' << flush;
+        cerr << "\rLineas restantes: " << j << ' ' << flush;
 
         for (int i = 0; i < image_width; ++i) {
             color pixel_color(0, 0, 0);
