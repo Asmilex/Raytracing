@@ -6,6 +6,7 @@
 #include "random.h"
 #include "material.h"
 #include "moving_sphere.h"
+#include "aarect.h"
 
 #include <iostream>
 
@@ -15,7 +16,7 @@ using namespace std;
 // ─────────────────────────────────────────────────────────────── UTILIDADES ─────
 //
 
-color ray_color(const Ray& ray, const hittable& world, int depth) {
+color ray_color(const Ray& r, const color& background, const hittable& world, int depth) {
     hit_record rec;
 
     // Si sobrepasamos el nivel máximo de profundidad, dejamos de acumular luz
@@ -23,45 +24,28 @@ color ray_color(const Ray& ray, const hittable& world, int depth) {
         return color(0, 0, 0);
     }
 
-    if (world.hit(ray, 0.00001, infinity, rec)) {
-        /*  NOTE capítulo 8
-            Podemos usar diferentes modelos de difusión para esta función.
-
-            (1) El primero tiene mayor probailidad de que se difusen los rayos alrededor de la normal, y más baja en los extremos.
-            La distribución es cos(phi^3), con phi el ángulo de la normal.
-            Se debe usar la siguiente línea:
-                point3 target = rec.p + rec.normal + random_in_unit_sphere();   // Ver dibujo de la sección 8
-
-            (2) Para la distribución lambertiana, necesitamos cos(phi). Corregimos el anterior haciéndolo unitario:
-                point3 target = rec.p + rec.normal + random_unit_vector();
-            No es totalmente correcto. Para ello, se puede usar la siguiente versión.
-
-            (3) La opción presentada en RT in one weekend no es correcta del todo (ver 8.6). Para hacerlo intuitivo,
-            se puede hacer una difusión de los rayos uniforme, independientemente de la normal.
-                point3 target = rec.p + random_in_hemisphere(rec.normal);
-
-            Es recomendable variar entre uno y otro, para ver cómo quedan finalmente las escenas.
-
-            Código del capítulo 8:
-                point3 target = rec.p + rec.normal + random_in_unit_sphere();   // Ver dibujo de la sección 8
-                return 0.5 * ray_color(Ray(rec.p, target - rec.p), world, depth-1);
-        */
-
-        Ray scattered;
-        color attenuation;
-
-        if (rec.mat_ptr->scatter(ray, rec, attenuation, scattered)) {
-            return attenuation * ray_color(scattered, world, depth-1);
-        }
-
-        return color(0, 0, 0);
+    // Si el rayo no toca nada, devolver el color del fondo
+    if (!world.hit(r, 0.001, infinity, rec)) {
+        return background;
     }
 
-    vec3 unit_direction = ray.direction().normalize();
-    auto t = 0.5 * (unit_direction.y() + 1.0);
+    Ray scattered;
+    color attenuation;
+    color emitted = rec.mat_ptr->emmitted(rec.u, rec.v, rec.p);
 
-    return (1.0 - t) * color (1.0, 1.0, 1.0) + t * color(0.5, 0.7, 1.0);
+    if (!rec.mat_ptr->scatter(r, rec, attenuation, scattered)) {
+        return emitted;
+    }
+
+    return emitted + attenuation * ray_color(scattered, background, world, depth-1);
 }
+
+
+//
+// ────────────────────────────────────────────────────── I ──────────
+//   :::::: E S C E N A S : :  :   :    :     :        :          :
+// ────────────────────────────────────────────────────────────────
+//
 
 
 hittable_list random_scene() {
@@ -163,9 +147,38 @@ hittable_list earth() {
     return hittable_list(globe);
 }
 
+hittable_list simple_light() {
+    hittable_list world;
+
+    auto perlin_texture = make_shared<noise_texture>(16);
+    world.add(
+        make_shared<sphere>(point3(0, -1000, 0), 1000, make_shared<lambertian>(perlin_texture))
+    );
+    world.add(
+        make_shared<sphere>(point3(0, 2, 0), 2, make_shared<lambertian>(perlin_texture))
+    );
+
+    auto panel_light = make_shared<diffuse_light>(10*color(0.4000, 0.4824, 0.4118));
+    world.add(
+        make_shared<xy_rect>(3, 5, 1, 3, -2, panel_light)
+    );
+
+
+    auto ball_light = make_shared<diffuse_light>(2*color(0.0314, 0.1216, 0.3176));
+    world.add(
+        make_shared<sphere>(point3(1, 4, 4), 1, ball_light)
+    );
+
+    return world;
+}
+
+
 //
-// ───────────────────────────────────────────────────────────────────── MAIN ─────
+// ──────────────────────────────────────────────── I ──────────
+//   :::::: M A I N : :  :   :    :     :        :          :
+// ──────────────────────────────────────────────────────────
 //
+
 
 int main() {
     //
@@ -175,8 +188,8 @@ int main() {
     const auto aspect_ratio = 16.0/9.0;
     const int image_width = 800;
     const int image_height = static_cast<int>(image_width/aspect_ratio);
-    const int samples_per_pixel = 100;
     const int max_depth = 50;
+    int samples_per_pixel = 100;
 
     //
     // ──────────────────────────────────────────────────────────────────── MUNDO ─────
@@ -190,8 +203,9 @@ int main() {
     double dist_to_focus = 10;
     double aperture;
     double fovy = 20.0;
+    color background(0, 0, 0);
 
-    const int scene = 4;
+    const int scene = 5;
 
     switch (scene) {
         case 0:
@@ -200,6 +214,7 @@ int main() {
             lookfrom = point3(13,2,3);
             lookat = point3(0,0,0);
             aperture = 0.1;
+            background = color(0.7, 0.8, 1.0);
 
             break;
 
@@ -209,6 +224,7 @@ int main() {
             lookfrom = point3(-2, 2, 1);
             lookat = point3(0, 0, -1);
             aperture = 0.1;
+            background = color(0.7, 0.8, 1.0);
 
             break;
 
@@ -219,6 +235,7 @@ int main() {
             lookat = point3(0,0,0);
             fovy = 20.0;
             aperture = 0.0;
+            background = color(0.7, 0.8, 1.0);
 
             break;
 
@@ -227,14 +244,31 @@ int main() {
             lookfrom = point3(13,2,3);
             lookat = point3(0,0,0);
             fovy = 20.0;
+            background = color(0.7, 0.8, 1.0);
+
             break;
 
-        default:
         case 4:
             world = earth();
             lookfrom = point3(13,2,3);
             lookat = point3(0,0,0);
             fovy = 20.0;
+            background = color(0.7, 0.8, 1.0);
+
+            break;
+
+        case 5:
+            world = simple_light();
+            samples_per_pixel = 400;
+            background = color(0, 0, 0);
+            lookfrom = point3(26,3,6);
+            lookat = point3(0,2,0);
+            fovy = 20.0;
+
+            break;
+
+        default:
+            background = color(0.7, 0.0, 1.0);
             break;
     }
 
@@ -259,7 +293,7 @@ int main() {
 
                 Ray r = camara.get_ray(u, v);
 
-                pixel_color += ray_color(r, world, max_depth);
+                pixel_color += ray_color(r, background, world, max_depth);
             }
 
             write_color(std::cout, pixel_color, samples_per_pixel);
