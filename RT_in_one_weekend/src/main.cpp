@@ -147,6 +147,7 @@ hittable_list earth() {
     return hittable_list(globe);
 }
 
+
 hittable_list simple_light() {
     hittable_list world;
 
@@ -173,6 +174,25 @@ hittable_list simple_light() {
 }
 
 
+hittable_list cornerll_box() {
+    hittable_list objects;
+
+    auto red = make_shared<lambertian>(color(.65, .05, .05));
+    auto green = make_shared<lambertian>(color(.12, .45, .15));
+    auto white = make_shared<lambertian>(color(.73, .73, .73));
+    auto light = make_shared<diffuse_light>(color(15, 15, 15));
+
+    objects.add(make_shared<yz_rect>(0, 555, 0, 555, 555, green));
+    objects.add(make_shared<yz_rect>(0, 555, 0, 555, 0, red));
+    objects.add(make_shared<xz_rect>(213, 343, 227, 332, 554, light));
+    objects.add(make_shared<xz_rect>(0, 555, 0, 555, 0, white));
+    objects.add(make_shared<xz_rect>(0, 555, 0, 555, 555, white));
+    objects.add(make_shared<xy_rect>(0, 555, 0, 555, 555, white));
+
+    return objects;
+}
+
+
 //
 // ──────────────────────────────────────────────── I ──────────
 //   :::::: M A I N : :  :   :    :     :        :          :
@@ -181,20 +201,10 @@ hittable_list simple_light() {
 
 
 int main() {
-    //
-    // ─────────────────────────────────────────────────────────────────── IMAGEN ─────
-    //
-
-    const auto aspect_ratio = 16.0/9.0;
-    const int image_width = 800;
-    const int image_height = static_cast<int>(image_width/aspect_ratio);
-    const int max_depth = 50;
+    auto aspect_ratio = 16.0/9.0;
     int samples_per_pixel = 100;
 
-    //
-    // ──────────────────────────────────────────────────────────────────── MUNDO ─────
-    //
-
+    int image_width = 800;
 
     hittable_list world;
     point3 lookfrom;
@@ -205,7 +215,7 @@ int main() {
     double fovy = 20.0;
     color background(0, 0, 0);
 
-    const int scene = 5;
+    const int scene = 6;
 
     switch (scene) {
         case 0:
@@ -267,6 +277,18 @@ int main() {
 
             break;
 
+        case 6:
+            world = cornerll_box();
+            aspect_ratio = 1.0;
+            image_width = 600;
+            samples_per_pixel = 200;
+            background = color(0,0,0);
+            lookfrom = point3(278, 278, -800);
+            lookat = point3(278, 278, 0);
+            fovy = 40;
+
+            break;
+
         default:
             background = color(0.7, 0.0, 1.0);
             break;
@@ -274,6 +296,10 @@ int main() {
 
 
     Camera camara(lookfrom, lookat, vup, fovy, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
+
+    int image_height = static_cast<int>(image_width/aspect_ratio);
+    const int max_depth = 50;
+
 
     //
     // ─────────────────────────────────────────────────────────────────── RENDER ─────
