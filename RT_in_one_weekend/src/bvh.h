@@ -7,13 +7,13 @@
 #include "utilities.h"
 #include "hittable_list.h"
 
-class BVH_node : public hittable {
+class bvh_node : public hittable {
     public:
-        BVH_node();
-        BVH_node(const hittable_list& list, double time0, double time1)
-            : BVH_node(list.objects, 0, list.objects.size(), time0, time1) {}
+        bvh_node();
+        bvh_node(const hittable_list& list, double time0, double time1)
+            : bvh_node(list.objects, 0, list.objects.size(), time0, time1) {}
 
-        BVH_node(const std::vector<shared_ptr<hittable>>& src_objects, int start, int end, double time0, double time1);
+        bvh_node(const std::vector<shared_ptr<hittable>>& src_objects, size_t start, size_t end, double time0, double time1);
 
         virtual bool hit(const Ray& r, double t_min, double t_max, hit_record& rec) const override;
 
@@ -29,7 +29,34 @@ class BVH_node : public hittable {
 // ────────────────────────────────────────────────────────────────────────────────
 
 
-BVH_node::BVH_node(const std::vector<shared_ptr<hittable>>& src_objects, int start, int end, double time0, double time1) {
+inline bool box_compare(const shared_ptr<hittable> a, const shared_ptr<hittable> b, int axis) {
+    aabb box_a;
+    aabb box_b;
+
+    if (!a->bounding_box(0, 0, box_a) || !b->bounding_box(0, 0, box_b)) {
+        std::cerr << "No hay una bounding box en box_compare\n";
+    }
+
+    return box_a.min().e[axis] < box_b.min().e[axis];
+}
+
+bool box_x_compare(const shared_ptr<hittable> a, const shared_ptr<hittable> b) {
+    return box_compare(a, b, 0);
+}
+
+bool box_y_compare(const shared_ptr<hittable> a, const shared_ptr<hittable> b) {
+    return box_compare(a, b, 1);
+}
+
+bool box_z_compare(const shared_ptr<hittable> a, const shared_ptr<hittable> b) {
+    return box_compare(a, b, 2);
+}
+
+
+// ────────────────────────────────────────────────────────────────────────────────
+
+
+bvh_node::bvh_node(const std::vector<shared_ptr<hittable>>& src_objects, size_t start, size_t end, double time0, double time1) {
     // Copia modificable de los objetos de la escena.
     auto objects = src_objects;
 
@@ -58,8 +85,8 @@ BVH_node::BVH_node(const std::vector<shared_ptr<hittable>>& src_objects, int sta
 
         auto mid = start + object_span/2;
 
-        left = make_shared<BVH_node>(objects, start, mid, time0, time1);
-        right = make_shared<BVH_node>(objects, mid, end, time0, time1);
+        left = make_shared<bvh_node>(objects, start, mid, time0, time1);
+        right = make_shared<bvh_node>(objects, mid, end, time0, time1);
     }
 
     aabb box_left, box_right;
@@ -75,14 +102,13 @@ BVH_node::BVH_node(const std::vector<shared_ptr<hittable>>& src_objects, int sta
 }
 
 
-
-bool BVH_node::bounding_box(double time0, double time1, aabb& output_box) const {
+bool bvh_node::bounding_box(double time0, double time1, aabb& output_box) const {
     output_box = box;
     return true;
 }
 
 
-bool BVH_node::hit(const Ray& r, double t_min, double t_max, hit_record& rec) const {
+bool bvh_node::hit(const Ray& r, double t_min, double t_max, hit_record& rec) const {
     if (!box.hit(r, t_min, t_max)) {
         return false;
     }
@@ -96,32 +122,6 @@ bool BVH_node::hit(const Ray& r, double t_min, double t_max, hit_record& rec) co
     );
 
     return hit_left || hit_right;
-}
-
-
-// ────────────────────────────────────────────────────────────────────────────────
-
-
-inline bool box_compare(const shared_ptr<hittable> a, const shared_ptr<hittable> b, int axis) {
-    aabb box_a, box_b;
-
-    if (!a->bounding_box(0, 0, box_a) || !b->bounding_box(0, 0, box_b)) {
-        std::cerr << "No hay una bounding box en box_compare\n";
-    }
-
-    return box_a.min().e[axis] < box_b.min().e[axis];
-}
-
-bool box_x_compare(const shared_ptr<hittable> a, const shared_ptr<hittable> b) {
-    return box_compare(a, b, 0);
-}
-
-bool box_y_compare(const shared_ptr<hittable> a, const shared_ptr<hittable> b) {
-    return box_compare(a, b, 1);
-}
-
-bool box_z_compare(const shared_ptr<hittable> a, const shared_ptr<hittable> b) {
-    return box_compare(a, b, 2);
 }
 
 #endif

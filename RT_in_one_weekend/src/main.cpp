@@ -9,6 +9,7 @@
 #include "aarect.h"
 #include "box.h"
 #include "constant-medium.h"
+#include "bvh.h"
 
 #include <iostream>
 
@@ -236,6 +237,180 @@ hittable_list cornell_smoke() {
 }
 
 
+hittable_list final_scene() {
+    hittable_list boxes1;
+
+    std::cerr << "Creating scene...\n";
+
+    auto ground = make_shared<lambertian>(color(0.5333, 0.2000, 0.3569));
+
+    const int boxes_per_side = 200;
+    for (int i = 0; i < boxes_per_side; i++) {
+        for (int j = 0; j < boxes_per_side; j++) {
+            auto w = 100.0;
+            auto x0 = -1000 + i * w;
+            auto z0 = -1000 + j * w;
+            auto y0 = 0.0;
+            auto x1 = x0 + w;
+            auto y1 = random_double(1, 101);
+            auto z1 = z0 + w;
+
+            boxes1.add(make_shared<box>(point3(x0, y0, z0), point3(x1, y1, z1), ground));
+        }
+    }
+
+    hittable_list objects;
+
+    objects.add(make_shared<bvh_node>(boxes1, 0, 1));
+
+    auto light = make_shared<diffuse_light>(color(7, 7, 7));
+    objects.add(make_shared<xz_rect>(123, 423, 147, 412, 554, light));
+
+    auto center1 = point3(400, 400, 200);
+    auto center2 = center1 + vec3(30, 0, 0);
+    auto moving_sphere_material = make_shared<lambertian>(color(0.1216, 0.4431, 0.5255));
+    objects.add(
+        make_shared<moving_sphere>(center1, center2, 0, 1, 40, moving_sphere_material)
+    );
+
+    objects.add(
+        make_shared<sphere>(point3(260, 150, 45), 50, make_shared<dielectric>(1.5))
+    );
+    objects.add(
+        make_shared<sphere>(point3(0, 150, 145), 50, make_shared<metal>(color(0.3765, 0.2745, 0.2392), 1.0))
+    );
+
+    auto boundary = make_shared<sphere>(point3(360, 150, 145), 70, make_shared<dielectric>(1.5));
+    objects.add(boundary);
+    objects.add(
+        make_shared<constant_medium>(boundary, 0.2, color(0.9882, 0.9490, 0.6902))
+    );
+
+    // Fog
+    boundary = make_shared<sphere>(point3(0, 0, 0), 5000, make_shared<dielectric>(1.5));
+    objects.add(
+        make_shared<constant_medium>(boundary, .0001, color(1, 1, 1))
+    );
+
+    auto emat = make_shared<lambertian>(make_shared<image_texture>("RT_in_one_weekend/img/earthmap.jpg"));
+    objects.add(make_shared<sphere>(point3(400, 200, 400), 100, emat));
+    auto perlin_texture = make_shared<noise_texture>(0.1);
+    objects.add(
+        make_shared<sphere>(point3(220, 200, 300), 80, make_shared<lambertian>(perlin_texture))
+    );
+
+    hittable_list boxes2;
+    auto white = make_shared<lambertian>(color(.74, .74, .74));
+    int ns = 1000;
+
+    for (int j = 0; j < ns; j++) {
+        boxes2.add(make_shared<sphere>(point3::random(0, 165), 10, white));
+    }
+
+    objects.add(
+        make_shared<translate>(
+            make_shared<rotate_y>(make_shared<bvh_node>(boxes2, 0.0, 1.0), 15),
+            vec3(-100,270,395)
+        )
+    );
+
+
+    std::cerr << "Scene loaded\n";
+    return objects;
+}
+
+
+hittable_list default_final_scene() {
+    hittable_list boxes1;
+    auto ground = make_shared<lambertian>(color(0.48, 0.83, 0.53));
+
+    const int boxes_per_side = 20;
+    for (int i = 0; i < boxes_per_side; i++) {
+        for (int j = 0; j < boxes_per_side; j++) {
+            auto w = 100.0;
+            auto x0 = -1000.0 + i*w;
+            auto z0 = -1000.0 + j*w;
+            auto y0 = 0.0;
+            auto x1 = x0 + w;
+            auto y1 = random_double(1,101);
+            auto z1 = z0 + w;
+
+            boxes1.add(make_shared<box>(point3(x0,y0,z0), point3(x1,y1,z1), ground));
+        }
+    }
+
+    hittable_list objects;
+
+    objects.add(make_shared<bvh_node>(boxes1, 0, 1));
+
+    auto light = make_shared<diffuse_light>(color(7, 7, 7));
+    objects.add(make_shared<xz_rect>(123, 423, 147, 412, 554, light));
+
+    auto center1 = point3(400, 400, 200);
+    auto center2 = center1 + vec3(30,0,0);
+    auto moving_sphere_material = make_shared<lambertian>(color(0.7, 0.3, 0.1));
+    objects.add(make_shared<moving_sphere>(center1, center2, 0, 1, 50, moving_sphere_material));
+
+    objects.add(make_shared<sphere>(point3(260, 150, 45), 50, make_shared<dielectric>(1.5)));
+    objects.add(make_shared<sphere>(
+        point3(0, 150, 145), 50, make_shared<metal>(color(0.8, 0.8, 0.9), 1.0)
+    ));
+
+    auto boundary = make_shared<sphere>(point3(360,150,145), 70, make_shared<dielectric>(1.5));
+    objects.add(boundary);
+    auto pelota_azul = make_shared<constant_medium>(boundary, 0.2, color(0.2, 0.4, 0.9));
+    objects.add(pelota_azul);
+
+/*     boundary = make_shared<sphere>(point3(0, 0, 0), 5000, make_shared<dielectric>(1.5));
+    objects.add(make_shared<constant_medium>(boundary, .0001, color(1,1,1)));
+
+ */    auto emat = make_shared<lambertian>(make_shared<image_texture>("RT_in_one_weekend/img/earthmap.jpg"));
+    objects.add(make_shared<sphere>(point3(400,200,400), 100, emat));
+    auto pertext = make_shared<noise_texture>(0.1);
+    objects.add(make_shared<sphere>(point3(220,280,300), 80, make_shared<lambertian>(pertext)));
+
+    hittable_list boxes2;
+    auto white = make_shared<lambertian>(color(.73, .73, .73));
+    int ns = 1000;
+    for (int j = 0; j < ns; j++) {
+        boxes2.add(make_shared<sphere>(point3::random(0,165), 10, white));
+    }
+
+    objects.add(make_shared<translate>(
+        make_shared<rotate_y>(
+            make_shared<bvh_node>(boxes2, 0.0, 1.0), 15),
+            vec3(-100,270,395)
+        )
+    );
+
+    return objects;
+}
+
+
+hittable_list bvh_debug() {
+    hittable_list objects;
+
+    auto red = make_shared<lambertian>(color(.65, .05, .05));
+    auto green = make_shared<lambertian>(color(.12, .45, .15));
+    auto white = make_shared<lambertian>(color(.73, .73, .73));
+    auto light = make_shared<diffuse_light>(color(15, 15, 15));
+
+    objects.add(make_shared<yz_rect>(0, 555, 0, 555, 555, green));
+    objects.add(make_shared<yz_rect>(0, 555, 0, 555, 0, red));
+    objects.add(make_shared<xz_rect>(213, 343, 227, 332, 554, light));
+    objects.add(make_shared<xz_rect>(0, 555, 0, 555, 0, white));
+    objects.add(make_shared<xz_rect>(0, 555, 0, 555, 555, white));
+    objects.add(make_shared<xy_rect>(0, 555, 0, 555, 555, white));
+
+    shared_ptr<hittable> box1 = make_shared<box>(point3(0, 0, 0), point3(165, 330, 165), white);
+    shared_ptr<hittable> nodos = make_shared<bvh_node>(box1, 0, 1);
+
+    objects.add(nodos);
+
+    return objects;
+}
+
+
 //
 // ──────────────────────────────────────────────── I ──────────
 //   :::::: M A I N : :  :   :    :     :        :          :
@@ -258,7 +433,7 @@ int main() {
     double fovy = 20.0;
     color background(0, 0, 0);
 
-    const int scene = 7;
+    const int scene = 8;
 
     switch (scene) {
         case 0:
@@ -342,6 +517,31 @@ int main() {
             fovy = 40.0;
 
             break;
+
+        case 8:
+            world = default_final_scene();
+            aspect_ratio = 1.0;
+            image_width = 800;
+            samples_per_pixel = 100;
+            background = color(0, 0, 0);
+            lookfrom = point3(478, 278, -600);
+            lookat = point3(278, 278, 0);
+            fovy = 40.0;
+
+            break;
+
+        case 9:
+            world = bvh_debug();
+            aspect_ratio = 1.0;
+            image_width = 600;
+            samples_per_pixel = 100;
+            background = color(0,0,0);
+            lookfrom = point3(278, 278, -800);
+            lookat = point3(278, 278, 0);
+            fovy = 40;
+
+            break;
+
 
         default:
             background = color(0.7, 0.0, 1.0);

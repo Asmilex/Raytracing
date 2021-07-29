@@ -80,7 +80,7 @@ class dielectric : public material {
             vec3 unit_direction = r_in.direction().normalize();
 
             double cos_theta = fmin(dot(-unit_direction, rec.normal), 1.0);
-            double sin_theta = sqrt(1 - cos_theta*cos_theta);
+            double sin_theta = sqrt(1.0 - cos_theta*cos_theta);
 
             bool cannot_refract = refraction_ratio * sin_theta > 1.0;
             vec3 direction;
@@ -138,7 +138,7 @@ class diffuse_light : public material {
 
 class isotropic : public material {
     public:
-        isotropic(const color& c) : albedo(make_shared<solid_color>(c)) {}
+        isotropic(color c) : albedo(make_shared<solid_color>(c)) {}
         isotropic(shared_ptr<texture> c) : albedo(c) {}
 
         virtual bool scatter(const Ray& r_in, const hit_record& rec, color& attenuation, Ray& scattered) const override {
