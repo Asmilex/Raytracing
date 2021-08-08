@@ -47,7 +47,7 @@ class aabb {
                 auto t0 = (minimum[a] - r.origin()[a]) * invD;
                 auto t1 = (maximum[a] - r.origin()[a]) * invD;
 
-                if (invD < 0.0f) {
+                if (t1 < t0) {
                     std::swap(t0, t1);
                 }
 
@@ -76,9 +76,9 @@ aabb surrounding_box(aabb box0, aabb box1) {
     );
 
     point3 big(
-        fmax(box0.min().x(), box1.min().x()),
-        fmax(box0.min().y(), box1.min().y()),
-        fmax(box0.min().z(), box1.min().z())
+        fmax(box0.max().x(), box1.max().x()),
+        fmax(box0.max().y(), box1.max().y()),
+        fmax(box0.max().z(), box1.max().z())
     );
 
     return aabb(small, big);

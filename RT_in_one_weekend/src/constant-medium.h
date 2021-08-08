@@ -31,7 +31,7 @@ class constant_medium : public hittable {
 
 bool constant_medium::hit(const Ray& r, double t_min, double t_max, hit_record& rec) const {
     // Mensajes de debuggeo útiles de vez en cuando.
-    const bool enable_debug = true;
+    const bool enable_debug = false;
     const bool debugging = enable_debug && random_double() < 0.00001;
 
     hit_record rec1, rec2;

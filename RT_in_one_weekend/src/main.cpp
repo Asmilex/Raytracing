@@ -244,12 +244,12 @@ hittable_list final_scene() {
 
     auto ground = make_shared<lambertian>(color(0.5333, 0.2000, 0.3569));
 
-    const int boxes_per_side = 200;
+    const int boxes_per_side = 50;
     for (int i = 0; i < boxes_per_side; i++) {
         for (int j = 0; j < boxes_per_side; j++) {
             auto w = 100.0;
-            auto x0 = -1000 + i * w;
-            auto z0 = -1000 + j * w;
+            auto x0 = -1000.0 + i*w;
+            auto z0 = -1000.0 + j*w;
             auto y0 = 0.0;
             auto x1 = x0 + w;
             auto y1 = random_double(1, 101);
@@ -519,10 +519,10 @@ int main() {
             break;
 
         case 8:
-            world = default_final_scene();
+            world = final_scene();
             aspect_ratio = 1.0;
             image_width = 800;
-            samples_per_pixel = 100;
+            samples_per_pixel = 10000;
             background = color(0, 0, 0);
             lookfrom = point3(478, 278, -600);
             lookat = point3(278, 278, 0);
