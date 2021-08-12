@@ -4,6 +4,7 @@
 #include "utilities.h"
 #include "hittable.h"
 #include "texture.h"
+#include "onb.h"
 
 struct hit_record;
 
@@ -32,17 +33,14 @@ class lambertian : public material {
         lambertian(shared_ptr<texture> a) : albedo(a) {}
 
         virtual bool scatter(const Ray& r_in, const hit_record& rec, color& alb, Ray& scattered, double& pdf) const override {
-            auto scatter_direction = random_in_hemisphere(rec.normal);
+            onb orthonormal_base;
+            orthonormal_base.build_from_w(rec.normal);
 
-            // Debemos tener cuidado con los scatters cerca de 0. Podrían producir infinitos y NaNs.
-            /* if (scatter_direction.near_zero()) {
-                scatter_direction = rec.normal;
-            }
-            // Comentado debido a la sección 6.2 de RT the rest of your life. Revertir cambios si fuera necesario.
- */
-            scattered = Ray(rec.p, scatter_direction.normalize(), r_in.time());
+            auto direction = orthonormal_base.local(random_cosine_direction());
+
+            scattered = Ray(rec.p, direction.normalize(), r_in.time());
             alb = albedo->value(rec.u, rec.v, rec.p);
-            pdf = 0.5/pi;
+            pdf = dot(orthonormal_base.w(), scattered.direction()) / pi;
 
             return true;
         }

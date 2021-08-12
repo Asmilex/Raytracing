@@ -5,6 +5,7 @@
 #include <cmath>
 #include <iostream>
 
+
 using std::sqrt;
 
 //
@@ -183,4 +184,5 @@ vec3 refract(const vec3& uv, const vec3& normal, double etai_over_etat) {
     vec3 r_out_parallel = -sqrt(fabs(1.0 - r_out_perp.length_squared())) * normal;
     return r_out_parallel + r_out_perp;
 }
+
 #endif
