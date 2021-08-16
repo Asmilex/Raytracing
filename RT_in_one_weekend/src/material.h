@@ -5,6 +5,7 @@
 #include "hittable.h"
 #include "texture.h"
 #include "onb.h"
+#include "pdf.h"
 
 struct hit_record;
 
