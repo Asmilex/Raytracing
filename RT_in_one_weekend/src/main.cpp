@@ -20,7 +20,7 @@ using namespace std;
 // ─────────────────────────────────────────────────────────────── UTILIDADES ─────
 //
 
-color ray_color(const Ray& r, const color& background, const hittable& world, shared_ptr<hittable_list>& lights, int depth) {
+color ray_color(const Ray& r, const color& background, const hittable& world, shared_ptr<hittable> lights, int depth) {
     hit_record rec;
 
     // Si sobrepasamos el nivel máximo de profundidad, dejamos de acumular luz
