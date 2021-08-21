@@ -577,13 +577,8 @@ int main() {
     const int max_depth = 50;
 
     // FIXME capítulo 10.2 muy temporal
-    auto lights = make_shared<hittable_list>();
-    lights->add(
-        make_shared<xz_rect>(213, 343, 227, 332, 554, shared_ptr<material>())
-    );
-    lights->add(
-        make_shared<sphere>(point3(190, 90, 190), 90, shared_ptr<material>())
-    );
+    shared_ptr<hittable> lights = make_shared<sphere>(point3(190, 90, 190), 90, shared_ptr<material>());
+
 
     //
     // ─────────────────────────────────────────────────────────────────── RENDER ─────

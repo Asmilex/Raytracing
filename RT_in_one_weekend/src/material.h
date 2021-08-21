@@ -45,7 +45,7 @@ class lambertian : public material {
         virtual bool scatter(const Ray& r_in, const hit_record& rec, scatter_record& srec) const override {
             srec.is_specular = false;
             srec.attenuation = albedo->value(rec.u, rec.v, rec.p);
-            srec.pdf_ptr = make_shared<cosine_pdf>(rec.normal);     // NOTE ¿implementación del libro equivocada?
+            srec.pdf_ptr = make_shared<cosine_pdf>(rec.normal);
 
             return true;
         }
@@ -71,9 +71,9 @@ class metal : public material {
             vec3 reflected = reflect(r_in.direction().normalize(), rec.normal);
 
             srec.is_specular = true;
-            srec.specular_ray = Ray(rec.p, reflected + fuzz * random_in_unit_sphere());
+            srec.specular_ray = Ray(rec.p, reflected + fuzz * random_in_unit_sphere(), r_in.time());
             srec.attenuation = albedo;
-            srec.pdf_ptr = 0;
+            srec.pdf_ptr = nullptr;
 
             return true;
         }
@@ -124,7 +124,7 @@ class dielectric : public material {
             auto r0 = (1 - ref_idx) / (1 + ref_idx);
             r0 = r0 * r0;
 
-            return r0 + (1 - r0) * pow(1 - cosine, 5);
+            return r0 + (1 - r0) * pow((1 - cosine), 5);
         }
 };
 
@@ -165,7 +165,7 @@ class isotropic : public material {
             srec.is_specular = true;
             srec.specular_ray = Ray(rec.p, random_in_unit_sphere(), r_in.time());
             srec.attenuation = albedo->value(rec.u, rec.v, rec.p);
-            srec.pdf_ptr = 0;       // FIXME me lo he cuajao.
+            srec.pdf_ptr = nullptr;       // FIXME me lo he cuajao.
 
             return true;
         }
