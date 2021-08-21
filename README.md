@@ -28,6 +28,12 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 
 ## Log
 
+### 2021/08/21.
+
+- RT: The rest of your life completado.
+- La aplicación ha sido pausada. Esperaré a que se reanude el curso.
+- Debemos plantear si merece la pena usar algo de la implementación de Shirley.
+
 ### 2021/07/16
 - Inicio desarrollo de RT in one weekend.
 
