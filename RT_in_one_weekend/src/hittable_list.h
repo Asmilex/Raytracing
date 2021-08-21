@@ -28,6 +28,20 @@ class hittable_list : public hittable {
         virtual bool hit(const Ray& r, double t_min, double t_max, hit_record& rec) const override;
         virtual bool bounding_box(double time0, double time1, aabb& output_box) const override;
 
+        double pdf_value(const point3& o, const vec3& v) const {
+            auto weight = 1.0/objects.size();
+            auto sum = 0.0;
+
+            for (const auto& object : objects)
+                sum += weight * object->pdf_value(o, v);
+
+            return sum;
+        }
+
+        vec3 random(const vec3& o) const {
+            auto size_in_int = static_cast<int>(objects.size());
+            return objects[random_int(0, size_in_int - 1)]->random(o);
+        }
 
     public:
         std::vector<shared_ptr<hittable>> objects;
