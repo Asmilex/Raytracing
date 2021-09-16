@@ -20,6 +20,7 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 - [Tutorial de Vulkan](https://vulkan-tutorial.com/Introduction)
 - [Vulkan con CMake](https://vulkan.lunarg.com/doc/view/1.1.108.0/windows/getting_started.html)
 - [Explicación interesante sobre GI](https://www.youtube.com/watch?v=yEkryaaAsBU)
+- [Ray Tracing Gems II](https://developer.nvidia.com/ray-tracing-gems-ii)
 
 ## Temas de interés e investigación
 
