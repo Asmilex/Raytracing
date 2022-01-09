@@ -204,6 +204,8 @@ CMAKE_STATIC_LINKER_FLAGS_RELEASE:STRING=
 // during RELWITHDEBINFO builds.
 CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
+CMAKE_TOOLCHAIN_FILE:STRING=C:\Users\Andre/vcpkg/scripts/buildsystems/vcpkg.cmake
+
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
 // during the make.  This is useful for debugging only. With Visual
@@ -216,30 +218,6 @@ COVERAGE_COMMAND:FILEPATH=E:/Perl/c/bin/gcov.exe
 
 //Extra command line flags to pass to the coverage tool
 COVERAGE_EXTRA_FLAGS:STRING=-l
-
-//Enable to build 7-Zip packages
-CPACK_BINARY_7Z:BOOL=OFF
-
-//Enable to build IFW packages
-CPACK_BINARY_IFW:BOOL=OFF
-
-//Enable to build NSIS packages
-CPACK_BINARY_NSIS:BOOL=ON
-
-//Enable to build NuGet packages
-CPACK_BINARY_NUGET:BOOL=OFF
-
-//Enable to build WiX packages
-CPACK_BINARY_WIX:BOOL=OFF
-
-//Enable to build ZIP packages
-CPACK_BINARY_ZIP:BOOL=OFF
-
-//Enable to build 7-Zip source packages
-CPACK_SOURCE_7Z:BOOL=ON
-
-//Enable to build ZIP source packages
-CPACK_SOURCE_ZIP:BOOL=ON
 
 //How many times to retry timed-out CTest submissions.
 CTEST_SUBMIT_RETRY_COUNT:STRING=3
@@ -268,6 +246,18 @@ TFG_VkRay_BINARY_DIR:STATIC=C:/Users/Andre/Repositorios/TFG_RT_VkRay/application
 //Value Computed by CMake
 TFG_VkRay_SOURCE_DIR:STATIC=C:/Users/Andre/Repositorios/TFG_RT_VkRay/application
 
+//Path to a program.
+Vulkan_GLSLC_EXECUTABLE:FILEPATH=C:/VulkanSDK/1.2.182.0/Bin/glslc.exe
+
+//Path to a file.
+Vulkan_INCLUDE_DIR:PATH=C:/VulkanSDK/1.2.182.0/Include
+
+//Path to a library.
+Vulkan_LIBRARY:FILEPATH=C:/VulkanSDK/1.2.182.0/Lib/vulkan-1.lib
+
+//The directory containing a CMake configuration file for glfw3.
+glfw3_DIR:PATH=glfw3_DIR-NOTFOUND
+
 
 ########################
 # INTERNAL cache entries
@@ -291,6 +281,8 @@ CMAKE_CPACK_COMMAND:INTERNAL=C:/Program Files (x86)/Microsoft Visual Studio/2019
 CMAKE_CTEST_COMMAND-ADVANCED:INTERNAL=1
 //Path to ctest program executable.
 CMAKE_CTEST_COMMAND:INTERNAL=C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/ctest.exe
+//Result of TRY_COMPILE
+CMAKE_CXX_ABI_COMPILED:INTERNAL=FALSE
 //ADVANCED property for variable: CMAKE_CXX_COMPILER
 CMAKE_CXX_COMPILER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_FLAGS
@@ -411,28 +403,14 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 COVERAGE_COMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: COVERAGE_EXTRA_FLAGS
 COVERAGE_EXTRA_FLAGS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_BINARY_7Z
-CPACK_BINARY_7Z-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_BINARY_IFW
-CPACK_BINARY_IFW-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_BINARY_NSIS
-CPACK_BINARY_NSIS-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_BINARY_NUGET
-CPACK_BINARY_NUGET-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_BINARY_WIX
-CPACK_BINARY_WIX-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_BINARY_ZIP
-CPACK_BINARY_ZIP-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_SOURCE_7Z
-CPACK_SOURCE_7Z-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CPACK_SOURCE_ZIP
-CPACK_SOURCE_ZIP-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CTEST_SUBMIT_RETRY_COUNT
 CTEST_SUBMIT_RETRY_COUNT-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CTEST_SUBMIT_RETRY_DELAY
 CTEST_SUBMIT_RETRY_DELAY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: DART_TESTING_TIMEOUT
 DART_TESTING_TIMEOUT-ADVANCED:INTERNAL=1
+//Details about finding Vulkan
+FIND_PACKAGE_MESSAGE_DETAILS_Vulkan:INTERNAL=[C:/VulkanSDK/1.2.182.0/Lib/vulkan-1.lib][C:/VulkanSDK/1.2.182.0/Include][v()]
 //ADVANCED property for variable: MAKECOMMAND
 MAKECOMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MEMORYCHECK_COMMAND
@@ -441,4 +419,10 @@ MEMORYCHECK_COMMAND-ADVANCED:INTERNAL=1
 MEMORYCHECK_SUPPRESSIONS_FILE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SITE
 SITE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_GLSLC_EXECUTABLE
+Vulkan_GLSLC_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_INCLUDE_DIR
+Vulkan_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_LIBRARY
+Vulkan_LIBRARY-ADVANCED:INTERNAL=1
 
