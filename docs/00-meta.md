@@ -1,22 +1,28 @@
 ---
-documentclass: scrreprt
-
-title: My Title Here
+title: Titulaco del TFG
 author: Andrés Millán Muñoz (<andresmm@outlook.com>)
 date: \today
-geometry: margin=1.5in
+keywords: [TFG]
 
+book: true
+classoption: [oneside]
+#geometry: margin=1.5in
+
+mainfont: 'Crimson Pro Regular'
 fontsize: 12pt
-fontfamily: Crimson Pro
 monofont: JuliaMono
-newtxmathoptions:
-- cmintegrals
-- cmbraces
+monofontoptions:
+ - Scale=0.8
 
+titlepage: true
 toc: true
 numbersections: true
 
 colorlinks: true
 linkcolor: RoyalBlue
 urlcolor: RoyalBlue
+
+page-background: ./img/background.png
+page-background-opacity: 0.8
 ---
+

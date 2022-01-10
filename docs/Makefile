@@ -23,19 +23,24 @@
 # ============================================================================
 
 
-TARGET = sample
+TARGET = TFG
 
-SOURCES = $(shell find . -name '*.md')
+SOURCES = $(shell find . -wholename './chapters/*.md')
+SOURCES += 00-meta.md
 
 PANDOC_FLAGS =\
-	-f markdown+tex_math_single_backslash \
-	-t latex \
-	# --template template.tex \
+	--from markdown \
+	--template eisvogel.tex \
+	--listings \
+	--top-level-division="chapter"
 
 LATEX_FLAGS = \
 
+PANDOC_EXEC = pandoc    # Estot en WSL, y prefiero usar pandoc.exe para evitar instalar más distros.
+
 PDF_ENGINE = xelatex
-PANDOCVERSIONGTEQ2 := $(shell expr `pandoc.exe --version | grep ^pandoc | sed 's/^.* //g' | cut -f1 -d.` \>= 2)
+PANDOCVERSIONGTEQ2 := $(shell expr `$(PANDOC_EXEC) --version | grep ^pandoc | sed 's/^.* //g' | cut -f1 -d.` \>= 2)
+
 ifeq "$(PANDOCVERSIONGTEQ2)" "1"
     LATEX_FLAGS += --pdf-engine=$(PDF_ENGINE)
 else
@@ -44,11 +49,11 @@ endif
 
 all: $(TARGET).pdf
 
-$(TARGET).pdf: $(SOURCES) template.tex
-	pandoc.exe $(PANDOC_FLAGS) $(LATEX_FLAGS) -o $@ $(SOURCES)
+$(TARGET).pdf: $(SOURCES) eisvogel.tex
+	$(PANDOC_EXEC) $(PANDOC_FLAGS) $(LATEX_FLAGS) -o $@ $(SOURCES)
 
-$(TARGET).tex: $(SOURCES) template.tex
-	pandoc.exe --standalone $(PANDOC_FLAGS) -o $@ $(SOURCES)
+$(TARGET).tex: $(SOURCES) eisvogel.tex
+	$(PANDOC_EXEC) --standalone $(PANDOC_FLAGS) -o $@ $(SOURCES)
 
 clean:
 	rm -f *.aux *.log *.nav *.out *.snm *.toc *.vrb tags || true
