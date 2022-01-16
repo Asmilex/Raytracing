@@ -36,7 +36,7 @@ PANDOC_FLAGS =\
 
 LATEX_FLAGS = \
 
-PANDOC_EXEC = pandoc    # Estot en WSL, y prefiero usar pandoc.exe para evitar instalar más distros.
+PANDOC_EXEC = pandoc    # Posible uso de pandoc.exe si ejecutas a través de WSL.
 
 PDF_ENGINE = xelatex
 PANDOCVERSIONGTEQ2 := $(shell expr `$(PANDOC_EXEC) --version | grep ^pandoc | sed 's/^.* //g' | cut -f1 -d.` \>= 2)

@@ -3,6 +3,7 @@ title: Titulaco del TFG
 author: Andrés Millán Muñoz (<andresmm@outlook.com>)
 date: \today
 keywords: [TFG]
+#lang: "es"
 
 book: true
 classoption: [oneside]
@@ -17,6 +18,13 @@ monofontoptions:
 titlepage: true
 toc: true
 numbersections: true
+
+header-left: "\\textcolor{gray}{\\thetitle}"
+header-right: "\\textcolor{gray}{\\textit{\\leftmark}}"
+footer-left: "\\hspace{1cm}"
+footer-center: "\\thepage"
+footer-right: "\\hspace{1cm}"
+
 
 colorlinks: true
 linkcolor: RoyalBlue
