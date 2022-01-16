@@ -25,4 +25,3 @@ urlcolor: RoyalBlue
 page-background: ./img/background.png
 page-background-opacity: 0.8
 ---
-

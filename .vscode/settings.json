@@ -1,4 +1,12 @@
 {
+    "triggerTaskOnSave.on": true,
+    "triggerTaskOnSave.tasks": {
+        "Documentation": [
+            "docs/chapters/*.md",
+            "docs/*.md"
+        ],
+    },
+
     "files.associations": {
         "algorithm": "cpp",
         "atomic": "cpp",

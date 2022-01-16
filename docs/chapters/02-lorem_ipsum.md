@@ -67,7 +67,7 @@ $$r_d^i(t+1) = \min\{r_s,\max\{0, r_d^i(t) + \beta(n_t - \lvert N_i(t)\rvert)\}\
 Obstitit silentia et novi non, huic metitur, coronantur lucos. Bracchia aura;
 donis quod volucris illi futurae, ut
 *venturorumque tellus* arma: saxumque.
-
+fdlsfksdjkfsjdf
 ## Vera tum est putes adspicit noxque
 
 Hora et vidit figere tangi! Omni bis *prior nunc* capilli, pulsat tuam Pallante,
