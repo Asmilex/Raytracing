@@ -1,5 +1,5 @@
 ---
-title: Titulaco del TFG
+title: Pedazo de título del TFG
 author: Andrés Millán Muñoz (<andresmm@outlook.com>)
 date: \today
 keywords: [TFG]
@@ -9,8 +9,14 @@ book: true
 classoption: [oneside]
 #geometry: margin=1.5in
 
-mainfont: 'Crimson Pro Regular'
-fontsize: 12pt
+ # ────────────────────────────────────────────────────────────────── FUENTES ─────
+
+#mainfont: 'Crimson Pro Regular'
+#fontsize: 12pt
+
+mainfont: Fraunces Light
+fontsize: 11pt
+
 monofont: JuliaMono
 monofontoptions:
  - Scale=0.8
@@ -31,5 +37,5 @@ linkcolor: RoyalBlue
 urlcolor: RoyalBlue
 
 page-background: ./img/background.png
-page-background-opacity: 0.8
+page-background-opacity: 0.85
 ---
