@@ -9,6 +9,9 @@ book: true
 classoption: [oneside]
 #geometry: margin=1.5in
 
+bibliography: bibliography.bib
+link-citations: true
+
  # ────────────────────────────────────────────────────────────────── FUENTES ─────
 
 #mainfont: 'Crimson Pro Regular'
