@@ -1,9 +1,7 @@
-# Documentación
+# ¿Qué hay aquí?
 
-## Posibles tipografías a usar
+En esta carpeta se encuentran los ficheros relacionados con la documentación. Esto es, los ficheros originales (en [chapters](./chapters)) así como la web generada.
 
-- [Fraunces](https://fonts.google.com/specimen/Fraunces?preview.text_type=custom; https://github.com/undercasetype/Fraunces)
-- [Jeroky y Compilada](http://tipografiaparaguarani.org/#services)
-- [Atkinson Hyperlegible](https://brailleinstitute.org/freefont)
-- [Alguna de Open Foundry](https://open-foundry.com/fonts)
-- [Crimson Pro](https://fonts.google.com/specimen/Crimson+Pro)
+**Si quieres acceder a la página web 🌐, visita https://asmilex.github.io/TFG_RT_VkRay/.**.
+
+**Si lo que buscas es el PDF 📕, puedes encontrarlo en [aquí](./TFG.pdf).**
