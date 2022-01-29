@@ -1,4 +1,6 @@
-Posibles fuentes:
+# Documentación
+
+## Posibles tipografías a usar
 
 - [Fraunces](https://fonts.google.com/specimen/Fraunces?preview.text_type=custom; https://github.com/undercasetype/Fraunces)
 - [Jeroky y Compilada](http://tipografiaparaguarani.org/#services)

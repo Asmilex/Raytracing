@@ -3,7 +3,7 @@ title: Pedazo de título del TFG
 author: Andrés Millán Muñoz (<andresmm@outlook.com>)
 date: \today
 keywords: [TFG]
-#lang: "es"
+# lang: spanish     # Roto. (https://github.com/Wandmalfarbe/pandoc-latex-template/issues/278)
 
 book: true
 classoption: [oneside]
@@ -14,11 +14,11 @@ link-citations: true
 
  # ────────────────────────────────────────────────────────────────── FUENTES ─────
 
-#mainfont: 'Crimson Pro Regular'
-#fontsize: 12pt
+mainfont: 'Crimson Pro Regular'
+fontsize: 12pt
 
-mainfont: Fraunces Light
-fontsize: 11pt
+#mainfont: Fraunces
+#fontsize: 11pt
 
 monofont: JuliaMono
 monofontoptions:
@@ -41,4 +41,13 @@ urlcolor: RoyalBlue
 
 page-background: ./img/background.png
 page-background-opacity: 0.85
+
+
+# HTML
+header-includes:
+- |
+  ```{=html}
+  <link rel="stylesheet" href="https://unpkg.com/bamboo.css">
+  <link rel="stylesheet" href="./style.css">
+  ```
 ---

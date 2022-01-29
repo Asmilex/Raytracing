@@ -1,0 +1,16 @@
+:root {
+    --b-font-main: 'Crimson Pro', sans-serif;
+    --b-font-mono: 'JuliaMono', monospace;
+
+    --b-bg-1: #fdfcfc;
+    --b-bg-2: #f7f7f7
+}
+
+html {
+    font-size: 16pt;
+}
+
+p {
+    text-align: justify;
+    text-justify: auto;
+}
