@@ -4,35 +4,41 @@
 # ===== Usage ================================================================
 #
 # NOTE:
-#   When running these commands at the command line, replace $(TARGET) with
-#   the actual value of the TARGET variable.
+#   When running these commands at the command line, replace $(TARGET_PDF) with
+#   the actual value of the TARGET_PDF variable.
 #
 #
 # make                  Compile all *.md files to PDFs
 # make <filename>.pdf   Compile <filename>.md to a PDF
 # make <filename>.tex   Generate the intermediate LaTeX for <filename>.md
 #
-# make view             Compile $(TARGET).md to a PDF, then view it
+# make view             Compile $(TARGET_PDF).md to a PDF, then view it
 # make again            Force everything to recompile
 #
 # make clean            Get rid of all intermediate generated files
 # make veryclean        Get rid of ALL generated files:
 #
-# make print            Send $(TARGET).pdf to the default printer:
+# make print            Send $(TARGET_PDF).pdf to the default printer:
 #
 # ============================================================================
 
 
-TARGET = TFG
+TARGET_PDF = TFG
+TARGET_WEB = index
 
 SOURCES = $(shell find . -wholename './chapters/*.md')
-SOURCES += 00-meta.md
+SOURCES += ./headers/meta.md
+
+SOURCES_WEB = ./headers/web.md
+SOURCES_PDF = ./headers/pdf.md
 
 PANDOC_FLAGS =\
 	--from markdown \
-	--template eisvogel.tex \
 	--listings \
 	--top-level-division="chapter"
+
+PANDOC_FLAGS_PDF = --template ./headers/eisvogel.tex
+PANDOC_FLAGS_WEB = -s --toc
 
 LATEX_FLAGS = \
 
@@ -47,21 +53,23 @@ else
     LATEX_FLAGS += --latex-engine=$(PDF_ENGINE)
 endif
 
-all: $(TARGET).pdf
+all: $(TARGET_PDF).pdf $(TARGET_WEB).html
 
-$(TARGET).pdf: $(SOURCES) eisvogel.tex
-	$(PANDOC_EXEC) $(PANDOC_FLAGS) $(LATEX_FLAGS) -o $@ $(SOURCES)
+$(TARGET_PDF).pdf: $(SOURCES) $(SOURCES_PDF)
+	$(info Compilando $(TARGET_PDF).pdf con los archivos $(SOURCES) y metadata $(SOURCES_PDF))
+	$(PANDOC_EXEC) $(PANDOC_FLAGS) $(PANDOC_FLAGS_PDF) $(LATEX_FLAGS) -o $@ $(SOURCES) $(SOURCES_PDF)
 
-$(TARGET).tex: $(SOURCES) eisvogel.tex
-	$(PANDOC_EXEC) --standalone $(PANDOC_FLAGS) -o $@ $(SOURCES)
+$(TARGET_WEB).html: $(SOURCES) $(SOURCES_WEB)
+	$(info Compilando $(TARGET_WEB).html con los archivos $(SOURCES) y metadata $(SOURCES_WEB))
+	$(PANDOC_EXEC) $(PANDOC_FLAGS) $(PANDOC_FLAGS_WEB) $(LATEX_FLAGS) -o $@ $(SOURCES) $(SOURCES_WEB)
 
 clean:
 	rm -f *.aux *.log *.nav *.out *.snm *.toc *.vrb tags || true
 
 veryclean: clean
-	rm -f $(TARGET).pdf
+	rm -f $(TARGET_PDF).pdf $(TARGET_WEB).html
 
-view: $(TARGET).pdf
-	if [ "Darwin" = "$(shell uname)" ]; then open $(TARGET).pdf ; else xdg-open $(TARGET).pdf ; fi
+view: $(TARGET_PDF).pdf
+	if [ "Darwin" = "$(shell uname)" ]; then open $(TARGET_PDF).pdf ; else xdg-open $(TARGET_PDF).pdf ; fi
 
 .PHONY: all clean veryclean view
