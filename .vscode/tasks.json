@@ -5,7 +5,10 @@
             "label": "Compile debug RT in one weekend",
             "command": "cmake",
             "type": "shell",
-            "args": ["--build", "."],
+            "args": [
+                "--build",
+                "."
+            ],
             "options": {
                 "cwd": "${workspaceFolder}/RT_in_one_weekend/build/"
             }
@@ -14,10 +17,67 @@
             "label": "Compile release RT in one weekend",
             "command": "cmake",
             "type": "shell",
-            "args": ["--build", ".", "--config", "Release"],
+            "args": [
+                "--build",
+                ".",
+                "--config",
+                "Release"
+            ],
             "options": {
                 "cwd": "${workspaceFolder}/RT_in_one_weekend/build/"
             }
         },
+        {
+            "label": "Documentation (all)",
+            "command": "wsl.exe",
+            "type": "shell",
+            "args": [
+                "make",
+                "PANDOC_EXEC=pandoc.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/docs/"
+            },
+            "runOptions": {
+                "runOn": "folderOpen",
+                "instanceLimit": 1
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Documentation (web)",
+            "command": "wsl.exe",
+            "type": "shell",
+            "args": [
+                "make",
+                "PANDOC_EXEC=pandoc.exe",
+                "web"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/docs/"
+            },
+            "runOptions": {
+                "runOn": "folderOpen",
+                "instanceLimit": 1
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        }
+
     ]
 }

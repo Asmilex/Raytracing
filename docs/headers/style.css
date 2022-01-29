@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,400&family=JetBrains+Mono&family=Rubik&display=swap');
+
+:root {
+  --b-font-main: "Rubik", "Crimson Pro", sans-serif;
+  --b-font-mono: "Jetbrains Mono", monospace;
+
+  --b-bg-1: #fdfcfc;
+  --b-bg-2: #f7f7f7;
+}
+
+html {
+  font-size: 13pt;
+  font-feature-settings: "liga" 1;
+}
+
+h1, #toc-title {
+  font-family: "Fraunces", "Rubik", sans-serif;
+  font-weight: 600;
+  font-size: 3rem;
+  text-align: center;
+
+  margin-top: 5rem;
+  padding: 1rem;
+}
+
+h2 {
+  font-family: "Fraunces", "Rubik", sans-serif;
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+h3 {
+  font-family: "Fraunces", "Rubik", sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-family: "Fraunces", "Rubik", sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+p {
+  text-align: justify;
+  text-justify: auto;
+}
+
+.author {
+  text-align: center;
+  font-family: 'Fraunces', 'Rubik', sans-serif;
+  font-style: italic;
+  font-size: 2rem;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+code,
+pre {
+  color: #eeffff;
+  --b-bg-1: #131413;
+  --b-bg-2: #131413;
+}
+
+/* Prism.js */
+
+pre[class*="language-"],
+code[class*="language-"] {
+  color: #eeffff;
+  --b-bg-2: #131413;
+  text-shadow: none;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+pre[class*="language-"]::selection,
+code[class*="language-"]::selection,
+pre[class*="language-"]::mozselection,
+code[class*="language-"]::mozselection {
+  text-shadow: none;
+  background: #316aaf;
+}
+@media print {
+  pre[class*="language-"],
+  code[class*="language-"] {
+    text-shadow: none;
+  }
+}
+pre[class*="language-"] {
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+  background: #131413;
+}
+:not(pre) > code[class*="language-"] {
+  padding: 0.1em 0.3em;
+  border-radius: 0.3em;
+  color: #bf616a;
+  background: #fcfcfc;
+}
+/*********************************************************
+* Tokens
+*/
+.namespace {
+  opacity: 0.7;
+}
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #424242;
+}
+.token.punctuation {
+  color: #8d99ae;
+}
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #aea6d8;
+}
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #4ec18d;
+}
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #8d99ae;
+  background: #131413;
+}
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #8d99ae;
+}
+.token.function {
+  color: #bcbcbc;
+}
+.token.regex,
+.token.important,
+.token.variable {
+  color: #eeffff;
+}
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+.token.entity {
+  cursor: help;
+}
+/*********************************************************
+* Line highlighting
+*/
+pre[data-line] {
+  position: relative;
+}
+pre[class*="language-"] > code[class*="language-"] {
+  position: relative;
+  z-index: 1;
+}
+.line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: #f7ebc6;
+  box-shadow: inset 5px 0 0 #f7d87c;
+  z-index: 0;
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}

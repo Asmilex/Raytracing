@@ -1,4 +1,12 @@
 {
+    "triggerTaskOnSave.on": true,
+    "triggerTaskOnSave.tasks": {
+        "Documentation (web)": [
+            "docs/chapters/*.md",
+            "docs/headers/*.md"
+        ],
+    },
+
     "files.associations": {
         "algorithm": "cpp",
         "atomic": "cpp",
@@ -45,5 +53,14 @@
         "xstring": "cpp",
         "xtr1common": "cpp",
         "xutility": "cpp"
-    }
+    },
+    "spellright.language": [
+        "en",
+        "es"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ]
 }
