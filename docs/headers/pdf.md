@@ -1,6 +1,6 @@
 ---
 # lang: spanish     # Roto. (https://github.com/Wandmalfarbe/pandoc-latex-template/issues/278)
-
+date: \today
 book: true
 classoption: [oneside]
 #geometry: margin=1.5in
