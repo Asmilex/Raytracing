@@ -14,3 +14,7 @@ p {
     text-align: justify;
     text-justify: auto;
 }
+
+.author {
+    text-align: center;
+}
