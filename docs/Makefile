@@ -38,7 +38,7 @@ PANDOC_FLAGS =\
 	--top-level-division="chapter"
 
 PANDOC_FLAGS_PDF = --template ./headers/eisvogel.tex
-PANDOC_FLAGS_WEB = -s --toc
+PANDOC_FLAGS_WEB = -s --toc --mathjax
 
 LATEX_FLAGS = \
 
