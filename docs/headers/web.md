@@ -8,6 +8,6 @@ header-includes:
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script>
   ```
-body-includes:
+toc-title: Tabla de contenidos
 
 ---
