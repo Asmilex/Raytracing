@@ -1,7 +1,7 @@
 {
     "triggerTaskOnSave.on": true,
     "triggerTaskOnSave.tasks": {
-        "Documentation": [
+        "Documentation (web)": [
             "docs/chapters/*.md",
             "docs/headers/*.md"
         ],

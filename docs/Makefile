@@ -57,15 +57,17 @@ else
     LATEX_FLAGS += --latex-engine=$(PDF_ENGINE)
 endif
 
-all: $(TARGET_PDF).pdf $(TARGET_WEB).html
+all: pdf web
 
-$(TARGET_PDF).pdf: $(SOURCES) $(SOURCES_PDF)
-	$(info Compilando $(TARGET_PDF).pdf con los archivos $(SOURCES) y metadata $(SOURCES_PDF))
-	$(PANDOC_EXEC) $(PANDOC_FLAGS) $(PANDOC_FLAGS_PDF) $(LATEX_FLAGS) -o $@ $(SOURCES) $(SOURCES_PDF)
+pdf: $(SOURCES) $(SOURCES_PDF)
+	$(info Compilando $(TARGET_PDF).pdf)
+	$(PANDOC_EXEC) $(PANDOC_FLAGS) $(PANDOC_FLAGS_PDF) $(LATEX_FLAGS) -o $(TARGET_PDF).pdf $(SOURCES) $(SOURCES_PDF)
+	$(info Terminado.)
 
-$(TARGET_WEB).html: $(SOURCES) $(SOURCES_WEB)
-	$(info Compilando $(TARGET_WEB).html con los archivos $(SOURCES) y metadata $(SOURCES_WEB))
-	$(PANDOC_EXEC) $(PANDOC_FLAGS) $(PANDOC_FLAGS_WEB) $(LATEX_FLAGS) -o $@ $(SOURCES) $(SOURCES_WEB)
+web: $(SOURCES) $(SOURCES_WEB)
+	$(info Compilando $(TARGET_WEB).html...)
+	$(PANDOC_EXEC) $(PANDOC_FLAGS) $(PANDOC_FLAGS_WEB) $(LATEX_FLAGS) -o $(TARGET_WEB).html $(SOURCES) $(SOURCES_WEB)
+	$(info Terminado.)
 
 clean:
 	rm -f *.aux *.log *.nav *.out *.snm *.toc *.vrb tags || true
