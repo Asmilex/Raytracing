@@ -38,7 +38,11 @@ PANDOC_FLAGS =\
 	--top-level-division="chapter"
 
 PANDOC_FLAGS_PDF = --template ./headers/eisvogel.tex
-PANDOC_FLAGS_WEB = -s --toc --mathjax
+PANDOC_FLAGS_WEB =\
+	-s \
+	--toc \
+	--mathjax \
+	--lua-filter ./headers/standard-code.lua
 
 LATEX_FLAGS = \
 
