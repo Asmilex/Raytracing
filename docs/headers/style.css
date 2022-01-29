@@ -1,13 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=JetBrains+Mono&family=Rubik&display=swap');
+
+
 :root {
-    --b-font-main: 'Crimson Pro', sans-serif;
-    --b-font-mono: 'JuliaMono', monospace;
+    --b-font-main: 'Rubik', 'Crimson Pro', sans-serif;
+    --b-font-mono: 'Jetbrains Mono', monospace;
 
     --b-bg-1: #fdfcfc;
     --b-bg-2: #f7f7f7
 }
 
 html {
-    font-size: 16pt;
+    font-size: 13pt;
+    font-feature-settings: 'liga' 1;
+}
+
+
+h1 {
+    font-family: 'Fraunces', 'Rubik', sans-serif;
+    font-weight: 600;
+    font-size: 3rem;
+    text-align: center;
+
+}
+
+h2, h3 {
+    font-family: 'Fraunces', 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 2rem;
 }
 
 p {
@@ -17,4 +36,9 @@ p {
 
 .author {
     text-align: center;
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: bold;
 }
