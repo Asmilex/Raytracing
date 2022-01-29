@@ -23,11 +23,22 @@ h1, #toc-title {
   padding: 1rem;
 }
 
-h2,
-h3 {
+h2 {
   font-family: "Fraunces", "Rubik", sans-serif;
   font-weight: 500;
   font-size: 2rem;
+}
+
+h3 {
+  font-family: "Fraunces", "Rubik", sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-family: "Fraunces", "Rubik", sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
 }
 
 p {
