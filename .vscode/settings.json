@@ -3,7 +3,9 @@
     "triggerTaskOnSave.tasks": {
         "Documentation (web)": [
             "docs/chapters/*.md",
-            "docs/headers/*.md"
+            "docs/headers/*.md",
+            "docs/Makefile",
+            "docs/headers/style.css"
         ],
     },
 

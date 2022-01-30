@@ -42,7 +42,7 @@ PANDOC_FLAGS_WEB =\
 	-s \
 	--toc \
 	--mathjax \
-	--lua-filter ./headers/standard-code.lua
+	--lua-filter ./headers/standard-code.lua \
 
 LATEX_FLAGS = \
 
