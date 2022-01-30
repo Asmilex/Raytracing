@@ -65,6 +65,13 @@ pre {
   --b-bg-2: #131413;
 }
 
+mjx-container {
+  display: inline-grid;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
 /* Prism.js */
 
 pre[class*="language-"],
