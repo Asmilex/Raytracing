@@ -35,7 +35,9 @@ SOURCES_PDF = ./headers/pdf.md
 PANDOC_FLAGS =\
 	--from markdown \
 	--listings \
-	--top-level-division="chapter"
+	--top-level-division="chapter" \
+	--bibliography ./chapters/bibliography.bib \
+	--citeproc
 
 PANDOC_FLAGS_PDF = --template ./headers/eisvogel.tex
 PANDOC_FLAGS_WEB =\

@@ -1,8 +1,6 @@
 ---
-title: Pedazo de título del TFG
-author: Andrés Millán Muñoz (<andresmm@outlook.com>)
-keywords: [TFG]
-
-bibliography: bibliography.bib
+title: Raytracing (WIP name)
+author: Andrés Millán Muñoz
+keywords: [TFG, Raytracing, Ray tracing, Monte Carlo, DGIIM]
 link-citations: true
 ---
