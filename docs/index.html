@@ -146,25 +146,6 @@ Carlo, DGIIM" />
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
-    div.csl-bib-body { }
-    div.csl-entry {
-      clear: both;
-    }
-    .hanging div.csl-entry {
-      margin-left:2em;
-      text-indent:-2em;
-    }
-    div.csl-left-margin {
-      min-width:2em;
-      float:left;
-    }
-    div.csl-right-inline {
-      margin-left:2em;
-      padding-left:1em;
-    }
-    div.csl-indent {
-      margin-left: 2em;
-    }
   </style>
   <link rel="stylesheet" href="https://unpkg.com/bamboo.css/dist/light.min.css">
   <link rel="stylesheet" href="./headers/style.css">
@@ -185,434 +166,59 @@ Carlo, DGIIM" />
 <nav id="TOC" role="doc-toc">
 <h2 id="toc-title">Tabla de contenidos</h2>
 <ul>
-<li><a href="#overview">Overview</a>
-<ul>
-<li><a href="#an-h2-header">An h2 header</a>
-<ul>
-<li><a href="#an-h3-header">An h3 header</a></li>
-</ul></li>
-<li><a href="#aut-nunc-furori-ad-latarumque-philomela">Aut nunc furori
-ad latarumque Philomela</a></li>
-<li><a href="#gaudet-silenus-iuvenis">Gaudet Silenus iuvenis</a></li>
-<li><a href="#dies-tunc-in-enim">Dies tunc in enim</a></li>
-<li><a href="#et-dextra-utque-per-lenius-portus-eburnae">Et dextra utque
-per lenius portus eburnae</a></li>
-</ul></li>
-<li><a href="#vagata-eiectatamque-sidera-satis-reducet">Vagata
-eiectatamque sidera satis reducet</a>
-<ul>
-<li><a href="#talem-ex-aliquo-ingemuit">Talem ex aliquo
-ingemuit</a></li>
-<li><a
-href="#arachnes-deus-tum-penetralia-tempore-aurea-populante">Arachnes
-deus tum penetralia tempore aurea populante</a></li>
-</ul></li>
-<li><a href="#images-and-tables">Images and Tables</a>
-<ul>
-<li><a href="#latex-table-with-caption">LaTeX Table with
-Caption</a></li>
-<li><a href="#image-with-caption">Image with Caption</a></li>
-<li><a href="#markdown-table-without-caption">Markdown Table without
-Caption</a></li>
-</ul></li>
+<li><a href="#dedicatoria">Dedicatoria</a></li>
+<li><a href="#introducción">Introducción</a></li>
+<li><a href="#notación">Notación</a></li>
 </ul>
 </nav>
+<h1 id="dedicatoria">Dedicatoria</h1>
 <p><em>Aquí es donde me pongo ñoño</em></p>
-<h1 id="overview">Overview</h1>
-<p>Ejemplo! <span class="citation" data-cites="Shirley2020RTW1">(<a
-href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
-2020</a>)</span> You can make chapters by using <code>h1</code> Markdown
-headings.</p>
-<p>Paragraphs are separated by a blank line.</p>
-<p>2nd paragraph. <em>Italic</em>, <strong>bold</strong>, and
-<code>monospace</code>. Itemized lists look like:</p>
-<ul>
-<li>this one</li>
-<li>that one</li>
-<li>the other one</li>
-</ul>
-<p>Note that — not considering the asterisk — the actual text content
-starts at 4-columns in.</p>
+<p>¡Parece que has llegado un poco pronto! Si lo has hecho
+voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado
+en verano de 2022.</p>
+<p>Mientras tanto, actualizaré poco a poco el contenido. Si quieres ir
+comprobando los progresos, puedes visitar <a
+href="github.com/Asmilex/Raytracing">Asmilex/Raytracing</a> en Github
+para ver el estado del desarrollo.</p>
+<h1 id="introducción">Introducción</h1>
+<p>Cosas de las que debería hablar aquí:</p>
+<ol type="1">
+<li>Por qué existe este TFG.</li>
+</ol>
 <blockquote>
-<p>Block quotes are written like so.</p>
-<p>They can span multiple paragraphs, if you like.</p>
+<p><em>Porque acabo la carrera, duh</em></p>
 </blockquote>
-<p>Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., “it’s all
-in chapters 12–14”). Three dots … will be converted to an ellipsis.
-Unicode is supported. ☺</p>
-<h2 id="an-h2-header">An h2 header</h2>
-<p>Here’s a numbered list:</p>
-<ol type="1">
-<li>first item</li>
-<li>second item</li>
-<li>third item</li>
+<ol start="2" type="1">
+<li>Qué es un ray tracer.</li>
+<li>Real time ray tracing: ha llegado el momento.</li>
+<li>Cómo desarrollaremos este documento.</li>
 </ol>
-<p>Note again how the actual text starts at 4 columns in (4 characters
-from the left side). Here’s a code sample:</p>
-<pre><code># Let me re-iterate ...
-for i in 1 .. 10 { do-something(i) }</code></pre>
-<p>As you probably guessed, indented 4 spaces. By the way, instead of
-indenting the block, you can use delimited blocks, if you like:</p>
-<pre><code>define foobar() {
-    print &quot;Welcome to flavor country!&quot;;
-}</code></pre>
-<p>(which makes copying &amp; pasting easier). You can optionally mark
-the delimited block for Pandoc to syntax highlight it:</p>
-<pre><code class="language-python">import time
-# Quick, count to ten!
-for i in range(10):
-    # (but not *too* quick)
-    time.sleep(0.5)
-    print(i)</code></pre>
-<h3 id="an-h3-header">An h3 header</h3>
-<p>Now a nested list:</p>
-<ol type="1">
-<li><p>First, get these ingredients:</p>
-<ul>
-<li>carrots</li>
-<li>celery</li>
-<li>lentils</li>
-</ul></li>
-<li><p>Boil some water.</p></li>
-<li><p>Dump everything in the pot and follow this algorithm:</p>
-<pre><code>find wooden spoon
-uncover pot
-stir
-cover pot
-balance wooden spoon precariously on pot handle
-wait 10 minutes
-goto first step (or shut off burner when done)</code></pre>
-<p>Do not bump wooden spoon or it will fall.</p></li>
-</ol>
-<p>Notice again how text always lines up on 4-space indents (including
-that last line which continues item 3 above).</p>
-<p>Here’s a link to <a href="http://foo.bar">a website</a>, to a <a
-href="local-doc.html">local doc</a>, and to a <a
-href="#an-h2-header">section heading in the current doc</a>. Here’s a
-footnote <a href="#fn1" class="footnote-ref" id="fnref1"
-role="doc-noteref"><sup>1</sup></a>.</p>
-<p>Tables can look like this:</p>
-<table>
-<caption>Shoes sizes, materials, and colors.</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Name</th>
-<th style="text-align: right;">Size</th>
-<th style="text-align: left;">Material</th>
-<th style="text-align: left;">Color</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">All Business</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: left;">leather</td>
-<td style="text-align: left;">brown</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Roundabout</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">hemp canvas</td>
-<td style="text-align: left;">natural</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Cinderella</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: left;">glass</td>
-<td style="text-align: left;">transparent</td>
-</tr>
-</tbody>
-</table>
-<p>(The above is the caption for the table.) Pandoc also supports
-multi-line tables:</p>
-<table style="width:47%;">
-<colgroup>
-<col style="width: 13%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Keyword</th>
-<th style="text-align: left;">Text</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">red</td>
-<td style="text-align: left;">Sunsets, apples, and other red or reddish
-things.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">green</td>
-<td style="text-align: left;">Leaves, grass, frogs and other things it’s
-not easy being.</td>
-</tr>
-</tbody>
-</table>
-<p>A horizontal rule follows.</p>
-<hr />
-<p>Here’s a definition list:</p>
-<dl>
-<dt>apples</dt>
-<dd>
-Good for making applesauce.
-</dd>
-<dt>oranges</dt>
-<dd>
-Citrus!
-</dd>
-<dt>tomatoes</dt>
-<dd>
-There’s no “e” in tomatoe.
-</dd>
-</dl>
-<p>Again, text is indented 4 spaces. (Put a blank line between each term
-and its definition to spread things out more.)</p>
-<p>Here’s a “line block” (note how whitespace is honored):</p>
-<div class="line-block">Line one<br />
-  Line too<br />
-Line tree</div>
-<p>and images can be specified like so:</p>
-<figure>
-<img src="example-image.jpg" title="An exemplary image"
-alt="example image" />
-<figcaption aria-hidden="true">example image</figcaption>
-</figure>
-<p>Inline math equation: <span class="math inline">\(\omega = d\phi /
-dt\)</span>. Display math should get its own line like so:</p>
-<p><span class="math display">\[I = \int \rho R^{2} dV\]</span></p>
-<p>And note that you can backslash-escape any punctuation characters
-which you wish to be displayed literally, ex.: `foo`, *bar*, etc. #
-Crinis mixtaque factisque ille</p>
-<h2 id="aut-nunc-furori-ad-latarumque-philomela">Aut nunc furori ad
-latarumque Philomela</h2>
-<p>Lorem markdownum includite volenti monticolae videre vocem hac
-sparsit puta gelidis vestros egressus sex. Undis eris per auguris armis.
-Est saevior pater. Lorem ipsum dolor sit amet, consetetur sadipscing
-elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet.</p>
-<h2 id="gaudet-silenus-iuvenis">Gaudet Silenus iuvenis</h2>
-<p>Mulciber denique faces ingratus, in umeros umeri cum, iram ira custos
-non. Pariterque admissa nubes, in ait ecce setae summis sacrorum me
-gaudete tellus. Ille tu perire ille, artificis caede.</p>
-<pre><code class="language-scala">def sumLeaves(t: Tree): Int = t match {
-    case Branch(l, r) =&gt; sumLeaves(l) + sumLeaves(r)
-    case Leaf(x) =&gt; x
-}</code></pre>
-<p>Cephea rector minorque, quem corpora, Argus. Superi hoc tenuavit
-timebant ossibus totque non serpere animo corpore superas gelidae,
-comitate deus Iunonigenaeque pectora.</p>
-<ul>
-<li>Tuis Cereris armiferae fugiunt suus derepta vel</li>
-<li>Veniam mea cum sollertior arbore flore</li>
-<li>Ceae saecula</li>
-<li>Tamen est</li>
-</ul>
-<h2 id="dies-tunc-in-enim">Dies tunc in enim</h2>
-<p>Gerunt urimur violaeque agricolis iussa locis puppis simul cognita,
-vertentia Romana obprobrium pignora superem est certe nondum suffuderat.
-Nox Pasiphaeia domo: <strong>abiit</strong> catenas utro crimine gramina
-ingemuere mixtae. Quem trabibus etiamnum orbe addita, eiaculatur videri
-cervo artus. Nutritur cupidine silentia Maeoniam aere enim gemuit
-adgreditur, telasque <em>annis</em> nos cum Arctonque ingens lateri cum
-iaculoque ferus.</p>
-<h2 id="et-dextra-utque-per-lenius-portus-eburnae">Et dextra utque per
-lenius portus eburnae</h2>
-<p>Cui vittas aris ibi putat dicere; factum sedere antiqua? Cognita
-Lyncides iuste insuetum lacerum in sinamus arces; aves aevum spatiumque
-de utrumque moveret in? Tertia ordine, Epidaurius, <em>has sed et</em>
-et novat: quod superare concubitusque retia quoque, ne totiens.</p>
-<p>Est paenitet Cerealia sparsit; carne insignia in maris; tibi Nec, que
-Peleu meum buxus. Propoetides formae magna auro ad gerat cohibentur
-facienda partem at nunc, foret? <strong>Ad stirpe</strong>! Ut latius
-pararet: vestibus cumque pedibus ficta prior summas cancer ipsa Marte
-Buten es terruit. Opifex dixit oculos Oete quoque, quot silvarum abrepti
-nutrix concita obsidis consistere fibula saxum, Antigonen minabitur
-tota.</p>
-<h1 id="vagata-eiectatamque-sidera-satis-reducet">Vagata eiectatamque
-sidera satis reducet</h1>
-<h2 id="talem-ex-aliquo-ingemuit">Talem ex aliquo ingemuit</h2>
-<p>Lorem markdownum solus miserabile sitae. Tantum Syron limenque
-cupidine: litore modo coniuge: in huc, illo crimen novena, vocisque
-gratia, quae. Sua manusque patris nec meritorum pedibus hominis virgine,
-ruere tamen virtus aliter. Tunc ego. Solitaque remittant fagus omnia
-eat.</p>
-<p><span class="math display">\[r_d^i(t+1) = \min\{r_s,\max\{0, r_d^i(t)
-+ \beta(n_t - \lvert N_i(t)\rvert)\}\}\]</span></p>
-<p>Obstitit silentia et novi non, huic metitur, coronantur lucos.
-Bracchia aura; donis quod volucris illi futurae, ut <em>venturorumque
-tellus</em> arma: saxumque. fdlsfksdjkfsjdf ## Vera tum est putes
-adspicit noxque</p>
-<p>Hora et vidit figere tangi! Omni bis <em>prior nunc</em> capilli,
-pulsat tuam Pallante, <em>suis</em>. Solae decore ipso armorum coitusque
-paro audita <em>viveret tibi</em> apparuit flammasque lapides. Cursu
-anas usus eundo anticipata, intabescere quae concita fallit. Dea corpore
-fabrae: nec Neptunus membris, falsa murice; fac Marte quam in.</p>
-<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-aliquyam erat, sed diam voluptua. At vero eos et accusam et.</p>
-<h2 id="arachnes-deus-tum-penetralia-tempore-aurea-populante">Arachnes
-deus tum penetralia tempore aurea populante</h2>
-<p>Lentae spissisque <em>carne</em>. Fixit inquit cautes et iugis novus
-sim quisquam nisi haesurum vel deorum fetibus virgo.</p>
-<p>Sub nautae, tegebat clamat. Credas Parrhasio. Commemorat nescio
-liceatque excipit! Uris clipeo ego visa amplexas meos ibitis condidit
-Taenaria, si. Tua ora tempus patrio revulsos, tellus curru facies, Gange
-gemit agitata!</p>
-<p>Ruinam ipsaque sibi ovis Teucer Iovis tibi; erat versus neque victa
-attonitus doque, quod! Dixit carmina, eo, per capillis quid lina, qua,
-ille. Siqua caelestum flammas ferre super et saevissime inmisit quoque
-suis sic aspergine vis praerupit. Et puellae summa eventu. Placeat ut
-medio <em>plectrumque inferni</em> Talia; pertimui opem.</p>
-<h1 id="images-and-tables">Images and Tables</h1>
-<h2 id="latex-table-with-caption">LaTeX Table with Caption</h2>
-<p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
-kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
-<p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
-kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
-<h2 id="image-with-caption">Image with Caption</h2>
-<figure>
-<img src="image.png"
-alt="Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat." />
-<figcaption aria-hidden="true">Nam liber tempor cum soluta nobis
-eleifend option congue nihil imperdiet doming id quod mazim placerat
-facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing
-elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-aliquam erat volutpat.</figcaption>
-</figure>
-<h2 id="markdown-table-without-caption">Markdown Table without
-Caption</h2>
-<p>Lorem markdownum Letoia, et alios: figurae flectentem annis aliquid
-Peneosque abesse, obstat gravitate. Obscura atque coniuge, per de
-coniunx, sibi medias commentaque virgine anima tamen comitemque petis,
-sed. In Amphion vestros hamos ire arceor mandere spicula, in licet
-aliquando.</p>
-<table>
-<colgroup>
-<col style="width: 12%" />
-<col style="width: 12%" />
-<col style="width: 12%" />
-<col style="width: 12%" />
-<col style="width: 12%" />
-<col style="width: 12%" />
-<col style="width: 12%" />
-<col style="width: 12%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Test Nr.</th>
-<th>Position</th>
-<th>Radius</th>
-<th>Rot</th>
-<th>Grün</th>
-<th>Blau</th>
-<th>beste Fitness</th>
-<th>Abweichung</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>20 %</td>
-<td>20 %</td>
-<td>20 %</td>
-<td>20 %</td>
-<td>20 %</td>
-<td>7,5219</td>
-<td>0,9115</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>0 %</td>
-<td>25 %</td>
-<td>25 %</td>
-<td>25 %</td>
-<td>25 %</td>
-<td>8,0566</td>
-<td>1,4462</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>0 %</td>
-<td>0 %</td>
-<td>33 %</td>
-<td>33 %</td>
-<td>33 %</td>
-<td>8,7402</td>
-<td>2,1298</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>50 %</td>
-<td>20 %</td>
-<td>10 %</td>
-<td>10 %</td>
-<td>10 %</td>
-<td>6,6104</td>
-<td>0,0000</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>70 %</td>
-<td>0 %</td>
-<td>10 %</td>
-<td>10 %</td>
-<td>10 %</td>
-<td>7,0696</td>
-<td>0,4592</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>20 %</td>
-<td>50 %</td>
-<td>10 %</td>
-<td>10 %</td>
-<td>10 %</td>
-<td>7,0034</td>
-<td>0,3930</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>40 %</td>
-<td>15 %</td>
-<td>15 %</td>
-<td>15 %</td>
-<td>15 %</td>
-<td>6,9122</td>
-<td>0,3018</td>
-</tr>
-</tbody>
-</table>
-<p>Porrigitur et Pallas nuper longusque cratere habuisse sepulcro
-pectore fertur. Laudat ille auditi; vertitur iura tum nepotis causa;
-motus. Diva virtus! Acrota destruitis vos iubet quo et classis excessere
-Scyrumve spiro subitusque mente Pirithoi abstulit, lapides.</p>
-<div id="refs" class="references csl-bib-body hanging-indent"
-role="doc-bibliography">
-<div id="ref-Shirley2020RTW1" class="csl-entry" role="doc-biblioentry">
-Shirley, Peter. 2020. <em>Ray Tracing in One Weekend</em>. <a
-href="https://raytracing.github.io/books/RayTracingInOneWeekend.html">https://raytracing.github.io/books/RayTracingInOneWeekend.html</a>.
-</div>
-</div>
-<section class="footnotes footnotes-end-of-document"
-role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p>Some footnote text.<a href="#fnref1"
-class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+<h1 id="notación">Notación</h1>
+<p>Antes de comenzar, asentemos la notación que utilizaremos.</p>
+<p>Para denotar a los <strong>puntos</strong>, usaremos letras
+mayúsculas como <span class="math inline">\(P\)</span> o <span
+class="math inline">\(Q\)</span>. Los <strong>escalares</strong> vendrán
+dados por letras minúsculas, como <span class="math inline">\(a\)</span>
+o <span class="math inline">\(b\)</span>; mientras que los
+<strong>vectores</strong> irán en letra minúscula negrita (p.e.: <span
+class="math inline">\(\bf{v}\)</span> o <span
+class="math inline">\(\bf{w}\)</span>). Además, serán vectores columnas.
+Aquellos normalizados los representaremos con un gorrito: <span
+class="math inline">\(\bf{\hat{v}} =
+\frac{\bf{v}}{\Vert\bf{v}\Vert}\)</span>. Las <strong>matrices</strong>,
+por otra parte, vendrán dadas por letra mayúscula en negrita, como <span
+class="math inline">\(\bf{M}\)</span>. También son columna.</p>
+<p>El producto escalar vendrá dado por <span
+class="math inline">\(\bf{v} \cdot \bf{w}\)</span>, y el vectorial por
+<span class="math inline">\(\bf{v} \times \bf{w}\)</span>.</p>
+<p>La notación usada para las <strong>variables aleatorias</strong> será
+la habitual: mayúsculas como <span class="math inline">\(X\)</span>. Su
+valor esperado vendrá dado por <span
+class="math inline">\(E\left[X\right]\)</span> y la varianza por <span
+class="math inline">\(V\left[X\right]\)</span>.</p>
+<blockquote>
+<p>TODO: notación para las funciones de densidad y distribución. TODO:
+acceso a componentes de un vector/matriz?</p>
+</blockquote>
 </body>
 </html>
