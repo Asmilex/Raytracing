@@ -7,7 +7,7 @@ on:
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
-    container: pandoc/latex
+    container: asmilex/raytracing
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
