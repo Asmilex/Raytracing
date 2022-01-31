@@ -8,6 +8,8 @@ jobs:
   check-files:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
     name: Check if .md have been updated
+    outputs:
+      updated: ${{ steps.changed-files.outputs.updated }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -22,8 +24,7 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file"
             if [[ "$file" == *docs/chapters/*md* ]]; then
-              echo "ME HE ENCONTRADO EL ARCHIVO DE MIERDA"
-              echo '::set-output name=modified-files::true'
+              echo '::set-output name=updated::true'
             fi
           done
 
@@ -32,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     container: asmilex/raytracing
     needs: check-files
-    if: ${{ needs.check-files.outputs.modified-files }}
+    if: ${{ needs.check-files.outputs.updated }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
