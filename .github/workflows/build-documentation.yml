@@ -6,10 +6,12 @@ on:
 
 jobs:
   check-files:
-    runs-on: ubuntu-latest  # windows-latest | macos-latest
     name: Check if .md have been updated
+    runs-on: ubuntu-latest
+
     outputs:
       updated: ${{ steps.out.outputs.updated }}
+
     steps:
       - uses: actions/checkout@v2
         with:
@@ -24,17 +26,24 @@ jobs:
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file"
-            if [[ "$file" == *docs/chapters/*md* ]]; then
+            if     [[ "$file" == *docs/chapters/*md* ]]
+                || [[ "$file" == *docs/chapters/*.bib* ]]
+                || [[ "$file" == *docs/Makefile* ]]
+                || [[ "$file" == *docs/headers/* ]]; then
               echo '::set-output name=updated::true'
             fi
           done
 
 
   build-web:
-    runs-on: ubuntu-latest
-    container: asmilex/raytracing
+    name: Construir la web
+
     needs: check-files
     if: ${{ needs.check-files.outputs.updated }}
+
+    runs-on: ubuntu-latest
+    container: asmilex/raytracing
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
