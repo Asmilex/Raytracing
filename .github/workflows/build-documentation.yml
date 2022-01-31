@@ -16,3 +16,15 @@ jobs:
         run: |
           cd docs
           make PANDOC_EXEC=pandoc web
+
+      - name: Commit index.html
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git add index.html
+          git commit -m "[:notebook:] Actualizando Github Pages"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PUSH_TOKEN }}
+          branch: ${{ github.ref }}
