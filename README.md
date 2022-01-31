@@ -1,17 +1,74 @@
-# TFG_RT_VkRay
-Implementación del ray-tracer de Peter Shirley en VkRay para el Trabajo de Fin de Grado de mi doble grado en Ingeniería Informática y Matemáticas en la UGR.
+<h1 style="text-align: center">Un TFG sobre Raytracing 🔦 </h1>
 
+<div style="text-align: center">
+  <a href="https://asmilex.github.io/Raytracing">🏮 asmilex.github.io/Raytracing 🏮 </a>
+</div>
+
+<hr>
+
+<p align="center" dir="auto">
+  <a href="#bulb-y-esto-de-qu%C3%A9-va-exactamente">Sobre el proyecto</a> •
+  <a href="#gear-instalaci%C3%B3n">Instalación</a> •
+  <a href="#evergreen_tree-estructura-del-repositorio">Estructura</a> •
+  <a href="#handshake-contribuyendo">Contribuyendo</a> •
+  <a href="#link-enlaces-de-inter%C3%A9s">Enlaces de interés</a>
+</p>
+
+## :bulb: Y esto, de qué va exactamente?
+
+Este repositorio contiene una implementación del ray tracer de Peter Shirley en VkRay, así como la documentación asociada al desarrollo.
+
+Ah, también es el trabajo de fin de grado de mi doble grado en Ingeniería Informática y Matemáticas 🎓.
+
+Actualmente se encuentra en una fase temprana de desarrollo. Con un poco de suerte, ¡debería estar listo para verano de 2022!
+
+## :gear: Instalación
+
+Lo siento, ¡todavía no está listo! Vuelve en el futuro.
+
+## :evergreen_tree: Estructura del repositorio
+
+A fecha 2022-01-31,  el repositorio está compuesto por los siguientes directorios:
+
+- [`./docs`](./docs): Documentación del proyecto. Toda la documentación está basada en markdown. Para convertirla en PDF y desplegarla en la web, se utiliza Pandoc. Tienes más información en el [README](./docs/README.md) correspondiente.
+- [`./RT_in_one_weekend`](./RT_in_one_weekend): Código del ray tracer de la [serie de libros de Shirley](https://raytracing.github.io/) original en CPU.
+- [`./application`](./application): El futuro ray tracer en GPU se ubicará aquí. Ahora mismo está en pañales.
 
 ![Visualización de la codebase](./diagram.svg)
 
-## Enlaces de interés
+
+## :handshake: Contribuyendo
+
+### :open_book: Github Projects
+
+Puedes acceder a [Github Projects](https://github.com/users/Asmilex/projects/2) para ver la gestión de las tareas. Resulta especialmente útil para saber en lo que se está trabajando actualmente.
+
+### :eyeglasses: Guía de estilo
+
+Cada commit debería ir identificado con un emoji antes del mensaje, así como terminar en un issue enlazado. Por ejemplo, `[📓] Descripción de función de densidad (#71)`
+
+Estos son los iconos usados, así como su significado:
+
+| Tipo de commit           |   Emoji    | Cómo se escribe rápidamente |
+|:-------------------------|:----------:|:----------------------------|
+| Documentación            | :notebook: | `:notebook:`                |
+| Archivo de configuración |  :wrench:  | `:wrench:`                  |
+| Integración continua     |     👷     | `:construction_worker:`     |
+| Bugfix                   |   :bug:    | `:bug:`                     |
+
+Los issues también deberían seguir el mismo estilo. Tienes un ejemplo [aquí](https://github.com/Asmilex/Raytracing/issues/4)
+
+
+## :link: Enlaces de interés
 
 En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se irá actualizando conforme avance.
+
+*(Y, seguramente, desaparezca en el futuro)*
 
 - [Libro de Shirley](https://raytracing.github.io/)
 - [Tutorial de Nvidia de VkRay](https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/)
 - [Arquitectura de Turing](https://developer.nvidia.com/blog/nvidia-turing-architecture-in-depth/)
-- [Nvidia designworks RT tutorial](https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR)
+- [Nvidia design works RT tutorial](https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR)
 - [Libro de Shirley implementado en NvVkRay](https://github.com/GPSnoopy/RayTracingInVulkan)
 - [Métodos de Monte Carlo](http://statweb.stanford.edu/~owen/mc/)
 - [Physically Based Rendering](http://www.pbr-book.org/)
@@ -21,46 +78,8 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 - [Vulkan con CMake](https://vulkan.lunarg.com/doc/view/1.1.108.0/windows/getting_started.html)
 - [Explicación interesante sobre GI](https://www.youtube.com/watch?v=yEkryaaAsBU)
 - [Ray Tracing Gems II](https://developer.nvidia.com/ray-tracing-gems-ii)
-
-## Temas de interés e investigación
-
-- Ruido Perlin.
-- Estructura Bounding Volume Hierarchy.
-
-## Log
-
-### 2021/08/21.
-
-- RT: The rest of your life completado.
-- La aplicación ha sido pausada. Esperaré a que se reanude el curso.
-- Debemos plantear si merece la pena usar algo de la implementación de Shirley.
-
-### 2021/07/16
-- Inicio desarrollo de RT in one weekend.
-
-### 2021/07/12
-
-- Intento finalizar el cmake
-  - Hace falta compilar con `cmake -A x64` para las builds de 64, o usar desde la línea de comandos `cmake --build .`. (https://vulkan.lunarg.com/doc/view/1.1.108.0/windows/getting_started.html)
-- Día poco productivo; me estanco con la creación del proyecto de Vulkan.
-
-### 2021/07/11
-
-- Implemento proyecto basándome en Cmake y vcpkg:
-  - Lista de recursos:
-    - [Tutorial pequeño](https://www.40tude.fr/how-to-use-vcpkg-with-vscode-and-cmake/)
-    - [Sistema automatizado](https://cpptruths.blogspot.com/2019/03/bootstrapping-vcpkg-based-cmake-project.html)
-    - [Blog 101](https://gamefromscratch.com/vcpkg-cpp-easy-mode-step-by-step-tutorial/)
-    - [Otro blog 101](https://sam.elborai.me/blog/vscode-cpp-dev-environment-2020)
-  - Requisitos:
-    - Microsoft compiler CL (build tools) (https://visualstudio.microsoft.com/es/downloads/)
-    - Git
-    - Cmake (https://cmake.org/)
-  - Creo proyecto que automatiza la descarga de vcpkg, basándome en el tutorial del sistema automatizado.
-
-FIXME terminar documentación
-- Entorno de desarrollo basándose en el tutorial de Vulkan
-  - VS2019 https://visualstudio.microsoft.com/es/
-  - Vulkan SDK https://vulkan.lunarg.com/ instaladas en C:\V
-  - GLFW https://www.glfw.org/download.html binarios precompilados, ubicados en User\Documentos\Visual Studio 2019\Libraries\GLFW
-  - GLM https://github.com/g-truc/glm ubicado en User\Documentos\Visual Studio 2019\Libraries\GLM
+- Sobre Cmake y vcpkg:
+  - [Tutorial pequeño](https://www.40tude.fr/how-to-use-vcpkg-with-vscode-and-cmake/)
+  - [Sistema automatizado](https://cpptruths.blogspot.com/2019/03/bootstrapping-vcpkg-based-cmake-project.html)
+  - [Blog 101](https://gamefromscratch.com/vcpkg-cpp-easy-mode-step-by-step-tutorial/)
+  - [Otro blog 101](https://sam.elborai.me/blog/vscode-cpp-dev-environment-2020)
