@@ -15,7 +15,6 @@ jobs:
       - name: Compile web documentation
         run: |
           cd docs
-          find . -wholename './chapters/*.md' | sort -V -k1 | cut -d$'\t' -f2 | tr '\n' '\0' | xargs -r0 -I {} echo 'Found: "{}"'
           make PANDOC_EXEC=pandoc web
 
       - name: Commit and push index.html

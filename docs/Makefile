@@ -26,7 +26,7 @@
 TARGET_PDF = TFG
 TARGET_WEB = index
 
-SOURCES = $(shell find . -wholename './chapters/*.md' | sort -z | xargs -r0 echo)
+SOURCES = $(shell find . -wholename './chapters/*.md' | sort | awk -F'\0' '{print $2}')
 SOURCES += ./headers/meta.md
 
 SOURCES_WEB = ./headers/web.md
