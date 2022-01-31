@@ -17,15 +17,11 @@ jobs:
           cd docs
           make PANDOC_EXEC=pandoc web
 
-      - name: Commit index.html
-        run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "noreply@example.com"
+      - uses: actions/checkout@v2
+      - name: Commit and push index.html
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add docs/index.html
-          git commit -m "[:notebook:] Actualizando Github Pages"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.PUSH_TOKEN }}
-          branch: ${{ github.ref }}
+          git commit -m "Actualizado github-pages"
+          git push
