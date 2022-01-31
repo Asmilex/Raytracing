@@ -19,7 +19,7 @@ jobs:
 
       - name: Set output
         if: |
-          contains(steps.changed-files.outputs.modified-files, 'docs/*.md')
+          contains(steps.changed-files.outputs.modified-files, 'docs/chapters/*.md')
         run: echo '::set-output name=updated::true'
 
   build-web:
