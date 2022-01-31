@@ -7,7 +7,7 @@ on:
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
-    container: pandoc/core
+    container: pandoc/latex
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
