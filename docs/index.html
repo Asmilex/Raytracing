@@ -33,6 +33,9 @@ Carlo, DGIIM" />
         font-size: 0.9em;
         padding: 1em;
       }
+      h1 {
+        font-size: 1.8em;
+      }
     }
     @media print {
       body {
@@ -137,6 +140,12 @@ Carlo, DGIIM" />
     #TOC li {
       list-style: none;
     }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
     #TOC a:not(:hover) {
       text-decoration: none;
     }
@@ -166,33 +175,11 @@ Carlo, DGIIM" />
 <nav id="TOC" role="doc-toc">
 <h2 id="toc-title">Tabla de contenidos</h2>
 <ul>
+<li><a href="#notación">Notación</a></li>
 <li><a href="#dedicatoria">Dedicatoria</a></li>
 <li><a href="#introducción">Introducción</a></li>
-<li><a href="#notación">Notación</a></li>
 </ul>
 </nav>
-<h1 id="dedicatoria">Dedicatoria</h1>
-<p><em>Aquí es donde me pongo ñoño</em></p>
-<p>¡Parece que has llegado un poco pronto! Si lo has hecho
-voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado
-en verano de 2022.</p>
-<p>Mientras tanto, actualizaré poco a poco el contenido. Si quieres ir
-comprobando los progresos, puedes visitar <a
-href="github.com/Asmilex/Raytracing">Asmilex/Raytracing</a> en Github
-para ver el estado del desarrollo.</p>
-<h1 id="introducción">Introducción</h1>
-<p>Cosas de las que debería hablar aquí:</p>
-<ol type="1">
-<li>Por qué existe este TFG.</li>
-</ol>
-<blockquote>
-<p><em>Porque acabo la carrera, duh</em></p>
-</blockquote>
-<ol start="2" type="1">
-<li>Qué es un ray tracer.</li>
-<li>Real time ray tracing: ha llegado el momento.</li>
-<li>Cómo desarrollaremos este documento.</li>
-</ol>
 <h1 id="notación">Notación</h1>
 <p>Antes de comenzar, asentemos la notación que utilizaremos.</p>
 <p>Para denotar a los <strong>puntos</strong>, usaremos letras
@@ -220,5 +207,27 @@ class="math inline">\(V\left[X\right]\)</span>.</p>
 <p>TODO: notación para las funciones de densidad y distribución. TODO:
 acceso a componentes de un vector/matriz?</p>
 </blockquote>
+<h1 id="dedicatoria">Dedicatoria</h1>
+<p><em>Aquí es donde me pongo ñoño</em></p>
+<p>¡Parece que has llegado un poco pronto! Si lo has hecho
+voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado
+en verano de 2022.</p>
+<p>Mientras tanto, actualizaré poco a poco el contenido. Si quieres ir
+comprobando los progresos, puedes visitar <a
+href="github.com/Asmilex/Raytracing">Asmilex/Raytracing</a> en Github
+para ver el estado del desarrollo.</p>
+<h1 id="introducción">Introducción</h1>
+<p>Cosas de las que debería hablar aquí:</p>
+<ol type="1">
+<li>Por qué existe este TFG.</li>
+</ol>
+<blockquote>
+<p><em>Porque acabo la carrera, duh</em></p>
+</blockquote>
+<ol start="2" type="1">
+<li>Qué es un ray tracer.</li>
+<li>Real time ray tracing: ha llegado el momento.</li>
+<li>Cómo desarrollaremos este documento.</li>
+</ol>
 </body>
 </html>
