@@ -7,7 +7,7 @@ on:
 jobs:
   check-files:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
-    name: Check if the documentation has been updated
+    name: Check if .md have been updated
     steps:
       - uses: actions/checkout@v2
         with:
