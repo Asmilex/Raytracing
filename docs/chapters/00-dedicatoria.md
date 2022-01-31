@@ -10,4 +10,5 @@
 
 Mientras tanto, actualizaré poco a poco el contenido. Si quieres ir comprobando los progresos, puedes visitar [Asmilex/Raytracing](github.com/Asmilex/Raytracing) en Github para ver el estado del desarrollo.
 
+
 \vspace*{\fill}
