@@ -18,9 +18,13 @@ jobs:
         uses: tj-actions/changed-files@v14.1
 
       - name: Set output
-        if: |
-          contains(steps.changed-files.outputs.modified-files, '.md')
-        run: echo '::set-output name=updated::true'
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            if [[ $file =~ docs/chapters/+.md ]]
+              echo '::set-output name=updated::true'
+            fi
+          done
+
 
   build-web:
     runs-on: ubuntu-latest
