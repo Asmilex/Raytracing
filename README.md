@@ -4,6 +4,11 @@
   <a href="https://asmilex.github.io/Raytracing"> asmilex.github.io/Raytracing </a>
 </div>
 
+<br>
+<div align=center>
+  <img src="https://img.shields.io/github/workflow/status/Asmilex/Raytracing/Construir%20documentaci%C3%B3n?color=%2300b894&label=Docs&logoColor=%232e3440&style=for-the-badge">
+</div>
+
 <hr>
 
 <p align="center" dir="auto">
