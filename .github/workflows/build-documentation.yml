@@ -20,7 +20,8 @@ jobs:
       - name: Set output
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            if [[ $file =~ docs/chapters/+.md ]]; then
+            echo "$file"
+            if [[ "$file" =~ docs/chapters/+.md ]]; then
               echo '::set-output name=updated::true'
             fi
           done
