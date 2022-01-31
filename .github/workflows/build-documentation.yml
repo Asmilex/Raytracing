@@ -20,6 +20,7 @@ jobs:
       - name: Commit index.html
         run: |
           git config --local user.name "github-actions[bot]"
+          git config --local user.email "noreply@example.com"
           git add docs/index.html
           git commit -m "[:notebook:] Actualizando Github Pages"
 
