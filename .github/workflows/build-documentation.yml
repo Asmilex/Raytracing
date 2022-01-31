@@ -1,0 +1,18 @@
+name: Construir documentación
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    container: pandoc/core
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Compile web documentation
+        run: |
+          cd docs
+          ls
