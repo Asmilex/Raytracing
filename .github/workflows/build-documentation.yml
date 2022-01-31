@@ -9,17 +9,18 @@ jobs:
     runs-on: ubuntu-latest  # windows-latest | macos-latest
     name: Check if .md have been updated
     outputs:
-      updated: ${{ steps.changed-files.outputs.updated }}
+      updated: ${{ steps.out.outputs.updated }}
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+          fetch-depth: 0
 
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v14.1
 
       - name: Set output
+        id: out
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file"
