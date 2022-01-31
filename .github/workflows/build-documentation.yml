@@ -15,7 +15,7 @@ jobs:
       - name: Compile web documentation
         run: |
           cd docs
-          find . -wholename './chapters/*.md'
+          find . -wholename './chapters/*.md' | sort -z
           make PANDOC_EXEC=pandoc web
 
       - name: Commit and push index.html
