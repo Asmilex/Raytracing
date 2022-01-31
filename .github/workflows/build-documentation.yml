@@ -15,4 +15,4 @@ jobs:
       - name: Compile web documentation
         run: |
           cd docs
-          ls
+          make PANDOC_EXEC=pandoc web
