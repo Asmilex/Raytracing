@@ -5,11 +5,13 @@
 </div>
 
 <br>
+
 <div align=center>
   <img src="https://img.shields.io/github/workflow/status/Asmilex/Raytracing/Construir%20documentaci%C3%B3n?color=%2300b894&label=Docs&logoColor=%232e3440&style=for-the-badge">
 </div>
 
 <hr>
+
 
 <p align="center" dir="auto">
   <a href="#bulb-y-esto-de-qu%C3%A9-va-exactamente">Sobre el proyecto</a> •
@@ -18,6 +20,11 @@
   <a href="#handshake-contribuyendo">Contribuyendo</a> •
   <a href="#link-enlaces-de-inter%C3%A9s">Enlaces de interés</a>
 </p>
+
+<figure align=center>
+  <img src="https://i.imgur.com/RrWQVRE.jpg" width="600">
+  <figcaption><i>En el futuro, esto será una foto mucho más chula</i></figcaption>
+</figure>
 
 ## :bulb: Y esto, de qué va exactamente?
 
