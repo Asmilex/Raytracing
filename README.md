@@ -21,10 +21,10 @@
   <a href="#link-enlaces-de-inter%C3%A9s">Enlaces de interés</a>
 </p>
 
-<figure align=center>
-  <img src="https://i.imgur.com/RrWQVRE.jpg" width="600">
-  <figcaption><i>En el futuro, esto será una foto mucho más chula</i></figcaption>
-</figure>
+<div align=center>
+  <img align=center src="https://i.imgur.com/RrWQVRE.jpg" width="600">
+  <p align=center><i>En el futuro, esto será una foto mucho más chula</i></p>
+</div>
 
 ## :bulb: Y esto, de qué va exactamente?
 
