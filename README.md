@@ -7,7 +7,7 @@
 <br>
 
 <div align=center>
-  <img src="https://img.shields.io/github/workflow/status/Asmilex/Raytracing/Construir%20documentaci%C3%B3n?color=%2300b894&label=Docs&logoColor=%232e3440&style=for-the-badge">
+  <img src="https://img.shields.io/github/workflow/status/Asmilex/Raytracing/Publicar%20a%20Github%20Pages?color=00b894&label=WEB&style=for-the-badge">
   <img src="https://img.shields.io/github/workflow/status/Asmilex/Raytracing/Construir%20PDF?color=%23fdcb6e&label=PDF&style=for-the-badge">
 </div>
 
