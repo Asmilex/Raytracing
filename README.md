@@ -47,7 +47,7 @@ A fecha 2022-01-31,  el repositorio está compuesto por los siguientes directori
 - [`./RT_in_one_weekend`](./RT_in_one_weekend): Código del ray tracer de la [serie de libros de Shirley](https://raytracing.github.io/) original en CPU.
 - [`./application`](./application): El futuro ray tracer en GPU se ubicará aquí. Ahora mismo está en pañales.
 
-![Visualización de la codebase](./diagram.svg)
+![Visualización de la codebase](./docs/img/repo_diagram.svg)
 
 
 ## :handshake: Contribuyendo
