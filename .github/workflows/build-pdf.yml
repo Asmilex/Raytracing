@@ -1,0 +1,30 @@
+name: Construir PDF
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-pdf:
+    name: Construir el PDF
+
+    runs-on: ubuntu-latest
+    container: asmilex/raytracing
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Compile pdf documentation
+        run: |
+          cd docs
+          make PANDOC_EXEC=pandoc pdf
+
+      - name: Commit and push pdf
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add 'docs/*.pdf'
+          git commit -m "Actualizado PDF"
+          git push
