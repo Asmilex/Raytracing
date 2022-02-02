@@ -27,7 +27,7 @@
   <p align=center><i>En el futuro, esto será una foto mucho más chula</i></p>
 </div>
 
-## :bulb: Y esto, de qué va exactamente?
+## :bulb: Y esto, ¿de qué va exactamente?
 
 Este repositorio contiene una implementación del ray tracer de Peter Shirley en VkRay, así como la documentación asociada al desarrollo.
 
@@ -83,6 +83,8 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 - [Libros de Shirley](https://raytracing.github.io/)
 - [Nvidia Vulkan Ray Tracing tutorial](https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/). Parte desde un proyecto básico de Vulkan, y añade lo necesario para tener aceleración de RT usando el framework nvpro-samples. Interesante cuanto menos, y una de las opciones más seguras. Se basa en el código de [este repositorio](https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR).
 - En la misma línea, una [implementación de In One Weekend](https://github.com/GPSnoopy/RayTracingInVulkan) con esas extensiones por GPSsnoopy. Podría resultar muy útil también
+- [Un mini path tracer](https://github.com/nvpro-samples/vk_mini_path_tracer). Referenciado en Gems II.
+- [Vulkan Samples](https://github.com/KhronosGroup/Vulkan-Samples).
 - [Tutorial de Vulkan](https://vulkan-tutorial.com/Introduction)
 - [Lista con recursos de RT](https://www.realtimerendering.com/raytracing.html)
 - [ImGui, una librería de de GUI para C++](https://github.com/ocornut/imgui). Convenientemente, tiene un ejemplo para [integrarlo con Vulkan y GLFW](https://github.com/ocornut/imgui/blob/master/examples/example_glfw_vulkan/main.cpp). Podría ser un gran punto de partida.
