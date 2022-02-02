@@ -64,12 +64,18 @@ Cada commit debería ir identificado con un emoji antes del mensaje, así como t
 
 Estos son los iconos usados, así como su significado:
 
-| Tipo de commit           |   Emoji    | Cómo se escribe rápidamente |
-|:-------------------------|:----------:|:----------------------------|
-| Documentación            | :notebook: | `:notebook:`                |
-| Archivo de configuración |  :wrench:  | `:wrench:`                  |
-| Integración continua     |     👷     | `:construction_worker:`     |
-| Bugfix                   |   :bug:    | `:bug:`                     |
+| Tipo de commit           |         Emoji         | Cómo se escribe rápidamente |
+|:-------------------------|:---------------------:|:---------------------------:|
+| Documentación            |      :notebook:       |        `:notebook:`         |
+| Archivo de configuración |       :wrench:        |         `:wrench:`          |
+| Integración continua     | :construction_worker: |   `:construction_worker:`   |
+| Quitar archivos          |        :fire:         |          `:fire:`           |
+| Nuevas características   |      :sparkles:       |        `:sparkles:`         |
+| Test                     |       :alembic:       |         `:alembic:`         |
+| Refactorización          |       :recycle:       |         `:recycle:`         |
+| Bugfix                   |         :bug:         |           `:bug:`           |
+
+
 
 Los issues también deberían seguir el mismo estilo. Tienes un ejemplo [aquí](https://github.com/Asmilex/Raytracing/issues/4)
 
