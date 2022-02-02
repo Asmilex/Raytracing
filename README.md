@@ -1,7 +1,9 @@
 <h1 align=center>🔦 Un TFG sobre Raytracing 🔦</h1>
 
 <div align=center>
-  <a href="https://asmilex.github.io/Raytracing" style="font-size:x-large">:small_orange_diamond: ¡Visita la documentación online! :small_orange_diamond:</a>
+  <h3>
+    <a href="https://asmilex.github.io/Raytracing">:small_orange_diamond: ¡Visita la documentación online! :small_orange_diamond:</a>
+  </h3>
 </div>
 
 <br>
