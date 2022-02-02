@@ -78,21 +78,24 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 
 *(Y, seguramente, desaparezca en el futuro)*
 
-- [Libro de Shirley](https://raytracing.github.io/)
-- [Tutorial de Nvidia de VkRay](https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/)
-- [Arquitectura de Turing](https://developer.nvidia.com/blog/nvidia-turing-architecture-in-depth/)
-- [Nvidia design works RT tutorial](https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR)
-- [Libro de Shirley implementado en NvVkRay](https://github.com/GPSnoopy/RayTracingInVulkan)
-- [Métodos de Monte Carlo](http://statweb.stanford.edu/~owen/mc/)
-- [Physically Based Rendering](http://www.pbr-book.org/)
-- [Template de Latex ClassicThesis](https://bitbucket.org/amiede/classicthesis/downloads)
-- [Lista con recursos de RT](https://www.realtimerendering.com/raytracing.html)
+### Implementaciones y tutoriales
+
+- [Libros de Shirley](https://raytracing.github.io/)
+- [Nvidia Vulkan Ray Tracing tutorial](https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/). Parte desde un proyecto básico de Vulkan, y añade lo necesario para tener aceleración de RT usando el framework nvpro-samples. Interesante cuanto menos, y una de las opciones más seguras. Se basa en el código de [este repositorio](https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR).
+- En la misma línea, una [implementación de In One Weekend](https://github.com/GPSnoopy/RayTracingInVulkan) con esas extensiones por GPSsnoopy. Podría resultar muy útil también
 - [Tutorial de Vulkan](https://vulkan-tutorial.com/Introduction)
-- [Vulkan con CMake](https://vulkan.lunarg.com/doc/view/1.1.108.0/windows/getting_started.html)
-- [Explicación interesante sobre GI](https://www.youtube.com/watch?v=yEkryaaAsBU)
-- [Ray Tracing Gems II](https://developer.nvidia.com/ray-tracing-gems-ii)
+- [Lista con recursos de RT](https://www.realtimerendering.com/raytracing.html)
 - Sobre Cmake y vcpkg:
   - [Tutorial pequeño](https://www.40tude.fr/how-to-use-vcpkg-with-vscode-and-cmake/)
   - [Sistema automatizado](https://cpptruths.blogspot.com/2019/03/bootstrapping-vcpkg-based-cmake-project.html)
   - [Blog 101](https://gamefromscratch.com/vcpkg-cpp-easy-mode-step-by-step-tutorial/)
   - [Otro blog 101](https://sam.elborai.me/blog/vscode-cpp-dev-environment-2020)
+
+### Conocimiento
+
+- [Physically Based Rendering](http://www.pbr-book.org/)
+- [Libro sobre métodos de Monte Carlo](http://statweb.stanford.edu/~owen/mc/)
+- [Arquitectura de Turing](https://developer.nvidia.com/blog/nvidia-turing-architecture-in-depth/)
+- [Explicación interesante sobre GI de Digital Foundry](https://www.youtube.com/watch?v=yEkryaaAsBU)
+- [Ray Tracing Gems I](https://www.realtimerendering.com/raytracinggems/rtg/index.html)
+- [Ray Tracing Gems II](https://developer.nvidia.com/ray-tracing-gems-ii)
