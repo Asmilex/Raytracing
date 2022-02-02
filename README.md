@@ -85,6 +85,8 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 - En la misma línea, una [implementación de In One Weekend](https://github.com/GPSnoopy/RayTracingInVulkan) con esas extensiones por GPSsnoopy. Podría resultar muy útil también
 - [Tutorial de Vulkan](https://vulkan-tutorial.com/Introduction)
 - [Lista con recursos de RT](https://www.realtimerendering.com/raytracing.html)
+- [ImGui, una librería de de GUI para C++](https://github.com/ocornut/imgui). Convenientemente, tiene un ejemplo para [integrarlo con Vulkan y GLFW](https://github.com/ocornut/imgui/blob/master/examples/example_glfw_vulkan/main.cpp). Podría ser un gran punto de partida.
+- [Vulkan base](https://github.com/kennyalive/vulkan-base), una simple aplicación de Vulkan para renderizar modelos 3D. Parece una implementación del punto anterior. Además, enlaza a [Vulkan Raytracing](https://github.com/kennyalive/vulkan-raytracing), del mismo autor.
 - Sobre Cmake y vcpkg:
   - [Tutorial pequeño](https://www.40tude.fr/how-to-use-vcpkg-with-vscode-and-cmake/)
   - [Sistema automatizado](https://cpptruths.blogspot.com/2019/03/bootstrapping-vcpkg-based-cmake-project.html)
