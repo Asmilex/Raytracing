@@ -124,3 +124,4 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 - [Explicación interesante sobre GI de Digital Foundry](https://www.youtube.com/watch?v=yEkryaaAsBU)
 - [Ray Tracing Gems I](https://www.realtimerendering.com/raytracinggems/rtg/index.html)
 - [Ray Tracing Gems II](https://developer.nvidia.com/ray-tracing-gems-ii)
+- [Awesome ray tracing](https://github.com/dannyfritz/awesome-ray-tracing#vulkan-ray-tracing)
