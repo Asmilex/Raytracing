@@ -5,6 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "(Debug) Asmiray",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/application/bin_x64/Debug/asmiray.exe",
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}",
+            "environment": [],
+            "console": "externalTerminal",
+            "preLaunchTask": "Compile debug asmiray"
+        },
+        {
             "name": "(Debug) RT in one weekend",
             "type": "cppvsdbg",
             "request": "launch",
