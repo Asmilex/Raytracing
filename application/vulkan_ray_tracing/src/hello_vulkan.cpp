@@ -580,7 +580,7 @@ void HelloVulkan::initRayTracing() {
     prop2.pNext = &m_rtProperties;
     vkGetPhysicalDeviceProperties2(m_physicalDevice, &prop2);
 
-    nvvk::RaytracingBuilderKHR m_rtBuilder;
+    m_rtBuilder.setup(m_device, &m_alloc, m_graphicsQueueIndex);
 }
 
 // ────────────────────────────────────────────────────────────────────────────────
