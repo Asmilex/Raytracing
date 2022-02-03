@@ -569,7 +569,7 @@ void HelloVulkan::drawPost(VkCommandBuffer cmdBuf)
 
 // ────────────────────────────────────────────────────────────────────────────────
 // Inicializar Vulkan ray tracing
-// # VkRay
+// #VkRay
 
 void HelloVulkan::initRayTracing() {
     // Mirar las propiedades de ray tracing
@@ -579,4 +579,86 @@ void HelloVulkan::initRayTracing() {
 
     prop2.pNext = &m_rtProperties;
     vkGetPhysicalDeviceProperties2(m_physicalDevice, &prop2);
+
+    nvvk::RaytracingBuilderKHR m_rtBuilder;
+}
+
+// ────────────────────────────────────────────────────────────────────────────────
+// Convertir un modelo OBJ en geometría de ray tracing para construir el BLAS
+//
+
+auto HelloVulkan::objectToVkGeometryKHR(const ObjModel& model) {
+    // El constructor BLAS requiere las direcciones del dispositivo en raw
+    VkDeviceAddress vertexAddress = nvvk::getBufferDeviceAddress(m_device, model.vertexBuffer.buffer);
+    VkDeviceAddress indexAddress  = nvvk::getBufferDeviceAddress(m_device, model.indexBuffer.buffer);
+
+    uint32_t maxPrimitiveCount = model.nbIndices / 3;
+
+    // Describir el buffer como un array de VertexObj
+
+    VkAccelerationStructureGeometryTrianglesDataKHR triangles {
+        VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR
+    };
+    triangles.vertexFormat             = VK_FORMAT_R32G32B32_SFLOAT;  // vec3 vertex position data
+    triangles.vertexData.deviceAddress = vertexAddress;
+    triangles.vertexStride             = sizeof(VertexObj);
+    // Describe index data (32 bit unsigned int)
+    triangles.indexType                = VK_INDEX_TYPE_UINT32;
+    triangles.indexData.deviceAddress  = indexAddress;
+    // Indicate identity transform by setting transformData to null device pointer
+    // triangles.transformData           = {};
+    triangles.maxVertex                = model.nbVertices;
+
+    // Identify the above data as containing opaque triangles
+    VkAccelerationStructureGeometryKHR asGeom {
+        VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_KHR
+    };
+    asGeom.geometryType       = VK_GEOMETRY_TYPE_TRIANGLES_KHR;
+    asGeom.flags              = VK_GEOMETRY_OPAQUE_BIT_KHR;
+    asGeom.geometry.triangles = triangles;
+
+    // El array entero se va a usar para construir la BLAS
+    VkAccelerationStructureBuildRangeInfoKHR offset;
+    offset.firstVertex     = 0;
+    offset.primitiveCount  = maxPrimitiveCount;
+    offset.primitiveOffset = 0;
+    offset.transformOffset = 0;
+
+    // Nuestro BLAS está compuesto de solo una geometría, pero podría estar compuesto por más
+    nvvk::RaytracingBuilderKHR::BlasInput input;
+    input.asGeometry.emplace_back(asGeom);
+    input.asBuildOffsetInfo.emplace_back(offset);
+
+    /*
+        BlasInput acts essentially as a fancy device pointer to vertex buffer data;
+        no actual vertex data is copied or managed by the helper.
+
+        For this simple example, we are relying on the fact that all models are loaded at startup and remain
+        in memory unchanged until the BLAS is created. If you are dynamically loading and unloading parts
+        of a larger scene, or dynamically generating vertex data.
+
+        It is your responsibility to avoid race conditions with the AS builder.
+
+        (Suena mal eso. No sé realmente qué está pasando aquí pero va)
+    */
+
+
+    return input;
+}
+
+
+void HelloVulkan::createBottomLevelAS() {
+    // BLAS - guardar cada primitiva en una geometría
+
+    std::vector<nvvk::RaytracingBuilderKHR::BlasInput> allBlas;
+    allBlas.reserve(m_objModel.size());
+
+    for (const auto& obj: m_objModel) {
+        auto blas = objectToVkGeometryKHR(obj);
+
+        // Podríamos añadir más geometrías en cada BLAS. De momento, solo una.
+        allBlas.emplace_back(blas);
+    }
+
+    m_rtBuilder.buildBlas(allBlas, VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR);
 }
