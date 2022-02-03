@@ -380,6 +380,9 @@ void HelloVulkan::destroyResources()
   vkDestroyRenderPass(m_device, m_offscreenRenderPass, nullptr);
   vkDestroyFramebuffer(m_device, m_offscreenFramebuffer, nullptr);
 
+  // #VKRay
+  m_rtBuilder.destroy();
+
   m_alloc.deinit();
 }
 
@@ -661,4 +664,26 @@ void HelloVulkan::createBottomLevelAS() {
     }
 
     m_rtBuilder.buildBlas(allBlas, VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR);
+}
+
+
+// ────────────────────────────────────────────────────────────────────────────────
+
+void HelloVulkan::createTopLevelAS() {
+    std::vector<VkAccelerationStructureInstanceKHR> tlas;
+    tlas.reserve(m_instances.size());
+
+    for (const HelloVulkan::ObjInstance& inst: m_instances) {
+        VkAccelerationStructureInstanceKHR rayInst{};
+        rayInst.transform                              = nvvk::toTransformMatrixKHR(inst.transform);                 // Posición de la instancia
+        rayInst.instanceCustomIndex                    = inst.objIndex;                                              // gl_InstanceCustomIndexEXT
+        rayInst.accelerationStructureReference         = m_rtBuilder.getBlasDeviceAddress(inst.objIndex);            // returns the acceleration structure device address of the blasId. The id correspond to the created BLAS in buildBlas.
+        rayInst.flags                                  = VK_GEOMETRY_INSTANCE_TRIANGLE_FACING_CULL_DISABLE_BIT_KHR;
+        rayInst.mask                                   = 0xFF;                                                       // Solo registramos hit si rayMask & instance.mask != 0
+        rayInst.instanceShaderBindingTableRecordOffset = 0;                                                          // Usaremos el mismo hit group para todos los objetos
+
+        tlas.emplace_back(rayInst);
+    }
+
+    m_rtBuilder.buildTlas(tlas, VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR);
 }
