@@ -13,10 +13,15 @@ html {
   font-feature-settings: "liga" 1;
 }
 
+.title {
+  font-size: clamp(2rem, -1.0000rem + 16.0000vw, 4rem);
+  font-weight: bold;
+}
+
 h1, #toc-title {
   font-family: "Fraunces", "Rubik", sans-serif;
   font-weight: 600;
-  font-size: 3rem;
+  font-size: clamp(1.5rem, -1.0000rem + 16.0000vw, 3rem);
   text-align: center;
 
   margin-top: 5rem;
@@ -26,19 +31,19 @@ h1, #toc-title {
 h2 {
   font-family: "Fraunces", "Rubik", sans-serif;
   font-weight: 500;
-  font-size: 2rem;
+  font-size: clamp(1.3rem, -1.0000rem + 16.0000vw, 2rem);
 }
 
 h3 {
   font-family: "Fraunces", "Rubik", sans-serif;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: clamp(1.3rem, -1.0000rem + 16.0000vw, 1.5rem);
 }
 
 h4 {
   font-family: "Fraunces", "Rubik", sans-serif;
   font-weight: 400;
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, -1.0000rem + 16.0000vw, 1.4rem);
 }
 
 p {
@@ -50,12 +55,7 @@ p {
   text-align: center;
   font-family: 'Fraunces', 'Rubik', sans-serif;
   font-style: italic;
-  font-size: 2rem;
-}
-
-.title {
-  font-size: 4rem;
-  font-weight: bold;
+  font-size: clamp(1rem, -1.0000rem + 16.0000vw, 2rem);
 }
 
 code,
