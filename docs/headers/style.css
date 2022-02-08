@@ -47,8 +47,7 @@ h4 {
 }
 
 p {
-  text-align: justify;
-  text-justify: auto;
+  text-align: left;
 }
 
 .author {
