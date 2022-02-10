@@ -1,0 +1,1 @@
+# ¿Cómo funciona ray tracing?

@@ -1,1 +1,0 @@
-# ¿Qué es ray tracing?
