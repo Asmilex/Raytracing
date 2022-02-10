@@ -5,7 +5,8 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Andrés Millán Muñoz" />
-  <meta name="keywords" content="TFG, Raytracing, Ray tracing, Monte Carlo, DGIIM" />
+  <meta name="keywords" content="TFG, Raytracing, Ray tracing, Monte
+Carlo, DGIIM" />
   <title>Raytracing (WIP name)</title>
   <style>
     html {
@@ -31,6 +32,9 @@
       body {
         font-size: 0.9em;
         padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
       }
     }
     @media print {
@@ -136,6 +140,12 @@
     #TOC li {
       list-style: none;
     }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
     #TOC a:not(:hover) {
       text-decoration: none;
     }
@@ -146,14 +156,16 @@
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   <link rel="stylesheet" href="https://unpkg.com/bamboo.css/dist/light.min.css">
   <link rel="stylesheet" href="./headers/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <header id="title-block-header">
@@ -167,11 +179,14 @@
 <li><a href="#introducción">Introducción</a>
 <ul>
 <li><a href="#qué-es-ray-tracing">¿Qué es ray tracing?</a></li>
-<li><a href="#vale-y-qué-vamos-a-hacer-entonces">Vale, ¿y qué vamos a hacer entonces?</a></li>
+<li><a href="#vale-y-qué-vamos-a-hacer-entonces">Vale, ¿y qué vamos a
+hacer entonces?</a></li>
 </ul></li>
 <li><a href="#notación">Notación</a></li>
-<li><a href="#cómo-funciona-ray-tracing">¿Cómo funciona ray tracing?</a></li>
-<li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se hizo este trabajo</a>
+<li><a href="#cómo-funciona-ray-tracing">¿Cómo funciona ray
+tracing?</a></li>
+<li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
+cómo se hizo este trabajo</a>
 <ul>
 <li><a href="#github">Github</a>
 <ul>
@@ -183,38 +198,107 @@
 </nav>
 <h1 id="dedicatoria">Dedicatoria</h1>
 <p><em>Aquí es donde me pongo ñoño</em></p>
-<p>¡Parece que has llegado un poco pronto! Si lo has hecho voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado en verano de 2022.</p>
-<p>Mientras tanto, actualizaré poco a poco el contenido. Si quieres ir comprobando los progresos, puedes visitar <a href="github.com/Asmilex/Raytracing">Asmilex/Raytracing</a> en Github para ver el estado del desarrollo.</p>
+<p>¡Parece que has llegado un poco pronto! Si lo has hecho
+voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado
+en verano de 2022.</p>
+<p>Mientras tanto, actualizaré poco a poco el contenido. Si quieres ir
+comprobando los progresos, puedes visitar <a
+href="github.com/Asmilex/Raytracing">Asmilex/Raytracing</a> en Github
+para ver el estado del desarrollo.</p>
 <h1 id="introducción">Introducción</h1>
 <p>Ser capaces de capturar un momento.</p>
-<p>Desde siempre, este ha sido uno de los sueños de la humanidad. La capacidad de retener lo que ven nuestros ojos comenzó con simples pinturas ruprestres. Con el tiempo, el arte evolucionó, así como la capacidad de retratar nuestra percepción con mayor fidelidad.</p>
-<p>A inicios del siglo XVIII, se caputaron las primeras imágenes con una cámara gracias a Nicéphore Niépce. Sería una imagen primitiva, claro; pero era funcional. Gracias a la compañía Kodak, la fotografía se extendió al consumidor rápidamente sobre 1890. Más tarde llegaría la fotografía digital, la cual simplificaría muchos de los problemas de las cámaras tradicionales.</p>
-<p>Hablando de digital. Los ordenadores personales modernos nacieron unos años más tarde. Los usuarios eran capaces de mostrar imágenes en pantalla, que cambiaban bajo demanda. Y, entonces, nos hicimos una pregunta…</p>
-<p>¿Podríamos <strong>simular la vida real</strong> para mostrarla en pantalla?</p>
-<p>Como era de esperar, esto es complicado de lograr. Para conseguirlo, hemos necesitado crear abstracciones de conceptos que nos resultan naturales, como objetos, luces y seres vivos. <em>“Cosas”</em> que un ordenador no entiende, y sin embargo, para nosotros <em>funcionan</em>.</p>
-<p>Así, nació la geometría, los puntos de luces, texturas, sombreados, y otros elementos de un escenario digital. Pero, por muchas abstracciones elegantes que tengamos, no nos basta. Necesitamos visualizarlas. Y como podemos imaginarnos, esto es un proceso costoso.</p>
-<p>La <strong>rasterización</strong> es el proceso mediante el cual estos objetos tridimensionales se transforman en bidimensionales. Proyectando acordemente el entorno a una cámara, conseguimos colorear un pixel, de forma que represente lo que se ve en ese mundo.</p>
-<p>[TODO insertar imagen rasterización. NOTE quizás debería extender un poco más esta parte? Parece que se queda algo coja la explicación.]</p>
-<p>Aunque esta técnica es bastante eficiente en términos de computación y ha evolucionado mucho, rápidamente saturamos sus posibilidades. Conceptos como <em>shadow maps</em>, <em>baked lightning</em>, o <em>reflection cubemaps</em> intentan solventar lo que no es posible con rasterización: preguntrarnos <em>qué es lo que se encuentra alrededor nuestra</em>.</p>
-<p>En parte, nos olvidamos de la intuitiva realidad, para centrarnos en aquello computacionalmente viable.</p>
-<p>Y, entonces, en 1960 el trazado de rayos con una simple idea intuitiva .</p>
+<p>Desde siempre, este ha sido uno de los sueños de la humanidad. La
+capacidad de retener lo que ven nuestros ojos comenzó con simples
+pinturas ruprestres. Con el tiempo, el arte evolucionó, así como la
+capacidad de retratar nuestra percepción con mayor fidelidad.</p>
+<p>A inicios del siglo XVIII, se caputaron las primeras imágenes con una
+cámara gracias a Nicéphore Niépce. Sería una imagen primitiva, claro;
+pero era funcional. Gracias a la compañía Kodak, la fotografía se
+extendió al consumidor rápidamente sobre 1890. Más tarde llegaría la
+fotografía digital, la cual simplificaría muchos de los problemas de las
+cámaras tradicionales.</p>
+<p>Hablando de digital. Los ordenadores personales modernos nacieron
+unos años más tarde. Los usuarios eran capaces de mostrar imágenes en
+pantalla, que cambiaban bajo demanda. Y, entonces, nos hicimos una
+pregunta…</p>
+<p>¿Podríamos <strong>simular la vida real</strong> para mostrarla en
+pantalla?</p>
+<p>Como era de esperar, esto es complicado de lograr. Para conseguirlo,
+hemos necesitado crear abstracciones de conceptos que nos resultan
+naturales, como objetos, luces y seres vivos. <em>“Cosas”</em> que un
+ordenador no entiende, y sin embargo, para nosotros
+<em>funcionan</em>.</p>
+<p>Así, nació la geometría, los puntos de luces, texturas, sombreados, y
+otros elementos de un escenario digital. Pero, por muchas abstracciones
+elegantes que tengamos, no nos basta. Necesitamos visualizarlas. Y como
+podemos imaginarnos, esto es un proceso costoso.</p>
+<p>La <strong>rasterización</strong> es el proceso mediante el cual
+estos objetos tridimensionales se transforman en bidimensionales.
+Proyectando acordemente el entorno a una cámara, conseguimos colorear un
+pixel, de forma que represente lo que se ve en ese mundo.</p>
+<p>[TODO insertar imagen rasterización. NOTE quizás debería extender un
+poco más esta parte? Parece que se queda algo coja la explicación.]</p>
+<p>Aunque esta técnica es bastante eficiente en términos de computación
+y ha evolucionado mucho, rápidamente saturamos sus posibilidades.
+Conceptos como <em>shadow maps</em>, <em>baked lightning</em>, o
+<em>reflection cubemaps</em> intentan solventar lo que no es posible con
+rasterización: preguntrarnos <em>qué es lo que se encuentra alrededor
+nuestra</em>.</p>
+<p>En parte, nos olvidamos de la intuitiva realidad, para centrarnos en
+aquello computacionalmente viable.</p>
+<p>Y, entonces, en 1960 el trazado de rayos con una simple idea
+intuitiva .</p>
 <h2 id="qué-es-ray-tracing">¿Qué es ray tracing?</h2>
-<p>En resumidas cuentas, <em>ray tracing</em> (o trazado de rayos en español), se basa en disparar fotones desde nuestras luces digitales y hacerlos rebotar en la escena.</p>
-<p>De esta forma, simulamos cómo se comporta la luz. Al impactar en un objeto, sufre un cambio en su trayectoria. Este cambio origina nuevos rayos, que vuelven a dispersarse por la escena. Estos nuevos rayos dependerán de las propiedades del objeto con el que hayan impactado. Con el tiempo necesario, lo que veremos desde nuestra cámara será una representación fotorealista de lo que habita en ese universo.</p>
-<p>Esta técnica, tan estúpidamente intuitiva, se ha hecho famosa por su simpleza y su elegancia. <em>Pues claro</em> que la respuesta a “<em>¿Cómo simulamos fielmente una imagen en un ordenador?</em>” es “<em>Representando la luz de forma realista</em>”.</p>
-<p>Aunque, quizás intuitiva no sea la palabra. Podemos llamarla <em>natural</em>, eso sí. A fin de cuentas, fue a partir del siglo XVIII cuando empezamos a entender que podíamos capturar la luz. Nuestros antepasados tenían teorías, pero no podían explicar por qué <em>veíamos</em> el mundo.</p>
-<p>Ahora sí que sabemos cómo funciona. Entendiendo el por qué lo hace nos permitirá programarlo. Y, resulta que funciona impresionantemente bien.</p>
-<p>Atrás se quedan los <em>hacks</em> necesarios para rasterización. Los cubemaps no son esenciales para los reflejos, y no necesitamos cámaras virtuales para calcular sombras. Ray tracing permite simular fácilmente efectos como reflejos, refracción, desenfoque de movimiento, aberración cromática… Incluso fenómenos físicos propios de las particulas y las ondas.</p>
+<p>En resumidas cuentas, <em>ray tracing</em> (o trazado de rayos en
+español), se basa en disparar fotones desde nuestras luces digitales y
+hacerlos rebotar en la escena.</p>
+<p>De esta forma, simulamos cómo se comporta la luz. Al impactar en un
+objeto, sufre un cambio en su trayectoria. Este cambio origina nuevos
+rayos, que vuelven a dispersarse por la escena. Estos nuevos rayos
+dependerán de las propiedades del objeto con el que hayan impactado. Con
+el tiempo necesario, lo que veremos desde nuestra cámara será una
+representación fotorealista de lo que habita en ese universo.</p>
+<p>Esta técnica, tan estúpidamente intuitiva, se ha hecho famosa por su
+simpleza y su elegancia. <em>Pues claro</em> que la respuesta a
+“<em>¿Cómo simulamos fielmente una imagen en un ordenador?</em>” es
+“<em>Representando la luz de forma realista</em>”.</p>
+<p>Aunque, quizás intuitiva no sea la palabra. Podemos llamarla
+<em>natural</em>, eso sí. A fin de cuentas, fue a partir del siglo XVIII
+cuando empezamos a entender que podíamos capturar la luz. Nuestros
+antepasados tenían teorías, pero no podían explicar por qué
+<em>veíamos</em> el mundo.</p>
+<p>Ahora sí que sabemos cómo funciona. Entendiendo el por qué lo hace
+nos permitirá programarlo. Y, resulta que funciona impresionantemente
+bien.</p>
+<p>Atrás se quedan los <em>hacks</em> necesarios para rasterización. Los
+cubemaps no son esenciales para los reflejos, y no necesitamos cámaras
+virtuales para calcular sombras. Ray tracing permite simular fácilmente
+efectos como reflejos, refracción, desenfoque de movimiento, aberración
+cromática… Incluso fenómenos físicos propios de las particulas y las
+ondas.</p>
 <blockquote>
 <p>Espera. Si tan bueno es, ¿por qué no lo usamos en todos lados?</p>
 </blockquote>
-<p>Por desgracia, el elefante en la sala es el rendimiento. Como era de esperar, disparar rayos a diestro y siniestro es costoso. <strong>Muy costoso</strong>.</p>
-<p>A diferencia del universo, nosotros no nos podemos permitir el lujo de usar fotones de tamaño infinitesimal y dispersiones casi infinitas. Nos pasaríamos una eternidad esperando. Y para ver una imagen en nuestra pantalla necesitaremos estar vivos, claro.</p>
-<p>Debemos evitar la fuerza bruta. Dado que la idea es tan elegante, la respuesta no está en el <em>“qué”</em>, sino en el <em>“cómo”</em>. Si <strong>disparamos y dispersamos rayos con cabeza</strong> seremos capaces de obtener lo que buscamos en un tiempo razonable.</p>
-<p>Hace unos años, al hablar de tiempo razonable, nos referiríamos a horas. Quizás días. Producir un <em>frame</em> podría suponer una cantidad de tiempo impensable para un ordenador de consumidor. Hoy en día también ocurre esto, claro está. Pero la tecnología evoluciona.</p>
+<p>Por desgracia, el elefante en la sala es el rendimiento. Como era de
+esperar, disparar rayos a diestro y siniestro es costoso. <strong>Muy
+costoso</strong>.</p>
+<p>A diferencia del universo, nosotros no nos podemos permitir el lujo
+de usar fotones de tamaño infinitesimal y dispersiones casi infinitas.
+Nos pasaríamos una eternidad esperando. Y para ver una imagen en nuestra
+pantalla necesitaremos estar vivos, claro.</p>
+<p>Debemos evitar la fuerza bruta. Dado que la idea es tan elegante, la
+respuesta no está en el <em>“qué”</em>, sino en el <em>“cómo”</em>. Si
+<strong>disparamos y dispersamos rayos con cabeza</strong> seremos
+capaces de obtener lo que buscamos en un tiempo razonable.</p>
+<p>Hace unos años, al hablar de tiempo razonable, nos referiríamos a
+horas. Quizás días. Producir un <em>frame</em> podría suponer una
+cantidad de tiempo impensable para un ordenador de consumidor. Hoy en
+día también ocurre esto, claro está. Pero la tecnología evoluciona.</p>
 <p>Podemos bajarlo a milisegundos.</p>
-<p>Hemos entrado en la era del <strong>real time ray tracing</strong>.</p>
-<h2 id="vale-y-qué-vamos-a-hacer-entonces">Vale, ¿y qué vamos a hacer entonces?</h2>
+<p>Hemos entrado en la era del <strong>real time ray
+tracing</strong>.</p>
+<h2 id="vale-y-qué-vamos-a-hacer-entonces">Vale, ¿y qué vamos a hacer
+entonces?</h2>
 <p>TODO hablar de los objetivos del trabajo.</p>
 <hr>
 <p>Referencias que pasar después:</p>
@@ -229,20 +313,47 @@
 </ol>
 <h1 id="notación">Notación</h1>
 <p>Antes de comenzar, asentemos la notación que utilizaremos.</p>
-<p>Para denotar a los <strong>puntos</strong>, usaremos letras mayúsculas como <span class="math inline">\(P\)</span> o <span class="math inline">\(Q\)</span>. Los <strong>escalares</strong> vendrán dados por letras minúsculas, como <span class="math inline">\(a\)</span> o <span class="math inline">\(b\)</span>; mientras que los <strong>vectores</strong> irán en letra minúscula negrita (p.e.: <span class="math inline">\(\bf{v}\)</span> o <span class="math inline">\(\bf{w}\)</span>). Además, serán vectores columnas. Aquellos normalizados los representaremos con un gorrito: <span class="math inline">\(\bf{\hat{v}} = \frac{\bf{v}}{\Vert\bf{v}\Vert}\)</span>. Las <strong>matrices</strong>, por otra parte, vendrán dadas por letra mayúscula en negrita, como <span class="math inline">\(\bf{M}\)</span>. También son columna.</p>
-<p>El producto escalar vendrá dado por <span class="math inline">\(\bf{v} \cdot \bf{w}\)</span>, y el vectorial por <span class="math inline">\(\bf{v} \times \bf{w}\)</span>.</p>
-<p>La notación usada para las <strong>variables aleatorias</strong> será la habitual: mayúsculas como <span class="math inline">\(X\)</span>. Su valor esperado vendrá dado por <span class="math inline">\(E\left[X\right]\)</span> y la varianza por <span class="math inline">\(V\left[X\right]\)</span>.</p>
+<p>Para denotar a los <strong>puntos</strong>, usaremos letras
+mayúsculas como <span class="math inline">\(P\)</span> o <span
+class="math inline">\(Q\)</span>. Los <strong>escalares</strong> vendrán
+dados por letras minúsculas, como <span class="math inline">\(a\)</span>
+o <span class="math inline">\(b\)</span>; mientras que los
+<strong>vectores</strong> irán en letra minúscula negrita (p.e.: <span
+class="math inline">\(\bf{v}\)</span> o <span
+class="math inline">\(\bf{w}\)</span>). Además, serán vectores columnas.
+Aquellos normalizados los representaremos con un gorrito: <span
+class="math inline">\(\bf{\hat{v}} =
+\frac{\bf{v}}{\Vert\bf{v}\Vert}\)</span>. Las <strong>matrices</strong>,
+por otra parte, vendrán dadas por letra mayúscula en negrita, como <span
+class="math inline">\(\bf{M}\)</span>. También son columna.</p>
+<p>El producto escalar vendrá dado por <span
+class="math inline">\(\bf{v} \cdot \bf{w}\)</span>, y el vectorial por
+<span class="math inline">\(\bf{v} \times \bf{w}\)</span>.</p>
+<p>La notación usada para las <strong>variables aleatorias</strong> será
+la habitual: mayúsculas como <span class="math inline">\(X\)</span>. Su
+valor esperado vendrá dado por <span
+class="math inline">\(E\left[X\right]\)</span> y la varianza por <span
+class="math inline">\(V\left[X\right]\)</span>.</p>
 <blockquote>
-<p>TODO: notación para las funciones de densidad y distribución. TODO: acceso a componentes de un vector/matriz?</p>
+<p>TODO: notación para las funciones de densidad y distribución. TODO:
+acceso a componentes de un vector/matriz?</p>
 </blockquote>
 <h1 id="cómo-funciona-ray-tracing">¿Cómo funciona ray tracing?</h1>
-<h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se hizo este trabajo</h1>
-<p>TODO - hablar de las fases de desarrollo. Interpretación propia de Agile. Documentación y código desarrollado a la par, mediante issues. Adaptación de los requisitos conforme se avanza. Beneficios de una página web (seguramente debería ser su propia sección)</p>
+<h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
+hizo este trabajo</h1>
+<p>TODO - hablar de las fases de desarrollo. Interpretación propia de
+Agile. Documentación y código desarrollado a la par, mediante issues.
+Adaptación de los requisitos conforme se avanza. Beneficios de una
+página web (seguramente debería ser su propia sección)</p>
 <h2 id="github">Github</h2>
-<p>TODO - Hablar de cómo se utiliza Github y sus tecnologías para agrupar todo el trabajo. Hablar de la guía de estilos, y cómo los emojis ayudan a identificar rápidamente secciones.</p>
+<p>TODO - Hablar de cómo se utiliza Github y sus tecnologías para
+agrupar todo el trabajo. Hablar de la guía de estilos, y cómo los emojis
+ayudan a identificar rápidamente secciones.</p>
 <h3 id="github-actions">Github Actions</h3>
-<p>TODO - Hablar de cómo se usa el sistema de integración continua para construir la web y el pdf</p>
+<p>TODO - Hablar de cómo se usa el sistema de integración continua para
+construir la web y el pdf</p>
 <h3 id="github-projects">Github Projects</h3>
-<p>TODO - Hablar de cómo se gestiona el trabajo mediante issues, recapitulados todos con Projects.</p>
+<p>TODO - Hablar de cómo se gestiona el trabajo mediante issues,
+recapitulados todos con Projects.</p>
 </body>
 </html>
