@@ -65,6 +65,8 @@ Referencias que pasar después:
 2. https://www.wikiwand.com/es/Kodak#/Historia
 3. https://www.wikiwand.com/en/Computer#/Digital_computers
 4. https://www.wikiwand.com/en/Rendering_(computer_graphics)#/Chronology_of_important_published_ideas
-5. Ray tracing gems I (p 16).
+5. Ray tracing gems I (p 16), gems II.
 6. https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/
 7. https://www.wikiwand.com/en/Ray_tracing_(graphics)
+8. https://sciencebehindpixar.org/pipeline/rendering#:~:text=They%20said%20it%20takes%20at,to%20render%20that%20many%20frames.
+9.
