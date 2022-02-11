@@ -3,21 +3,25 @@
 date: \today
 book: true
 classoption: [oneside]
-#geometry: margin=1.5in
-
-# ────────────────────────────────────────────────────────────────── FUENTES ─────
 
 mainfont: 'Crimson Pro Regular'
-fontsize: 12pt
-
-#mainfont: Fraunces
-#fontsize: 11pt
+fontsize: 13pt
 
 monofont: JuliaMono
 monofontoptions:
  - Scale=0.8
 
 titlepage: true
+subtitle: "Doble grado en ingeniería informática y matemáticas"
+institute: "Universidad de Granada"
+author:
+- "\\textbf{Presentado por}: Andrés Millán Muñoz,"
+- "\\textbf{Tutorizado por}: Carlos Ureña Almagro, María del Carmen Segovia García"
+#logo: ./img/ugr.png
+logo-width: 100mm
+titlepage-rule-height: 0
+titlepage-background: "./img/ugrA4.pdf"
+
 toc: true
 numbersections: true
 
@@ -30,8 +34,4 @@ footer-right: "\\hspace{1cm}"
 colorlinks: true
 linkcolor: RoyalBlue
 urlcolor: RoyalBlue
-
-page-background: ./img/background.png
-page-background-opacity: 0.85
-
 ---

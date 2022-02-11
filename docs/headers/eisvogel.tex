@@ -671,7 +671,7 @@ $if(beamer)$
 $else$
 \usepackage{titling}
 \title{$title$}
-\author{$for(author)$$author$$sep$, $endfor$}
+\author{$for(author)$$author$$sep$\newline $endfor$}
 \date{$date$}
 $endif$
 
@@ -917,14 +917,19 @@ $if(titlepage-background)$
 {
   \setstretch{2}
   \vfill
-  \vskip -8em
-  \noindent {\huge \textbf{\textsf{$title$}}}
+  \vskip -7em
+  \noindent {\Huge \textbf{\textsf{$title$}}}
   $if(subtitle)$
-  \vskip 1em
-  {\Large \textsf{$subtitle$}}
-  $endif$
   \vskip 2em
-  \noindent {\Large \textsf{$for(author)$$author$$sep$, $endfor$} \vskip 0.6em \textsf{$date$}}
+  {\large \textsf{$subtitle$}}
+  $endif$
+  \vskip 1.5em
+  \setstretch{1.4}
+  \noindent {\large \textsf{$for(author)$$author$\newline $endfor$}}
+  \vskip 5em
+  \textsf{Escuela Técnica Superior de Ingenierías Informática y de Telecomunicación\newline Facultad de Ciencias\newline}
+  \vskip 1em
+  \textsf{$date$}
   \vfill
 }
 $else$
@@ -937,7 +942,7 @@ $else$
   {\Large \textsf{$subtitle$}}
   $endif$
   \vskip 2em
-  \noindent {\Large \textsf{$for(author)$$author$$sep$, $endfor$}}
+  \noindent {\Large \textsf{$for(author)$$author$\newline $endfor$}}
   \vfill
 }
 $endif$
