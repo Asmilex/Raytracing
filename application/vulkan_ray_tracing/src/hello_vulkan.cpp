@@ -983,3 +983,30 @@ void HelloVulkan::createRtShaderBindingTable() {
     m_alloc.unmap(m_rtSBTBuffer);
     m_alloc.finalizeAndReleaseStaging();
 }
+
+// ────────────────────────────────────────────────────────────────────────────────
+// Ray tracing the scene
+//
+
+void HelloVulkan::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clearColor) {
+    m_debug.beginLabel(cmdBuf, "Ray trace");
+
+    // Inicializar las push constant
+    m_pcRay.clearColor     = clearColor;
+    m_pcRay.lightPosition  = m_pcRaster.lightPosition;
+    m_pcRay.lightIntensity = m_pcRaster.lightIntensity;
+    m_pcRay.lightType      = m_pcRaster.lightType;
+
+    std::vector<VkDescriptorSet> descSets {m_rtDescSet, m_descSet};
+    vkCmdBindPipeline(cmdBuf, VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR, m_rtPipeline);
+    vkCmdBindDescriptorSets(cmdBuf, VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR, m_rtPipelineLayout, 0,
+        (uint32_t)descSets.size(), descSets.data(), 0, nullptr
+    );
+    vkCmdPushConstants(cmdBuf, m_rtPipelineLayout,
+        VK_SHADER_STAGE_RAYGEN_BIT_KHR | VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR | VK_SHADER_STAGE_MISS_BIT_KHR,
+        0, sizeof(PushConstantRay), &m_pcRay
+    );
+
+    vkCmdTraceRaysKHR(cmdBuf, &m_rgenRegion, &m_missRegion, &m_hitRegion, &m_callRegion, m_size.width, m_size.height, 1);
+    m_debug.endLabel(cmdBuf);
+}
