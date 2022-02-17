@@ -706,7 +706,7 @@ void HelloVulkan::createTopLevelAS() {
 void HelloVulkan::createRtDescriptorSet() {
     m_rtDescSetLayoutBind.addBinding(
         RtxBindings::eTlas, VK_DESCRIPTOR_TYPE_ACCELERATION_STRUCTURE_KHR, 1,
-        VK_SHADER_STAGE_RAYGEN_BIT_KHR
+        VK_SHADER_STAGE_RAYGEN_BIT_KHR | VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR
     ); // TLAS
 
     m_rtDescSetLayoutBind.addBinding(
@@ -767,7 +767,7 @@ void HelloVulkan::createRtPipeline() {
     enum StageIndices {
         eRaygen,
         eMiss,
-        //eMiss2,
+        eMiss2,
         eClosestHit,
         eShaderGroupCount
     };
@@ -796,11 +796,11 @@ void HelloVulkan::createRtPipeline() {
     // // El segundo miss shader se invoca cuando un shadow ray no ha colisionado con la geometría.
     // // Simplemente, indica que no ha habido oclusión.
 
-    // stage.module = nvvk::createShaderModule(m_device,
-    //     nvh::loadFile("spv/raytraceShadow.rmiss.spv", true, defaultSearchPaths, true
-    // ));
-    // stage.stage   = VK_SHADER_STAGE_MISS_BIT_KHR;
-    // stages[eMiss2] = stage;
+    stage.module = nvvk::createShaderModule(m_device,
+        nvh::loadFile("spv/raytraceShadow.rmiss.spv", true, defaultSearchPaths, true
+    ));
+    stage.stage   = VK_SHADER_STAGE_MISS_BIT_KHR;
+    stages[eMiss2] = stage;
 
     // Hit group - closest hit
     stage.module = nvvk::createShaderModule(m_device,
@@ -830,6 +830,11 @@ void HelloVulkan::createRtPipeline() {
     // Miss
     group.type          = VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR;
     group.generalShader = eMiss;
+    m_rtShaderGroups.push_back(group);
+
+    // Shadow miss
+    group.type          = VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR;
+    group.generalShader = eMiss2;
     m_rtShaderGroups.push_back(group);
 
     // closest hit shader
@@ -886,13 +891,18 @@ void HelloVulkan::createRtPipeline() {
         To allow the underlying RTX layer to optimize the pipeline we indicate the maximum recursion depth used
         by our shaders
 
-        For the simplistic shaders we currently have, we set this depth to 1,
+        For the simplistic shaders we currently have, we can set this depth to 1,
         meaning that we must not trigger recursion at all (i.e. a hit shader calling TraceRayEXT()).
 
         Note that it is preferable to keep the recursion level as low as possible,
         replacing it by a loop formulation instead.
+
+        When shadow rays are added, we must increase the recursion depth to 2, since we
+        can shoot rays from the hit points of the camera rays.
+
+        Realisticly, it should be flatten to a loop.
     */
-    rayPipelineInfo.maxPipelineRayRecursionDepth = 1;  // Ray depth
+    rayPipelineInfo.maxPipelineRayRecursionDepth = 2;  // Ray depth
     rayPipelineInfo.layout                       = m_rtPipelineLayout;
 
     vkCreateRayTracingPipelinesKHR(m_device, {}, {}, 1, &rayPipelineInfo, nullptr, &m_rtPipeline);
@@ -908,8 +918,9 @@ void HelloVulkan::createRtPipeline() {
 // - Besides exception, this could always be done like this
 
 void HelloVulkan::createRtShaderBindingTable() {
-    // Siempre hay un único raygen, así que podemos ponerlo constantemente 1.
-    uint32_t missCount{1};
+    // Miss count: miss y shadows
+    // Hit count: solo hit.
+    uint32_t missCount{2};
     uint32_t hitCount{1};
     auto handleCount = 1 + missCount + hitCount;
     uint32_t handleSize = m_rtProperties.shaderGroupHandleSize;
