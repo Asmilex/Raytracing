@@ -2,6 +2,18 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Compile debug asmiray",
+            "command": "cmake",
+            "type": "shell",
+            "args": [
+                "--build",
+                "."
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/application/vulkan_ray_tracing/build"
+            }
+        },
+        {
             "label": "Compile debug RT in one weekend",
             "command": "cmake",
             "type": "shell",
