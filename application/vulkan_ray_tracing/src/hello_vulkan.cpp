@@ -766,7 +766,7 @@ void HelloVulkan::createRtPipeline() {
     enum StageIndices {
         eRaygen,
         eMiss,
-        eMiss2,
+        //eMiss2,
         eClosestHit,
         eShaderGroupCount
     };
@@ -794,6 +794,7 @@ void HelloVulkan::createRtPipeline() {
 
     // // El segundo miss shader se invoca cuando un shadow ray no ha colisionado con la geometría.
     // // Simplemente, indica que no ha habido oclusión.
+
     // stage.module = nvvk::createShaderModule(m_device,
     //     nvh::loadFile("spv/raytraceShadow.rmiss.spv", true, defaultSearchPaths, true
     // ));
