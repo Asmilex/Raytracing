@@ -816,6 +816,9 @@ void HelloVulkan::createRtPipeline() {
     group.anyHitShader       = VK_SHADER_UNUSED_KHR;
     group.closestHitShader   = VK_SHADER_UNUSED_KHR;
     group.generalShader      = VK_SHADER_UNUSED_KHR;
+
+    // Raytrace hardware therefore takes the place of the intersection shader,
+    // so, we leave the intersectionShader member to VK_SHADER_UNUSED_KHR
     group.intersectionShader = VK_SHADER_UNUSED_KHR;
 
     // Raygen
@@ -829,6 +832,11 @@ void HelloVulkan::createRtPipeline() {
     m_rtShaderGroups.push_back(group);
 
     // closest hit shader
+
+    // Note that if the geometry were not triangles, we would have set the type
+    // to VK_RAY_TRACING_SHADER_GROUP_TYPE_PROCEDURAL_HIT_GROUP_KHR,
+    // and would have to define an intersection shader.
+
     group.type             = VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANGLES_HIT_GROUP_KHR;
     group.generalShader    = VK_SHADER_UNUSED_KHR;
     group.closestHitShader = eClosestHit;
@@ -842,13 +850,15 @@ void HelloVulkan::createRtPipeline() {
         sizeof(PushConstantRay)
     };
 
+    // After creating the shader groups, we need to setup the pipeline layout that
+    // will describe how the pipeline will access external data:
     VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo {
         VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
     };
     pipelineLayoutCreateInfo.pushConstantRangeCount = 1;
     pipelineLayoutCreateInfo.pPushConstantRanges    = &pushConstant;
 
-    // Descriptor sets: one specific to ray tracing, and one shared with the rasterization pipeline
+    // Descriptor sets: one specific to ray tracing (set=0), and one shared with the rasterization pipeline (set=1)
     std::vector<VkDescriptorSetLayout> rtDescSetLayouts = {m_rtDescSetLayout, m_descSetLayout};
     pipelineLayoutCreateInfo.setLayoutCount             = static_cast<uint32_t>(rtDescSetLayouts.size());
     pipelineLayoutCreateInfo.pSetLayouts                = rtDescSetLayouts.data();
@@ -871,6 +881,10 @@ void HelloVulkan::createRtPipeline() {
 
 
     /*
+        The ray generation and closest hit shaders can trace rays, making the ray tracing a potentially recursive process.
+        To allow the underlying RTX layer to optimize the pipeline we indicate the maximum recursion depth used
+        by our shaders
+
         For the simplistic shaders we currently have, we set this depth to 1,
         meaning that we must not trigger recursion at all (i.e. a hit shader calling TraceRayEXT()).
 
