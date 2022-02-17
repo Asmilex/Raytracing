@@ -137,6 +137,8 @@ public:
 
     void createRtPipeline();
 
+    void createRtShaderBindingTable();
+
     VkPhysicalDeviceRayTracingPipelinePropertiesKHR m_rtProperties {VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR};
     nvvk::RaytracingBuilderKHR m_rtBuilder;
 
@@ -151,4 +153,11 @@ public:
 
     // Push constant for ray tracer
     PushConstantRay m_pcRay{};
+
+    // Miembros para el Shader Binding Table
+    nvvk::Buffer m_rtSBTBuffer;
+    VkStridedDeviceAddressRegionKHR m_rgenRegion{};
+    VkStridedDeviceAddressRegionKHR m_missRegion{};
+    VkStridedDeviceAddressRegionKHR m_hitRegion{};
+    VkStridedDeviceAddressRegionKHR m_callRegion{};
 };
