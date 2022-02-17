@@ -18,6 +18,8 @@ layout(buffer_reference, scalar) buffer Indices { ivec3 i[]; };                /
 layout(buffer_reference, scalar) buffer Materials { WaveFrontMaterial m[]; };  // Array con todos los materiales
 layout(buffer_reference, scalar) buffer MatIndices { int i[]; };                // ID del material para cada triángulo
 layout(set = 1, binding = eObjDescs, scalar) buffer ObjDesc_ { ObjDesc i[]; } objDesc;
+layout(set = 1, binding = eTextures) uniform sampler2D textureSamplers[];
+
 
 layout (push_constant) uniform _PushConstantRay { PushConstantRay pcRay; };
 
@@ -45,8 +47,8 @@ void main()
     const vec3 worldPos = vec3(gl_ObjectToWorldEXT * vec4(pos, 1.0));
 
     // Computing the normal at hit position
-    const vec3 nrm      = v0.nrm * barycentrics.x + v1.nrm * barycentrics.y + v2.nrm * barycentrics.z;
-    const vec3 worldNrm = normalize(vec3(nrm * gl_WorldToObjectEXT));
+    const vec3 normal      = v0.nrm * barycentrics.x + v1.nrm * barycentrics.y + v2.nrm * barycentrics.z;
+    const vec3 worldNormal = normalize(vec3(normal * gl_WorldToObjectEXT));
 
     // Vector toward the light
     vec3 L;
@@ -63,5 +65,21 @@ void main()
         L = normalize(pcRay.lightPosition);
     }
 
-    prd.hitValue = L;
+    // Material of the object
+    int               matIdx = matIndices.i[gl_PrimitiveID];
+    WaveFrontMaterial mat    = materials.m[matIdx];
+
+    // Diffuse
+    vec3 diffuse = computeDiffuse(mat, L, normal);
+
+    if (mat.textureId >= 0) {
+        uint txtId = mat.textureId + objDesc.i[gl_InstanceCustomIndexEXT].txtOffset;
+        vec2 texCoord = v0.texCoord * barycentrics.x + v1.texCoord * barycentrics.y + v2.texCoord * barycentrics.z;
+        diffuse *= texture(textureSamplers[nonuniformEXT(txtId)], texCoord).xyz;
+    }
+
+    // Specular
+    vec3 specular = computeSpecular(mat, gl_WorldRayDirectionEXT, L, normal);
+
+    prd.hitValue = vec3(lightIntensity * (diffuse + specular));
 }
