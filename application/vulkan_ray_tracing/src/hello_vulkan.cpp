@@ -109,8 +109,10 @@ void HelloVulkan::createDescriptorSetLayout()
   m_descSetLayoutBind.addBinding(SceneBindings::eGlobals, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1,
                                  VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_RAYGEN_BIT_KHR);
   // Obj descriptions
-  m_descSetLayoutBind.addBinding(SceneBindings::eObjDescs, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1,
-                                 VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR);
+  m_descSetLayoutBind.addBinding(
+      SceneBindings::eObjDescs, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1,
+      VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR | VK_SHADER_STAGE_ANY_HIT_BIT_KHR
+  );
   // Textures
   m_descSetLayoutBind.addBinding(SceneBindings::eTextures, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, nbTxt,
                                  VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR);
@@ -627,7 +629,7 @@ auto HelloVulkan::objectToVkGeometryKHR(const ObjModel& model) {
         VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_KHR
     };
     asGeom.geometryType       = VK_GEOMETRY_TYPE_TRIANGLES_KHR;
-    asGeom.flags              = VK_GEOMETRY_OPAQUE_BIT_KHR;
+    asGeom.flags              = VK_GEOMETRY_NO_DUPLICATE_ANY_HIT_INVOCATION_BIT_KHR;
     asGeom.geometry.triangles = triangles;
 
     // El array entero se va a usar para construir la BLAS
@@ -769,7 +771,9 @@ void HelloVulkan::createRtPipeline() {
         eMiss,
         eMiss2,
         eClosestHit,
-        eShaderGroupCount
+        eAnyHit,
+        eAnyHit2,
+        eShaderGroupCount,
     };
 
     // All stages
@@ -809,6 +813,19 @@ void HelloVulkan::createRtPipeline() {
     stage.stage = VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR;
     stages[eClosestHit] = stage;
 
+    // Hit group - any hit
+    stage.module = nvvk::createShaderModule(m_device,
+        nvh::loadFile("spv/raytrace_0.rahit.spv", true, defaultSearchPaths, true)
+    );
+    stage.stage = VK_SHADER_STAGE_ANY_HIT_BIT_KHR;
+    stages[eAnyHit] = stage;
+    //
+    stage.module = nvvk::createShaderModule(m_device,
+      nvh::loadFile("spv/raytrace_1.rahit.spv", true, defaultSearchPaths, true)
+    );
+    stage.stage     = VK_SHADER_STAGE_ANY_HIT_BIT_KHR;
+    stages[eAnyHit2] = stage;
+
 
     // Shader groups
     VkRayTracingShaderGroupCreateInfoKHR group {
@@ -842,10 +859,17 @@ void HelloVulkan::createRtPipeline() {
     // Note that if the geometry were not triangles, we would have set the type
     // to VK_RAY_TRACING_SHADER_GROUP_TYPE_PROCEDURAL_HIT_GROUP_KHR,
     // and would have to define an intersection shader.
-
+    // Payload 0
     group.type             = VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANGLES_HIT_GROUP_KHR;
     group.generalShader    = VK_SHADER_UNUSED_KHR;
     group.closestHitShader = eClosestHit;
+    group.anyHitShader     = eAnyHit;
+    m_rtShaderGroups.push_back(group);
+
+    group.type             = VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANGLES_HIT_GROUP_KHR;
+    group.generalShader    = VK_SHADER_UNUSED_KHR;
+    group.closestHitShader = VK_SHADER_UNUSED_KHR;
+    group.anyHitShader     = eAnyHit2;
     m_rtShaderGroups.push_back(group);
 
 

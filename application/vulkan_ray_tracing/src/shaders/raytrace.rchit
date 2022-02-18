@@ -12,7 +12,7 @@
 hitAttributeEXT vec3 attribs;
 
 layout(location = 0) rayPayloadInEXT hitPayload prd;
-layout(location = 1) rayPayloadEXT bool isShadowed;
+layout(location = 1) rayPayloadEXT shadowPayload prdShadow;
 
 layout(buffer_reference, scalar) buffer Vertices { Vertex v[]; };              // Posición del objeto
 layout(buffer_reference, scalar) buffer Indices { ivec3 i[]; };                // Indices del triángulo
@@ -92,13 +92,14 @@ void main()
         vec3 origin = gl_WorldRayOriginEXT + gl_WorldRayDirectionEXT * gl_HitTEXT;
         vec3 rayDir = L;
 
-        uint flags = gl_RayFlagsTerminateOnFirstHitEXT | gl_RayFlagsOpaqueEXT | gl_RayFlagsSkipClosestHitShaderEXT;
-        isShadowed = true;
+        uint flags = gl_RayFlagsSkipClosestHitShaderEXT;
+        prdShadow.isHit = true;
+        prdShadow.seed = prd.seed;
 
         traceRayEXT(topLevelAS,
             flags,       // rayFlags
             0xFF,        // cullMask
-            0,           // sbtRecordOffset
+            1,           // sbtRecordOffset
             0,           // sbtRecordStride
             1,           // missIndex
             origin,      // ray origin
@@ -108,7 +109,9 @@ void main()
             1            // payload (location = 1)
         );
 
-        if (isShadowed) {
+        prd.seed = prdShadow.seed;
+
+        if (prdShadow.isHit) {
             attenuation = 1.0 / (1.0 + lightDistance);
         }
         else {

@@ -35,14 +35,14 @@ void main()
         than calling raytrace() with NBSAMPLE=1 10 times in a row.
     */
 
-    uint seed = tea(gl_LaunchIDEXT.y * gl_LaunchIDEXT.x + gl_LaunchIDEXT.x, pcRay.frame);
+    prd.seed = tea(gl_LaunchIDEXT.y * gl_LaunchIDEXT.x + gl_LaunchIDEXT.x, pcRay.frame);
 
     vec3 hitValue  = vec3(0);  // For current frame
     vec3 hitValues = vec3(0);  // For all accumulated frames
 
     for (int smpl = 0; smpl < NB_SAMPLES; smpl++) {
-        float r1 = rnd(seed);
-        float r2 = rnd(seed);
+        float r1 = rnd(prd.seed);
+        float r2 = rnd(prd.seed);
 
         // Subpixel jitter: send the ray through a different position inside the pixel each time to provide AA
         vec2 subpixel_jitter = pcRay.frame == 0
@@ -57,7 +57,7 @@ void main()
         vec4 target    = uni.projInverse * vec4(d.x, d.y, 1, 1);
         vec4 direction = uni.viewInverse * vec4(normalize(target.xyz), 0);
 
-        uint rayFlags = gl_RayFlagsOpaqueEXT;   // Toda la geometría es opaca. Esto cambiará en el futuro (¿creo?).
+        uint rayFlags = gl_RayFlagsNoneEXT;
         float tMin = 0.001;
         float tMax = 10000.0;
 

@@ -1,9 +1,12 @@
 #version 460
-#extension GL_EXT_ray_tracing : require
+#extension GL_EXT_ray_tracing : require   // GL_NV_ray_tracing ?
+#extension GL_GOOGLE_include_directive : enable
 
-layout(location = 1) rayPayloadInEXT bool isShadowed;
+#include "raycommon.glsl"
+
+layout(location = 1) rayPayloadInEXT shadowPayload prd;   //rayPayloadInNV?
 
 void main()
 {
-  isShadowed = false;
+  prd.isHit = false;
 }

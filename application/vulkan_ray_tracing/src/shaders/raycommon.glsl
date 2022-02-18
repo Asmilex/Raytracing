@@ -8,4 +8,12 @@ struct hitPayload
     int done;
     vec3 rayOrigin;
     vec3 rayDir;
+
+    uint seed;
+};
+
+struct shadowPayload
+{
+    bool isHit;
+    uint seed;
 };

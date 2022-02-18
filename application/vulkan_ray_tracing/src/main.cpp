@@ -176,9 +176,10 @@ int main(int argc, char** argv) {
         cube_default,
         medieval_building,
         cube_reflective,
+        any_hit,
     };
 
-    Scene scene = cube_reflective;
+    Scene scene = any_hit;
 
     switch (scene) {
         case Scene::cube_default:
@@ -205,6 +206,15 @@ int main(int argc, char** argv) {
                 nvmath::translation_mat4(nvmath::vec3f(0, -1, 0))
             );
             break;
+
+        case Scene::any_hit:
+            helloVk.loadModel(nvh::findFile("media/scenes/wuson_transparent.obj", defaultSearchPaths, true));
+            helloVk.loadModel(
+                nvh::findFile("media/scenes/sphere.obj", defaultSearchPaths, true),
+                nvmath::scale_mat4(nvmath::vec3f(1.5f)) * nvmath::translation_mat4(nvmath::vec3f(0.0f, 1.0f, 0.0f))
+            );
+            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
+
     }
 
 
