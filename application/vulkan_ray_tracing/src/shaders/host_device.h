@@ -37,7 +37,7 @@ using uint = unsigned int;
  #define END_BINDING() }
 #else
  #define START_BINDING(a)  const uint
- #define END_BINDING() 
+ #define END_BINDING()
 #endif
 
 START_BINDING(SceneBindings)
@@ -89,6 +89,8 @@ struct PushConstantRay
   vec3  lightPosition;
   float lightIntensity;
   int   lightType;
+
+  int maxDepth;
 };
 
 struct Vertex  // See ObjLoader, copy of VertexObj, could be compressed for device

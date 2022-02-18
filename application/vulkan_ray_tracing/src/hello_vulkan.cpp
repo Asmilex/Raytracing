@@ -902,6 +902,7 @@ void HelloVulkan::createRtPipeline() {
 
         Realisticly, it should be flatten to a loop.
     */
+
     rayPipelineInfo.maxPipelineRayRecursionDepth = 2;  // Ray depth
     rayPipelineInfo.layout                       = m_rtPipelineLayout;
 

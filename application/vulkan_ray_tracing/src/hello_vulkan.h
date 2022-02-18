@@ -154,7 +154,13 @@ public:
     VkPipeline                                        m_rtPipeline;
 
     // Push constant for ray tracer
-    PushConstantRay m_pcRay{};
+    PushConstantRay m_pcRay{
+        {},     // clear color
+        {},     // light position
+        0,      // light intensity
+        0,      // light type
+        10      // max depth
+    };
 
     // Miembros para el Shader Binding Table
     nvvk::Buffer m_rtSBTBuffer;

@@ -55,13 +55,17 @@ static void onErrorCallback(int error, const char* description) {
 void renderUI(HelloVulkan& helloVk) {
     ImGuiH::CameraWidget();
 
-    if (ImGui::CollapsingHeader("Light"))     {
+    if (ImGui::CollapsingHeader("Light")) {
         ImGui::RadioButton("Point", &helloVk.m_pcRaster.lightType, 0);
         ImGui::SameLine();
         ImGui::RadioButton("Infinite", &helloVk.m_pcRaster.lightType, 1);
 
         ImGui::SliderFloat3("Position", &helloVk.m_pcRaster.lightPosition.x, -20.f, 20.f);
         ImGui::SliderFloat("Intensity", &helloVk.m_pcRaster.lightIntensity, 0.f, 150.f);
+    }
+
+    if (ImGui::CollapsingHeader("Ray tracing options")) {
+        ImGui::SliderInt("Max Depth", &helloVk.m_pcRay.maxDepth, 1, 50);
     }
 }
 
@@ -158,9 +162,40 @@ int main(int argc, char** argv) {
     helloVk.initGUI(0);  // Using sub-pass 0
 
     // Creation of the example
-    //helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
-    helloVk.loadModel(nvh::findFile("media/scenes/Medieval_building.obj", defaultSearchPaths, true));
-    helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
+    enum Scene {
+        cube_default,
+        medieval_building,
+        cube_reflective,
+    };
+
+    Scene scene = cube_reflective;
+
+    switch (scene) {
+        case Scene::cube_default:
+            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
+            break;
+
+        case Scene::medieval_building:
+            helloVk.loadModel(nvh::findFile("media/scenes/Medieval_building.obj", defaultSearchPaths, true));
+            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
+            break;
+
+        case Scene::cube_reflective:
+            helloVk.loadModel (
+                nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
+                nvmath::translation_mat4(nvmath::vec3f(-2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
+            );
+            helloVk.loadModel(
+                nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
+                nvmath::translation_mat4(nvmath::vec3f(2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
+            );
+            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
+            helloVk.loadModel(
+                nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true),
+                nvmath::translation_mat4(nvmath::vec3f(0, -1, 0))
+            );
+            break;
+    }
 
 
     helloVk.createOffscreenRender();

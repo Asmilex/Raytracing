@@ -116,5 +116,16 @@ void main()
         }
     }
 
+    // Si el material es reflectivo, disparamos un rayo
+    if (mat.illum == 3) {
+        vec3 origin = worldPos;
+        vec3 rayDir = reflect(gl_WorldRayDirectionEXT, normal);
+
+        prd.attenuation *= mat.specular;
+        prd.done         = 0;
+        prd.rayOrigin    = origin;
+        prd.rayDir       = rayDir;
+    }
+
     prd.hitValue = vec3(lightIntensity * attenuation * (diffuse + specular));
 }
