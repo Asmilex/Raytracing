@@ -53,19 +53,29 @@ static void onErrorCallback(int error, const char* description) {
 
 // Extra UI
 void renderUI(HelloVulkan& helloVk) {
-    ImGuiH::CameraWidget();
+    bool changed = false;
+
+    changed |= ImGuiH::CameraWidget();
+    changed |= ImGui::SliderInt("Max accumulated frames", &helloVk.m_maxAcumFrames, 1, 100);
+
 
     if (ImGui::CollapsingHeader("Light")) {
-        ImGui::RadioButton("Point", &helloVk.m_pcRaster.lightType, 0);
-        ImGui::SameLine();
-        ImGui::RadioButton("Infinite", &helloVk.m_pcRaster.lightType, 1);
+        auto& pc = helloVk.m_pcRaster;
 
-        ImGui::SliderFloat3("Position", &helloVk.m_pcRaster.lightPosition.x, -20.f, 20.f);
-        ImGui::SliderFloat("Intensity", &helloVk.m_pcRaster.lightIntensity, 0.f, 150.f);
+        changed |= ImGui::RadioButton("Point", &pc.lightType, 0);
+        ImGui::SameLine();
+        changed |= ImGui::RadioButton("Infinite", &pc.lightType, 1);
+
+        changed |= ImGui::SliderFloat3("Position", &pc.lightPosition.x, -20.f, 20.f);
+        changed |= ImGui::SliderFloat("Intensity", &pc.lightIntensity, 0.f, 150.f);
     }
 
     if (ImGui::CollapsingHeader("Ray tracing options")) {
-        ImGui::SliderInt("Max Depth", &helloVk.m_pcRay.maxDepth, 1, 50);
+        changed |= ImGui::SliderInt("Max Depth", &helloVk.m_pcRay.maxDepth, 1, 50);
+    }
+
+    if (changed) {
+        helloVk.resetFrame();
     }
 }
 

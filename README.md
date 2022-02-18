@@ -125,3 +125,4 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 - [Ray Tracing Gems I](https://www.realtimerendering.com/raytracinggems/rtg/index.html)
 - [Ray Tracing Gems II](https://developer.nvidia.com/ray-tracing-gems-ii)
 - [Awesome ray tracing](https://github.com/dannyfritz/awesome-ray-tracing#vulkan-ray-tracing)
+- [Generación de números aleatorios en GPU](https://www.csee.umbc.edu/~olano/papers/GPUTEA.pdf)

@@ -5,6 +5,7 @@
 
 #include "raycommon.glsl"
 #include "host_device.h"
+#include "random.glsl"
 
 layout(location = 0) rayPayloadEXT hitPayload prd;
 
@@ -19,65 +20,107 @@ layout(push_constant) uniform _PushConstantRay { PushConstantRay pcRay; };
     pipelineLayoutCreateInfo.pSetLayouts in HelloVulkan::createRtPipeline().
 */
 
+const int NB_SAMPLES = 10;
+
 
 void main()
 {
-    const vec2 pixelCenter = vec2(gl_LaunchIDEXT.xy) + vec2(0.5);
-    const vec2 inUV        = pixelCenter/vec2(gl_LaunchSizeEXT.xy);
-    vec2  d                = inUV * 2.0 - 1.0;
+    /*
+        For a given value of m_maxFrames and NBSAMPLE,  the image will have
+            m_maxFrames * NBSAMPLE
+        antialiasing samples. For instance,
+            m_maxFrames = 10 and NBSAMPLE = 10 == m_maxFrames = 100 and NBSAMPLE = 1.
 
-    vec4 origin    = uni.viewInverse * vec4(0, 0, 0, 1);
-    vec4 target    = uni.projInverse * vec4(d.x, d.y, 1, 1);
-    vec4 direction = uni.viewInverse * vec4(normalize(target.xyz), 0);
+        However, using NBSAMPLE=10 in the ray generation shader will be faster
+        than calling raytrace() with NBSAMPLE=1 10 times in a row.
+    */
 
-    uint rayFlags = gl_RayFlagsOpaqueEXT;   // Toda la geometría es opaca. Esto cambiará en el futuro (¿creo?).
-    float tMin = 0.001;
-    float tMax = 10000.0;
+    uint seed = tea(gl_LaunchIDEXT.y * gl_LaunchIDEXT.x + gl_LaunchIDEXT.x, pcRay.frame);
 
-    // Llamada a la generación del rayo.
-    // Para saber por qué ponemos esos valores en sbtRecordOffset y sbtRecordStride, mira este artículo:
-    // https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways
+    vec3 hitValue  = vec3(0);  // For current frame
+    vec3 hitValues = vec3(0);  // For all accumulated frames
 
-    // (Y mira en general el capítulo 11 de nvpro tutorial que esto tiene mucha chicha)
+    for (int smpl = 0; smpl < NB_SAMPLES; smpl++) {
+        float r1 = rnd(seed);
+        float r2 = rnd(seed);
 
-    // Inicializar el payload correctamente
-    prd.depth       = 0;
-    prd.hitValue    = vec3(0);
-    prd.attenuation = vec3(1.f, 1.f, 1.f);
-    prd.done        = 1;
-    prd.rayOrigin   = origin.xyz;
-    prd.rayDir      = direction.xyz;
+        // Subpixel jitter: send the ray through a different position inside the pixel each time to provide AA
+        vec2 subpixel_jitter = pcRay.frame == 0
+            ? vec2(0.5f, 0.5f)
+            : vec2(r1, r2);
+
+        const vec2 pixelCenter = vec2(gl_LaunchIDEXT.xy) + subpixel_jitter;
+        const vec2 inUV        = pixelCenter/vec2(gl_LaunchSizeEXT.xy);
+        vec2  d                = inUV * 2.0 - 1.0;
+
+        vec4 origin    = uni.viewInverse * vec4(0, 0, 0, 1);
+        vec4 target    = uni.projInverse * vec4(d.x, d.y, 1, 1);
+        vec4 direction = uni.viewInverse * vec4(normalize(target.xyz), 0);
+
+        uint rayFlags = gl_RayFlagsOpaqueEXT;   // Toda la geometría es opaca. Esto cambiará en el futuro (¿creo?).
+        float tMin = 0.001;
+        float tMax = 10000.0;
+
+        // Llamada a la generación del rayo.
+        // Para saber por qué ponemos esos valores en sbtRecordOffset y sbtRecordStride, mira este artículo:
+        // https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways
+
+        // (Y mira en general el capítulo 11 de nvpro tutorial que esto tiene mucha chicha)
+
+        // Inicializar el payload correctamente
+        prd.depth       = 0;
+        prd.hitValue    = vec3(0);
+        prd.attenuation = vec3(1.f, 1.f, 1.f);
+        prd.done        = 1;
+        prd.rayOrigin   = origin.xyz;
+        prd.rayDir      = direction.xyz;
 
 
-    vec3 hitValue = vec3(0);
+        hitValue = vec3(0);
 
-    // Lanzamos rayos, y si pegamos con un material reflectivo, seguimos generando.
-    // Con este bucle evitamos generar rayos desde el closest hit
-    for (;;) {
-        traceRayEXT(topLevelAS, // acceleration structure
-            rayFlags,       // rayFlags
-            0xFF,           // cullMask
-            0,              // sbtRecordOffset
-            0,              // sbtRecordStride
-            0,              // missIndex
-            origin.xyz,     // ray origin
-            tMin,           // ray min range
-            direction.xyz,  // ray direction
-            tMax,           // ray max range
-            0               // payload (location = 0)
-        );
+        // Lanzamos rayos, y si pegamos con un material reflectivo, seguimos generando.
+        // Con este bucle evitamos generar rayos desde el closest hit
+        for (;;) {
+            traceRayEXT(topLevelAS, // acceleration structure
+                rayFlags,       // rayFlags
+                0xFF,           // cullMask
+                0,              // sbtRecordOffset
+                0,              // sbtRecordStride
+                0,              // missIndex
+                origin.xyz,     // ray origin
+                tMin,           // ray min range
+                direction.xyz,  // ray direction
+                tMax,           // ray max range
+                0               // payload (location = 0)
+            );
 
-        hitValue += prd.hitValue * prd.attenuation;
+            hitValue += prd.hitValue * prd.attenuation;
 
-        prd.depth++;
+            prd.depth++;
 
-        if (prd.done == 1 || prd.depth >= pcRay.maxDepth)
-            break;
+            if (prd.done == 1 || prd.depth >= pcRay.maxDepth)
+                break;
 
-        origin.xyz    = prd.rayOrigin;
-        direction.xyz = prd.rayDir;
-        prd.done      = 1;              // Si se impacta en un material no reflectivo, paramos
+            origin.xyz    = prd.rayOrigin;
+            direction.xyz = prd.rayDir;
+            prd.done      = 1;              // Si se impacta en un material no reflectivo, paramos
+        }
+
+        hitValues += hitValue;
     }
 
-    imageStore(image, ivec2(gl_LaunchIDEXT.xy), vec4(hitValue, 1.0));
+    // Tenemos varios frames acumulados en hitValues -> dividimos por el número de samples
+    // para obtener el frame resultante.
+
+    hitValue = hitValues / NB_SAMPLES;
+    // Hacer acumulación de frames cuando no nos encontremos en el primero (aka el 0)
+    if (pcRay.frame > 0) {
+        float a         = 1.0f / float(pcRay.frame + 1);        // Atenuación, creo
+        vec3  old_color = imageLoad(image, ivec2(gl_LaunchIDEXT.xy)).xyz;
+
+        imageStore(image, ivec2(gl_LaunchIDEXT.xy), vec4(mix(old_color, hitValue, a), 1.f));
+    }
+    else {
+        imageStore(image, ivec2(gl_LaunchIDEXT.xy), vec4(hitValue, 1.0));
+    }
 }

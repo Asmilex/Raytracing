@@ -141,6 +141,10 @@ public:
 
     void raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clearColor);
 
+    // Jitter camera
+    void resetFrame();
+    void updateFrame();
+
     VkPhysicalDeviceRayTracingPipelinePropertiesKHR m_rtProperties {VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR};
     nvvk::RaytracingBuilderKHR m_rtBuilder;
 
@@ -161,6 +165,7 @@ public:
         0,      // light type
         10      // max depth
     };
+    int m_maxAcumFrames {20};
 
     // Miembros para el Shader Binding Table
     nvvk::Buffer m_rtSBTBuffer;

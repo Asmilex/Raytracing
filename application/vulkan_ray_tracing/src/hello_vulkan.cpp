@@ -1003,6 +1003,14 @@ void HelloVulkan::createRtShaderBindingTable() {
 void HelloVulkan::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clearColor) {
     m_debug.beginLabel(cmdBuf, "Ray trace");
 
+    updateFrame();
+
+    // NOTE Tengo que pensar seriamente esto. ¿Quizás esté limitando de forma artificial el framerate?
+    // Así es como se indica en el tutorial, pero me escama.
+    if (m_pcRay.frame >= m_maxAcumFrames) {
+        return ;
+    }
+
     // Inicializar las push constant
     m_pcRay.clearColor     = clearColor;
     m_pcRay.lightPosition  = m_pcRaster.lightPosition;
@@ -1021,4 +1029,32 @@ void HelloVulkan::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& 
 
     vkCmdTraceRaysKHR(cmdBuf, &m_rgenRegion, &m_missRegion, &m_hitRegion, &m_callRegion, m_size.width, m_size.height, 1);
     m_debug.endLabel(cmdBuf);
+}
+
+// ────────────────────────────────────────────────────────────────────────────────
+// Si la matriz de cámara o el FOV cambia, reseteamos el frame
+// En otro caso, lo incrementamos
+//
+void HelloVulkan::updateFrame() {
+    static nvmath::mat4f refCamMatrix;
+    static float refFov {CameraManip.getFov()};
+
+    const auto& m  = CameraManip.getMatrix();
+    const auto fov = CameraManip.getFov();
+
+    if (    memcmp(&refCamMatrix.a00, &m.a00, sizeof(nvmath::mat4f)) != 0
+         || refFov != fov )
+    {
+        resetFrame();
+        refCamMatrix = m;
+        refFov       = fov;
+    }
+
+    m_pcRay.frame++;
+}
+
+void HelloVulkan::resetFrame() {
+    // Como resetFrame() se llama antes de que se incremente el contador en updateFrame(),
+    // ponemos el contador a -1.
+    m_pcRay.frame = -1;
 }
