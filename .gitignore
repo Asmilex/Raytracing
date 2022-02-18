@@ -799,3 +799,4 @@ FodyWeavers.xsd
 
 !.vscode/c_cpp_properties.json
 log_*.txt
+!application/vulkan_ray_tracing/media/scenes/*.obj
