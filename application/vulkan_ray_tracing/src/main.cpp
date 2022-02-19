@@ -177,9 +177,10 @@ int main(int argc, char** argv) {
         medieval_building,
         cube_reflective,
         any_hit,
+        cornell_box_obj,
     };
 
-    Scene scene = any_hit;
+    Scene scene = cornell_box_obj;
 
     switch (scene) {
         case Scene::cube_default:
@@ -214,7 +215,11 @@ int main(int argc, char** argv) {
                 nvmath::scale_mat4(nvmath::vec3f(1.5f)) * nvmath::translation_mat4(nvmath::vec3f(0.0f, 1.0f, 0.0f))
             );
             helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
+            break;
 
+        case Scene::cornell_box_obj:
+            helloVk.loadModel(nvh::findFile("media/scenes/cornell_box_original_merged.obj", defaultSearchPaths, true));
+            break;
     }
 
 

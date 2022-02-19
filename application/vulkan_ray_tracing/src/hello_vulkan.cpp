@@ -585,7 +585,6 @@ void HelloVulkan::drawPost(VkCommandBuffer cmdBuf)
 // ────────────────────────────────────────────────────────────────────────────────
 // Inicializar Vulkan ray tracing
 // #VkRay
-
 void HelloVulkan::initRayTracing() {
     // Mirar las propiedades de ray tracing
     VkPhysicalDeviceProperties2 prop2 {
@@ -601,7 +600,6 @@ void HelloVulkan::initRayTracing() {
 // ────────────────────────────────────────────────────────────────────────────────
 // Convertir un modelo OBJ en geometría de ray tracing para construir el BLAS
 //
-
 auto HelloVulkan::objectToVkGeometryKHR(const ObjModel& model) {
     // El constructor BLAS requiere las direcciones del dispositivo en raw
     VkDeviceAddress vertexAddress = nvvk::getBufferDeviceAddress(m_device, model.vertexBuffer.buffer);
@@ -704,7 +702,6 @@ void HelloVulkan::createTopLevelAS() {
 // ────────────────────────────────────────────────────────────────────────────────
 // Este conjunto de descriptores contiene la estructura de aceleración y la imagen de salida
 //
-
 void HelloVulkan::createRtDescriptorSet() {
     m_rtDescSetLayoutBind.addBinding(
         RtxBindings::eTlas, VK_DESCRIPTOR_TYPE_ACCELERATION_STRUCTURE_KHR, 1,
@@ -749,7 +746,6 @@ void HelloVulkan::createRtDescriptorSet() {
 // Escribir la imagen de salida al conjunto de descriptores
 // - Necesario cuando se cambia la resolución; i.e. cuando se redimensiona la ventana
 //
-
 void HelloVulkan::updateRtDescriptorSet() {
     // (1) Output buffer
     VkDescriptorImageInfo imageInfo {
@@ -764,7 +760,6 @@ void HelloVulkan::updateRtDescriptorSet() {
 // ────────────────────────────────────────────────────────────────────────────────
 // Pipeline for the ray tracer: all shaders, raygen, close hit, miss
 //
-
 void HelloVulkan::createRtPipeline() {
     enum StageIndices {
         eRaygen,
@@ -941,7 +936,7 @@ void HelloVulkan::createRtPipeline() {
 // The Shader Binding Table (SBT)
 // - getting all shader handles and write them in a SBT buffer
 // - Besides exception, this could always be done like this
-
+//
 void HelloVulkan::createRtShaderBindingTable() {
     // Miss count: miss y shadows
     // Hit count: solo hit.
@@ -1023,7 +1018,6 @@ void HelloVulkan::createRtShaderBindingTable() {
 // ────────────────────────────────────────────────────────────────────────────────
 // Ray tracing the scene
 //
-
 void HelloVulkan::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clearColor) {
     m_debug.beginLabel(cmdBuf, "Ray trace");
 
