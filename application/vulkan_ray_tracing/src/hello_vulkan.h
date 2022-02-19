@@ -27,6 +27,7 @@
 #include "shaders/host_device.h"
 
 // #VKRay
+#include "nvh/gltfscene.hpp"
 #include "nvvk/raytraceKHR_vk.hpp"
 
 
@@ -79,10 +80,29 @@ public:
         0                   // light type
     };
 
+
+    // glTF tutorial
+/*
+    Quitamos estos elementos para el tutorial de glTF.
+
     // Array of objects and instances in the scene
     std::vector<ObjModel>    m_objModel;   // Model on host
     std::vector<ObjDesc>     m_objDesc;    // Model description for device access
     std::vector<ObjInstance> m_instances;  // Scene model instances
+*/
+
+    void loadScene(const std::string& filename);
+    void createTextureImages(const VkCommandBuffer& cmdBuf, tinygltf::Model& gltfModel);
+    auto primitiveToVkGeometry(const nvh::GltfPrimMesh& prim);
+
+    nvh::GltfScene m_gltfScene;
+    nvvk::Buffer   m_vertexBuffer;
+    nvvk::Buffer   m_normalBuffer;
+    nvvk::Buffer   m_uvBuffer;
+    nvvk::Buffer   m_indexBuffer;
+    nvvk::Buffer   m_materialBuffer;
+    nvvk::Buffer   m_primInfo;
+    nvvk::Buffer   m_sceneDesc;
 
 
     // Graphic pipeline

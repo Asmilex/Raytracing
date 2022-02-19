@@ -21,10 +21,10 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_EXT_scalar_block_layout : enable
 #extension GL_GOOGLE_include_directive : enable
-
 #extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
 
-#include "wavefront.glsl"
+#include "gltf.glsl"
+#include "host_device.h"
 
 layout(binding = 0) uniform _GlobalUniforms
 {
@@ -38,8 +38,7 @@ layout(push_constant) uniform _PushConstantRaster
 
 layout(location = 0) in vec3 i_position;
 layout(location = 1) in vec3 i_normal;
-layout(location = 2) in vec3 i_color;
-layout(location = 3) in vec2 i_texCoord;
+layout(location = 2) in vec2 i_texCoord;
 
 
 layout(location = 1) out vec3 o_worldPos;

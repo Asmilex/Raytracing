@@ -26,8 +26,8 @@
 #extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
 #extension GL_EXT_buffer_reference2 : require
 
-#include "wavefront.glsl"
-
+#include "gltf.glsl"
+#include "host_device.h"
 
 layout(push_constant) uniform _PushConstantRaster
 {
@@ -35,33 +35,25 @@ layout(push_constant) uniform _PushConstantRaster
 };
 
 // clang-format off
-// Incoming 
+// Incoming
 layout(location = 1) in vec3 i_worldPos;
 layout(location = 2) in vec3 i_worldNrm;
 layout(location = 3) in vec3 i_viewDir;
 layout(location = 4) in vec2 i_texCoord;
 // Outgoing
 layout(location = 0) out vec4 o_color;
-
-layout(buffer_reference, scalar) buffer Vertices {Vertex v[]; }; // Positions of an object
-layout(buffer_reference, scalar) buffer Indices {uint i[]; }; // Triangle indices
-layout(buffer_reference, scalar) buffer Materials {WaveFrontMaterial m[]; }; // Array of all materials on an object
-layout(buffer_reference, scalar) buffer MatIndices {int i[]; }; // Material ID for each triangle
-
-layout(binding = eObjDescs, scalar) buffer ObjDesc_ { ObjDesc i[]; } objDesc;
-layout(binding = eTextures) uniform sampler2D[] textureSamplers;
+// Buffers
+layout(buffer_reference, scalar) buffer  GltfMaterial { GltfShadeMaterial m[]; };
+layout(set = 0, binding = eSceneDesc ) readonly buffer SceneDesc_ { SceneDesc sceneDesc; } ;
+layout(set = 0, binding = eTextures) uniform sampler2D[] textureSamplers;
 // clang-format on
 
 
 void main()
 {
   // Material of the object
-  ObjDesc    objResource = objDesc.i[pcRaster.objIndex];
-  MatIndices matIndices  = MatIndices(objResource.materialIndexAddress);
-  Materials  materials   = Materials(objResource.materialAddress);
-
-  int               matIndex = matIndices.i[gl_PrimitiveID];
-  WaveFrontMaterial mat      = materials.m[matIndex];
+  GltfMaterial      gltfMat = GltfMaterial(sceneDesc.materialAddress);
+  GltfShadeMaterial mat     = gltfMat.m[pcRaster.materialId];
 
   vec3 N = normalize(i_worldNrm);
 
@@ -83,10 +75,9 @@ void main()
 
   // Diffuse
   vec3 diffuse = computeDiffuse(mat, L, N);
-  if(mat.textureId >= 0)
+  if(mat.pbrBaseColorTexture > -1)
   {
-    int  txtOffset  = objDesc.i[pcRaster.objIndex].txtOffset;
-    uint txtId      = txtOffset + mat.textureId;
+    uint txtId      = mat.pbrBaseColorTexture;
     vec3 diffuseTxt = texture(textureSamplers[nonuniformEXT(txtId)], i_texCoord).xyz;
     diffuse *= diffuseTxt;
   }

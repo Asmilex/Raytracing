@@ -6,6 +6,7 @@
 #include "raycommon.glsl"
 #include "host_device.h"
 #include "random.glsl"
+#include "sampling.glsl"
 
 layout(location = 0) rayPayloadEXT hitPayload prd;
 

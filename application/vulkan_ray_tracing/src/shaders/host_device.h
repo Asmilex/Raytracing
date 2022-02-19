@@ -41,14 +41,15 @@ using uint = unsigned int;
 #endif
 
 START_BINDING(SceneBindings)
-  eGlobals  = 0,  // Global uniform containing camera matrices
-  eObjDescs = 1,  // Access to the object descriptions
-  eTextures = 2   // Access to textures
+  eGlobals   = 0,   // Global uniform containing camera matrices
+  eSceneDesc = 1,   // Access to the scene buffers
+  eTextures  = 2    // Access to textures
 END_BINDING();
 
 START_BINDING(RtxBindings)
-  eTlas     = 0,  // Top-level acceleration structure
-  eOutImage = 1   // Ray tracer output image
+  eTlas       = 0,   // Top-level acceleration structure
+  eOutImage   = 1,   // Ray tracer output image
+  ePrimLookup = 2    // Lookup of objects
 END_BINDING();
 // clang-format on
 
@@ -79,6 +80,7 @@ struct PushConstantRaster
   uint  objIndex;
   float lightIntensity;
   int   lightType;
+  int   materialId;
 };
 
 
@@ -115,5 +117,34 @@ struct WaveFrontMaterial  // See ObjLoader, copy of MaterialObj, could be compre
   int   textureId;
 };
 
+
+// Structure used for retrieving the primitive information in the closest hit
+struct PrimMeshInfo
+{
+  uint indexOffset;
+  uint vertexOffset;
+  int  materialIndex;
+};
+
+// Scene buffer addresses
+struct SceneDesc
+{
+  uint64_t vertexAddress;    // Address of the Vertex buffer
+  uint64_t normalAddress;    // Address of the Normal buffer
+  uint64_t uvAddress;        // Address of the texture coordinates buffer
+  uint64_t indexAddress;     // Address of the triangle indices buffer
+  uint64_t materialAddress;  // Address of the Materials buffer (GltfShadeMaterial)
+  uint64_t primInfoAddress;  // Address of the mesh primitives buffer (PrimMeshInfo)
+};
+
+
+// Striped down version of PBR.
+// For the correct implementation, check https://github.com/nvpro-samples/vk_raytrace
+struct GltfShadeMaterial
+{
+  vec4 pbrBaseColorFactor;
+  vec3 emissiveFactor;
+  int  pbrBaseColorTexture;
+};
 
 #endif

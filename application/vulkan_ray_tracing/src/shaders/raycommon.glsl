@@ -5,7 +5,7 @@ struct hitPayload
     // Reflections
     int  depth;
     vec3 attenuation;
-    int done;
+    int  done;
     vec3 rayOrigin;
     vec3 rayDir;
 
