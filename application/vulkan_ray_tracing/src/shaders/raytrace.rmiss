@@ -26,7 +26,7 @@ void main()
         prd.hitValue = pcRay.clearColor.xyz * 0.8;
     }
     else {
-        prd.hitValue = vec3(0.01);   // Tiny contribution from environment
+        prd.hitValue = vec3(0.5);   // Tiny contribution from environment
     }
 
     prd.depth = 100; // Ending trace

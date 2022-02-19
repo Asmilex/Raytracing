@@ -70,7 +70,6 @@ void main()
         // Inicializar el payload correctamente
         prd.depth     = 0;
         prd.hitValue  = vec3(0);
-        prd.done      = 1;
         prd.rayOrigin = origin.xyz;
         prd.rayDir    = direction.xyz;
         prd.weight    = vec3(0);
@@ -89,9 +88,9 @@ void main()
                 0,              // sbtRecordOffset
                 0,              // sbtRecordStride
                 0,              // missIndex
-                origin.xyz,     // ray origin
+                prd.rayOrigin,     // ray origin
                 tMin,           // ray min range
-                direction.xyz,  // ray direction
+                prd.rayDir,  // ray direction
                 tMax,           // ray max range
                 0               // payload (location = 0)
             );
@@ -101,12 +100,8 @@ void main()
 
             prd.depth++;
 
-            if (prd.done == 1 || prd.depth >= pcRay.maxDepth)
+            if (prd.depth >= pcRay.maxDepth)
                 break;
-
-            origin.xyz    = prd.rayOrigin;
-            direction.xyz = prd.rayDir;
-            prd.done      = 1;              // Si se impacta en un material no reflectivo, paramos
         }
 
         hitValues += hitValue;

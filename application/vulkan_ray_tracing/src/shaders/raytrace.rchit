@@ -64,12 +64,21 @@ void main()
     vec3 ray_origin = world_position;
     vec3 ray_dir = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
 
+
     // Probability of the new ray (cosine distributed)
     const float p = 1 / M_PI;
 
     // Compute the BRDF for this ray (assuming Lambertian reflection)
     float cos_theta = dot(ray_dir, world_normal);
-    vec3 BRDF = mat.diffuse.xyz / M_PI;
+
+    vec3 diffuse = mat.diffuse;
+    if (mat.textureId >= 0) {
+        uint txtId = mat.textureId + objDesc.i[gl_InstanceCustomIndexEXT].txtOffset;
+        vec2 texCoord = v0.texCoord * barycentrics.x + v1.texCoord * barycentrics.y + v2.texCoord * barycentrics.z;
+        diffuse *= texture(textureSamplers[nonuniformEXT(txtId)], texCoord).xyz;
+    }
+
+    vec3 BRDF = diffuse / M_PI;
 
     prd.rayOrigin = ray_origin;
     prd.rayDir    = ray_dir;
