@@ -180,7 +180,7 @@ int main(int argc, char** argv) {
         cornell_box_obj,
     };
 
-    Scene scene = cornell_box_obj;
+    Scene scene = medieval_building;
 
     switch (scene) {
         case Scene::cube_default:

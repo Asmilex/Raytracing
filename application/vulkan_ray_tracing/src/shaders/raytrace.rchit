@@ -8,6 +8,7 @@
 
 #include "raycommon.glsl"
 #include "wavefront.glsl"
+#include "sampling.glsl"
 
 hitAttributeEXT vec3 attribs;
 
@@ -46,11 +47,36 @@ void main()
 
     // Computing the coordinates of the hit position
     const vec3 pos      = v0.pos * barycentrics.x + v1.pos * barycentrics.y + v2.pos * barycentrics.z;
-    const vec3 worldPos = vec3(gl_ObjectToWorldEXT * vec4(pos, 1.0));
+    const vec3 world_position = vec3(gl_ObjectToWorldEXT * vec4(pos, 1.0));
 
     // Computing the normal at hit position
-    const vec3 normal      = v0.nrm * barycentrics.x + v1.nrm * barycentrics.y + v2.nrm * barycentrics.z;
-    const vec3 worldNormal = normalize(vec3(normal * gl_WorldToObjectEXT));
+    const vec3 normal       = v0.nrm * barycentrics.x + v1.nrm * barycentrics.y + v2.nrm * barycentrics.z;
+    const vec3 world_normal = normalize(vec3(normal * gl_WorldToObjectEXT));
+
+    // Material of the object
+    int               matIdx    = matIndices.i[gl_PrimitiveID];
+    WaveFrontMaterial mat       = materials.m[matIdx];
+    vec3              emittance = mat.emission;
+
+    // Pick a random direction from here and keep going
+    vec3 tangent, bitangent;
+    create_coordinate_system(world_normal, tangent, bitangent);
+    vec3 ray_origin = world_position;
+    vec3 ray_dir = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
+
+    // Probability of the new ray (cosine distributed)
+    const float p = 1 / M_PI;
+
+    // Compute the BRDF for this ray (assuming Lambertian reflection)
+    float cos_theta = dot(ray_dir, world_normal);
+    vec3 BRDF = mat.diffuse.xyz / M_PI;
+
+    prd.rayOrigin = ray_origin;
+    prd.rayDir    = ray_dir;
+    prd.hitValue  = emittance;
+    prd.weight    = BRDF * cos_theta / p;
+
+/* Código viejo antes de pasar a path tracing
 
     // Vector toward the light
     vec3 L;
@@ -131,4 +157,5 @@ void main()
     }
 
     prd.hitValue = vec3(lightIntensity * attenuation * (diffuse + specular));
+*/
 }
