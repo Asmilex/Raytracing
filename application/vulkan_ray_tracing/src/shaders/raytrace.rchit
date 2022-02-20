@@ -15,14 +15,16 @@ hitAttributeEXT vec3 attribs;
 layout(location = 0) rayPayloadInEXT hitPayload prd;
 layout(location = 1) rayPayloadEXT shadowPayload prdShadow;
 
-layout(buffer_reference, scalar) buffer Vertices { Vertex v[]; };              // Posición del objeto
-layout(buffer_reference, scalar) buffer Indices { ivec3 i[]; };                // Indices del triángulo
-layout(buffer_reference, scalar) buffer Materials { WaveFrontMaterial m[]; };  // Array con todos los materiales
+layout(set = 0, binding = eTlas) uniform accelerationStructureEXT topLevelAS;
+
+layout(buffer_reference, scalar) buffer Vertices   { Vertex v[]; };             // Posición del objeto
+layout(buffer_reference, scalar) buffer Indices    { ivec3 i[]; };              // Indices del triángulo
+layout(buffer_reference, scalar) buffer Materials  { WaveFrontMaterial m[]; };  // Array con todos los materiales
 layout(buffer_reference, scalar) buffer MatIndices { int i[]; };                // ID del material para cada triángulo
+
 layout(set = 1, binding = eObjDescs, scalar) buffer ObjDesc_ { ObjDesc i[]; } objDesc;
 layout(set = 1, binding = eTextures) uniform sampler2D textureSamplers[];
 
-layout(set = 0, binding = eTlas) uniform accelerationStructureEXT topLevelAS;   // Para los shadow rays
 
 layout (push_constant) uniform _PushConstantRay { PushConstantRay pcRay; };
 
@@ -46,7 +48,7 @@ void main()
     const vec3 barycentrics = vec3(1.0 - attribs.x - attribs.y, attribs.x, attribs.y);
 
     // Computing the coordinates of the hit position
-    const vec3 pos      = v0.pos * barycentrics.x + v1.pos * barycentrics.y + v2.pos * barycentrics.z;
+    const vec3 pos            = v0.pos * barycentrics.x + v1.pos * barycentrics.y + v2.pos * barycentrics.z;
     const vec3 world_position = vec3(gl_ObjectToWorldEXT * vec4(pos, 1.0));
 
     // Computing the normal at hit position
@@ -62,7 +64,7 @@ void main()
     vec3 tangent, bitangent;
     create_coordinate_system(world_normal, tangent, bitangent);
     vec3 ray_origin = world_position;
-    vec3 ray_dir = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
+    vec3 ray_dir    = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
 
 
     // Probability of the new ray (cosine distributed)

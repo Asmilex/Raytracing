@@ -90,6 +90,7 @@ struct PushConstantRay
   float lightIntensity;
   int   lightType;
   int   maxDepth;
+  int   nb_samples;     // For the antialiasing
   int   frame;
 };
 

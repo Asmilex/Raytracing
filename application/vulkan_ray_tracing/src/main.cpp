@@ -56,7 +56,6 @@ void renderUI(HelloVulkan& helloVk) {
     bool changed = false;
 
     changed |= ImGuiH::CameraWidget();
-    changed |= ImGui::SliderInt("Max accumulated frames", &helloVk.m_maxAcumFrames, 1, 100);
 
 
     if (ImGui::CollapsingHeader("Light")) {
@@ -71,7 +70,9 @@ void renderUI(HelloVulkan& helloVk) {
     }
 
     if (ImGui::CollapsingHeader("Ray tracing options")) {
-        changed |= ImGui::SliderInt("Max Depth", &helloVk.m_pcRay.maxDepth, 1, 50);
+        changed |= ImGui::SliderInt("Max depth of ray", &helloVk.m_pcRay.maxDepth, 1, 50);
+        changed |= ImGui::SliderInt("Max accum frames", &helloVk.m_maxAcumFrames, 1, 100);
+        changed |= ImGui::SliderInt("Number of samples", &helloVk.m_pcRay.nb_samples, 1, 20);
     }
 
     if (changed) {
@@ -153,10 +154,7 @@ int main(int argc, char** argv) {
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     GLFWwindow* window = glfwCreateWindow(SAMPLE_WIDTH, SAMPLE_HEIGHT, PROJECT_NAME, nullptr, nullptr);
 
-
-    // Setup camera
     CameraManip.setWindowSize(SAMPLE_WIDTH, SAMPLE_HEIGHT);
-    CameraManip.setLookat(nvmath::vec3f(4.0f, 4.0f, 4.0f), nvmath::vec3f(0, 1, 0), nvmath::vec3f(0, 1, 0));
 
     // Setup Vulkan
     if(!glfwVulkanSupported()) {
@@ -243,7 +241,6 @@ int main(int argc, char** argv) {
 
     bool useRaytracer = true;
 
-
     helloVk.createPostDescriptor();
     helloVk.createPostPipeline();
     helloVk.updatePostDescriptorSet();
@@ -275,6 +272,7 @@ int main(int argc, char** argv) {
             renderUI(helloVk);
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             ImGuiH::Control::Info("", "", "(F10) Toggle Pane", ImGuiH::Control::Flags::Disabled);
+            ImGui::Text("Total samples = %i", helloVk.m_maxAcumFrames * helloVk.m_pcRay.nb_samples);
             ImGuiH::Panel::End();
         }
 

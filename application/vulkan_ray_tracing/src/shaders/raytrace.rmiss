@@ -26,8 +26,9 @@ void main()
         prd.hitValue = pcRay.clearColor.xyz * 0.8;
     }
     else {
-        prd.hitValue = vec3(0.5);   // Tiny contribution from environment
+        prd.hitValue = vec3(0.3);   // Tiny contribution from environment
     }
 
-    prd.depth = 100; // Ending trace
+    // If nothing is hit, there's no point in continuing the ray.
+    prd.depth = pcRay.maxDepth;
 }
