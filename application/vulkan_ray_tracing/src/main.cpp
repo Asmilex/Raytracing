@@ -79,6 +79,59 @@ void renderUI(HelloVulkan& helloVk) {
     }
 }
 
+enum Scene {
+    cube_default,
+    medieval_building,
+    cube_reflective,
+    any_hit,
+    cornell_box_obj,
+};
+
+void load_scene(Scene scene, HelloVulkan& helloVk) {
+    CameraManip.setLookat(nvmath::vec3f(4.0f, 4.0f, 4.0f), nvmath::vec3f(0, 1, 0), nvmath::vec3f(0, 1, 0));
+
+    switch (scene) {
+        case Scene::cube_default:
+            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
+            break;
+
+        case Scene::medieval_building:
+            helloVk.loadModel(nvh::findFile("media/scenes/Medieval_building.obj", defaultSearchPaths, true));
+            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
+            break;
+
+        case Scene::cube_reflective:
+            helloVk.loadModel (
+                nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
+                nvmath::translation_mat4(nvmath::vec3f(-2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
+            );
+            helloVk.loadModel(
+                nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
+                nvmath::translation_mat4(nvmath::vec3f(2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
+            );
+            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
+            helloVk.loadModel(
+                nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true),
+                nvmath::translation_mat4(nvmath::vec3f(0, -1, 0))
+            );
+            break;
+
+        case Scene::any_hit:
+            helloVk.loadModel(nvh::findFile("media/scenes/wuson_transparent.obj", defaultSearchPaths, true));
+            helloVk.loadModel(
+                nvh::findFile("media/scenes/sphere.obj", defaultSearchPaths, true),
+                nvmath::scale_mat4(nvmath::vec3f(1.5f)) * nvmath::translation_mat4(nvmath::vec3f(0.0f, 1.0f, 0.0f))
+            );
+            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
+            break;
+
+        case Scene::cornell_box_obj:
+            helloVk.loadModel(nvh::findFile("media/scenes/cornell_box_original_merged.obj", defaultSearchPaths, true));
+            CameraManip.setLookat(nvmath::vec3f(0.076, 0.950, 2.748), nvmath::vec3f(0.079, 1.000, 0.000), nvmath::vec3f(0, 1, 0));
+            break;
+    }
+}
+
 // ────────────────────────────────────────────────────────────────────────────────
 
 static int const SAMPLE_WIDTH  = 1280;
@@ -171,57 +224,7 @@ int main(int argc, char** argv) {
     // Setup Imgui
     helloVk.initGUI(0);  // Using sub-pass 0
 
-    // Creation of the example
-    enum Scene {
-        cube_default,
-        medieval_building,
-        cube_reflective,
-        any_hit,
-        cornell_box_obj,
-    };
-
-    Scene scene = cornell_box_obj;
-
-    switch (scene) {
-        case Scene::cube_default:
-            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
-            break;
-
-        case Scene::medieval_building:
-            helloVk.loadModel(nvh::findFile("media/scenes/Medieval_building.obj", defaultSearchPaths, true));
-            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
-            break;
-
-        case Scene::cube_reflective:
-            helloVk.loadModel (
-                nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
-                nvmath::translation_mat4(nvmath::vec3f(-2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
-            );
-            helloVk.loadModel(
-                nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
-                nvmath::translation_mat4(nvmath::vec3f(2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
-            );
-            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
-            helloVk.loadModel(
-                nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true),
-                nvmath::translation_mat4(nvmath::vec3f(0, -1, 0))
-            );
-            break;
-
-        case Scene::any_hit:
-            helloVk.loadModel(nvh::findFile("media/scenes/wuson_transparent.obj", defaultSearchPaths, true));
-            helloVk.loadModel(
-                nvh::findFile("media/scenes/sphere.obj", defaultSearchPaths, true),
-                nvmath::scale_mat4(nvmath::vec3f(1.5f)) * nvmath::translation_mat4(nvmath::vec3f(0.0f, 1.0f, 0.0f))
-            );
-            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
-            break;
-
-        case Scene::cornell_box_obj:
-            helloVk.loadModel(nvh::findFile("media/scenes/cornell_box_original_merged.obj", defaultSearchPaths, true));
-            break;
-    }
-
+    load_scene(Scene::cornell_box_obj, helloVk);
 
     helloVk.createOffscreenRender();
     helloVk.createDescriptorSetLayout();
