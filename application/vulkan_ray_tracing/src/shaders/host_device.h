@@ -102,6 +102,7 @@ struct Vertex  // See ObjLoader, copy of VertexObj, could be compressed for devi
   vec2 texCoord;
 };
 
+// https://www.loc.gov/preservation/digital/formats/fdd/fdd000508.shtml
 struct WaveFrontMaterial  // See ObjLoader, copy of MaterialObj, could be compressed for device
 {
   vec3  ambient;

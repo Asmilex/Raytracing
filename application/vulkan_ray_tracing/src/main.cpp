@@ -85,7 +85,8 @@ enum Scene {
     medieval_building,
     cube_reflective,
     any_hit,
-    cornell_box_obj,
+    cornell_box,
+    cornell_box_multimaterial,
 };
 
 void load_scene(Scene scene, HelloVulkan& helloVk) {
@@ -126,10 +127,16 @@ void load_scene(Scene scene, HelloVulkan& helloVk) {
             helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
             break;
 
-        case Scene::cornell_box_obj:
-            helloVk.loadModel(nvh::findFile("media/scenes/cornell_box_original_merged.obj", defaultSearchPaths, true));
-            CameraManip.setLookat(nvmath::vec3f(0.076, 0.950, 2.748), nvmath::vec3f(0.079, 1.000, 0.000), nvmath::vec3f(0, 1, 0));
+        case Scene::cornell_box:
+            helloVk.loadModel(nvh::findFile("media/scenes/cornell_box.obj", defaultSearchPaths, true));
+            CameraManip.setLookat(nvmath::vec3f(233.665, 324.268, -508.527), nvmath::vec3f(232.440, 297.224, 11.248), nvmath::vec3f(0, 1, 0));
             break;
+
+        case Scene::cornell_box_multimaterial:
+            helloVk.loadModel(nvh::findFile("media/scenes/cornell_box_multimaterial.obj", defaultSearchPaths, true));
+            CameraManip.setLookat(nvmath::vec3f(233.665, 324.268, -508.527), nvmath::vec3f(232.440, 297.224, 11.248), nvmath::vec3f(0, 1, 0));
+            break;
+
     }
 }
 
@@ -222,7 +229,7 @@ int main(int argc, char** argv) {
     // Setup Imgui
     helloVk.initGUI(0);  // Using sub-pass 0
 
-    load_scene(Scene::cornell_box_obj, helloVk);
+    load_scene(Scene::cornell_box, helloVk);
 
     helloVk.createOffscreenRender();
     helloVk.createDescriptorSetLayout();

@@ -72,8 +72,8 @@ void main()
 
     // Compute the BRDF for this ray (assuming Lambertian reflection)
     float cos_theta = dot(ray_dir, world_normal);
-
     vec3 diffuse = mat.diffuse;
+
     if (mat.textureId >= 0) {
         uint txtId = mat.textureId + objDesc.i[gl_InstanceCustomIndexEXT].txtOffset;
         vec2 texCoord = v0.texCoord * barycentrics.x + v1.texCoord * barycentrics.y + v2.texCoord * barycentrics.z;
@@ -84,7 +84,7 @@ void main()
 
     prd.rayOrigin = ray_origin;
     prd.rayDir    = ray_dir;
-    prd.hitValue  = emittance;
+    prd.hitValue  = mat.emission;
     prd.weight    = BRDF * cos_theta / p;
 
 /* Código viejo antes de pasar a path tracing

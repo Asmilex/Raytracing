@@ -77,9 +77,10 @@ void main()
         vec3 current_weight = vec3(1);
              hitValue       = vec3(0);
 
-        // Lanzamos rayos, y si pegamos con un material reflectivo, seguimos generando.
         // Con este bucle evitamos generar rayos desde el closest hit
         for (; prd.depth < pcRay.maxDepth; prd.depth++) {
+            // Cada vez que impactemos con algo, se actualizará el origen y la nueva dirección.
+            // Dependerá del closest hit poner los parámetros de impacto correctos.
             traceRayEXT(topLevelAS, // acceleration structure
                 rayFlags,       // rayFlags
                 0xFF,           // cullMask
@@ -93,6 +94,7 @@ void main()
                 0               // payload (location = 0)
             );
 
+            // A partir de aquí, debemos determinar el color que vaya adquiriendo.
             hitValue += prd.hitValue * current_weight;
             current_weight *= prd.weight;
         }

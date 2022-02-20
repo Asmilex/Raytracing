@@ -23,12 +23,16 @@ layout(push_constant) uniform _PushConstantRay
 void main()
 {
     if (prd.depth == 0) {
-        prd.hitValue = pcRay.clearColor.xyz * 0.8;
+        /*
+            Primer rayo => hemos impactado con el cielo.
+            No hacemos nada, devolvemos simplemente el color del cielo
+        */
+        prd.hitValue = pcRay.clearColor.xyz;
     }
     else {
         prd.hitValue = vec3(0.3);   // Tiny contribution from environment
     }
 
-    // If nothing is hit, there's no point in continuing the ray.
+    // Como no hemos fallado, no hay necesidad de continuar; así que paramos la generación.
     prd.depth = pcRay.maxDepth;
 }
