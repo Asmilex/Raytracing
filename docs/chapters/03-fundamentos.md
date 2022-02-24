@@ -134,6 +134,24 @@ define una superficie diferenciable siempre que $f$ también lo sea.
 >
 > NOTE: estoy usando (radial, polar, azimuthal). $\theta$ corresponde con la apertura con respecto a la vertical)
 
+El vector normal $\mathbf{n}$ a la superficie en un punto $(u, v)$ del dominio viene dado por
+
+$$
+\mathbf{n}(u, v) =
+        \left( \frac{\partial f}{\partial u}, \frac{\partial g}{\partial u}, \frac{\partial h}{\partial u} \right)
+                \times
+        \left( \frac{\partial f}{\partial v}, \frac{\partial g}{\partial v}, \frac{\partial h}{\partial v} \right)
+$$
+
+Encontrar el punto de intersección de una superficie paramétrica con un rayo es sencillo. Basta con encontrar aquellos puntos $(u, v)$ y $t$ para los que
+
+$$
+O_x + tD_x = f(u, v) \\
+O_y + tD_y = g(u, v) \\
+O_z + tD_z = h(u, v)
+$$
+
+Es posible que el rayo no impacte en ningún punto. En ese caso, el sistema de ecuaciones no tendría solución. Otra posibilidad es que intersequen en varios puntos.
 <hr>
 
 Fuentes que he usado y que debería pasar:
