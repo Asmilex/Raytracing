@@ -45,6 +45,7 @@ Estas cuestiones las exploraremos a fondo en las siguientes secciones.
 ## Intersecciones rayo - objeto
 
 Como dijimos al principio del capítulo, representaremos un rayo como
+
 $$
 \begin{aligned}
 P(t) & = (O_x, O_y, O_z) + t (D_x, D_y, D_z) = \\
@@ -136,11 +137,11 @@ $$
 G(f) = \left\{(x, y, f(x, y)) \,\middle|\,  (x, y) \in D\right\}
 $$
 define una superficie diferenciable siempre que $f$ también lo sea.
-- Usando coordenadas esféricas $(r, \theta, \phi)$, podemos parametrizar la esfera como $(x, y, z) = (\cos\phi\sin\theta, \sin\phi\sin\theta, \cos\theta)$ (
+- Usando coordenadas esféricas $(r, \theta, \phi)$, podemos parametrizar la esfera como $(x, y, z) = (\cos\phi\sin\theta, \sin\phi\sin\theta, \cos\theta)$
 
 > TODO añadir imagen de coordenadas esféricas. U otro capítulo con coordenadas.
 >
-> NOTE: estoy usando (radial, polar, azimuthal). $\theta$ corresponde con la apertura con respecto a la vertical)
+> NOTE: estoy usando (radial, polar, azimuthal). $\theta$ corresponde con la apertura con respecto a la vertical
 
 El vector normal $\mathbf{n}$ a la superficie en un punto $(u, v)$ del dominio viene dado por
 
@@ -154,11 +155,11 @@ $$
 Encontrar el punto de intersección de una superficie paramétrica con un rayo es sencillo. Basta con encontrar aquellos puntos $(u, v)$ y $t$ para los que
 
 $$
-\begin{align}
+\begin{aligned}
 O_x + tD_x & = f(u, v) \\
 O_y + tD_y & = g(u, v) \\
 O_z + tD_z & = h(u, v) \\
-\end{align}
+\end{aligned}
 $$
 
 Es posible que el rayo no impacte en ningún punto. En ese caso, el sistema de ecuaciones no tendría solución. Otra posibilidad es que intersequen en varios puntos.
