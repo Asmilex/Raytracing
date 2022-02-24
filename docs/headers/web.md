@@ -8,5 +8,18 @@ header-includes:
   <link rel="stylesheet" href="./headers/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        chtml: {
+            scale: 1.1
+        },
+        svg: {
+            scale: 1.1
+        }
+    };
+  </script>
   ```
 ---
