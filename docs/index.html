@@ -155,6 +155,25 @@ Carlo, DGIIM" />
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
   <link rel="stylesheet" href="https://unpkg.com/bamboo.css/dist/light.min.css">
   <link rel="stylesheet" href="./headers/style.css">
@@ -187,6 +206,13 @@ hacer entonces?</a></li>
 <li><a href="#los-fundamentos">Los fundamentos</a>
 <ul>
 <li><a href="#eligiendo-direcciones">Eligiendo direcciones</a></li>
+<li><a href="#intersecciones-rayo---objeto">Intersecciones rayo -
+objeto</a>
+<ul>
+<li><a href="#superficies-implícitas">Superficies implícitas</a></li>
+<li><a href="#superficies-paramétricas">Superficies
+paramétricas</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
 cómo se hizo este trabajo</a>
@@ -412,17 +438,180 @@ controlar la profundidad de la recursión. A mayor profundidad, mayor
 calidad de imagen; pero también, mayor tiempo de ejecución.</p>
 <h2 id="eligiendo-direcciones">Eligiendo direcciones</h2>
 <p>Una de las partes más importantes de ray tracing, y a la que quizás
-dedicaremos más tiempo es a la elección de la dirección.</p>
+dedicaremos más tiempo, es a la elección de la dirección.</p>
 <p>Hay varios factores que entran en juego a la hora de decidir qué
-hacemos cuando impactamos una nueva geometría:</p>
+hacemos cuando impactamos con un nuevo objeto:</p>
 <ol type="1">
 <li><strong>¿Cómo es la superficie del material?</strong> A mayor
 rugosidad, mayor aleatoriedad en la dirección. Por ejemplo, no es lo
 mismo el asfalto de una carretera que una lámina de aluminio
 impecable.</li>
-<li><strong>¿Cómo de fiel es nuestra geometría?</strong> Queramos o no,
-debemos</li>
+<li><strong>¿Cómo de fiel es nuestra geometría?</strong></li>
+<li><strong>¿Dónde se encuentran las luces en la escena?</strong>
+Dependiendo de la posición, nos interesará muestrear la luz con mayor
+influencia.</li>
 </ol>
+<p>Estas cuestiones las exploraremos a fondo en las siguientes
+secciones.</p>
+<h2 id="intersecciones-rayo---objeto">Intersecciones rayo - objeto</h2>
+<p>Como dijimos al principio del capítulo, representaremos un rayo como
+<span class="math inline">\(P(t) = (O_x, O_y, O_z) + t (D_x, D_y, D_z) =
+(O_x + t D_x, O_y + t D_y, O_y + t D_z)\)</span>.</p>
+<p>Por ejemplo, tomando <span class="math inline">\(O = (1, 3, 2), D =
+(1, 2, 1)\)</span>:</p>
+<ul>
+<li>Para <span class="math inline">\(t = 0\)</span>, <span
+class="math inline">\(P(t) = (1, 3, 2)\)</span>.</li>
+<li>Para <span class="math inline">\(t = 1\)</span>, <span
+class="math inline">\(P(t) = (1, 3, 2) + (1, 2, 1) = (2, 5,
+3)\)</span>.</li>
+</ul>
+<p>Nos resultará especialmente útil limitar los valores que puede tomar
+<span class="math inline">\(t\)</span>. Restringiremos los posibles
+puntos del dominio de forma que <span class="math inline">\(t \in
+[t_{min}, t_{max})\)</span>, con <span class="math inline">\(t_{min}
+&lt; t_{max}\)</span>. En general, nos interesará separarnos de las
+superficies un pequeño pero no despreciable <span
+class="math inline">\(\varepsilon\)</span> para evitar errores de
+redondeo.</p>
+<blockquote>
+<p>TODO dibujo origen - epsilon == tmin -&gt; rayo -&gt; t_max =
+1-epsilon</p>
+</blockquote>
+<p>Una de las principales cuestiones que debemos hacernos es saber
+cuándo un rayo impacta con una superficie. Lo definiremos
+analíticamente.</p>
+<h3 id="superficies-implícitas">Superficies implícitas</h3>
+<p>Generalmente, cuando hablemos de superficies, nos referiremos <a
+href="https://www.wikiwand.com/en/Differential_geometry_of_surfaces">superficies
+diferenciables</a>, pues nos interesará conocer el vector normal en cada
+punto.</p>
+<p>Una superficie implícita es una superficie en un espacio euclidiano
+definida como</p>
+<p><span class="math display">\[
+F(x, y, z) = 0
+\]</span></p>
+<p>Esta ecuación implícita define una serie de puntos del espacio <span
+class="math inline">\(\mathbb{R}^3\)</span> que se encuentran en la
+superficie.</p>
+<p>Por ejemplo, la esfera se define como <span class="math inline">\(x^2
++ y^2 + z^2 - 1 = 0\)</span>.</p>
+<p>Consideremos una superficie <span class="math inline">\(S\)</span> y
+un punto regular de ella <span class="math inline">\(P\)</span>; es
+decir, un punto tal que el gradiente de <span
+class="math inline">\(F\)</span> en <span
+class="math inline">\(P\)</span> no es 0. Se define el vector normal
+<span class="math inline">\(\mathbf{n}\)</span> a la superficie en ese
+punto como</p>
+<p><span class="math display">\[
+\mathbf{n} = \nabla F(P) = \left( \frac{\partial F(P)}{\partial x},
+\frac{\partial F(P)}{\partial y}, \frac{\partial F(P)}{\partial z}\right
+)
+\]</span></p>
+<blockquote>
+<p>TODO: dibujo de la normal a una superficie.</p>
+</blockquote>
+<p>Dado un punto <span class="math inline">\(Q \in
+\mathbb{R}^3\)</span>, queremos saber dónde interseca un rayo <span
+class="math inline">\(P(t)\)</span>. Es decir, para qué <span
+class="math inline">\(t\)</span> se cumple que <span
+class="math inline">\(F(P(t)) = 0 \iff F(O + tD) = 0\)</span>.</p>
+<p>Consideremos por ejemplo un plano, como en <span class="citation"
+data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
+role="doc-biblioref">Shirley and Morley 2003</a>)</span>. Para ello, nos
+tomamos un punto <span class="math inline">\(Q_0\)</span> del plano y un
+vector normal a la superficie <span
+class="math inline">\(\mathbf{n}\)</span>.</p>
+<p>La ecuación implícita del plano será</p>
+<p><span class="math display">\[
+F(Q) = (Q - Q_0) \cdot \mathbf{n} = 0
+\]</span></p>
+<p>Si pinchamos nuestro rayo en la ecuación,</p>
+<p><span class="math display">\[
+\begin{aligned}
+F(P(t)) &amp; = (P(t) - Q_0) \cdot \mathbf{n} \\
+        &amp; = (O + tD - Q_0) \cdot \mathbf{n} = 0 \\
+\end{aligned}
+\]</span></p>
+<p>Resolviendo para <span class="math inline">\(t\)</span>, esto se da
+si</p>
+<p><span class="math display">\[
+\begin{aligned}
+O \cdot \mathbf{n} + tD \cdot \mathbf{n} - Q_0 \cdot \mathbf{n} &amp; =
+0 &amp; \iff \\
+tD \cdot \mathbf{n} &amp; = Q_0 \cdot \mathbf{n} - O \cdot \mathbf{n}
+&amp; \iff \\
+t &amp; = \frac{Q_0 \cdot \mathbf{n} - O \cdot \mathbf{n}}{D \cdot
+\mathbf{n}}
+\end{aligned}
+\]</span></p>
+<p>Es decir, hemos obtenido el único valor de <span
+class="math inline">\(t\)</span> para el cual el rayo toca la
+superficie.</p>
+<p>Debemos tener en cuenta el caso para el cual <span
+class="math inline">\(D \cdot \mathbf{n} = 0\)</span>. Esto solo se da
+si la dirección y el vector normal a la superficie son paralelos.</p>
+<blockquote>
+<p>TODO: dibujo de dos rayos con un plano: uno corta a la superficie,
+mientras que el otro es paralelo.</p>
+</blockquote>
+<h3 id="superficies-paramétricas">Superficies paramétricas</h3>
+<p>Otra forma de definir una superficie en el espacio es mediante un
+subconjunto <span class="math inline">\(D \sub \mathbb{R}^2\)</span> y
+una serie de funciones, <span class="math inline">\(f, g, h: D
+\rightarrow \mathbb{R}^3\)</span>, de forma que</p>
+<p><span class="math display">\[
+(x, y, z) = \left( f(u, v), g(u, v), h(u, v) \right) \\
+\]</span></p>
+<blockquote>
+<p>En informática gráfica, hacemos algo similar cuando mapeamos una
+textura a una superficie. Se conoce como UV mapping</p>
+</blockquote>
+<p>Demos un par de ejemplos de superficies paramétricas: - El grafo de
+una función <span class="math inline">\(f: D \rightarrow
+\mathbb{R}^3\)</span>, <span class="math display">\[
+G(f) = \left\{(x, y, f(x, y)) \,\middle|\,  (x, y) \in D\right\}
+\]</span> define una superficie diferenciable siempre que <span
+class="math inline">\(f\)</span> también lo sea. - Usando coordenadas
+esféricas <span class="math inline">\((r, \theta, \phi)\)</span>,
+podemos parametrizar la esfera como <span class="math inline">\((x, y,
+z) = (\cos\phi\sin\theta, \sin\phi\sin\theta, \cos\theta)\)</span> (</p>
+<blockquote>
+<p>TODO añadir imagen de coordenadas esféricas. U otro capítulo con
+coordenadas.</p>
+<p>NOTE: estoy usando (radial, polar, azimuthal). <span
+class="math inline">\(\theta\)</span> corresponde con la apertura con
+respecto a la vertical)</p>
+</blockquote>
+<p>El vector normal <span class="math inline">\(\mathbf{n}\)</span> a la
+superficie en un punto <span class="math inline">\((u, v)\)</span> del
+dominio viene dado por</p>
+<p><span class="math display">\[
+\mathbf{n}(u, v) =
+        \left( \frac{\partial f}{\partial u}, \frac{\partial g}{\partial
+u}, \frac{\partial h}{\partial u} \right)
+                \times
+        \left( \frac{\partial f}{\partial v}, \frac{\partial g}{\partial
+v}, \frac{\partial h}{\partial v} \right)
+\]</span></p>
+<p>Encontrar el punto de intersección de una superficie paramétrica con
+un rayo es sencillo. Basta con encontrar aquellos puntos <span
+class="math inline">\((u, v)\)</span> y <span
+class="math inline">\(t\)</span> para los que</p>
+<p><span class="math display">\[
+O_x + tD_x = f(u, v) \\
+O_y + tD_y = g(u, v) \\
+O_z + tD_z = h(u, v)
+\]</span></p>
+Es posible que el rayo no impacte en ningún punto. En ese caso, el
+sistema de ecuaciones no tendría solución. Otra posibilidad es que
+intersequen en varios puntos.
+<hr>
+<p>Fuentes que he usado y que debería pasar:</p>
+<ul>
+<li>https://www.wikiwand.com/en/Implicit_surface</li>
+<li>https://www.wikiwand.com/en/Parametric_surface</li>
+</ul>
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
 <p>TODO - hablar de las fases de desarrollo. Interpretación propia de
@@ -439,5 +628,12 @@ construir la web y el pdf</p>
 <h3 id="github-projects">Github Projects</h3>
 <p>TODO - Hablar de cómo se gestiona el trabajo mediante issues,
 recapitulados todos con Projects.</p>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-ShirleyRRT" class="csl-entry" role="doc-biblioentry">
+Shirley, Peter, and R. Keith Morley. 2003. <em>Realistic Ray
+Tracing</em>. 2nd ed. USA: A. K. Peters, Ltd.
+</div>
+</div>
 </body>
 </html>
