@@ -164,6 +164,20 @@ $$
 
 Es posible que el rayo no impacte en ningún punto. En ese caso, el sistema de ecuaciones no tendría solución. Otra posibilidad es que intersequen en varios puntos.
 
+### Intersecciones con esferas
+
+Estudiemos ahora cómo intersecan las esfera con nuestro rayo. Una esfera de centro $C$ y radio $r$ viene dados por aquellos puntos $P = (x, y, z)$ que cumplen
+
+$$
+(P - C) \cdot (P - C) = r^2
+$$
+
+Podemos reescribir esta ecuación en términos de sus coordenadas para obtener
+
+$$
+(x - C_x)^2 + (y - C_y)^2 + (z - C_z)^2 = r^2
+$$
+
 <hr>
 
 Fuentes que he usado y que debería pasar:
