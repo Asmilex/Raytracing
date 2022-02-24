@@ -148,9 +148,11 @@ $$
 Encontrar el punto de intersección de una superficie paramétrica con un rayo es sencillo. Basta con encontrar aquellos puntos $(u, v)$ y $t$ para los que
 
 $$
-O_x + tD_x = f(u, v) \\
-O_y + tD_y = g(u, v) \\
-O_z + tD_z = h(u, v)
+\begin{align}
+O_x + tD_x & = f(u, v) \\
+O_y + tD_y & = g(u, v) \\
+O_z + tD_z & = h(u, v) \\
+\end{align}
 $$
 
 Es posible que el rayo no impacte en ningún punto. En ese caso, el sistema de ecuaciones no tendría solución. Otra posibilidad es que intersequen en varios puntos.
