@@ -44,7 +44,13 @@ Estas cuestiones las exploraremos a fondo en las siguientes secciones.
 
 ## Intersecciones rayo - objeto
 
-Como dijimos al principio del capítulo, representaremos un rayo como $P(t) = (O_x, O_y, O_z) + t (D_x, D_y, D_z) = (O_x + t D_x, O_y + t D_y, O_y + t D_z)$.
+Como dijimos al principio del capítulo, representaremos un rayo como
+$$
+\begin{aligned}
+P(t) & = (O_x, O_y, O_z) + t (D_x, D_y, D_z) = \\
+& = (O_x + t D_x, O_y + t D_y, O_y + t D_z)
+\end{aligned}
+$$
 
 Por ejemplo, tomando $O = (1, 3, 2), D = (1, 2, 1)$:
 
@@ -156,6 +162,7 @@ O_z + tD_z & = h(u, v) \\
 $$
 
 Es posible que el rayo no impacte en ningún punto. En ese caso, el sistema de ecuaciones no tendría solución. Otra posibilidad es que intersequen en varios puntos.
+
 <hr>
 
 Fuentes que he usado y que debería pasar:
