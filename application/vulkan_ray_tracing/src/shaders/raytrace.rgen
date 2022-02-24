@@ -15,12 +15,10 @@ layout(set = 1, binding = eGlobals) uniform _GlobalUniforms { GlobalUniforms uni
 layout(push_constant) uniform _PushConstantRay { PushConstantRay pcRay; };
 
 /*
-    The buffer of camera uses binding = 0 as described in host_device.h.
+    The buffer of camera uses binding = 0 (eGlobalsUniform) as described in host_device.h.
     The set = 1 comes from the fact that it is the second descriptor set passed to
     pipelineLayoutCreateInfo.pSetLayouts in HelloVulkan::createRtPipeline().
 */
-
-const int NB_SAMPLES = 10;
 
 
 void main()
@@ -31,7 +29,7 @@ void main()
         antialiasing samples. For instance,
             m_maxFrames = 10 and NBSAMPLE = 10 == m_maxFrames = 100 and NBSAMPLE = 1.
 
-        However, using NBSAMPLE=10 in the ray generation shader will be faster
+        However, using NBSAMPLE = 10 in the ray generation shader will be faster
         than calling raytrace() with NBSAMPLE=1 10 times in a row.
     */
 
@@ -40,11 +38,12 @@ void main()
     vec3 hitValue  = vec3(0);  // For current frame
     vec3 hitValues = vec3(0);  // For all accumulated frames
 
-    for (int smpl = 0; smpl < NB_SAMPLES; smpl++) {
+    // sample is a keyword, so we use smpl
+    for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {
         float r1 = rnd(prd.seed);
         float r2 = rnd(prd.seed);
 
-        // Subpixel jitter: send the ray through a different position inside the pixel each time to provide AA
+        // Subpixel jitter: send the ray through a different position inside the pixel each time to provide antialiasing
         vec2 subpixel_jitter = pcRay.frame == 0
             ? vec2(0.5f, 0.5f)
             : vec2(r1, r2);
@@ -64,46 +63,40 @@ void main()
         // Llamada a la generación del rayo.
         // Para saber por qué ponemos esos valores en sbtRecordOffset y sbtRecordStride, mira este artículo:
         // https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways
-
         // (Y mira en general el capítulo 11 de nvpro tutorial que esto tiene mucha chicha)
 
         // Inicializar el payload correctamente
-        prd.depth       = 0;
-        prd.hitValue    = vec3(0);
-        prd.attenuation = vec3(1.f, 1.f, 1.f);
-        prd.done        = 1;
-        prd.rayOrigin   = origin.xyz;
-        prd.rayDir      = direction.xyz;
+        prd.depth     = 0;
+        prd.hitValue  = vec3(0);
+        prd.rayOrigin = origin.xyz;
+        prd.rayDir    = direction.xyz;
+        prd.weight    = vec3(0);
+        //prd.attenuation = vec3(1.f, 1.f, 1.f);    // No debería ser necesario con path tracing
+        // seed ya estaba puesto
 
+        vec3 current_weight = vec3(1);
+             hitValue       = vec3(0);
 
-        hitValue = vec3(0);
-
-        // Lanzamos rayos, y si pegamos con un material reflectivo, seguimos generando.
         // Con este bucle evitamos generar rayos desde el closest hit
-        for (;;) {
+        for (; prd.depth < pcRay.maxDepth; prd.depth++) {
+            // Cada vez que impactemos con algo, se actualizará el origen y la nueva dirección.
+            // Dependerá del closest hit poner los parámetros de impacto correctos.
             traceRayEXT(topLevelAS, // acceleration structure
                 rayFlags,       // rayFlags
                 0xFF,           // cullMask
                 0,              // sbtRecordOffset
                 0,              // sbtRecordStride
                 0,              // missIndex
-                origin.xyz,     // ray origin
+                prd.rayOrigin,  // ray origin
                 tMin,           // ray min range
-                direction.xyz,  // ray direction
+                prd.rayDir,     // ray direction
                 tMax,           // ray max range
                 0               // payload (location = 0)
             );
 
-            hitValue += prd.hitValue * prd.attenuation;
-
-            prd.depth++;
-
-            if (prd.done == 1 || prd.depth >= pcRay.maxDepth)
-                break;
-
-            origin.xyz    = prd.rayOrigin;
-            direction.xyz = prd.rayDir;
-            prd.done      = 1;              // Si se impacta en un material no reflectivo, paramos
+            // A partir de aquí, debemos determinar el color que vaya adquiriendo.
+            hitValue += prd.hitValue * current_weight;
+            current_weight *= prd.weight;
         }
 
         hitValues += hitValue;
@@ -111,8 +104,8 @@ void main()
 
     // Tenemos varios frames acumulados en hitValues -> dividimos por el número de samples
     // para obtener el frame resultante.
+    hitValue = hitValues / pcRay.nb_samples;
 
-    hitValue = hitValues / NB_SAMPLES;
     // Hacer acumulación de frames cuando no nos encontremos en el primero (aka el 0)
     if (pcRay.frame > 0) {
         float a         = 1.0f / float(pcRay.frame + 1);        // Atenuación, creo

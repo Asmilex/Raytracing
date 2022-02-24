@@ -163,7 +163,8 @@ public:
         {},     // light position
         0,      // light intensity
         0,      // light type
-        10      // max depth
+        10,     // max depth
+        5,      // number of samples
     };
     int m_maxAcumFrames {20};
 

@@ -103,18 +103,10 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 
 - [Libros de Shirley](https://raytracing.github.io/)
 - [Nvidia Vulkan Ray Tracing tutorial](https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/). Parte desde un proyecto básico de Vulkan, y añade lo necesario para tener aceleración de RT usando el framework nvpro-samples. Interesante cuanto menos, y una de las opciones más seguras. Se basa en el código de [este repositorio](https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR).
-- En la misma línea, una [implementación de In One Weekend](https://github.com/GPSnoopy/RayTracingInVulkan) con esas extensiones por GPSsnoopy. Podría resultar muy útil también
+- [Nvpro samples vk_raytrace](https://github.com/nvpro-samples/vk_raytrace). Una implementación PBR usando como base el tutorial de nvpro samples. Bastante más avanzada, pero los shaders son *muy* útiles.
+- En la misma línea, una [implementación de In One Weekend](https://github.com/GPSnoopy/RayTracingInVulkan) con esas extensiones por GPSsnoopy. Podría resultar muy útil también.
 - [Un mini path tracer](https://github.com/nvpro-samples/vk_mini_path_tracer). Referenciado en Gems II.
 - [Vulkan Samples](https://github.com/KhronosGroup/Vulkan-Samples).
-- [Tutorial de Vulkan](https://vulkan-tutorial.com/Introduction)
-- [Lista con recursos de RT](https://www.realtimerendering.com/raytracing.html)
-- [ImGui, una librería de de GUI para C++](https://github.com/ocornut/imgui). Convenientemente, tiene un ejemplo para [integrarlo con Vulkan y GLFW](https://github.com/ocornut/imgui/blob/master/examples/example_glfw_vulkan/main.cpp). Podría ser un gran punto de partida.
-- [Vulkan base](https://github.com/kennyalive/vulkan-base), una simple aplicación de Vulkan para renderizar modelos 3D. Parece una implementación del punto anterior. Además, enlaza a [Vulkan Raytracing](https://github.com/kennyalive/vulkan-raytracing), del mismo autor.
-- Sobre Cmake y vcpkg:
-  - [Tutorial pequeño](https://www.40tude.fr/how-to-use-vcpkg-with-vscode-and-cmake/)
-  - [Sistema automatizado](https://cpptruths.blogspot.com/2019/03/bootstrapping-vcpkg-based-cmake-project.html)
-  - [Blog 101](https://gamefromscratch.com/vcpkg-cpp-easy-mode-step-by-step-tutorial/)
-  - [Otro blog 101](https://sam.elborai.me/blog/vscode-cpp-dev-environment-2020)
 
 ### Conocimiento
 
@@ -127,3 +119,7 @@ En esta sección se recopilan enlaces útiles para el desarrollo del motor. Se i
 - [Awesome ray tracing](https://github.com/dannyfritz/awesome-ray-tracing#vulkan-ray-tracing)
 - [Generación de números aleatorios en GPU](https://www.csee.umbc.edu/~olano/papers/GPUTEA.pdf)
 - [The RTX Shader Binding Table](https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways)
+- [Tutorial de Vulkan](https://vulkan-tutorial.com/Introduction)
+- [Lista con recursos de RT](https://www.realtimerendering.com/raytracing.html)
+- [ImGui](https://github.com/ocornut/imgui). Se usa como base en nvpro samples, así que viene bien tener la documentación a mano.
+- [Wavefront material properties](https://www.neurobs.com/pres_docs/html/03_presentation/04_stimuli/03_visual_stimuli/02_picture_stimuli/04_3d_graphics/02_3d_common_properties/index.html)

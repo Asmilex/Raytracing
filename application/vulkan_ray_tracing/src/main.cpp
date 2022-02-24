@@ -56,7 +56,6 @@ void renderUI(HelloVulkan& helloVk) {
     bool changed = false;
 
     changed |= ImGuiH::CameraWidget();
-    changed |= ImGui::SliderInt("Max accumulated frames", &helloVk.m_maxAcumFrames, 1, 100);
 
 
     if (ImGui::CollapsingHeader("Light")) {
@@ -71,11 +70,73 @@ void renderUI(HelloVulkan& helloVk) {
     }
 
     if (ImGui::CollapsingHeader("Ray tracing options")) {
-        changed |= ImGui::SliderInt("Max Depth", &helloVk.m_pcRay.maxDepth, 1, 50);
+        changed |= ImGui::SliderInt("Max depth of ray", &helloVk.m_pcRay.maxDepth, 1, 50);
+        changed |= ImGui::SliderInt("Max accum frames", &helloVk.m_maxAcumFrames, 1, 100);
+        changed |= ImGui::SliderInt("Number of samples", &helloVk.m_pcRay.nb_samples, 1, 20);
     }
 
     if (changed) {
         helloVk.resetFrame();
+    }
+}
+
+enum Scene {
+    cube_default,
+    medieval_building,
+    cube_reflective,
+    any_hit,
+    cornell_box,
+    cornell_box_multimaterial,
+};
+
+void load_scene(Scene scene, HelloVulkan& helloVk) {
+    CameraManip.setLookat(nvmath::vec3f(4.0f, 4.0f, 4.0f), nvmath::vec3f(0, 1, 0), nvmath::vec3f(0, 1, 0));
+
+    switch (scene) {
+        case Scene::cube_default:
+            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
+            break;
+
+        case Scene::medieval_building:
+            helloVk.loadModel(nvh::findFile("media/scenes/Medieval_building.obj", defaultSearchPaths, true));
+            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
+            break;
+
+        case Scene::cube_reflective:
+            helloVk.loadModel (
+                nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
+                nvmath::translation_mat4(nvmath::vec3f(-2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
+            );
+            helloVk.loadModel(
+                nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
+                nvmath::translation_mat4(nvmath::vec3f(2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
+            );
+            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
+            helloVk.loadModel(
+                nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true),
+                nvmath::translation_mat4(nvmath::vec3f(0, -1, 0))
+            );
+            break;
+
+        case Scene::any_hit:
+            helloVk.loadModel(nvh::findFile("media/scenes/wuson_transparent.obj", defaultSearchPaths, true));
+            helloVk.loadModel(
+                nvh::findFile("media/scenes/sphere.obj", defaultSearchPaths, true),
+                nvmath::scale_mat4(nvmath::vec3f(1.5f)) * nvmath::translation_mat4(nvmath::vec3f(0.0f, 1.0f, 0.0f))
+            );
+            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
+            break;
+
+        case Scene::cornell_box:
+            helloVk.loadModel(nvh::findFile("media/scenes/cornell_box.obj", defaultSearchPaths, true));
+            CameraManip.setLookat(nvmath::vec3f(233.665, 324.268, -508.527), nvmath::vec3f(232.440, 297.224, 11.248), nvmath::vec3f(0, 1, 0));
+            break;
+
+        case Scene::cornell_box_multimaterial:
+            helloVk.loadModel(nvh::findFile("media/scenes/cornell_box_multimaterial.obj", defaultSearchPaths, true));
+            CameraManip.setLookat(nvmath::vec3f(233.665, 324.268, -508.527), nvmath::vec3f(232.440, 297.224, 11.248), nvmath::vec3f(0, 1, 0));
+            break;
+
     }
 }
 
@@ -100,10 +161,7 @@ int main(int argc, char** argv) {
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     GLFWwindow* window = glfwCreateWindow(SAMPLE_WIDTH, SAMPLE_HEIGHT, PROJECT_NAME, nullptr, nullptr);
 
-
-    // Setup camera
     CameraManip.setWindowSize(SAMPLE_WIDTH, SAMPLE_HEIGHT);
-    CameraManip.setLookat(nvmath::vec3f(4.0f, 4.0f, 4.0f), nvmath::vec3f(0, 1, 0), nvmath::vec3f(0, 1, 0));
 
     // Setup Vulkan
     if(!glfwVulkanSupported()) {
@@ -171,57 +229,7 @@ int main(int argc, char** argv) {
     // Setup Imgui
     helloVk.initGUI(0);  // Using sub-pass 0
 
-    // Creation of the example
-    enum Scene {
-        cube_default,
-        medieval_building,
-        cube_reflective,
-        any_hit,
-        cornell_box_obj,
-    };
-
-    Scene scene = cornell_box_obj;
-
-    switch (scene) {
-        case Scene::cube_default:
-            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
-            break;
-
-        case Scene::medieval_building:
-            helloVk.loadModel(nvh::findFile("media/scenes/Medieval_building.obj", defaultSearchPaths, true));
-            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
-            break;
-
-        case Scene::cube_reflective:
-            helloVk.loadModel (
-                nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
-                nvmath::translation_mat4(nvmath::vec3f(-2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
-            );
-            helloVk.loadModel(
-                nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
-                nvmath::translation_mat4(nvmath::vec3f(2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
-            );
-            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
-            helloVk.loadModel(
-                nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true),
-                nvmath::translation_mat4(nvmath::vec3f(0, -1, 0))
-            );
-            break;
-
-        case Scene::any_hit:
-            helloVk.loadModel(nvh::findFile("media/scenes/wuson_transparent.obj", defaultSearchPaths, true));
-            helloVk.loadModel(
-                nvh::findFile("media/scenes/sphere.obj", defaultSearchPaths, true),
-                nvmath::scale_mat4(nvmath::vec3f(1.5f)) * nvmath::translation_mat4(nvmath::vec3f(0.0f, 1.0f, 0.0f))
-            );
-            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
-            break;
-
-        case Scene::cornell_box_obj:
-            helloVk.loadModel(nvh::findFile("media/scenes/cornell_box_original_merged.obj", defaultSearchPaths, true));
-            break;
-    }
-
+    load_scene(Scene::cornell_box, helloVk);
 
     helloVk.createOffscreenRender();
     helloVk.createDescriptorSetLayout();
@@ -239,7 +247,6 @@ int main(int argc, char** argv) {
     helloVk.createRtShaderBindingTable();
 
     bool useRaytracer = true;
-
 
     helloVk.createPostDescriptor();
     helloVk.createPostPipeline();
@@ -272,6 +279,7 @@ int main(int argc, char** argv) {
             renderUI(helloVk);
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             ImGuiH::Control::Info("", "", "(F10) Toggle Pane", ImGuiH::Control::Flags::Disabled);
+            ImGui::Text("Total samples = %i", helloVk.m_maxAcumFrames * helloVk.m_pcRay.nb_samples);
             ImGuiH::Panel::End();
         }
 

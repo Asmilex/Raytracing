@@ -8,20 +8,23 @@
 
 #include "raycommon.glsl"
 #include "wavefront.glsl"
+#include "sampling.glsl"
 
 hitAttributeEXT vec3 attribs;
 
 layout(location = 0) rayPayloadInEXT hitPayload prd;
 layout(location = 1) rayPayloadEXT shadowPayload prdShadow;
 
-layout(buffer_reference, scalar) buffer Vertices { Vertex v[]; };              // Posición del objeto
-layout(buffer_reference, scalar) buffer Indices { ivec3 i[]; };                // Indices del triángulo
-layout(buffer_reference, scalar) buffer Materials { WaveFrontMaterial m[]; };  // Array con todos los materiales
+layout(set = 0, binding = eTlas) uniform accelerationStructureEXT topLevelAS;
+
+layout(buffer_reference, scalar) buffer Vertices   { Vertex v[]; };             // Posición del objeto
+layout(buffer_reference, scalar) buffer Indices    { ivec3 i[]; };              // Indices del triángulo
+layout(buffer_reference, scalar) buffer Materials  { WaveFrontMaterial m[]; };  // Array con todos los materiales
 layout(buffer_reference, scalar) buffer MatIndices { int i[]; };                // ID del material para cada triángulo
+
 layout(set = 1, binding = eObjDescs, scalar) buffer ObjDesc_ { ObjDesc i[]; } objDesc;
 layout(set = 1, binding = eTextures) uniform sampler2D textureSamplers[];
 
-layout(set = 0, binding = eTlas) uniform accelerationStructureEXT topLevelAS;   // Para los shadow rays
 
 layout (push_constant) uniform _PushConstantRay { PushConstantRay pcRay; };
 
@@ -45,12 +48,46 @@ void main()
     const vec3 barycentrics = vec3(1.0 - attribs.x - attribs.y, attribs.x, attribs.y);
 
     // Computing the coordinates of the hit position
-    const vec3 pos      = v0.pos * barycentrics.x + v1.pos * barycentrics.y + v2.pos * barycentrics.z;
-    const vec3 worldPos = vec3(gl_ObjectToWorldEXT * vec4(pos, 1.0));
+    const vec3 pos            = v0.pos * barycentrics.x + v1.pos * barycentrics.y + v2.pos * barycentrics.z;
+    const vec3 world_position = vec3(gl_ObjectToWorldEXT * vec4(pos, 1.0));
 
     // Computing the normal at hit position
-    const vec3 normal      = v0.nrm * barycentrics.x + v1.nrm * barycentrics.y + v2.nrm * barycentrics.z;
-    const vec3 worldNormal = normalize(vec3(normal * gl_WorldToObjectEXT));
+    const vec3 normal       = v0.nrm * barycentrics.x + v1.nrm * barycentrics.y + v2.nrm * barycentrics.z;
+    const vec3 world_normal = normalize(vec3(normal * gl_WorldToObjectEXT));
+
+    // Material of the object
+    int               matIdx    = matIndices.i[gl_PrimitiveID];
+    WaveFrontMaterial mat       = materials.m[matIdx];
+    vec3              emittance = mat.emission;
+
+    // Pick a random direction from here and keep going
+    vec3 tangent, bitangent;
+    create_coordinate_system(world_normal, tangent, bitangent);
+    vec3 ray_origin = world_position;
+    vec3 ray_dir    = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
+
+
+    // Probability of the new ray (cosine distributed)
+    const float p = 1 / M_PI;
+
+    // Compute the BRDF for this ray (assuming Lambertian reflection)
+    float cos_theta = dot(ray_dir, world_normal);
+    vec3 diffuse = mat.diffuse;
+
+    if (mat.textureId >= 0) {
+        uint txtId = mat.textureId + objDesc.i[gl_InstanceCustomIndexEXT].txtOffset;
+        vec2 texCoord = v0.texCoord * barycentrics.x + v1.texCoord * barycentrics.y + v2.texCoord * barycentrics.z;
+        diffuse *= texture(textureSamplers[nonuniformEXT(txtId)], texCoord).xyz;
+    }
+
+    vec3 BRDF = diffuse / M_PI;
+
+    prd.rayOrigin = ray_origin;
+    prd.rayDir    = ray_dir;
+    prd.hitValue  = mat.emission;
+    prd.weight    = BRDF * cos_theta / p;
+
+/* Código viejo antes de pasar a path tracing
 
     // Vector toward the light
     vec3 L;
@@ -131,4 +168,5 @@ void main()
     }
 
     prd.hitValue = vec3(lightIntensity * attenuation * (diffuse + specular));
+*/
 }
