@@ -184,8 +184,10 @@ Carlo, DGIIM" />
 hacer entonces?</a></li>
 </ul></li>
 <li><a href="#notación">Notación</a></li>
-<li><a href="#cómo-funciona-ray-tracing">¿Cómo funciona ray
-tracing?</a></li>
+<li><a href="#los-fundamentos">Los fundamentos</a>
+<ul>
+<li><a href="#eligiendo-direcciones">Eligiendo direcciones</a></li>
+</ul></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
 cómo se hizo este trabajo</a>
 <ul>
@@ -361,7 +363,66 @@ class="math inline">\(V\left[X\right]\)</span>.</p>
 <p>TODO: notación para las funciones de densidad y distribución. TODO:
 acceso a componentes de un vector/matriz?</p>
 </blockquote>
-<h1 id="cómo-funciona-ray-tracing">¿Cómo funciona ray tracing?</h1>
+<h1 id="los-fundamentos">Los fundamentos</h1>
+<p>Empecemos por definir lo que es un rayo.</p>
+<p>Un rayo es una función <span class="math inline">\(P(t) = O +
+tD\)</span>, donde <span class="math inline">\(O\)</span> es el origin,
+<span class="math inline">\(D\)</span> la dirección, y <span
+class="math inline">\(t \in \mathbb{R}\)</span>. Podemos considerarlo
+una interpolación entre dos puntos en el espacio, donde <span
+class="math inline">\(t\)</span> controla la posición en la que nos
+encontramos.</p>
+<p>Por ejemplo, si <span class="math inline">\(t = 0\)</span>,
+obtendremos el origen. Si <span class="math inline">\(t = 1\)</span>,
+obtendremos el punto correspondiente a la dirección. Usando valores
+negativos vamos <em>hacia atrás</em>.</p>
+<p><img src="./img/rayo.png" /></p>
+<p>Dado que estos puntos estarán generalmente en <span
+class="math inline">\(\mathbb{R}^3\)</span>, podemos escribirlo como</p>
+<p><span class="math display">\[
+P(t) = (O_x, O_y, O_z) + t (D_x, D_y, D_z)
+\]</span></p>
+<p>Estos rayos los <em>dispararemos</em> a través de una cámara virtual,
+que estará enfocando a la escena. De esta forma, los haremos rebotar con
+los objetos que se encuentren en el camino del rayo. A este proceso lo
+llamaremos <strong>ray casting</strong>.</p>
+<blockquote>
+<p>TODO foto de cámara - pixel - rayo - objeto.</p>
+</blockquote>
+<p>Generalmente, nos quedaremos con el primer objeto que nos encontremos
+en su camino. Aunque, a veces, nos interesará saber todos con los que se
+encuentre.</p>
+<p>Cuando un rayo impacta con un objeto, adquirirá parte de las
+propiedades lumínicas del punto de impacto. Por ejemplo, cuánta luz
+proporciona la lámpara que tiene encima la esfera de la figura
+anterior.</p>
+<p>Una vez recojamos la información que nos interese, aplicaremos otro
+raycast desde el nuevo punto de impacto, escogiendo una nueva dirección
+determinada. Esta dirección dependerá del tipo de material del objeto.
+Y, de hecho, algunos serán capaces de invocar varios rayos.</p>
+<p>Por ejemplo, los espejos reflejan la luz casi de forma perfecta;
+mientras que otros elementos como el agua o el cristal reflejan
+<em>y</em> refractan luz, así que necesitaremos generar dos nuevos
+raycast.</p>
+<p>Usando suficientes rayos obtendremos la imagen de la escena. A este
+proceso de <strong>ray casting recursivo</strong> es lo que se conoce
+como ray tracing.</p>
+<p>Como este proceso puede continuar indefinidamente, tendremos que
+controlar la profundidad de la recursión. A mayor profundidad, mayor
+calidad de imagen; pero también, mayor tiempo de ejecución.</p>
+<h2 id="eligiendo-direcciones">Eligiendo direcciones</h2>
+<p>Una de las partes más importantes de ray tracing, y a la que quizás
+dedicaremos más tiempo es a la elección de la dirección.</p>
+<p>Hay varios factores que entran en juego a la hora de decidir qué
+hacemos cuando impactamos una nueva geometría:</p>
+<ol type="1">
+<li><strong>¿Cómo es la superficie del material?</strong> A mayor
+rugosidad, mayor aleatoriedad en la dirección. Por ejemplo, no es lo
+mismo el asfalto de una carretera que una lámina de aluminio
+impecable.</li>
+<li><strong>¿Cómo de fiel es nuestra geometría?</strong> Queramos o no,
+debemos</li>
+</ol>
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
 <p>TODO - hablar de las fases de desarrollo. Interpretación propia de
