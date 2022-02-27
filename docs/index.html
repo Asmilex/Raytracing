@@ -192,6 +192,13 @@ Carlo, DGIIM" />
         }
     };
   </script>
+  
+  <!-- pandoc-eqnos: equation style -->
+  <style>
+    .eqnos { display: inline-block; position: relative; width: 100%; }
+    .eqnos br { display: none; }
+    .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
+  </style>
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
@@ -421,7 +428,9 @@ encontramos.</p>
 obtendremos el origen. Si <span class="math inline">\(t = 1\)</span>,
 obtendremos el punto correspondiente a la dirección. Usando valores
 negativos vamos <em>hacia atrás</em>.</p>
-<p><img src="./img/rayo.png" /></p>
+<figure>
+<img src="./img/rayo.png" />
+</figure>
 <p>Dado que estos puntos estarán generalmente en <span
 class="math inline">\(\mathbb{R}^3\)</span>, podemos escribirlo como</p>
 <p><span class="math display">\[
@@ -581,8 +590,8 @@ mientras que el otro es paralelo.</p>
 </blockquote>
 <h3 id="superficies-paramétricas">Superficies paramétricas</h3>
 <p>Otra forma de definir una superficie en el espacio es mediante un
-subconjunto <span class="math inline">\(D \sub \mathbb{R}^2\)</span> y
-una serie de funciones, <span class="math inline">\(f, g, h: D
+subconjunto <span class="math inline">\(D \subset \mathbb{R}^2\)</span>
+y una serie de funciones, <span class="math inline">\(f, g, h: D
 \rightarrow \mathbb{R}^3\)</span>, de forma que</p>
 <p><span class="math display">\[
 (x, y, z) = \left( f(u, v), g(u, v), h(u, v) \right) \\
@@ -703,11 +712,130 @@ normal resultante viene dado por</p>
 \]</span></p>
 <h3 id="intersecciones-con-triángulos">Intersecciones con
 triángulos</h3>
+<p>Este tipo de intersecciones serán las más útiles en nuestro path
+tracer. Generalmente, nuestras geometrías estarán compuestas por mallas
+de triángulos, así que conocer dónde impacta nuestro rayo será clave.
+Empecemos por la base:</p>
+<p>Un triángulo viene dado por tres puntos, <span
+class="math inline">\(A, B\)</span>, y <span
+class="math inline">\(C\)</span>; correspondientes a sus vértices. Para
+evitar casos absurdos, supongamos que estos puntos son afinmente
+independientes; es decir, que no están alineados.</p>
+<h4 id="coordenadas-baricéntricas">Coordenadas baricéntricas</h4>
+<p>Podemos describir los puntos contenidos en el plano que forman estos
+vertices mediante <strong>coordenadas baricéntricas</strong>. Este
+sistema de coordenadas expresa cada punto del plano como una combinación
+convexa de los vértices. Es decir, que para cada punto <span
+class="math inline">\(P\)</span> del triángulo existen <span
+class="math inline">\(\alpha, \beta\)</span> y <span
+class="math inline">\(\gamma\)</span> tales que <span
+class="math inline">\(\alpha + \beta + \gamma = 1\)</span> y</p>
+<p><span class="math display">\[
+P = \alpha A + \beta B + \gamma C
+\]</span></p>
+<blockquote>
+<p>TODO: triángulo con coordenadas baricéntricas.</p>
+</blockquote>
+<p>Debemos destacar que existen dos grados de libertad debido a la
+restricción de que las coordenadas sumen 1.</p>
+<p>Una propiedad de estas coordenadas que nos puede resultar útil es que
+un punto <span class="math inline">\(P\)</span> está contenido en el
+triángulo si y sólo si <span class="math inline">\(0 &lt; \alpha, \beta,
+\gamma &lt; 1\)</span>.</p>
+<p>Esta propiedad y la restricción de que sumen 1 nos da una cierta
+intuición de cómo funcionan. Podemos ver las coordenadas baricéntricas
+como la contribución de los vértices a un punto <span
+class="math inline">\(P\)</span>. Por ejemplo, si <span
+class="math inline">\(\alpha = 0\)</span>, eso significa que el punto
+viene dado por <span class="math inline">\(\beta B + \gamma C\)</span>;
+es decir, una combinación lineal de <span
+class="math inline">\(B\)</span> y <span
+class="math inline">\(C\)</span>. Se encuentra en la recta que
+generan.</p>
+<p>Por proponer otro ejemplo, si alguna de las coordenadas fuera mayor
+que 1, eso significaría que el punto estaría más allá del triángulo.</p>
+<blockquote>
+<p>TODO: dibujo con explicación de cómo funciona (libreta Shinrin -
+Yoku)</p>
+</blockquote>
+<h4 id="calculando-la-intersección">Calculando la intersección</h4>
+<p>Podemos eliminar una de las varibales escribiendo <span
+class="math inline">\(\alpha = 1 - \beta - \gamma\)</span>, lo que nos
+dice</p>
+<p><span class="math display">\[
+\begin{aligned}
+P &amp; = (1 - \beta - \gamma) A + \beta B + \gamma C \\
+  &amp; = A + (B - A) \beta + (C - A) \gamma
+\end{aligned}
+\]</span></p>
+<p>bajo la restricción</p>
+<p><span id="eq:beta_gamma" class="eqnos"><span class="math display">\[
+\begin{aligned}
+\beta + \gamma &amp; &lt; 1 \\
+0 &amp; &lt; \beta          \\
+0 &amp; &lt; \gamma
+\end{aligned}
+\]</span><span class="eqnos-number">(1)</span></span> </p>
+<p>Un rayo <span class="math inline">\(P(t) = O + tD\)</span> impactará
+en un punto del triángulo si se cumple</p>
+<p><span class="math display">\[
+P(t) = O + tD = A + (B - A) \beta + (C - A) \gamma
+\]</span></p>
+<p>cumpliendo <a href="#eq:beta_gamma">1</a>. Podemos expandir la
+ecuación anterior en sus coordenadas para obtener</p>
+<p><span class="math display">\[
+\begin{aligned}
+O_x + tD_x &amp; = A_x + (B_x - A_x) \beta + (C_x - A_x) \gamma  \\
+O_y + tD_y &amp; = A_y + (B_y - A_y) \beta + (C_y - A_y) \gamma  \\
+O_z + tD_z &amp; = A_z + (B_z - A_z) \beta + (C_z - A_z) \gamma  \\
+\end{aligned}
+\]</span></p>
+<p>Reordenamos:</p>
+<p><span class="math display">\[
+\begin{aligned}
+(A_x - B_x) \beta + (A_x - C_x) \gamma+ tD_x &amp; = A_x - O_x   \\
+(A_y - B_y) \beta + (A_y - C_y) \gamma+ tD_y &amp; = A_y - O_y   \\
+(A_z - B_z) \beta + (A_z - C_z) \gamma+ tD_z &amp; = A_z - O_z
+\end{aligned}
+\]</span></p>
+<p>Lo que nos permite escribir el sistema en forma de ecuación:</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+        A_x - B_x &amp; A_x - C_x &amp; D_x \\
+        A_y - B_y &amp; A_y - C_y &amp; D_y \\
+        A_z - B_z &amp; A_z - C_z &amp; D_z
+\end{pmatrix}
+\begin{pmatrix}
+        \beta \\ \gamma \\ t
+\end{pmatrix}
+=
+\begin{pmatrix}
+        A_x - O_x \\ A_y - O_y \\ A_z - O_z
+\end{pmatrix}
+\]</span></p>
+<p>Calcular rápidamente la solución a un sistema de ecuaciones lineales
+es un problema habitual. En <span class="citation"
+data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
+role="doc-biblioref">Shirley and Morley 2003</a>)</span> se utiliza la
+regla de Cramer para hacerlo, esperando que el compilador optimice las
+variables intermedias creadas. Nosotros no nos tendremos que preocupar
+de esto en particular, ya que el punto de impacto lo calculará la GPU
+gracias a las <a
+href="https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap33.html#ray-intersection-candidate-determination">herramientras
+aportadas por KHR</a>.</p>
+<p>Para obtener el vector normal, podemos hacer el producto vectorial de
+dos vectores que se encuentren en el plano del triángulo. Como, por
+convención, los vértices se guardan en sentido antihorario visto desde
+fuera del objeto, entonces</p>
+<p><span class="math display">\[
+\mathbf{n} = (B - A) \times (C - A)
+\]</span></p>
 <hr>
 <p>Fuentes que he usado y que debería pasar:</p>
 <ul>
 <li>https://www.wikiwand.com/en/Implicit_surface</li>
 <li>https://www.wikiwand.com/en/Parametric_surface</li>
+<li>https://www.wikiwand.com/en/Barycentric_coordinate_system</li>
 </ul>
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
