@@ -61,6 +61,10 @@ a:visited {
   color: #c28a90
 }
 
+li {
+  margin-top: 0.5em;
+}
+
 code,
 pre {
   color: #eeffff;
