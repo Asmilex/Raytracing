@@ -37,7 +37,8 @@ PANDOC_FLAGS =\
 	--listings \
 	--top-level-division="chapter" \
 	--bibliography ./chapters/bibliography.bib \
-	--citeproc
+	--citeproc \
+	--filter pandoc-eqnos
 
 PANDOC_FLAGS_PDF = --template ./headers/eisvogel.tex
 PANDOC_FLAGS_WEB =\
