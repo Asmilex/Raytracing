@@ -123,7 +123,7 @@ Debemos tener en cuenta el caso para el cual $D \cdot \mathbf{n} = 0$. Esto solo
 
 ### Superficies paramétricas
 
-Otra forma de definir una superficie en el espacio es mediante un subconjunto $D \sub \mathbb{R}^2$ y una serie de funciones, $f, g, h: D \rightarrow \mathbb{R}^3$, de forma que
+Otra forma de definir una superficie en el espacio es mediante un subconjunto $D \subset \mathbb{R}^2$ y una serie de funciones, $f, g, h: D \rightarrow \mathbb{R}^3$, de forma que
 
 $$
 (x, y, z) = \left( f(u, v), g(u, v), h(u, v) \right) \\
