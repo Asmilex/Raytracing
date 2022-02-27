@@ -16,8 +16,8 @@ Así, nació la geometría, los puntos de luces, texturas, sombreados, y otros e
 
 La **rasterización** es el proceso mediante el cual estos objetos tridimensionales se transforman en bidimensionales. Proyectando acordemente el entorno a una cámara, conseguimos colorear un pixel, de forma que represente lo que se ve en ese mundo.
 
-[TODO insertar imagen rasterización.
-NOTE quizás debería extender un poco más esta parte? Parece que se queda algo coja la explicación.]
+> TODO insertar imagen rasterización.
+> NOTE quizás debería extender un poco más esta parte? Parece que se queda algo coja la explicación.
 
 Aunque esta técnica es bastante eficiente en términos de computación y ha evolucionado mucho, rápidamente saturamos sus posibilidades. Conceptos como *shadow maps*, *baked lightning*, o *reflection cubemaps* intentan solventar lo que no es posible con rasterización: preguntrarnos *qué es lo que se encuentra alrededor nuestra*.
 
@@ -55,7 +55,7 @@ Hemos entrado en la era del **real time ray tracing**.
 
 ## Vale, ¿y qué vamos a hacer entonces?
 
-TODO hablar de los objetivos del trabajo.
+> TODO hablar de los objetivos del trabajo.
 
 <hr>
 
