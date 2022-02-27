@@ -166,7 +166,7 @@ Es posible que el rayo no impacte en ningún punto. En ese caso, el sistema de e
 
 ### Intersecciones con esferas
 
-Estudiemos ahora cómo intersecan las esfera con nuestro rayo. Una esfera de centro $C$ y radio $r$ viene dados por aquellos puntos $P = (x, y, z)$ que cumplen
+Estudiemos ahora cómo intersecan las esfera con nuestro rayo. Una esfera de centro $C$ y radio $r$ viene dada por aquellos puntos $P = (x, y, z)$ que cumplen
 
 $$
 (P - C) \cdot (P - C) = r^2
@@ -177,6 +177,58 @@ Podemos reescribir esta ecuación en términos de sus coordenadas para obtener
 $$
 (x - C_x)^2 + (y - C_y)^2 + (z - C_z)^2 = r^2
 $$
+
+Veamos para qué valores de $t$ de nuestro rayo se cumple esa ecuación:
+
+$$
+\begin{aligned}
+(P(t) - C) \cdot (P(t) - C) & = r^2 & \iff \\
+(O + tD - C) \cdot (O + tD - C) & = r^2 & \iff \\
+\end{aligned}
+$$
+
+Aplicando las propiedades del producto escalar de la conmutatividad ($a \cdot b = b \cdot a$) y la distributiva ($a \cdot (b + c) = a \cdot b + a \cdot c$), podemos escribir
+
+$$
+\begin{aligned}
+((O - C) + tD) \cdot ((O - C) + tD) & = r^2 & \iff \\
+(O - C)^2 + 2 \cdot (O - C) \cdot tD + (tD)^2 & = r^2 & \iff \\
+D^2t^2 + 2 D \cdot (O - C)t + (O - C)^2 - r^2 & = 0 & \iff \\
+\end{aligned}
+$$
+
+Así que tenemos una ecuación de segundo grado. Resolviéndola, nos salen nuestros puntos de intersección:
+
+$$
+t = \frac{
+    - D \cdot (O - C) \pm \sqrt{(D \cdot (O - C))^2 - 4 (D^2)((O - C)^2 - r^2)}
+}{
+    2 D^2
+}
+$$
+
+Debemos distinguir tres casos, atiendiendo al valor que toma el discriminante $\Delta = (D \cdot (O - C))^2 - 4 (D^2)((O - C)^2 - r^2)$:
+
+1. Si $\Delta < 0$, $\sqrt{\Delta} \notin \mathbb{R}$, y el rayo no impacta con la esfera
+2. Si $\Delta = 0$, el rayo impacta en un punto, que toma el valor $t = \frac{-D \cdot (O - C)}{2 D \cdot D}$. Digamos que *pegaría* justo en el borde.
+3. Si $\Delta > 0$, existen dos soluciones. En ese caso, el rayo atraviesa la esfera.
+
+> TODO dibujo explicativo de la intersección con una esfera.
+
+Para estos dos últimos, si consideramos $t_0$ cualquier solución válida, el vector normal resultante viene dado por
+
+$$
+\mathbf{n} = 2 (P(t_0) - C)
+$$
+
+o, normalizando,
+
+$$
+\hat{\mathbf{n}} = \frac{(P(t_0) - C)}{r}
+$$
+
+### Intersecciones con triángulos
+
 
 <hr>
 
