@@ -207,7 +207,7 @@ t = \frac{
 }
 $$
 
-Debemos distinguir tres casos, atiendiendo al valor que toma el discriminante $\Delta = (D \cdot (O - C))^2 - 4 (D^2)((O - C)^2 - r^2)$:
+Debemos distinguir tres casos, atiendiendo al valor que toma el discriminante $\Delta = \small{(D \cdot (O - C))^2 - 4 (D^2)((O - C)^2 - r^2)}$:
 
 1. Si $\Delta < 0$, $\sqrt{\Delta} \notin \mathbb{R}$, y el rayo no impacta con la esfera
 2. Si $\Delta = 0$, el rayo impacta en un punto, que toma el valor $t = \frac{-D \cdot (O - C)}{2 D \cdot D}$. Digamos que *pegaría* justo en el borde.
