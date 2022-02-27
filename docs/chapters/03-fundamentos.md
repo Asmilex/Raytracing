@@ -280,7 +280,51 @@ $$
 P(t) = O + tD = A + (B - A) \beta + (C - A) \gamma
 $$
 
-cumpliendo [@eq:beta_gamma].
+cumpliendo [@eq:beta_gamma]. Podemos expandir la ecuación anterior en sus coordenadas para obtener
+
+$$
+\begin{aligned}
+O_x + tD_x & = A_x + (B_x - A_x) \beta + (C_x - A_x) \gamma  \\
+O_y + tD_y & = A_y + (B_y - A_y) \beta + (C_y - A_y) \gamma  \\
+O_z + tD_z & = A_z + (B_z - A_z) \beta + (C_z - A_z) \gamma  \\
+\end{aligned}
+$$
+
+Reordenamos:
+
+$$
+\begin{aligned}
+(A_x - B_x) \beta + (A_x - C_x) \gamma+ tD_x & = A_x - O_x   \\
+(A_y - B_y) \beta + (A_y - C_y) \gamma+ tD_y & = A_y - O_y   \\
+(A_z - B_z) \beta + (A_z - C_z) \gamma+ tD_z & = A_z - O_z
+\end{aligned}
+$$
+
+Lo que nos permite escribir el sistema en forma de ecuación:
+
+$$
+\begin{pmatrix}
+        A_x - B_x & A_x - C_x & D_x \\
+        A_y - B_y & A_y - C_y & D_y \\
+        A_z - B_z & A_z - C_z & D_z
+\end{pmatrix}
+\begin{pmatrix}
+        \beta \\ \gamma \\ t
+\end{pmatrix}
+=
+\begin{pmatrix}
+        A_x - O_x \\ A_y - O_y \\ A_z - O_z
+\end{pmatrix}
+$$
+
+Calcular rápidamente la solución a un sistema de ecuaciones lineales es un problema habitual. En [@ShirleyRRT] se utiliza la regla de Cramer para hacerlo, esperando que el compilador optimice las variables intermedias creadas. Nosotros no nos tendremos que preocupar de esto en particular, ya que el punto de impacto lo calculará la GPU gracias a las [herramientras aportadas por KHR](https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap33.html#ray-intersection-candidate-determination).
+
+Para obtener el vector normal, podemos hacer el producto vectorial de dos vectores que se encuentren en el plano del triángulo. Como, por convención, los vértices se guardan en sentido antihorario visto desde fuera del objeto, entonces
+
+$$
+\mathbf{n} = (B - A) \times (C - A)
+$$
+
 
 <hr>
 
