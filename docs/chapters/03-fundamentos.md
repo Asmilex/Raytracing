@@ -229,6 +229,58 @@ $$
 
 ### Intersecciones con triángulos
 
+Este tipo de intersecciones serán las más útiles en nuestro path tracer. Generalmente, nuestras geometrías estarán compuestas por mallas de triángulos, así que conocer dónde impacta nuestro rayo será clave. Empecemos por la base:
+
+Un triángulo viene dado por tres puntos, $A, B$, y $C$; correspondientes a sus vértices. Para evitar casos absurdos, supongamos que estos puntos son afinmente independientes; es decir, que no están alineados.
+
+#### Coordenadas baricéntricas
+
+Podemos describir los puntos contenidos en el plano que forman estos vertices mediante **coordenadas baricéntricas**. Este sistema de coordenadas expresa cada punto del plano como una combinación convexa de los vértices. Es decir, que para cada punto $P$ del triángulo existen $\alpha, \beta$ y $\gamma$ tales que $\alpha + \beta + \gamma = 1$ y
+
+$$
+P = \alpha A + \beta B + \gamma C
+$$
+
+> TODO: triángulo con coordenadas baricéntricas.
+
+Debemos destacar que existen dos grados de libertad debido a la restricción de que las coordenadas sumen 1.
+
+Una propiedad de estas coordenadas que nos puede resultar útil es que un punto $P$ está contenido en el triángulo si y sólo si $0 < \alpha, \beta, \gamma < 1$.
+
+Esta propiedad y la restricción de que sumen 1 nos da una cierta intuición de cómo funcionan. Podemos ver las coordenadas baricéntricas como la contribución de los vértices a un punto $P$. Por ejemplo, si $\alpha = 0$, eso significa que el punto viene dado por $\beta B + \gamma C$; es decir, una combinación lineal de $B$ y $C$. Se encuentra en la recta que generan.
+
+Por proponer otro ejemplo, si alguna de las coordenadas fuera mayor que 1, eso significaría que el punto estaría más allá del triángulo.
+
+> TODO: dibujo con explicación de cómo funciona (libreta Shinrin - Yoku)
+
+#### Calculando la intersección
+
+Podemos eliminar una de las varibales escribiendo $\alpha = 1 - \beta - \gamma$, lo que nos dice
+
+$$
+\begin{aligned}
+P & = (1 - \beta - \gamma) A + \beta B + \gamma C \\
+  & = A + (B - A) \beta + (C - A) \gamma
+\end{aligned}
+$$
+
+bajo la restricción
+
+$$
+\begin{aligned}
+\beta + \gamma & < 1 \\
+0 & < \beta          \\
+0 & < \gamma
+\end{aligned}
+$$ {#eq:beta_gamma}
+
+Un rayo $P(t) = O + tD$ impactará en un punto del triángulo si se cumple
+
+$$
+P(t) = O + tD = A + (B - A) \beta + (C - A) \gamma
+$$
+
+cumpliendo [@eq:beta_gamma].
 
 <hr>
 
@@ -236,3 +288,4 @@ Fuentes que he usado y que debería pasar:
 
 - https://www.wikiwand.com/en/Implicit_surface
 - https://www.wikiwand.com/en/Parametric_surface
+- https://www.wikiwand.com/en/Barycentric_coordinate_system
