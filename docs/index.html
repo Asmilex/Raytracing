@@ -227,6 +227,8 @@ objeto</a>
 paramétricas</a></li>
 <li><a href="#intersecciones-con-esferas">Intersecciones con
 esferas</a></li>
+<li><a href="#intersecciones-con-triángulos">Intersecciones con
+triángulos</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
@@ -394,7 +396,9 @@ class="math inline">\(\mathbf{M}\)</span>. También son columna.</p>
 <p>El producto escalar vendrá dado por <span
 class="math inline">\(\mathbf{v} \cdot \mathbf{w}\)</span>, y el
 vectorial por <span class="math inline">\(\mathbf{v} \times
-\mathbf{w}\)</span>.</p>
+\mathbf{w}\)</span>. Cuando escribamos <span
+class="math inline">\(\mathbf{v}^2\)</span>, lo entenderemos como <span
+class="math inline">\(\mathbf{v} \cdot \mathbf{v}\)</span></p>
 <p>La notación usada para las <strong>variables aleatorias</strong> será
 la habitual: mayúsculas como <span class="math inline">\(X\)</span>. Su
 valor esperado vendrá dado por <span
@@ -631,7 +635,7 @@ intersequen en varios puntos.</p>
 <h3 id="intersecciones-con-esferas">Intersecciones con esferas</h3>
 <p>Estudiemos ahora cómo intersecan las esfera con nuestro rayo. Una
 esfera de centro <span class="math inline">\(C\)</span> y radio <span
-class="math inline">\(r\)</span> viene dados por aquellos puntos <span
+class="math inline">\(r\)</span> viene dada por aquellos puntos <span
 class="math inline">\(P = (x, y, z)\)</span> que cumplen</p>
 <p><span class="math display">\[
 (P - C) \cdot (P - C) = r^2
@@ -641,6 +645,64 @@ obtener</p>
 <p><span class="math display">\[
 (x - C_x)^2 + (y - C_y)^2 + (z - C_z)^2 = r^2
 \]</span></p>
+<p>Veamos para qué valores de <span class="math inline">\(t\)</span> de
+nuestro rayo se cumple esa ecuación:</p>
+<p><span class="math display">\[
+\begin{aligned}
+(P(t) - C) \cdot (P(t) - C) &amp; = r^2 &amp; \iff \\
+(O + tD - C) \cdot (O + tD - C) &amp; = r^2 &amp; \iff \\
+\end{aligned}
+\]</span></p>
+<p>Aplicando las propiedades del producto escalar de la conmutatividad
+(<span class="math inline">\(a \cdot b = b \cdot a\)</span>) y la
+distributiva (<span class="math inline">\(a \cdot (b + c) = a \cdot b +
+a \cdot c\)</span>), podemos escribir</p>
+<p><span class="math display">\[
+\begin{aligned}
+((O - C) + tD) \cdot ((O - C) + tD) &amp; = r^2 &amp; \iff \\
+(O - C)^2 + 2 \cdot (O - C) \cdot tD + (tD)^2 &amp; = r^2 &amp; \iff \\
+D^2t^2 + 2 D \cdot (O - C)t + (O - C)^2 - r^2 &amp; = 0 &amp; \iff \\
+\end{aligned}
+\]</span></p>
+<p>Así que tenemos una ecuación de segundo grado. Resolviéndola, nos
+salen nuestros puntos de intersección:</p>
+<p><span class="math display">\[
+t = \frac{
+    - D \cdot (O - C) \pm \sqrt{(D \cdot (O - C))^2 - 4 (D^2)((O - C)^2
+- r^2)}
+}{
+    2 D^2
+}
+\]</span></p>
+<p>Debemos distinguir tres casos, atiendiendo al valor que toma el
+discriminante <span class="math inline">\(\Delta = (D \cdot (O - C))^2 -
+4 (D^2)((O - C)^2 - r^2)\)</span>:</p>
+<ol type="1">
+<li>Si <span class="math inline">\(\Delta &lt; 0\)</span>, <span
+class="math inline">\(\sqrt{\Delta} \notin \mathbb{R}\)</span>, y el
+rayo no impacta con la esfera</li>
+<li>Si <span class="math inline">\(\Delta = 0\)</span>, el rayo impacta
+en un punto, que toma el valor <span class="math inline">\(t = \frac{-D
+\cdot (O - C)}{2 D \cdot D}\)</span>. Digamos que <em>pegaría</em> justo
+en el borde.</li>
+<li>Si <span class="math inline">\(\Delta &gt; 0\)</span>, existen dos
+soluciones. En ese caso, el rayo atraviesa la esfera.</li>
+</ol>
+<blockquote>
+<p>TODO dibujo explicativo de la intersección con una esfera.</p>
+</blockquote>
+<p>Para estos dos últimos, si consideramos <span
+class="math inline">\(t_0\)</span> cualquier solución válida, el vector
+normal resultante viene dado por</p>
+<p><span class="math display">\[
+\mathbf{n} = 2 (P(t_0) - C)
+\]</span></p>
+<p>o, normalizando,</p>
+<p><span class="math display">\[
+\hat{\mathbf{n}} = \frac{(P(t_0) - C)}{r}
+\]</span></p>
+<h3 id="intersecciones-con-triángulos">Intersecciones con
+triángulos</h3>
 <hr>
 <p>Fuentes que he usado y que debería pasar:</p>
 <ul>
