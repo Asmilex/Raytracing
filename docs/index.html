@@ -238,6 +238,8 @@ esferas</a></li>
 triángulos</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#integración-de-monte-carlo">Integración de Monte
+Carlo</a></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
 cómo se hizo este trabajo</a>
 <ul>
@@ -785,7 +787,7 @@ en un punto del triángulo si se cumple</p>
 <p><span class="math display">\[
 P(t) = O + tD = A + (B - A) \beta + (C - A) \gamma
 \]</span></p>
-<p>cumpliendo <a href="#eq:beta_gamma">1</a>. Podemos expandir la
+<p>cumpliendo [<a href="#eq:beta_gamma">1</a>]. Podemos expandir la
 ecuación anterior en sus coordenadas para obtener</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -840,6 +842,28 @@ fuera del objeto, entonces</p>
 <li>https://www.wikiwand.com/en/Implicit_surface</li>
 <li>https://www.wikiwand.com/en/Parametric_surface</li>
 <li>https://www.wikiwand.com/en/Barycentric_coordinate_system</li>
+</ul>
+<h1 id="integración-de-monte-carlo">Integración de Monte Carlo</h1>
+<blockquote>
+<p>TODO: este capítulo seguramente debería ir más tarde. De esa forma,
+puedo introducir otros conceptos antes. De momento, se queda aquí.</p>
+</blockquote>
+<p>La parte más importante de nuestro ray tracer es saber calcular la
+luz en un punto. Para ello, necesitaríamos hallar la radianza en un
+punto mediante la <em>rendering equation</em>. Sin embargo, es
+<em>muy</em> difícil resolverla. Tanto computacionalmente como
+analíticamente. Por ello, debemos atacar el problema desde otro punto de
+vista.</p>
+<p>Las técnicas de Monte Carlo nos permitirán aproximar el valor que
+toman mediante una estimación. Utilizan muestreo aleatorias para evaluar
+integrales. Una de las propiedades más improtantes que tienen es la
+<strong>independencia del ratio de convergencia y la dimensionalidad del
+integrando</strong>.</p>
+<hr>
+<ul>
+<li>https://www.wikiwand.com/en/Rendering_equation</li>
+<li>https://www.pbr-book.org/3ed-2018/contents</li>
+<li>RTT Shirley.</li>
 </ul>
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
