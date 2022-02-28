@@ -82,11 +82,11 @@
             },
             "presentation": {
                 "echo": true,
-                "reveal": "silent",
+                "reveal": "never",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": true,
-                "clear": false
+                "close": true,
             },
             "problemMatcher": []
         }

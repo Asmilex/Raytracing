@@ -36,9 +36,9 @@ PANDOC_FLAGS =\
 	--from markdown \
 	--listings \
 	--top-level-division="chapter" \
-	--bibliography ./chapters/bibliography.bib \
+	--filter pandoc-eqnos \
 	--citeproc \
-	--filter pandoc-eqnos
+	--bibliography ./chapters/bibliography.bib
 
 PANDOC_FLAGS_PDF = --template ./headers/eisvogel.tex
 PANDOC_FLAGS_WEB =\
