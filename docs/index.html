@@ -238,8 +238,10 @@ esferas</a></li>
 triángulos</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#integración-de-monte-carlo">Integración de Monte
-Carlo</a></li>
+<li><a href="#integración-de-monte-carlo">Integración de Monte Carlo</a>
+<ul>
+<li><a href="#repaso-de-probabilidad">Repaso de probabilidad</a></li>
+</ul></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
 cómo se hizo este trabajo</a>
 <ul>
@@ -249,6 +251,7 @@ cómo se hizo este trabajo</a>
 <li><a href="#github-projects">Github Projects</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#anexo-cheatsheet">Anexo: Cheatsheet</a></li>
 </ul>
 </nav>
 <h1 id="abstract">Abstract</h1>
@@ -849,16 +852,28 @@ fuera del objeto, entonces</p>
 puedo introducir otros conceptos antes. De momento, se queda aquí.</p>
 </blockquote>
 <p>La parte más importante de nuestro ray tracer es saber calcular la
-luz en un punto. Para ello, necesitaríamos hallar la radianza en un
+luz en un punto. Para ello, necesitaríamos hallar la radianza en dicho
 punto mediante la <em>rendering equation</em>. Sin embargo, es
 <em>muy</em> difícil resolverla. Tanto computacionalmente como
 analíticamente. Por ello, debemos atacar el problema desde otro punto de
 vista.</p>
 <p>Las técnicas de Monte Carlo nos permitirán aproximar el valor que
-toman mediante una estimación. Utilizan muestreo aleatorias para evaluar
-integrales. Una de las propiedades más improtantes que tienen es la
+toman mediante una estimación. Utilizando muestreo aleatorio para
+evaluar integrales, seremos capaces de obtener un resultado
+suficientemente bueno.</p>
+<p>Una de las propiedades más improtantes que tienen es la
 <strong>independencia del ratio de convergencia y la dimensionalidad del
-integrando</strong>.</p>
+integrando</strong>. Sin embargo, dadas <span
+class="math inline">\(n\)</span> nuestras, la convergencia a la solución
+correcta tiene un orden de <span
+class="math inline">\(\mathcal{O}\left(n^{-1/2}\right)\)</span>. Es
+decir, para reducir el error a la mitad, necesitaríamos 4 veces más
+muestras.</p>
+<h2 id="repaso-de-probabilidad">Repaso de probabilidad</h2>
+<p>Necesitaremos unas cuantas nociones de variable aleatoria para poder
+entender la integración de Monte Carlo, así que vamos a hacer un breve
+repaso.</p>
+<p>Una <strong>variable aleatoria</strong></p>
 <hr>
 <ul>
 <li>https://www.wikiwand.com/en/Rendering_equation</li>
@@ -889,6 +904,7 @@ construir la web y el pdf</p>
 <p>TODO - Hablar de cómo se gestiona el trabajo mediante issues,
 recapitulados todos con Projects.</p>
 </blockquote>
+<h1 class="unnumbered" id="anexo-cheatsheet">Anexo: Cheatsheet</h1>
 <div id="refs" class="references csl-bib-body hanging-indent"
 role="doc-bibliography">
 <div id="ref-ShirleyRRT" class="csl-entry" role="doc-biblioentry">
