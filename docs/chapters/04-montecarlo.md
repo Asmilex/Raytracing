@@ -105,7 +105,7 @@ $$
 
 Esta última propiedad me gusta entenderla como *si recoges todos los valores que puede tomar la variable aleatoria, la probabilidad de que te encuentres en el conjunto debe ser 1.*. Si nos encontramos en el conjunto de números reales, podemos escribir la integral como $\int_{-\infty}^{\infty}{f_X(x)} = 1$.
 
-Una de las variables aleatorias que más juego nos darán en el futuro será la **v.a. uniforme**. La denotaremos como $\xi$, y puede tomar valores en $[0, 1)$. La probabilidad de que $\xi$ tome un valor es constante, por lo que podemos definir su función de densidad como
+Una de las variables aleatorias que más juego nos darán en el futuro será la **v.a. con distribución uniforme en $[0, 1)$**. La denotaremos como $\xi$, y escribiremos $\xi \sim U\left([0, 1)\right)$. La probabilidad de que $\xi$ tome un valor es constante, por lo que podemos definir su función de densidad como
 
 $$
 f(\xi) = \left\{  \begin{array}{llc}
@@ -137,6 +137,89 @@ $$
 f_X(x) = \frac{dF_X(x)}{dx}
 $$
 
+### Esperanza y varianza de una variable aleatoria
+
+La esperanza de una variable aleatoria, denotada $E[X]$, es una generalización de la media ponderada. Nos informa del *valor esperado* de una variable aleatoria.
+
+En el caso de las variables discretas, se define como
+
+$$
+E[X] = \sum{x_i p_i}
+$$
+
+donde $x_i$ son los posibles valores que puede tomar la v.a., y $p_i$ la probabilidad asociada a cada uno de ellos.
+
+En el caso de las variables aleatorias continuas reales, la esperanza viene dada por
+
+$$
+E[X] = \int_{-\infty}^{\infty}{x f_X(x) dx}
+$$
+
+aunque, generalizando a una v.a. con espacio muestral $\Omega$, la esperanza viene dada por
+
+$$
+E[X] = \int_{\Omega}{x f_X(x) dx}
+$$
+
+En el ejemplo de las variables discretas, su esperanza venía dada por
+
+$$
+E[X] = \sum_{i = 2}^{12}{i \cdot p_i} = 2 \frac{1}{36} + 3 \frac{2}{36} + \dots + 12 \frac{1}{36} = 7
+$$
+
+Para variables aleatorias uniformes en $(a, b)$ (es decir, $X \sim U(a, b)$), la esperanza es
+
+$$
+E[X] = \int_{a}^{b}{x \cdot \frac{1}{b - a}dx} = \frac{a + b}{2}
+$$
+
+La esperanza tiene unas cuantas propiedades que nos resultarán muy útiles. Estas son:
+
+- **Linealidad**:
+  - Si $X, Y$ son dos v.a., $E[X + Y] = E[X] + E[Y]$
+  - Si $a$ es una constante, $X$ una v.a., entonces $E[aX] = aE[X]$
+  - Análogamente, para ciertas $X_1, \dots, X_k, E\left[\sum_{i = 1}^{k}{X_i}\right] = \sum_{i = 1}^{k}{E[X_i]}$
+  - Estas propiedades no necesitan que las variables aleatorias sean independientes. ¡Este hecho será clave para las técnicas de Monte Carlo!.
+- La **Ley del estadístico insconciente** (*Law of the unconscious statistician*, o LOTUS): dada una variable aleatoria $X$ y una función medible $g$, la esperanza de $g(X)$ se puede calcular como
+
+$$
+E[g(X)] = \int_{\Omega}{g(x) f_X(x) dx}
+$$
+
+**Esta propiedad será clave en nuestro desarrollo**.
+
+Será habitual encontrarnos con el problema de que no conocemos la distribución de una variable aleatoria $Y$. Sin embargo, si encontramos una transformación medible de una variable aleatoria $X$ de forma que obtengamos $Y$ (esto es, $\exists g$ función medible tal que $g(X) = Y$), entonces podemos calcular la esperanza de $Y$ fácilmente. La importancia de la variable aleatoria con distribución uniforme $\xi$ se debe a esta propiedad. Generar números aleatorios en $[0, 1)$ es muy fácil, así que obtendremos otras v.a.s a partir de $\xi$. Pero no adelantemos acontecimientos, así que no variemos tanto.
+
+Hablando de variar: **la varianza de una variable aleatoria** nos permitirá medir cómo de dispersa es la distribución con respecto a su media. La denotaremos como $Var[X]$, y se define como
+
+$$
+Var[X] = E\left[(X - E[X])^2\right]
+$$
+
+Si desarrollamos esta definición, podemos conseguir una expresión algo más agradable:
+
+$$
+\begin{aligned}
+   Var[X] & = E\left[(X - E[X])^2\right] = \\
+          & = E\left[X^2 + E[X]^2 - 2XE[X]\right] = \\
+          & = E\left[X^2\right] + E[X]^2 - 2E[X]E[X] = \\
+          & = E\left[X^2\right] - E\left[X\right]^2
+\end{aligned}
+$$
+
+Hemos usado que $E[E[X]] = E[X]$ y la linealidad de la esperanza.
+
+Enunciemos un par de propiedades que tiene, similares a la de la esperanza:
+
+
+- La varianza saca constantes al cuadrado: $Var[aX] = a^2Var[X]$
+- $Var[X + Y] = Var[X] + Var[Y] + 2Cov[X, Y]$, donde $Cov[X, Y]$ es la covarianza de $X$ y $Y$.
+  - En el caso en el que $X$ e $Y$ sean incorreladas (es decir, la covarianza es $0$), $Var[X + Y] = Var[X] + Var[Y]$.
+
+La varianza nos será útil a la hora de medir el error cometido por una estimación de Monte Carlo.
+
+### Variables aleatorias multidimensionales
+
 <hr>
 
 - https://www.wikiwand.com/en/Rendering_equation
@@ -144,6 +227,7 @@ $$
 - https://www.wikiwand.com/es/Distribuci%C3%B3n_de_probabilidad#/Distribuciones_de_variable_discreta
 - https://www.wikiwand.com/es/Funci%C3%B3n_de_probabilidad
 - https://www.pbr-book.org/3ed-2018/contents
+- https://www.wikiwand.com/en/Expected_value
 - https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf
 - https://www.wikiwand.com/en/Probability_density_function
 - RTT Shirley.
