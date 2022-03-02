@@ -69,11 +69,73 @@ $$
 F_X(x) = P(X \le x) = \sum_{k = -\infty}^{x}{P(X = x)} = 1
 $$
 
-Es una función continua por la derecha y monótona no decreciente. Además, se cumple que $\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$
+Es una función continua por la derecha y monótona no decreciente. Además, se cumple que $\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$.
+
+En nuestro ejemplo, si consideramos $x = 3$:
+
+$$
+\begin{aligned}
+F_X(x) & = \sum_{i = 1}^{3}{P(X = i)} = P(X = 1) + P(X = 2) + P(X = 3) \\
+       & = \frac{1}{36} + \frac{2}{36} + \frac{3}{36} = \frac{1}{12}
+\end{aligned}
+$$
 
 ### Variables aleatorias continuas
 
-Estas variables aleatorias tienen un rango no numerable.
+Este tipo de variables aleatorias tienen un rango no numerable; es decir, el conjunto de valores que puede tomar abarca un intervalo de números.
+
+Un ejemplo podría ser la altura de una persona.
+
+Si en las variables aleatorias discretas teníamos funciones masa de probabilidad, aquí definireoms **funciones de densidad de probabilidad** (o simplemente, funciones de densidad). La idea es la misma: nos permite conocer la probabilidad de que nuestra variable aleatoria tome un cierto valor del espacio muestral.
+
+Es importante mencionar que, aunque *la probabilidad de que la variable aleatoria tome un valor específico* es $0$, ya que nos encontramos en un conjunto no numerable, sí que podemos calcular la probabilidad de que se encuentre entre dos valores. Por tanto, si la función de densidad es $f_X$, entonces
+
+$$
+P(a \le X \le b) = \int_{a}^{b}{f_X(x)dx}
+$$
+
+La función de densidad tiene dos características importantes:
+
+1. $f_X$ es no negativa; esto es, $f_X(x) \ge 0\  \forall x \in \Omega$
+2. $f_X$ integra uno en todo el espacio muestral:
+
+$$
+\int_{-\Omega}{f_X(x)} = 1
+$$
+
+Esta última propiedad me gusta entenderla como *si recoges todos los valores que puede tomar la variable aleatoria, la probabilidad de que te encuentres en el conjunto debe ser 1.*. Si nos encontramos en el conjunto de números reales, podemos escribir la integral como $\int_{-\infty}^{\infty}{f_X(x)} = 1$.
+
+Una de las variables aleatorias que más juego nos darán en el futuro será la **v.a. uniforme**. La denotaremos como $\xi$, y puede tomar valores en $[0, 1)$. La probabilidad de que $\xi$ tome un valor es constante, por lo que podemos definir su función de densidad como
+
+$$
+f(\xi) = \left\{  \begin{array}{llc}
+                  1 & \text{si } \xi \in [0, 1) \\
+                  0 & \text{en otro caso.}
+                  \end{array}
+         \right.
+$$
+
+La probabilidad de $\xi$ tome un valor entre dos elementos $a, b \in [0, 1)$ es
+
+$$
+P(\xi \in [a, b]) = \int_{a}^{b}{1dx} = b - a
+$$
+
+Como veremos más adelante, saber definir correctamente una función de densidad nos permitirá mejorar el rendimiento del path tracer.
+
+La función de distribución $F_X(x)$ podemos definirla como:
+
+$$
+F_X(x) = P(X \le x) = \int_{-\infty}^{x}{f_X(t)dt}
+$$
+
+Podemos concebir la función de distribución como *ir acumulando los valores que pueda tomar la variable aleatoria*: dado un cierto punto del espacio, $x$, ¿cuál sería la probabilidad de que cayéramos en algún valor que deja $x$ por debajo?
+
+El Teorema Fundamental del Cálculo nos permite relacionar función de distribución y función de densidad directamente:
+
+$$
+f_X(x) = \frac{dF_X(x)}{dx}
+$$
 
 <hr>
 
@@ -83,4 +145,5 @@ Estas variables aleatorias tienen un rango no numerable.
 - https://www.wikiwand.com/es/Funci%C3%B3n_de_probabilidad
 - https://www.pbr-book.org/3ed-2018/contents
 - https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf
+- https://www.wikiwand.com/en/Probability_density_function
 - RTT Shirley.
