@@ -36,7 +36,7 @@ PANDOC_FLAGS =\
 	--from markdown \
 	--listings \
 	--top-level-division="chapter" \
-	--filter ./headers/pandoc_eqnos.py \
+	--filter pandoc-eqnos \
 	--citeproc \
 	--bibliography ./chapters/bibliography.bib
 
