@@ -52,7 +52,10 @@ La **función masa de probabilidad** nos permite conocer la probabilidad de que 
 En este ejemplo, la probabilidad de que $X$ tome el valor $4$ es
 
 $$
-P(X = 4) = p_i \cdot \text{nº parejas que sumen 4} = \frac{1}{36} \cdot 3 = \frac{1}{12}
+\begin{aligned}
+P(X = 4) & = \sum{\small{\text{nº parejas que suman 4}} \cdot \small{\text{probabilidad de que salga la pareja}}} \\
+         & = \frac{1}{36} \cdot 3 = \frac{1}{12}
+\end{aligned}
 $$
 
 (Las parejas serían $(1, 3), (2, 2), (3, 1)$).
@@ -178,7 +181,7 @@ La esperanza tiene unas cuantas propiedades que nos resultarán muy útiles. Est
 - **Linealidad**:
   - Si $X, Y$ son dos v.a., $E[X + Y] = E[X] + E[Y]$
   - Si $a$ es una constante, $X$ una v.a., entonces $E[aX] = aE[X]$
-  - Análogamente, para ciertas $X_1, \dots, X_k, E\left[\sum_{i = 1}^{k}{X_i}\right] = \sum_{i = 1}^{k}{E[X_i]}$
+  - Análogamente, para ciertas $X_1, \dots, X_k$, $E\left[\sum_{i = 1}^{k}{X_i}\right] = \sum_{i = 1}^{k}{E[X_i]}$
   - Estas propiedades no necesitan que las variables aleatorias sean independientes. ¡Este hecho será clave para las técnicas de Monte Carlo!.
 - La **Ley del estadístico insconciente** (*Law of the unconscious statistician*, o LOTUS): dada una variable aleatoria $X$ y una función medible $g$, la esperanza de $g(X)$ se puede calcular como
 
@@ -213,7 +216,7 @@ Enunciemos un par de propiedades que tiene, similares a la de la esperanza:
 
 
 - La varianza saca constantes al cuadrado: $Var[aX] = a^2Var[X]$
-- $Var[X + Y] = Var[X] + Var[Y] + 2Cov[X, Y]$, donde $Cov[X, Y]$ es la covarianza de $X$ y $Y$.
+- $\small{Var[X + Y] = Var[X] + Var[Y] + 2Cov[X, Y]}$, donde $Cov[X, Y]$ es la covarianza de $X$ y $Y$.
   - En el caso en el que $X$ e $Y$ sean incorreladas (es decir, la covarianza es $0$), $Var[X + Y] = Var[X] + Var[Y]$.
 
 La varianza nos será útil a la hora de medir el error cometido por una estimación de Monte Carlo.
