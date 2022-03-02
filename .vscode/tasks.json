@@ -70,7 +70,6 @@
             "type": "shell",
             "args": [
                 "make",
-                "PANDOC_EXEC=pandoc.exe",
                 "web"
             ],
             "options": {
@@ -86,7 +85,7 @@
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": true,
-                "close": true,
+                "close": false,
             },
             "problemMatcher": []
         }
