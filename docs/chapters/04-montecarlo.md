@@ -221,7 +221,77 @@ Enunciemos un par de propiedades que tiene, similares a la de la esperanza:
 
 La varianza nos será útil a la hora de medir el error cometido por una estimación de Monte Carlo.
 
-### Variables aleatorias multidimensionales
+## El estimador de Monte Carlo
+
+Tras este breve repaso, estamos en condiciones de definir el estimador de Monte Carlo. Primero, vamos con su versión más sencilla.
+
+Los estimadores de Monte Carlo nos permiten hallar la esperanza de una variable aleatoria, digamos, $Y$, sin necesidad de calcular explícitamente su valor. Para ello, tomamos unas cuantas muestras $Y_1, \dots, Y_N$ que sigan la misma distribución que $Y$ con media $\mu$, y consideramos el estimador de $\mu$ [@mcbook]:
+
+$$
+\hat\mu_N = \frac{1}{N} \sum_{i = 1}^{N}{Y_i}
+$${#eq:mc_simple}
+
+Haciendo la esperanza de este estimador, vemos que
+
+$$
+\begin{aligned}
+E[\hat\mu_N] & = E\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right] = \frac{1}{N} E\left[\sum_{i = 1}^{N}{Y_i}\right] \\
+             & = \frac{1}{N} \sum_{i = 1}^{N}{E\left[Y_i\right]} = \frac{1}{N} \sum_{i = 1}^{N}{\mu} = \\
+             & = \mu
+\end{aligned}
+$$
+
+A este tipo de estimadores se les llama insesgados.
+
+Generalmente nos encontraremos en la situación en la que $Y = f(X)$, donde $X$ sigue una distribución con función de densidad $p_X(x)$, y $f: S \rightarrow \mathbb{R}$. En ese caso, sabemos que la esperanza de $Y$ se puede calcular como
+
+$$
+\mu = E[Y] = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
+$$
+
+Lo que estamos buscando es calcular $\int_{S}{f(x)dx}$. Entonces, ¿qué ocurre si intentamos compensar [@eq:mc_simple] con la función de densidad?
+
+$$
+\begin{aligned}
+& E\left[\frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}\right] = \frac{1}{N} \sum_{i = 1}^{N}{E\left[\frac{f(X_i)}{p_X(X_i)}\right]} = \\
+& = \frac{1}{N} \sum_{i = 1}^{N}{\left(\int_{S}{\frac{f(x)}{p_X(x)}p_X(x)dx}\right)} = \\
+& = \frac{1}{N} N \int_{S}{f(x)dx} = \\
+& = \int_{S}{f(x)dx}
+\end{aligned}
+$$
+
+¡Genial! Esto nos da una forma de calcular la integral de una función usando muestras de variables aleatorias con cierta distribución. Llamaremos al estimador de Monte Carlo
+
+$$
+\hat{F_N} = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
+$$
+
+Es importante mencionar que $p_X(x)$ debe ser distinto de 0 cuando $f$ también lo sea.
+
+Podemos particularizar el caso en el que nuestras muestras $X_i$ sigan una distribución uniforme en $[a, b]$. Si eso ocurre, su función de densidad es $p_X(x) = \frac{1}{b - a}$, así que podemos simplificar un poco nuestro estimador:
+
+$$
+\hat{F_N} = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
+$$
+
+Elegir correctamente la función de densidad $p_X$ será clave. Si conseguimos elegirla debidamente, reduciremos mucho el error que genera el estimador. Esto es lo que se conoce como *importance sampling*.
+
+Podemos calcular el error cuadrático medio de la estimación si volvemos al estimador de la media [@eq:mc_simple], $\hat\mu_N$. Para ello, necesitamos la varianza: como $\hat\mu_N$ es insesgado, tenemos que
+
+$$
+\begin{aligned}
+Var[\hat\mu_N] & = Var\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right] = \frac{1}{N^2} Var\left[\sum_{i = 1}^{N}{Y_i}\right] = \\
+               & = \frac{1}{N^2} \sum_{i = 1}^{N}{Var[Y_i]} = \frac{1}{N^2} N Var[Y] = \\
+               & = \frac{Var[Y]}{N}
+\end{aligned}
+$$
+
+El error cuadrático medio es
+$$
+\sqrt(Var[\hat\mu_N]) = \sqrt{\frac{Var[Y]}{N}} = \frac{\sqrt{Var[Y]}}{\sqrt{N}}
+$$
+
+así que, como adelantamos al inicio del capítulo, la estimación tiene un error del orden $\mathcal{O}(N^{-1/2})$. Esto nos dice que, para reducir el error a la mitad, debemos tomar 4 veces más muestras.
 
 <hr>
 
@@ -234,3 +304,5 @@ La varianza nos será útil a la hora de medir el error cometido por una estimac
 - https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf
 - https://www.wikiwand.com/en/Probability_density_function
 - RTT Shirley.
+- https://artowen.su.domains/mc/
+- https://www.wikiwand.com/es/Estimador
