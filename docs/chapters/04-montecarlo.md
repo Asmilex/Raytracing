@@ -103,7 +103,7 @@ La función de densidad tiene dos características importantes:
 2. $f_X$ integra uno en todo el espacio muestral:
 
 $$
-\int_{-\Omega}{f_X(x)} = 1
+\int_{\Omega}{f_X(x)} = 1
 $$
 
 Esta última propiedad me gusta entenderla como *si recoges todos los valores que puede tomar la variable aleatoria, la probabilidad de que te encuentres en el conjunto debe ser 1.*. Si nos encontramos en el conjunto de números reales, podemos escribir la integral como $\int_{-\infty}^{\infty}{f_X(x)} = 1$.
