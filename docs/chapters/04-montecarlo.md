@@ -60,10 +60,10 @@ $$
 
 (Las parejas serían $(1, 3), (2, 2), (3, 1)$).
 
-Por definición, si el espacio muestral de $X$ es $x_1, \dots, x_n$, la función masa de probabilidad debe cumplir que
+Por definición, si el espacio muestral de $X$ es $x_1, \dots, x_n$, la función masa de probabilidad debe cumplir
 
 $$
-\sum_{i = 1}^{k}{P(X = x_i)} = 1
+\sum_{i = 1}^{n}{P(X = x_i)} = 1
 $$
 
 La **función de distribución** de una variable aleatoria $X$ es
