@@ -82,6 +82,7 @@ Estos son los iconos usados, así como su significado:
 | Documentación            |      :notebook:       |        `:notebook:`         |
 | Archivo de configuración |       :wrench:        |         `:wrench:`          |
 | Integración continua     | :construction_worker: |   `:construction_worker:`   |
+| Commit de Actions        |        :robot:        |          `:robot:`          |
 | Quitar archivos          |        :fire:         |          `:fire:`           |
 | Nuevas características   |      :sparkles:       |        `:sparkles:`         |
 | Test                     |       :alembic:       |         `:alembic:`         |
