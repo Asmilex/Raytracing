@@ -288,7 +288,7 @@ $$
 
 El error cuadrático medio es
 $$
-\sqrt(Var[\hat\mu_N]) = \sqrt{\frac{Var[Y]}{N}} = \frac{\sqrt{Var[Y]}}{\sqrt{N}}
+\sqrt{Var[\hat\mu_N]} = \sqrt{\frac{Var[Y]}{N}} = \frac{\sqrt{Var[Y]}}{\sqrt{N}}
 $$
 
 así que, como adelantamos al inicio del capítulo, la estimación tiene un error del orden $\mathcal{O}(N^{-1/2})$. Esto nos dice que, para reducir el error a la mitad, debemos tomar 4 veces más muestras.
@@ -306,3 +306,4 @@ así que, como adelantamos al inicio del capítulo, la estimación tiene un erro
 - RTT Shirley.
 - https://artowen.su.domains/mc/
 - https://www.wikiwand.com/es/Estimador
+- Presentación que no he mirado pero que tiene buena pinta: https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf

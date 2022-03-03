@@ -23,7 +23,7 @@ Aunque esta técnica es bastante eficiente en términos de computación y ha evo
 
 En parte, nos olvidamos de la intuitiva realidad, para centrarnos en aquello computacionalmente viable.
 
-Y, entonces, en 1960 el trazado de rayos con una simple idea intuitiva .
+Y, entonces, en 1960 el trazado de rayos con una simple idea intuitiva.
 
 ## ¿Qué es ray tracing?
 
