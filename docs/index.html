@@ -248,9 +248,9 @@ discretas</a></li>
 continuas</a></li>
 <li><a href="#esperanza-y-varianza-de-una-variable-aleatoria">Esperanza
 y varianza de una variable aleatoria</a></li>
-<li><a href="#variables-aleatorias-multidimensionales">Variables
-aleatorias multidimensionales</a></li>
 </ul></li>
+<li><a href="#el-estimador-de-monte-carlo">El estimador de Monte
+Carlo</a></li>
 </ul></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
 cómo se hizo este trabajo</a>
@@ -964,10 +964,9 @@ P(X = 4) &amp; = \sum{\small{\text{nº parejas que suman 4}} \cdot
 1)\)</span>).</p>
 <p>Por definición, si el espacio muestral de <span
 class="math inline">\(X\)</span> es <span class="math inline">\(x_1,
-\dots, x_n\)</span>, la función masa de probabilidad debe cumplir
-que</p>
+\dots, x_n\)</span>, la función masa de probabilidad debe cumplir</p>
 <p><span class="math display">\[
-\sum_{i = 1}^{k}{P(X = x_i)} = 1
+\sum_{i = 1}^{n}{P(X = x_i)} = 1
 \]</span></p>
 <p>La <strong>función de distribución</strong> de una variable aleatoria
 <span class="math inline">\(X\)</span> es</p>
@@ -1016,7 +1015,7 @@ P(a \le X \le b) = \int_{a}^{b}{f_X(x)dx}
 espacio muestral:</li>
 </ol>
 <p><span class="math display">\[
-\int_{-\Omega}{f_X(x)} = 1
+\int_{\Omega}{f_X(x)} = 1
 \]</span></p>
 <p>Esta última propiedad me gusta entenderla como <em>si recoges todos
 los valores que puede tomar la variable aleatoria, la probabilidad de
@@ -1176,8 +1175,103 @@ class="math inline">\(Var[X + Y] = Var[X] + Var[Y]\)</span>.</li>
 </ul>
 <p>La varianza nos será útil a la hora de medir el error cometido por
 una estimación de Monte Carlo.</p>
-<h3 id="variables-aleatorias-multidimensionales">Variables aleatorias
-multidimensionales</h3>
+<h2 id="el-estimador-de-monte-carlo">El estimador de Monte Carlo</h2>
+<p>Tras este breve repaso, estamos en condiciones de definir el
+estimador de Monte Carlo. Primero, vamos con su versión más
+sencilla.</p>
+<p>Los estimadores de Monte Carlo nos permiten hallar la esperanza de
+una variable aleatoria, digamos, <span class="math inline">\(Y\)</span>,
+sin necesidad de calcular explícitamente su valor. Para ello, tomamos
+unas cuantas muestras <span class="math inline">\(Y_1, \dots,
+Y_N\)</span> que sigan la misma distribución que <span
+class="math inline">\(Y\)</span> con media <span
+class="math inline">\(\mu\)</span>, y consideramos el estimador de <span
+class="math inline">\(\mu\)</span> <span class="citation"
+data-cites="mcbook">(<a href="#ref-mcbook" role="doc-biblioref">Owen
+2013</a>)</span>:</p>
+<p><span id="eq:mc_simple" class="eqnos"><span class="math display">\[
+\hat\mu_N = \frac{1}{N} \sum_{i = 1}^{N}{Y_i}
+\]</span><span class="eqnos-number">(2)</span></span></p>
+<p>Haciendo la esperanza de este estimador, vemos que</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\hat\mu_N] &amp; = E\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right] =
+\frac{1}{N} E\left[\sum_{i = 1}^{N}{Y_i}\right] \\
+             &amp; = \frac{1}{N} \sum_{i = 1}^{N}{E\left[Y_i\right]} =
+\frac{1}{N} \sum_{i = 1}^{N}{\mu} = \\
+             &amp; = \mu
+\end{aligned}
+\]</span></p>
+<p>A este tipo de estimadores se les llama insesgados.</p>
+<p>Generalmente nos encontraremos en la situación en la que <span
+class="math inline">\(Y = f(X)\)</span>, donde <span
+class="math inline">\(X\)</span> sigue una distribución con función de
+densidad <span class="math inline">\(p_X(x)\)</span>, y <span
+class="math inline">\(f: S \rightarrow \mathbb{R}\)</span>. En ese caso,
+sabemos que la esperanza de <span class="math inline">\(Y\)</span> se
+puede calcular como</p>
+<p><span class="math display">\[
+\mu = E[Y] = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
+\]</span></p>
+<p>Lo que estamos buscando es calcular <span
+class="math inline">\(\int_{S}{f(x)dx}\)</span>. Entonces, ¿qué ocurre
+si intentamos compensar [<a href="#eq:mc_simple">2</a>] con la función
+de densidad?</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp; E\left[\frac{1}{N} \sum_{i =
+1}^{N}{\frac{f(X_i)}{p_X(X_i)}}\right] = \frac{1}{N} \sum_{i =
+1}^{N}{E\left[\frac{f(X_i)}{p_X(X_i)}\right]} = \\
+&amp; = \frac{1}{N} \sum_{i =
+1}^{N}{\left(\int_{S}{\frac{f(x)}{p_X(x)}p_X(x)dx}\right)} = \\
+&amp; = \frac{1}{N} N \int_{S}{f(x)dx} = \\
+&amp; = \int_{S}{f(x)dx}
+\end{aligned}
+\]</span></p>
+<p>¡Genial! Esto nos da una forma de calcular la integral de una función
+usando muestras de variables aleatorias con cierta distribución.
+Llamaremos al estimador de Monte Carlo</p>
+<p><span class="math display">\[
+\hat{F_N} = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
+\]</span></p>
+<p>Es importante mencionar que <span
+class="math inline">\(p_X(x)\)</span> debe ser distinto de 0 cuando
+<span class="math inline">\(f\)</span> también lo sea.</p>
+<p>Podemos particularizar el caso en el que nuestras muestras <span
+class="math inline">\(X_i\)</span> sigan una distribución uniforme en
+<span class="math inline">\([a, b]\)</span>. Si eso ocurre, su función
+de densidad es <span class="math inline">\(p_X(x) = \frac{1}{b -
+a}\)</span>, así que podemos simplificar un poco nuestro estimador:</p>
+<p><span class="math display">\[
+\hat{F_N} = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
+\]</span></p>
+<p>Elegir correctamente la función de densidad <span
+class="math inline">\(p_X\)</span> será clave. Si conseguimos elegirla
+debidamente, reduciremos mucho el error que genera el estimador. Esto es
+lo que se conoce como <em>importance sampling</em>.</p>
+<p>Podemos calcular el error cuadrático medio de la estimación si
+volvemos al estimador de la media [<a href="#eq:mc_simple">2</a>], <span
+class="math inline">\(\hat\mu_N\)</span>. Para ello, necesitamos la
+varianza: como <span class="math inline">\(\hat\mu_N\)</span> es
+insesgado, tenemos que</p>
+<p><span class="math display">\[
+\begin{aligned}
+Var[\hat\mu_N] &amp; = Var\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right]
+= \frac{1}{N^2} Var\left[\sum_{i = 1}^{N}{Y_i}\right] = \\
+               &amp; = \frac{1}{N^2} \sum_{i = 1}^{N}{Var[Y_i]} =
+\frac{1}{N^2} N Var[Y] = \\
+               &amp; = \frac{Var[Y]}{N}
+\end{aligned}
+\]</span></p>
+<p>El error cuadrático medio es <span class="math display">\[
+\sqrt(Var[\hat\mu_N]) = \sqrt{\frac{Var[Y]}{N}} =
+\frac{\sqrt{Var[Y]}}{\sqrt{N}}
+\]</span></p>
+<p>así que, como adelantamos al inicio del capítulo, la estimación tiene
+un error del orden <span
+class="math inline">\(\mathcal{O}(N^{-1/2})\)</span>. Esto nos dice que,
+para reducir el error a la mitad, debemos tomar 4 veces más
+muestras.</p>
 <hr>
 <ul>
 <li>https://www.wikiwand.com/en/Rendering_equation</li>
@@ -1189,6 +1283,8 @@ multidimensionales</h3>
 <li>https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf</li>
 <li>https://www.wikiwand.com/en/Probability_density_function</li>
 <li>RTT Shirley.</li>
+<li>https://artowen.su.domains/mc/</li>
+<li>https://www.wikiwand.com/es/Estimador</li>
 </ul>
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
@@ -1217,6 +1313,9 @@ recapitulados todos con Projects.</p>
 <h1 class="unnumbered" id="anexo-cheatsheet">Anexo: Cheatsheet</h1>
 <div id="refs" class="references csl-bib-body hanging-indent"
 role="doc-bibliography">
+<div id="ref-mcbook" class="csl-entry" role="doc-biblioentry">
+Owen, Art B. 2013. <em>Monte Carlo Theory, Methods and Examples</em>.
+</div>
 <div id="ref-ShirleyRRT" class="csl-entry" role="doc-biblioentry">
 Shirley, Peter, and R. Keith Morley. 2003. <em>Realistic Ray
 Tracing</em>. 2nd ed. USA: A. K. Peters, Ltd.
