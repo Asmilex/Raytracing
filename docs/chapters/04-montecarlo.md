@@ -225,7 +225,7 @@ La varianza nos será útil a la hora de medir el error cometido por una estimac
 
 Tras este breve repaso, estamos en condiciones de definir el estimador de Monte Carlo. Primero, vamos con su versión más sencilla.
 
-Los estimadores de Monte Carlo nos permiten hallar la esperanza de una variable aleatoria, digamos, $Y$, sin necesidad de calcular explícitamente su valor. Para ello, tomamos unas cuantas muestras $Y_1, \dots, Y_N$ que sigan la misma distribución que $Y$ con media $\mu$, y consideramos el estimador de $\mu$ [@mcbook]:
+Los estimadores de Monte Carlo nos permiten hallar la esperanza de una variable aleatoria, digamos, $Y$, sin necesidad de calcular explícitamente su valor. Para ello, tomamos unas cuantas muestras $Y_1, \dots, Y_N$ que sigan la misma distribución que $Y$ con media $\mu$. Entonces, consideramos el estimador de $\mu$ [@mcbook]:
 
 $$
 \hat\mu_N = \frac{1}{N} \sum_{i = 1}^{N}{Y_i}
@@ -249,7 +249,7 @@ $$
 \mu = E[Y] = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
 $$
 
-Lo que estamos buscando es calcular $\int_{S}{f(x)dx}$. Entonces, ¿qué ocurre si intentamos compensar [@eq:mc_simple] con la función de densidad?
+Lo que estamos buscando es calcular $\int_{S}{f(x)dx}$. Entonces, ¿qué ocurre si intentamos compensar en [@eq:mc_simple] con la función de densidad?
 
 $$
 \begin{aligned}
@@ -263,15 +263,15 @@ $$
 ¡Genial! Esto nos da una forma de calcular la integral de una función usando muestras de variables aleatorias con cierta distribución. Llamaremos al estimador de Monte Carlo
 
 $$
-\hat{F_N} = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
-$$
+\hat{F}_N = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
+$${#eq:mc_integral}
 
 Es importante mencionar que $p_X(x)$ debe ser distinto de 0 cuando $f$ también lo sea.
 
-Podemos particularizar el caso en el que nuestras muestras $X_i$ sigan una distribución uniforme en $[a, b]$. Si eso ocurre, su función de densidad es $p_X(x) = \frac{1}{b - a}$, así que podemos simplificar un poco nuestro estimador:
+Podemos particularizar el caso en el que nuestras muestras $X_i$ sigan una distribución uniforme en $[a, b]$. Si eso ocurre, su función de densidad es $p_X(x) = \frac{1}{b - a}$, así que podemos simplificar un poco [@eq:mc_integral]:
 
 $$
-\hat{F_N} = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
+\hat{F}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
 $$
 
 Elegir correctamente la función de densidad $p_X$ será clave. Si conseguimos elegirla debidamente, reduciremos mucho el error que genera el estimador. Esto es lo que se conoce como *importance sampling*.
@@ -293,6 +293,83 @@ $$
 
 así que, como adelantamos al inicio del capítulo, la estimación tiene un error del orden $\mathcal{O}(N^{-1/2})$. Esto nos dice que, para reducir el error a la mitad, debemos tomar 4 veces más muestras.
 
+Pongamos un ejemplo de estimador de Monte Carlo para una caja de dimensiones $\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]}$. Si queremos estimar la integral de la función $f: \mathbb{R}^3 \rightarrow \mathbb{R}$
+
+$$
+\int_{x_0}^{x_1} \int_{y_0}^{y_1} \int_{z_0}^{z_1}{f(x, y, z)dx dy dz}
+$$
+
+mediante una una variable aleatoria $X \sim U(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]})$ con función de densidad $p(x, y, z) = \frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}$, tomamos el estimador
+
+$$
+\hat{F}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)} \sum_{i = 1}^{N}{f(X_i)}
+$$
+
+## Escogiendo puntos aleatorios
+
+Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber escoger la función de densidad $p_X$ correctamente. En esta sección, veremos algunos métodos para conseguir distribuciones específicas partiendo de funciones de densidad sencillas.
+
+### Método de la transformada inversa
+
+> **En resumen**
+>
+> 1. Generar un número aleatorio $\xi \sim U(0, 1)$.
+> 2. Hallar la inversa de la función de distribución deseada $F_X$, denotada $F_X^{-1}(x)$.
+> 3. Calcular $F_X^{-1}(\xi) = X$.
+
+Este método nos permite conseguir muestras de cualquier distribución continua a partir de variables aleatorias uniformes, siempre que se conozca la inversa de la función de distribución.
+
+Sea $X$ una variable aleatoria con función de distribución $F_X$[^1]. Queremos buscar una transformación $T: [0, 1] \rightarrow \mathbb{R}$ tal que $T(\xi) \stackrel{\text{\small d}}{=} X$, siendo $\xi$ una v.a. uniformemente distribuida. Para que esto se cumpla, se debe dar
+
+$$
+\begin{aligned}
+F_X(x) & = P[X < x] = \\
+       & = P[T(\xi) < x] = \\
+       & = P(\xi < T^{-1}(x)) = \\
+       & = T^{-1}(x)
+\end{aligned}
+$$
+
+Este último paso se debe a que, como $\xi$ es uniforme en $(0, 1)$, $P[\xi < x] = x$. Es decir, hemos obtenido que $F_X$ es la inversa de $T$.
+
+
+> TODO: dibujo similar a [este p.52](https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf)
+
+Como ejemplo, vamos a muestrear la función $f(x) =  x^2,\ x \in [0, 2]$.
+
+Primero, normalizamos esta función para obtener una función de densidad $p_X(x)$. Es decir, buscamos $p_X(x) = c f(x)$ tal que
+
+$$
+\begin{aligned}
+1 & = \int_{0}^{2}{p_X(x)dx} = \int_{0}^{2}{c f(x)dx} = c \int_{0}^{2}{f(x)dx} = \\
+  & = \left.{\frac{cx^3}{3}}\right\rvert_{2}^{3} = \frac{8c}{3} \\
+  & \Rightarrow c = \frac{3}{8} \\
+  & \Rightarrow p_X(x) = \frac{3x^2}{8}
+\end{aligned}
+$$
+
+A continuación, integramos la función de densidad para obtener la de distribución $F_X$:
+
+$$
+\begin{aligned}
+F_X(x) = \int_{0}^{x}{p_X(x)dx} = \int_{0}^{x}{\frac{3x^2}{8}} = \frac{x^3}{8}
+\end{aligned}
+$$
+
+Solo nos queda conseguir la muestra. Para ello,
+
+$$
+\begin{aligned}
+\xi & = F_X(x)  = \frac{x^3}{8} \iff \\
+x & = \sqrt[3]{8 \xi}
+\end{aligned}
+$$
+
+Sacando un número aleatorio $\xi$, y pasándolo por la función obtenida, conseguimos un elemento con distribución $f(x)$.
+
+[^1]: En su defecto, si tenemos una función de densidad $f_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{f_X(t)dt}$
+
+
 <hr>
 
 - https://www.wikiwand.com/en/Rendering_equation
@@ -307,3 +384,4 @@ así que, como adelantamos al inicio del capítulo, la estimación tiene un erro
 - https://artowen.su.domains/mc/
 - https://www.wikiwand.com/es/Estimador
 - Presentación que no he mirado pero que tiene buena pinta: https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf
+- https://www.wikiwand.com/es/M%C3%A9todo_de_la_transformada_inversa
