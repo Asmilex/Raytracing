@@ -251,6 +251,12 @@ y varianza de una variable aleatoria</a></li>
 </ul></li>
 <li><a href="#el-estimador-de-monte-carlo">El estimador de Monte
 Carlo</a></li>
+<li><a href="#escogiendo-puntos-aleatorios">Escogiendo puntos
+aleatorios</a>
+<ul>
+<li><a href="#método-de-la-transformada-inversa">Método de la
+transformada inversa</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
 cómo se hizo este trabajo</a>
@@ -335,7 +341,7 @@ nuestra</em>.</p>
 <p>En parte, nos olvidamos de la intuitiva realidad, para centrarnos en
 aquello computacionalmente viable.</p>
 <p>Y, entonces, en 1960 el trazado de rayos con una simple idea
-intuitiva .</p>
+intuitiva.</p>
 <h2 id="qué-es-ray-tracing">¿Qué es ray tracing?</h2>
 <p>En resumidas cuentas, <em>ray tracing</em> (o trazado de rayos en
 español), se basa en disparar fotones desde nuestras luces digitales y
@@ -1185,8 +1191,8 @@ sin necesidad de calcular explícitamente su valor. Para ello, tomamos
 unas cuantas muestras <span class="math inline">\(Y_1, \dots,
 Y_N\)</span> que sigan la misma distribución que <span
 class="math inline">\(Y\)</span> con media <span
-class="math inline">\(\mu\)</span>, y consideramos el estimador de <span
-class="math inline">\(\mu\)</span> <span class="citation"
+class="math inline">\(\mu\)</span>. Entonces, consideramos el estimador
+de <span class="math inline">\(\mu\)</span> <span class="citation"
 data-cites="mcbook">(<a href="#ref-mcbook" role="doc-biblioref">Owen
 2013</a>)</span>:</p>
 <p><span id="eq:mc_simple" class="eqnos"><span class="math display">\[
@@ -1215,8 +1221,8 @@ puede calcular como</p>
 \]</span></p>
 <p>Lo que estamos buscando es calcular <span
 class="math inline">\(\int_{S}{f(x)dx}\)</span>. Entonces, ¿qué ocurre
-si intentamos compensar [<a href="#eq:mc_simple">2</a>] con la función
-de densidad?</p>
+si intentamos compensar en [<a href="#eq:mc_simple">2</a>] con la
+función de densidad?</p>
 <p><span class="math display">\[
 \begin{aligned}
 &amp; E\left[\frac{1}{N} \sum_{i =
@@ -1231,9 +1237,9 @@ de densidad?</p>
 <p>¡Genial! Esto nos da una forma de calcular la integral de una función
 usando muestras de variables aleatorias con cierta distribución.
 Llamaremos al estimador de Monte Carlo</p>
-<p><span class="math display">\[
-\hat{F_N} = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
-\]</span></p>
+<p><span id="eq:mc_integral" class="eqnos"><span class="math display">\[
+\hat{F}_N = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
+\]</span><span class="eqnos-number">(3)</span></span></p>
 <p>Es importante mencionar que <span
 class="math inline">\(p_X(x)\)</span> debe ser distinto de 0 cuando
 <span class="math inline">\(f\)</span> también lo sea.</p>
@@ -1241,9 +1247,10 @@ class="math inline">\(p_X(x)\)</span> debe ser distinto de 0 cuando
 class="math inline">\(X_i\)</span> sigan una distribución uniforme en
 <span class="math inline">\([a, b]\)</span>. Si eso ocurre, su función
 de densidad es <span class="math inline">\(p_X(x) = \frac{1}{b -
-a}\)</span>, así que podemos simplificar un poco nuestro estimador:</p>
+a}\)</span>, así que podemos simplificar un poco [<a
+href="#eq:mc_integral">3</a>]:</p>
 <p><span class="math display">\[
-\hat{F_N} = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
+\hat{F}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
 \]</span></p>
 <p>Elegir correctamente la función de densidad <span
 class="math inline">\(p_X\)</span> será clave. Si conseguimos elegirla
@@ -1264,7 +1271,7 @@ Var[\hat\mu_N] &amp; = Var\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right]
 \end{aligned}
 \]</span></p>
 <p>El error cuadrático medio es <span class="math display">\[
-\sqrt(Var[\hat\mu_N]) = \sqrt{\frac{Var[Y]}{N}} =
+\sqrt{Var[\hat\mu_N]} = \sqrt{\frac{Var[Y]}{N}} =
 \frac{\sqrt{Var[Y]}}{\sqrt{N}}
 \]</span></p>
 <p>así que, como adelantamos al inicio del capítulo, la estimación tiene
@@ -1272,6 +1279,105 @@ un error del orden <span
 class="math inline">\(\mathcal{O}(N^{-1/2})\)</span>. Esto nos dice que,
 para reducir el error a la mitad, debemos tomar 4 veces más
 muestras.</p>
+<p>Pongamos un ejemplo de estimador de Monte Carlo para una caja de
+dimensiones <span class="math inline">\(\small{[x_0, x_1] \times [y_0,
+y_1] \times [z_0, z_1]}\)</span>. Si queremos estimar la integral de la
+función <span class="math inline">\(f: \mathbb{R}^3 \rightarrow
+\mathbb{R}\)</span></p>
+<p><span class="math display">\[
+\int_{x_0}^{x_1} \int_{y_0}^{y_1} \int_{z_0}^{z_1}{f(x, y, z)dx dy dz}
+\]</span></p>
+<p>mediante una una variable aleatoria <span class="math inline">\(X
+\sim U(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]})\)</span>
+con función de densidad <span class="math inline">\(p(x, y, z) =
+\frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}\)</span>,
+tomamos el estimador</p>
+<p><span class="math display">\[
+\hat{F}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)}
+\sum_{i = 1}^{N}{f(X_i)}
+\]</span></p>
+<h2 id="escogiendo-puntos-aleatorios">Escogiendo puntos aleatorios</h2>
+<p>Una de las partes clave del estimador de Monte Carlo [<a
+href="#eq:mc_integral">3</a>] es saber escoger la función de densidad
+<span class="math inline">\(p_X\)</span> correctamente. En esta sección,
+veremos algunos métodos para conseguir distribuciones específicas
+partiendo de funciones de densidad sencillas.</p>
+<h3 id="método-de-la-transformada-inversa">Método de la transformada
+inversa</h3>
+<blockquote>
+<p><strong>En resumen</strong></p>
+<ol type="1">
+<li>Generar un número aleatorio <span class="math inline">\(\xi \sim
+U(0, 1)\)</span>.</li>
+<li>Hallar la inversa de la función de distribución deseada <span
+class="math inline">\(F_X\)</span>, denotada <span
+class="math inline">\(F_X^{-1}(x)\)</span>.</li>
+<li>Calcular <span class="math inline">\(F_X^{-1}(\xi) =
+X\)</span>.</li>
+</ol>
+</blockquote>
+<p>Este método nos permite conseguir muestras de cualquier distribución
+continua a partir de variables aleatorias uniformes, siempre que se
+conozca la inversa de la función de distribución.</p>
+<p>Sea <span class="math inline">\(X\)</span> una variable aleatoria con
+función de distribución <span class="math inline">\(F_X\)</span><a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>. Queremos buscar una transformación
+<span class="math inline">\(T: [0, 1] \rightarrow \mathbb{R}\)</span>
+tal que <span class="math inline">\(T(\xi) \stackrel{\text{\small d}}{=}
+X\)</span>, siendo <span class="math inline">\(\xi\)</span> una v.a.
+uniformemente distribuida. Para que esto se cumpla, se debe dar</p>
+<p><span class="math display">\[
+\begin{aligned}
+F_X(x) &amp; = P[X &lt; x] = \\
+       &amp; = P[T(\xi) &lt; x] = \\
+       &amp; = P(\xi &lt; T^{-1}(x)) = \\
+       &amp; = T^{-1}(x)
+\end{aligned}
+\]</span></p>
+<p>Este último paso se debe a que, como <span
+class="math inline">\(\xi\)</span> es uniforme en <span
+class="math inline">\((0, 1)\)</span>, <span class="math inline">\(P[\xi
+&lt; x] = x\)</span>. Es decir, hemos obtenido que <span
+class="math inline">\(F_X\)</span> es la inversa de <span
+class="math inline">\(T\)</span>.</p>
+<blockquote>
+<p>TODO: dibujo similar a <a
+href="https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf">este
+p.52</a></p>
+</blockquote>
+<p>Como ejemplo, vamos a muestrear la función <span
+class="math inline">\(f(x) = x^2,\ x \in [0, 2]\)</span>.</p>
+<p>Primero, normalizamos esta función para obtener una función de
+densidad <span class="math inline">\(p_X(x)\)</span>. Es decir, buscamos
+<span class="math inline">\(p_X(x) = c f(x)\)</span> tal que</p>
+<p><span class="math display">\[
+\begin{aligned}
+1 &amp; = \int_{0}^{2}{p_X(x)dx} = \int_{0}^{2}{c f(x)dx} = c
+\int_{0}^{2}{f(x)dx} = \\
+  &amp; = \left.{\frac{cx^3}{3}}\right\rvert_{2}^{3} = \frac{8c}{3} \\
+  &amp; \Rightarrow c = \frac{3}{8} \\
+  &amp; \Rightarrow p_X(x) = \frac{3x^2}{8}
+\end{aligned}
+\]</span></p>
+<p>A continuación, integramos la función de densidad para obtener la de
+distribución <span class="math inline">\(F_X\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+F_X(x) = \int_{0}^{x}{p_X(x)dx} = \int_{0}^{x}{\frac{3x^2}{8}} =
+\frac{x^3}{8}
+\end{aligned}
+\]</span></p>
+<p>Solo nos queda conseguir la muestra. Para ello,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\xi &amp; = F_X(x)  = \frac{x^3}{8} \iff \\
+x &amp; = \sqrt[3]{8 \xi}
+\end{aligned}
+\]</span></p>
+<p>Sacando un número aleatorio <span class="math inline">\(\xi\)</span>,
+y pasándolo por la función obtenida, conseguimos un elemento con
+distribución <span class="math inline">\(f(x)\)</span>.</p>
 <hr>
 <ul>
 <li>https://www.wikiwand.com/en/Rendering_equation</li>
@@ -1285,6 +1391,9 @@ muestras.</p>
 <li>RTT Shirley.</li>
 <li>https://artowen.su.domains/mc/</li>
 <li>https://www.wikiwand.com/es/Estimador</li>
+<li>Presentación que no he mirado pero que tiene buena pinta:
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf</li>
+<li>https://www.wikiwand.com/es/M%C3%A9todo_de_la_transformada_inversa</li>
 </ul>
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
@@ -1321,5 +1430,16 @@ Shirley, Peter, and R. Keith Morley. 2003. <em>Realistic Ray
 Tracing</em>. 2nd ed. USA: A. K. Peters, Ltd.
 </div>
 </div>
+<section class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>En su defecto, si tenemos una función
+de densidad <span class="math inline">\(f_X\)</span>, podemos hallar la
+función de distribución haciendo <span class="math inline">\(F_X(x) =
+P[X &lt; x] = \int_{x_{min}}^{x}{f_X(t)dt}\)</span><a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 </body>
 </html>
