@@ -135,7 +135,7 @@ $$
 F_X(x) = P(X \le x) = \int_{-\infty}^{x}{f_X(t)dt}
 $$
 
-Podemos concebir la función de distribución como *ir acumulando los valores que pueda tomar la variable aleatoria*: dado un cierto punto del espacio, $x$, ¿cuál sería la probabilidad de que cayéramos en algún valor que deja $x$ por debajo?
+Es decir, dado un $x$, ¿cuál sería la probabilidad de que $X$ se quede por debajo de $x$?
 
 El Teorema Fundamental del Cálculo nos permite relacionar función de distribución y función de densidad directamente:
 
@@ -145,32 +145,32 @@ $$
 
 ### Esperanza y varianza de una variable aleatoria
 
-La esperanza de una variable aleatoria, denotada $E[X]$, es una generalización de la media ponderada. Nos informa del *valor esperado* de una variable aleatoria.
+La **esperanza de una variable aleatoria**, denotada $E[X]$, es una generalización de la media ponderada. Nos informa del *valor esperado* de dicha variable aleatoria.
 
 En el caso de las variables discretas, se define como
 
 $$
-E[X] = \sum{x_i p_i}
+E[X] = \sum_{x_i \in \Omega}{x_i p_i}
 $$
 
-donde $x_i$ son los posibles valores que puede tomar la v.a., y $p_i$ la probabilidad asociada a cada uno de ellos.
+donde $x_i$ son los posibles valores que puede tomar la v.a., y $p_i$ la probabilidad asociada a cada uno de ellos; es decir, $p_i = P[X = x_i]$
 
-En el caso de las variables aleatorias continuas reales, la esperanza viene dada por
+Para una variable aleatoria continuas real, la esperanza viene dada por
 
 $$
 E[X] = \int_{-\infty}^{\infty}{x f_X(x) dx}
 $$
 
-aunque, generalizando a una v.a. con espacio muestral $\Omega$, la esperanza viene dada por
+aunque, generalizando a una v.a. con espacio muestral $\Omega$, la esperanza se puede generalizar como
 
 $$
 E[X] = \int_{\Omega}{x f_X(x) dx}
 $$
 
-En el ejemplo de las variables discretas, su esperanza venía dada por
+Pongamos un par de ejemplos del cálculo de la esperanza. En el [ejemplo de las variables discretas](#variables-aleatorias-discretas), la esperanza venía dada por
 
 $$
-E[X] = \sum_{i = 2}^{12}{i \cdot p_i} = 2 \frac{1}{36} + 3 \frac{2}{36} + \dots + 12 \frac{1}{36} = 7
+E[X] = \sum_{i = 2}^{12}{i \cdot P[X = i]} = 2 \cdot \frac{1}{36} + 3 \cdot \frac{2}{36} + \dots + 12 \cdot \frac{1}{36} = 7
 $$
 
 Para variables aleatorias uniformes en $(a, b)$ (es decir, $X \sim U(a, b)$), la esperanza es
@@ -185,7 +185,7 @@ La esperanza tiene unas cuantas propiedades que nos resultarán muy útiles. Est
   - Si $X, Y$ son dos v.a., $E[X + Y] = E[X] + E[Y]$
   - Si $a$ es una constante, $X$ una v.a., entonces $E[aX] = aE[X]$
   - Análogamente, para ciertas $X_1, \dots, X_k$, $E\left[\sum_{i = 1}^{k}{X_i}\right] = \sum_{i = 1}^{k}{E[X_i]}$
-  - Estas propiedades no necesitan que las variables aleatorias sean independientes. ¡Este hecho será clave para las técnicas de Monte Carlo!.
+  - Estas propiedades no necesitan que las variables aleatorias sean independientes. Este hecho será clave para las técnicas de Monte Carlo.
 - La **Ley del estadístico insconciente** (*Law of the unconscious statistician*, o LOTUS): dada una variable aleatoria $X$ y una función medible $g$, la esperanza de $g(X)$ se puede calcular como
 
 $$
@@ -194,9 +194,9 @@ $$
 
 **Esta propiedad será clave en nuestro desarrollo**.
 
-Será habitual encontrarnos con el problema de que no conocemos la distribución de una variable aleatoria $Y$. Sin embargo, si encontramos una transformación medible de una variable aleatoria $X$ de forma que obtengamos $Y$ (esto es, $\exists g$ función medible tal que $g(X) = Y$), entonces podemos calcular la esperanza de $Y$ fácilmente. La importancia de la variable aleatoria con distribución uniforme $\xi$ se debe a esta propiedad. Generar números aleatorios en $[0, 1)$ es muy fácil, así que obtendremos otras v.a.s a partir de $\xi$. Pero no adelantemos acontecimientos, así que no variemos tanto.
+Será habitual encontrarnos con el problema de que no conocemos la distribución de una variable aleatoria $Y$. Sin embargo, si encontramos una transformación medible de una variable aleatoria $X$ de forma que obtengamos $Y$ (esto es, $\exists g$ función medible tal que $g(X) = Y$), entonces podemos calcular la esperanza de $Y$ fácilmente. Esta propiedad hará que las variables aleatorias con distribución uniforme adquieran muchísima importancia. Generar números aleatorios en $[0, 1)$ es muy fácil, así [que obtendremos otras v.a.s a partir de $\xi$](#método-de-la-transformada-inversa).
 
-Hablando de variar: **la varianza de una variable aleatoria** nos permitirá medir cómo de dispersa es la distribución con respecto a su media. La denotaremos como $Var[X]$, y se define como
+Otra medida muy útil de una variable aleatoria es **la varianza**. Nos permitirá medir cómo de dispersa es la distribución con respecto a su media. La denotaremos como $Var[X]$, y se define como
 
 $$
 Var[X] = E\left[(X - E[X])^2\right]
@@ -219,14 +219,14 @@ Enunciemos un par de propiedades que tiene, similares a la de la esperanza:
 
 
 - La varianza saca constantes al cuadrado: $Var[aX] = a^2Var[X]$
-- $\small{Var[X + Y] = Var[X] + Var[Y] + 2Cov[X, Y]}$, donde $Cov[X, Y]$ es la covarianza de $X$ y $Y$.
-  - En el caso en el que $X$ e $Y$ sean incorreladas (es decir, la covarianza es $0$), $Var[X + Y] = Var[X] + Var[Y]$.
+- $Var[X + Y] = $ $Var[X] + Var[Y] + 2Cov[X, Y]$, donde $Cov[X, Y]$ es la covarianza de $X$ y $Y$.
+  - En el caso en el que $X$ e $Y$ sean incorreladas (es decir, la covarianza es $0$), $Var[X + Y] = $ $Var[X] + Var[Y]$.
 
 La varianza nos será útil a la hora de medir el error cometido por una estimación de Monte Carlo.
 
 ## El estimador de Monte Carlo
 
-Tras este breve repaso, estamos en condiciones de definir el estimador de Monte Carlo. Primero, vamos con su versión más sencilla.
+Tras este breve repaso de probabilidad, estamos en condiciones de definir el estimador de Monte Carlo. Primero, vamos con su versión más sencilla.
 
 Los estimadores de Monte Carlo nos permiten hallar la esperanza de una variable aleatoria, digamos, $Y$, sin necesidad de calcular explícitamente su valor. Para ello, tomamos unas cuantas muestras $Y_1, \dots, Y_N$ que sigan la misma distribución que $Y$ con media $\mu$. Entonces, consideramos el estimador de $\mu$ [@mcbook]:
 
@@ -277,9 +277,11 @@ $$
 \hat{F}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
 $$
 
-Elegir correctamente la función de densidad $p_X$ será clave. Si conseguimos elegirla debidamente, reduciremos mucho el error que genera el estimador. Esto es lo que se conoce como *importance sampling*.
+Elegir correctamente la función de densidad $p_X$ será clave. Si conseguimos escogerla debidamente, reduciremos mucho el error que genera el estimador. Esto es lo que se conoce como *importance sampling*.
 
-Podemos calcular el error cuadrático medio de la estimación si volvemos al estimador de la media [@eq:mc_simple], $\hat\mu_N$. Para ello, necesitamos la varianza: como $\hat\mu_N$ es insesgado, tenemos que
+> TODO: añadir enlace al capítulo de importance sampling.
+
+Podemos calcular el error cuadrático medio de la estimación si volvemos al estimador de la media $\hat\mu_N$ [@eq:mc_simple]. Para ello, necesitamos la varianza: como $\hat\mu_N$ es insesgado, tenemos que
 
 $$
 \begin{aligned}
