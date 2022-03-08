@@ -2,23 +2,25 @@
 
 > TODO: este capítulo seguramente debería ir más tarde. De esa forma, puedo introducir otros conceptos antes. De momento, se queda aquí.
 
-La parte más importante de nuestro ray tracer es saber calcular la luz en un punto. Para ello, necesitaríamos hallar la radianza en dicho punto mediante la *rendering equation*. Sin embargo, es *muy* difícil resolverla. Tanto computacionalmente como analíticamente. Por ello, debemos atacar el problema desde otro punto de vista.
+Una de las partes más importante de nuestro ray tracer es saber calcular la cantidad de luz en un punto de la escena. Para ello, necesitaríamos hallar la radianza en dicha posición mediante la *rendering equation*. Sin embargo, es *muy* difícil resolverla; tanto computacional como analíticamente. Por ello, debemos atacar el problema desde otro punto de vista.
 
-Las técnicas de Monte Carlo nos permitirán aproximar el valor que toman mediante una estimación. Utilizando muestreo aleatorio para evaluar integrales, seremos capaces de obtener un resultado suficientemente bueno.
+Las técnicas de Monte Carlo nos permitirán aproximar el valor que toman las integrales mediante una estimación. Utilizando muestreo aleatorio para evaluar puntos de una función, seremos capaces de obtener un resultado suficientemente bueno.
 
-Una de las propiedades más improtantes que tienen es la **independencia del ratio de convergencia y la dimensionalidad del integrando**. Sin embargo, dadas $n$ nuestras, la convergencia a la solución correcta tiene un orden de $\mathcal{O}\left(n^{-1/2}\right)$. Es decir, para reducir el error a la mitad, necesitaríamos 4 veces más muestras.
+Una de las propiedades que hacen interesantes a este tipo de métodos es la **independencia del ratio de convergencia y la dimensionalidad del integrando**. Sin embargo, conseguir un mejor rendimiento tiene un precio a pagar. Dadas $n$ muestras, la convergencia a la solución correcta tiene un orden de $\mathcal{O}\left(n^{-1/2}\right)$. Es decir, para reducir el error a la mitad, necesitaríamos 4 veces más muestras.
+
+En este capítulo veremos el fundamento de la integración de Monte Carlo, cómo muestrear distribuciones específicas y cómo afinar el resultado final.
 
 ## Repaso de probabilidad
 
 Necesitaremos unas cuantas nociones de variable aleatoria para poder entender la integración de Monte Carlo, así que vamos a hacer un breve repaso.
 
-Una **variable aleatoria** $X$ (v.a.) es, esencialmente, una regla que asigna un valor numérico a cada posibilidad de algún proceso de azar. Formalmente, una variable aleatoria es una función definida en un espacio de probabilidad $(\Omega, \mathcal{A}, P)$ asociado a un exprimento aleatorio:
+Una **variable aleatoria** $X$ (v.a.) es, esencialmente, una regla que asigna un valor numérico a cada posibilidad de proceso de azar. Formalmente, es una función definida en un espacio de probabilidad $(\Omega, \mathcal{A}, P)$ asociado a un exprimento aleatorio:
 
 $$
 X: \Omega \rightarrow \mathbb{R}
 $$
 
-A $\Omega$ lo conocemos como espacio muestral (aquel conjunto de todas las posibilidades), $\mathcal{A}$ es una $\sigma$-álgebra de subconjuntos de $\Omega$ que refleja todas las posibilidades de eventos aleatorios. $P$ es una función probabilidad, que asigna a cada evento una probabilidad.
+A $\Omega$ lo conocemos como espacio muestral (conjunto de todas las posibilidades), $\mathcal{A}$ es una $\sigma$-álgebra de subconjuntos de $\Omega$ que refleja todas las posibilidades de eventos aleatorios, y $P$ es una función probabilidad, que asigna a cada evento una probabilidad.
 
 > NOTE: no sé hasta qué punto debería meterme en la definición formal de variable aleatoria. Es una movida tremenda para poca cosa que necesitamos. De momento, voy con lo más interesante.
 
@@ -28,8 +30,7 @@ Una variable aleatoria $X$ puede clasificarse en discreta o continua, dependiend
 
 Las v.a. discretas son aquellas cuyo rango es un conjunto discreto.
 
-Para comprender mejor cómo funcionan, pongamos un ejemplo.
-
+Para comprender mejor cómo funcionan, pongamos un ejemplo:
 Consideremos un experimento en el que lanzamos dos dados, anotando lo que sale en cada uno. Los posibles valores que toman serán
 
 $$
@@ -45,34 +46,36 @@ $$
 
 Cada resultado tiene la misma probabilidad de ocurrir (claro está, si el dado no está trucado). Como hay $36$ posibilidades, la probabilidad de obtener un cierto valor es de $\frac{1}{36}$.
 
-La v.a. $X$ denotará la suma de los valores obtenidos en cada uno. Así, por ejemplo, si los dados han dado $(1, 3)$, $X$ será $4$. En total, $X$ puede tomar todos los valores comprendidos entre $2$ y $12$. Este sería el **espacio muestral**.  Además, podemos observar que $X$ puede obtener el mismo valor para dos resultados diferentes. Por ejemplo, $(1, 2)$ suma lo mismo que $(2, 1)$. Esto nos lleva a preguntarnos... ¿cuál es la probabilidad de que $X$ adquiera un cierto valor?
+La v.a. $X$ denotará la suma de los valores obtenidos en cada uno. Así, por ejemplo, si al lanzar los dados hemos obtenido $(1, 3)$, $X$ tomará el valor $4$. En total, $X$ puede tomar todos los valores comprendidos entre $2$ y $12$. Este sería el **espacio muestral**. Cada pareja no está asociada a un único valor de $X$. Por ejemplo, $(1, 2)$ suma lo mismo que $(2, 1)$. Esto nos lleva a preguntarnos... ¿cuál es la probabilidad de que $X$ adquiera un cierto valor?
 
-La **función masa de probabilidad** nos permite conocer la probabilidad de que una variable aleatoria $X$ tome un valor $x$. Se denota por $P(X = x)$.
+La **función masa de probabilidad** nos permite conocer la probabilidad de que $X$ tome un cierto valor $x$. Se denota por $P(X = x)$.
 
 En este ejemplo, la probabilidad de que $X$ tome el valor $4$ es
 
 $$
 \begin{aligned}
 P(X = 4) & = \sum{\small{\text{nº parejas que suman 4}} \cdot \small{\text{probabilidad de que salga la pareja}}} \\
-         & = \frac{1}{36} \cdot 3 = \frac{1}{12}
+         & = 3 \cdot \frac{1}{36} = \frac{1}{12}
 \end{aligned}
 $$
 
-(Las parejas serían $(1, 3), (2, 2), (3, 1)$).
+Las parejas serían $(1, 3), (2, 2)$ y $(3, 1)$.
 
-Por definición, si el espacio muestral de $X$ es $x_1, \dots, x_n$, la función masa de probabilidad debe cumplir
+Por definición, si el espacio muestral de $X$ es $\Omega = \{x_1, \dots, x_n\}$, la función masa de probabilidad debe cumplir que
 
 $$
 \sum_{i = 1}^{n}{P(X = x_i)} = 1
 $$
 
-La **función de distribución** de una variable aleatoria $X$ es
+Muchas veces nos interesará conocer la probabilidad de que $X$ se quede por debajo de un cierto valor $x$ (de hecho, podemos caracterizar distribuciones aleatorias gracias a esto). Para ello, usamos la **función de distribución**:
 
 $$
-F_X(x) = P(X \le x) = \sum_{k = -\infty}^{x}{P(X = x)} = 1
+F_X(x) = P(X \le x) = \sum_{\substack{k \in \Omega \\ k \le x}}{P(X = k)}
 $$
 
-Es una función continua por la derecha y monótona no decreciente. Además, se cumple que $\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$.
+
+
+Es una función continua por la derecha y monótona no decreciente. Además, se cumple que $0 \le F_X \le 1(x)$ y $\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$.
 
 En nuestro ejemplo, si consideramos $x = 3$:
 
@@ -89,7 +92,7 @@ Este tipo de variables aleatorias tienen un rango no numerable; es decir, el con
 
 Un ejemplo podría ser la altura de una persona.
 
-Si en las variables aleatorias discretas teníamos funciones masa de probabilidad, aquí definireoms **funciones de densidad de probabilidad** (o simplemente, funciones de densidad). La idea es la misma: nos permite conocer la probabilidad de que nuestra variable aleatoria tome un cierto valor del espacio muestral.
+Si en las variables aleatorias discretas teníamos funciones masa de probabilidad, aquí definiremos las **funciones de densidad de probabilidad** (o simplemente, funciones de densidad). La idea es la misma: nos permite conocer la probabilidad de que nuestra variable aleatoria tome un cierto valor del espacio muestral.
 
 Es importante mencionar que, aunque *la probabilidad de que la variable aleatoria tome un valor específico* es $0$, ya que nos encontramos en un conjunto no numerable, sí que podemos calcular la probabilidad de que se encuentre entre dos valores. Por tanto, si la función de densidad es $f_X$, entonces
 
@@ -99,14 +102,14 @@ $$
 
 La función de densidad tiene dos características importantes:
 
-1. $f_X$ es no negativa; esto es, $f_X(x) \ge 0\  \forall x \in \Omega$
+1. $f_X$ es no negativa; esto es, $f_X(x) \ge 0\ \forall x \in \Omega$
 2. $f_X$ integra uno en todo el espacio muestral:
 
 $$
 \int_{\Omega}{f_X(x)} = 1
 $$
 
-Esta última propiedad me gusta entenderla como *si recoges todos los valores que puede tomar la variable aleatoria, la probabilidad de que te encuentres en el conjunto debe ser 1.*. Si nos encontramos en el conjunto de números reales, podemos escribir la integral como $\int_{-\infty}^{\infty}{f_X(x)} = 1$.
+Intuitivamente, podemos ver esta última propiedad como *si acumulamos todos los valores que puede tomar la variable aleatoria, la probabilidad de que te encuentres en el conjunto debe ser 1*. Si tratamos con un conjunto de números reales, podemos escribir la integral como $\int_{-\infty}^{\infty}{f_X(x)} = 1$.
 
 Una de las variables aleatorias que más juego nos darán en el futuro será la **v.a. con distribución uniforme en $[0, 1)$**. La denotaremos como $\xi$, y escribiremos $\xi \sim U\left([0, 1)\right)$. La probabilidad de que $\xi$ tome un valor es constante, por lo que podemos definir su función de densidad como
 
@@ -124,7 +127,7 @@ $$
 P(\xi \in [a, b]) = \int_{a}^{b}{1dx} = b - a
 $$
 
-Como veremos más adelante, saber definir correctamente una función de densidad nos permitirá mejorar el rendimiento del path tracer.
+Como veremos más adelante, definiendo correctamente una función de densidad conseguiremos mejorar el rendimiento del path tracer.
 
 La función de distribución $F_X(x)$ podemos definirla como:
 
