@@ -1066,11 +1066,9 @@ class="math inline">\(F_X(x)\)</span> podemos definirla como:</p>
 <p><span class="math display">\[
 F_X(x) = P(X \le x) = \int_{-\infty}^{x}{f_X(t)dt}
 \]</span></p>
-<p>Podemos concebir la función de distribución como <em>ir acumulando
-los valores que pueda tomar la variable aleatoria</em>: dado un cierto
-punto del espacio, <span class="math inline">\(x\)</span>, ¿cuál sería
-la probabilidad de que cayéramos en algún valor que deja <span
-class="math inline">\(x\)</span> por debajo?</p>
+<p>Es decir, dado un <span class="math inline">\(x\)</span>, ¿cuál sería
+la probabilidad de que <span class="math inline">\(X\)</span> se quede
+por debajo de <span class="math inline">\(x\)</span>?</p>
 <p>El Teorema Fundamental del Cálculo nos permite relacionar función de
 distribución y función de densidad directamente:</p>
 <p><span class="math display">\[
@@ -1078,33 +1076,36 @@ f_X(x) = \frac{dF_X(x)}{dx}
 \]</span></p>
 <h3 id="esperanza-y-varianza-de-una-variable-aleatoria">Esperanza y
 varianza de una variable aleatoria</h3>
-<p>La esperanza de una variable aleatoria, denotada <span
-class="math inline">\(E[X]\)</span>, es una generalización de la media
-ponderada. Nos informa del <em>valor esperado</em> de una variable
-aleatoria.</p>
+<p>La <strong>esperanza de una variable aleatoria</strong>, denotada
+<span class="math inline">\(E[X]\)</span>, es una generalización de la
+media ponderada. Nos informa del <em>valor esperado</em> de dicha
+variable aleatoria.</p>
 <p>En el caso de las variables discretas, se define como</p>
 <p><span class="math display">\[
-E[X] = \sum{x_i p_i}
+E[X] = \sum_{x_i \in \Omega}{x_i p_i}
 \]</span></p>
 <p>donde <span class="math inline">\(x_i\)</span> son los posibles
 valores que puede tomar la v.a., y <span
 class="math inline">\(p_i\)</span> la probabilidad asociada a cada uno
-de ellos.</p>
-<p>En el caso de las variables aleatorias continuas reales, la esperanza
-viene dada por</p>
+de ellos; es decir, <span class="math inline">\(p_i = P[X =
+x_i]\)</span></p>
+<p>Para una variable aleatoria continuas real, la esperanza viene dada
+por</p>
 <p><span class="math display">\[
 E[X] = \int_{-\infty}^{\infty}{x f_X(x) dx}
 \]</span></p>
 <p>aunque, generalizando a una v.a. con espacio muestral <span
-class="math inline">\(\Omega\)</span>, la esperanza viene dada por</p>
+class="math inline">\(\Omega\)</span>, la esperanza se puede generalizar
+como</p>
 <p><span class="math display">\[
 E[X] = \int_{\Omega}{x f_X(x) dx}
 \]</span></p>
-<p>En el ejemplo de las variables discretas, su esperanza venía dada
-por</p>
+<p>Pongamos un par de ejemplos del cálculo de la esperanza. En el <a
+href="#variables-aleatorias-discretas">ejemplo de las variables
+discretas</a>, la esperanza venía dada por</p>
 <p><span class="math display">\[
-E[X] = \sum_{i = 2}^{12}{i \cdot p_i} = 2 \frac{1}{36} + 3 \frac{2}{36}
-+ \dots + 12 \frac{1}{36} = 7
+E[X] = \sum_{i = 2}^{12}{i \cdot P[X = i]} = 2 \cdot \frac{1}{36} + 3
+\cdot \frac{2}{36} + \dots + 12 \cdot \frac{1}{36} = 7
 \]</span></p>
 <p>Para variables aleatorias uniformes en <span
 class="math inline">\((a, b)\)</span> (es decir, <span
@@ -1126,8 +1127,8 @@ class="math inline">\(E[aX] = aE[X]\)</span></li>
 X_k\)</span>, <span class="math inline">\(E\left[\sum_{i =
 1}^{k}{X_i}\right] = \sum_{i = 1}^{k}{E[X_i]}\)</span></li>
 <li>Estas propiedades no necesitan que las variables aleatorias sean
-independientes. ¡Este hecho será clave para las técnicas de Monte
-Carlo!.</li>
+independientes. Este hecho será clave para las técnicas de Monte
+Carlo.</li>
 </ul></li>
 <li>La <strong>Ley del estadístico insconciente</strong> (<em>Law of the
 unconscious statistician</em>, o LOTUS): dada una variable aleatoria
@@ -1147,15 +1148,14 @@ class="math inline">\(X\)</span> de forma que obtengamos <span
 class="math inline">\(Y\)</span> (esto es, <span
 class="math inline">\(\exists g\)</span> función medible tal que <span
 class="math inline">\(g(X) = Y\)</span>), entonces podemos calcular la
-esperanza de <span class="math inline">\(Y\)</span> fácilmente. La
-importancia de la variable aleatoria con distribución uniforme <span
-class="math inline">\(\xi\)</span> se debe a esta propiedad. Generar
-números aleatorios en <span class="math inline">\([0, 1)\)</span> es muy
-fácil, así que obtendremos otras v.a.s a partir de <span
-class="math inline">\(\xi\)</span>. Pero no adelantemos acontecimientos,
-así que no variemos tanto.</p>
-<p>Hablando de variar: <strong>la varianza de una variable
-aleatoria</strong> nos permitirá medir cómo de dispersa es la
+esperanza de <span class="math inline">\(Y\)</span> fácilmente. Esta
+propiedad hará que las variables aleatorias con distribución uniforme
+adquieran muchísima importancia. Generar números aleatorios en <span
+class="math inline">\([0, 1)\)</span> es muy fácil, así <a
+href="#método-de-la-transformada-inversa">que obtendremos otras v.a.s a
+partir de <span class="math inline">\(\xi\)</span></a>.</p>
+<p>Otra medida muy útil de una variable aleatoria es <strong>la
+varianza</strong>. Nos permitirá medir cómo de dispersa es la
 distribución con respecto a su media. La denotaremos como <span
 class="math inline">\(Var[X]\)</span>, y se define como</p>
 <p><span class="math display">\[
@@ -1178,22 +1178,22 @@ esperanza:</p>
 <ul>
 <li>La varianza saca constantes al cuadrado: <span
 class="math inline">\(Var[aX] = a^2Var[X]\)</span></li>
-<li><span class="math inline">\(\small{Var[X + Y] = Var[X] + Var[Y] +
-2Cov[X, Y]}\)</span>, donde <span class="math inline">\(Cov[X,
+<li>$Var[X + Y] = $ <span class="math inline">\(Var[X] + Var[Y] +
+2Cov[X, Y]\)</span>, donde <span class="math inline">\(Cov[X,
 Y]\)</span> es la covarianza de <span class="math inline">\(X\)</span> y
 <span class="math inline">\(Y\)</span>.
 <ul>
 <li>En el caso en el que <span class="math inline">\(X\)</span> e <span
 class="math inline">\(Y\)</span> sean incorreladas (es decir, la
-covarianza es <span class="math inline">\(0\)</span>), <span
-class="math inline">\(Var[X + Y] = Var[X] + Var[Y]\)</span>.</li>
+covarianza es <span class="math inline">\(0\)</span>), $Var[X + Y] = $
+<span class="math inline">\(Var[X] + Var[Y]\)</span>.</li>
 </ul></li>
 </ul>
 <p>La varianza nos será útil a la hora de medir el error cometido por
 una estimación de Monte Carlo.</p>
 <h2 id="el-estimador-de-monte-carlo">El estimador de Monte Carlo</h2>
-<p>Tras este breve repaso, estamos en condiciones de definir el
-estimador de Monte Carlo. Primero, vamos con su versión más
+<p>Tras este breve repaso de probabilidad, estamos en condiciones de
+definir el estimador de Monte Carlo. Primero, vamos con su versión más
 sencilla.</p>
 <p>Los estimadores de Monte Carlo nos permiten hallar la esperanza de
 una variable aleatoria, digamos, <span class="math inline">\(Y\)</span>,
@@ -1263,14 +1263,18 @@ href="#eq:mc_integral">3</a>]:</p>
 \hat{F}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
 \]</span></p>
 <p>Elegir correctamente la función de densidad <span
-class="math inline">\(p_X\)</span> será clave. Si conseguimos elegirla
+class="math inline">\(p_X\)</span> será clave. Si conseguimos escogerla
 debidamente, reduciremos mucho el error que genera el estimador. Esto es
 lo que se conoce como <em>importance sampling</em>.</p>
+<blockquote>
+<p>TODO: añadir enlace al capítulo de importance sampling.</p>
+</blockquote>
 <p>Podemos calcular el error cuadrático medio de la estimación si
-volvemos al estimador de la media [<a href="#eq:mc_simple">2</a>], <span
-class="math inline">\(\hat\mu_N\)</span>. Para ello, necesitamos la
-varianza: como <span class="math inline">\(\hat\mu_N\)</span> es
-insesgado, tenemos que</p>
+volvemos al estimador de la media <span
+class="math inline">\(\hat\mu_N\)</span> [<a
+href="#eq:mc_simple">2</a>]. Para ello, necesitamos la varianza: como
+<span class="math inline">\(\hat\mu_N\)</span> es insesgado, tenemos
+que</p>
 <p><span class="math display">\[
 \begin{aligned}
 Var[\hat\mu_N] &amp; = Var\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right]
