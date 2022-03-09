@@ -50,6 +50,18 @@ p {
   text-align: left;
 }
 
+figure, img {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+figcaption {
+  font-style: italic;
+  color: #4e4c4c;
+
+}
+
 .author {
   text-align: center;
   font-family: 'Fraunces', 'Rubik', sans-serif;

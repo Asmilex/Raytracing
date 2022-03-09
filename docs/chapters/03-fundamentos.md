@@ -6,7 +6,7 @@ Un rayo es una función $P(t) = O + tD$, donde $O$ es el origin, $D$ la direcci�
 
 Por ejemplo, si $t = 0$, obtendremos el origen. Si $t = 1$, obtendremos el punto correspondiente a la dirección. Usando valores negativos vamos *hacia atrás*.
 
-![](./img/rayo.png)
+![El parámetro $t$ nos permite controlar los puntos del rayo](./img/Rayo%20básico.png){ margin=auto }
 
 Dado que estos puntos estarán generalmente en $\mathbb{R}^3$, podemos escribirlo como
 
