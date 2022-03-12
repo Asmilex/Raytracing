@@ -316,7 +316,7 @@ Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber 
 
 ### Método de la transformada inversa
 
-> **En resumen**
+> **En resumen**: Para conseguir una muestra de una distribución específica $F_X$:
 >
 > 1. Generar un número aleatorio $\xi \sim U(0, 1)$.
 > 2. Hallar la inversa de la función de distribución deseada $F_X$, denotada $F_X^{-1}(x)$.
@@ -372,6 +372,34 @@ $$
 
 Sacando un número aleatorio $\xi$, y pasándolo por la función obtenida, conseguimos un elemento con distribución $f(x)$.
 
+### Método del rechazo
+
+> **En resumen**: Para conseguir una muestra de una variable aleatoria $X$ con función de densidad $p_X$:
+>
+> 1. Obtener una muestra $y$ de $Y$ , y otra $\xi$ de $U(0, 1)$.
+> 2. Comprobar si $\xi < \frac{p_X(y)}{Mp_Y(y)}$. Si es así, aceptarla. Si no, sacar otra muestra.
+
+El método anterior presenta principalmente dos problemas:
+
+1. No siempre es posible integrar una función para hallar su función de densidad.
+2. La inversa de la función de distribución, $F_X^{-1}$ no tiene por qué existir.
+
+Como alternativa, podemos usar este método (en inglés, *rejection method*). Para ello, necesitamos una variable aleatoria $Y$ con función de densidad $p_Y(y)$. El objetivo es conseguir una muestra de $X$ con función de densidad $p_X(x)$.
+
+La idea principal es aceptar una muestra de $Y$ con probabilidad $p_X/Mp_Y$, con $1 < M < \infty$. En esencia, estamos jugando a los dardos: si la muestra de $y$ que hemos obtenido se queda por debajo de la gráfica de la función $Mp_Y < p_X$, estaremos obteniendo una de $p_X$.
+
+> TODO dibujo de la gráfica $\frac{p_X(y)}{Mp_Y(y)}$.
+>
+> ¿Quizás haga falta una demostración también? No estoy satisfecho con este apartado ahora mismo. Necesita trabajo.
+
+El algoritmo consiste en:
+
+1. Obtener una muestra de $Y$, denotada $y$, y otra de $U(0, 1)$, llamada $\xi$.
+2. Comprobar si $\xi < \frac{p_X(y)}{Mp_Y(y)}$.
+   1. Si se cumple, se acepta $y$ como muestra de $p_X$
+   2. En caso contrario, se rechaza $y$ y se vuelve al paso 1.
+
+
 [^1]: En su defecto, si tenemos una función de densidad $f_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{f_X(t)dt}$
 
 
@@ -390,3 +418,4 @@ Sacando un número aleatorio $\xi$, y pasándolo por la función obtenida, conse
 - https://www.wikiwand.com/es/Estimador
 - Presentación que no he mirado pero que tiene buena pinta: https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf
 - https://www.wikiwand.com/es/M%C3%A9todo_de_la_transformada_inversa
+- https://www.wikiwand.com/en/Rejection_sampling#Algorithm
