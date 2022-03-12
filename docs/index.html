@@ -259,6 +259,7 @@ transformada inversa</a></li>
 <li><a href="#método-del-rechazo">Método del rechazo</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#radiometría">Radiometría</a></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
 cómo se hizo este trabajo</a>
 <ul>
@@ -1474,6 +1475,35 @@ https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integrat
 <li>https://www.wikiwand.com/es/M%C3%A9todo_de_la_transformada_inversa</li>
 <li>https://www.wikiwand.com/en/Rejection_sampling#Algorithm</li>
 </ul>
+<h1 id="radiometría">Radiometría</h1>
+<blockquote>
+<p>TODO: capítulo temporal. De momento, solo hay notas de lo que me
+gustaría hablar.</p>
+</blockquote>
+<p>Unidades básicas: flux, irradiancia/radiancia de salida, intensidad y
+radiancia.</p>
+<p>Energía: <span class="math display">\[
+Q = \frac{hc}{\lambda} = hf (J)
+\]</span></p>
+<p>Flux: <span class="math display">\[
+\Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt}
+(J/s)
+\]</span></p>
+<p><span class="math display">\[
+\Rightarrow Q = \int_{t_0}^{t_1}{\Phi(t)dt}
+\]</span></p>
+<p><span class="math inline">\(J/s = W\)</span></p>
+<p>Irradiancia:</p>
+<p><span class="math display">\[
+E = \frac{\Phi}{A} (W/m^2)
+\]</span></p>
+<p><span class="math display">\[
+E(p) = \lim_{\Delta A \to 0}{\frac{\Delta \Phi}{\Delta A}} =
+\frac{d\Phi}{dA} (W/m^2)
+\]</span></p>
+<p><span class="math display">\[
+\Rightarrow \Phi = \int_{A}{E(p)dp}
+\]</span></p>
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
 <blockquote>
