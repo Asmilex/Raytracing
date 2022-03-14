@@ -259,7 +259,15 @@ transformada inversa</a></li>
 <li><a href="#método-del-rechazo">Método del rechazo</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#radiometría">Radiometría</a></li>
+<li><a href="#radiometría">Radiometría</a>
+<ul>
+<li><a href="#unidades-básicas">Unidades básicas</a>
+<ul>
+<li><a href="#potencia">Potencia</a></li>
+<li><a href="#irradiancia">Irradiancia</a></li>
+<li><a href="#ángulos-sólidos">Ángulos sólidos</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
 cómo se hizo este trabajo</a>
 <ul>
@@ -1480,30 +1488,103 @@ https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integrat
 <p>TODO: capítulo temporal. De momento, solo hay notas de lo que me
 gustaría hablar.</p>
 </blockquote>
-<p>Unidades básicas: flux, irradiancia/radiancia de salida, intensidad y
-radiancia.</p>
-<p>Energía: <span class="math display">\[
-Q = \frac{hc}{\lambda} = hf (J)
+<p>En este capítulo estudiaremos las bases de la radiometría. Esta área
+de la óptica nos proporcionará una serie de herramientas con las cuales
+podremos responder a la pregunta <em>cuánta luz existe en un
+punto</em>.</p>
+<h2 id="unidades-básicas">Unidades básicas</h2>
+<blockquote>
+<p><strong>Nota</strong>: cuando usemos un paréntesis tras una ecuación,
+dentro denotaremos sus unidades de medida.</p>
+</blockquote>
+<p>Antes de comenzar a trabajar, necesitamos conocer <em>qué
+entendemos</em> por luz. Aunque hay muchas formas de trabajar con ella
+(a fin de cuentas, todavía seguimos discutiendo sobre <em>qué es</em>
+exactamente la luz<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>), nosotros nos quedaremos con
+algunas pinceladas de la cuántica. Nos será suficiente quedarnos con la
+concepción de fotón. Una fuente de iluminación emite una serie de
+fotones. Estos fotones tienen<sup><span class="citation"
+data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
+role="doc-biblioref">Shirley and Morley 2003</a>)</span></sup> una
+posición, una dirección de propagación y una longitud de onda <span
+class="math inline">\(\lambda\)</span>. Un fotón también tiene asociado
+una velocidad <span class="math inline">\(c\)</span> que depende del
+índice de refracción del medio, <span
+class="math inline">\(n\)</span>.</p>
+<p>La unidad de medida de <span class="math inline">\(\lambda\)</span>
+es el nanómetro (<span class="math inline">\(\text{nm}\)</span>).
+También nos vendrá bien definir una frecuencia, <span
+class="math inline">\(f\)</span>. Su utilidad viene del hecho de que,
+cuando la luz cambia de medio al propagarse, la frecuencia se mantiene
+constante.</p>
+<p><span class="math display">\[
+f = \frac{c}{\lambda}
 \]</span></p>
-<p>Flux: <span class="math display">\[
+<p>Un fotón tiene asociada una carga de energía, denotada por <span
+class="math inline">\(Q\)</span>:</p>
+<p><span class="math display">\[
+Q = hf = \frac{hc}{\lambda} (\text{J})
+\]</span></p>
+<p>donde <span class="math inline">\(h = 6.62607004 \times 10^{-34}
+\text{J} \cdot \text{s}\)</span> es la constante de Planck y <span
+class="math inline">\(c = 299 792 458 \text{m/s}\)</span> la velocidad
+de la luz.</p>
+<p>En realiad, <strong>todas estas cantidades deberían tener un
+subíndice <span class="math inline">\(\lambda\)</span></strong>, puesto
+que dependen de la longitud de onda. La energía de un fotón <span
+class="math inline">\(Q\)</span>, por ejemplo, debería denotarse <span
+class="math inline">\(Q_\lambda\)</span>. Sin embargo, en la literatura
+de informática gráfica, <strong>se ha optado por omitirla</strong>.
+¡Tenlo en cuenta a partir de aquí!</p>
+<h3 id="potencia">Potencia</h3>
+<p>A partir de la energía anterior, podemos estimar <em>la tasa de
+producción de energía</em>. A esta tasa la llamaremos<sup><span
+class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
+role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>)</span></sup>
+<strong>potencia</strong>, o <strong>flujo radiante</strong> <span
+class="math inline">\(\Phi\)</span>. Esta medida nos resultará más útil
+que la energía total, puesto que nos permite estimar la energía en un
+instante:</p>
+<p><span class="math display">\[
 \Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt}
 (J/s)
 \]</span></p>
+<p>Su unidad es julios por segundo, comunmente denotado vatio
+(<em>watts</em>, <span class="math inline">\(\text{W}\)</span>). Podemos
+encontrar la energía total en un periodo de tiempo <span
+class="math inline">\([t_0, t_1]\)</span> integrando el flujo
+randiante:</p>
 <p><span class="math display">\[
-\Rightarrow Q = \int_{t_0}^{t_1}{\Phi(t)dt}
+Q = \int_{t_0}^{t_1}{\Phi(t)dt}
 \]</span></p>
 <p><span class="math inline">\(J/s = W\)</span></p>
-<p>Irradiancia:</p>
+<h3 id="irradiancia">Irradiancia</h3>
+<p>La <strong>irradiancia</strong> o <strong>radiancia emitida</strong>
+es el fujo radiante que recibe una superficie. Dada un área <span
+class="math inline">\(A\)</span>, se define como</p>
 <p><span class="math display">\[
 E = \frac{\Phi}{A} (W/m^2)
 \]</span></p>
+<p>Ahora que tenemos la potencia emitida en un cierto área, nos surge
+una pregunta: <em>¿y en un cierto punto <span
+class="math inline">\(p\)</span>?</em>. Tomando límites en la expresión
+anterior, encontramos la respuesta:</p>
 <p><span class="math display">\[
 E(p) = \lim_{\Delta A \to 0}{\frac{\Delta \Phi}{\Delta A}} =
 \frac{d\Phi}{dA} (W/m^2)
 \]</span></p>
+<p>De la misma manera que con la potencia, integrando <span
+class="math inline">\(E(p)\)</span> podemos obtener el flujo
+radiante:</p>
 <p><span class="math display">\[
-\Rightarrow \Phi = \int_{A}{E(p)dp}
+\Phi = \int_{A}{E(p)dp}
 \]</span></p>
+<h3 id="ángulos-sólidos">Ángulos sólidos</h3>
+<p><br></p>
+<ul>
+<li>https://www.wikiwand.com/en/Radiometry</li>
+</ul>
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
 <blockquote>
@@ -1534,6 +1615,11 @@ role="doc-bibliography">
 <div id="ref-mcbook" class="csl-entry" role="doc-biblioentry">
 Owen, Art B. 2013. <em>Monte Carlo Theory, Methods and Examples</em>.
 </div>
+<div id="ref-PBRT3e" class="csl-entry" role="doc-biblioentry">
+Pharr, Matt, Wenzel Jakob, and Greg Humphreys. 2016. <em>Physically
+Based Rendering: From Theory to Implementation (3rd Ed.)</em>. 3rd ed.
+San Francisco, CA, USA: Morgan Kaufmann Publishers Inc.
+</div>
 <div id="ref-ShirleyRRT" class="csl-entry" role="doc-biblioentry">
 Shirley, Peter, and R. Keith Morley. 2003. <em>Realistic Ray
 Tracing</em>. 2nd ed. USA: A. K. Peters, Ltd.
@@ -1548,6 +1634,12 @@ de densidad <span class="math inline">\(f_X\)</span>, podemos hallar la
 función de distribución haciendo <span class="math inline">\(F_X(x) =
 P[X &lt; x] = \int_{x_{min}}^{x}{f_X(t)dt}\)</span><a href="#fnref1"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>No entraremos en detalle sobre la
+naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos
+divulgadores <a href="https://www.youtube.com/watch?v=DkcEAz09Buo">como
+QuantumFracture</a> que han tratado el tema con suficiente
+profundidad.<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </body>
