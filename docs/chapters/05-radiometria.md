@@ -1,7 +1,5 @@
 # Radiometría
 
-> TODO: capítulo temporal. De momento, solo hay notas de lo que me gustaría hablar.
-
 En este capítulo estudiaremos las bases de la radiometría. Esta área de la óptica nos proporcionará una serie de herramientas con las cuales podremos responder a la pregunta *cuánta luz existe en un punto*.
 
 ## Unidades básicas
@@ -65,7 +63,13 @@ $$
 
 ### Ángulos sólidos
 
+Con estas tres unidades básicas, nos surge una pregunta muy natural: *¿cómo mido cuánta luz llega a una superficie?*
 
+Para responder a esta pregunta, usaremos los **ángulos sólidos**.
+
+Un ángulo sólido es la extensión del concepto de ángulo planar (en dos dimensiones). Para ilustrar el sentido de estos ángulos, imaginemos que tenemos un cierto objeto en dos dimensiones delante nuestra. Dependiendo de cómo de lejos se encuentre, nos parecerá más grande o más pequeño. Si trazamos un par de líneas desde nuestra posición a las partes más alejadas de este objeto, y las cortamos con una circunferencia de radio $r$, tendremos un par de puntos en nuestra circunferencia. Al arco que encapsulan ambos puntos le corresponde un cierto ángulo.
+
+![La idea intuitiva de un ángulo planar](./img/Ángulo%20planar.png)
 
 
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores [como QuantumFracture](https://www.youtube.com/watch?v=DkcEAz09Buo) que han tratado el tema con suficiente profundidad.
