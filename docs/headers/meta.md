@@ -5,7 +5,7 @@ keywords: [TFG, Raytracing, Ray tracing, Monte Carlo, DGIIM]
 link-citations: true
 ---
 
-# Abstract
+# Abstract{.unnumbered}
 
 Se procederá a analizar los algoritmos modernos de visualización 3D realista usando métodos de Monte-Carlo, y su implementación en hardware gráfico moderno (GPUs) específicamente diseñadas para aceleración de Ray-Tracing. Se diseñará e implementará un sistema software de síntesis de imágenes realistas por path tracing y muestreo directo de fuentes de luz, que haga uso del hardware gráfico, y se analizará su eficiencia en tiempo en relación a la calidad de las imágenes y en comparación con una implementación exclusivamente sobre CPU.
 
@@ -14,3 +14,17 @@ Se realizará una revisión bibliográfica de los métodos de Montecarlo que se 
 <hr>
 
 *Translation. It'll be left as is until there's a definitive abstract*
+
+\newpage
+
+\vspace*{\fill}
+
+# Dedicatoria{.unnumbered}
+
+*Aquí es donde me pongo ñoño*
+
+¡Parece que has llegado un poco pronto! Si lo has hecho voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado en verano de 2022.
+
+Mientras tanto, actualizaré poco a poco el contenido. Si quieres ir comprobando los progresos, puedes visitar [Asmilex/Raytracing](github.com/Asmilex/Raytracing) en Github para ver el estado del desarrollo.
+
+\vspace*{\fill}
