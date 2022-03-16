@@ -6,6 +6,44 @@
 
   --b-bg-1: #fdfcfc;
   --b-bg-2: #f7f7f7;
+
+  --blanco-100: hsla(0, 0%, 99%, 1);
+  --blanco-200: hsla(240, 8%, 95%, 1);
+  --gris-300  : hsla(218, 11%, 85%, 1);
+  --gris-500  : hsla(222, 7%, 59%, 1);
+  --negro-700 : hsla(221, 10%, 30%, 1);
+  --negro-800 : hsla(220, 16%, 22%, 1);
+  --negro-900 : hsla(215, 22%, 15%, 1);
+
+  --rojo-clarisimo : hsla(356, 52%, 88%, 1);
+  --rojo-claro     : hsla(357, 47%, 74%, 1);
+  --rojo-primario  : hsla(354, 42%, 56%, 1);
+  --rojo-oscuro    : hsla(352, 28%, 46%, 1);
+  --rojo-oscurisimo: hsla(340, 18%, 33%, 1);
+
+  --naranja-clarisimo : hsla(16, 89%, 89%, 1);
+  --naranja-claro     : hsla(17, 86%, 81%, 1);
+  --naranja-primario  : hsla(17, 77%, 68%, 1);
+  --naranja-oscuro    : hsla(14, 30%, 53%, 1);
+  --naranja-oscurisimo: hsla(4, 15%, 36%, 1);
+
+  --amarillo-clarisimo : hsla(44, 100%, 91%, 1);
+  --amarillo-claro     : hsla(44, 100%, 82%, 1);
+  --amarillo-primario  : hsla(47, 95%, 69%, 1);
+  --amarillo-oscuro    : hsla(45, 35%, 53%, 1);
+  --amarillo-oscurisimo: hsla(43, 15%, 36%, 1);
+
+  --verde-clarisimo : hsla(150, 35%, 87%, 1);
+  --verde-claro     : hsla(152, 37%, 74%, 1);
+  --verde-primario  : hsla(154, 38%, 61%, 1);
+  --verde-oscuro    : hsla(161, 21%, 46%, 1);
+  --verde-oscurisimo: hsla(178, 20%, 33%, 1);
+
+  --azul-clarisimo : hsla(218, 85%, 92%, 1);
+  --azul-claro     : hsla(217, 89%, 85%, 1);
+  --azul-primario  : hsla(215, 91%, 77%, 1);
+  --azul-oscuro    : hsla(216, 32%, 56%, 1);
+  --azul-oscurisimo: hsla(216, 22%, 38%, 1);
 }
 
 html {
