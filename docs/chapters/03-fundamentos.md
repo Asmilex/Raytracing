@@ -16,7 +16,7 @@ $$
 
 Estos rayos los *dispararemos* a través de una cámara virtual, que estará enfocando a la escena. De esta forma, los haremos rebotar con los objetos que se encuentren en el camino del rayo. A este proceso lo llamaremos **ray casting**.
 
-> TODO foto de cámara - pixel - rayo - objeto.
+![Diagrama de ray casting](./img/Ray%20casting.png)
 
 Generalmente, nos quedaremos con el primer objeto que nos encontremos en su camino. Aunque, a veces, nos interesará saber todos con los que se encuentre.
 
