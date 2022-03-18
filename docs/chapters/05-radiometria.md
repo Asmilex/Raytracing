@@ -67,12 +67,107 @@ Con estas tres unidades básicas, nos surge una pregunta muy natural: *¿cómo m
 
 Para responder a esta pregunta, usaremos los **ángulos sólidos**.
 
-Un ángulo sólido es la extensión del concepto de ángulo planar (en dos dimensiones). Para ilustrar el sentido de estos ángulos, imaginemos que tenemos un cierto objeto en dos dimensiones delante nuestra. Dependiendo de cómo de lejos se encuentre, nos parecerá más grande o más pequeño. Si trazamos un par de líneas desde nuestra posición a las partes más alejadas de este objeto, y las cortamos con una circunferencia de radio $r$, tendremos un par de puntos en nuestra circunferencia. Al arco que encapsulan ambos puntos le corresponde un cierto ángulo.
+Un ángulo sólido es la extensión del concepto de **ángulo planar** (en dos dimensiones). Para ilustrar el sentido de estos ángulos, imaginemos que tenemos un cierto objeto en dos dimensiones delante nuestra. Dependiendo de cómo de lejos se encuentre, nos parecerá más grande o más pequeño. Si trazamos un par de líneas desde nuestra posición a las partes más alejadas de este objeto, y las cortamos con una circunferencia de radio $r$, obtendremos un par de puntos en dicha circunferencia. Al arco que encapsulan ambos puntos le corresponde un cierto ángulo: el ángulo planar.
 
 ![La idea intuitiva de un ángulo planar](./img/Ángulo%20planar.png)
 
+Llevando esta idea a las tres dimensiones es como conseguimos el concepto de **ángulo sólido**. Su unidad de medida es el estereorradián ($\text{sr}$). Corresponde a la superficie generada por las rectas proyectantes que van desde un objeto hasta un punto, cortando con una esfera de radio $r$. Se define como
+
+$$
+\omega = \frac{A}{r^2} \text{(sr)}
+$$
+
+siendo $A$ la superficie cubierta por el objeto. Por tanto, un esterorradián corresponde una superficie con área $r^2$.
+
+> TODO: foto de un ángulo sólido.
+
+Si $2 \pi$ radianes corresponden a la cirfunferencia completa, para la esfera se tiene que $4 \pi$ esterorradianes cubren toda la superficie de ésta. Además, $2\pi$ sr cubren un hemisferio.
+
+Denotaremos a los ángulos sólidos por $\omega$. Como hemos visto, $\omega \in [0, 4\pi]$.
+
+### Intensidad
+
+Los ángulos sólidos nos proporcionan una variedad de herramientas nuevas considerable. Gracias a ellos, podemos desarrollar algunos conceptos nuevos. Uno de ellos es la **intensidad**.
+
+Imaginémonos un pequeñito punto de luz encerrado en una esfera, el cual emite fotones en todas direcciones. Nos gustaría medir cuánta energía pasa por la esfera. Podríamos entonces definir
+
+$$
+I = \frac{\Phi}{4\pi} \text{(W/sr)}
+$$
+
+La anterior definición mide cuántos fotones pasan por toda la esfera. ¿Qué ocurre si *cerramos* el ángulo, restringiéndonos así a un área muy pequeña de la esfera?
+
+$$
+I = \lim_{\Delta\omega \to 0}{\frac{\Delta\Phi}{\Delta\omega}} = \frac{d\Phi}{d\omega}
+$$
+
+De la misma manera que con los conceptos anteriores, podemos volver a la potencia integrando sobre un conjunto de direcciones:
+
+$$
+\Phi = \int_{\Omega}{I(\omega)d\omega}
+$$
+
+### Randianza
+
+Finalmente, llegamos al concepto más importante. La **radianza espectral** (o radianza a secas[^3]) es una extensión de la radianza emitida teniendo en cuenta la dirección:
+
+$$
+L(p, \omega) = \lim_{\Delta\omega \to 0}{\frac{\Delta E_\omega(p)}{\Delta\omega}} = \frac{dE_\omega(p)}{d\omega}
+$$
+
+siendo $E_\omega(p)$ la radianza emitida a la superficie perpendicular a $\omega$.
+
+Podemos dar otra expresión de la radianza en términos del flujo:
+
+$$
+L = \frac{d\Phi}{d\omega dA^\bot}
+$$
+
+donde $dA^\bot$ es el área proyectada por $dA$ en una hipotética superficie perpendicular a $\omega$:
+
+> TODO: figura similar a pbr figura 5.10 https://www.pbr-book.org/3ed-2018/Color_and_Radiometry/Radiometry
+
+Cuando un rayo impacta en una superficie, $L$ puede tomar valores muy diferentes en un lado y otro de dicha superficie. Por ejemplo, si nos imaginamos un espejo, el valor un poco por encima y un poco por debajo de un punto del espejo es muy diferente. Para solucionarlo, podemos tomar límites para distinguir a ambos lados:
+
+$$
+\begin{aligned}
+L^+(p, \omega) = \lim_{t \to 0^+}{L(p + t\mathbf{n_p}, \omega)} \\
+L^-(p, \omega) = \lim_{t \to 0^-}{L(p + t\mathbf{n_p}, \omega)}
+\end{aligned}
+$${#eq:L_limit}
+
+donde $\mathbf{n_p}$ es la normal en el punto $p$.
+
+Otra forma de solucionarlo (y preferible, puesto que simplifica entender lo que ocurre) es distinguir entre la radianza que llega a un punto --la incidente--, y la que sale.
+
+La primera se llamará $L_i(p, \omega)$, mientras que la segunda será $L_o(p, \omega)$. Es importante destacar que $\omega$ apunta hacia fuera de la superficie. Quizás es contraintuitivo en $L_i$, puesto que $-\omega$ apunta *hacia* la superficie. Depende del autor se utiliza una concepción u otra.
+
+Utilizando esta notación y usando [{@eq:L_limit}], podemos escribir $L_i$ y $L_o$ como
+
+$$
+\begin{aligned}
+    L_i(p, \omega) & =
+        \begin{cases}
+            L^+(p, -\omega) & \text{si }  \omega \cdot \mathbf{n_p} > 0  \\
+            L^-(p, -\omega) & \text{si }  \omega \cdot \mathbf{n_p} < 0
+        \end{cases} \\
+    L_o(p, \omega) & =
+        \begin{cases}
+            L^+(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} > 0 & \\
+            L^-(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} < 0 &
+        \end{cases}
+\end{aligned}
+$$
+
+Una propiedad a tener en cuenta es que, si cogemos un punto $p$ del espacio donde no existe ninguna superifcie, $L_o(p, \omega) = L_i(p, -\omega) = L(p, \omega)$
+
+La importancia de la radianza se debe a un par de propiedades:
+
+La primera de ellas es que, dado $L$, podemos calcular cualquier otra unidad básica mediante integración. Además, su valor se mantiene constante en rayos que viajan en el vacío. Parece natural usarla en un ray tracer.
+
 
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores [como QuantumFracture](https://www.youtube.com/watch?v=DkcEAz09Buo) que han tratado el tema con suficiente profundidad.
+[^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
 
 <br>
 
