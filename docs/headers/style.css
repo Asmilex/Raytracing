@@ -115,6 +115,10 @@ li {
   margin-top: 0.5em;
 }
 
+td {
+  min-width: 120px;
+}
+
 .MathJax {
   font-size: 1.2em !important;
 }

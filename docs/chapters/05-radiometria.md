@@ -182,7 +182,7 @@ Para obtener cuánta luz llega a un punto, debemos acumular la radianza incident
 Dado un punto $p$ que se encuentra en una superficie con normal $n$ en dicho punto, la irradianza se puede expresar como
 
 $$
-\int_{\Omega}{L_i(p, \omega) \mid cos\theta \mid d\omega}
+E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \mid cos\theta \mid d\omega}
 $$
 
 El término $cos\theta$ aparece en la integral debido a la derivada del área proyectada, $dA^\bot$. $\theta$ es el ángulo entre la dirección $\omega$ y la normal $\mathbf{n}$.
