@@ -115,6 +115,10 @@ li {
   margin-top: 0.5em;
 }
 
+.MathJax {
+  font-size: 1.2em !important;
+}
+
 code,
 pre {
   color: #eeffff;
