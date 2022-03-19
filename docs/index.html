@@ -179,19 +179,6 @@ Carlo, DGIIM" />
   <link rel="stylesheet" href="./headers/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script>
-  <script>
-    MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        chtml: {
-            scale: 1.1
-        },
-        svg: {
-            scale: 1.1
-        }
-    };
-  </script>
   
   <!-- pandoc-eqnos: equation style -->
   <style>
@@ -268,6 +255,11 @@ transformada inversa</a></li>
 <li><a href="#ángulos-sólidos">Ángulos sólidos</a></li>
 <li><a href="#intensidad">Intensidad</a></li>
 <li><a href="#randianza">Randianza</a></li>
+</ul></li>
+<li><a href="#integrales-radiométricas">Integrales radiométricas</a>
+<ul>
+<li><a href="#una-nueva-expresión-de-la-irradianza">Una nueva expresión
+de la irradianza</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
@@ -1557,7 +1549,6 @@ randiante:</p>
 <p><span class="math display">\[
 Q = \int_{t_0}^{t_1}{\Phi(t)dt}
 \]</span></p>
-<p><span class="math inline">\(J/s = W\)</span></p>
 <h3 id="irradiancia">Irradiancia</h3>
 <p>La <strong>irradiancia</strong> o <strong>radiancia emitida</strong>
 es el fujo radiante que recibe una superficie. Dada un área <span
@@ -1579,6 +1570,8 @@ radiante:</p>
 <p><span class="math display">\[
 \Phi = \int_{A}{E(p)dp}
 \]</span></p>
+<p>El principal problema de la irradianza es que <em>no nos dice nada
+sobre las direcciones</em> desde las que ha llegado la luz.</p>
 <h3 id="ángulos-sólidos">Ángulos sólidos</h3>
 <p>Con estas tres unidades básicas, nos surge una pregunta muy natural:
 <em>¿cómo mido cuánta luz llega a una superficie?</em></p>
@@ -1690,8 +1683,8 @@ punto –la incidente–, y la que sale.</p>
 <p>La primera se llamará <span class="math inline">\(L_i(p,
 \omega)\)</span>, mientras que la segunda será <span
 class="math inline">\(L_o(p, \omega)\)</span>. Es importante destacar
-que <span class="math inline">\(\omega\)</span> apunta hacia fuera de la
-superficie. Quizás es contraintuitivo en <span
+que <span class="math inline">\(\omega\)</span> apunta <em>hacia
+fuera</em> de la superficie. Quizás es contraintuitivo en <span
 class="math inline">\(L_i\)</span>, puesto que <span
 class="math inline">\(-\omega\)</span> apunta <em>hacia</em> la
 superficie. Depende del autor se utiliza una concepción u otra.</p>
@@ -1726,6 +1719,40 @@ class="math inline">\(L\)</span>, podemos calcular cualquier otra unidad
 básica mediante integración. Además, su valor se mantiene constante en
 rayos que viajan en el vacío. Parece natural usarla en un ray
 tracer.</p>
+<h2 id="integrales-radiométricas">Integrales radiométricas</h2>
+<p>En esta sección, vamos a explorar las nuevas herramientas que nos
+proporciona la radianza. Veremos también cómo integrar ángulos sólidos,
+y cómo simplificar dichas integrales.</p>
+<h3 id="una-nueva-expresión-de-la-irradianza">Una nueva expresión de la
+irradianza</h3>
+<p>Como dijimos al final de <a href="#irradiancia">la sección de la
+irradianza</a>, esta medida no tiene en cuenta las direcciones desde las
+que llegaba la luz.</p>
+<p>Una de las ventajas de la radianza es que nos permite obtener el
+resto de medidas radiométricas. Pues bien, empecemos con la
+irradianza.</p>
+<p>Para obtener cuánta luz llega a un punto, debemos acumular la
+radianza incidente que nos llega desde cualquier dirección.</p>
+<blockquote>
+<p>TODO: dibujo como el de la libreta roja. Me lo mandé por Telegram,
+por si no lo encuentro</p>
+</blockquote>
+<p>Dado un punto <span class="math inline">\(p\)</span> que se encuentra
+en una superficie con normal <span class="math inline">\(n\)</span> en
+dicho punto, la irradianza se puede expresar como</p>
+<p><span class="math display">\[
+E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \mid cos\theta \mid
+d\omega}
+\]</span></p>
+<p>El término <span class="math inline">\(cos\theta\)</span> aparece en
+la integral debido a la derivada del área proyectada, <span
+class="math inline">\(dA^\bot\)</span>. <span
+class="math inline">\(\theta\)</span> es el ángulo entre la dirección
+<span class="math inline">\(\omega\)</span> y la normal <span
+class="math inline">\(\mathbf{n}\)</span>.</p>
+<p>Generalmente, la irradianza se calcula únicamente en el hemisferio de
+direcciones asociado a la normal en el punto, <span
+class="math inline">\(H^2(\mathbf{n})\)</span>.</p>
 <p><br></p>
 <ul>
 <li>https://www.wikiwand.com/en/Radiometry</li>
@@ -1754,7 +1781,71 @@ construir la web y el pdf</p>
 <p>TODO - Hablar de cómo se gestiona el trabajo mediante issues,
 recapitulados todos con Projects.</p>
 </blockquote>
-<h1 class="unnumbered" id="anexo-cheatsheet">Anexo: Cheatsheet</h1>
+<h1 id="anexo-cheatsheet">Anexo: Cheatsheet</h1>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Concepto</strong></th>
+<th style="text-align: center;"><strong>Expresiones</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Carga de energía</strong></td>
+<td style="text-align: center;"><span class="math display">\[Q = hf =
+\frac{hc}{\lambda}\]</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Flujo radiante,
+potencia</strong></td>
+<td style="text-align: center;"><span class="math display">\[\Phi =
+\frac{dQ}{dt}\]</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Irradianza, radianza
+emitida</strong></td>
+<td style="text-align: center;"><span
+class="math display">\[\begin{aligned}E &amp; = \frac{\Phi}{A} \\ E(p)
+&amp; = \frac{d\Phi}{dA} \\ E(p, \mathbf{n}) &amp; =
+\int_{\Omega}{L_i(p, \omega) \mid cos\theta \mid
+d\omega}\end{aligned}\]</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Intensidad</strong></td>
+<td style="text-align: center;"><span class="math display">\[I =
+\frac{d\Phi}{d\omega}\]</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Radianza</strong></td>
+<td style="text-align: center;"><span
+class="math display">\[\begin{aligned} &amp; L(p, \omega) =
+\frac{dE_\omega(p)}{d\omega} \\ &amp; L = \frac{d\Phi}{d\omega dA^\bot}
+\\ &amp; L^+(p, \omega) = \lim_{t \to 0^+}{L(p + t\mathbf{n_p}, \omega)}
+\\ &amp; L^-(p, \omega) = \lim_{t \to 0^-}{L(p + t\mathbf{n_p}, \omega)}
+\end{aligned}\]</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Radianza incidente</strong></td>
+<td style="text-align: center;"><span
+class="math display">\[\begin{aligned}  L_i(p, \omega) = \begin{cases}
+L^+(p, -\omega) &amp; \text{si }  \omega \cdot \mathbf{n_p} &gt; 0  \\
+L^-(p, -\omega) &amp; \text{si }  \omega \cdot \mathbf{n_p} &lt; 0
+\end{cases}\end{aligned}\]</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Radianza de salida</strong></td>
+<td style="text-align: center;"><span
+class="math display">\[\begin{aligned} L_o(p, \omega) &amp; =
+\begin{cases} L^+(p, \omega)  &amp; \text{si }  \omega \cdot
+\mathbf{n_p} &gt; 0 &amp; \\ L^-(p, \omega)  &amp; \text{si }  \omega
+\cdot \mathbf{n_p} &lt; 0 &amp; \end{cases} \end{aligned}\]</span></td>
+</tr>
+</tbody>
+</table>
 <div id="refs" class="references csl-bib-body hanging-indent"
 role="doc-bibliography">
 <div id="ref-mcbook" class="csl-entry" role="doc-biblioentry">
