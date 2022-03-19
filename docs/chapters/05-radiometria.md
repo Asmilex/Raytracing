@@ -77,13 +77,43 @@ $$
 \omega = \frac{A}{r^2} \text{(sr)}
 $$
 
-siendo $A$ la superficie cubierta por el objeto. Por tanto, un esterorradián corresponde una superficie con área $r^2$.
+siendo $A$ la superficie cubierta por el objeto. Por tanto, un esterorradián corresponde una superficie con área $r^2$: $1 \text{sr} = \frac{r^2}{r^2}$.
 
 > TODO: foto de un ángulo sólido.
 
 Si $2 \pi$ radianes corresponden a la cirfunferencia completa, para la esfera se tiene que $4 \pi$ esterorradianes cubren toda la superficie de ésta. Además, $2\pi$ sr cubren un hemisferio.
 
 Denotaremos a los ángulos sólidos por $\omega$. Como hemos visto, $\omega \in [0, 4\pi]$.
+
+Usualmente emplearemos coordenadas esféricas cuando trabajemos con ellos, dado que resulta más cómodo.
+
+$$
+\begin{aligned}
+    \begin{cases}
+        x = \sin\theta\cos\theta \\
+        y = \sin\theta\sin\theta \\
+        z = \cos\theta
+    \end{cases}
+\end{aligned}
+$$
+
+A $\theta$ se le denomina ángulo polar, mientras que a $\phi$ se le llama acimut. Imaginémosnos un punto en la esfera de radio $r$ ubicado en una posición $(r, \theta, \phi)$. Queremos calcular un área chiquitita $dA_h$, de forma que el ángulo sólido asociado a dicha área debe ser $d\omega$. Así, $d\omega = \frac{dA_h}{r^2}$. Si proyectamos el área, obtenemos $d\theta$ y $d\phi$: pequeños cambios en los ángulos que nos generan nuestra pequeña área.
+
+$dA_h$ debe tener dos lados $lado_1$ y $lado_2$. Podemos hallar $lado_1$ si lo trasladamos al eje $z$ de nuevo. Así, $lado_1 = r \sin d\theta$. De la misma manera, $lado_2 = r d\theta$.
+
+> TODO: foto que explique todo esto, porque si no, no hay quien se entere.
+
+Poniendo estos valores en $d\omega$:
+
+$$
+\begin{aligned}
+d\omega & = \frac{dA_h}{r^2} = \frac{lado_1 lado_2}{r^2} = \\
+        & = \frac{r \sin\theta\ d\phi\ r\ d\theta}{r^2} = \\
+        & = \sin\theta\ d\theta\ d\phi
+\end{aligned}
+$${#eq:d_omega}
+
+¡Genial! Acabamos de añadir un recurso muy potente a nuestro inventario. Esta expresión nos permitirá convertir integrales sobre ángulos sólidos en integrales sobre ángulos esféricos.
 
 ### Intensidad
 
@@ -107,7 +137,7 @@ $$
 \Phi = \int_{\Omega}{I(\omega)d\omega}
 $$
 
-### Randianza
+### Radianza
 
 Finalmente, llegamos al concepto más importante. La **radianza espectral** (o radianza a secas[^3]) es una extensión de la radianza emitida teniendo en cuenta la dirección:
 
@@ -189,9 +219,20 @@ El término $cos\theta$ aparece en la integral debido a la derivada del área pr
 
 Generalmente, la irradianza se calcula únicamente en el hemisferio de direcciones asociado a la normal en el punto, $H^2(\mathbf{n})$.
 
+Podemos eliminar el término $cos\theta$ de la integral mediante una pequeña transformación: proyectando el ángulo sólido sobre el disco alrededor del punto $p$, obtenemos una expresión más sencilla:
+
+$$
+\begin{aligned}
+d\omega^\bot = \lvert \omega \rvert d\omega  \Rightarrow \\
+E(p, \mathbf{n}) = \int_{H^2(\mathbf{n})}{L_i(p, \omega) d\omega^\bot}
+\end{aligned}
+$$
+
+
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores [como QuantumFracture](https://www.youtube.com/watch?v=DkcEAz09Buo) que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
 
 <br>
 
 - https://www.wikiwand.com/en/Radiometry
+- https://youtu.be/WrKsgBElPWA
