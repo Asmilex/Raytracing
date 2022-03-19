@@ -39,8 +39,6 @@ $$
 Q = \int_{t_0}^{t_1}{\Phi(t)dt}
 $$
 
-$J/s = W$
-
 ### Irradiancia
 
 La **irradiancia** o **radiancia emitida** es el fujo radiante que recibe una superficie. Dada un área $A$, se define como
@@ -60,6 +58,8 @@ De la misma manera que con la potencia, integrando $E(p)$ podemos obtener el flu
 $$
 \Phi = \int_{A}{E(p)dp}
 $$
+
+El principal problema de la irradianza es que *no nos dice nada sobre las direcciones* desde las que ha llegado la luz.
 
 ### Ángulos sólidos
 
@@ -140,7 +140,7 @@ donde $\mathbf{n_p}$ es la normal en el punto $p$.
 
 Otra forma de solucionarlo (y preferible, puesto que simplifica entender lo que ocurre) es distinguir entre la radianza que llega a un punto --la incidente--, y la que sale.
 
-La primera se llamará $L_i(p, \omega)$, mientras que la segunda será $L_o(p, \omega)$. Es importante destacar que $\omega$ apunta hacia fuera de la superficie. Quizás es contraintuitivo en $L_i$, puesto que $-\omega$ apunta *hacia* la superficie. Depende del autor se utiliza una concepción u otra.
+La primera se llamará $L_i(p, \omega)$, mientras que la segunda será $L_o(p, \omega)$. Es importante destacar que $\omega$ apunta *hacia fuera* de la superficie. Quizás es contraintuitivo en $L_i$, puesto que $-\omega$ apunta *hacia* la superficie. Depende del autor se utiliza una concepción u otra.
 
 Utilizando esta notación y usando [{@eq:L_limit}], podemos escribir $L_i$ y $L_o$ como
 
@@ -165,6 +165,29 @@ La importancia de la radianza se debe a un par de propiedades:
 
 La primera de ellas es que, dado $L$, podemos calcular cualquier otra unidad básica mediante integración. Además, su valor se mantiene constante en rayos que viajan en el vacío. Parece natural usarla en un ray tracer.
 
+## Integrales radiométricas
+
+En esta sección, vamos a explorar las nuevas herramientas que nos proporciona la radianza. Veremos también cómo integrar ángulos sólidos, y cómo simplificar dichas integrales.
+
+### Una nueva expresión de la irradianza
+
+Como dijimos al final de [la sección de la irradianza](#irradiancia), esta medida no tiene en cuenta las direcciones desde las que llegaba la luz.
+
+Una de las ventajas de la radianza es que nos permite obtener el resto de medidas radiométricas. Pues bien, empecemos con la irradianza.
+
+Para obtener cuánta luz llega a un punto, debemos acumular la radianza incidente que nos llega desde cualquier dirección.
+
+> TODO: dibujo como el de la libreta roja. Me lo mandé por Telegram, por si no lo encuentro
+
+Dado un punto $p$ que se encuentra en una superficie con normal $n$ en dicho punto, la irradianza se puede expresar como
+
+$$
+\int_{\Omega}{L_i(p, \omega) \mid cos\theta \mid d\omega}
+$$
+
+El término $cos\theta$ aparece en la integral debido a la derivada del área proyectada, $dA^\bot$. $\theta$ es el ángulo entre la dirección $\omega$ y la normal $\mathbf{n}$.
+
+Generalmente, la irradianza se calcula únicamente en el hemisferio de direcciones asociado a la normal en el punto, $H^2(\mathbf{n})$.
 
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores [como QuantumFracture](https://www.youtube.com/watch?v=DkcEAz09Buo) que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
