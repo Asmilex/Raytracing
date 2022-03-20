@@ -269,6 +269,7 @@ href="#la-bidirectional-reflectance-distribution-function-brdf">La
 <em>bidirectional reflectance distribution function</em> (BRDF)</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#importance-sampling"><em>Importance sampling</em></a></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
 cómo se hizo este trabajo</a>
 <ul>
@@ -282,6 +283,7 @@ cómo se hizo este trabajo</a>
 <ul>
 <li><a href="#radiometría-1"><span>Radiometría</span></a></li>
 </ul></li>
+<li><a href="#bibliografía">Bibliografía</a></li>
 </ul>
 </nav>
 <h1 class="unnumbered" id="abstract">Abstract</h1>
@@ -411,18 +413,29 @@ entonces?</h2>
 <p>TODO hablar de los objetivos del trabajo.</p>
 </blockquote>
 <hr>
-<p>Referencias que pasar después:</p>
-<ol type="1">
-<li>https://www.wikiwand.com/en/History_of_photography#/1816_to_1833:_Ni%C3%A9pce’s_earliest_fixed_images</li>
-<li>https://www.wikiwand.com/es/Kodak#/Historia</li>
-<li>https://www.wikiwand.com/en/Computer#/Digital_computers</li>
-<li>https://www.wikiwand.com/en/Rendering_(computer_graphics)#/Chronology_of_important_published_ideas</li>
-<li>Ray tracing gems I (p 16), gems II.</li>
-<li>https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/</li>
-<li>https://www.wikiwand.com/en/Ray_tracing_(graphics)</li>
-<li>https://sciencebehindpixar.org/pipeline/rendering#:~:text=They%20said%20it%20takes%20at,to%20render%20that%20many%20frames.</li>
-<li></li>
-</ol>
+<p><span class="citation"
+data-cites="wikipedia-contributors-2022A">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2022A"
+role="doc-biblioref">2022j</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022B">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2022B"
+role="doc-biblioref">2022h</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022C">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2022C"
+role="doc-biblioref">2022d</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022D">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2022D"
+role="doc-biblioref">2022c</a>)</span>, <span class="citation"
+data-cites="caulfield-2020">Caulfield (<a href="#ref-caulfield-2020"
+role="doc-biblioref">2020</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022E">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2022E"
+role="doc-biblioref">2022b</a>)</span>, <span class="citation"
+data-cites="unknown-author-no-date"><span>“Rendering”</span> (<a
+href="#ref-unknown-author-no-date"
+role="doc-biblioref">n.d.</a>)</span>, <span class="citation"
+data-cites="Haines2019">Haines and Akenine-Möller (<a
+href="#ref-Haines2019" role="doc-biblioref">2019</a>)</span>, p. 16</p>
 <h1 id="notación">Notación</h1>
 <p>Antes de comenzar, asentemos la notación que utilizaremos.</p>
 <p>Para denotar a los <strong>puntos</strong>, usaremos letras
@@ -875,12 +888,18 @@ fuera del objeto, entonces</p>
 \mathbf{n} = (B - A) \times (C - A)
 \]</span></p>
 <hr>
-<p>Fuentes que he usado y que debería pasar:</p>
-<ul>
-<li>https://www.wikiwand.com/en/Implicit_surface</li>
-<li>https://www.wikiwand.com/en/Parametric_surface</li>
-<li>https://www.wikiwand.com/en/Barycentric_coordinate_system</li>
-</ul>
+<p><span class="citation"
+data-cites="wikipedia-contributors-2022F">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2022F"
+role="doc-biblioref">2022e</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2021A">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2021A"
+role="doc-biblioref">2021c</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022G">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2022G"
+role="doc-biblioref">2022f</a>)</span>, <span class="citation"
+data-cites="Sarabia">Alfonso Romero Sarabia (<a href="#ref-Sarabia"
+role="doc-biblioref">2021</a>)</span></p>
 <h1 id="integración-de-monte-carlo">Integración de Monte Carlo</h1>
 <blockquote>
 <p>TODO: este capítulo seguramente debería ir más tarde. De esa forma,
@@ -1389,7 +1408,7 @@ densidad <span class="math inline">\(p_X(x)\)</span>. Es decir, buscamos
 \begin{aligned}
 1 &amp; = \int_{0}^{2}{p_X(x)dx} = \int_{0}^{2}{c f(x)dx} = c
 \int_{0}^{2}{f(x)dx} = \\
-  &amp; = \left.{\frac{cx^3}{3}}\right\rvert_{2}^{3} = \frac{8c}{3} \\
+  &amp; = \left.\frac{cx^3}{3}\right\rvert_{2}^{3} = \frac{8c}{3} \\
   &amp; \Rightarrow c = \frac{3}{8} \\
   &amp; \Rightarrow p_X(x) = \frac{3x^2}{8}
 \end{aligned}
@@ -1471,23 +1490,45 @@ y se vuelve al paso 1.</li>
 </ol></li>
 </ol>
 <hr>
-<ul>
-<li>https://www.wikiwand.com/en/Rendering_equation</li>
-<li>https://www.wikiwand.com/es/Variable_aleatoria</li>
-<li>https://www.wikiwand.com/es/Distribuci%C3%B3n_de_probabilidad#/Distribuciones_de_variable_discreta</li>
-<li>https://www.wikiwand.com/es/Funci%C3%B3n_de_probabilidad</li>
-<li>https://www.pbr-book.org/3ed-2018/contents</li>
-<li>https://www.wikiwand.com/en/Expected_value</li>
-<li>https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf</li>
-<li>https://www.wikiwand.com/en/Probability_density_function</li>
-<li>RTT Shirley.</li>
-<li>https://artowen.su.domains/mc/</li>
-<li>https://www.wikiwand.com/es/Estimador</li>
-<li>Presentación que no he mirado pero que tiene buena pinta:
-https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf</li>
-<li>https://www.wikiwand.com/es/M%C3%A9todo_de_la_transformada_inversa</li>
-<li>https://www.wikiwand.com/en/Rejection_sampling#Algorithm</li>
-</ul>
+<p><span class="citation"
+data-cites="wikipedia-contributors-2021B">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2021B"
+role="doc-biblioref">2021a</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2021C">Wikipedia colaborators (<a
+href="#ref-wikipedia-contributors-2021C"
+role="doc-biblioref">2021</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022H">Wikipedia colaborators (<a
+href="#ref-wikipedia-contributors-2022H"
+role="doc-biblioref">2022c</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022I">Wikipedia colaborators (<a
+href="#ref-wikipedia-contributors-2022I"
+role="doc-biblioref">2022a</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022J">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2022J"
+role="doc-biblioref">2022g</a>)</span>, <span class="citation"
+data-cites="galvin-no-date">Galvin (<a href="#ref-galvin-no-date"
+role="doc-biblioref">n.d.</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022K">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2022K"
+role="doc-biblioref">2022i</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022L">Wikipedia colaborators (<a
+href="#ref-wikipedia-contributors-2022L"
+role="doc-biblioref">2022d</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022M">Wikipedia colaborators (<a
+href="#ref-wikipedia-contributors-2022M"
+role="doc-biblioref">2022b</a>)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2022N">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2022N"
+role="doc-biblioref">2022a</a>)</span>, <span class="citation"
+data-cites="ShirleyRRT">Shirley and Morley (<a href="#ref-ShirleyRRT"
+role="doc-biblioref">2003</a>)</span>, <span class="citation"
+data-cites="PBRT3e">Pharr, Jakob, and Humphreys (<a href="#ref-PBRT3e"
+role="doc-biblioref">2016</a>)</span>, <span class="citation"
+data-cites="mcbook">Owen (<a href="#ref-mcbook"
+role="doc-biblioref">2013</a>)</span>, <span class="citation"
+data-cites="berkeley-cs184-no-date">Berkeley cs184 (<a
+href="#ref-berkeley-cs184-no-date"
+role="doc-biblioref">n.d.</a>)</span></p>
 <h1 id="radiometría">Radiometría</h1>
 <p>En este capítulo estudiaremos las bases de la radiometría. Esta área
 de la óptica nos proporcionará una serie de herramientas con las cuales
@@ -1762,9 +1803,9 @@ class="math inline">\(L_o\)</span> como</p>
     L_o(p, \omega) &amp; =
         \begin{cases}
             L^+(p, \omega)  &amp; \text{si }  \omega \cdot \mathbf{n_p}
-&gt; 0 &amp; \\
+&gt; 0  \\
             L^-(p, \omega)  &amp; \text{si }  \omega \cdot \mathbf{n_p}
-&lt; 0 &amp;
+&lt; 0
         \end{cases}
 \end{aligned}
 \]</span></p>
@@ -1800,7 +1841,7 @@ por si no lo encuentro</p>
 en una superficie con normal <span class="math inline">\(n\)</span> en
 dicho punto, la irradiancia se puede expresar como</p>
 <p><span id="eq:E_abs_cos" class="eqnos"><span class="math display">\[
-E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \mid cos\theta \mid
+E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \lvert cos\theta \rvert
 d\omega}
 \]</span><span class="eqnos-number">(6)</span></span></p>
 <p>El término <span class="math inline">\(cos\theta\)</span> aparece en
@@ -1882,10 +1923,19 @@ salida de la superficie del cuadrilátero.</p>
 <h2 id="reflexión-de-luz">Reflexión de luz</h2>
 <h3 id="la-bidirectional-reflectance-distribution-function-brdf">La
 <em>bidirectional reflectance distribution function</em> (BRDF)</h3>
-<p><br></p>
+<hr>
+<p><span class="citation"
+data-cites="wikipedia-contributors-2021D">Wikipedia contributors (<a
+href="#ref-wikipedia-contributors-2021D"
+role="doc-biblioref">2021b</a>)</span>, <span class="citation"
+data-cites="studysession-2021">StudySession (<a
+href="#ref-studysession-2021" role="doc-biblioref">2021</a>)</span></p>
+<h1 id="importance-sampling"><em>Importance sampling</em></h1>
+<hr>
 <ul>
-<li>https://www.wikiwand.com/en/Radiometry</li>
-<li>https://youtu.be/WrKsgBElPWA</li>
+<li><em>(berkeley-cs184)</em>
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf</li>
+<li>https://cs184.eecs.berkeley.edu/sp22</li>
 </ul>
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
@@ -1913,7 +1963,7 @@ recapitulados todos con Projects.</p>
 </blockquote>
 <h1 id="anexo-cheat-sheet">Anexo: Cheat sheet</h1>
 <blockquote>
-<p>It’s dangerous to go alone, take this.</p>
+<p><em>It’s dangerous to go alone, take this.</em></p>
 </blockquote>
 <p>Tener en mente <em>todos</em> los conceptos y las expresiones que
 pueden tomar es prácticamente imposible. Tampoco hay necesidad de ello,
@@ -1957,7 +2007,7 @@ href="#irradiancia">Irradiancia, radiancia emitida</a></strong></td>
 <td style="text-align: left;"><span
 class="math inline">\(\begin{aligned}E &amp; = \frac{\Phi}{A} \\ E(p)
 &amp; = \frac{d\Phi}{dA} \\ E(p, \mathbf{n}) &amp; =
-\int_{\Omega}{L_i(p, \omega) \mid cos\theta \mid d\omega} \\ E(p,
+\int_{\Omega}{L_i(p, \omega) \lvert cos\theta \rvert d\omega} \\ E(p,
 \mathbf{n}) &amp; = \int_{0}^{2\pi}\int_{0}^{\pi/2}{L_i(p, \theta, \phi)
 \cos\theta\ \sin\theta\ d\theta\ d\phi} \end{aligned}\)</span></td>
 </tr>
@@ -1992,24 +2042,160 @@ salida</a></strong></td>
 <td style="text-align: left;"><span
 class="math inline">\(\begin{aligned} L_o(p, \omega) &amp; =
 \begin{cases} L^+(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
-&gt; 0 &amp; \\ L^-(p, \omega) &amp; \text{si } \omega \cdot
-\mathbf{n_p} &lt; 0 &amp; \end{cases} \end{aligned}\)</span></td>
+&gt; 0 \\ L^-(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p} &lt;
+0 \end{cases} \end{aligned}\)</span></td>
 </tr>
 </tbody>
 </table>
+<h1 class="unnumbered" id="bibliografía">Bibliografía</h1>
 <div id="refs" class="references csl-bib-body hanging-indent"
 role="doc-bibliography">
+<div id="ref-Sarabia" class="csl-entry" role="doc-biblioentry">
+Alfonso Romero Sarabia. 2021. <em>Apuntes de La Asignatura Curvas y
+Superficies</em>.
+</div>
+<div id="ref-berkeley-cs184-no-date" class="csl-entry"
+role="doc-biblioentry">
+Berkeley cs184. n.d. <span>“Monte Carlo Integration Cs184/284a.”</span>
+Accessed March 20, 2022. <a
+href="https://cs184.eecs.berkeley.edu/sp22/lecture/12/monte-carlo-integration">https://cs184.eecs.berkeley.edu/sp22/lecture/12/monte-carlo-integration</a>.
+</div>
+<div id="ref-caulfield-2020" class="csl-entry" role="doc-biblioentry">
+Caulfield, Brian. 2020. <span>“What’s the Difference Between Ray
+Tracing, Rasterization?”</span> May 22, 2020. <a
+href="https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/">https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/</a>.
+</div>
+<div id="ref-galvin-no-date" class="csl-entry" role="doc-biblioentry">
+Galvin. n.d. <span>“Random Variables.”</span> Accessed March 20, 2022.
+<a
+href="https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf">https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf</a>.
+</div>
+<div id="ref-Haines2019" class="csl-entry" role="doc-biblioentry">
+Haines, Eric, and Tomas Akenine-Möller, eds. 2019. <span>“Ray Tracing
+Gems.”</span> Apress. 2019. <a
+href="http://raytracinggems.com">http://raytracinggems.com</a>.
+</div>
 <div id="ref-mcbook" class="csl-entry" role="doc-biblioentry">
 Owen, Art B. 2013. <em>Monte Carlo Theory, Methods and Examples</em>.
 </div>
 <div id="ref-PBRT3e" class="csl-entry" role="doc-biblioentry">
-Pharr, Matt, Wenzel Jakob, and Greg Humphreys. 2016. <em>Physically
-Based Rendering: From Theory to Implementation (3rd Ed.)</em>. 3rd ed.
-San Francisco, CA, USA: Morgan Kaufmann Publishers Inc.
+Pharr, Matt, Wenzel Jakob, and Greg Humphreys. 2016. <span>“Physically
+Based Rendering: From Theory to Implementation (3rd Ed.).”</span> San
+Francisco, CA, USA: Morgan Kaufmann Publishers Inc. November 2016. <a
+href="https://www.pbr-book.org/3ed-2018/contents">https://www.pbr-book.org/3ed-2018/contents</a>.
+</div>
+<div id="ref-unknown-author-no-date" class="csl-entry"
+role="doc-biblioentry">
+<span>“Rendering.”</span> n.d. Accessed March 20, 2022. <a
+href="https://sciencebehindpixar.org/pipeline/rendering#:%7E:text=They%20said%20it%20takes%20at,to%20render%20that%20many%20frames">https://sciencebehindpixar.org/pipeline/rendering#:%7E:text=They%20said%20it%20takes%20at,to%20render%20that%20many%20frames</a>.
 </div>
 <div id="ref-ShirleyRRT" class="csl-entry" role="doc-biblioentry">
 Shirley, Peter, and R. Keith Morley. 2003. <em>Realistic Ray
 Tracing</em>. 2nd ed. USA: A. K. Peters, Ltd.
+</div>
+<div id="ref-studysession-2021" class="csl-entry"
+role="doc-biblioentry">
+StudySession. 2021. <span>“Solid Angle Derivation &amp;
+Intuition.”</span> March 4, 2021. <a
+href="https://www.youtube.com/watch?v=WrKsgBElPWA">https://www.youtube.com/watch?v=WrKsgBElPWA</a>.
+</div>
+<div id="ref-wikipedia-contributors-2021C" class="csl-entry"
+role="doc-biblioentry">
+Wikipedia colaborators. 2021. <span>“Variable Aleatoria.”</span> August
+30, 2021. <a
+href="https://es.wikipedia.org/wiki/Variable_aleatoria">https://es.wikipedia.org/wiki/Variable_aleatoria</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022I" class="csl-entry"
+role="doc-biblioentry">
+———. 2022a. <span>“Función de Probabilidad.”</span> February 10, 2022.
+<a
+href="https://es.wikipedia.org/wiki/Funci%C3%B3n_de_probabilidad">https://es.wikipedia.org/wiki/Funci%C3%B3n_de_probabilidad</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022M" class="csl-entry"
+role="doc-biblioentry">
+———. 2022b. <span>“Método de La Transformada Inversa.”</span> February
+20, 2022. <a
+href="https://es.wikipedia.org/wiki/M%C3%A9todo_de_la_transformada_inversa">https://es.wikipedia.org/wiki/M%C3%A9todo_de_la_transformada_inversa</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022H" class="csl-entry"
+role="doc-biblioentry">
+———. 2022c. <span>“Distribución de Probabilidad.”</span> February 28,
+2022. <a
+href="https://es.wikipedia.org/wiki/Distribuci%C3%B3n_de_probabilidad">https://es.wikipedia.org/wiki/Distribuci%C3%B3n_de_probabilidad</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022L" class="csl-entry"
+role="doc-biblioentry">
+———. 2022d. <span>“Estimador.”</span> March 14, 2022. <a
+href="https://es.wikipedia.org/wiki/Estimador?oldformat=true">https://es.wikipedia.org/wiki/Estimador?oldformat=true</a>.
+</div>
+<div id="ref-wikipedia-contributors-2021B" class="csl-entry"
+role="doc-biblioentry">
+Wikipedia contributors. 2021a. <span>“Rendering Equation.”</span> March
+9, 2021. <a
+href="https://en.wikipedia.org/wiki/Rendering_equation">https://en.wikipedia.org/wiki/Rendering_equation</a>.
+</div>
+<div id="ref-wikipedia-contributors-2021D" class="csl-entry"
+role="doc-biblioentry">
+———. 2021b. <span>“Radiometry.”</span> September 12, 2021. <a
+href="https://en.wikipedia.org/wiki/Radiometry">https://en.wikipedia.org/wiki/Radiometry</a>.
+</div>
+<div id="ref-wikipedia-contributors-2021A" class="csl-entry"
+role="doc-biblioentry">
+———. 2021c. <span>“Parametric Surface.”</span> December 15, 2021. <a
+href="https://en.wikipedia.org/wiki/Parametric_surface">https://en.wikipedia.org/wiki/Parametric_surface</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022N" class="csl-entry"
+role="doc-biblioentry">
+———. 2022a. <span>“Rejection Sampling.”</span> February 4, 2022. <a
+href="https://en.wikipedia.org/wiki/Rejection_sampling">https://en.wikipedia.org/wiki/Rejection_sampling</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022E" class="csl-entry"
+role="doc-biblioentry">
+———. 2022b. <span>“Ray Tracing (Graphics).”</span> March 7, 2022. <a
+href="https://en.wikipedia.org/wiki/Ray_tracing_(graphics)">https://en.wikipedia.org/wiki/Ray_tracing_(graphics)</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022D" class="csl-entry"
+role="doc-biblioentry">
+———. 2022c. <span>“Rendering (Computer Graphics).”</span> March 8, 2022.
+<a
+href="https://en.wikipedia.org/wiki/Rendering_(computer_graphics)">https://en.wikipedia.org/wiki/Rendering_(computer_graphics)</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022C" class="csl-entry"
+role="doc-biblioentry">
+———. 2022d. <span>“Computer.”</span> March 13, 2022. <a
+href="https://en.wikipedia.org/wiki/Computer">https://en.wikipedia.org/wiki/Computer</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022F" class="csl-entry"
+role="doc-biblioentry">
+———. 2022e. <span>“Implicit Surface.”</span> March 13, 2022. <a
+href="https://en.wikipedia.org/wiki/Implicit_surface">https://en.wikipedia.org/wiki/Implicit_surface</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022G" class="csl-entry"
+role="doc-biblioentry">
+———. 2022f. <span>“Barycentric Coordinate System.”</span> March 14,
+2022. <a
+href="https://en.wikipedia.org/wiki/Barycentric_coordinate_system">https://en.wikipedia.org/wiki/Barycentric_coordinate_system</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022J" class="csl-entry"
+role="doc-biblioentry">
+———. 2022g. <span>“Expected Value.”</span> March 14, 2022. <a
+href="https://en.wikipedia.org/wiki/Expected_value">https://en.wikipedia.org/wiki/Expected_value</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022B" class="csl-entry"
+role="doc-biblioentry">
+———. 2022h. <span>“Kodak.”</span> March 14, 2022. <a
+href="https://es.wikipedia.org/wiki/Kodak">https://es.wikipedia.org/wiki/Kodak</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022K" class="csl-entry"
+role="doc-biblioentry">
+———. 2022i. <span>“Probability Density Function.”</span> March 17, 2022.
+<a
+href="https://en.wikipedia.org/wiki/Probability_density_function">https://en.wikipedia.org/wiki/Probability_density_function</a>.
+</div>
+<div id="ref-wikipedia-contributors-2022A" class="csl-entry"
+role="doc-biblioentry">
+———. 2022j. <span>“History of Photography.”</span> March 18, 2022. <a
+href="https://en.wikipedia.org/wiki/History_of_photography">https://en.wikipedia.org/wiki/History_of_photography</a>.
 </div>
 </div>
 <section class="footnotes footnotes-end-of-document"
