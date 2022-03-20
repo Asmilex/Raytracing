@@ -199,7 +199,7 @@ La primera de ellas es que, dado $L$, podemos calcular cualquier otra unidad bá
 
 En esta sección, vamos a explorar las nuevas herramientas que nos proporciona la radianza. Veremos también cómo integrar ángulos sólidos, y cómo simplificar dichas integrales.
 
-### Una nueva expresión de la irradianza
+### Una nueva expresión de la irradianza y el flujo
 
 Como dijimos al final de [la sección de la irradianza](#irradiancia), esta medida no tiene en cuenta las direcciones desde las que llegaba la luz.
 
@@ -213,21 +213,59 @@ Dado un punto $p$ que se encuentra en una superficie con normal $n$ en dicho pun
 
 $$
 E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \mid cos\theta \mid d\omega}
-$$
+$${#eq:E_abs_cos}
 
 El término $cos\theta$ aparece en la integral debido a la derivada del área proyectada, $dA^\bot$. $\theta$ es el ángulo entre la dirección $\omega$ y la normal $\mathbf{n}$.
 
 Generalmente, la irradianza se calcula únicamente en el hemisferio de direcciones asociado a la normal en el punto, $H^2(\mathbf{n})$.
 
-Podemos eliminar el término $cos\theta$ de la integral mediante una pequeña transformación: proyectando el ángulo sólido sobre el disco alrededor del punto $p$, obtenemos una expresión más sencilla:
+Podemos eliminar el término $cos\theta$ de la integral mediante una pequeña transformación: proyectando el ángulo sólido sobre el disco alrededor del punto $p$ con normal $\mathbf{n}$, obtenemos una expresión más sencilla: como $d\omega^\bot = \lvert \cos\theta \rvert d\omega$, entonces
 
 $$
 \begin{aligned}
-d\omega^\bot = \lvert \omega \rvert d\omega  \Rightarrow \\
-E(p, \mathbf{n}) = \int_{H^2(\mathbf{n})}{L_i(p, \omega) d\omega^\bot}
+    E(p, \mathbf{n}) = \int_{H^2(\mathbf{n})}{L_i(p, \omega) d\omega^\bot}
 \end{aligned}
 $$
 
+Usando lo que aprendimos sobre la derivada de los ángulos sólidos [{@eq:d_omega}], se puede reescribir la ecuación anterior como
+
+$$
+E(p, \mathbf{n}) = \int_{0}^{2\pi}\int_{0}^{\pi/2}{L_i(p, \theta, \phi) \cos\theta\ \sin\theta\ d\theta\ d\phi}
+$$
+
+Haciendo el mismo juego con el flujo emitido de un cierto objeto al hemisferio que encapsula la normal, conseguimos:
+
+$$
+\begin{aligned}
+    \Phi & = \int_{A}\int_{H^2(\mathbf{n})}{L_o(p, \omega) \cos\theta\ d\omega dA} = \\
+         & = \int_{A}\int_{H^2(\mathbf{n})}{L_o(p, \omega) d\omega^\bot dA}
+\end{aligned}
+$$
+
+## Integrando sobre área
+
+Una herramienta más que nos vendrá bien será la capacidad de convertir integrales sobre direcciones en integrales sobre área. Hemos hecho algo similar en las secciones anteriores, así que no perdemos nada por generalizarlo.
+
+Considera un punto $p$ sobre una superficie con normal en dicho punto $\mathbf{n}$. Supongamos que tenemos una pequeña área $dA$ con normal $\mathbf{n_{dA}}$. Sea $\theta$ el ángulo entre $\mathbf{n}$ y $\mathbf{n_{dA}}$, y $r$ la distancia entre $p$ y $dA$.
+
+Entonces, la relación entre la diferencial de un ángulo sólido y la de un área es
+
+$$
+d\omega = \frac{dA\cos\theta}{r^2}
+$$
+
+> TODO: figura como la de pbr book 5.16
+
+Esto nos permite, por ejemplo, expandir algunas expresiones como la de la irradianza [{@eq:E_abs_cos}] si partimos de un cuadrilátero $dA$:
+
+$$
+\begin{aligned}
+    E(p, \mathbf{n}) & = \int_{\Omega}{L_i(p, \omega) \lvert \cos\theta \rvert d\omega} = \\
+                     & = \int_{A}{L\cos\theta\ \frac{\cos\theta_0}{r^2}dA}
+\end{aligned}
+$$
+
+siendo $\theta_0$ la radianza de salida de la superficie del cuadrilátero.
 
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores [como QuantumFracture](https://www.youtube.com/watch?v=DkcEAz09Buo) que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
