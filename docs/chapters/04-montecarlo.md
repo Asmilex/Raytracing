@@ -347,7 +347,7 @@ Primero, normalizamos esta función para obtener una función de densidad $p_X(x
 $$
 \begin{aligned}
 1 & = \int_{0}^{2}{p_X(x)dx} = \int_{0}^{2}{c f(x)dx} = c \int_{0}^{2}{f(x)dx} = \\
-  & = \left.{\frac{cx^3}{3}}\right\rvert_{2}^{3} = \frac{8c}{3} \\
+  & = \Eval{\frac{cx^3}{3}}{2}{3} = \frac{8c}{3} \\
   & \Rightarrow c = \frac{3}{8} \\
   & \Rightarrow p_X(x) = \frac{3x^2}{8}
 \end{aligned}

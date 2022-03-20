@@ -183,8 +183,8 @@ $$
         \end{cases} \\
     L_o(p, \omega) & =
         \begin{cases}
-            L^+(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} > 0 & \\
-            L^-(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} < 0 &
+            L^+(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} > 0  \\
+            L^-(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} < 0
         \end{cases}
 \end{aligned}
 $$
@@ -212,14 +212,14 @@ Para obtener cuánta luz llega a un punto, debemos acumular la radiancia inciden
 Dado un punto $p$ que se encuentra en una superficie con normal $n$ en dicho punto, la irradiancia se puede expresar como
 
 $$
-E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \mid cos\theta \mid d\omega}
+E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \abs{cos\theta} d\omega}
 $${#eq:E_abs_cos}
 
 El término $cos\theta$ aparece en la integral debido a la derivada del área proyectada, $dA^\bot$. $\theta$ es el ángulo entre la dirección $\omega$ y la normal $\mathbf{n}$.
 
 Generalmente, la irradiancia se calcula únicamente en el hemisferio de direcciones asociado a la normal en el punto, $H^2(\mathbf{n})$.
 
-Podemos eliminar el término $cos\theta$ de la integral mediante una pequeña transformación: proyectando el ángulo sólido sobre el disco alrededor del punto $p$ con normal $\mathbf{n}$, obtenemos una expresión más sencilla: como $d\omega^\bot = \lvert \cos\theta \rvert d\omega$, entonces
+Podemos eliminar el término $cos\theta$ de la integral mediante una pequeña transformación: proyectando el ángulo sólido sobre el disco alrededor del punto $p$ con normal $\mathbf{n}$, obtenemos una expresión más sencilla: como $d\omega^\bot = \abs{\cos\theta} d\omega$, entonces
 
 $$
 \begin{aligned}
@@ -260,7 +260,7 @@ Esto nos permite, por ejemplo, expandir algunas expresiones como la de la irradi
 
 $$
 \begin{aligned}
-    E(p, \mathbf{n}) & = \int_{\Omega}{L_i(p, \omega) \lvert \cos\theta \rvert d\omega} = \\
+    E(p, \mathbf{n}) & = \int_{\Omega}{L_i(p, \omega) \abs{\cos\theta} d\omega} = \\
                      & = \int_{A}{L\cos\theta\ \frac{\cos\theta_0}{r^2}dA}
 \end{aligned}
 $$
