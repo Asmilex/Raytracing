@@ -59,7 +59,7 @@ $$
 \Phi = \int_{A}{E(p)dp}
 $$
 
-El principal problema de la irradianza es que *no nos dice nada sobre las direcciones* desde las que ha llegado la luz.
+El principal problema de la irradiancia es que *no nos dice nada sobre las direcciones* desde las que ha llegado la luz.
 
 ### Ángulos sólidos
 
@@ -115,9 +115,9 @@ $${#eq:d_omega}
 
 ¡Genial! Acabamos de añadir un recurso muy potente a nuestro inventario. Esta expresión nos permitirá convertir integrales sobre ángulos sólidos en integrales sobre ángulos esféricos.
 
-### Intensidad
+### Intensidad radiante
 
-Los ángulos sólidos nos proporcionan una variedad de herramientas nuevas considerable. Gracias a ellos, podemos desarrollar algunos conceptos nuevos. Uno de ellos es la **intensidad**.
+Los ángulos sólidos nos proporcionan una variedad de herramientas nuevas considerable. Gracias a ellos, podemos desarrollar algunos conceptos nuevos. Uno de ellos es la **intensidad radiante**.
 
 Imaginémonos un pequeñito punto de luz encerrado en una esfera, el cual emite fotones en todas direcciones. Nos gustaría medir cuánta energía pasa por la esfera. Podríamos entonces definir
 
@@ -137,17 +137,17 @@ $$
 \Phi = \int_{\Omega}{I(\omega)d\omega}
 $$
 
-### Radianza
+### Radiancia
 
-Finalmente, llegamos al concepto más importante. La **radianza espectral** (o radianza a secas[^3]) es una extensión de la radianza emitida teniendo en cuenta la dirección:
+Finalmente, llegamos al concepto más importante. La **radiancia espectral** (o radiancia a secas[^3]) es una extensión de la radiancia emitida teniendo en cuenta la dirección:
 
 $$
 L(p, \omega) = \lim_{\Delta\omega \to 0}{\frac{\Delta E_\omega(p)}{\Delta\omega}} = \frac{dE_\omega(p)}{d\omega}
 $$
 
-siendo $E_\omega(p)$ la radianza emitida a la superficie perpendicular a $\omega$.
+siendo $E_\omega(p)$ la radiancia emitida a la superficie perpendicular a $\omega$.
 
-Podemos dar otra expresión de la radianza en términos del flujo:
+Podemos dar otra expresión de la radiancia en términos del flujo:
 
 $$
 L = \frac{d\Phi}{d\omega dA^\bot}
@@ -168,7 +168,7 @@ $${#eq:L_limit}
 
 donde $\mathbf{n_p}$ es la normal en el punto $p$.
 
-Otra forma de solucionarlo (y preferible, puesto que simplifica entender lo que ocurre) es distinguir entre la radianza que llega a un punto --la incidente--, y la que sale.
+Otra forma de solucionarlo (y preferible, puesto que simplifica entender lo que ocurre) es distinguir entre la radiancia que llega a un punto --la incidente--, y la que sale.
 
 La primera se llamará $L_i(p, \omega)$, mientras que la segunda será $L_o(p, \omega)$. Es importante destacar que $\omega$ apunta *hacia fuera* de la superficie. Quizás es contraintuitivo en $L_i$, puesto que $-\omega$ apunta *hacia* la superficie. Depende del autor se utiliza una concepción u otra.
 
@@ -191,25 +191,25 @@ $$
 
 Una propiedad a tener en cuenta es que, si cogemos un punto $p$ del espacio donde no existe ninguna superifcie, $L_o(p, \omega) = L_i(p, -\omega) = L(p, \omega)$
 
-La importancia de la radianza se debe a un par de propiedades:
+La importancia de la radiancia se debe a un par de propiedades:
 
 La primera de ellas es que, dado $L$, podemos calcular cualquier otra unidad básica mediante integración. Además, su valor se mantiene constante en rayos que viajan en el vacío. Parece natural usarla en un ray tracer.
 
 ## Integrales radiométricas
 
-En esta sección, vamos a explorar las nuevas herramientas que nos proporciona la radianza. Veremos también cómo integrar ángulos sólidos, y cómo simplificar dichas integrales.
+En esta sección, vamos a explorar las nuevas herramientas que nos proporciona la radiancia. Veremos también cómo integrar ángulos sólidos, y cómo simplificar dichas integrales.
 
-### Una nueva expresión de la irradianza y el flujo
+### Una nueva expresión de la irradiancia y el flujo
 
-Como dijimos al final de [la sección de la irradianza](#irradiancia), esta medida no tiene en cuenta las direcciones desde las que llegaba la luz.
+Como dijimos al final de [la sección de la irradiancia](#irradiancia), esta medida no tiene en cuenta las direcciones desde las que llegaba la luz.
 
-Una de las ventajas de la radianza es que nos permite obtener el resto de medidas radiométricas. Pues bien, empecemos con la irradianza.
+Una de las ventajas de la radiancia es que nos permite obtener el resto de medidas radiométricas. Pues bien, empecemos con la irradiancia.
 
-Para obtener cuánta luz llega a un punto, debemos acumular la radianza incidente que nos llega desde cualquier dirección.
+Para obtener cuánta luz llega a un punto, debemos acumular la radiancia incidente que nos llega desde cualquier dirección.
 
 > TODO: dibujo como el de la libreta roja. Me lo mandé por Telegram, por si no lo encuentro
 
-Dado un punto $p$ que se encuentra en una superficie con normal $n$ en dicho punto, la irradianza se puede expresar como
+Dado un punto $p$ que se encuentra en una superficie con normal $n$ en dicho punto, la irradiancia se puede expresar como
 
 $$
 E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \mid cos\theta \mid d\omega}
@@ -217,7 +217,7 @@ $${#eq:E_abs_cos}
 
 El término $cos\theta$ aparece en la integral debido a la derivada del área proyectada, $dA^\bot$. $\theta$ es el ángulo entre la dirección $\omega$ y la normal $\mathbf{n}$.
 
-Generalmente, la irradianza se calcula únicamente en el hemisferio de direcciones asociado a la normal en el punto, $H^2(\mathbf{n})$.
+Generalmente, la irradiancia se calcula únicamente en el hemisferio de direcciones asociado a la normal en el punto, $H^2(\mathbf{n})$.
 
 Podemos eliminar el término $cos\theta$ de la integral mediante una pequeña transformación: proyectando el ángulo sólido sobre el disco alrededor del punto $p$ con normal $\mathbf{n}$, obtenemos una expresión más sencilla: como $d\omega^\bot = \lvert \cos\theta \rvert d\omega$, entonces
 
@@ -256,7 +256,7 @@ $$
 
 > TODO: figura como la de pbr book 5.16
 
-Esto nos permite, por ejemplo, expandir algunas expresiones como la de la irradianza [{@eq:E_abs_cos}] si partimos de un cuadrilátero $dA$:
+Esto nos permite, por ejemplo, expandir algunas expresiones como la de la irradiancia [{@eq:E_abs_cos}] si partimos de un cuadrilátero $dA$:
 
 $$
 \begin{aligned}
@@ -265,7 +265,11 @@ $$
 \end{aligned}
 $$
 
-siendo $\theta_0$ la radianza de salida de la superficie del cuadrilátero.
+siendo $\theta_0$ la radiancia de salida de la superficie del cuadrilátero.
+
+## Reflexión de luz
+
+### La *bidirectional reflectance distribution function* (BRDF)
 
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores [como QuantumFracture](https://www.youtube.com/watch?v=DkcEAz09Buo) que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
