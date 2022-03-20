@@ -405,17 +405,4 @@ El algoritmo consiste en:
 
 <hr>
 
-- https://www.wikiwand.com/en/Rendering_equation
-- https://www.wikiwand.com/es/Variable_aleatoria
-- https://www.wikiwand.com/es/Distribuci%C3%B3n_de_probabilidad#/Distribuciones_de_variable_discreta
-- https://www.wikiwand.com/es/Funci%C3%B3n_de_probabilidad
-- https://www.pbr-book.org/3ed-2018/contents
-- https://www.wikiwand.com/en/Expected_value
-- https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf
-- https://www.wikiwand.com/en/Probability_density_function
-- RTT Shirley.
-- https://artowen.su.domains/mc/
-- https://www.wikiwand.com/es/Estimador
-- Presentación que no he mirado pero que tiene buena pinta: https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf
-- https://www.wikiwand.com/es/M%C3%A9todo_de_la_transformada_inversa
-- https://www.wikiwand.com/en/Rejection_sampling#Algorithm
+@wikipedia-contributors-2021B, @wikipedia-contributors-2021C, @wikipedia-contributors-2022H, @wikipedia-contributors-2022I, @wikipedia-contributors-2022J, @galvin-no-date, @wikipedia-contributors-2022K, @wikipedia-contributors-2022L, @wikipedia-contributors-2022M, @wikipedia-contributors-2022N, @ShirleyRRT, @PBRT3e, @mcbook, @berkeley-cs184-no-date

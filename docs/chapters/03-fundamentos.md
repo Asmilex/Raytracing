@@ -325,11 +325,6 @@ $$
 \mathbf{n} = (B - A) \times (C - A)
 $$
 
-
 <hr>
 
-Fuentes que he usado y que debería pasar:
-
-- https://www.wikiwand.com/en/Implicit_surface
-- https://www.wikiwand.com/en/Parametric_surface
-- https://www.wikiwand.com/en/Barycentric_coordinate_system
+@wikipedia-contributors-2022F, @wikipedia-contributors-2021A, @wikipedia-contributors-2022G, @Sarabia

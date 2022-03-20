@@ -59,14 +59,4 @@ Hemos entrado en la era del **real time ray tracing**.
 
 <hr>
 
-Referencias que pasar después:
-
-1. https://www.wikiwand.com/en/History_of_photography#/1816_to_1833:_Ni%C3%A9pce's_earliest_fixed_images
-2. https://www.wikiwand.com/es/Kodak#/Historia
-3. https://www.wikiwand.com/en/Computer#/Digital_computers
-4. https://www.wikiwand.com/en/Rendering_(computer_graphics)#/Chronology_of_important_published_ideas
-5. Ray tracing gems I (p 16), gems II.
-6. https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/
-7. https://www.wikiwand.com/en/Ray_tracing_(graphics)
-8. https://sciencebehindpixar.org/pipeline/rendering#:~:text=They%20said%20it%20takes%20at,to%20render%20that%20many%20frames.
-9.
+@wikipedia-contributors-2022A, @wikipedia-contributors-2022B, @wikipedia-contributors-2022C, @wikipedia-contributors-2022D, @caulfield-2020, @wikipedia-contributors-2022E, @unknown-author-no-date, @Haines2019, p. 16

@@ -274,7 +274,6 @@ siendo $\theta_0$ la radiancia de salida de la superficie del cuadrilátero.
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores [como QuantumFracture](https://www.youtube.com/watch?v=DkcEAz09Buo) que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
 
-<br>
+<hr>
 
-- https://www.wikiwand.com/en/Radiometry
-- https://youtu.be/WrKsgBElPWA
+@wikipedia-contributors-2021D, @studysession-2021
