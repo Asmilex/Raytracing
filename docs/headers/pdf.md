@@ -12,7 +12,7 @@ monofontoptions:
  - Scale=0.8
 
 titlepage: true
-subtitle: "Doble grado en ingeniería informática y matemáticas"
+subtitle: "Doble grado en ingeniería informática y matemáticas \\ \\href{http://asmilex.github.io/Raytracing}{asmilex.github.io/Raytracing}"
 institute: "Universidad de Granada"
 author:
 - "\\textbf{Presentado por}: Andrés Millán Muñoz,"
