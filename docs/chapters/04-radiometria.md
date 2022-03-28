@@ -201,25 +201,23 @@ En esta sección, vamos a explorar las nuevas herramientas que nos proporciona l
 
 ### Una nueva expresión de la irradiancia y el flujo
 
-Como dijimos al final de [la sección de la irradiancia](#irradiancia), esta medida no tiene en cuenta las direcciones desde las que llegaba la luz.
-
-Una de las ventajas de la radiancia es que nos permite obtener el resto de medidas radiométricas. Pues bien, empecemos con la irradiancia.
+Como dijimos al final de [la sección de la irradiancia](#irradiancia), esta medida no tiene en cuenta las direcciones desde las que llegaba la luz. A diferencia de ésta, la radiancia sí que las utiliza. Dado que una de las ventajas de la radiancia es que nos permite obtener el resto de medidas radiométricas, ¿por qué no desarrollamos una nueva expresión de la irradiancia?
 
 Para obtener cuánta luz llega a un punto, debemos acumular la radiancia incidente que nos llega desde cualquier dirección.
 
 > TODO: dibujo como el de la libreta roja. Me lo mandé por Telegram, por si no lo encuentro
 
-Dado un punto $p$ que se encuentra en una superficie con normal $n$ en dicho punto, la irradiancia se puede expresar como
+Dado un punto $p$ que se encuentra en una superficie con normal $\mathbf{n}$ en dicho punto, la irradiancia se puede expresar como
 
 $$
 E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \abs{cos\theta} d\omega}
 $${#eq:E_abs_cos}
 
-El término $cos\theta$ aparece en la integral debido a la derivada del área proyectada, $dA^\bot$. $\theta$ es el ángulo entre la dirección $\omega$ y la normal $\mathbf{n}$.
+El término $\cos\theta$ aparece en la integral debido a la derivada del área proyectada, $dA^\bot$. $\theta$ es el ángulo entre la dirección $\omega$ y la normal $\mathbf{n}$.
 
 Generalmente, la irradiancia se calcula únicamente en el hemisferio de direcciones asociado a la normal en el punto, $H^2(\mathbf{n})$.
 
-Podemos eliminar el término $cos\theta$ de la integral mediante una pequeña transformación: proyectando el ángulo sólido sobre el disco alrededor del punto $p$ con normal $\mathbf{n}$, obtenemos una expresión más sencilla: como $d\omega^\bot = \abs{\cos\theta} d\omega$, entonces
+Podemos eliminar el $\cos\theta$ de la integral mediante una pequeña transformación: proyectando el ángulo sólido sobre el disco alrededor del punto $p$ con normal $\mathbf{n}$, obtenemos una expresión más sencilla: como $d\omega^\bot = \abs{\cos\theta} d\omega$, entonces
 
 $$
 \begin{aligned}
@@ -261,13 +259,13 @@ Esto nos permite, por ejemplo, expandir algunas expresiones como la de la irradi
 $$
 \begin{aligned}
     E(p, \mathbf{n}) & = \int_{\Omega}{L_i(p, \omega) \abs{\cos\theta} d\omega} = \\
-                     & = \int_{A}{L\cos\theta\ \frac{\cos\theta_0}{r^2}dA}
+                     & = \int_{A}{L\cos\theta\ \frac{\cos\theta_o}{r^2}dA}
 \end{aligned}
 $$
 
-siendo $\theta_0$ la radiancia de salida de la superficie del cuadrilátero.
+siendo $\theta_o$ la radiancia de salida de la superficie del cuadrilátero.
 
-## Reflexión de luz
+## Dispersión de luz: las familias de funciones de distribución bidireccionales
 
 Cuando una fuente de luz emite fotones hacia una superficie impactando en ella, ocurren un par de sucesos: parte de la luz se refleja en ella, saliendo disparada hacia alguna dirección; mientras que otra parte se absorbe.
 
@@ -275,38 +273,64 @@ En este capítulo vamos a modelar la primera. Estudiaremos qué es lo que ocurre
 
 ### La función de distribución de reflectancia bidireccional (BRDF)
 
-La **función de distribución de reflectancia bidireccional** (en inglés, *bidirectional reflectance distribution function*, BRDF) describe cómo la luz se refleja en una superficie opaca. Se encarga de informarnos cuánta radiancia sale en dirección $\omega_0$ debido a la radiancia incidente desde la dirección $\omega_i$, partiendo de un punto $p$ en una superficie con normal $\mathbf{n}$.
+La **función de distribución de reflectancia bidireccional** (en inglés, *bidirectional reflectance distribution function*, BRDF) describe cómo la luz se refleja en una superficie opaca. Se encarga de informarnos cuánta radiancia sale en dirección $\omega_o$ debido a la radiancia incidente desde la dirección $\omega_i$, partiendo de un punto $p$ en una superficie con normal $\mathbf{n}$.
 
 > TODO: esquema como el de pbr fig 5.18.
 
-Si consideramos la dirección $\omega_i$ como un cono diferencial de direcciones, la irradiancia diferencial en $p$ viene dada por
+Si consideramos $\omega_i$ como un cono diferencial de direcciones, la irradiancia diferencial en $p$ viene dada por
 
 $$
 dE(p, \omega_i) = L_i(p, \omega_i) \cos\omega_i\ d\omega_i
 $$
 
-Debido a esta irradiancia, una pequeña parte de radiancia saldrá en dirección $\omega_0$, proporcional a la irradiancia:
+Debido a esta irradiancia, una pequeña parte de radiancia saldrá en dirección $\omega_o$, proporcional a la irradiancia:
 
 $$
-dL_o(p, \omega_0) \propto dE(p, \omega_i)
+dL_o(p, \omega_o) \propto dE(p, \omega_i)
 $$
 
-Si lo ponemos en forma de cociente, sabremos exactamente cuál es la proporción de luz. A este cociente lo llamaremos $f_r(p, \omega_0, \omega_i)$; la función de distribución de reflectancia bidireccional:
+Si lo ponemos en forma de cociente, sabremos exactamente cuál es la proporción de luz. A este cociente lo llamaremos $f_r(p, \omega_o, \omega_i)$; la función de distribución de reflectancia bidireccional:
 
 $$
-f_r(p, \omega_0, \omega_i) = \frac{dL_0(p, \omega_0)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_0)}{L_i(p \omega_i) \cos\theta_i\ d\omega_i}
+f_r(p, \omega_o, \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p \omega_i) \cos\theta_i\ d\omega_i}
 $$
 
-Las BRDFs realistas tienen un par de propiedades importantes:
+Las BRDFs físicamente realistas tienen un par de propiedades importantes:
 
-1. **Reciprocidad**: para cualquier par de direcciones $\omega_i$, $\omega_0$, se tiene que $f_r(p, \omega_i, \omega_0) = $ $f_r(p, \omega_0, \omega_i)$.
-2. **Conservación de la energía**: La energía reflejaada tiene que ser menor o igual que la incidente:
+1. **Reciprocidad**: para cualquier par de direcciones $\omega_i$, $\omega_o$, se tiene que $f_r(p, \omega_i, \omega_o)=\ $ $f_r(p, \omega_o, \omega_i)$.
+2. **Conservación de la energía**: La energía reflejada tiene que ser menor o igual que la incidente:
 
 $$
-\int_{H^2(\mathbf{n})}{f_r(p, \omega_0, \omega_i) \cos\theta_i\ d\omega_i} \leq 1
+\int_{H^2(\mathbf{n})}{f_r(p, \omega_o, \omega_i) \cos\theta_i\ d\omega_i} \leq 1
 $$
 
-> NOTE: En wikipedia integran con respecto a $\omega_0$, y no con la incidente. ¿Quizás afecte en algo?
+### La función de distribución de transmitancia bidireccional (BTDF)
+
+Si la BRDF describe cómo se refleja la luz, la *bidirectional transmittance distribution function* (abreviada BTDF) nos informará sobre la transmitancia; es decir, cómo se comporta la luz cuando entra en un medio. Son caras de la misma moneda: la luz impacta en una superficie, y parte de ella, se reflejará, y otra parte se transmitirá.
+
+Denotaremos a la BTDF por
+
+$$
+f_t(p, \omega_o, \omega_i)
+$$
+
+Al contrario que en la BRDF, $\omega_o$ y $\omega_i$ se encuentran en hemisferios diferentes.
+
+### Juntando la BRDF y la BTDF
+
+Convenientemente, podemos juntar las BRDF y las BTDF en una sola expresión, llamada **la de distribución de dispersión bidireccional** (*bidirectional scattering distribution function*, BSDF). A la BSDF la llamaremos
+
+$$
+f(p, \omega_o, \omega_i)
+$$
+
+Usando esta definición, podemos obtener
+
+$$
+dL_o(p, \omega_o) = f(p, \omega_o, \omega_i) L_i(p, \omega_i) \abs{\cos\theta_i} d\omega_i
+$$
+
+> NOTE: En wikipedia integran con respecto a $\omega_o$, y no con la incidente. ¿Quizás afecte en algo?
 
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores [como QuantumFracture](https://www.youtube.com/watch?v=DkcEAz09Buo) que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
@@ -316,3 +340,4 @@ $$
 @wikipedia-contributors-2021D, @studysession-2021
 
 - https://www.wikiwand.com/es/Funci%C3%B3n_de_distribuci%C3%B3n_de_reflectancia_bidireccional
+- https://www.wikiwand.com/en/Transmittance
