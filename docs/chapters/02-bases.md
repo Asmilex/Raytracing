@@ -1,4 +1,4 @@
-# Los fundamentos
+# Las bases
 
 Empecemos por definir lo que es un rayo.
 
