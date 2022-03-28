@@ -7,7 +7,7 @@
   <meta name="author" content="Andrés Millán Muñoz" />
   <meta name="keywords" content="TFG, Raytracing, Ray tracing, Monte
 Carlo, DGIIM" />
-  <title>Raytracing (WIP name)</title>
+  <title>Los fundamentos de Ray Tracing</title>
   <style>
     html {
       line-height: 1.5;
@@ -177,6 +177,7 @@ Carlo, DGIIM" />
   </style>
   <link rel="stylesheet" href="https://unpkg.com/bamboo.css/dist/light.min.css">
   <link rel="stylesheet" href="./headers/style.css">
+  <link rel="icon" type="image/x-icon" href="./img/favicon.svg">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script>
   
@@ -195,7 +196,7 @@ Carlo, DGIIM" />
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Raytracing (WIP name)</h1>
+<h1 class="title">Los fundamentos de Ray Tracing</h1>
 <p class="author">Andrés Millán Muñoz</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -209,8 +210,7 @@ Carlo, DGIIM" />
 <li><a href="#vale-y-qué-vamos-a-hacer-entonces">Vale, ¿y qué vamos a
 hacer entonces?</a></li>
 </ul></li>
-<li><a href="#notación">Notación</a></li>
-<li><a href="#los-fundamentos">Los fundamentos</a>
+<li><a href="#las-bases">Las bases</a>
 <ul>
 <li><a href="#eligiendo-direcciones">Eligiendo direcciones</a></li>
 <li><a href="#intersecciones-rayo---objeto">Intersecciones rayo -
@@ -262,11 +262,18 @@ transformada inversa</a></li>
 nueva expresión de la irradiancia y el flujo</a></li>
 </ul></li>
 <li><a href="#integrando-sobre-área">Integrando sobre área</a></li>
-<li><a href="#reflexión-de-luz">Reflexión de luz</a>
+<li><a
+href="#dispersión-de-luz-las-familias-de-funciones-de-distribución-bidireccionales">Dispersión
+de luz: las familias de funciones de distribución bidireccionales</a>
 <ul>
 <li><a
 href="#la-función-de-distribución-de-reflectancia-bidireccional-brdf">La
 función de distribución de reflectancia bidireccional (BRDF)</a></li>
+<li><a
+href="#la-función-de-distribución-de-transmitancia-bidireccional-btdf">La
+función de distribución de transmitancia bidireccional (BTDF)</a></li>
+<li><a href="#juntando-la-brdf-y-la-btdf">Juntando la BRDF y la
+BTDF</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#importance-sampling"><em>Importance sampling</em></a></li>
@@ -279,8 +286,10 @@ cómo se hizo este trabajo</a>
 <li><a href="#github-projects">Github Projects</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#anexo-cheat-sheet">Anexo: Cheat sheet</a>
+<li><a href="#anexo-glosario-de-términos-y-expresiones">Anexo: Glosario
+de términos y expresiones</a>
 <ul>
+<li><a href="#notación">Notación</a></li>
 <li><a href="#radiometría-1"><span>Radiometría</span></a></li>
 </ul></li>
 <li><a href="#bibliografía">Bibliografía</a></li>
@@ -436,38 +445,7 @@ href="#ref-unknown-author-no-date"
 role="doc-biblioref">n.d.</a>)</span>, <span class="citation"
 data-cites="Haines2019">Haines and Akenine-Möller (<a
 href="#ref-Haines2019" role="doc-biblioref">2019</a>)</span>, p. 16</p>
-<h1 id="notación">Notación</h1>
-<p>Antes de comenzar, asentemos la notación que utilizaremos.</p>
-<p>Para denotar a los <strong>puntos</strong>, usaremos letras
-mayúsculas como <span class="math inline">\(P\)</span> o <span
-class="math inline">\(Q\)</span>. Los <strong>escalares</strong> vendrán
-dados por letras minúsculas, como <span class="math inline">\(a\)</span>
-o <span class="math inline">\(b\)</span>; mientras que los
-<strong>vectores</strong> irán en letra minúscula negrita (p.e.: <span
-class="math inline">\(\mathbf{v}\)</span> o <span
-class="math inline">\(\mathbf{w}\)</span>). Además, serán vectores
-columnas. Aquellos normalizados los representaremos con un gorrito:
-<span class="math inline">\(\hat{\mathbf{v}} =
-\frac{\mathbf{v}}{\Vert\mathbf{v}\Vert}\)</span>. Las
-<strong>matrices</strong>, por otra parte, vendrán dadas por letra
-mayúscula en negrita, como <span
-class="math inline">\(\mathbf{M}\)</span>. También son columna.</p>
-<p>El producto escalar vendrá dado por <span
-class="math inline">\(\mathbf{v} \cdot \mathbf{w}\)</span>, y el
-vectorial por <span class="math inline">\(\mathbf{v} \times
-\mathbf{w}\)</span>. Cuando escribamos <span
-class="math inline">\(\mathbf{v}^2\)</span>, lo entenderemos como <span
-class="math inline">\(\mathbf{v} \cdot \mathbf{v}\)</span></p>
-<p>La notación usada para las <strong>variables aleatorias</strong> será
-la habitual: mayúsculas como <span class="math inline">\(X\)</span>. Su
-valor esperado vendrá dado por <span
-class="math inline">\(E\left[X\right]\)</span> y la varianza por <span
-class="math inline">\(V\left[X\right]\)</span>.</p>
-<blockquote>
-<p>TODO: notación para las funciones de densidad y distribución. TODO:
-acceso a componentes de un vector/matriz?</p>
-</blockquote>
-<h1 id="los-fundamentos">Los fundamentos</h1>
+<h1 id="las-bases">Las bases</h1>
 <p>Empecemos por definir lo que es un rayo.</p>
 <p>Un rayo es una función <span class="math inline">\(P(t) = O +
 tD\)</span>, donde <span class="math inline">\(O\)</span> es el origin,
@@ -1827,10 +1805,10 @@ y cómo simplificar dichas integrales.</p>
 expresión de la irradiancia y el flujo</h3>
 <p>Como dijimos al final de <a href="#irradiancia">la sección de la
 irradiancia</a>, esta medida no tiene en cuenta las direcciones desde
-las que llegaba la luz.</p>
-<p>Una de las ventajas de la radiancia es que nos permite obtener el
-resto de medidas radiométricas. Pues bien, empecemos con la
-irradiancia.</p>
+las que llegaba la luz. A diferencia de ésta, la radiancia sí que las
+utiliza. Dado que una de las ventajas de la radiancia es que nos permite
+obtener el resto de medidas radiométricas, ¿por qué no desarrollamos una
+nueva expresión de la irradiancia?</p>
 <p>Para obtener cuánta luz llega a un punto, debemos acumular la
 radiancia incidente que nos llega desde cualquier dirección.</p>
 <blockquote>
@@ -1838,13 +1816,14 @@ radiancia incidente que nos llega desde cualquier dirección.</p>
 por si no lo encuentro</p>
 </blockquote>
 <p>Dado un punto <span class="math inline">\(p\)</span> que se encuentra
-en una superficie con normal <span class="math inline">\(n\)</span> en
-dicho punto, la irradiancia se puede expresar como</p>
+en una superficie con normal <span
+class="math inline">\(\mathbf{n}\)</span> en dicho punto, la irradiancia
+se puede expresar como</p>
 <p><span id="eq:E_abs_cos" class="eqnos"><span class="math display">\[
 E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \lvert cos\theta \rvert
 d\omega}
 \]</span><span class="eqnos-number">(6)</span></span></p>
-<p>El término <span class="math inline">\(cos\theta\)</span> aparece en
+<p>El término <span class="math inline">\(\cos\theta\)</span> aparece en
 la integral debido a la derivada del área proyectada, <span
 class="math inline">\(dA^\bot\)</span>. <span
 class="math inline">\(\theta\)</span> es el ángulo entre la dirección
@@ -1853,12 +1832,12 @@ class="math inline">\(\mathbf{n}\)</span>.</p>
 <p>Generalmente, la irradiancia se calcula únicamente en el hemisferio
 de direcciones asociado a la normal en el punto, <span
 class="math inline">\(H^2(\mathbf{n})\)</span>.</p>
-<p>Podemos eliminar el término <span
-class="math inline">\(cos\theta\)</span> de la integral mediante una
-pequeña transformación: proyectando el ángulo sólido sobre el disco
-alrededor del punto <span class="math inline">\(p\)</span> con normal
-<span class="math inline">\(\mathbf{n}\)</span>, obtenemos una expresión
-más sencilla: como <span class="math inline">\(d\omega^\bot = \lvert
+<p>Podemos eliminar el <span class="math inline">\(\cos\theta\)</span>
+de la integral mediante una pequeña transformación: proyectando el
+ángulo sólido sobre el disco alrededor del punto <span
+class="math inline">\(p\)</span> con normal <span
+class="math inline">\(\mathbf{n}\)</span>, obtenemos una expresión más
+sencilla: como <span class="math inline">\(d\omega^\bot = \lvert
 \cos\theta \rvert d\omega\)</span>, entonces</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -1915,12 +1894,14 @@ cuadrilátero <span class="math inline">\(dA\)</span>:</p>
     E(p, \mathbf{n}) &amp; = \int_{\Omega}{L_i(p, \omega) \lvert
 \cos\theta \rvert d\omega} = \\
                      &amp; = \int_{A}{L\cos\theta\
-\frac{\cos\theta_0}{r^2}dA}
+\frac{\cos\theta_o}{r^2}dA}
 \end{aligned}
 \]</span></p>
-<p>siendo <span class="math inline">\(\theta_0\)</span> la radiancia de
+<p>siendo <span class="math inline">\(\theta_o\)</span> la radiancia de
 salida de la superficie del cuadrilátero.</p>
-<h2 id="reflexión-de-luz">Reflexión de luz</h2>
+<h2
+id="dispersión-de-luz-las-familias-de-funciones-de-distribución-bidireccionales">Dispersión
+de luz: las familias de funciones de distribución bidireccionales</h2>
 <p>Cuando una fuente de luz emite fotones hacia una superficie
 impactando en ella, ocurren un par de sucesos: parte de la luz se
 refleja en ella, saliendo disparada hacia alguna dirección; mientras que
@@ -1936,7 +1917,7 @@ función de distribución de reflectancia bidireccional (BRDF)</h3>
 bidireccional</strong> (en inglés, <em>bidirectional reflectance
 distribution function</em>, BRDF) describe cómo la luz se refleja en una
 superficie opaca. Se encarga de informarnos cuánta radiancia sale en
-dirección <span class="math inline">\(\omega_0\)</span> debido a la
+dirección <span class="math inline">\(\omega_o\)</span> debido a la
 radiancia incidente desde la dirección <span
 class="math inline">\(\omega_i\)</span>, partiendo de un punto <span
 class="math inline">\(p\)</span> en una superficie con normal <span
@@ -1944,43 +1925,74 @@ class="math inline">\(\mathbf{n}\)</span>.</p>
 <blockquote>
 <p>TODO: esquema como el de pbr fig 5.18.</p>
 </blockquote>
-<p>Si consideramos la dirección <span
-class="math inline">\(\omega_i\)</span> como un cono diferencial de
-direcciones, la irradiancia diferencial en <span
+<p>Si consideramos <span class="math inline">\(\omega_i\)</span> como un
+cono diferencial de direcciones, la irradiancia diferencial en <span
 class="math inline">\(p\)</span> viene dada por</p>
 <p><span class="math display">\[
 dE(p, \omega_i) = L_i(p, \omega_i) \cos\omega_i\ d\omega_i
 \]</span></p>
 <p>Debido a esta irradiancia, una pequeña parte de radiancia saldrá en
-dirección <span class="math inline">\(\omega_0\)</span>, proporcional a
+dirección <span class="math inline">\(\omega_o\)</span>, proporcional a
 la irradiancia:</p>
 <p><span class="math display">\[
-dL_o(p, \omega_0) \propto dE(p, \omega_i)
+dL_o(p, \omega_o) \propto dE(p, \omega_i)
 \]</span></p>
 <p>Si lo ponemos en forma de cociente, sabremos exactamente cuál es la
 proporción de luz. A este cociente lo llamaremos <span
-class="math inline">\(f_r(p, \omega_0, \omega_i)\)</span>; la función de
+class="math inline">\(f_r(p, \omega_o, \omega_i)\)</span>; la función de
 distribución de reflectancia bidireccional:</p>
 <p><span class="math display">\[
-f_r(p, \omega_0, \omega_i) = \frac{dL_0(p, \omega_0)}{dE(p, \omega_i)} =
-\frac{dL_o(p, \omega_0)}{L_i(p \omega_i) \cos\theta_i\ d\omega_i}
+f_r(p, \omega_o, \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} =
+\frac{dL_o(p, \omega_o)}{L_i(p \omega_i) \cos\theta_i\ d\omega_i}
 \]</span></p>
-<p>Las BRDFs realistas tienen un par de propiedades importantes:</p>
+<p>Las BRDFs físicamente realistas tienen un par de propiedades
+importantes:</p>
 <ol type="1">
 <li><strong>Reciprocidad</strong>: para cualquier par de direcciones
 <span class="math inline">\(\omega_i\)</span>, <span
-class="math inline">\(\omega_0\)</span>, se tiene que $f_r(p, _i, _0) =
-$ <span class="math inline">\(f_r(p, \omega_0, \omega_i)\)</span>.</li>
-<li><strong>Conservación de la energía</strong>: La energía reflejaada
+class="math inline">\(\omega_o\)</span>, se tiene que <span
+class="math inline">\(f_r(p, \omega_i, \omega_o)=\ \)</span> <span
+class="math inline">\(f_r(p, \omega_o, \omega_i)\)</span>.</li>
+<li><strong>Conservación de la energía</strong>: La energía reflejada
 tiene que ser menor o igual que la incidente:</li>
 </ol>
 <p><span class="math display">\[
-\int_{H^2(\mathbf{n})}{f_r(p, \omega_0, \omega_i) \cos\theta_i\
+\int_{H^2(\mathbf{n})}{f_r(p, \omega_o, \omega_i) \cos\theta_i\
 d\omega_i} \leq 1
+\]</span></p>
+<h3
+id="la-función-de-distribución-de-transmitancia-bidireccional-btdf">La
+función de distribución de transmitancia bidireccional (BTDF)</h3>
+<p>Si la BRDF describe cómo se refleja la luz, la <em>bidirectional
+transmittance distribution function</em> (abreviada BTDF) nos informará
+sobre la transmitancia; es decir, cómo se comporta la luz cuando entra
+en un medio. Son caras de la misma moneda: la luz impacta en una
+superficie, y parte de ella, se reflejará, y otra parte se
+transmitirá.</p>
+<p>Denotaremos a la BTDF por</p>
+<p><span class="math display">\[
+f_t(p, \omega_o, \omega_i)
+\]</span></p>
+<p>Al contrario que en la BRDF, <span
+class="math inline">\(\omega_o\)</span> y <span
+class="math inline">\(\omega_i\)</span> se encuentran en hemisferios
+diferentes.</p>
+<h3 id="juntando-la-brdf-y-la-btdf">Juntando la BRDF y la BTDF</h3>
+<p>Convenientemente, podemos juntar las BRDF y las BTDF en una sola
+expresión, llamada <strong>la de distribución de dispersión
+bidireccional</strong> (<em>bidirectional scattering distribution
+function</em>, BSDF). A la BSDF la llamaremos</p>
+<p><span class="math display">\[
+f(p, \omega_o, \omega_i)
+\]</span></p>
+<p>Usando esta definición, podemos obtener</p>
+<p><span class="math display">\[
+dL_o(p, \omega_o) = f(p, \omega_o, \omega_i) L_i(p, \omega_i) \lvert
+\cos\theta_i \rvert d\omega_i
 \]</span></p>
 <blockquote>
 <p>NOTE: En wikipedia integran con respecto a <span
-class="math inline">\(\omega_0\)</span>, y no con la incidente. ¿Quizás
+class="math inline">\(\omega_o\)</span>, y no con la incidente. ¿Quizás
 afecte en algo?</p>
 </blockquote>
 <hr>
@@ -1992,6 +2004,7 @@ data-cites="studysession-2021">StudySession (<a
 href="#ref-studysession-2021" role="doc-biblioref">2021</a>)</span></p>
 <ul>
 <li>https://www.wikiwand.com/es/Funci%C3%B3n_de_distribuci%C3%B3n_de_reflectancia_bidireccional</li>
+<li>https://www.wikiwand.com/en/Transmittance</li>
 </ul>
 <h1 id="importance-sampling"><em>Importance sampling</em></h1>
 <hr>
@@ -2024,7 +2037,8 @@ construir la web y el pdf</p>
 <p>TODO - Hablar de cómo se gestiona el trabajo mediante issues,
 recapitulados todos con Projects.</p>
 </blockquote>
-<h1 id="anexo-cheat-sheet">Anexo: Cheat sheet</h1>
+<h1 id="anexo-glosario-de-términos-y-expresiones">Anexo: Glosario de
+términos y expresiones</h1>
 <blockquote>
 <p><em>It’s dangerous to go alone, take this.</em></p>
 </blockquote>
@@ -2032,11 +2046,69 @@ recapitulados todos con Projects.</p>
 pueden tomar es prácticamente imposible. Tampoco hay necesidad de ello,
 realmente. Por eso, aquí tienes recopilada una lista con las fórmulas y
 enlace a las secciones correspondientes.</p>
+<h2 id="notación">Notación</h2>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Concepto</strong></th>
+<th style="text-align: left;"><strong>Notación</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Puntos</strong></td>
+<td style="text-align: left;">Letras mayúsculas: <span
+class="math inline">\(P, Q, \dots\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Escalares</strong></td>
+<td style="text-align: left;">Letras minúsculas: <span
+class="math inline">\(a, b, c, k, \dots\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Vectores</strong></td>
+<td style="text-align: left;">Letras minúsculas en negrita: <span
+class="math inline">\(\mathbf{v, w, n}, \dots\)</span>. Si están
+normalizados, se les pone gorrito (por ejemplo, <span
+class="math inline">\(\hat{\mathbf{n}}\)</span>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Matrices</strong></td>
+<td style="text-align: left;">Letras mayúsculas en negrita: <span
+class="math inline">\(\mathbf{M}\)</span>. Por columnas.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Producto escalar</strong></td>
+<td style="text-align: left;"><span class="math inline">\(\mathbf{v}
+\cdot \mathbf{w}\)</span>. Si es el producto escalar de un vector
+consigo mismo, a veces pondremos <span
+class="math inline">\(\mathbf{v}^2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Producto vectorial</strong></td>
+<td style="text-align: left;"><span class="math inline">\(\mathbf{v}
+\times \mathbf{w}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a
+href="#repaso-de-probabilidad"><strong>Variables
+aleatorias</strong></a></td>
+<td style="text-align: left;"><span class="math inline">\(X, Y\)</span>.
+<span class="math inline">\(\xi\)</span> representa una variable
+aleatoria con distribución uniforme en <span class="math inline">\([0,
+1)\)</span>.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="radiometría-1"><a href="#radiometría">Radiometría</a></h2>
 <table>
 <colgroup>
-<col style="width: 20%" />
-<col style="width: 79%" />
+<col style="width: 18%" />
+<col style="width: 81%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -2049,48 +2121,54 @@ enlace a las secciones correspondientes.</p>
 <td style="text-align: left;"><a href="#ángulos-sólidos"><strong>Ángulo
 sólido</strong></a>, derivada [<a href="#eq:d_omega">4</a>]</td>
 <td style="text-align: left;"><span
-class="math inline">\(\begin{aligned} \omega &amp; = \frac{A}{r^2} \\
-d\omega &amp; = \sin\theta\ d\theta\ d\phi\end{aligned}\)</span></td>
+class="math inline">\(\begin{aligned} &amp;\omega = \frac{A}{r^2} \\
+&amp; d\omega = \sin\theta\ d\theta\ d\phi\end{aligned}\)</span></td>
 </tr>
 <tr class="even">
+<td style="text-align: left;"><strong>Hemisferio de direcciones
+alrededor de un vector</strong></td>
+<td style="text-align: left;"><span
+class="math inline">\(H^2(\mathbf{n})\)</span></td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"><a href="#unidades-básicas"><strong>Carga
 de energía</strong></a></td>
 <td style="text-align: left;"><span class="math inline">\(Q = hf =
 \frac{hc}{\lambda}\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><strong><a href="#potencia">Flujo
 radiante, potencia</a></strong></td>
 <td style="text-align: left;"><span class="math inline">\(\Phi =
 \frac{dQ}{dt}\)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><strong><a
 href="#irradiancia">Irradiancia, radiancia emitida</a></strong></td>
 <td style="text-align: left;"><span
-class="math inline">\(\begin{aligned}E &amp; = \frac{\Phi}{A} \\ E(p)
-&amp; = \frac{d\Phi}{dA} \\ E(p, \mathbf{n}) &amp; =
-\int_{\Omega}{L_i(p, \omega) \lvert cos\theta \rvert d\omega} \\ E(p,
-\mathbf{n}) &amp; = \int_{0}^{2\pi}\int_{0}^{\pi/2}{L_i(p, \theta, \phi)
-\cos\theta\ \sin\theta\ d\theta\ d\phi} \end{aligned}\)</span></td>
+class="math inline">\(\begin{aligned} &amp; E = \frac{\Phi}{A} \\ &amp;
+E(p) = \frac{d\Phi}{dA} \\ &amp; E(p, \mathbf{n}) = \int_{\Omega}{L_i(p,
+\omega) \lvert cos\theta \rvert d\omega} \\ &amp; E(p, \mathbf{n}) =
+\int_{0}^{2\pi}\int_{0}^{\pi/2}{L_i(p, \theta, \phi) \cos\theta\
+\sin\theta\ d\theta\ d\phi} \end{aligned}\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><strong><a
 href="#intensidad_radiante">Intensidad radiante</a></strong></td>
 <td style="text-align: left;"><span class="math inline">\(I =
 \frac{d\Phi}{d\omega}\)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><strong><a
 href="#radiancia">Radiancia</a></strong></td>
 <td style="text-align: left;"><span
-class="math inline">\(\begin{aligned} L(p, \omega) &amp; =
-\frac{dE_\omega(p)}{d\omega} \\ L &amp; = \frac{d\Phi}{d\omega dA^\bot}
-\\ L^+(p, \omega) &amp; = \lim_{t \to 0^+}{L(p + t\mathbf{n_p}, \omega)}
-\\ L^-(p, \omega) &amp; = \lim_{t \to 0^-}{L(p + t\mathbf{n_p}, \omega)}
+class="math inline">\(\begin{aligned} &amp; L(p, \omega) =
+\frac{dE_\omega(p)}{d\omega} \\ &amp; L = \frac{d\Phi}{d\omega dA^\bot}
+\\ &amp; L^+(p, \omega) = \lim_{t \to 0^+}{L(p + t\mathbf{n_p}, \omega)}
+\\ &amp; L^-(p, \omega) = \lim_{t \to 0^-}{L(p + t\mathbf{n_p}, \omega)}
 \end{aligned}\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><strong><a href="#radiancia">Radiancia
 incidente</a></strong></td>
 <td style="text-align: left;"><span
@@ -2099,7 +2177,7 @@ L^+(p, -\omega) &amp; \text{si } \omega \cdot \mathbf{n_p} &gt; 0 \\
 L^-(p, -\omega) &amp; \text{si } \omega \cdot \mathbf{n_p} &lt; 0
 \end{cases}\end{aligned}\)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><strong><a href="#radiancia">Radiancia de
 salida</a></strong></td>
 <td style="text-align: left;"><span
