@@ -1,5 +1,5 @@
 ---
-title: Raytracing (WIP name)
+title: Los fundamentos de Ray Tracing
 author: Andrés Millán Muñoz
 keywords: [TFG, Raytracing, Ray tracing, Monte Carlo, DGIIM]
 link-citations: true
