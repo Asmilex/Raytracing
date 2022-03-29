@@ -32,7 +32,7 @@ $$
 \Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt} (J/s)
 $$
 
-Su unidad es julios por segundo, comunmente denotado vatio (*watts*, $\text{W}$).
+Su unidad es julios por segundo, comunmente denotado vatio (*watts*, $\text{W}$). También se utiliza el lumen.
 Podemos encontrar la energía total en un periodo de tiempo $[t_0, t_1]$ integrando el flujo randiante:
 
 $$
@@ -46,6 +46,8 @@ La **irradiancia** o **radiancia emitida** es el fujo radiante que recibe una su
 $$
 E = \frac{\Phi}{A} (W/m^2)
 $$
+
+> TODO: dibujo como el de https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, p.28
 
 Ahora que tenemos la potencia emitida en un cierto área, nos surge una pregunta: *¿y en un cierto punto $p$?*. Tomando límites en la expresión anterior, encontramos la respuesta:
 
@@ -85,6 +87,10 @@ Si $2 \pi$ radianes corresponden a la cirfunferencia completa, para la esfera se
 
 Denotaremos a los ángulos sólidos por $\omega$. Como hemos visto, $\omega \in [0, 4\pi]$.
 
+De vez en cuando, usaremos $\omega$ **un vector dirección unitario en la esfera**.
+
+> TODO: y si meto un xkcd https://xkcd.com/1276/
+
 Usualmente emplearemos coordenadas esféricas cuando trabajemos con ellos, dado que resulta más cómodo.
 
 $$
@@ -101,7 +107,7 @@ A $\theta$ se le denomina ángulo polar, mientras que a $\phi$ se le llama acimu
 
 $dA_h$ debe tener dos lados $lado_1$ y $lado_2$. Podemos hallar $lado_1$ si lo trasladamos al eje $z$ de nuevo. Así, $lado_1 = r \sin d\theta$. De la misma manera, $lado_2 = r d\theta$.
 
-> TODO: foto que explique todo esto, porque si no, no hay quien se entere.
+> TODO: foto que explique todo esto, porque si no, no hay quien se entere. Quizás me sirva la de https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, p.16 siempre que adapte $\phi$.
 
 Poniendo estos valores en $d\omega$:
 
@@ -125,7 +131,7 @@ $$
 I = \frac{\Phi}{4\pi} \text{(W/sr)}
 $$
 
-La anterior definición mide cuántos fotones pasan por toda la esfera. ¿Qué ocurre si *cerramos* el ángulo, restringiéndonos así a un área muy pequeña de la esfera?
+Otra unidad de medida es el lumen por esterorradián, $\text{(lm/sr)}$. La anterior definición mide cuántos fotones pasan por toda la esfera. ¿Qué ocurre si *cerramos* el ángulo, restringiéndonos así a un área muy pequeña de la esfera?
 
 $$
 I = \lim_{\Delta\omega \to 0}{\frac{\Delta\Phi}{\Delta\omega}} = \frac{d\Phi}{d\omega}
@@ -147,10 +153,12 @@ $$
 
 siendo $E_\omega(p)$ la radiancia emitida a la superficie perpendicular a $\omega$.
 
+> TODO: foto como la de https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, página 10.
+
 Podemos dar otra expresión de la radiancia en términos del flujo:
 
 $$
-L = \frac{d\Phi}{d\omega dA^\bot}
+L(p, \omega) = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} = \frac{d^2\Phi(p, \omega)}{d\omega\ dA\ \cos\theta}
 $$
 
 donde $dA^\bot$ es el área proyectada por $dA$ en una hipotética superficie perpendicular a $\omega$:
@@ -188,6 +196,8 @@ $$
         \end{cases}
 \end{aligned}
 $$
+
+> TODO: https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, p.36
 
 Una propiedad a tener en cuenta es que, si cogemos un punto $p$ del espacio donde no existe ninguna superifcie, $L_o(p, \omega) = L_i(p, -\omega) = L(p, \omega)$
 
@@ -240,6 +250,8 @@ $$
 \end{aligned}
 $$
 
+> TODO: a lo mejor merece la pena hacer un ejemplo sobre los diferentes tipos de luz, como en https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf p.41? O a lo mejor un capítulo para hablar de luces en general.
+
 ## Integrando sobre área
 
 Una herramienta más que nos vendrá bien será la capacidad de convertir integrales sobre direcciones en integrales sobre área. Hemos hecho algo similar en las secciones anteriores, así que no perdemos nada por generalizarlo.
@@ -252,7 +264,7 @@ $$
 d\omega = \frac{dA\cos\theta}{r^2}
 $$
 
-> TODO: figura como la de pbr book 5.16
+> TODO: figura como la de pbr book 5.16.
 
 Esto nos permite, por ejemplo, expandir algunas expresiones como la de la irradiancia [{@eq:E_abs_cos}] si partimos de un cuadrilátero $dA$:
 
@@ -273,7 +285,7 @@ En este capítulo vamos a modelar la primera. Estudiaremos qué es lo que ocurre
 
 ### La función de distribución de reflectancia bidireccional (BRDF)
 
-La **función de distribución de reflectancia bidireccional** (en inglés, *bidirectional reflectance distribution function*, BRDF) describe cómo la luz se refleja en una superficie opaca. Se encarga de informarnos cuánta radiancia sale en dirección $\omega_o$ debido a la radiancia incidente desde la dirección $\omega_i$, partiendo de un punto $p$ en una superficie con normal $\mathbf{n}$.
+La **función de distribución de reflectancia bidireccional** (en inglés, *bidirectional reflectance distribution function*, BRDF) describe cómo la luz se refleja en una superficie opaca. Se encarga de informarnos sobre cuánta radiancia sale en dirección $\omega_o$ debido a la radiancia incidente desde la dirección $\omega_i$, partiendo de un punto $p$ en una superficie con normal $\mathbf{n}$.
 
 > TODO: esquema como el de pbr fig 5.18.
 
@@ -306,7 +318,7 @@ $$
 
 ### La función de distribución de transmitancia bidireccional (BTDF)
 
-Si la BRDF describe cómo se refleja la luz, la *bidirectional transmittance distribution function* (abreviada BTDF) nos informará sobre la transmitancia; es decir, cómo se comporta la luz cuando entra en un medio. Son caras de la misma moneda: la luz impacta en una superficie, y parte de ella, se reflejará, y otra parte se transmitirá.
+Si la BRDF describe cómo se refleja la luz, la *bidirectional transmittance distribution function* (abreviada BTDF) nos informará sobre la transmitancia; es decir, cómo se comporta la luz cuando entra en un medio. Son caras de la misma moneda: cuando la luz impacta en una superficie, y parte de ella, se reflejará, y otra parte se transmitirá.
 
 Denotaremos a la BTDF por
 
@@ -318,7 +330,7 @@ Al contrario que en la BRDF, $\omega_o$ y $\omega_i$ se encuentran en hemisferio
 
 ### Juntando la BRDF y la BTDF
 
-Convenientemente, podemos juntar las BRDF y las BTDF en una sola expresión, llamada **la de distribución de dispersión bidireccional** (*bidirectional scattering distribution function*, BSDF). A la BSDF la llamaremos
+Convenientemente, podemos unir la BRDF y la BTDF en una sola expresión, llamada **la función de distribución de dispersión bidireccional** (*bidirectional scattering distribution function*, BSDF). A la BSDF la llamaremos
 
 $$
 f(p, \omega_o, \omega_i)
@@ -330,7 +342,21 @@ $$
 dL_o(p, \omega_o) = f(p, \omega_o, \omega_i) L_i(p, \omega_i) \abs{\cos\theta_i} d\omega_i
 $$
 
-> NOTE: En wikipedia integran con respecto a $\omega_o$, y no con la incidente. ¿Quizás afecte en algo?
+
+> NOTE: En wikipedia integran con respecto a $\omega_o$, y no con la incidente. ¿Quizás afecte en algo? Además, el término $\cos\omega_i$ aparece en valor absoluto porque las normales no siempre están orientadas hacia fuera. ¿Podríamos omitirlo?
+
+Esto nos deja a punto de caramelo una nueva expresión de la randiancia en términos de la randiancia incidente en un punto $p$. Integrando la expresión anterior, obtenemos
+
+$$
+L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o, \omega_i)L_i(p, \omega_i)\abs{\cos\theta_i} d\omega_i}
+$$
+
+siendo $\mathbb{S}^2$ la esfera.
+
+Esta forma de expresar la radiancia es muy importante. Generalmente se le suele llamar la *ecuación de dispersión* (*scattering equation*, en inglés). Dado que es una integral muy importante, seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte Carlo nos vendrán de perlas!
+
+### Subsurface scattering
+
 
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores [como QuantumFracture](https://www.youtube.com/watch?v=DkcEAz09Buo) que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
@@ -341,3 +367,4 @@ $$
 
 - https://www.wikiwand.com/es/Funci%C3%B3n_de_distribuci%C3%B3n_de_reflectancia_bidireccional
 - https://www.wikiwand.com/en/Transmittance
+- https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf
