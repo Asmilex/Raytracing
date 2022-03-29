@@ -2,7 +2,7 @@
 
 > *It's dangerous to go alone, take this.*
 
-Tener en mente *todos* los conceptos y las expresiones que pueden tomar es prácticamente imposible. Tampoco hay necesidad de ello, realmente. Por eso, aquí tienes recopilada una lista con las fórmulas y enlace a las secciones correspondientes.
+Tener en mente *todos* los conceptos y sus expresiones que aparecen en un libro como este es prácticamente imposible. Tampoco hay necesidad de ello, realmente. ¡Vaya desperdicio de cabeza! Por eso, aquí tienes recopilada una lista con todos los elementos importantes y un enlace a sus secciones correspondientes.
 
 ## Notación
 
