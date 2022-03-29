@@ -58,7 +58,7 @@ Por ejemplo, tomando $O = (1, 3, 2), D = (1, 2, 1)$:
 - Para $t = 0$, $P(t) = (1, 3, 2)$.
 - Para $t = 1$, $P(t) = (1, 3, 2) + (1, 2, 1) = (2, 5, 3)$.
 
-Nos resultará especialmente útil limitar los valores que puede tomar $t$. Restringiremos los posibles puntos del dominio de forma que  $t \in [t_{min}, t_{max})$, con $t_{min} < t_{max}$. En general, nos interesará separarnos de las superficies un pequeño pero no despreciable $\varepsilon$ para evitar errores de redondeo.
+Nos resultará especialmente útil limitar los valores que puede tomar $t$. Restringiremos los posibles puntos del dominio de forma que $t \in [t_{min}, t_{max})$, con $t_{min} < t_{max}$. En general, nos interesará separarnos de las superficies un pequeño pero no despreciable $\varepsilon$ para evitar errores de redondeo.
 
 > TODO dibujo origen - epsilon == tmin -> rayo -> t_max = 1-epsilon
 
@@ -166,7 +166,7 @@ Es posible que el rayo no impacte en ningún punto. En ese caso, el sistema de e
 
 ### Intersecciones con esferas
 
-Estudiemos ahora cómo intersecan las esfera con nuestro rayo. Una esfera de centro $C$ y radio $r$ viene dada por aquellos puntos $P = (x, y, z)$ que cumplen
+Estudiemos ahora cómo intersecan una esfera con nuestro rayo. Una esfera de centro $C$ y radio $r$ viene dada por aquellos puntos $P = (x, y, z)$ que cumplen
 
 $$
 (P - C) \cdot (P - C) = r^2
@@ -245,7 +245,7 @@ $$
 
 Debemos destacar que existen dos grados de libertad debido a la restricción de que las coordenadas sumen 1.
 
-Una propiedad de estas coordenadas que nos puede resultar útil es que un punto $P$ está contenido en el triángulo si y sólo si $0 < \alpha, \beta, \gamma < 1$.
+Una propiedad de estas coordenadas que nos puede resultar útil es que un punto $P$ está contenido en el triángulo si y solo si $0 < \alpha, \beta, \gamma < 1$.
 
 Esta propiedad y la restricción de que sumen 1 nos da una cierta intuición de cómo funcionan. Podemos ver las coordenadas baricéntricas como la contribución de los vértices a un punto $P$. Por ejemplo, si $\alpha = 0$, eso significa que el punto viene dado por $\beta B + \gamma C$; es decir, una combinación lineal de $B$ y $C$. Se encuentra en la recta que generan.
 
@@ -284,9 +284,9 @@ cumpliendo [@eq:beta_gamma]. Podemos expandir la ecuación anterior en sus coord
 
 $$
 \begin{aligned}
-O_x + tD_x & = A_x + (B_x - A_x) \beta + (C_x - A_x) \gamma  \\
-O_y + tD_y & = A_y + (B_y - A_y) \beta + (C_y - A_y) \gamma  \\
-O_z + tD_z & = A_z + (B_z - A_z) \beta + (C_z - A_z) \gamma  \\
+O_x + tD_x & = A_x + (B_x - A_x) \beta + (C_x - A_x) \gamma \\
+O_y + tD_y & = A_y + (B_y - A_y) \beta + (C_y - A_y) \gamma \\
+O_z + tD_z & = A_z + (B_z - A_z) \beta + (C_z - A_z) \gamma \\
 \end{aligned}
 $$
 
@@ -294,8 +294,8 @@ Reordenamos:
 
 $$
 \begin{aligned}
-(A_x - B_x) \beta + (A_x - C_x) \gamma+ tD_x & = A_x - O_x   \\
-(A_y - B_y) \beta + (A_y - C_y) \gamma+ tD_y & = A_y - O_y   \\
+(A_x - B_x) \beta + (A_x - C_x) \gamma+ tD_x & = A_x - O_x \\
+(A_y - B_y) \beta + (A_y - C_y) \gamma+ tD_y & = A_y - O_y \\
 (A_z - B_z) \beta + (A_z - C_z) \gamma+ tD_z & = A_z - O_z
 \end{aligned}
 $$
