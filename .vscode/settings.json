@@ -9,6 +9,9 @@
         ],
     },
 
+    "ltex.enabled": true,
+    "ltex.language": "es",
+
     "files.associations": {
         "algorithm": "cpp",
         "atomic": "cpp",
@@ -57,13 +60,4 @@
         "xutility": "cpp",
         "array": "cpp"
     },
-    "spellright.language": [
-        "en",
-        "es"
-    ],
-    "spellright.documentTypes": [
-        "markdown",
-        "latex",
-        "plaintext"
-    ]
 }

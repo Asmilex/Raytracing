@@ -1,0 +1,3 @@
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qdonde \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q es la normal en el punto \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qsiendo \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q la superficie cubierta por el objeto.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qdonde \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q es la constante de Plank y \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q la velocidad de la luz.\\E$"}
