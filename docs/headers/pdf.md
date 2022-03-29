@@ -24,14 +24,11 @@ titlepage-background: "./img/ugrA4.pdf"
 
 toc: true
 numbersections: true
+colorlinks: true
 
 header-left: "\\textcolor{gray}{\\thetitle}"
 header-right: "\\textcolor{gray}{\\textit{\\leftmark}}"
 footer-left: "\\hspace{1cm}"
 footer-center: "\\thepage"
 footer-right: "\\hspace{1cm}"
-
-colorlinks: true
-linkcolor: RoyalBlue
-urlcolor: RoyalBlue
 ---
