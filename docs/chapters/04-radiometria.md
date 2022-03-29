@@ -292,7 +292,7 @@ La **función de distribución de reflectancia bidireccional** (en inglés, *bid
 Si consideramos $\omega_i$ como un cono diferencial de direcciones, la irradiancia diferencial en $p$ viene dada por
 
 $$
-dE(p, \omega_i) = L_i(p, \omega_i) \cos\omega_i\ d\omega_i
+dE(p, \omega_i) = L_i(p, \omega_i) \cos\theta_i\ d\omega_i
 $$
 
 Debido a esta irradiancia, una pequeña parte de radiancia saldrá en dirección $\omega_o$, proporcional a la irradiancia:
@@ -304,7 +304,7 @@ $$
 Si lo ponemos en forma de cociente, sabremos exactamente cuál es la proporción de luz. A este cociente lo llamaremos $f_r(p, \omega_o, \omega_i)$; la función de distribución de reflectancia bidireccional:
 
 $$
-f_r(p, \omega_o, \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p \omega_i) \cos\theta_i\ d\omega_i}
+f_r(p, \omega_o, \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i} \text{(1/sr)}
 $$
 
 Las BRDFs físicamente realistas tienen un par de propiedades importantes:
@@ -343,7 +343,7 @@ dL_o(p, \omega_o) = f(p, \omega_o, \omega_i) L_i(p, \omega_i) \abs{\cos\theta_i}
 $$
 
 
-> NOTE: En wikipedia integran con respecto a $\omega_o$, y no con la incidente. ¿Quizás afecte en algo? Además, el término $\cos\omega_i$ aparece en valor absoluto porque las normales no siempre están orientadas hacia fuera. ¿Podríamos omitirlo?
+> NOTE: En wikipedia integran con respecto a $\omega_o$, y no con la incidente. ¿Quizás afecte en algo? Además, el término $\cos\theta_i$ aparece en valor absoluto porque las normales no siempre están orientadas hacia fuera. ¿Podríamos omitirlo?
 
 Esto nos deja a punto de caramelo una nueva expresión de la randiancia en términos de la randiancia incidente en un punto $p$. Integrando la expresión anterior, obtenemos
 
@@ -355,8 +355,9 @@ siendo $\mathbb{S}^2$ la esfera.
 
 Esta forma de expresar la radiancia es muy importante. Generalmente se le suele llamar la *ecuación de dispersión* (*scattering equation*, en inglés). Dado que es una integral muy importante, seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte Carlo nos vendrán de perlas!
 
-### Subsurface scattering
+### *Subsurface scattering*
 
+> NOTE: quizás no merezca la pena hablar de esto. De momento, se queda para recordar su existencia. No es tampoco difícil, pero si no lo vamos a usar...
 
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores [como QuantumFracture](https://www.youtube.com/watch?v=DkcEAz09Buo) que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
