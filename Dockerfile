@@ -14,6 +14,8 @@ RUN cd /usr/share/fonts/opentype && \
     mkdir crimson-pro && \
     cd crimson-pro && \
     wget https://github.com/Fonthausen/CrimsonPro/raw/master/fonts/otf/CrimsonPro-Regular.otf && \
+    wget https://github.com/Fonthausen/CrimsonPro/raw/master/fonts/otf/CrimsonPro-Italic.otf && \
+    wget https://github.com/Fonthausen/CrimsonPro/raw/master/fonts/otf/CrimsonPro-Bold.otf
     # Julia Mono
     cd /usr/share/fonts/truetype && \
     mkdir julia-mono && \

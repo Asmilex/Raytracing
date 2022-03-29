@@ -5,6 +5,9 @@ book: true
 classoption: [oneside]
 
 mainfont: 'Crimson Pro Regular'
+mainfontoptions:
+ - BoldFont=CrimsonPro-Bold
+ - ItalicFont=CrimsonPro-Italic
 fontsize: 13pt
 
 monofont: JuliaMono
