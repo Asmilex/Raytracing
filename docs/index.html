@@ -274,6 +274,8 @@ href="#la-función-de-distribución-de-transmitancia-bidireccional-btdf">La
 función de distribución de transmitancia bidireccional (BTDF)</a></li>
 <li><a href="#juntando-la-brdf-y-la-btdf">Juntando la BRDF y la
 BTDF</a></li>
+<li><a href="#subsurface-scattering"><em>Subsurface
+scattering</em></a></li>
 </ul></li>
 </ul></li>
 <li><a href="#importance-sampling"><em>Importance sampling</em></a></li>
@@ -354,7 +356,7 @@ estos objetos tridimensionales se transforman en bidimensionales.
 Proyectando acordemente el entorno a una cámara, conseguimos colorear un
 pixel, de forma que represente lo que se ve en ese mundo.</p>
 <blockquote>
-<p>TODO insertar imagen rasterización. NOTE quizás debería extender un
+<p>TODO insertar imagen rasterización. NOTE ¿quizás debería extender un
 poco más esta parte? Parece que se queda algo coja la explicación.</p>
 </blockquote>
 <p>Aunque esta técnica es bastante eficiente en términos de computación
@@ -677,7 +679,7 @@ O_z + tD_z &amp; = h(u, v) \\
 sistema de ecuaciones no tendría solución. Otra posibilidad es que
 intersequen en varios puntos.</p>
 <h3 id="intersecciones-con-esferas">Intersecciones con esferas</h3>
-<p>Estudiemos ahora cómo intersecan las esfera con nuestro rayo. Una
+<p>Estudiemos ahora cómo intersecan una esfera con nuestro rayo. Una
 esfera de centro <span class="math inline">\(C\)</span> y radio <span
 class="math inline">\(r\)</span> viene dada por aquellos puntos <span
 class="math inline">\(P = (x, y, z)\)</span> que cumplen</p>
@@ -775,7 +777,7 @@ P = \alpha A + \beta B + \gamma C
 restricción de que las coordenadas sumen 1.</p>
 <p>Una propiedad de estas coordenadas que nos puede resultar útil es que
 un punto <span class="math inline">\(P\)</span> está contenido en el
-triángulo si y sólo si <span class="math inline">\(0 &lt; \alpha, \beta,
+triángulo si y solo si <span class="math inline">\(0 &lt; \alpha, \beta,
 \gamma &lt; 1\)</span>.</p>
 <p>Esta propiedad y la restricción de que sumen 1 nos da una cierta
 intuición de cómo funcionan. Podemos ver las coordenadas baricéntricas
@@ -820,16 +822,16 @@ P(t) = O + tD = A + (B - A) \beta + (C - A) \gamma
 ecuación anterior en sus coordenadas para obtener</p>
 <p><span class="math display">\[
 \begin{aligned}
-O_x + tD_x &amp; = A_x + (B_x - A_x) \beta + (C_x - A_x) \gamma  \\
-O_y + tD_y &amp; = A_y + (B_y - A_y) \beta + (C_y - A_y) \gamma  \\
-O_z + tD_z &amp; = A_z + (B_z - A_z) \beta + (C_z - A_z) \gamma  \\
+O_x + tD_x &amp; = A_x + (B_x - A_x) \beta + (C_x - A_x) \gamma \\
+O_y + tD_y &amp; = A_y + (B_y - A_y) \beta + (C_y - A_y) \gamma \\
+O_z + tD_z &amp; = A_z + (B_z - A_z) \beta + (C_z - A_z) \gamma \\
 \end{aligned}
 \]</span></p>
 <p>Reordenamos:</p>
 <p><span class="math display">\[
 \begin{aligned}
-(A_x - B_x) \beta + (A_x - C_x) \gamma+ tD_x &amp; = A_x - O_x   \\
-(A_y - B_y) \beta + (A_y - C_y) \gamma+ tD_y &amp; = A_y - O_y   \\
+(A_x - B_x) \beta + (A_x - C_x) \gamma+ tD_x &amp; = A_x - O_x \\
+(A_y - B_y) \beta + (A_y - C_y) \gamma+ tD_y &amp; = A_y - O_y \\
 (A_z - B_z) \beta + (A_z - C_z) \gamma+ tD_z &amp; = A_z - O_z
 \end{aligned}
 \]</span></p>
@@ -969,7 +971,7 @@ muestral</strong>. Cada pareja no está asociada a un único valor de
 <span class="math inline">\(X\)</span>. Por ejemplo, <span
 class="math inline">\((1, 2)\)</span> suma lo mismo que <span
 class="math inline">\((2, 1)\)</span>. Esto nos lleva a preguntarnos…
-¿cuál es la probabilidad de que <span class="math inline">\(X\)</span>
+¿Cuál es la probabilidad de que <span class="math inline">\(X\)</span>
 adquiera un cierto valor?</p>
 <p>La <strong>función masa de probabilidad</strong> nos permite conocer
 la probabilidad de que <span class="math inline">\(X\)</span> tome un
@@ -1105,7 +1107,7 @@ valores que puede tomar la v.a., y <span
 class="math inline">\(p_i\)</span> la probabilidad asociada a cada uno
 de ellos; es decir, <span class="math inline">\(p_i = P[X =
 x_i]\)</span></p>
-<p>Para una variable aleatoria continuas real, la esperanza viene dada
+<p>Para una variable aleatoria continua real, la esperanza viene dada
 por</p>
 <p><span class="math display">\[
 E[X] = \int_{-\infty}^{\infty}{x f_X(x) dx}
@@ -1317,9 +1319,9 @@ función <span class="math inline">\(f: \mathbb{R}^3 \rightarrow
 <p><span class="math display">\[
 \int_{x_0}^{x_1} \int_{y_0}^{y_1} \int_{z_0}^{z_1}{f(x, y, z)dx dy dz}
 \]</span></p>
-<p>mediante una una variable aleatoria <span class="math inline">\(X
-\sim U(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]})\)</span>
-con función de densidad <span class="math inline">\(p(x, y, z) =
+<p>mediante una variable aleatoria <span class="math inline">\(X \sim
+U(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]})\)</span> con
+función de densidad <span class="math inline">\(p(x, y, z) =
 \frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}\)</span>,
 tomamos el estimador</p>
 <p><span class="math display">\[
@@ -1374,7 +1376,7 @@ class="math inline">\(F_X\)</span> es la inversa de <span
 class="math inline">\(T\)</span>.</p>
 <blockquote>
 <p>TODO: dibujo similar a <a
-href="https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf">este
+href="https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf">este:
 p.52</a></p>
 </blockquote>
 <p>Como ejemplo, vamos a muestrear la función <span
@@ -1520,7 +1522,7 @@ dentro denotaremos sus unidades de medida.</p>
 <p>Antes de comenzar a trabajar, necesitamos conocer <em>qué
 entendemos</em> por luz. Aunque hay muchas formas de trabajar con ella
 (a fin de cuentas, todavía seguimos discutiendo sobre <em>qué es</em>
-exactamente la luz<a href="#fn2" class="footnote-ref" id="fnref2"
+exactamente la luz <a href="#fn2" class="footnote-ref" id="fnref2"
 role="doc-noteref"><sup>2</sup></a>), nosotros nos quedaremos con
 algunas pinceladas de la cuántica. Nos será suficiente quedarnos con la
 concepción de fotón. Una fuente de iluminación emite una serie de
@@ -1547,10 +1549,10 @@ class="math inline">\(Q\)</span>:</p>
 Q = hf = \frac{hc}{\lambda} (\text{J})
 \]</span></p>
 <p>donde <span class="math inline">\(h = 6.62607004 \times 10^{-34}
-\text{J} \cdot \text{s}\)</span> es la constante de Planck y <span
+\text{J} \cdot \text{s}\)</span> es la constante de Plank y <span
 class="math inline">\(c = 299 792 458 \text{m/s}\)</span> la velocidad
 de la luz.</p>
-<p>En realiad, <strong>todas estas cantidades deberían tener un
+<p>En realidad, <strong>todas estas cantidades deberían tener un
 subíndice <span class="math inline">\(\lambda\)</span></strong>, puesto
 que dependen de la longitud de onda. La energía de un fotón <span
 class="math inline">\(Q\)</span>, por ejemplo, debería denotarse <span
@@ -1570,22 +1572,27 @@ instante:</p>
 \Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt}
 (J/s)
 \]</span></p>
-<p>Su unidad es julios por segundo, comunmente denotado vatio
-(<em>watts</em>, <span class="math inline">\(\text{W}\)</span>). Podemos
-encontrar la energía total en un periodo de tiempo <span
-class="math inline">\([t_0, t_1]\)</span> integrando el flujo
-randiante:</p>
+<p>Su unidad es julios por segundo, comúnmente denotado vatio
+(<em>watts</em>, <span class="math inline">\(\text{W}\)</span>). También
+se utiliza el lumen. Podemos encontrar la energía total en un periodo de
+tiempo <span class="math inline">\([t_0, t_1]\)</span> integrando el
+flujo radiante:</p>
 <p><span class="math display">\[
 Q = \int_{t_0}^{t_1}{\Phi(t)dt}
 \]</span></p>
 <h3 id="irradiancia">Irradiancia</h3>
 <p>La <strong>irradiancia</strong> o <strong>radiancia emitida</strong>
-es el fujo radiante que recibe una superficie. Dada un área <span
+es el flujo radiante que recibe una superficie. Dada un área <span
 class="math inline">\(A\)</span>, se define como</p>
 <p><span class="math display">\[
 E = \frac{\Phi}{A} (W/m^2)
 \]</span></p>
-<p>Ahora que tenemos la potencia emitida en un cierto área, nos surge
+<blockquote>
+<p>TODO: dibujo como el de
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
+p.28</p>
+</blockquote>
+<p>Ahora que tenemos la potencia emitida en una cierta área, nos surge
 una pregunta: <em>¿y en un cierto punto <span
 class="math inline">\(p\)</span>?</em>. Tomando límites en la expresión
 anterior, encontramos la respuesta:</p>
@@ -1609,13 +1616,13 @@ sólidos</strong>.</p>
 <p>Un ángulo sólido es la extensión del concepto de <strong>ángulo
 planar</strong> (en dos dimensiones). Para ilustrar el sentido de estos
 ángulos, imaginemos que tenemos un cierto objeto en dos dimensiones
-delante nuestra. Dependiendo de cómo de lejos se encuentre, nos parecerá
-más grande o más pequeño. Si trazamos un par de líneas desde nuestra
-posición a las partes más alejadas de este objeto, y las cortamos con
-una circunferencia de radio <span class="math inline">\(r\)</span>,
-obtendremos un par de puntos en dicha circunferencia. Al arco que
-encapsulan ambos puntos le corresponde un cierto ángulo: el ángulo
-planar.</p>
+delante de nosotros. Dependiendo de cómo de lejos se encuentre, nos
+parecerá más grande o más pequeño. Si trazamos un par de líneas desde
+nuestra posición a las partes más alejadas de este objeto, y las
+cortamos con una circunferencia de radio <span
+class="math inline">\(r\)</span>, obtendremos un par de puntos en dicha
+circunferencia. Al arco que encapsulan ambos puntos le corresponde un
+cierto ángulo: el ángulo planar.</p>
 <figure>
 <img src="./img/Ángulo%20planar.png"
 alt="La idea intuitiva de un ángulo planar" />
@@ -1632,20 +1639,26 @@ class="math inline">\(r\)</span>. Se define como</p>
 \omega = \frac{A}{r^2} \text{(sr)}
 \]</span></p>
 <p>siendo <span class="math inline">\(A\)</span> la superficie cubierta
-por el objeto. Por tanto, un esterorradián corresponde una superficie
-con área <span class="math inline">\(r^2\)</span>: <span
+por el objeto. Por tanto, un esteorradián corresponde una superficie con
+área <span class="math inline">\(r^2\)</span>: <span
 class="math inline">\(1 \text{sr} = \frac{r^2}{r^2}\)</span>.</p>
 <blockquote>
 <p>TODO: foto de un ángulo sólido.</p>
 </blockquote>
 <p>Si <span class="math inline">\(2 \pi\)</span> radianes corresponden a
-la cirfunferencia completa, para la esfera se tiene que <span
-class="math inline">\(4 \pi\)</span> esterorradianes cubren toda la
-superficie de ésta. Además, <span class="math inline">\(2\pi\)</span> sr
+la circunferencia completa, para la esfera se tiene que <span
+class="math inline">\(4 \pi\)</span> esteorradianes cubren toda la
+superficie de esta. Además, <span class="math inline">\(2\pi\)</span> sr
 cubren un hemisferio.</p>
 <p>Denotaremos a los ángulos sólidos por <span
 class="math inline">\(\omega\)</span>. Como hemos visto, <span
 class="math inline">\(\omega \in [0, 4\pi]\)</span>.</p>
+<p>De vez en cuando, usaremos <span
+class="math inline">\(\omega\)</span> <strong>un vector dirección
+unitario en la esfera</strong>.</p>
+<blockquote>
+<p>TODO: y si meto un xkcd https://xkcd.com/1276/</p>
+</blockquote>
 <p>Usualmente emplearemos coordenadas esféricas cuando trabajemos con
 ellos, dado que resulta más cómodo.</p>
 <p><span class="math display">\[
@@ -1659,7 +1672,7 @@ ellos, dado que resulta más cómodo.</p>
 \]</span></p>
 <p>A <span class="math inline">\(\theta\)</span> se le denomina ángulo
 polar, mientras que a <span class="math inline">\(\phi\)</span> se le
-llama acimut. Imaginémosnos un punto en la esfera de radio <span
+llama acimut. Imaginémonos un punto en la esfera de radio <span
 class="math inline">\(r\)</span> ubicado en una posición <span
 class="math inline">\((r, \theta, \phi)\)</span>. Queremos calcular un
 área chiquitita <span class="math inline">\(dA_h\)</span>, de forma que
@@ -1679,7 +1692,9 @@ class="math inline">\(lado_1 = r \sin d\theta\)</span>. De la misma
 manera, <span class="math inline">\(lado_2 = r d\theta\)</span>.</p>
 <blockquote>
 <p>TODO: foto que explique todo esto, porque si no, no hay quien se
-entere.</p>
+entere. Quizás me sirva la de
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
+p.16 siempre que adapte <span class="math inline">\(\phi\)</span>.</p>
 </blockquote>
 <p>Poniendo estos valores en <span
 class="math inline">\(d\omega\)</span>:</p>
@@ -1704,9 +1719,11 @@ energía pasa por la esfera. Podríamos entonces definir</p>
 <p><span class="math display">\[
 I = \frac{\Phi}{4\pi} \text{(W/sr)}
 \]</span></p>
-<p>La anterior definición mide cuántos fotones pasan por toda la esfera.
-¿Qué ocurre si <em>cerramos</em> el ángulo, restringiéndonos así a un
-área muy pequeña de la esfera?</p>
+<p>Otra unidad de medida es el lumen por esterorradián, <span
+class="math inline">\(\text{(lm/sr)}\)</span>. La anterior definición
+mide cuántos fotones pasan por toda la esfera. ¿Qué ocurre si
+<em>cerramos</em> el ángulo, restringiéndonos así a un área muy pequeña
+de la esfera?</p>
 <p><span class="math display">\[
 I = \lim_{\Delta\omega \to 0}{\frac{\Delta\Phi}{\Delta\omega}} =
 \frac{d\Phi}{d\omega}
@@ -1729,9 +1746,15 @@ E_\omega(p)}{\Delta\omega}} = \frac{dE_\omega(p)}{d\omega}
 <p>siendo <span class="math inline">\(E_\omega(p)\)</span> la radiancia
 emitida a la superficie perpendicular a <span
 class="math inline">\(\omega\)</span>.</p>
+<blockquote>
+<p>TODO: foto como la de
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
+página 10.</p>
+</blockquote>
 <p>Podemos dar otra expresión de la radiancia en términos del flujo:</p>
 <p><span class="math display">\[
-L = \frac{d\Phi}{d\omega dA^\bot}
+L(p, \omega) = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} =
+\frac{d^2\Phi(p, \omega)}{d\omega\ dA\ \cos\theta}
 \]</span></p>
 <p>donde <span class="math inline">\(dA^\bot\)</span> es el área
 proyectada por <span class="math inline">\(dA\)</span> en una hipotética
@@ -1787,6 +1810,11 @@ class="math inline">\(L_o\)</span> como</p>
         \end{cases}
 \end{aligned}
 \]</span></p>
+<blockquote>
+<p>TODO:
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
+p.36</p>
+</blockquote>
 <p>Una propiedad a tener en cuenta es que, si cogemos un punto <span
 class="math inline">\(p\)</span> del espacio donde no existe ninguna
 superifcie, <span class="math inline">\(L_o(p, \omega) = L_i(p, -\omega)
@@ -1805,7 +1833,7 @@ y cómo simplificar dichas integrales.</p>
 expresión de la irradiancia y el flujo</h3>
 <p>Como dijimos al final de <a href="#irradiancia">la sección de la
 irradiancia</a>, esta medida no tiene en cuenta las direcciones desde
-las que llegaba la luz. A diferencia de ésta, la radiancia sí que las
+las que llegaba la luz. A diferencia de esta, la radiancia sí que las
 utiliza. Dado que una de las ventajas de la radiancia es que nos permite
 obtener el resto de medidas radiométricas, ¿por qué no desarrollamos una
 nueva expresión de la irradiancia?</p>
@@ -1862,6 +1890,12 @@ hemisferio que encapsula la normal, conseguimos:</p>
 d\omega^\bot dA}
 \end{aligned}
 \]</span></p>
+<blockquote>
+<p>TODO: a lo mejor merece la pena hacer un ejemplo sobre los diferentes
+tipos de luz, como en
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf
+p.41? O a lo mejor un capítulo para hablar de luces en general.</p>
+</blockquote>
 <h2 id="integrando-sobre-área">Integrando sobre área</h2>
 <p>Una herramienta más que nos vendrá bien será la capacidad de
 convertir integrales sobre direcciones en integrales sobre área. Hemos
@@ -1884,7 +1918,7 @@ de un área es</p>
 d\omega = \frac{dA\cos\theta}{r^2}
 \]</span></p>
 <blockquote>
-<p>TODO: figura como la de pbr book 5.16</p>
+<p>TODO: figura como la de pbr book 5.16.</p>
 </blockquote>
 <p>Esto nos permite, por ejemplo, expandir algunas expresiones como la
 de la irradiancia [<a href="#eq:E_abs_cos">6</a>] si partimos de un
@@ -1916,8 +1950,8 @@ función de distribución de reflectancia bidireccional (BRDF)</h3>
 <p>La <strong>función de distribución de reflectancia
 bidireccional</strong> (en inglés, <em>bidirectional reflectance
 distribution function</em>, BRDF) describe cómo la luz se refleja en una
-superficie opaca. Se encarga de informarnos cuánta radiancia sale en
-dirección <span class="math inline">\(\omega_o\)</span> debido a la
+superficie opaca. Se encarga de informarnos sobre cuánta radiancia sale
+en dirección <span class="math inline">\(\omega_o\)</span> debido a la
 radiancia incidente desde la dirección <span
 class="math inline">\(\omega_i\)</span>, partiendo de un punto <span
 class="math inline">\(p\)</span> en una superficie con normal <span
@@ -1929,7 +1963,7 @@ class="math inline">\(\mathbf{n}\)</span>.</p>
 cono diferencial de direcciones, la irradiancia diferencial en <span
 class="math inline">\(p\)</span> viene dada por</p>
 <p><span class="math display">\[
-dE(p, \omega_i) = L_i(p, \omega_i) \cos\omega_i\ d\omega_i
+dE(p, \omega_i) = L_i(p, \omega_i) \cos\theta_i\ d\omega_i
 \]</span></p>
 <p>Debido a esta irradiancia, una pequeña parte de radiancia saldrá en
 dirección <span class="math inline">\(\omega_o\)</span>, proporcional a
@@ -1943,7 +1977,8 @@ class="math inline">\(f_r(p, \omega_o, \omega_i)\)</span>; la función de
 distribución de reflectancia bidireccional:</p>
 <p><span class="math display">\[
 f_r(p, \omega_o, \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} =
-\frac{dL_o(p, \omega_o)}{L_i(p \omega_i) \cos\theta_i\ d\omega_i}
+\frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
+\text{(1/sr)}
 \]</span></p>
 <p>Las BRDFs físicamente realistas tienen un par de propiedades
 importantes:</p>
@@ -1966,7 +2001,7 @@ función de distribución de transmitancia bidireccional (BTDF)</h3>
 <p>Si la BRDF describe cómo se refleja la luz, la <em>bidirectional
 transmittance distribution function</em> (abreviada BTDF) nos informará
 sobre la transmitancia; es decir, cómo se comporta la luz cuando entra
-en un medio. Son caras de la misma moneda: la luz impacta en una
+en un medio. Son caras de la misma moneda: cuando la luz impacta en una
 superficie, y parte de ella, se reflejará, y otra parte se
 transmitirá.</p>
 <p>Denotaremos a la BTDF por</p>
@@ -1978,8 +2013,8 @@ class="math inline">\(\omega_o\)</span> y <span
 class="math inline">\(\omega_i\)</span> se encuentran en hemisferios
 diferentes.</p>
 <h3 id="juntando-la-brdf-y-la-btdf">Juntando la BRDF y la BTDF</h3>
-<p>Convenientemente, podemos juntar las BRDF y las BTDF en una sola
-expresión, llamada <strong>la de distribución de dispersión
+<p>Convenientemente, podemos unir la BRDF y la BTDF en una sola
+expresión, llamada <strong>la función de distribución de dispersión
 bidireccional</strong> (<em>bidirectional scattering distribution
 function</em>, BSDF). A la BSDF la llamaremos</p>
 <p><span class="math display">\[
@@ -1993,7 +2028,31 @@ dL_o(p, \omega_o) = f(p, \omega_o, \omega_i) L_i(p, \omega_i) \lvert
 <blockquote>
 <p>NOTE: En wikipedia integran con respecto a <span
 class="math inline">\(\omega_o\)</span>, y no con la incidente. ¿Quizás
-afecte en algo?</p>
+afecte en algo? Además, el término <span
+class="math inline">\(\cos\theta_i\)</span> aparece en valor absoluto
+porque las normales no siempre están orientadas hacia fuera. ¿Podríamos
+omitirlo?</p>
+</blockquote>
+<p>Esto nos deja a punto de caramelo una nueva expresión de la
+randiancia en términos de la randiancia incidente en un punto <span
+class="math inline">\(p\)</span>. Integrando la expresión anterior,
+obtenemos</p>
+<p><span class="math display">\[
+L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o, \omega_i)L_i(p,
+\omega_i)\lvert \cos\theta_i \rvert d\omega_i}
+\]</span></p>
+<p>siendo <span class="math inline">\(\mathbb{S}^2\)</span> la
+esfera.</p>
+<p>Esta forma de expresar la radiancia es muy importante. Generalmente
+se le suele llamar la <em>ecuación de dispersión</em> (<em>scattering
+equation</em>, en inglés). Dado que es una integral muy importante,
+seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte
+Carlo nos vendrán de perlas!</p>
+<h3 id="subsurface-scattering"><em>Subsurface scattering</em></h3>
+<blockquote>
+<p>NOTE: quizás no merezca la pena hablar de esto. De momento, se queda
+para recordar su existencia. No es tampoco difícil, pero si no lo vamos
+a usar…</p>
 </blockquote>
 <hr>
 <p><span class="citation"
@@ -2005,6 +2064,7 @@ href="#ref-studysession-2021" role="doc-biblioref">2021</a>)</span></p>
 <ul>
 <li>https://www.wikiwand.com/es/Funci%C3%B3n_de_distribuci%C3%B3n_de_reflectancia_bidireccional</li>
 <li>https://www.wikiwand.com/en/Transmittance</li>
+<li>https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf</li>
 </ul>
 <h1 id="importance-sampling"><em>Importance sampling</em></h1>
 <hr>
