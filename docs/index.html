@@ -1586,20 +1586,23 @@ Q = \int_{t_0}^{t_1}{\Phi(t)dt}
 es el flujo radiante que recibe una superficie. Dada un área <span
 class="math inline">\(A\)</span>, se define como</p>
 <p><span class="math display">\[
-E = \frac{\Phi}{A} (W/m^2)
+E = \frac{\Phi}{A} (\text{W/m}^2)
 \]</span></p>
-<blockquote>
-<p>TODO: dibujo como el de
-https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
-p.28</p>
-</blockquote>
+<figure>
+<img src="./img/Irradiancia.png"
+alt="La irradiancia es la potencia por metro cuadrado incidente en una superficie. Es proporcional al coseno del ángulo entre la dirección de la luz y la normal a la superficie." />
+<figcaption aria-hidden="true">La irradiancia es la potencia por metro
+cuadrado incidente en una superficie. Es proporcional al coseno del
+ángulo entre la dirección de la luz y la normal a la
+superficie.</figcaption>
+</figure>
 <p>Ahora que tenemos la potencia emitida en una cierta área, nos surge
 una pregunta: <em>¿y en un cierto punto <span
 class="math inline">\(p\)</span>?</em>. Tomando límites en la expresión
 anterior, encontramos la respuesta:</p>
 <p><span class="math display">\[
 E(p) = \lim_{\Delta A \to 0}{\frac{\Delta \Phi}{\Delta A}} =
-\frac{d\Phi}{dA} (W/m^2)
+\frac{d\Phi}{dA} (\text{W/m}^2)
 \]</span></p>
 <p>De la misma manera que con la potencia, integrando <span
 class="math inline">\(E(p)\)</span> podemos obtener el flujo
@@ -1612,18 +1615,23 @@ sobre las direcciones</em> desde las que ha llegado la luz.</p>
 <h3 id="ángulos-sólidos">Ángulos sólidos</h3>
 <p>Con estas tres unidades básicas, nos surge una pregunta muy natural:
 <em>¿cómo mido cuánta luz llega a una superficie?</em></p>
-<p>Para responder a esta pregunta, usaremos los <strong>ángulos
-sólidos</strong>.</p>
-<p>Un ángulo sólido es la extensión del concepto de <strong>ángulo
-planar</strong> (en dos dimensiones). Para ilustrar el sentido de estos
-ángulos, imaginemos que tenemos un cierto objeto en dos dimensiones
-delante de nosotros. Dependiendo de cómo de lejos se encuentre, nos
-parecerá más grande o más pequeño. Si trazamos un par de líneas desde
-nuestra posición a las partes más alejadas de este objeto, y las
-cortamos con una circunferencia de radio <span
-class="math inline">\(r\)</span>, obtendremos un par de puntos en dicha
-circunferencia. Al arco que encapsulan ambos puntos le corresponde un
-cierto ángulo: el ángulo planar.</p>
+<p>Para responder a esta pregunta, necesitaremos los <strong>ángulos
+sólidos</strong>. Son la extensión de los ángulos de los <strong>ángulos
+planares</strong>, en dos dimensiones.</p>
+<p>Ilustremos el sentido de estos ángulos: imaginemos que tenemos un
+cierto objeto en dos dimensiones delante de nosotros, a una distancia
+desconocida. ¿Sabríamos cuál es su tamaño, solo con esta información? Es
+más, si entrara otro objeto en la escena, ¿podríamos distinguir cuál de
+ellos es más grande?</p>
+<p>Parece difícil responder a estas preguntas. Sin embargo, sí que
+podemos determinar <em>cómo de grandes nos parecen</em> desde nuestro
+punto de vista. Para ello, describimos una circunferencia de radio <span
+class="math inline">\(r\)</span> alrededor nuestra. Si trazamos un par
+de líneas desde nuestra posición a las partes más alejadas de este
+objeto, y las cortamos con nuestra circunferencia, obtendremos un par de
+puntos inscritos en ella. Pues bien, al arco que encapsulan dichos
+puntos le vamos a hacer corresponder un cierto ángulo: el ángulo
+planar.</p>
 <figure>
 <img src="./img/Ángulo%20planar.png"
 alt="La idea intuitiva de un ángulo planar" />
@@ -1631,35 +1639,43 @@ alt="La idea intuitiva de un ángulo planar" />
 planar</figcaption>
 </figure>
 <p>Llevando esta idea a las tres dimensiones es como conseguimos el
-concepto de <strong>ángulo sólido</strong>. Su unidad de medida es el
-estereorradián (<span class="math inline">\(\text{sr}\)</span>).
-Corresponde a la superficie generada por las rectas proyectantes que van
-desde un objeto hasta un punto, cortando con una esfera de radio <span
-class="math inline">\(r\)</span>. Se define como</p>
+concepto de <strong>ángulo sólido</strong>. Si en dos dimensiones
+teníamos una circunferencia, aquí tendremos una esfera. Cuando generemos
+las rectas proyectantes hacia el volumen, a diferencia de los ángulos
+planares, se inscribirá un área en la esfera. La razón entre dicha área
+<span class="math inline">\(A\)</span> y el cuadrado del radio <span
+class="math inline">\(r\)</span> nos dará un ángulo sólido:</p>
 <p><span class="math display">\[
 \omega = \frac{A}{r^2} \text{(sr)}
 \]</span></p>
-<p>siendo <span class="math inline">\(A\)</span> la superficie cubierta
-por el objeto. Por tanto, un esteorradián corresponde una superficie con
-área <span class="math inline">\(r^2\)</span>: <span
-class="math inline">\(1 \text{sr} = \frac{r^2}{r^2}\)</span>.</p>
-<blockquote>
-<p>TODO: foto de un ángulo sólido.</p>
-</blockquote>
-<p>Si <span class="math inline">\(2 \pi\)</span> radianes corresponden a
-la circunferencia completa, para la esfera se tiene que <span
+<figure>
+<img src="./img/Ángulo%20sólido.png"
+alt="Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio" />
+<figcaption aria-hidden="true">Un ángulo sólido es la razón entre el
+área proyectada y el cuadrado del radio</figcaption>
+</figure>
+<p>Los denotaremos por <span class="math inline">\(\omega\)</span>. En
+física se suele usar <span class="math inline">\(\Omega\)</span>, pero
+aquí optaremos por la minúscula. Su unidad de medida es el
+estereorradián (<span class="math inline">\(\text{sr}\)</span>). Se
+tiene que <span class="math inline">\(\omega \in [0, 4\pi]\)</span>. Si
+<span class="math inline">\(2 \pi\)</span> radianes corresponden a la
+circunferencia completa, para la esfera se tiene que <span
 class="math inline">\(4 \pi\)</span> esteorradianes cubren toda la
-superficie de esta. Además, <span class="math inline">\(2\pi\)</span> sr
-cubren un hemisferio.</p>
-<p>Denotaremos a los ángulos sólidos por <span
-class="math inline">\(\omega\)</span>. Como hemos visto, <span
-class="math inline">\(\omega \in [0, 4\pi]\)</span>.</p>
+superficie de esta. Se tiene también que <span
+class="math inline">\(2\pi \text{sr}\)</span> cubren un hemisferio.
+Además, un esteorradián corresponde a una superficie con área <span
+class="math inline">\(r^2\)</span>: <span class="math inline">\(1
+\text{sr} = \frac{r^2}{r^2}\)</span>.</p>
 <p>De vez en cuando, usaremos <span
 class="math inline">\(\omega\)</span> <strong>un vector dirección
 unitario en la esfera</strong>.</p>
-<blockquote>
-<p>TODO: y si meto un xkcd https://xkcd.com/1276/</p>
-</blockquote>
+<figure>
+<img src="./img/xkcd_1276.png"
+alt="Como de costumbre, hay un xkcd relevante. (Fuente)" />
+<figcaption aria-hidden="true">Como de costumbre, hay un xkcd relevante.
+<a href="https://xkcd.com/1276/">(Fuente)</a></figcaption>
+</figure>
 <p>Usualmente emplearemos coordenadas esféricas cuando trabajemos con
 ellos, dado que resulta más cómodo.</p>
 <p><span class="math display">\[
@@ -1932,8 +1948,8 @@ cuadrilátero <span class="math inline">\(dA\)</span>:</p>
 \frac{\cos\theta_o}{r^2}dA}
 \end{aligned}
 \]</span></p>
-<p>siendo <span class="math inline">\(\theta_o\)</span> la radiancia de
-salida de la superficie del cuadrilátero.</p>
+<p>siendo <span class="math inline">\(\theta_o\)</span> el ángulo de la
+radiancia de salida de la superficie del cuadrilátero.</p>
 <h2
 id="dispersión-de-luz-las-familias-de-funciones-de-distribución-bidireccionales">Dispersión
 de luz: las familias de funciones de distribución bidireccionales</h2>
@@ -2169,8 +2185,8 @@ aleatoria con distribución uniforme en <span class="math inline">\([0,
 <h2 id="radiometría-1"><a href="#radiometría">Radiometría</a></h2>
 <table>
 <colgroup>
-<col style="width: 18%" />
-<col style="width: 81%" />
+<col style="width: 15%" />
+<col style="width: 84%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -2201,8 +2217,10 @@ de energía</strong></a></td>
 <tr class="even">
 <td style="text-align: left;"><strong><a href="#potencia">Flujo
 radiante, potencia</a></strong></td>
-<td style="text-align: left;"><span class="math inline">\(\Phi =
-\frac{dQ}{dt}\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\begin{aligned}&amp; \Phi = \frac{dQ}{dt} \\ &amp;
+\Phi = \int_{A}\int_{H^2(\mathbf{n})}{L_o(p, \omega) d\omega^\bot
+dA}\end{aligned}\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong><a
@@ -2212,23 +2230,27 @@ class="math inline">\(\begin{aligned} &amp; E = \frac{\Phi}{A} \\ &amp;
 E(p) = \frac{d\Phi}{dA} \\ &amp; E(p, \mathbf{n}) = \int_{\Omega}{L_i(p,
 \omega) \lvert cos\theta \rvert d\omega} \\ &amp; E(p, \mathbf{n}) =
 \int_{0}^{2\pi}\int_{0}^{\pi/2}{L_i(p, \theta, \phi) \cos\theta\
-\sin\theta\ d\theta\ d\phi} \end{aligned}\)</span></td>
+\sin\theta\ d\theta\ d\phi} \\ &amp; E(p, \mathbf{n}) =
+\int_{A}{L\cos\theta\ \frac{\cos\theta_o}{r^2}dA}
+\end{aligned}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong><a
 href="#intensidad_radiante">Intensidad radiante</a></strong></td>
-<td style="text-align: left;"><span class="math inline">\(I =
-\frac{d\Phi}{d\omega}\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\begin{aligned}I =
+\frac{d\Phi}{d\omega}\end{aligned}\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong><a
 href="#radiancia">Radiancia</a></strong></td>
 <td style="text-align: left;"><span
 class="math inline">\(\begin{aligned} &amp; L(p, \omega) =
-\frac{dE_\omega(p)}{d\omega} \\ &amp; L = \frac{d\Phi}{d\omega dA^\bot}
-\\ &amp; L^+(p, \omega) = \lim_{t \to 0^+}{L(p + t\mathbf{n_p}, \omega)}
-\\ &amp; L^-(p, \omega) = \lim_{t \to 0^-}{L(p + t\mathbf{n_p}, \omega)}
-\end{aligned}\)</span></td>
+\frac{dE_\omega(p)}{d\omega} \\ &amp; L(p, \omega) = \frac{d^2\Phi(p,
+\omega)}{d\omega\ dA^\bot} = \frac{d^2\Phi(p, \omega)}{d\omega\ dA\
+\cos\theta} \\ &amp; L^+(p, \omega) = \lim_{t \to 0^+}{L(p +
+t\mathbf{n_p}, \omega)} \\ &amp; L^-(p, \omega) = \lim_{t \to 0^-}{L(p +
+t\mathbf{n_p}, \omega)} \end{aligned}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong><a href="#radiancia">Radiancia
@@ -2243,10 +2265,33 @@ L^-(p, -\omega) &amp; \text{si } \omega \cdot \mathbf{n_p} &lt; 0
 <td style="text-align: left;"><strong><a href="#radiancia">Radiancia de
 salida</a></strong></td>
 <td style="text-align: left;"><span
-class="math inline">\(\begin{aligned} L_o(p, \omega) &amp; =
+class="math inline">\(\begin{aligned} &amp; L_o(p, \omega) =
 \begin{cases} L^+(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
 &gt; 0 \\ L^-(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p} &lt;
-0 \end{cases} \end{aligned}\)</span></td>
+0 \end{cases} \\ &amp; L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p,
+\omega_o, \omega_i)L_i(p, \omega_i)\lvert \cos\theta_i \rvert d\omega_i}
+\end{aligned}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><a
+href="#la-función-de-distribución-de-reflectancia-bidireccional-brdf">BRDF</a></strong></td>
+<td style="text-align: left;"><span
+class="math inline">\(\begin{aligned}&amp; f_r(p, \omega_o, \omega_i) =
+\frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p,
+\omega_o)}{L_i(p, \omega_i) \cos\theta_i\
+d\omega_i}\end{aligned}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><a
+href="#la-función-de-distribución-de-transmitancia-bidireccional-btdf">BTDF</a></strong></td>
+<td style="text-align: left;"><span class="math inline">\(f_t(p,
+\omega_o, \omega_i)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><a
+href="#juntando-la-brdf-y-la-btdf">BSDF</a></strong></td>
+<td style="text-align: left;"><span class="math inline">\(f(p, \omega_o,
+\omega_i)\)</span></td>
 </tr>
 </tbody>
 </table>
