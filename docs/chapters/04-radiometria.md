@@ -47,7 +47,8 @@ $$
 E = \frac{\Phi}{A} (\text{W/m}^2)
 $$
 
-> TODO: dibujo como el de https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, p.28
+
+![La irradiancia es la potencia por metro cuadrado incidente en una superficie. Es proporcional al coseno del ángulo entre la dirección de la luz y la normal a la superficie.](./img/Irradiancia.png)
 
 Ahora que tenemos la potencia emitida en una cierta área, nos surge una pregunta: *¿y en un cierto punto $p$?*. Tomando límites en la expresión anterior, encontramos la respuesta:
 
@@ -67,29 +68,28 @@ El principal problema de la irradiancia es que *no nos dice nada sobre las direc
 
 Con estas tres unidades básicas, nos surge una pregunta muy natural: *¿cómo mido cuánta luz llega a una superficie?*
 
-Para responder a esta pregunta, usaremos los **ángulos sólidos**.
+Para responder a esta pregunta, necesitaremos los **ángulos sólidos**. Son la extensión de los ángulos de los **ángulos planares**, en dos dimensiones.
 
-Un ángulo sólido es la extensión del concepto de **ángulo planar** (en dos dimensiones). Para ilustrar el sentido de estos ángulos, imaginemos que tenemos un cierto objeto en dos dimensiones delante de nosotros. Dependiendo de cómo de lejos se encuentre, nos parecerá más grande o más pequeño. Si trazamos un par de líneas desde nuestra posición a las partes más alejadas de este objeto, y las cortamos con una circunferencia de radio $r$, obtendremos un par de puntos en dicha circunferencia. Al arco que encapsulan ambos puntos le corresponde un cierto ángulo: el ángulo planar.
+Ilustremos el sentido de estos ángulos: imaginemos que tenemos un cierto objeto en dos dimensiones delante de nosotros, a una distancia desconocida. ¿Sabríamos cuál es su tamaño, solo con esta información? Es más, si entrara otro objeto en la escena, ¿podríamos distinguir cuál de ellos es más grande?
+
+Parece difícil responder a estas preguntas. Sin embargo, sí que podemos determinar *cómo de grandes nos parecen* desde nuestro punto de vista. Para ello, describimos una circunferencia de radio $r$ alrededor nuestra. Si trazamos un par de líneas desde nuestra posición a las partes más alejadas de este objeto, y las cortamos con nuestra circunferencia, obtendremos un par de puntos inscritos en ella. Pues bien, al arco que encapsulan dichos puntos le vamos a hacer corresponder un cierto ángulo: el ángulo planar.
 
 ![La idea intuitiva de un ángulo planar](./img/Ángulo%20planar.png)
 
-Llevando esta idea a las tres dimensiones es como conseguimos el concepto de **ángulo sólido**. Su unidad de medida es el estereorradián ($\text{sr}$). Corresponde a la superficie generada por las rectas proyectantes que van desde un objeto hasta un punto, cortando con una esfera de radio $r$. Se define como
+Llevando esta idea a las tres dimensiones es como conseguimos el concepto de **ángulo sólido**. Si en dos dimensiones teníamos una circunferencia, aquí tendremos una esfera. Cuando generemos las rectas proyectantes hacia el volumen, a diferencia de los ángulos planares, se inscribirá un área en la esfera. La razón entre dicha área $A$ y el cuadrado del radio $r$ nos dará un ángulo sólido:
 
 $$
 \omega = \frac{A}{r^2} \text{(sr)}
 $$
 
-siendo $A$ la superficie cubierta por el objeto. Por tanto, un esteorradián corresponde una superficie con área $r^2$: $1 \text{sr} = \frac{r^2}{r^2}$.
+![Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio](./img/Ángulo%20sólido.png)
 
-> TODO: foto de un ángulo sólido.
+Los denotaremos por $\omega$. En física se suele usar $\Omega$, pero aquí optaremos por la minúscula. Su unidad de medida es el estereorradián ($\text{sr}$).  Se tiene que $\omega \in [0, 4\pi]$. Si $2 \pi$ radianes corresponden a la circunferencia completa, para la esfera se tiene que $4 \pi$ esteorradianes cubren toda la superficie de esta. Se tiene también que $2\pi \text{sr}$ cubren un hemisferio. Además, un esteorradián corresponde a una superficie con área $r^2$: $1 \text{sr} = \frac{r^2}{r^2}$.
 
-Si $2 \pi$ radianes corresponden a la circunferencia completa, para la esfera se tiene que $4 \pi$ esteorradianes cubren toda la superficie de esta. Además, $2\pi$ sr cubren un hemisferio.
-
-Denotaremos a los ángulos sólidos por $\omega$. Como hemos visto, $\omega \in [0, 4\pi]$.
 
 De vez en cuando, usaremos $\omega$ **un vector dirección unitario en la esfera**.
 
-> TODO: y si meto un xkcd https://xkcd.com/1276/
+![Como de costumbre, hay un xkcd relevante. [(Fuente)](https://xkcd.com/1276/)](./img/xkcd_1276.png)
 
 Usualmente emplearemos coordenadas esféricas cuando trabajemos con ellos, dado que resulta más cómodo.
 
