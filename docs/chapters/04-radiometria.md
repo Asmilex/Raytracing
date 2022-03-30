@@ -68,7 +68,7 @@ El principal problema de la irradiancia es que *no nos dice nada sobre las direc
 
 Con estas tres unidades básicas, nos surge una pregunta muy natural: *¿cómo mido cuánta luz llega a una superficie?*
 
-Para responder a esta pregunta, necesitaremos los **ángulos sólidos**. Son la extensión de los ángulos de los **ángulos planares**, en dos dimensiones.
+Para responder a esta pregunta, necesitaremos los **ángulos sólidos**. Son la extensión de los **ángulos planares**, en dos dimensiones.
 
 Ilustremos el sentido de estos ángulos: imaginemos que tenemos un cierto objeto en dos dimensiones delante de nosotros, a una distancia desconocida. ¿Sabríamos cuál es su tamaño, solo con esta información? Es más, si entrara otro objeto en la escena, ¿podríamos distinguir cuál de ellos es más grande?
 
