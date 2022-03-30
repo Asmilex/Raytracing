@@ -44,7 +44,7 @@ $$
 La **irradiancia** o **radiancia emitida** es el flujo radiante que recibe una superficie. Dada un área $A$, se define como
 
 $$
-E = \frac{\Phi}{A} (W/m^2)
+E = \frac{\Phi}{A} (\text{W/m}^2)
 $$
 
 > TODO: dibujo como el de https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, p.28
@@ -52,7 +52,7 @@ $$
 Ahora que tenemos la potencia emitida en una cierta área, nos surge una pregunta: *¿y en un cierto punto $p$?*. Tomando límites en la expresión anterior, encontramos la respuesta:
 
 $$
-E(p) = \lim_{\Delta A \to 0}{\frac{\Delta \Phi}{\Delta A}} = \frac{d\Phi}{dA} (W/m^2)
+E(p) = \lim_{\Delta A \to 0}{\frac{\Delta \Phi}{\Delta A}} = \frac{d\Phi}{dA} (\text{W/m}^2)
 $$
 
 De la misma manera que con la potencia, integrando $E(p)$ podemos obtener el flujo radiante:
@@ -275,7 +275,7 @@ $$
 \end{aligned}
 $$
 
-siendo $\theta_o$ la radiancia de salida de la superficie del cuadrilátero.
+siendo $\theta_o$ el ángulo de la radiancia de salida de la superficie del cuadrilátero.
 
 ## Dispersión de luz: las familias de funciones de distribución bidireccionales
 
