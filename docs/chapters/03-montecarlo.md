@@ -219,7 +219,7 @@ Enunciemos un par de propiedades que tiene, similares a la de la esperanza:
 
 
 - La varianza saca constantes al cuadrado: $Var[aX] = a^2Var[X]$
-- $Var[X + Y] = $ $Var[X] + Var[Y] + 2Cov[X, Y]$, donde $Cov[X, Y]$ es la covarianza de $X$ y $Y$.
+- $Var[X + Y] =$ $Var[X] + Var[Y] + 2Cov[X, Y]$, donde $Cov[X, Y]$ es la covarianza de $X$ y $Y$.
   - En el caso en el que $X$ e $Y$ sean incorreladas (es decir, la covarianza es $0$), $Var[X + Y] =$ $Var[X] + Var[Y]$.
 
 La varianza nos será útil a la hora de medir el error cometido por una estimación de Monte Carlo.
