@@ -544,10 +544,12 @@ puntos del dominio de forma que <span class="math inline">\(t \in
 superficies un pequeño pero no despreciable <span
 class="math inline">\(\varepsilon\)</span> para evitar errores de
 redondeo.</p>
-<blockquote>
-<p>TODO dibujo origen - epsilon == tmin -&gt; rayo -&gt; t_max =
-1-epsilon</p>
-</blockquote>
+<figure>
+<img src="./img/Límites%20de%20un%20rayo.png"
+alt="Separarnos un poquito del origen evitará errores de coma flotante" />
+<figcaption aria-hidden="true">Separarnos un poquito del origen evitará
+errores de coma flotante</figcaption>
+</figure>
 <p>Una de las principales cuestiones que debemos hacernos es saber
 cuándo un rayo impacta con una superficie. Lo definiremos
 analíticamente.</p>
@@ -734,9 +736,12 @@ en el borde.</li>
 <li>Si <span class="math inline">\(\Delta &gt; 0\)</span>, existen dos
 soluciones. En ese caso, el rayo atraviesa la esfera.</li>
 </ol>
-<blockquote>
-<p>TODO dibujo explicativo de la intersección con una esfera.</p>
-</blockquote>
+<figure>
+<img src="./img/Intersección%20rayo%20-%20esfera.png"
+alt="Puntos de intersección con una esfera." />
+<figcaption aria-hidden="true">Puntos de intersección con una
+esfera.</figcaption>
+</figure>
 <p>Para estos dos últimos, si consideramos <span
 class="math inline">\(t_0\)</span> cualquier solución válida, el vector
 normal resultante viene dado por</p>
@@ -1196,10 +1201,11 @@ esperanza:</p>
 <ul>
 <li>La varianza saca constantes al cuadrado: <span
 class="math inline">\(Var[aX] = a^2Var[X]\)</span></li>
-<li>$Var[X + Y] = $ <span class="math inline">\(Var[X] + Var[Y] +
-2Cov[X, Y]\)</span>, donde <span class="math inline">\(Cov[X,
-Y]\)</span> es la covarianza de <span class="math inline">\(X\)</span> y
-<span class="math inline">\(Y\)</span>.
+<li><span class="math inline">\(Var[X + Y] =\)</span> <span
+class="math inline">\(Var[X] + Var[Y] + 2Cov[X, Y]\)</span>, donde <span
+class="math inline">\(Cov[X, Y]\)</span> es la covarianza de <span
+class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span>.
 <ul>
 <li>En el caso en el que <span class="math inline">\(X\)</span> e <span
 class="math inline">\(Y\)</span> sean incorreladas (es decir, la
