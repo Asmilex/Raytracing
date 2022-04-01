@@ -13,3 +13,7 @@ Tipos [pbr intro]:
 - Glossy specular
 - Perfect specular
 - Retro reflective
+
+<hr>
+
+## Referencias {.unlisted .unnumbered}

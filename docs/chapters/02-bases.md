@@ -66,7 +66,7 @@ Una de las principales cuestiones que debemos hacernos es saber cuándo un rayo 
 
 ### Superficies implícitas
 
-Generalmente, cuando hablemos de superficies, nos referiremos [superficies diferenciables](https://www.wikiwand.com/en/Differential_geometry_of_surfaces), pues nos interesará conocer el vector normal en cada punto.
+Generalmente, cuando hablemos de superficies, nos referiremos superficies diferenciables [@wikipedia-contributors-2022O], pues nos interesará conocer el vector normal en cada punto.
 
 Una superficie implícita es una superficie en un espacio euclidiano definida como
 
@@ -317,7 +317,7 @@ $$
 \end{pmatrix}
 $$
 
-Calcular rápidamente la solución a un sistema de ecuaciones lineales es un problema habitual. En [@ShirleyRRT] se utiliza la regla de Cramer para hacerlo, esperando que el compilador optimice las variables intermedias creadas. Nosotros no nos tendremos que preocupar de esto en particular, ya que el punto de impacto lo calculará la GPU gracias a las [herramientras aportadas por KHR](https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap33.html#ray-intersection-candidate-determination).
+Calcular rápidamente la solución a un sistema de ecuaciones lineales es un problema habitual. En [@ShirleyRRT] se utiliza la regla de Cramer para hacerlo, esperando que el compilador optimice las variables intermedias creadas. Nosotros no nos tendremos que preocupar de esto en particular, ya que el punto de impacto lo calculará la GPU gracias a las herramientras aportadas por KHR [@the-khronos-vulkan-working-group-2022].
 
 Para obtener el vector normal, podemos hacer el producto vectorial de dos vectores que se encuentren en el plano del triángulo. Como, por convención, los vértices se guardan en sentido antihorario visto desde fuera del objeto, entonces
 
@@ -327,4 +327,6 @@ $$
 
 <hr>
 
-@wikipedia-contributors-2022F, @wikipedia-contributors-2021A, @wikipedia-contributors-2022G, @Sarabia
+## Referencias {.unlisted .unnumbered}
+
+[@wikipedia-contributors-2022F], [@wikipedia-contributors-2021A], [@wikipedia-contributors-2022G], @[Sarabia], [@wikipedia-contributors-2022O]

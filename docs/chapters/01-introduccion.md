@@ -59,4 +59,6 @@ Hemos entrado en la era del **real time ray tracing**.
 
 <hr>
 
-@wikipedia-contributors-2022A, @wikipedia-contributors-2022B, @wikipedia-contributors-2022C, @wikipedia-contributors-2022D, @caulfield-2020, @wikipedia-contributors-2022E, @unknown-author-no-date, @Haines2019, p. 16
+## Referencias {.unlisted .unnumbered}
+
+[@wikipedia-contributors-2022A], [@wikipedia-contributors-2022B], [@wikipedia-contributors-2022C], [@wikipedia-contributors-2022D], [@caulfield-2020], [@wikipedia-contributors-2022E], [@unknown-author-no-date], [@Haines2019]

@@ -405,4 +405,6 @@ El algoritmo consiste en:
 
 <hr>
 
-@wikipedia-contributors-2021B, @wikipedia-contributors-2021C, @wikipedia-contributors-2022H, @wikipedia-contributors-2022I, @wikipedia-contributors-2022J, @galvin-no-date, @wikipedia-contributors-2022K, @wikipedia-contributors-2022L, @wikipedia-contributors-2022M, @wikipedia-contributors-2022N, @ShirleyRRT, @PBRT3e, @mcbook, @berkeley-cs184-no-date
+## Referencias {.unlisted .unnumbered}
+
+[@wikipedia-contributors-2021B], [@wikipedia-contributors-2021C], [@wikipedia-contributors-2022H], [@wikipedia-contributors-2022I], [@wikipedia-contributors-2022J], [@galvin-no-date], [@wikipedia-contributors-2022K], [@wikipedia-contributors-2022L], [@wikipedia-contributors-2022M], [@wikipedia-contributors-2022N], [@ShirleyRRT], [@PBRT3e], [@mcbook], [@berkeley-cs184, Monte Carlo Integration]
