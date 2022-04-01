@@ -278,6 +278,11 @@ BTDF</a></li>
 scattering</em></a></li>
 </ul></li>
 </ul></li>
+<li><a href="#el-comportamiento-de-la-luz">El comportamiento de la
+luz</a>
+<ul>
+<li><a href="#reflejos">Reflejos</a></li>
+</ul></li>
 <li><a href="#importance-sampling"><em>Importance sampling</em></a></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
 cómo se hizo este trabajo</a>
@@ -2089,12 +2094,36 @@ href="#ref-studysession-2021" role="doc-biblioref">2021</a>)</span></p>
 <li>https://www.wikiwand.com/en/Transmittance</li>
 <li>https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf</li>
 </ul>
+<h1 id="el-comportamiento-de-la-luz">El comportamiento de la luz</h1>
+<blockquote>
+<p>TODO: bastante temporal este capítulo. De momento, lo único que habrá
+serán notas sueltas de lo que voy leyendo.</p>
+<p>Tiene pinta de que merecerá la pena mover BRDF, BTDF y BSDF aquí, y
+meterl justo a continuación de radiometría. Algunos puntos de los que
+podemos hablar son materiales, modelos de reflejos, refracción, familias
+de BRDF, PDF… A fin de cuentas, es una simplificación de PBR Book.</p>
+</blockquote>
+<h2 id="reflejos">Reflejos</h2>
+<p>Tipos [pbr intro]:</p>
+<ul>
+<li>Diffuse</li>
+<li>Glossy specular</li>
+<li>Perfect specular</li>
+<li>Retro reflective</li>
+</ul>
 <h1 id="importance-sampling"><em>Importance sampling</em></h1>
+<p>Con la llegada de ray tracing en tiempo real surge una obligación por
+optimizar los pocos rayos que se pueden trazar. Una de las preguntas que
+nos debemos hacer es <em>hacia dónde</em> generamos el rayo.</p>
+<p>En este capítulo daremos respuesta a este dilema. Estudiaremos cómo
+las fuentes de luz afectan a la calidad de la imagen final. Veremos
+técnicas de reducción del error, las cuales nos permitirán acelerar
+enormemente el cómputo de la escena.</p>
 <hr>
 <ul>
 <li><em>(berkeley-cs184)</em>
 https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf</li>
-<li>https://cs184.eecs.berkeley.edu/sp22</li>
+<li>Gems I, p.284.</li>
 </ul>
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
