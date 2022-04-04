@@ -359,10 +359,29 @@ Esta forma de expresar la radiancia es muy importante. Generalmente se le suele 
 
 > NOTE: quizás no merezca la pena hablar de esto. De momento, se queda para recordar su existencia. No es tampoco difícil, pero si no lo vamos a usar...
 
+### Reflejos
+
+Una vez hemos definido las funciones de distribución bidireccionales, debemos encargarnos de modelar el comportamiento explícitamente. Para ello, veamos cómo los materiales modifican las distribuciones.
+
+En esencia, los reflejos se pueden clasificar en cuatro grandes tipos:
+
+- **Difusos** (*Diffuse*): esparcen la luz en todas direcciones casi equiprobablemente. Por ejemplo, la tela y el papel son materiales difusos.
+- **Especulares brillantes** (*Glossy specular*): la distribución de luz se asemeja a un cono. La chapa de un coche es un material especular brillante.
+- **Especulares perfectos** (*Perfect specular*): en esencia, son espejos. El ángulo de salida de la luz es muy pequeño, por lo que reflejan casi a la perfección lo que les llega.
+- **Retroreflectivos** (*Retro reflective*): la luz se refleja en dirección contraria a la de llegada. Esto es lo que sucede a la luna.
+
+Ten en cuenta que es muy difícil encontrar objetos físicos que imiten a la perfección un cierto modelo. Suelen recaer en un híbrido entre dos o más modelos.
+
+Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, puede ser **isotrópica** o **anisotrópica**. Los materiales isotrópicos mantienen las propiedades de reflectancia invariantes ante rotaciones; es decir, la distribución de luz es la misma en todas direcciones. Por el contrario, los anisotrópicos reflejan diferentes cantidades de luz dependiendo desde dónde los miremos. Los ejemplos más habituales de materiales anisotrópicos son las rocas y la madera.
+
+
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores como [@quantumfracture-2021] que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
 
 <hr>
 
 ## Referencias {.unlisted .unnumbered}
-[@wikipedia-contributors-2021D], [@studysession-2021], [@berkeley-cs184, Radiometry & Photometry], [@wikipedia-funcion-de-distribucion-de-reflectancia-bidireccional-2022], [@wikipedia-transmittance-2021]
+
+[@PBRT3e], [@wikipedia-contributors-2021D], [@studysession-2021], [@berkeley-cs184, Radiometry & Photometry], [@wikipedia-funcion-de-distribucion-de-reflectancia-bidireccional-2022], [@wikipedia-transmittance-2021]
+
+- https://matmatch.com/learn/property/isotropy-anisotropy

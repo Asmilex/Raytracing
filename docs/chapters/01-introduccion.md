@@ -55,10 +55,20 @@ Hemos entrado en la era del **real time ray tracing**.
 
 ## Vale, ¿y qué vamos a hacer entonces?
 
-> TODO hablar de los objetivos del trabajo.
+> TODO: WIP
+
+Estos son los objetivos del trabajo:
+
+- Path tracer inspirado en Shirley's *RT In One Weekend* series.
+  - Muestreo directo de fuentes de luz.
+  - Comparativa de rendimiento en tiempo real *vs* offline renderer.
+- Métodos de Monte Carlo. Estudio del error producido por cada uno. Comprobar cómo de "buena" es cada solución.
+- Futuro del área.
 
 <hr>
 
 ## Referencias {.unlisted .unnumbered}
 
 [@wikipedia-contributors-2022A], [@wikipedia-contributors-2022B], [@wikipedia-contributors-2022C], [@wikipedia-contributors-2022D], [@caulfield-2020], [@wikipedia-contributors-2022E], [@unknown-author-no-date], [@Haines2019]
+
+- RT IOW series
