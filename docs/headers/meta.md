@@ -21,10 +21,10 @@ Se realizará una revisión bibliográfica de los métodos de Montecarlo que se 
 
 # Dedicatoria{.unnumbered}
 
-*Aquí es donde me pongo ñoño*
+¡Parece que has llegado un poco pronto! Si lo has hecho voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado en verano de 2022. Mientras tanto, actualizaré poco a poco el contenido. Si quieres ir comprobando los progresos, puedes visitar [Asmilex/Raytracing](github.com/Asmilex/Raytracing) en Github para ver el estado del desarrollo.
 
-¡Parece que has llegado un poco pronto! Si lo has hecho voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado en verano de 2022.
+Aun así, hay mucha gente que me ha ayudado a sacar este proyecto hacia delante.
 
-Mientras tanto, actualizaré poco a poco el contenido. Si quieres ir comprobando los progresos, puedes visitar [Asmilex/Raytracing](github.com/Asmilex/Raytracing) en Github para ver el estado del desarrollo.
+Gracias, en primer lugar, a mi familia por permitirme acabar la carrera. A Cristina, Jorge, Jose OC, Lucas, Mari, Marina y Sergio por ayudarme con el contenido, feedback del desarrollo y guía de diseño.
 
 \vspace*{\fill}
