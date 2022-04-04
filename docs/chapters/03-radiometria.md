@@ -1,4 +1,4 @@
-# Radiometría
+# Radiometría 101
 
 En este capítulo estudiaremos las bases de la radiometría. Esta área de la óptica nos proporcionará una serie de herramientas con las cuales podremos responder a la pregunta *cuánta luz existe en un punto*.
 

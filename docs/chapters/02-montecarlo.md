@@ -399,6 +399,13 @@ El algoritmo consiste en:
    1. Si se cumple, se acepta $y$ como muestra de $p_X$
    2. En caso contrario, se rechaza $y$ y se vuelve al paso 1.
 
+## *Importance sampling*
+
+Con la llegada de ray tracing en tiempo real surge una obligación por optimizar los pocos rayos que se pueden trazar. Una de las preguntas que nos debemos hacer es *hacia dónde* generamos el rayo.
+
+En esta sección daremos respuesta a este dilema. Estudiaremos cómo las fuentes de luz afectan a la calidad de la imagen final. Veremos técnicas de reducción del error, las cuales nos permitirán acelerar enormemente el cómputo de la escena.
+
+
 
 [^1]: En su defecto, si tenemos una función de densidad $f_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{f_X(t)dt}$
 
@@ -408,3 +415,7 @@ El algoritmo consiste en:
 ## Referencias {.unlisted .unnumbered}
 
 [@wikipedia-contributors-2021B], [@wikipedia-contributors-2021C], [@wikipedia-contributors-2022H], [@wikipedia-contributors-2022I], [@wikipedia-contributors-2022J], [@galvin-no-date], [@wikipedia-contributors-2022K], [@wikipedia-contributors-2022L], [@wikipedia-contributors-2022M], [@wikipedia-contributors-2022N], [@ShirleyRRT], [@PBRT3e], [@mcbook], [@berkeley-cs184, Monte Carlo Integration]
+
+
+- *(berkeley-cs184)* https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf
+- Gems I, p.284.

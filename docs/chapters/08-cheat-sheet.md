@@ -32,3 +32,6 @@ Tener en mente *todos* los conceptos y sus expresiones que aparecen en un libro 
 |**[BRDF](#la-función-de-distribución-de-reflectancia-bidireccional-brdf)** | $\begin{aligned}& f_r(p, \omega_o, \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i}\end{aligned}$ |
 |**[BTDF](#la-función-de-distribución-de-transmitancia-bidireccional-btdf)**| $f_t(p, \omega_o, \omega_i)$ |
 |**[BSDF](#juntando-la-brdf-y-la-btdf)**| $f(p, \omega_o, \omega_i)$ |
+
+
+# Bibliografía {.unnumbered}
