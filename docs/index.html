@@ -2076,12 +2076,12 @@ dL_o(p, \omega_o) \propto dE(p, \omega_i)
 \]</span></p>
 <p>Si lo ponemos en forma de cociente, sabremos exactamente cuál es la
 proporción de luz. A este cociente lo llamaremos <span
-class="math inline">\(f_r(p, \omega_o, \omega_i)\)</span>; la función de
-distribución de reflectancia bidireccional:</p>
+class="math inline">\(f_r(p, \omega_o \leftarrow \omega_i)\)</span>; la
+función de distribución de reflectancia bidireccional:</p>
 <p><span class="math display">\[
-f_r(p, \omega_o, \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} =
-\frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
-\text{(1/sr)}
+f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p,
+\omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\
+d\omega_i} \text{(1/sr)}
 \]</span></p>
 <p>Las BRDFs físicamente realistas tienen un par de propiedades
 importantes:</p>
@@ -2090,13 +2090,14 @@ importantes:</p>
 <span class="math inline">\(\omega_i\)</span>, <span
 class="math inline">\(\omega_o\)</span>, se tiene que <span
 class="math inline">\(f_r(p, \omega_i, \omega_o)=\ \)</span> <span
-class="math inline">\(f_r(p, \omega_o, \omega_i)\)</span>.</li>
+class="math inline">\(f_r(p, \omega_o \leftarrow
+\omega_i)\)</span>.</li>
 <li><strong>Conservación de la energía</strong>: La energía reflejada
 tiene que ser menor o igual que la incidente:</li>
 </ol>
 <p><span class="math display">\[
-\int_{H^2(\mathbf{n})}{f_r(p, \omega_o, \omega_i) \cos\theta_i\
-d\omega_i} \leq 1
+\int_{H^2(\mathbf{n})}{f_r(p, \omega_o \leftarrow \omega_i)
+\cos\theta_i\ d\omega_i} \leq 1
 \]</span></p>
 <h3
 id="la-función-de-distribución-de-transmitancia-bidireccional-btdf">La
@@ -2109,7 +2110,7 @@ superficie, y parte de ella, se reflejará, y otra parte se
 transmitirá.</p>
 <p>Denotaremos a la BTDF por</p>
 <p><span class="math display">\[
-f_t(p, \omega_o, \omega_i)
+f_t(p, \omega_o \leftarrow \omega_i)
 \]</span></p>
 <p>Al contrario que en la BRDF, <span
 class="math inline">\(\omega_o\)</span> y <span
@@ -2121,12 +2122,12 @@ expresión, llamada <strong>la función de distribución de dispersión
 bidireccional</strong> (<em>bidirectional scattering distribution
 function</em>, BSDF). A la BSDF la llamaremos</p>
 <p><span class="math display">\[
-f(p, \omega_o, \omega_i)
+f(p, \omega_o \leftarrow \omega_i)
 \]</span></p>
 <p>Usando esta definición, podemos obtener</p>
 <p><span class="math display">\[
-dL_o(p, \omega_o) = f(p, \omega_o, \omega_i) L_i(p, \omega_i) \lvert
-\cos\theta_i \rvert d\omega_i
+dL_o(p, \omega_o) = f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i)
+\lvert \cos\theta_i \rvert d\omega_i
 \]</span></p>
 <blockquote>
 <p>NOTE: En wikipedia integran con respecto a <span
@@ -2141,8 +2142,8 @@ randiancia en términos de la randiancia incidente en un punto <span
 class="math inline">\(p\)</span>. Integrando la expresión anterior,
 obtenemos</p>
 <p><span class="math display">\[
-L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o, \omega_i)L_i(p,
-\omega_i)\lvert \cos\theta_i \rvert d\omega_i}
+L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow
+\omega_i)L_i(p, \omega_i)\lvert \cos\theta_i \rvert d\omega_i}
 \]</span></p>
 <p>siendo <span class="math inline">\(\mathbb{S}^2\)</span> la
 esfera.</p>
@@ -2166,8 +2167,8 @@ de dispersión. Algo así como un resumen de su distribución.</p>
 total sobre un hemisferio debida a una fuente de luz que proviene desde
 la dirección <span class="math inline">\(\omega_o\)</span>:</p>
 <p><span class="math display">\[
-\rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o, \omega_i) \lvert
-\cos\theta_i \rvert\ d\omega_i}
+\rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i)
+\lvert \cos\theta_i \rvert\ d\omega_i}
 \]</span></p>
 <blockquote>
 <p>FIXME: no creo que esté bien explicado. Debería echarle un ojo.</p>
@@ -2178,9 +2179,9 @@ reflectance</em>) es un valor espectral que nos proporciona el ratio de
 luz incidente reflejada por una superficie, suponiendo que llega la
 misma luz desde todas direcciones:</p>
 <p><span class="math display">\[
-\rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o,
-\omega_i) \lvert \cos\theta_o\ \cos\theta_i \rvert\ d\omega_o\
-d\omega_i}
+\rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o
+\leftarrow \omega_i) \lvert \cos\theta_o\ \cos\theta_i \rvert\
+d\omega_o\ d\omega_i}
 \]</span></p>
 <h3 id="reflejos">Reflejos</h3>
 <p>Una vez hemos definido las funciones de distribución bidireccionales,
@@ -2585,15 +2586,15 @@ class="math inline">\(\begin{aligned} &amp; L_o(p, \omega) =
 \begin{cases} L^+(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
 &gt; 0 \\ L^-(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p} &lt;
 0 \end{cases} \\ &amp; L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p,
-\omega_o, \omega_i)L_i(p, \omega_i)\lvert \cos\theta_i \rvert d\omega_i}
-\end{aligned}\)</span></td>
+\omega_o \leftarrow \omega_i)L_i(p, \omega_i)\lvert \cos\theta_i \rvert
+d\omega_i} \end{aligned}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong><a
 href="#la-función-de-distribución-de-reflectancia-bidireccional-brdf">BRDF</a></strong></td>
 <td style="text-align: left;"><span
-class="math inline">\(\begin{aligned}&amp; f_r(p, \omega_o, \omega_i) =
-\frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p,
+class="math inline">\(\begin{aligned}&amp; f_r(p, \omega_o \leftarrow
+\omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p,
 \omega_o)}{L_i(p, \omega_i) \cos\theta_i\
 d\omega_i}\end{aligned}\)</span></td>
 </tr>
@@ -2601,13 +2602,13 @@ d\omega_i}\end{aligned}\)</span></td>
 <td style="text-align: left;"><strong><a
 href="#la-función-de-distribución-de-transmitancia-bidireccional-btdf">BTDF</a></strong></td>
 <td style="text-align: left;"><span class="math inline">\(f_t(p,
-\omega_o, \omega_i)\)</span></td>
+\omega_o \leftarrow \omega_i)\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong><a
 href="#juntando-la-brdf-y-la-btdf">BSDF</a></strong></td>
-<td style="text-align: left;"><span class="math inline">\(f(p, \omega_o,
-\omega_i)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(p, \omega_o
+\leftarrow \omega_i)\)</span></td>
 </tr>
 </tbody>
 </table>
