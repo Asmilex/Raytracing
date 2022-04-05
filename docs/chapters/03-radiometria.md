@@ -301,19 +301,19 @@ $$
 dL_o(p, \omega_o) \propto dE(p, \omega_i)
 $$
 
-Si lo ponemos en forma de cociente, sabremos exactamente cuál es la proporción de luz. A este cociente lo llamaremos $f_r(p, \omega_o, \omega_i)$; la función de distribución de reflectancia bidireccional:
+Si lo ponemos en forma de cociente, sabremos exactamente cuál es la proporción de luz. A este cociente lo llamaremos $f_r(p, \omega_o \leftarrow \omega_i)$; la función de distribución de reflectancia bidireccional:
 
 $$
-f_r(p, \omega_o, \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i} \text{(1/sr)}
+f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i} \text{(1/sr)}
 $$
 
 Las BRDFs físicamente realistas tienen un par de propiedades importantes:
 
-1. **Reciprocidad**: para cualquier par de direcciones $\omega_i$, $\omega_o$, se tiene que $f_r(p, \omega_i, \omega_o)=\ $ $f_r(p, \omega_o, \omega_i)$.
+1. **Reciprocidad**: para cualquier par de direcciones $\omega_i$, $\omega_o$, se tiene que $f_r(p, \omega_i, \omega_o)=\ $ $f_r(p, \omega_o \leftarrow \omega_i)$.
 2. **Conservación de la energía**: La energía reflejada tiene que ser menor o igual que la incidente:
 
 $$
-\int_{H^2(\mathbf{n})}{f_r(p, \omega_o, \omega_i) \cos\theta_i\ d\omega_i} \leq 1
+\int_{H^2(\mathbf{n})}{f_r(p, \omega_o \leftarrow \omega_i) \cos\theta_i\ d\omega_i} \leq 1
 $$
 
 ### La función de distribución de transmitancia bidireccional (BTDF)
@@ -323,7 +323,7 @@ Si la BRDF describe cómo se refleja la luz, la *bidirectional transmittance dis
 Denotaremos a la BTDF por
 
 $$
-f_t(p, \omega_o, \omega_i)
+f_t(p, \omega_o \leftarrow \omega_i)
 $$
 
 Al contrario que en la BRDF, $\omega_o$ y $\omega_i$ se encuentran en hemisferios diferentes.
@@ -333,13 +333,13 @@ Al contrario que en la BRDF, $\omega_o$ y $\omega_i$ se encuentran en hemisferio
 Convenientemente, podemos unir la BRDF y la BTDF en una sola expresión, llamada **la función de distribución de dispersión bidireccional** (*bidirectional scattering distribution function*, BSDF). A la BSDF la llamaremos
 
 $$
-f(p, \omega_o, \omega_i)
+f(p, \omega_o \leftarrow \omega_i)
 $$
 
 Usando esta definición, podemos obtener
 
 $$
-dL_o(p, \omega_o) = f(p, \omega_o, \omega_i) L_i(p, \omega_i) \abs{\cos\theta_i} d\omega_i
+dL_o(p, \omega_o) = f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \abs{\cos\theta_i} d\omega_i
 $$
 
 
@@ -348,7 +348,7 @@ $$
 Esto nos deja a punto de caramelo una nueva expresión de la randiancia en términos de la randiancia incidente en un punto $p$. Integrando la expresión anterior, obtenemos
 
 $$
-L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o, \omega_i)L_i(p, \omega_i)\abs{\cos\theta_i} d\omega_i}
+L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\abs{\cos\theta_i} d\omega_i}
 $$
 
 siendo $\mathbb{S}^2$ la esfera.
@@ -366,7 +366,7 @@ Puede ser útil tomar el comportamiento agregado de las BRDFs y las BTDFs y redu
 La **reflectancia hemisférica-direccional** (*hemispherical-directional reflectance*) describe la reflexión total sobre un hemisferio debida a una fuente de luz que proviene desde la dirección $\omega_o$:
 
 $$
-\rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o, \omega_i) \abs{\cos\theta_i}\ d\omega_i}
+\rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_i}\ d\omega_i}
 $$
 
 > FIXME: no creo que esté bien explicado. Debería echarle un ojo.
@@ -374,7 +374,7 @@ $$
 Por otra parte, la **reflectancia hemisférica-hemisférica** (*hemispherical-hemispherical reflectance*) es un valor espectral que nos proporciona el ratio de luz incidente reflejada por una superficie, suponiendo que llega la misma luz desde todas direcciones:
 
 $$
-\rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o, \omega_i) \abs{\cos\theta_o\ \cos\theta_i}\ d\omega_o\ d\omega_i}
+\rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_o\ \cos\theta_i}\ d\omega_o\ d\omega_i}
 $$
 
 ### Reflejos
