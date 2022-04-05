@@ -245,8 +245,9 @@ aleatorios</a>
 transformada inversa</a></li>
 <li><a href="#método-del-rechazo">Método del rechazo</a></li>
 </ul></li>
+<li><a href="#importance-sampling"><em>Importance sampling</em></a></li>
 </ul></li>
-<li><a href="#radiometría">Radiometría</a>
+<li><a href="#radiometría-101">Radiometría 101</a>
 <ul>
 <li><a href="#unidades-básicas">Unidades básicas</a>
 <ul>
@@ -276,13 +277,54 @@ función de distribución de transmitancia bidireccional (BTDF)</a></li>
 BTDF</a></li>
 <li><a href="#subsurface-scattering"><em>Subsurface
 scattering</em></a></li>
+<li><a href="#reflectancia-hemisférica">Reflectancia
+hemisférica</a></li>
 <li><a href="#reflejos">Reflejos</a></li>
 </ul></li>
+<li><a href="#reflexión-especular-y-transmitancia">Reflexión especular y
+transmitancia</a></li>
+<li><a href="#fuentes-de-luz">Fuentes de luz</a>
+<ul>
+<li><a href="#point-lights-spotlights">Point lights +
+spotlights</a></li>
+<li><a href="#area-lights">Area lights</a></li>
 </ul></li>
-<li><a href="#importance-sampling"><em>Importance sampling</em></a></li>
+</ul></li>
+<li><a href="#construyamos-un-path-tracer">¡Construyamos un path
+tracer!</a>
+<ul>
+<li><a href="#requisitos-de-real-time-ray-tracing">Requisitos de
+<em>real time ray tracing</em></a>
+<ul>
+<li><a href="#arquitecturas-de-gráficas">Arquitecturas de
+gráficas</a></li>
+<li><a href="#frameworks-y-api-de-ray-tracing-en-tiempo-real">Frameworks
+y API de ray tracing en tiempo real</a></li>
+</ul></li>
+<li><a href="#setup-del-proyecto">Setup del proyecto</a></li>
+<li><a href="#rt-pipeline">RT pipeline</a></li>
+<li><a href="#estructuras-de-aceleración">Estructuras de
+aceleración</a></li>
+<li><a href="#shaders">Shaders</a>
+<ul>
+<li><a href="#tipos-de-shaders-en-rt">Tipos de shaders en RT</a></li>
+<li><a href="#shader-binding-table">Shader binding table</a></li>
+</ul></li>
+<li><a href="#asmiray">Asmiray</a>
+<ul>
+<li><a href="#materiales-y-objetos">Materiales y objetos</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#análisis-de-rendimiento">Análisis de rendimiento</a></li>
+<li><a href="#el-futuro-de-ray-tracing">El futuro de Ray
+Tracing</a></li>
 <li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
 cómo se hizo este trabajo</a>
 <ul>
+<li><a href="#influencias">Influencias</a></li>
+<li><a href="#diseño">Diseño</a></li>
+<li><a href="#herramientas">Herramientas</a></li>
+<li><a href="#metodología-de-trabajo">Metodología de trabajo</a></li>
 <li><a href="#github">Github</a>
 <ul>
 <li><a href="#github-actions">Github Actions</a></li>
@@ -293,7 +335,7 @@ cómo se hizo este trabajo</a>
 de términos y expresiones</a>
 <ul>
 <li><a href="#notación">Notación</a></li>
-<li><a href="#radiometría-1"><span>Radiometría</span></a></li>
+<li><a href="#radiometría"><span>Radiometría</span></a></li>
 </ul></li>
 <li><a href="#bibliografía">Bibliografía</a></li>
 </ul>
@@ -317,14 +359,17 @@ soluciones propuestas para el futuro del área.</p>
 <p><em>Translation. It’ll be left as is until there’s a definitive
 abstract</em></p>
 <h1 class="unnumbered" id="dedicatoria">Dedicatoria</h1>
-<p><em>Aquí es donde me pongo ñoño</em></p>
 <p>¡Parece que has llegado un poco pronto! Si lo has hecho
 voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado
-en verano de 2022.</p>
-<p>Mientras tanto, actualizaré poco a poco el contenido. Si quieres ir
-comprobando los progresos, puedes visitar <a
+en verano de 2022. Mientras tanto, actualizaré poco a poco el contenido.
+Si quieres ir comprobando los progresos, puedes visitar <a
 href="github.com/Asmilex/Raytracing">Asmilex/Raytracing</a> en Github
 para ver el estado del desarrollo.</p>
+<p>Aun así, hay mucha gente que me ha ayudado a sacar este proyecto
+hacia delante.</p>
+<p>Gracias, en primer lugar, a mi familia por permitirme acabar la
+carrera. A Cristina, Jorge, Jose OC, Lucas, Mari, Marina y Sergio por
+ayudarme con el contenido, feedback del desarrollo y guía de diseño.</p>
 <h1 id="introducción">Introducción</h1>
 <p>Ser capaces de capturar un momento.</p>
 <p>Desde siempre, este ha sido uno de los sueños de la humanidad. La
@@ -1498,6 +1543,14 @@ muestra de <span class="math inline">\(p_X\)</span></li>
 y se vuelve al paso 1.</li>
 </ol></li>
 </ol>
+<h2 id="importance-sampling"><em>Importance sampling</em></h2>
+<p>Con la llegada de ray tracing en tiempo real surge una obligación por
+optimizar los pocos rayos que se pueden trazar. Una de las preguntas que
+nos debemos hacer es <em>hacia dónde</em> generamos el rayo.</p>
+<p>En esta sección daremos respuesta a este dilema. Estudiaremos cómo
+las fuentes de luz afectan a la calidad de la imagen final. Veremos
+técnicas de reducción del error, las cuales nos permitirán acelerar
+enormemente el cómputo de la escena.</p>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-2">Referencias</h2>
 <p><span class="citation" data-cites="wikipedia-contributors-2021B">(<a
@@ -1538,7 +1591,12 @@ role="doc-biblioref">Owen 2013</a>)</span>, <span class="citation"
 data-cites="berkeley-cs184">(<a href="#ref-berkeley-cs184"
 role="doc-biblioref">Berkeley cs184 2022</a>, Monte Carlo
 Integration)</span></p>
-<h1 id="radiometría">Radiometría</h1>
+<ul>
+<li><em>(berkeley-cs184)</em>
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf</li>
+<li>Gems I, p.284.</li>
+</ul>
+<h1 id="radiometría-101">Radiometría 101</h1>
 <p>En este capítulo estudiaremos las bases de la radiometría. Esta área
 de la óptica nos proporcionará una serie de herramientas con las cuales
 podremos responder a la pregunta <em>cuánta luz existe en un
@@ -2099,6 +2157,31 @@ Carlo nos vendrán de perlas!</p>
 para recordar su existencia. No es tampoco difícil, pero si no lo vamos
 a usar…</p>
 </blockquote>
+<h3 id="reflectancia-hemisférica">Reflectancia hemisférica</h3>
+<p>Puede ser útil tomar el comportamiento agregado de las BRDFs y las
+BTDFs y reducirlo un cierto valor que describa su comportamiento general
+de dispersión. Algo así como un resumen de su distribución.</p>
+<p>La <strong>reflectancia hemisférica-direccional</strong>
+(<em>hemispherical-directional reflectance</em>) describe la reflexión
+total sobre un hemisferio debida a una fuente de luz que proviene desde
+la dirección <span class="math inline">\(\omega_o\)</span>:</p>
+<p><span class="math display">\[
+\rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o, \omega_i) \lvert
+\cos\theta_i \rvert\ d\omega_i}
+\]</span></p>
+<blockquote>
+<p>FIXME: no creo que esté bien explicado. Debería echarle un ojo.</p>
+</blockquote>
+<p>Por otra parte, la <strong>reflectancia
+hemisférica-hemisférica</strong> (<em>hemispherical-hemispherical
+reflectance</em>) es un valor espectral que nos proporciona el ratio de
+luz incidente reflejada por una superficie, suponiendo que llega la
+misma luz desde todas direcciones:</p>
+<p><span class="math display">\[
+\rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o,
+\omega_i) \lvert \cos\theta_o\ \cos\theta_i \rvert\ d\omega_o\
+d\omega_i}
+\]</span></p>
 <h3 id="reflejos">Reflejos</h3>
 <p>Una vez hemos definido las funciones de distribución bidireccionales,
 debemos encargarnos de modelar el comportamiento explícitamente. Para
@@ -2130,6 +2213,72 @@ distribución de luz es la misma en todas direcciones. Por el contrario,
 los anisotrópicos reflejan diferentes cantidades de luz dependiendo
 desde dónde los miremos. Los ejemplos más habituales de materiales
 anisotrópicos son las rocas y la madera.</p>
+<h2 id="reflexión-especular-y-transmitancia">Reflexión especular y
+transmitancia</h2>
+<blockquote>
+<p>TODO</p>
+</blockquote>
+<h2 id="fuentes-de-luz">Fuentes de luz</h2>
+<blockquote>
+<p>TODO: point lights, area lights, ambient lights…</p>
+<p>TODO: estas son notas muy puntuales (<em>como las luces, jeje</em>).
+Ya las revisaré más adelante.</p>
+</blockquote>
+<p>La interfaz se encuentra en <code>host_device.h</code>. Describe cómo
+comunicarse con la GPU.</p>
+<p>Ahora mismo, tenemos 3 constantes: tipo de luz:</p>
+<pre><code class="language-glsl">vec3  lightPosition;    // (x, y, z)
+float lightIntensity;   // (Intensidad)
+int   lightType;        // (0 =&gt; point light, 1 =&gt; area light)</code></pre>
+<p>Sería interesante añadir algunas constantes para controlar el tamaño
+(radio, posición, normal para las de área…)</p>
+<h3 id="point-lights-spotlights">Point lights + spotlights</h3>
+<blockquote>
+<p>pbr-book, point lights: <em>“Strictly speaking, it is incorrect to
+describe the light arriving at a point due to a point light source using
+units of radiance. Radiant intensity is instead the proper unit for
+describing emission from a point light source, as explained in Section
+5.4. In the light source interfaces here, however, we will abuse
+terminology and use Sample_Li() methods to report the illumination
+arriving at a point for all types of light sources, dividing radiant
+intensity by the squared distance to the point p to convert units.
+Section 14.2 revisits the details of this issue in its discussion of how
+delta distributions affect evaluation of the integral in the scattering
+equation. In the end, the correctness of the computation does not suffer
+from this fudge, and it makes the implementation of light transport
+algorithms more straightforward by not requiring them to use different
+interfaces for different types of lights.”</em></p>
+</blockquote>
+<pre><code class="language-cpp">// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.h
+// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.cpp
+
+Spectrum sample_light(interaccion, vec2 u, vec3 wi, float pdf, visibility_tester) {
+    wi = normalize(posicion_luz - interraccion.p);
+    pdf = 1.f;
+    // testeo de visibilidad. Opcional, I guess.
+
+    return intensidad / distancia_al_cuadrado(posicion_luz, interraccion.p);
+}</code></pre>
+<p>La potencia total emitida por la luz puede calcularse integrando la
+intensidad desprendida en toda su superficie. Asumiendo la intensidad
+constante:</p>
+<p><span class="math display">\[
+\Phi = \int_{\mathbb{S}^2}{I d\omega} = I \int_{\mathbb{S}^2}{d\omega} =
+4 \pi I
+\]</span></p>
+<p>Las spotlights son variaciones de las point lights iluminando en un
+cono.</p>
+<h3 id="area-lights">Area lights</h3>
+<p>Para simplificar la implementación, podemos asumir que son
+rectangulares.</p>
+<p>Nos van a hacer falta técnicas de Monte Carlo para solucionar el
+problema de calcular integrales a lo largo de su superficie.</p>
+<p>Primero, lo mejor es asumir un cuadrado, y después, extender la
+interfaz para meter otras formas (es decir, rectángulos. Porque lo otro
+sería mucha parafernalia innecesaria).</p>
+<p><a
+href="https://github.com/mmp/pbrt-v3/blob/aaa552a4b9cbf9dccb71450f47b268e0ed6370e2/src/core/light.h">Código
+fuente</a></p>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
 <p><span class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
@@ -2152,21 +2301,85 @@ Transmittance 2021</a>)</span></p>
 <ul>
 <li>https://matmatch.com/learn/property/isotropy-anisotropy</li>
 </ul>
-<h1 id="importance-sampling"><em>Importance sampling</em></h1>
-<p>Con la llegada de ray tracing en tiempo real surge una obligación por
-optimizar los pocos rayos que se pueden trazar. Una de las preguntas que
-nos debemos hacer es <em>hacia dónde</em> generamos el rayo.</p>
-<p>En este capítulo daremos respuesta a este dilema. Estudiaremos cómo
-las fuentes de luz afectan a la calidad de la imagen final. Veremos
-técnicas de reducción del error, las cuales nos permitirán acelerar
-enormemente el cómputo de la escena.</p>
+<h1 id="construyamos-un-path-tracer">¡Construyamos un path tracer!</h1>
+<blockquote>
+<p>TODO: una pequeña introducción. Hablar de los offline renderers
+disponibles. Tras esto, dar paso a los frameworks de real time RT. Esta
+sección estará fuertemente basada en el tutorial de Nvidia de <a
+href="https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/">nvpro
+samples</a> + <a
+href="https://nvpro-samples.github.io/vk_mini_path_tracer/index.html">mini
+path tracer</a>.</p>
+</blockquote>
+<h2 id="requisitos-de-real-time-ray-tracing">Requisitos de <em>real time
+ray tracing</em></h2>
+<h3 id="arquitecturas-de-gráficas">Arquitecturas de gráficas</h3>
+<blockquote>
+<p>Turing, Ampere, RDNA2, Arc… NOTE: sería interesante enlazarlo con la
+sección de rendimiento.</p>
+</blockquote>
+<h3 id="frameworks-y-api-de-ray-tracing-en-tiempo-real">Frameworks y API
+de ray tracing en tiempo real</h3>
+<blockquote>
+<p>TODO: hablar de DXR, Vulkan, OptiX… Hablar de por qué he escogido
+Vulkan + Nvidia Designworks (nv-pro samples)</p>
+</blockquote>
+<h2 id="setup-del-proyecto">Setup del proyecto</h2>
+<h2 id="rt-pipeline">RT pipeline</h2>
+<h2 id="estructuras-de-aceleración">Estructuras de aceleración</h2>
+<blockquote>
+<p>TODO: En esencia, hablar de la parafernalia que montamos con el BLAS
+y el TLAS.</p>
+</blockquote>
+<h2 id="shaders">Shaders</h2>
+<h3 id="tipos-de-shaders-en-rt">Tipos de shaders en RT</h3>
+<h3 id="shader-binding-table">Shader binding table</h3>
+<h2 id="asmiray">Asmiray</h2>
+<h3 id="materiales-y-objetos">Materiales y objetos</h3>
+<blockquote>
+<p>NOTE: esto son notas para el Andrés del futuro. Sí, lo sé, está
+bastante claro solo con leerlo (⊙_⊙;)</p>
+</blockquote>
+<p>Si quiero meter las BxDFs en los materiales tal y como tenía pensado
+(es decir, unas cuantas flags que me indiquen la BxDF que tengo que
+usar), tengo que…</p>
+<ol type="1">
+<li>Modificar <code>common/obj_loader.h/MaterialObj</code> para meterle
+las flags necesarias.</li>
+<li>Modificar acordemente
+<code>shaders/host_device.h/WaveFronMaterial</code>.</li>
+<li>Secuestrar <code>ObjLoader::loadModel()</code> para indicarle los
+parámetros nuevos.</li>
+<li>(<em>Creo que no hace falta tocar <code>HelloVk::loadModel()</code>
+de esta manera</em>)</li>
+<li>Toquetear los shaders para que me saque las flags.</li>
+</ol>
+<p>CREO que de esta manera no me va a hacer falta tocar framebuffers.
+Simplemente, todo dependerá de mi material y ya.</p>
+<p><em>Creo</em>.</p>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-4">Referencias</h2>
 <ul>
-<li><em>(berkeley-cs184)</em>
-https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf</li>
-<li>Gems I, p.284.</li>
+<li>https://github.com/dannyfritz/awesome-ray-tracing</li>
+<li>https://www.wikiwand.com/en/Radeon</li>
+<li>https://www.wikiwand.com/en/List_of_Nvidia_graphics_processing_units#/GeForce_30_series</li>
+<li></li>
 </ul>
+<h1 id="análisis-de-rendimiento">Análisis de rendimiento</h1>
+<blockquote>
+<p>TODO: para completar esta parte, necesitamos ambas implementaciones
+(en CPU y GPU) listas. Hasta entonces, esto se queda vacío. NOTE: Podría
+preguntarle a Kako que tire benchmark en su 2060, y a Manu con su 3060
+(¿ti?)</p>
+</blockquote>
+<hr>
+<h2 class="unlisted unnumbered" id="referencias-5">Referencias</h2>
+<h1 id="el-futuro-de-ray-tracing">El futuro de Ray Tracing</h1>
+<blockquote>
+<p>TODO:</p>
+</blockquote>
+<hr>
+<h2 class="unlisted unnumbered" id="referencias-6">Referencias</h2>
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
 <blockquote>
@@ -2174,6 +2387,30 @@ hizo este trabajo</h1>
 Agile. Documentación y código desarrollado a la par, mediante issues.
 Adaptación de los requisitos conforme se avanza. Beneficios de una
 página web (seguramente debería ser su propia sección)</p>
+</blockquote>
+<h2 id="influencias">Influencias</h2>
+<blockquote>
+<p>TODO: hablar de <a href="https://explorabl.es/">explorable
+explanations</a>, <a
+href="https://www.3blue1brown.com/">3Blue1Brown</a>, <a
+href="https://www.youtube.com/user/DigitalFoundry">Digital Foundry</a>,
+<a href="https://ciechanow.ski/lights-and-shadows/">Blog de Bartosz
+Ciechanowski</a>. Hablar del estilo de escritura</p>
+</blockquote>
+<h2 id="diseño">Diseño</h2>
+<blockquote>
+<p>TODO: hablar de paleta de colores, tipografía…</p>
+</blockquote>
+<h2 id="herramientas">Herramientas</h2>
+<blockquote>
+<p>TODO: hablar de <a href="https://www.figma.com/">Figma</a>, LTeX…
+(Issue <a
+href="https://github.com/Asmilex/Raytracing/issues/40">#40</a>)</p>
+</blockquote>
+<h2 id="metodología-de-trabajo">Metodología de trabajo</h2>
+<blockquote>
+<p>TODO: un poco de Agile <em>inventao’</em> sinceramente. Pero bueno,
+habrá que discutirlo.</p>
 </blockquote>
 <h2 id="github">Github</h2>
 <blockquote>
@@ -2191,6 +2428,8 @@ construir la web y el pdf</p>
 <p>TODO - Hablar de cómo se gestiona el trabajo mediante issues,
 recapitulados todos con Projects.</p>
 </blockquote>
+<hr>
+<h2 class="unlisted unnumbered" id="referencias-7">Referencias</h2>
 <h1 id="anexo-glosario-de-términos-y-expresiones">Anexo: Glosario de
 términos y expresiones</h1>
 <blockquote>
@@ -2259,7 +2498,7 @@ aleatoria con distribución uniforme en <span class="math inline">\([0,
 </tr>
 </tbody>
 </table>
-<h2 id="radiometría-1"><a href="#radiometría">Radiometría</a></h2>
+<h2 id="radiometría"><a href="#radiometría">Radiometría</a></h2>
 <table>
 <colgroup>
 <col style="width: 15%" />
