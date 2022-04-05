@@ -359,6 +359,24 @@ Esta forma de expresar la radiancia es muy importante. Generalmente se le suele 
 
 > NOTE: quizás no merezca la pena hablar de esto. De momento, se queda para recordar su existencia. No es tampoco difícil, pero si no lo vamos a usar...
 
+### Reflectancia hemisférica
+
+Puede ser útil tomar el comportamiento agregado de las BRDFs y las BTDFs y reducirlo un cierto valor que describa su comportamiento general de dispersión. Algo así como un resumen de su distribución.
+
+La **reflectancia hemisférica-direccional** (*hemispherical-directional reflectance*) describe la reflexión total sobre un hemisferio debida a una fuente de luz que proviene desde la dirección $\omega_o$:
+
+$$
+\rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o, \omega_i) \abs{\cos\theta_i}\ d\omega_i}
+$$
+
+> FIXME: no creo que esté bien explicado. Debería echarle un ojo.
+
+Por otra parte, la **reflectancia hemisférica-hemisférica** (*hemispherical-hemispherical reflectance*) es un valor espectral que nos proporciona el ratio de luz incidente reflejada por una superficie, suponiendo que llega la misma luz desde todas direcciones:
+
+$$
+\rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o, \omega_i) \abs{\cos\theta_o\ \cos\theta_i}\ d\omega_o\ d\omega_i}
+$$
+
 ### Reflejos
 
 Una vez hemos definido las funciones de distribución bidireccionales, debemos encargarnos de modelar el comportamiento explícitamente. Para ello, veamos cómo los materiales modifican las distribuciones.
@@ -374,13 +392,63 @@ Ten en cuenta que es muy difícil encontrar objetos físicos que imiten a la per
 
 Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, puede ser **isotrópica** o **anisotrópica**. Los materiales isotrópicos mantienen las propiedades de reflectancia invariantes ante rotaciones; es decir, la distribución de luz es la misma en todas direcciones. Por el contrario, los anisotrópicos reflejan diferentes cantidades de luz dependiendo desde dónde los miremos. Los ejemplos más habituales de materiales anisotrópicos son las rocas y la madera.
 
+## Reflexión especular y transmitancia
+
+> TODO
+
 ## Fuentes de luz
 
 > TODO: point lights, area lights, ambient lights...
+>
+> TODO: estas son notas muy puntuales (*como las luces, jeje*). Ya las revisaré más adelante.
 
+La interfaz se encuentra en `host_device.h`. Describe cómo comunicarse con la GPU.
 
-[^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores como [@quantumfracture-2021] que han tratado el tema con suficiente profundidad.
-[^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
+Ahora mismo, tenemos 3 constantes: tipo de luz:
+
+```glsl
+vec3  lightPosition;    // (x, y, z)
+float lightIntensity;   // (Intensidad)
+int   lightType;        // (0 => point light, 1 => area light)
+```
+
+Sería interesante añadir algunas constantes para controlar el tamaño (radio, posición, normal para las de área...)
+
+### Point lights + spotlights
+
+> pbr-book, point lights: *"Strictly speaking, it is incorrect to describe the light arriving at a point due to a point light source using units of radiance. Radiant intensity is instead the proper unit for describing emission from a point light source, as explained in Section 5.4. In the light source interfaces here, however, we will abuse terminology and use Sample_Li() methods to report the illumination arriving at a point for all types of light sources, dividing radiant intensity by the squared distance to the point p to convert units. Section 14.2 revisits the details of this issue in its discussion of how delta distributions affect evaluation of the integral in the scattering equation. In the end, the correctness of the computation does not suffer from this fudge, and it makes the implementation of light transport algorithms more straightforward by not requiring them to use different interfaces for different types of lights."*
+
+```cpp
+// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.h
+// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.cpp
+
+Spectrum sample_light(interaccion, vec2 u, vec3 wi, float pdf, visibility_tester) {
+    wi = normalize(posicion_luz - interraccion.p);
+    pdf = 1.f;
+    // testeo de visibilidad. Opcional, I guess.
+
+    return intensidad / distancia_al_cuadrado(posicion_luz, interraccion.p);
+}
+```
+
+La potencia total emitida por la luz puede calcularse integrando la intensidad desprendida en toda su superficie. Asumiendo la intensidad constante:
+
+$$
+\Phi = \int_{\mathbb{S}^2}{I d\omega} = I \int_{\mathbb{S}^2}{d\omega} = 4 \pi I
+$$
+
+Las spotlights son variaciones de las point lights iluminando en un cono.
+
+### Area lights
+
+Para simplificar la implementación, podemos asumir que son rectangulares.
+
+Nos van a hacer falta técnicas de Monte Carlo para solucionar el problema de calcular integrales a lo largo de su superficie.
+
+Primero, lo mejor es asumir un cuadrado, y después, extender la interfaz para meter otras formas (es decir, rectángulos. Porque lo otro sería mucha parafernalia innecesaria).
+
+[Código fuente](https://github.com/mmp/pbrt-v3/blob/aaa552a4b9cbf9dccb71450f47b268e0ed6370e2/src/core/light.h)
+
 
 <hr>
 
@@ -389,3 +457,6 @@ Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, pue
 [@PBRT3e], [@wikipedia-contributors-2021D], [@studysession-2021], [@berkeley-cs184, Radiometry & Photometry], [@wikipedia-funcion-de-distribucion-de-reflectancia-bidireccional-2022], [@wikipedia-transmittance-2021]
 
 - https://matmatch.com/learn/property/isotropy-anisotropy
+
+[^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores como [@quantumfracture-2021] que han tratado el tema con suficiente profundidad.
+[^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.

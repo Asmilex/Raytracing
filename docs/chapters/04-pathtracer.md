@@ -30,6 +30,22 @@
 
 ## Asmiray
 
+### Materiales y objetos
+
+> NOTE: esto son notas para el Andrés del futuro. Sí, lo sé, está bastante claro solo con leerlo (⊙_⊙;)
+
+Si quiero meter las BxDFs en los materiales tal y como tenía pensado (es decir, unas cuantas flags que me indiquen la BxDF que tengo que usar), tengo que...
+
+1. Modificar `common/obj_loader.h/MaterialObj` para meterle las flags necesarias.
+2. Modificar acordemente `shaders/host_device.h/WaveFronMaterial`.
+3. Secuestrar `ObjLoader::loadModel()` para indicarle los parámetros nuevos.
+4. (*Creo que no hace falta tocar `HelloVk::loadModel()` de esta manera*)
+5. Toquetear los shaders para que me saque las flags.
+
+CREO que de esta manera no me va a hacer falta tocar framebuffers. Simplemente, todo dependerá de mi material y ya.
+
+*Creo*.
+
 <hr>
 
 ## Referencias {.unlisted .unnumbered}
