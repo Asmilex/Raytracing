@@ -349,11 +349,11 @@ Esto nos deja a punto de caramelo una nueva expresión de la randiancia en térm
 
 $$
 L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\abs{\cos\theta_i} d\omega_i}
-$$
+$${#eq:scattering_equation}
 
 siendo $\mathbb{S}^2$ la esfera.
 
-Esta forma de expresar la radiancia es muy importante. Generalmente se le suele llamar la *ecuación de dispersión* (*scattering equation*, en inglés). Dado que es una integral muy importante, seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte Carlo nos vendrán de perlas!
+Esta forma de expresar la radiancia es muy importante. Generalmente se le suele llamar la *ecuación de dispersión* (*scattering equation*, en inglés). Dado que es una integral muy importante, seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte Carlo nos vendrán de perlas! Más adelante hablaremos de ella.
 
 ### *Subsurface scattering*
 
