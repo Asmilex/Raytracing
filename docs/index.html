@@ -310,7 +310,8 @@ aceleración</a></li>
 <li><a href="#tipos-de-shaders-en-rt">Tipos de shaders en RT</a></li>
 <li><a href="#shader-binding-table">Shader binding table</a></li>
 </ul></li>
-<li><a href="#asmiray">Asmiray</a>
+<li><a href="#asmiray">Asmiray</a></li>
+<li><a href="#transporte-de-luz">Transporte de luz</a>
 <ul>
 <li><a href="#materiales-y-objetos">Materiales y objetos</a></li>
 </ul></li>
@@ -2141,17 +2142,18 @@ omitirlo?</p>
 randiancia en términos de la randiancia incidente en un punto <span
 class="math inline">\(p\)</span>. Integrando la expresión anterior,
 obtenemos</p>
-<p><span class="math display">\[
+<p><span id="eq:scattering_equation" class="eqnos"><span
+class="math display">\[
 L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow
 \omega_i)L_i(p, \omega_i)\lvert \cos\theta_i \rvert d\omega_i}
-\]</span></p>
+\]</span><span class="eqnos-number">(7)</span></span></p>
 <p>siendo <span class="math inline">\(\mathbb{S}^2\)</span> la
 esfera.</p>
 <p>Esta forma de expresar la radiancia es muy importante. Generalmente
 se le suele llamar la <em>ecuación de dispersión</em> (<em>scattering
 equation</em>, en inglés). Dado que es una integral muy importante,
 seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte
-Carlo nos vendrán de perlas!</p>
+Carlo nos vendrán de perlas! Más adelante hablaremos de ella.</p>
 <h3 id="subsurface-scattering"><em>Subsurface scattering</em></h3>
 <blockquote>
 <p>NOTE: quizás no merezca la pena hablar de esto. De momento, se queda
@@ -2336,6 +2338,22 @@ y el TLAS.</p>
 <h3 id="tipos-de-shaders-en-rt">Tipos de shaders en RT</h3>
 <h3 id="shader-binding-table">Shader binding table</h3>
 <h2 id="asmiray">Asmiray</h2>
+<h2 id="transporte-de-luz">Transporte de luz</h2>
+<p>Hemos llegado a una de las partes más importantes de este trabajo. Es
+el momento de poner en concordancia todo lo que hemos visto a lo largo
+de los capítulos anteriores.</p>
+<p>Empecemos por la dispersión. ¿Recuerdas la ecuación de dispersión [<a
+href="#eq:scattering_equation">7</a>]? Podemos estimarla utilizando
+Monte Carlo:</p>
+<p><span class="math display">\[
+\begin{aligned}
+L_o(p, \omega_o) &amp; = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow
+\omega_i)L_i(p, \omega_i)\lvert \cos\theta_i \rvert d\omega_i} \\
+                 &amp; \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p,
+\omega_o \leftarrow \omega_j) L_i(p, \omega_j) \lvert \cos\theta_j
+\rvert}{p(\omega_j)}}
+\end{aligned}
+\]</span></p>
 <h3 id="materiales-y-objetos">Materiales y objetos</h3>
 <blockquote>
 <p>NOTE: esto son notas para el Andrés del futuro. Sí, lo sé, está
@@ -2502,8 +2520,8 @@ aleatoria con distribución uniforme en <span class="math inline">\([0,
 <h2 id="radiometría"><a href="#radiometría">Radiometría</a></h2>
 <table>
 <colgroup>
-<col style="width: 15%" />
-<col style="width: 84%" />
+<col style="width: 17%" />
+<col style="width: 82%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -2585,11 +2603,18 @@ salida</a></strong></td>
 class="math inline">\(\begin{aligned} &amp; L_o(p, \omega) =
 \begin{cases} L^+(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
 &gt; 0 \\ L^-(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p} &lt;
-0 \end{cases} \\ &amp; L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p,
-\omega_o \leftarrow \omega_i)L_i(p, \omega_i)\lvert \cos\theta_i \rvert
-d\omega_i} \end{aligned}\)</span></td>
+0 \end{cases} \end{aligned}\)</span></td>
 </tr>
 <tr class="even">
+<td style="text-align: left;"><strong><a href="">Ecuación de
+dispersión</a></strong></td>
+<td style="text-align: left;"><span
+class="math inline">\(\begin{aligned}L_o(p, \omega_o) =
+\int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p,
+\omega_i)\lvert \cos\theta_i \rvert
+d\omega_i}\end{aligned}\)</span></td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"><strong><a
 href="#la-función-de-distribución-de-reflectancia-bidireccional-brdf">BRDF</a></strong></td>
 <td style="text-align: left;"><span
@@ -2598,13 +2623,13 @@ class="math inline">\(\begin{aligned}&amp; f_r(p, \omega_o \leftarrow
 \omega_o)}{L_i(p, \omega_i) \cos\theta_i\
 d\omega_i}\end{aligned}\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><strong><a
 href="#la-función-de-distribución-de-transmitancia-bidireccional-btdf">BTDF</a></strong></td>
 <td style="text-align: left;"><span class="math inline">\(f_t(p,
 \omega_o \leftarrow \omega_i)\)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><strong><a
 href="#juntando-la-brdf-y-la-btdf">BSDF</a></strong></td>
 <td style="text-align: left;"><span class="math inline">\(f(p, \omega_o
