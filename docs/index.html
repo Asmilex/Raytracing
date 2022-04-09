@@ -273,16 +273,16 @@ función de distribución de reflectancia bidireccional (BRDF)</a></li>
 <li><a
 href="#la-función-de-distribución-de-transmitancia-bidireccional-btdf">La
 función de distribución de transmitancia bidireccional (BTDF)</a></li>
-<li><a href="#juntando-la-brdf-y-la-btdf">Juntando la BRDF y la
-BTDF</a></li>
-<li><a href="#subsurface-scattering"><em>Subsurface
-scattering</em></a></li>
+<li><a
+href="#juntando-la-brdf-y-la-btdf-en-la-función-de-distribución-de-dispersión-bidireccional">Juntando
+la BRDF y la BTDF en La función de distribución de dispersión
+bidireccional</a></li>
 <li><a href="#reflectancia-hemisférica">Reflectancia
 hemisférica</a></li>
 <li><a href="#reflejos">Reflejos</a></li>
 </ul></li>
-<li><a href="#reflexión-especular-y-transmitancia">Reflexión especular y
-transmitancia</a></li>
+<li><a href="#la-rendering-equation">La <em>rendering
+equation</em></a></li>
 <li><a href="#fuentes-de-luz">Fuentes de luz</a>
 <ul>
 <li><a href="#point-lights-spotlights">Point lights +
@@ -1856,10 +1856,11 @@ https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photo
 página 10.</p>
 </blockquote>
 <p>Podemos dar otra expresión de la radiancia en términos del flujo:</p>
-<p><span class="math display">\[
+<p><span id="eq:radiancia_flujo" class="eqnos"><span
+class="math display">\[
 L(p, \omega) = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} =
 \frac{d^2\Phi(p, \omega)}{d\omega\ dA\ \cos\theta}
-\]</span></p>
+\]</span><span class="eqnos-number">(5)</span></span></p>
 <p>donde <span class="math inline">\(dA^\bot\)</span> es el área
 proyectada por <span class="math inline">\(dA\)</span> en una hipotética
 superficie perpendicular a <span
@@ -1879,12 +1880,12 @@ distinguir a ambos lados:</p>
 L^+(p, \omega) = \lim_{t \to 0^+}{L(p + t\mathbf{n_p}, \omega)} \\
 L^-(p, \omega) = \lim_{t \to 0^-}{L(p + t\mathbf{n_p}, \omega)}
 \end{aligned}
-\]</span><span class="eqnos-number">(5)</span></span></p>
+\]</span><span class="eqnos-number">(6)</span></span></p>
 <p>donde <span class="math inline">\(\mathbf{n_p}\)</span> es la normal
 en el punto <span class="math inline">\(p\)</span>.</p>
 <p>Otra forma de solucionarlo (y preferible, puesto que simplifica
 entender lo que ocurre) es distinguir entre la radiancia que llega a un
-punto –la incidente–, y la que sale.</p>
+punto –la incidente–, y la saliente.</p>
 <p>La primera se llamará <span class="math inline">\(L_i(p,
 \omega)\)</span>, mientras que la segunda será <span
 class="math inline">\(L_o(p, \omega)\)</span>. Es importante destacar
@@ -1893,7 +1894,7 @@ fuera</em> de la superficie. Quizás es contraintuitivo en <span
 class="math inline">\(L_i\)</span>, puesto que <span
 class="math inline">\(-\omega\)</span> apunta <em>hacia</em> la
 superficie. Depende del autor se utiliza una concepción u otra.</p>
-<p>Utilizando esta notación y usando [<a href="#eq:L_limit">5</a>],
+<p>Utilizando esta notación y usando [<a href="#eq:L_limit">6</a>],
 podemos escribir <span class="math inline">\(L_i\)</span> y <span
 class="math inline">\(L_o\)</span> como</p>
 <p><span class="math display">\[
@@ -1914,6 +1915,9 @@ class="math inline">\(L_o\)</span> como</p>
         \end{cases}
 \end{aligned}
 \]</span></p>
+<p>Hacemos esta distinción porque, a fin de cuentas, necesitamos
+distinguir entre los fotones que llegan a la superficie y los que
+salen.</p>
 <blockquote>
 <p>TODO:
 https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
@@ -1926,9 +1930,42 @@ superifcie, <span class="math inline">\(L_o(p, \omega) = L_i(p, -\omega)
 <p>La importancia de la radiancia se debe a un par de propiedades:</p>
 <p>La primera de ellas es que, dado <span
 class="math inline">\(L\)</span>, podemos calcular cualquier otra unidad
-básica mediante integración. Además, su valor se mantiene constante en
-rayos que viajan en el vacío. Parece natural usarla en un ray
-tracer.</p>
+básica mediante integración. Además, <strong>su valor se mantiene
+constante en rayos que viajan en el vacío en línea recta</strong> <span
+class="citation" data-cites="Pellacini-Marschner-2017">(<a
+href="#ref-Pellacini-Marschner-2017" role="doc-biblioref">Fabio
+Pellacini 2017</a>)</span>. Esto último hace que resulte muy natural
+usarla en un ray tracer.</p>
+<p>Veamos por qué ocurre esto:</p>
+<blockquote>
+<p>TODO:
+https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf,
+página 18.</p>
+</blockquote>
+<p>Consideremos dos superficies ortogonales entre sí, <span
+class="math inline">\(S_1\)</span> y <span
+class="math inline">\(S_2\)</span> separadas una distancia <span
+class="math inline">\(r\)</span>. Debido a la conservación de la
+energía, cualquier fotón que salga de una superficie y se encuentre bajo
+el ángulo sólido de la otra debe llegar impactar en dicha superficie
+opuesta.</p>
+<p>Por tanto:</p>
+<p><span class="math display">\[
+d^2\Phi_1 = d^2\Phi_2
+\]</span></p>
+<p>Sustituyendo en la expresión de la radiancia [<a
+href="#eq:radiancia_flujo">5</a>], y teniendo en cuenta que son
+ortogonales (lo que nos dice que <span class="math inline">\(\cos\theta
+= 1\)</span>):</p>
+<p><span class="math display">\[
+L_1 d\omega_1 dA_1 = L_2 d\omega_2 dA_2
+\]</span></p>
+<p>Por construcción, podemos cambiar los ángulos sólidos:</p>
+<p><span class="math display">\[
+L_1 \frac{dA_2}{r^2} dA_1 = L_2 \frac{dA_1}{r^2} dA_2
+\]</span></p>
+<p>Lo que finalmente nos dice que <span class="math inline">\(L_1 =
+L_2\)</span>, como queríamos ver.</p>
 <h2 id="integrales-radiométricas">Integrales radiométricas</h2>
 <p>En esta sección, vamos a explorar las nuevas herramientas que nos
 proporciona la radiancia. Veremos también cómo integrar ángulos sólidos,
@@ -1954,7 +1991,7 @@ se puede expresar como</p>
 <p><span id="eq:E_abs_cos" class="eqnos"><span class="math display">\[
 E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \lvert cos\theta \rvert
 d\omega}
-\]</span><span class="eqnos-number">(6)</span></span></p>
+\]</span><span class="eqnos-number">(7)</span></span></p>
 <p>El término <span class="math inline">\(\cos\theta\)</span> aparece en
 la integral debido a la derivada del área proyectada, <span
 class="math inline">\(dA^\bot\)</span>. <span
@@ -2025,7 +2062,7 @@ d\omega = \frac{dA\cos\theta}{r^2}
 <p>TODO: figura como la de pbr book 5.16.</p>
 </blockquote>
 <p>Esto nos permite, por ejemplo, expandir algunas expresiones como la
-de la irradiancia [<a href="#eq:E_abs_cos">6</a>] si partimos de un
+de la irradiancia [<a href="#eq:E_abs_cos">7</a>] si partimos de un
 cuadrilátero <span class="math inline">\(dA\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -2044,6 +2081,11 @@ de luz: las familias de funciones de distribución bidireccionales</h2>
 impactando en ella, ocurren un par de sucesos: parte de la luz se
 refleja en ella, saliendo disparada hacia alguna dirección; mientras que
 otra parte se absorbe.</p>
+<p>En informática gráfica se consideran tres tipos principales de
+dispersión de luz: <strong>dispersión en superficie</strong>
+(<em>surface scattering</em>), <strong>dispersión volumétrica</strong>
+(<em>volumetric scattering</em>) y <strong>dispersión bajo
+superficie</strong> (<em>subsurface scattering</em>)</p>
 <p>En este capítulo vamos a modelar la primera. Estudiaremos qué es lo
 que ocurre cuando los fotones alcanzan una superficie, en qué dirección
 se reflejan, y cómo cambia el comportamiento dependiendo de las
@@ -2059,9 +2101,19 @@ en dirección <span class="math inline">\(\omega_o\)</span> debido a la
 radiancia incidente desde la dirección <span
 class="math inline">\(\omega_i\)</span>, partiendo de un punto <span
 class="math inline">\(p\)</span> en una superficie con normal <span
-class="math inline">\(\mathbf{n}\)</span>.</p>
+class="math inline">\(\mathbf{n}\)</span>. Depende de la longitud de
+onda <span class="math inline">\(\lambda\)</span>, pero, como de
+costumbre, la omitiremos.</p>
 <blockquote>
-<p>TODO: esquema como el de pbr fig 5.18.</p>
+<p><strong>Intuición</strong>: <em>¿cuál es la probabilidad de que,
+habiéndome llegado un fotón desde <span
+class="math inline">\(\omega_i\)</span>, me salga disparado hacia <span
+class="math inline">\(\omega_o\)</span>?</em></p>
+</blockquote>
+<blockquote>
+<p>TODO: esquema como el de pbr fig 5.18, o como
+https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf
+p.20</p>
 </blockquote>
 <p>Si consideramos <span class="math inline">\(\omega_i\)</span> como un
 cono diferencial de direcciones, la irradiancia diferencial en <span
@@ -2084,6 +2136,19 @@ f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p,
 \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\
 d\omega_i} \text{(1/sr)}
 \]</span></p>
+<blockquote>
+<p><strong>Nota</strong>(ción): dependiendo de la fuente que estés
+leyendo, es posible que te encuentres una integral algo diferente. Por
+ejemplo, en tanto en Wikipedia como en <span class="citation"
+data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
+role="doc-biblioref">Shirley and Morley 2003</a>)</span> se integra con
+respecto a los ángulos de salida <span
+class="math inline">\(\omega_o\)</span>, en vez de los incidentes.</p>
+<p>Aquí, usaremos la notación de integrar con respecto a los incidentes,
+como se hace en <span class="citation" data-cites="PBRT3e">(<a
+href="#ref-PBRT3e" role="doc-biblioref">Pharr, Jakob, and Humphreys
+2016</a>)</span>.</p>
+</blockquote>
 <p>Las BRDFs físicamente realistas tienen un par de propiedades
 importantes:</p>
 <ol type="1">
@@ -2105,10 +2170,12 @@ id="la-función-de-distribución-de-transmitancia-bidireccional-btdf">La
 función de distribución de transmitancia bidireccional (BTDF)</h3>
 <p>Si la BRDF describe cómo se refleja la luz, la <em>bidirectional
 transmittance distribution function</em> (abreviada BTDF) nos informará
-sobre la transmitancia; es decir, cómo se comporta la luz cuando entra
-en un medio. Son caras de la misma moneda: cuando la luz impacta en una
-superficie, y parte de ella, se reflejará, y otra parte se
-transmitirá.</p>
+sobre la transmitancia; es decir, cómo se comporta la luz cuando
+<em>entra</em> en un medio. Generalmente serán dos caras de la misma
+moneda: cuando la luz impacta en una superficie, parte de ella, se
+reflejará, y otra parte se transmitirá.</p>
+<p>Puedes imaginarte la BTDF como una función de reflectancia del
+hemisferio opuesto a donde se encuentra la normal de la superficie.</p>
 <p>Denotaremos a la BTDF por</p>
 <p><span class="math display">\[
 f_t(p, \omega_o \leftarrow \omega_i)
@@ -2117,27 +2184,26 @@ f_t(p, \omega_o \leftarrow \omega_i)
 class="math inline">\(\omega_o\)</span> y <span
 class="math inline">\(\omega_i\)</span> se encuentran en hemisferios
 diferentes.</p>
-<h3 id="juntando-la-brdf-y-la-btdf">Juntando la BRDF y la BTDF</h3>
+<h3
+id="juntando-la-brdf-y-la-btdf-en-la-función-de-distribución-de-dispersión-bidireccional">Juntando
+la BRDF y la BTDF en La función de distribución de dispersión
+bidireccional</h3>
 <p>Convenientemente, podemos unir la BRDF y la BTDF en una sola
 expresión, llamada <strong>la función de distribución de dispersión
 bidireccional</strong> (<em>bidirectional scattering distribution
-function</em>, BSDF). A la BSDF la llamaremos</p>
+function</em>, BSDF). A la BSDF la denotaremos por</p>
 <p><span class="math display">\[
 f(p, \omega_o \leftarrow \omega_i)
 \]</span></p>
+<blockquote>
+<p><strong>Intuición:</strong> <em>la BSDF son todas las posibles
+direcciones en las que puede salir disparada la luz.</em></p>
+</blockquote>
 <p>Usando esta definición, podemos obtener</p>
 <p><span class="math display">\[
 dL_o(p, \omega_o) = f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i)
 \lvert \cos\theta_i \rvert d\omega_i
 \]</span></p>
-<blockquote>
-<p>NOTE: En wikipedia integran con respecto a <span
-class="math inline">\(\omega_o\)</span>, y no con la incidente. ¿Quizás
-afecte en algo? Además, el término <span
-class="math inline">\(\cos\theta_i\)</span> aparece en valor absoluto
-porque las normales no siempre están orientadas hacia fuera. ¿Podríamos
-omitirlo?</p>
-</blockquote>
 <p>Esto nos deja a punto de caramelo una nueva expresión de la
 randiancia en términos de la randiancia incidente en un punto <span
 class="math inline">\(p\)</span>. Integrando la expresión anterior,
@@ -2146,7 +2212,7 @@ obtenemos</p>
 class="math display">\[
 L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow
 \omega_i)L_i(p, \omega_i)\lvert \cos\theta_i \rvert d\omega_i}
-\]</span><span class="eqnos-number">(7)</span></span></p>
+\]</span><span class="eqnos-number">(8)</span></span></p>
 <p>siendo <span class="math inline">\(\mathbb{S}^2\)</span> la
 esfera.</p>
 <p>Esta forma de expresar la radiancia es muy importante. Generalmente
@@ -2154,16 +2220,27 @@ se le suele llamar la <em>ecuación de dispersión</em> (<em>scattering
 equation</em>, en inglés). Dado que es una integral muy importante,
 seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte
 Carlo nos vendrán de perlas! Más adelante hablaremos de ella.</p>
-<h3 id="subsurface-scattering"><em>Subsurface scattering</em></h3>
-<blockquote>
-<p>NOTE: quizás no merezca la pena hablar de esto. De momento, se queda
-para recordar su existencia. No es tampoco difícil, pero si no lo vamos
-a usar…</p>
-</blockquote>
+<p>Las BSDFs tienen unas propiedades interesantes:</p>
+<ul>
+<li><strong>Positividad</strong>: como los fotones no se pueden reflejar
+“negativamente”, <span class="math inline">\(f(p, \omega_o \leftarrow
+\omega_i) \ge 0\)</span>.</li>
+<li><strong>Reciprocidad de Helmotz:</strong> se pueden invertir un rayo
+de luz: <span class="math inline">\(f(p, \omega_o \leftarrow \omega_i) =
+f(p, \omega_i \leftarrow \omega_o)\)</span>.</li>
+<li><strong>Conservación de la energía</strong>: todos los fotones que
+llegan a la superficie deben ser reflejados o absorbidos. Es decir, no
+se emite ningún fotón nuevo:</li>
+</ul>
+<p><span class="math display">\[
+\int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) \cos\theta_i\
+d\omega_i} \le 1\ \forall \omega_o
+\]</span></p>
 <h3 id="reflectancia-hemisférica">Reflectancia hemisférica</h3>
 <p>Puede ser útil tomar el comportamiento agregado de las BRDFs y las
 BTDFs y reducirlo un cierto valor que describa su comportamiento general
-de dispersión. Algo así como un resumen de su distribución.</p>
+de dispersión. Sería Algo así como un resumen de su distribución. Para
+conseguirlo, vamos a introducir dos nuevas funciones:</p>
 <p>La <strong>reflectancia hemisférica-direccional</strong>
 (<em>hemispherical-directional reflectance</em>) describe la reflexión
 total sobre un hemisferio debida a una fuente de luz que proviene desde
@@ -2172,9 +2249,6 @@ la dirección <span class="math inline">\(\omega_o\)</span>:</p>
 \rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i)
 \lvert \cos\theta_i \rvert\ d\omega_i}
 \]</span></p>
-<blockquote>
-<p>FIXME: no creo que esté bien explicado. Debería echarle un ojo.</p>
-</blockquote>
 <p>Por otra parte, la <strong>reflectancia
 hemisférica-hemisférica</strong> (<em>hemispherical-hemispherical
 reflectance</em>) es un valor espectral que nos proporciona el ratio de
@@ -2201,7 +2275,7 @@ material especular brillante.</li>
 <li><strong>Especulares perfectos</strong> (<em>Perfect specular</em>):
 en esencia, son espejos. El ángulo de salida de la luz es muy pequeño,
 por lo que reflejan casi a la perfección lo que les llega.</li>
-<li><strong>Retroreflectivos</strong> (<em>Retro reflective</em>): la
+<li><strong>Retrorreflectores</strong> (<em>Retro reflective</em>): la
 luz se refleja en dirección contraria a la de llegada. Esto es lo que
 sucede a la luna.</li>
 </ul>
@@ -2216,11 +2290,7 @@ distribución de luz es la misma en todas direcciones. Por el contrario,
 los anisotrópicos reflejan diferentes cantidades de luz dependiendo
 desde dónde los miremos. Los ejemplos más habituales de materiales
 anisotrópicos son las rocas y la madera.</p>
-<h2 id="reflexión-especular-y-transmitancia">Reflexión especular y
-transmitancia</h2>
-<blockquote>
-<p>TODO</p>
-</blockquote>
+<h2 id="la-rendering-equation">La <em>rendering equation</em></h2>
 <h2 id="fuentes-de-luz">Fuentes de luz</h2>
 <blockquote>
 <p>TODO: point lights, area lights, ambient lights…</p>
@@ -2303,6 +2373,7 @@ href="#ref-wikipedia-transmittance-2021" role="doc-biblioref">Wikipedia:
 Transmittance 2021</a>)</span></p>
 <ul>
 <li>https://matmatch.com/learn/property/isotropy-anisotropy</li>
+<li>https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf</li>
 </ul>
 <h1 id="construyamos-un-path-tracer">¡Construyamos un path tracer!</h1>
 <blockquote>
@@ -2343,7 +2414,7 @@ y el TLAS.</p>
 el momento de poner en concordancia todo lo que hemos visto a lo largo
 de los capítulos anteriores.</p>
 <p>Empecemos por la dispersión. ¿Recuerdas la ecuación de dispersión [<a
-href="#eq:scattering_equation">7</a>]? Podemos estimarla utilizando
+href="#eq:scattering_equation">8</a>]? Podemos estimarla utilizando
 Monte Carlo:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -2382,7 +2453,8 @@ Simplemente, todo dependerá de mi material y ya.</p>
 <li>https://github.com/dannyfritz/awesome-ray-tracing</li>
 <li>https://www.wikiwand.com/en/Radeon</li>
 <li>https://www.wikiwand.com/en/List_of_Nvidia_graphics_processing_units#/GeForce_30_series</li>
-<li></li>
+<li>Una explicación de la rendering equation:
+https://www.youtube.com/watch?v=eo_MTI-d28s</li>
 </ul>
 <h1 id="análisis-de-rendimiento">Análisis de rendimiento</h1>
 <blockquote>
@@ -2649,6 +2721,12 @@ href="https://cs184.eecs.berkeley.edu/sp22">https://cs184.eecs.berkeley.edu/sp22
 Caulfield, Brian. 2020. <span>“What’s the Difference Between Ray
 Tracing, Rasterization?”</span> May 22, 2020. <a
 href="https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/">https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/</a>.
+</div>
+<div id="ref-Pellacini-Marschner-2017" class="csl-entry"
+role="doc-biblioentry">
+Fabio Pellacini, Steve Marschner. 2017. <span>“Fundamentals of Computer
+Graphics.”</span> 2017. <a
+href="https://pellacini.di.uniroma1.it/teaching/graphics17b/">https://pellacini.di.uniroma1.it/teaching/graphics17b/</a>.
 </div>
 <div id="ref-galvin-no-date" class="csl-entry" role="doc-biblioentry">
 Galvin. n.d. <span>“Random Variables.”</span> Accessed March 20, 2022.
