@@ -180,6 +180,8 @@ Otra forma de solucionarlo (y preferible, puesto que simplifica entender lo que 
 
 La primera se llamará $L_i(p, \omega)$, mientras que la segunda será $L_o(p, \omega)$. Es importante destacar que $\omega$ apunta *hacia fuera* de la superficie. Quizás es contraintuitivo en $L_i$, puesto que $-\omega$ apunta *hacia* la superficie. Depende del autor se utiliza una concepción u otra.
 
+> **Nota**(ción): a $L_o$ también se le conoce como la radiancia reflejada. Por eso, algunas veces aparece como $L_r$ en algunas fuentes.
+
 Utilizando esta notación y usando [{@eq:L_limit}], podemos escribir $L_i$ y $L_o$ como
 
 $$
@@ -397,7 +399,7 @@ Esta forma de expresar la radiancia es muy importante. Generalmente se le suele 
 Las BSDFs tienen unas propiedades interesantes:
 
 - **Positividad**: como los fotones no se pueden reflejar "negativamente", $f(p, \omega_o \leftarrow \omega_i) \ge 0$.
-- **Reciprocidad de Helmotz:** se pueden invertir un rayo de luz: $f(p, \omega_o \leftarrow \omega_i) = f(p, \omega_i \leftarrow \omega_o)$.
+- **Reciprocidad de Helmotz:** se puede invertir un rayo de luz: $f(p, \omega_o \leftarrow \omega_i) = f(p, \omega_i \leftarrow \omega_o)$.
 - **Conservación de la energía**: todos los fotones que llegan a la superficie deben ser reflejados o absorbidos. Es decir, no se emite ningún fotón nuevo:
 
 $$
@@ -441,6 +443,51 @@ Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, pue
 Y, finalmente, tras esta introducción de los principales conceptos radiométricos, llegamos a la ecuación más importante de todo este trabajo: la **rendering equation**; también llamada la **ecuación del transporte de luz**.
 
 > **Nota**(ción): esta vez no traduciré el concepto. Es cierto que afea un poco la escritura teniendo en cuenta que esto es un texto en castellano. Sin embargo, la otra opción es inventarme una traducción que nadie usa.
+
+Antes de comenzar, volvamos a plantear de nuevo la situación: nos encontramos observando desde nuestra pantalla una escena virtual mediante la cámara. Queremos saber qué color tomará un pixel específico. Para conseguirlo, dispararemos rayos desde nuestro punto de vista hacia el entorno, haciendo que reboten en los objetos. Cuando un rayo impacte en una superficie, adquirirá parte de las propiedades del material del objeto. Además, de este rayo surgirán otros nuevos (un rayo dispersado y otro refractado), que a su vez repetirán el proceso. La información que se obtiene a partir de estos caminos de rayos nos permitirá darle color al píxel.
+
+La *rendering equation* se va a encargar de describir analíticamente cómo ocurre esto.
+
+Un último concepto más: denotemos por $L_e(p, \omega_o)$ a **la radiancia producida por los materiales emisivos**. Por ejemplo, una luz emite radiancia por sí misma.
+
+Bien, partamos de la ecuación de para la radiancia reflejada:
+
+$$
+L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
+$$
+
+Vamos a buscar expresar la radiancia incidente en términos de la radiancia reflejada. Para ello, usamos la propiedad de que la radiancia a lo largo de un rayo no cambia.
+
+Si a una superficie le llega un fotón desde alguna parte, debe ser porque *"alguien"* ha tenido que emitirlo. El fotón necesariamente ha llegado a partir de un rayo. La propiedad nos dice que la radiancia no ha podido cambiar en el camino.
+
+Pues bien, consideremos una función $r: \mathbb{R}^3 \times \Omega \to \mathbb{R}^3$ tal que, dado un punto $p$ y una dirección $\omega$, devuelve el siguiente punto de impacto en una superficie. En esencia, es una función de *ray casting*.
+
+Esta función nos permite expresar el punto anterior de la siguiente forma:
+
+$$
+L_i(p, \omega) = L_o(r(p, \omega), -\omega)
+$$
+
+Esto nos permite cambiar la expresión de $L_i$ en la integral anterior:
+
+$$
+L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\ d\omega_i}
+$$
+
+Finalmente, la radiancia total vendrá dada por la suma de la radiancia emitida y la reflejada:
+
+$$
+L(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\ d\omega_i}
+$${#eq:rendering_equation}
+
+Y con esto, ¡hemos obtenido la *rendering equation*!
+
+Si quieres ver gráficamente cómo funciona, te recomiendo pasarte por [@arneback-2019]. Es un vídeo muy intuitivo.
+
+<iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/eo_MTI-d28s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+> TODO: foto como la de https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf, p.29
+
 
 <hr>
 

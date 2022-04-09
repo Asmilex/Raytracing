@@ -122,4 +122,3 @@ Primero, lo mejor es asumir un cuadrado, y después, extender la interfaz para m
 - https://github.com/dannyfritz/awesome-ray-tracing
 - https://www.wikiwand.com/en/Radeon
 - https://www.wikiwand.com/en/List_of_Nvidia_graphics_processing_units#/GeForce_30_series
-- Una explicación de la rendering equation: https://www.youtube.com/watch?v=eo_MTI-d28s
