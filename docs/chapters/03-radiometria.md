@@ -159,7 +159,7 @@ Podemos dar otra expresión de la radiancia en términos del flujo:
 
 $$
 L(p, \omega) = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} = \frac{d^2\Phi(p, \omega)}{d\omega\ dA\ \cos\theta}
-$$
+$${#eq:radiancia_flujo}
 
 donde $dA^\bot$ es el área proyectada por $dA$ en una hipotética superficie perpendicular a $\omega$:
 
@@ -176,7 +176,7 @@ $${#eq:L_limit}
 
 donde $\mathbf{n_p}$ es la normal en el punto $p$.
 
-Otra forma de solucionarlo (y preferible, puesto que simplifica entender lo que ocurre) es distinguir entre la radiancia que llega a un punto --la incidente--, y la que sale.
+Otra forma de solucionarlo (y preferible, puesto que simplifica entender lo que ocurre) es distinguir entre la radiancia que llega a un punto --la incidente--, y la saliente.
 
 La primera se llamará $L_i(p, \omega)$, mientras que la segunda será $L_o(p, \omega)$. Es importante destacar que $\omega$ apunta *hacia fuera* de la superficie. Quizás es contraintuitivo en $L_i$, puesto que $-\omega$ apunta *hacia* la superficie. Depende del autor se utiliza una concepción u otra.
 
@@ -197,13 +197,41 @@ $$
 \end{aligned}
 $$
 
+Hacemos esta distinción porque, a fin de cuentas, necesitamos distinguir entre los fotones que llegan a la superficie y los que salen.
+
 > TODO: https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, p.36
 
 Una propiedad a tener en cuenta es que, si cogemos un punto $p$ del espacio donde no existe ninguna superifcie, $L_o(p, \omega) = L_i(p, -\omega) = L(p, \omega)$
 
 La importancia de la radiancia se debe a un par de propiedades:
 
-La primera de ellas es que, dado $L$, podemos calcular cualquier otra unidad básica mediante integración. Además, su valor se mantiene constante en rayos que viajan en el vacío. Parece natural usarla en un ray tracer.
+La primera de ellas es que, dado $L$, podemos calcular cualquier otra unidad básica mediante integración. Además, **su valor se mantiene constante en rayos que viajan en el vacío en línea recta** [@Pellacini-Marschner-2017]. Esto último hace que resulte muy natural usarla en un ray tracer.
+
+Veamos por qué ocurre esto:
+
+> TODO: https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf, página 18.
+
+Consideremos dos superficies ortogonales entre sí, $S_1$ y $S_2$ separadas una distancia $r$. Debido a la conservación de la energía, cualquier fotón que salga de una superficie y se encuentre bajo el ángulo sólido de la otra debe llegar impactar en dicha superficie opuesta.
+
+Por tanto:
+
+$$
+d^2\Phi_1 = d^2\Phi_2
+$$
+
+Sustituyendo en la expresión de la radiancia [@eq:radiancia_flujo], y teniendo en cuenta que son ortogonales (lo que nos dice que $\cos\theta = 1$):
+
+$$
+L_1 d\omega_1 dA_1 = L_2 d\omega_2 dA_2
+$$
+
+Por construcción, podemos cambiar los ángulos sólidos:
+
+$$
+L_1 \frac{dA_2}{r^2} dA_1 = L_2 \frac{dA_1}{r^2} dA_2
+$$
+
+Lo que finalmente nos dice que $L_1 = L_2$, como queríamos ver.
 
 ## Integrales radiométricas
 
@@ -281,13 +309,17 @@ siendo $\theta_o$ el ángulo de la radiancia de salida de la superficie del cuad
 
 Cuando una fuente de luz emite fotones hacia una superficie impactando en ella, ocurren un par de sucesos: parte de la luz se refleja en ella, saliendo disparada hacia alguna dirección; mientras que otra parte se absorbe.
 
+En informática gráfica se consideran tres tipos principales de dispersión de luz: **dispersión en superficie** (*surface scattering*), **dispersión volumétrica** (*volumetric scattering*) y **dispersión bajo superficie** (*subsurface scattering*)
+
 En este capítulo vamos a modelar la primera. Estudiaremos qué es lo que ocurre cuando los fotones alcanzan una superficie, en qué dirección se reflejan, y cómo cambia el comportamiento dependiendo de las propiedades del material.
 
 ### La función de distribución de reflectancia bidireccional (BRDF)
 
-La **función de distribución de reflectancia bidireccional** (en inglés, *bidirectional reflectance distribution function*, BRDF) describe cómo la luz se refleja en una superficie opaca. Se encarga de informarnos sobre cuánta radiancia sale en dirección $\omega_o$ debido a la radiancia incidente desde la dirección $\omega_i$, partiendo de un punto $p$ en una superficie con normal $\mathbf{n}$.
+La **función de distribución de reflectancia bidireccional** (en inglés, *bidirectional reflectance distribution function*, BRDF) describe cómo la luz se refleja en una superficie opaca. Se encarga de informarnos sobre cuánta radiancia sale en dirección $\omega_o$ debido a la radiancia incidente desde la dirección $\omega_i$, partiendo de un punto $p$ en una superficie con normal $\mathbf{n}$. Depende de la longitud de onda $\lambda$, pero, como de costumbre, la omitiremos.
 
-> TODO: esquema como el de pbr fig 5.18.
+> **Intuición**: *¿cuál es la probabilidad de que, habiéndome llegado un fotón desde $\omega_i$,  me salga disparado hacia $\omega_o$?*
+
+> TODO: esquema como el de pbr fig 5.18, o como https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf p.20
 
 Si consideramos $\omega_i$ como un cono diferencial de direcciones, la irradiancia diferencial en $p$ viene dada por
 
@@ -307,6 +339,12 @@ $$
 f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i} \text{(1/sr)}
 $$
 
+> **Nota**(ción): dependiendo de la fuente que estés leyendo, es posible que te encuentres una integral algo diferente. Por ejemplo, en tanto en Wikipedia como en [@ShirleyRRT] se integra con respecto a los ángulos de salida $\omega_o$, en vez de los incidentes.
+>
+> Aquí, usaremos la notación de integrar con respecto a los incidentes, como se hace en [@PBRT3e].
+
+
+
 Las BRDFs físicamente realistas tienen un par de propiedades importantes:
 
 1. **Reciprocidad**: para cualquier par de direcciones $\omega_i$, $\omega_o$, se tiene que $f_r(p, \omega_i, \omega_o)=\ $ $f_r(p, \omega_o \leftarrow \omega_i)$.
@@ -318,7 +356,9 @@ $$
 
 ### La función de distribución de transmitancia bidireccional (BTDF)
 
-Si la BRDF describe cómo se refleja la luz, la *bidirectional transmittance distribution function* (abreviada BTDF) nos informará sobre la transmitancia; es decir, cómo se comporta la luz cuando entra en un medio. Son caras de la misma moneda: cuando la luz impacta en una superficie, y parte de ella, se reflejará, y otra parte se transmitirá.
+Si la BRDF describe cómo se refleja la luz, la *bidirectional transmittance distribution function* (abreviada BTDF) nos informará sobre la transmitancia; es decir, cómo se comporta la luz cuando *entra* en un medio. Generalmente serán dos caras de la misma moneda: cuando la luz impacta en una superficie, parte de ella, se reflejará, y otra parte se transmitirá.
+
+Puedes imaginarte la BTDF como una función de reflectancia del hemisferio opuesto a donde se encuentra la normal de la superficie.
 
 Denotaremos a la BTDF por
 
@@ -328,22 +368,21 @@ $$
 
 Al contrario que en la BRDF, $\omega_o$ y $\omega_i$ se encuentran en hemisferios diferentes.
 
-### Juntando la BRDF y la BTDF
+### Juntando la BRDF y la BTDF en La función de distribución de dispersión bidireccional
 
-Convenientemente, podemos unir la BRDF y la BTDF en una sola expresión, llamada **la función de distribución de dispersión bidireccional** (*bidirectional scattering distribution function*, BSDF). A la BSDF la llamaremos
+Convenientemente, podemos unir la BRDF y la BTDF en una sola expresión, llamada **la función de distribución de dispersión bidireccional** (*bidirectional scattering distribution function*, BSDF). A la BSDF la denotaremos por
 
 $$
 f(p, \omega_o \leftarrow \omega_i)
 $$
+
+> **Intuición:** *la BSDF son todas las posibles direcciones en las que puede salir disparada la luz.*
 
 Usando esta definición, podemos obtener
 
 $$
 dL_o(p, \omega_o) = f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \abs{\cos\theta_i} d\omega_i
 $$
-
-
-> NOTE: En wikipedia integran con respecto a $\omega_o$, y no con la incidente. ¿Quizás afecte en algo? Además, el término $\cos\theta_i$ aparece en valor absoluto porque las normales no siempre están orientadas hacia fuera. ¿Podríamos omitirlo?
 
 Esto nos deja a punto de caramelo una nueva expresión de la randiancia en términos de la randiancia incidente en un punto $p$. Integrando la expresión anterior, obtenemos
 
@@ -361,7 +400,7 @@ Esta forma de expresar la radiancia es muy importante. Generalmente se le suele 
 
 ### Reflectancia hemisférica
 
-Puede ser útil tomar el comportamiento agregado de las BRDFs y las BTDFs y reducirlo un cierto valor que describa su comportamiento general de dispersión. Algo así como un resumen de su distribución.
+Puede ser útil tomar el comportamiento agregado de las BRDFs y las BTDFs y reducirlo un cierto valor que describa su comportamiento general de dispersión. Sería Algo así como un resumen de su distribución. Para conseguirlo, vamos a introducir dos nuevas funciones:
 
 La **reflectancia hemisférica-direccional** (*hemispherical-directional reflectance*) describe la reflexión total sobre un hemisferio debida a una fuente de luz que proviene desde la dirección $\omega_o$:
 
@@ -369,7 +408,6 @@ $$
 \rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_i}\ d\omega_i}
 $$
 
-> FIXME: no creo que esté bien explicado. Debería echarle un ojo.
 
 Por otra parte, la **reflectancia hemisférica-hemisférica** (*hemispherical-hemispherical reflectance*) es un valor espectral que nos proporciona el ratio de luz incidente reflejada por una superficie, suponiendo que llega la misma luz desde todas direcciones:
 
@@ -386,7 +424,7 @@ En esencia, los reflejos se pueden clasificar en cuatro grandes tipos:
 - **Difusos** (*Diffuse*): esparcen la luz en todas direcciones casi equiprobablemente. Por ejemplo, la tela y el papel son materiales difusos.
 - **Especulares brillantes** (*Glossy specular*): la distribución de luz se asemeja a un cono. La chapa de un coche es un material especular brillante.
 - **Especulares perfectos** (*Perfect specular*): en esencia, son espejos. El ángulo de salida de la luz es muy pequeño, por lo que reflejan casi a la perfección lo que les llega.
-- **Retroreflectivos** (*Retro reflective*): la luz se refleja en dirección contraria a la de llegada. Esto es lo que sucede a la luna.
+- **Retrorreflectores** (*Retro reflective*): la luz se refleja en dirección contraria a la de llegada. Esto es lo que sucede a la luna.
 
 Ten en cuenta que es muy difícil encontrar objetos físicos que imiten a la perfección un cierto modelo. Suelen recaer en un híbrido entre dos o más modelos.
 
@@ -457,6 +495,7 @@ Primero, lo mejor es asumir un cuadrado, y después, extender la interfaz para m
 [@PBRT3e], [@wikipedia-contributors-2021D], [@studysession-2021], [@berkeley-cs184, Radiometry & Photometry], [@wikipedia-funcion-de-distribucion-de-reflectancia-bidireccional-2022], [@wikipedia-transmittance-2021]
 
 - https://matmatch.com/learn/property/isotropy-anisotropy
+- https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf
 
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores como [@quantumfracture-2021] que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.

@@ -66,4 +66,4 @@ CREO que de esta manera no me va a hacer falta tocar framebuffers. Simplemente, 
 - https://github.com/dannyfritz/awesome-ray-tracing
 - https://www.wikiwand.com/en/Radeon
 - https://www.wikiwand.com/en/List_of_Nvidia_graphics_processing_units#/GeForce_30_series
--
+- Una explicación de la rendering equation: https://www.youtube.com/watch?v=eo_MTI-d28s
