@@ -247,9 +247,10 @@ transformada inversa</a></li>
 </ul></li>
 <li><a href="#importance-sampling"><em>Importance sampling</em></a></li>
 </ul></li>
-<li><a href="#radiometría-101">Radiometría 101</a>
+<li><a href="#transporte-de-luz">Transporte de luz</a>
 <ul>
-<li><a href="#unidades-básicas">Unidades básicas</a>
+<li><a href="#unidades-radiométricas-básicas">Unidades radiométricas
+básicas</a>
 <ul>
 <li><a href="#potencia">Potencia</a></li>
 <li><a href="#irradiancia">Irradiancia</a></li>
@@ -281,14 +282,8 @@ bidireccional</a></li>
 hemisférica</a></li>
 <li><a href="#reflejos">Reflejos</a></li>
 </ul></li>
-<li><a href="#la-rendering-equation">La <em>rendering
-equation</em></a></li>
-<li><a href="#fuentes-de-luz">Fuentes de luz</a>
-<ul>
-<li><a href="#point-lights-spotlights">Point lights +
-spotlights</a></li>
-<li><a href="#area-lights">Area lights</a></li>
-</ul></li>
+<li><a href="#la-rendering-equation"><strong>La rendering
+equation</strong></a></li>
 </ul></li>
 <li><a href="#construyamos-un-path-tracer">¡Construyamos un path
 tracer!</a>
@@ -311,9 +306,15 @@ aceleración</a></li>
 <li><a href="#shader-binding-table">Shader binding table</a></li>
 </ul></li>
 <li><a href="#asmiray">Asmiray</a></li>
-<li><a href="#transporte-de-luz">Transporte de luz</a>
+<li><a href="#transporte-de-luz-1">Transporte de luz</a>
 <ul>
 <li><a href="#materiales-y-objetos">Materiales y objetos</a></li>
+</ul></li>
+<li><a href="#fuentes-de-luz">Fuentes de luz</a>
+<ul>
+<li><a href="#point-lights-spotlights">Point lights +
+spotlights</a></li>
+<li><a href="#fuentes-de-área">Fuentes de área</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#análisis-de-rendimiento">Análisis de rendimiento</a></li>
@@ -332,8 +333,8 @@ cómo se hizo este trabajo</a>
 <li><a href="#github-projects">Github Projects</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#anexo-glosario-de-términos-y-expresiones">Anexo: Glosario
-de términos y expresiones</a>
+<li><a href="#glosario-de-términos-y-expresiones">Glosario de términos y
+expresiones</a>
 <ul>
 <li><a href="#notación">Notación</a></li>
 <li><a href="#radiometría"><span>Radiometría</span></a></li>
@@ -1597,12 +1598,13 @@ Integration)</span></p>
 https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf</li>
 <li>Gems I, p.284.</li>
 </ul>
-<h1 id="radiometría-101">Radiometría 101</h1>
+<h1 id="transporte-de-luz">Transporte de luz</h1>
 <p>En este capítulo estudiaremos las bases de la radiometría. Esta área
 de la óptica nos proporcionará una serie de herramientas con las cuales
 podremos responder a la pregunta <em>cuánta luz existe en un
 punto</em>.</p>
-<h2 id="unidades-básicas">Unidades básicas</h2>
+<h2 id="unidades-radiométricas-básicas">Unidades radiométricas
+básicas</h2>
 <blockquote>
 <p><strong>Nota</strong>: cuando usemos un paréntesis tras una ecuación,
 dentro denotaremos sus unidades de medida.</p>
@@ -1894,6 +1896,12 @@ fuera</em> de la superficie. Quizás es contraintuitivo en <span
 class="math inline">\(L_i\)</span>, puesto que <span
 class="math inline">\(-\omega\)</span> apunta <em>hacia</em> la
 superficie. Depende del autor se utiliza una concepción u otra.</p>
+<blockquote>
+<p><strong>Nota</strong>(ción): a <span
+class="math inline">\(L_o\)</span> también se le conoce como la
+radiancia reflejada. Por eso, algunas veces aparece como <span
+class="math inline">\(L_r\)</span> en algunas fuentes.</p>
+</blockquote>
 <p>Utilizando esta notación y usando [<a href="#eq:L_limit">6</a>],
 podemos escribir <span class="math inline">\(L_i\)</span> y <span
 class="math inline">\(L_o\)</span> como</p>
@@ -2225,7 +2233,7 @@ Carlo nos vendrán de perlas! Más adelante hablaremos de ella.</p>
 <li><strong>Positividad</strong>: como los fotones no se pueden reflejar
 “negativamente”, <span class="math inline">\(f(p, \omega_o \leftarrow
 \omega_i) \ge 0\)</span>.</li>
-<li><strong>Reciprocidad de Helmotz:</strong> se pueden invertir un rayo
+<li><strong>Reciprocidad de Helmotz:</strong> se puede invertir un rayo
 de luz: <span class="math inline">\(f(p, \omega_o \leftarrow \omega_i) =
 f(p, \omega_i \leftarrow \omega_o)\)</span>.</li>
 <li><strong>Conservación de la energía</strong>: todos los fotones que
@@ -2290,68 +2298,83 @@ distribución de luz es la misma en todas direcciones. Por el contrario,
 los anisotrópicos reflejan diferentes cantidades de luz dependiendo
 desde dónde los miremos. Los ejemplos más habituales de materiales
 anisotrópicos son las rocas y la madera.</p>
-<h2 id="la-rendering-equation">La <em>rendering equation</em></h2>
-<h2 id="fuentes-de-luz">Fuentes de luz</h2>
+<h2 id="la-rendering-equation"><strong>La rendering
+equation</strong></h2>
+<p>Y, finalmente, tras esta introducción de los principales conceptos
+radiométricos, llegamos a la ecuación más importante de todo este
+trabajo: la <strong>rendering equation</strong>; también llamada la
+<strong>ecuación del transporte de luz</strong>.</p>
 <blockquote>
-<p>TODO: point lights, area lights, ambient lights…</p>
-<p>TODO: estas son notas muy puntuales (<em>como las luces, jeje</em>).
-Ya las revisaré más adelante.</p>
+<p><strong>Nota</strong>(ción): esta vez no traduciré el concepto. Es
+cierto que afea un poco la escritura teniendo en cuenta que esto es un
+texto en castellano. Sin embargo, la otra opción es inventarme una
+traducción que nadie usa.</p>
 </blockquote>
-<p>La interfaz se encuentra en <code>host_device.h</code>. Describe cómo
-comunicarse con la GPU.</p>
-<p>Ahora mismo, tenemos 3 constantes: tipo de luz:</p>
-<pre><code class="language-glsl">vec3  lightPosition;    // (x, y, z)
-float lightIntensity;   // (Intensidad)
-int   lightType;        // (0 =&gt; point light, 1 =&gt; area light)</code></pre>
-<p>Sería interesante añadir algunas constantes para controlar el tamaño
-(radio, posición, normal para las de área…)</p>
-<h3 id="point-lights-spotlights">Point lights + spotlights</h3>
-<blockquote>
-<p>pbr-book, point lights: <em>“Strictly speaking, it is incorrect to
-describe the light arriving at a point due to a point light source using
-units of radiance. Radiant intensity is instead the proper unit for
-describing emission from a point light source, as explained in Section
-5.4. In the light source interfaces here, however, we will abuse
-terminology and use Sample_Li() methods to report the illumination
-arriving at a point for all types of light sources, dividing radiant
-intensity by the squared distance to the point p to convert units.
-Section 14.2 revisits the details of this issue in its discussion of how
-delta distributions affect evaluation of the integral in the scattering
-equation. In the end, the correctness of the computation does not suffer
-from this fudge, and it makes the implementation of light transport
-algorithms more straightforward by not requiring them to use different
-interfaces for different types of lights.”</em></p>
-</blockquote>
-<pre><code class="language-cpp">// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.h
-// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.cpp
-
-Spectrum sample_light(interaccion, vec2 u, vec3 wi, float pdf, visibility_tester) {
-    wi = normalize(posicion_luz - interraccion.p);
-    pdf = 1.f;
-    // testeo de visibilidad. Opcional, I guess.
-
-    return intensidad / distancia_al_cuadrado(posicion_luz, interraccion.p);
-}</code></pre>
-<p>La potencia total emitida por la luz puede calcularse integrando la
-intensidad desprendida en toda su superficie. Asumiendo la intensidad
-constante:</p>
+<p>Antes de comenzar, volvamos a plantear de nuevo la situación: nos
+encontramos observando desde nuestra pantalla una escena virtual
+mediante la cámara. Queremos saber qué color tomará un pixel específico.
+Para conseguirlo, dispararemos rayos desde nuestro punto de vista hacia
+el entorno, haciendo que reboten en los objetos. Cuando un rayo impacte
+en una superficie, adquirirá parte de las propiedades del material del
+objeto. Además, de este rayo surgirán otros nuevos (un rayo dispersado y
+otro refractado), que a su vez repetirán el proceso. La información que
+se obtiene a partir de estos caminos de rayos nos permitirá darle color
+al píxel.</p>
+<p>La <em>rendering equation</em> se va a encargar de describir
+analíticamente cómo ocurre esto.</p>
+<p>Un último concepto más: denotemos por <span
+class="math inline">\(L_e(p, \omega_o)\)</span> a <strong>la radiancia
+producida por los materiales emisivos</strong>. Por ejemplo, una luz
+emite radiancia por sí misma.</p>
+<p>Bien, partamos de la ecuación de para la radiancia reflejada:</p>
 <p><span class="math display">\[
-\Phi = \int_{\mathbb{S}^2}{I d\omega} = I \int_{\mathbb{S}^2}{d\omega} =
-4 \pi I
+L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
+\omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
 \]</span></p>
-<p>Las spotlights son variaciones de las point lights iluminando en un
-cono.</p>
-<h3 id="area-lights">Area lights</h3>
-<p>Para simplificar la implementación, podemos asumir que son
-rectangulares.</p>
-<p>Nos van a hacer falta técnicas de Monte Carlo para solucionar el
-problema de calcular integrales a lo largo de su superficie.</p>
-<p>Primero, lo mejor es asumir un cuadrado, y después, extender la
-interfaz para meter otras formas (es decir, rectángulos. Porque lo otro
-sería mucha parafernalia innecesaria).</p>
-<p><a
-href="https://github.com/mmp/pbrt-v3/blob/aaa552a4b9cbf9dccb71450f47b268e0ed6370e2/src/core/light.h">Código
-fuente</a></p>
+<p>Vamos a buscar expresar la radiancia incidente en términos de la
+radiancia reflejada. Para ello, usamos la propiedad de que la radiancia
+a lo largo de un rayo no cambia.</p>
+<p>Si a una superficie le llega un fotón desde alguna parte, debe ser
+porque <em>“alguien”</em> ha tenido que emitirlo. El fotón
+necesariamente ha llegado a partir de un rayo. La propiedad nos dice que
+la radiancia no ha podido cambiar en el camino.</p>
+<p>Pues bien, consideremos una función <span class="math inline">\(r:
+\mathbb{R}^3 \times \Omega \to \mathbb{R}^3\)</span> tal que, dado un
+punto <span class="math inline">\(p\)</span> y una dirección <span
+class="math inline">\(\omega\)</span>, devuelve el siguiente punto de
+impacto en una superficie. En esencia, es una función de <em>ray
+casting</em>.</p>
+<p>Esta función nos permite expresar el punto anterior de la siguiente
+forma:</p>
+<p><span class="math display">\[
+L_i(p, \omega) = L_o(r(p, \omega), -\omega)
+\]</span></p>
+<p>Esto nos permite cambiar la expresión de <span
+class="math inline">\(L_i\)</span> en la integral anterior:</p>
+<p><span class="math display">\[
+L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
+\omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\ d\omega_i}
+\]</span></p>
+<p>Finalmente, la radiancia total vendrá dada por la suma de la
+radiancia emitida y la reflejada:</p>
+<p><span id="eq:rendering_equation" class="eqnos"><span
+class="math display">\[
+L(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o
+\leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\
+d\omega_i}
+\]</span><span class="eqnos-number">(9)</span></span></p>
+<p>Y con esto, ¡hemos obtenido la <em>rendering equation</em>!</p>
+<p>Si quieres ver gráficamente cómo funciona, te recomiendo pasarte por
+<span class="citation" data-cites="arneback-2019">(<a
+href="#ref-arneback-2019" role="doc-biblioref">Arnebäck
+2019</a>)</span>. Es un vídeo muy intuitivo.</p>
+<iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/eo_MTI-d28s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<blockquote>
+<p>TODO: foto como la de
+https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf,
+p.29</p>
+</blockquote>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
 <p><span class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
@@ -2409,7 +2432,11 @@ y el TLAS.</p>
 <h3 id="tipos-de-shaders-en-rt">Tipos de shaders en RT</h3>
 <h3 id="shader-binding-table">Shader binding table</h3>
 <h2 id="asmiray">Asmiray</h2>
-<h2 id="transporte-de-luz">Transporte de luz</h2>
+<h2 id="transporte-de-luz-1">Transporte de luz</h2>
+<blockquote>
+<p>TODO: creo… que esto no debería ir aquí. Pero no quiero tampoco que
+el capítulo de radiometría sea un tocho impresionante.</p>
+</blockquote>
 <p>Hemos llegado a una de las partes más importantes de este trabajo. Es
 el momento de poner en concordancia todo lo que hemos visto a lo largo
 de los capítulos anteriores.</p>
@@ -2447,14 +2474,73 @@ de esta manera</em>)</li>
 <p>CREO que de esta manera no me va a hacer falta tocar framebuffers.
 Simplemente, todo dependerá de mi material y ya.</p>
 <p><em>Creo</em>.</p>
+<h2 id="fuentes-de-luz">Fuentes de luz</h2>
+<blockquote>
+<p>TODO: point lights, area lights, ambient lights…</p>
+<p>TODO: estas son notas muy puntuales (<em>como las luces, jeje</em>).
+Ya las revisaré más adelante.</p>
+</blockquote>
+<p>La interfaz se encuentra en <code>host_device.h</code>. Describe cómo
+comunicarse con la GPU.</p>
+<p>Ahora mismo, tenemos 3 constantes: tipo de luz:</p>
+<pre><code class="language-glsl">vec3  lightPosition;    // (x, y, z)
+float lightIntensity;   // (Intensidad)
+int   lightType;        // (0 =&gt; point light, 1 =&gt; area light)</code></pre>
+<p>Sería interesante añadir algunas constantes para controlar el tamaño
+(radio, posición, normal para las de área…)</p>
+<h3 id="point-lights-spotlights">Point lights + spotlights</h3>
+<blockquote>
+<p>pbr-book, point lights: <em>“Strictly speaking, it is incorrect to
+describe the light arriving at a point due to a point light source using
+units of radiance. Radiant intensity is instead the proper unit for
+describing emission from a point light source, as explained in Section
+5.4. In the light source interfaces here, however, we will abuse
+terminology and use Sample_Li() methods to report the illumination
+arriving at a point for all types of light sources, dividing radiant
+intensity by the squared distance to the point p to convert units.
+Section 14.2 revisits the details of this issue in its discussion of how
+delta distributions affect evaluation of the integral in the scattering
+equation. In the end, the correctness of the computation does not suffer
+from this fudge, and it makes the implementation of light transport
+algorithms more straightforward by not requiring them to use different
+interfaces for different types of lights.”</em></p>
+</blockquote>
+<pre><code class="language-cpp">// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.h
+// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.cpp
+
+Spectrum sample_light(interaccion, vec2 u, vec3 wi, float pdf, visibility_tester) {
+    wi = normalize(posicion_luz - interraccion.p);
+    pdf = 1.f;
+    // testeo de visibilidad. Opcional, I guess.
+
+    return intensidad / distancia_al_cuadrado(posicion_luz, interraccion.p);
+}</code></pre>
+<p>La potencia total emitida por la luz puede calcularse integrando la
+intensidad desprendida en toda su superficie. Asumiendo la intensidad
+constante:</p>
+<p><span class="math display">\[
+\Phi = \int_{\mathbb{S}^2}{I d\omega} = I \int_{\mathbb{S}^2}{d\omega} =
+4 \pi I
+\]</span></p>
+<p>Las spotlights son variaciones de las point lights iluminando en un
+cono.</p>
+<h3 id="fuentes-de-área">Fuentes de área</h3>
+<p>Para simplificar la implementación, podemos asumir que son
+rectangulares.</p>
+<p>Nos van a hacer falta técnicas de Monte Carlo para solucionar el
+problema de calcular integrales a lo largo de su superficie.</p>
+<p>Primero, lo mejor es asumir un cuadrado, y después, extender la
+interfaz para meter otras formas (es decir, rectángulos. Porque lo otro
+sería mucha parafernalia innecesaria).</p>
+<p><a
+href="https://github.com/mmp/pbrt-v3/blob/aaa552a4b9cbf9dccb71450f47b268e0ed6370e2/src/core/light.h">Código
+fuente</a></p>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-4">Referencias</h2>
 <ul>
 <li>https://github.com/dannyfritz/awesome-ray-tracing</li>
 <li>https://www.wikiwand.com/en/Radeon</li>
 <li>https://www.wikiwand.com/en/List_of_Nvidia_graphics_processing_units#/GeForce_30_series</li>
-<li>Una explicación de la rendering equation:
-https://www.youtube.com/watch?v=eo_MTI-d28s</li>
 </ul>
 <h1 id="análisis-de-rendimiento">Análisis de rendimiento</h1>
 <blockquote>
@@ -2471,6 +2557,7 @@ preguntarle a Kako que tire benchmark en su 2060, y a Manu con su 3060
 </blockquote>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-6">Referencias</h2>
+
 <h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
 hizo este trabajo</h1>
 <blockquote>
@@ -2521,8 +2608,9 @@ recapitulados todos con Projects.</p>
 </blockquote>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-7">Referencias</h2>
-<h1 id="anexo-glosario-de-términos-y-expresiones">Anexo: Glosario de
-términos y expresiones</h1>
+<p>\end</p>
+<h1 id="glosario-de-términos-y-expresiones">Glosario de términos y
+expresiones</h1>
 <blockquote>
 <p><em>It’s dangerous to go alone, take this.</em></p>
 </blockquote>
@@ -2669,8 +2757,8 @@ L^-(p, -\omega) &amp; \text{si } \omega \cdot \mathbf{n_p} &lt; 0
 \end{cases}\end{aligned}\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong><a href="#radiancia">Radiancia de
-salida</a></strong></td>
+<td style="text-align: left;"><strong><a href="#radiancia">Radiancia
+reflejada, radiancia de salida</a></strong></td>
 <td style="text-align: left;"><span
 class="math inline">\(\begin{aligned} &amp; L_o(p, \omega) =
 \begin{cases} L^+(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
@@ -2712,6 +2800,11 @@ href="#juntando-la-brdf-y-la-btdf">BSDF</a></strong></td>
 <h1 class="unnumbered" id="bibliografía">Bibliografía</h1>
 <div id="refs" class="references csl-bib-body hanging-indent"
 role="doc-bibliography">
+<div id="ref-arneback-2019" class="csl-entry" role="doc-biblioentry">
+Arnebäck. 2019. <span>“An Explanation of the Rendering Equation.”</span>
+January 10, 2019. <a
+href="https://www.youtube.com/watch?v=eo_MTI-d28s">https://www.youtube.com/watch?v=eo_MTI-d28s</a>.
+</div>
 <div id="ref-berkeley-cs184" class="csl-entry" role="doc-biblioentry">
 Berkeley cs184. 2022. <span>“Monte Carlo Integration Cs184/284a.”</span>
 2022. <a
