@@ -394,9 +394,15 @@ siendo $\mathbb{S}^2$ la esfera.
 
 Esta forma de expresar la radiancia es muy importante. Generalmente se le suele llamar la *ecuación de dispersión* (*scattering equation*, en inglés). Dado que es una integral muy importante, seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte Carlo nos vendrán de perlas! Más adelante hablaremos de ella.
 
-### *Subsurface scattering*
+Las BSDFs tienen unas propiedades interesantes:
 
-> NOTE: quizás no merezca la pena hablar de esto. De momento, se queda para recordar su existencia. No es tampoco difícil, pero si no lo vamos a usar...
+- **Positividad**: como los fotones no se pueden reflejar "negativamente", $f(p, \omega_o \leftarrow \omega_i) \ge 0$.
+- **Reciprocidad de Helmotz:** se pueden invertir un rayo de luz: $f(p, \omega_o \leftarrow \omega_i) = f(p, \omega_i \leftarrow \omega_o)$.
+- **Conservación de la energía**: todos los fotones que llegan a la superficie deben ser reflejados o absorbidos. Es decir, no se emite ningún fotón nuevo:
+
+$$
+\int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) \cos\theta_i\ d\omega_i} \le 1\ \forall \omega_o
+$$
 
 ### Reflectancia hemisférica
 
@@ -430,9 +436,9 @@ Ten en cuenta que es muy difícil encontrar objetos físicos que imiten a la per
 
 Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, puede ser **isotrópica** o **anisotrópica**. Los materiales isotrópicos mantienen las propiedades de reflectancia invariantes ante rotaciones; es decir, la distribución de luz es la misma en todas direcciones. Por el contrario, los anisotrópicos reflejan diferentes cantidades de luz dependiendo desde dónde los miremos. Los ejemplos más habituales de materiales anisotrópicos son las rocas y la madera.
 
-## Reflexión especular y transmitancia
+## La *rendering equation*
 
-> TODO
+
 
 ## Fuentes de luz
 
