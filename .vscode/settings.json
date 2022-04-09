@@ -12,6 +12,10 @@
     "ltex.enabled": true,
     "ltex.language": "es",
 
+    "latex-workshop.latex.bibDirs": [
+        "docs/chapters/"
+    ],
+
     "files.associations": {
         "algorithm": "cpp",
         "atomic": "cpp",
