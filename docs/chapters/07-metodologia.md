@@ -1,3 +1,5 @@
+\appendix
+
 # Metodología; o cómo se hizo este trabajo
 
 > TODO - hablar de las fases de desarrollo. Interpretación propia de Agile. Documentación y código desarrollado a la par, mediante issues. Adaptación de los requisitos conforme se avanza. Beneficios de una página web (seguramente debería ser su propia sección)
@@ -33,3 +35,5 @@
 <hr>
 
 ## Referencias {.unlisted .unnumbered}
+
+\end
