@@ -188,13 +188,13 @@ $$
 \begin{aligned}
     L_i(p, \omega) & =
         \begin{cases}
-            L^+(p, -\omega) & \text{si }  \omega \cdot \mathbf{n_p} > 0  \\
-            L^-(p, -\omega) & \text{si }  \omega \cdot \mathbf{n_p} < 0
+            L^+(p, -\omega) & \text{si } \omega \cdot \mathbf{n_p} > 0 \\
+            L^-(p, -\omega) & \text{si } \omega \cdot \mathbf{n_p} < 0
         \end{cases} \\
     L_o(p, \omega) & =
         \begin{cases}
-            L^+(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} > 0  \\
-            L^-(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} < 0
+            L^+(p, \omega) & \text{si } \omega \cdot \mathbf{n_p} > 0 \\
+            L^-(p, \omega) & \text{si } \omega \cdot \mathbf{n_p} < 0
         \end{cases}
 \end{aligned}
 $$
@@ -319,9 +319,9 @@ En este capítulo vamos a modelar la primera. Estudiaremos qué es lo que ocurre
 
 La **función de distribución de reflectancia bidireccional** (en inglés, *bidirectional reflectance distribution function*, BRDF) describe cómo la luz se refleja en una superficie opaca. Se encarga de informarnos sobre cuánta radiancia sale en dirección $\omega_o$ debido a la radiancia incidente desde la dirección $\omega_i$, partiendo de un punto $p$ en una superficie con normal $\mathbf{n}$. Depende de la longitud de onda $\lambda$, pero, como de costumbre, la omitiremos.
 
-> **Intuición**: *¿cuál es la probabilidad de que, habiéndome llegado un fotón desde $\omega_i$,  me salga disparado hacia $\omega_o$?*
+> **Intuición**: *¿cuál es la probabilidad de que, habiéndome llegado un fotón desde $\omega_i$, me salga disparado hacia $\omega_o$?*
 
-> TODO: esquema como el de pbr fig 5.18, o como https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf p.20
+> TODO: esquema como el de pbr fig. 5.18, o como https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf p.20
 
 Si consideramos $\omega_i$ como un cono diferencial de direcciones, la irradiancia diferencial en $p$ viene dada por
 
@@ -347,7 +347,7 @@ $$
 
 
 
-Las BRDFs físicamente realistas tienen un par de propiedades importantes:
+Las BRDF físicamente realistas tienen un par de propiedades importantes:
 
 1. **Reciprocidad**: para cualquier par de direcciones $\omega_i$, $\omega_o$, se tiene que $f_r(p, \omega_i, \omega_o)=\ $ $f_r(p, \omega_o \leftarrow \omega_i)$.
 2. **Conservación de la energía**: La energía reflejada tiene que ser menor o igual que la incidente:
@@ -462,6 +462,8 @@ Si a una superficie le llega un fotón desde alguna parte, debe ser porque *"alg
 
 Pues bien, consideremos una función $r: \mathbb{R}^3 \times \Omega \to \mathbb{R}^3$ tal que, dado un punto $p$ y una dirección $\omega$, devuelve el siguiente punto de impacto en una superficie. En esencia, es una función de *ray casting*.
 
+> TODO: foto como la de https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf, p.29
+
 Esta función nos permite expresar el punto anterior de la siguiente forma:
 
 $$
@@ -486,8 +488,12 @@ Si quieres ver gráficamente cómo funciona, te recomiendo pasarte por [@arnebac
 
 <iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/eo_MTI-d28s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-> TODO: foto como la de https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf, p.29
+Si nos paramos a pensar, la ecuación de reflexión es muy similar a la de renderizado. Sin embargo, hay un par de matices que las hacen muy diferentes:
 
+- La ecuación de reflexión describe cómo se comporta la luz reflejada en un cierto punto. Es decir, tiene un ámbito local. Además, para calcular la radiancia reflejada, se necesita conocer la radiancia incidente.
+- La *rendering equation* calcula las condiciones globales de la luz. Además, no se conocen las radiancias de salida.
+
+Este último matiz es importante. Para renderizar una imagen, se necesita calcular la radiancia de salida para aquellos puntos visibles desde nuestra cámara.
 
 <hr>
 
