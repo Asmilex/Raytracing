@@ -310,6 +310,25 @@ $$
 \hat{F}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)} \sum_{i = 1}^{N}{f(X_i)}
 $$
 
+Otro ejemplo clásico de estimador de Monte Carlo es calcular el valor de $\pi$. Se puede hallar integrando una función que valga $1$ en el interior de la circunferencia de radio unidad y $0$ en el exterior:
+
+$$
+\begin{aligned}
+f = \begin{cases}
+      1 & \text{si } x^2 + y^2 \le 1 \\
+      0 & \text{en otro caso}
+    \end{cases} \Longrightarrow	\pi = \int_{-1}^{1} \int_{-1}^{1}{f(x, y)}\ dxdy
+\end{aligned}
+$$
+
+Para usar el estimador de [@eq:mc_integral], necesitamos saber la probabilidad de obtener un punto dentro de la circunferencia.
+
+Bien, consideremos que una circunferencia de radio $r$ se encuentra inscrita en un cuadrado. El área de la circunferencia es $\pi r^2$, mientras que la del cuadrado es $(2r)^2 = 4r^2$. Por tanto, la probabilida de obtener un punto dentro de la circunferencia es $\frac{\pi r^2}{4r^2} = \frac{\pi}{4}$. Podemos tomar $p(x, y) = \frac{1}{4}$, de forma que
+
+$$
+\pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con } (x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
+$$
+
 ## Escogiendo puntos aleatorios
 
 Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber escoger la función de densidad $p_X$ correctamente. En esta sección, veremos algunos métodos para conseguir distribuciones específicas partiendo de funciones de densidad sencillas.
