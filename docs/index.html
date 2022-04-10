@@ -325,16 +325,20 @@ cómo se hizo este trabajo</a>
 <ul>
 <li><a href="#influencias">Influencias</a></li>
 <li><a href="#ciclos-de-desarrollo">Ciclos de desarrollo</a></li>
-<li><a href="#diseño">Diseño</a></li>
+<li><a href="#diseño">Diseño</a>
+<ul>
+<li><a href="#bases-del-diseño">Bases del diseño</a></li>
+<li><a href="#tipografías">Tipografías</a></li>
+</ul></li>
 <li><a href="#herramientas">Herramientas</a></li>
 <li><a href="#github">Github</a>
 <ul>
 <li><a href="#github-actions">Github Actions</a></li>
 <li><a href="#github-projects">Github Projects</a></li>
+<li><a href="#estilo-de-commits">Estilo de commits</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#glosario-de-términos-y-expresiones">Glosario de términos y
-expresiones</a>
+<li><a href="#glosario-de-términos">Glosario de términos</a>
 <ul>
 <li><a href="#notación">Notación</a></li>
 <li><a href="#radiometría"><span>Radiometría</span></a></li>
@@ -2612,33 +2616,129 @@ ha realizado este trabajo: mostraremos las herramientas usadas, los
 ciclos de desarrollo, integración entre documentación y path tracer, y
 otras influencias que han afectado al producto final.</p>
 <h2 id="influencias">Influencias</h2>
+<p>Antes de comenzar con la labor, primero uno se debe hacer una simple
+pregunta:</p>
 <blockquote>
-<p>TODO: hablar de <a href="https://explorabl.es/">explorable
-explanations</a>, <a
-href="https://www.3blue1brown.com/">3Blue1Brown</a>, <a
-href="https://www.youtube.com/user/DigitalFoundry">Digital Foundry</a>,
-<a href="https://ciechanow.ski/lights-and-shadows/">Blog de Bartosz
-Ciechanowski</a>, <a href="https://web.evanchen.cc/napkin.html">The
-napkin project</a> Hablar del estilo de escritura.</p>
+<p><em>“Y esto, ¿por qué me importa?”</em></p>
 </blockquote>
+<p>Dar una respuesta contundente a este tipo de cuestiones nunca es
+fácil. Sin embargo, sí que puedo proporcionar motivos por los que he
+querido escribir sobre ray tracing.</p>
+<p>Una de las principales influencias ha sido <a
+href="https://www.youtube.com/user/DigitalFoundry">Digital Foundry</a>.
+Este grupo de divulgación se dedica al estudio de las técnicas
+utilizadas en el mundo de los videojuegos. El inicio de la era del ray
+tracing en tiempo real les llevó a dedicar una serie de vídeos y
+artículos a esta tecnología, y a las diferentes maneras en las que se ha
+implementado. Se puede ver un ejemplo en <span class="citation"
+data-cites="digital-foundry-2020">(<a href="#ref-digital-foundry-2020"
+role="doc-biblioref">Digital Foundry 2020</a>)</span>.</p>
+<p>Dado que esta área combina tanto informática, matemáticas y una
+visión artística, ¿por qué no explorarlo a fondo?</p>
+<p>Ahora que se ha decidido el tema, es hora de ver cómo atacarlo.</p>
+<p>Soy un fiel creyente del aprendizaje mediante el juego. Páginas como
+<a href="https://explorabl.es/">Explorable Explanations</a>, el <a
+href="https://ciechanow.ski/lights-and-shadows/">blog de Bartosz
+Ciechanowski</a>, el proyecto <a
+href="https://web.evanchen.cc/napkin.html"><em>The napkin</em></a> o el
+divulgador <a href="https://www.3blue1brown.com/">3Blue1Brown</a>
+repercuten inevitablemente en la manera en la que te planteas cómo
+comunicar textos científicos. Por ello, aunque esto a fin de cuentas es
+un trabajo de fin de grado de una carrera, quería ver hasta dónde era
+capaz de llevarlo.</p>
+<p>Otro punto importante es la <em>manera</em> de escribir. No me gusta
+especialmente la escritura formal. Prefiero ser distendido. Por suerte,
+parece que el mundo científico se está volviendo más informal <span
+class="citation" data-cites="nature-2016">(<a href="#ref-nature-2016"
+role="doc-biblioref">Nature 2016</a>)</span>, así que no soy el único
+que aprueba esta tendencia. Además, la estructura clásica de un escrito
+matemático de “teorema, lema, demostración, corolario” no me agrada
+especialmente. He intentado preservar su estructura, pero sin ser tan
+explícito. Estos dos puntos, en conjunto, suponen un balance entre
+formalidad y distensión difícil de mantener.</p>
 <h2 id="ciclos-de-desarrollo">Ciclos de desarrollo</h2>
-<blockquote>
-<p>TODO - hablar de las fases de desarrollo. Interpretación propia de
-Agile. Documentación y código desarrollado a la par, mediante issues.
-Adaptación de los requisitos conforme se avanza. Beneficios de una
-página web (seguramente debería ser su propia sección)</p>
-</blockquote>
 <p>Este proyecto está compuesto por 2 grandes pilares: documentación –lo
-que estás leyendo– y software.</p>
+que estás leyendo, ya sea en PDF o en la web– y software.</p>
+<p>La metodología que se ha seguido es, en esencia, una versión de Agile
+muy laxa <span class="citation" data-cites="beck2001agile">(<a
+href="#ref-beck2001agile" role="doc-biblioref">Beck et al.
+2001</a>)</span>.</p>
+<p>Para empezar, se implementaron los tres libros de Shirley de la
+“serie In One Weekend”: In One Weekend <span class="citation"
+data-cites="Shirley2020RTW1">(<a href="#ref-Shirley2020RTW1"
+role="doc-biblioref">Shirley 2020a</a>)</span>, The Next Week <span
+class="citation" data-cites="Shirley2020RTW2">(<a
+href="#ref-Shirley2020RTW2" role="doc-biblioref">Shirley
+2020b</a>)</span>, y The Rest of your Life <span class="citation"
+data-cites="Shirley2020RTW3">(<a href="#ref-Shirley2020RTW3"
+role="doc-biblioref">Shirley 2020c</a>)</span>.</p>
+<p>Tras esto, comenzó a <a href="#setup-del-proyecto">desarrollarse</a>
+el motor por GPU. Cuando se consiguió una base sólida (que se puede ver
+en <a href="https://github.com/Asmilex/Raytracing/issues/25">este issue
+del repositorio</a>), se empezó a alternar entre escritura de
+documentación y desarrollo del software. A fin de cuentas, no tiene
+sentido implementar algo que no se conoce.</p>
+<p>Para apoyar el desarrollo, se ha utilizado <a
+href="#github">Github</a>. Más adelante hablaremos de cómo esta
+plataforma ha facilitado el trabajo.</p>
 <h2 id="diseño">Diseño</h2>
 <blockquote>
 <p>TODO: hablar de paleta de colores, tipografía…</p>
 </blockquote>
+<p>El diseño juega un papel fundamental en este proyecto. Todos los
+elementos visuales han sido escogidos con cuidado, de forma que se
+preserve la estética.</p>
+<p>Se ha creado <strong>un diseño que preserve el equilibrio entre la
+profesionalidad y la distensión</strong>.</p>
+<h3 id="bases-del-diseño">Bases del diseño</h3>
+<p>Para la documentación en versión PDF, usamos como base la
+<em>template</em> <a
+href="https://github.com/Wandmalfarbe/pandoc-latex-template">Eisvogel</a>.
+Esta es una elegante plantilla fácil de usar para LaTeX. Uno de sus
+puntos fuertes es la personalización, la cual aprovecharemos para darle
+un toque diferente.</p>
+<p>La web utiliza como base el estilo generado por Pandoc, el
+microframework de css <a
+href="https://github.com/rilwis/bamboo">Bamboo</a> y unas modificaciones
+personales.</p>
+<h3 id="tipografías">Tipografías</h3>
+<p>Se ha utilizado una combinación de las siguietes tipografías:</p>
+<ul>
+<li><a href="https://fonts.google.com/specimen/Crimson+Pro">Crimson
+Pro</a>: una tipografía serif clara, legible y contemporánea. Funciona
+muy bien en densidades más bajas, como 11pt. Es ideal para la versión en
+PDF. Además, liga estupendamente con Source Sans Pro, utilizada para los
+títulos en la plantilla Eisvogel.</li>
+<li><a href="https://fonts.google.com/specimen/Fraunces">Fraunces</a>:
+de lejos, la fuente más interesante de todo este proyecto. Es una
+soft-serif <em>old style</em>, pensada para títulos y similares (lo que
+se conoce como <em>display</em>). Es usada en los títulos de la web. Una
+de sus propiedades más curiosas es que modifica activamente los glifos
+dependiendo del valor del <em>optical size axis</em>, el peso y
+similares. Recomiendo echarle un ojo a su <a
+href="https://github.com/undercasetype/Fraunces">repositorio de
+Github</a>.</li>
+<li><a href="https://fonts.google.com/specimen/Rubik">Rubik</a>: La
+elección de Rubik es peculiar. Por sí sola, no casa con el proyecto. Sin
+embargo, combinada con Fraunces, proporcionan un punto de elegancia y
+familiaridad a la web. Su principal fuerte es la facilidad para la
+comprensión lectora en pantallas, algo que buscamos para la página
+web.</li>
+<li><a href="https://juliamono.netlify.app/">Julia Mono</a>:
+monoespaciada, pensada para computación científica. Llevo usándola
+bastante tiempo, y combia bien con Crimson Pro.</li>
+<li><a href="https://www.jetbrains.com/es-es/lp/mono/">Jetbrains
+Mono</a>: otra tipografía monoespaciada open source muy sólida,
+producida por la compañía Jetbrains. Se utiliza en la web para los
+bloques de código.</li>
+</ul>
+<p>Todas estas fuentes permiten un uso no comercial gratuito.</p>
 <h2 id="herramientas">Herramientas</h2>
 <blockquote>
 <p>TODO: hablar de <a href="https://www.figma.com/">Figma</a>, LTeX…
 (Issue <a
-href="https://github.com/Asmilex/Raytracing/issues/40">#40</a>)</p>
+href="https://github.com/Asmilex/Raytracing/issues/40">#40</a>),
+bamboo.css</p>
 </blockquote>
 <h2 id="github">Github</h2>
 <blockquote>
@@ -2646,6 +2746,7 @@ href="https://github.com/Asmilex/Raytracing/issues/40">#40</a>)</p>
 agrupar todo el trabajo. Hablar de la guía de estilos, y cómo los emojis
 ayudan a identificar rápidamente secciones.</p>
 </blockquote>
+<p><a href="https://github.com">Github</a></p>
 <h3 id="github-actions">Github Actions</h3>
 <blockquote>
 <p>TODO - Hablar de cómo se usa el sistema de integración continua para
@@ -2656,11 +2757,11 @@ construir la web y el pdf</p>
 <p>TODO - Hablar de cómo se gestiona el trabajo mediante issues,
 recapitulados todos con Projects.</p>
 </blockquote>
+<h3 id="estilo-de-commits">Estilo de commits</h3>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-7">Referencias</h2>
 <p>\end</p>
-<h1 id="glosario-de-términos-y-expresiones">Glosario de términos y
-expresiones</h1>
+<h1 id="glosario-de-términos">Glosario de términos</h1>
 <blockquote>
 <p><em>It’s dangerous to go alone, take this.</em></p>
 </blockquote>
@@ -2859,6 +2960,12 @@ Arnebäck. 2019. <span>“An Explanation of the Rendering Equation.”</span>
 January 10, 2019. <a
 href="https://www.youtube.com/watch?v=eo_MTI-d28s">https://www.youtube.com/watch?v=eo_MTI-d28s</a>.
 </div>
+<div id="ref-beck2001agile" class="csl-entry" role="doc-biblioentry">
+Beck, Kent, Mike Beedle, Arie van Bennekum, Alistair Cockburn, Ward
+Cunningham, Martin Fowler, James Grenning, et al. 2001. <span>“Manifesto
+for Agile Software Development.”</span> <a
+href="http://www.agilemanifesto.org/">http://www.agilemanifesto.org/</a>.
+</div>
 <div id="ref-berkeley-cs184" class="csl-entry" role="doc-biblioentry">
 Berkeley cs184. 2022. <span>“Monte Carlo Integration Cs184/284a.”</span>
 2022. <a
@@ -2868,6 +2975,12 @@ href="https://cs184.eecs.berkeley.edu/sp22">https://cs184.eecs.berkeley.edu/sp22
 Caulfield, Brian. 2020. <span>“What’s the Difference Between Ray
 Tracing, Rasterization?”</span> May 22, 2020. <a
 href="https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/">https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/</a>.
+</div>
+<div id="ref-digital-foundry-2020" class="csl-entry"
+role="doc-biblioentry">
+Digital Foundry. 2020. <span>“Cyberpunk 2077 PC: What Does Ray Tracing
+Deliver... And Is It Worth It?”</span> December 19, 2020. <a
+href="https://www.youtube.com/watch?v=6bqA8F6B6NQ">https://www.youtube.com/watch?v=6bqA8F6B6NQ</a>.
 </div>
 <div id="ref-Pellacini-Marschner-2017" class="csl-entry"
 role="doc-biblioentry">
@@ -2884,6 +2997,11 @@ href="https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf
 Haines, Eric, and Tomas Akenine-Möller, eds. 2019. <span>“Ray Tracing
 Gems.”</span> Apress. 2019. <a
 href="http://raytracinggems.com">http://raytracinggems.com</a>.
+</div>
+<div id="ref-nature-2016" class="csl-entry" role="doc-biblioentry">
+Nature. 2016. <span>“Scientific Language Is Becoming More
+Informal.”</span> November 8, 2016. <a
+href="https://doi.org/10.1038/539140a">https://doi.org/10.1038/539140a</a>.
 </div>
 <div id="ref-mcbook" class="csl-entry" role="doc-biblioentry">
 Owen, Art B. 2013. <em>Monte Carlo Theory, Methods and Examples</em>. <a
@@ -2905,6 +3023,19 @@ href="https://www.youtube.com/watch?v=DkcEAz09Buo">https://www.youtube.com/watch
 role="doc-biblioentry">
 <span>“Rendering.”</span> n.d. Accessed March 20, 2022. <a
 href="https://sciencebehindpixar.org/pipeline/rendering#:%7E:text=They%20said%20it%20takes%20at,to%20render%20that%20many%20frames">https://sciencebehindpixar.org/pipeline/rendering#:%7E:text=They%20said%20it%20takes%20at,to%20render%20that%20many%20frames</a>.
+</div>
+<div id="ref-Shirley2020RTW1" class="csl-entry" role="doc-biblioentry">
+Shirley, Peter. 2020a. <span>“Ray Tracing in One Weekend.”</span> 2020.
+<a
+href="https://raytracing.github.io/books/RayTracingInOneWeekend.html">https://raytracing.github.io/books/RayTracingInOneWeekend.html</a>.
+</div>
+<div id="ref-Shirley2020RTW2" class="csl-entry" role="doc-biblioentry">
+———. 2020b. <span>“Ray Tracing: The Next Week.”</span> 2020. <a
+href="https://raytracing.github.io/books/RayTracingTheNextWeek.html">https://raytracing.github.io/books/RayTracingTheNextWeek.html</a>.
+</div>
+<div id="ref-Shirley2020RTW3" class="csl-entry" role="doc-biblioentry">
+———. 2020c. <span>“Ray Tracing: The Rest of Your Life.”</span> 2020. <a
+href="https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html">https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html</a>.
 </div>
 <div id="ref-ShirleyRRT" class="csl-entry" role="doc-biblioentry">
 Shirley, Peter, and R. Keith Morley. 2003. <em>Realistic Ray
