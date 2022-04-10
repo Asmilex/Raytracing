@@ -1,4 +1,6 @@
 {
+    "audioCues.volume": 0,
+
     "triggerTaskOnSave.on": true,
     "triggerTaskOnSave.tasks": {
         "Documentation (web)": [
