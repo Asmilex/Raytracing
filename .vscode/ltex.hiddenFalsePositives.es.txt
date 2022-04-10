@@ -8,3 +8,5 @@
 {"rule":"PUNTO_EN_ABREVIATURAS","sentence":"^\\Q\\mu = EY = Ef(X) = \\int_{S}{f(x)p_X(x)dx}\\E$"}
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qasí que, como adelantamos al inicio del capítulo, la estimación tiene un error del orden \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
 {"rule":"ARROWS","sentence":"^\\QTODO dibujo origen - epsilon == tmin -> rayo -> t_max = 1-epsilon\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qsiendo \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q el ángulo de la radiancia de salida de la superficie del cuadrilátero.\\E$"}
+{"rule":"PRONOMBRE_SIN_VERBO","sentence":"^\\Q\\int_{H^2(\\mathbf{n})}{f(p, \\omega_o \\leftarrow \\omega_i) \\cos\\theta_i\\ d\\omega_i} \\le 1\\ \\forall \\omega_o\\E$"}
