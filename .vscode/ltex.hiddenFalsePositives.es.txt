@@ -10,3 +10,4 @@
 {"rule":"ARROWS","sentence":"^\\QTODO dibujo origen - epsilon == tmin -> rayo -> t_max = 1-epsilon\\E$"}
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qsiendo \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q el ángulo de la radiancia de salida de la superficie del cuadrilátero.\\E$"}
 {"rule":"PRONOMBRE_SIN_VERBO","sentence":"^\\Q\\int_{H^2(\\mathbf{n})}{f(p, \\omega_o \\leftarrow \\omega_i) \\cos\\theta_i\\ d\\omega_i} \\le 1\\ \\forall \\omega_o\\E$"}
+{"rule":"AGREEMENT_POSTPONED_ADJ","sentence":"^\\QJetbrains Mono: otra tipografía monoespaciada open source muy sólida, producida por la compañía Jetbrains.\\E$"}
