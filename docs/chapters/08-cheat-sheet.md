@@ -1,5 +1,5 @@
 
-# Glosario de términos y expresiones
+# Glosario de términos
 
 > *It's dangerous to go alone, take this.*
 
