@@ -62,6 +62,8 @@ Para este trabajo, se han escogido las siguientes tipografías:
 
 Todas estas fuentes permiten un uso no comercial gratuito.
 
+> TODO: Añadir imagen comparativa con las fuentes
+
 ### Paleta de colores
 
 A fin de mantener consistencia, se ha creado una paleta de colores específica.
@@ -118,7 +120,7 @@ La página [Github](https://github.com) ha alojado prácticamente todo el conten
 
 Se ha escogido Github en vez de sus competidores por los siguientes motivos:
 
-1. Llevo usándolo toda la carrera. Es mi página de hosting de repositorios favorita.
+1. Llevo usándola toda la carrera. Es mi página de hosting de repositorios favorita.
 2. Los repositorios de Nvidia se encontraban en Github, por lo que resulta más fácil sincronizarlos.
 3. La documentación se puede desplegar usando Github Pages.
 4. Las Github Actions son particularmente cómodas y sencillas de usar.
@@ -139,7 +141,7 @@ Tendremos dos tipos de `Actions`: uno que se encarga de compilar la web, y otro 
    2. El PDF se crea en `docs/TFG.pdf`
 3. Commitea los archivos y termina.
 
-![Pantallazo de los workflows](./img/Github%20Actions.png){ width=900px}
+![Pantallazo de los workflows](./img/Github%20Actions.png)
 
 El workflow de la web corre automáticamente, mientras que para generar el PDF hace falta activación manual. Aunque no es *del todo* correcto almacenar ficheros binarios en un repositorio de git, no me resulta molesto personalmente. Así que, cuando considero que es el momento oportuno, lo hago manualmente. Además, también se activa por cada *release* que se crea.
 
