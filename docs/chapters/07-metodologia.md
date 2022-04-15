@@ -99,7 +99,7 @@ Un fichero Makefile (`docs/Makefile`) contiene varias órdenes para generar ambo
 
 [Figma](https://www.figma.com/) es otro de esos programas que te hace preguntarte por qué es gratis. Es una aplicación en la web usada para diseño gráfico. Es muy potente, intuitiva, y genera unos resultados muy buenos en poco tiempo. Todos los diseños de este trabajo se han hecho con esta herramienta.
 
-![Tablón principal del proyecto, a día 15 de abril de 2022](./img/Figma.png)
+![Tablón principal del proyecto de Figma, a día 15 de abril de 2022](./img/Figma.png)
 
 Una de las características más útiles es poder exportar rápidamente la imagen. Esto permite hacer cambios rápidos y registrarlos en el repositorio fácilmente. Además, permite instalar plugins. Uno de ellos ha resultado especialmente útil: [Latex Complete](https://www.figma.com/community/plugin/793023817364007801/LaTeX-Complete). Esto nos permite incrustar código LaTeX en el documento en forma de SVG.
 
@@ -114,8 +114,6 @@ Como es normal, hay muchos otros programas que han intervenido en el desarrollo.
 
 ## Github
 
-> TODO - Hablar de cómo se utiliza Github y sus tecnologías para agrupar todo el trabajo. Hablar de la guía de estilos, y cómo los emojis ayudan a identificar rápidamente secciones.
-
 La página [Github](https://github.com) ha alojado prácticamente todo el contenido del trabajo; desde el programa, hasta la documentación online. El repositorio se puede consultar en [Github.com/Asmilex/Raytracing](https://github.com/Asmilex/Raytracing).
 
 Se ha escogido Github en vez de sus competidores por los siguientes motivos:
@@ -128,8 +126,6 @@ Se ha escogido Github en vez de sus competidores por los siguientes motivos:
 Entremos en detalle en algunos de los puntos anteriores:
 
 ### Integración continua con Github Actions y Github Pages
-
-> TODO - Hablar de cómo se usa el sistema de integración continua para construir la web y el pdf
 
 Cuando hablamos de **integración continua**, nos referimos a ciertos programas que corren en un repositorio y se encargan de hacer ciertas transformaciones al código, de forma que este se prepare para su presentación final. En esencia, automatizan algunas tareas habituales de un desarrollo de software.
 
@@ -157,7 +153,11 @@ Para generar los archivos nos hace falta una distribución de LaTeX, Pandoc, y t
 
 ### Estilo de commits
 
+Una de los detalles que has podido apreciar si has entrado al repositorio es un estilo de commit un tanto inusual. Aunque parece un detalle de lo más insustancial, añadir emojis a los mensajes de commits añade un toque particular al repositorio, y permite identificar rápidamente el tipo de cambio.
 
+Cada uno tiene un significado particular. En esta tabla se recogen sus significados:
+
+![Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno](./img/Commits.png)
 
 <hr>
 
