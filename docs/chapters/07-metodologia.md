@@ -66,7 +66,7 @@ Todas estas fuentes permiten un uso no comercial gratuito.
 
 A fin de mantener consistencia, se ha creado una paleta de colores específica.
 
-![La paleta de colores del proyecto](./img/Paleta%20de%20colores.png)
+![La paleta de colores del proyecto](./img/Paleta%20de%20colores.png){ width=400px }
 
 El principal objetivo es **transmitir tranquilidad**, pero a la misma vez, **profesionalidad**. De nuevo, buscamos la idea de profesionalidad distendida que ya hemos repetido un par de veces.
 
@@ -110,24 +110,53 @@ Como es normal, hay muchos otros programas que han intervenido en el desarrollo.
 - El editor por excelencia [VSCode](https://code.visualstudio.com/). Ha facilitado en gran medida el desarrollo de la aplicación y la documentación. En particular, se ha usado una extensión denominada [Trigger task on save](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.triggertaskonsave) que compila la documentación HTML automáticamente al guardar un fichero. ¡Muy útil y rápido!
 - [Vectary](https://www.vectary.com/) para hacer los diseños en 3D fácilmente. Permite exportar una escena rápidamente a png para editarla en Figma.
 - Como veremos más adelante, la documentación se compila en el repositorio usando un contenedor de [Docker](https://www.docker.com/).
+- Cualquier proyecto informático debería usar `git`. Este no es una excepción.
 
 ## Github
 
 > TODO - Hablar de cómo se utiliza Github y sus tecnologías para agrupar todo el trabajo. Hablar de la guía de estilos, y cómo los emojis ayudan a identificar rápidamente secciones.
 
-[Github](https://github.com)
+La página [Github](https://github.com) ha alojado prácticamente todo el contenido del trabajo; desde el programa, hasta la documentación online. El repositorio se puede consultar en [Github.com/Asmilex/Raytracing](https://github.com/Asmilex/Raytracing).
 
-### Integración continua con Github Actions
+Se ha escogido Github en vez de sus competidores por los siguientes motivos:
+
+1. Llevo usándolo toda la carrera. Es mi página de hosting de repositorios favorita.
+2. Los repositorios de Nvidia se encontraban en Github, por lo que resulta más fácil sincronizarlos.
+3. La documentación se puede desplegar usando Github Pages.
+4. Las Github Actions son particularmente cómodas y sencillas de usar.
+
+Entremos en detalle en algunos de los puntos anteriores:
+
+### Integración continua con Github Actions y Github Pages
 
 > TODO - Hablar de cómo se usa el sistema de integración continua para construir la web y el pdf
 
-El contenedor se encuentra en el [repositorio de Dockerhub][https://hub.docker.com/r/asmilex/raytracing]. Esta imagen está basada en [dockershelf/latex:full](https://hub.docker.com/r/dockershelf/latex). Por desgracia, es *muy* pesada para ser un contenedor. Desafortunadamente, una instalación de LaTeX ocupa una cantidad de espacio considerable; y para compilar el PDF necesitamos una muy completa. El Dockerfile, además, carga los ficheros fuentes necesarios en el sistema. Puedes encontrar el Dockerfile [aquí](https://github.com/Asmilex/Raytracing/blob/main/Dockerfile).
+Cuando hablamos de **integración continua**, nos referimos a ciertos programas que corren en un repositorio y se encargan de hacer ciertas transformaciones al código, de forma que este se prepare para su presentación final. En esencia, automatizan algunas tareas habituales de un desarrollo de software.
 
-### Github Projects
+En este trabajo lo usaremos para compilar la documentación. De esta forma, no necesitamos lidiar con "proyecto final", "proyecto final definitivo", "proyecto final final v2", etc. Simplemente, cuando registremos un cambio en los ficheros Markdown (lo que se conoce en git como un `commit`), y lo subamos a Github (acción de `push`), se ejecutará un denominado `Action` que operará sobre nuestros archivos.
+
+Tendremos dos tipos de `Actions`: uno que se encarga de compilar la web, y otro el PDF. En esencia, operan de la siguiente manera:
+
+1. Comprueba si se ha modificado algún fichero `.md` en el último commit subido. Si no es el caso, para.
+2. Si sí se ha modificado, accede a la carpeta del repositorio y compila la documentación mediante `pandoc`.
+   1. La web se genera en `docs/index.html`. Publica la web a Github Pages.
+   2. El PDF se crea en `docs/TFG.pdf`
+3. Commitea los archivos y termina.
+
+![Pantallazo de los workflows](./img/Github%20Actions.png){ width=900px}
+
+El workflow de la web corre automáticamente, mientras que para generar el PDF hace falta activación manual. Aunque no es *del todo* correcto almacenar ficheros binarios en un repositorio de git, no me resulta molesto personalmente. Así que, cuando considero que es el momento oportuno, lo hago manualmente. Además, también se activa por cada *release* que se crea.
+
+Volviendo a la web, Github permite alojar páginas web para un repositorio. Activando el parámetro correcto en las opciones del repositorio, y configurándolo debidamente, conseguimos que lea el archivo `index.html` generado por el Action y lo despliegue. Esto es potentísimo: con solo editar una línea de código y subir los cambios, conseguimos que la web se actualice al instante.
+
+Para generar los archivos nos hace falta una distribución de LaTeX, Pandoc, y todas las dependencias (como filtros). Como no encontré ningún contenedor que sirviera mi propósito, decidí crear uno. Se encuentra en el [repositorio de Dockerhub][https://hub.docker.com/r/asmilex/raytracing]. Esta imagen está basada en [dockershelf/latex:full](https://hub.docker.com/r/dockershelf/latex). Por desgracia, es *muy* pesada para ser un contenedor. Desafortunadamente, una instalación de LaTeX ocupa una cantidad de espacio considerable; y para compilar el PDF necesitamos una muy completa, por lo que debemos lidiar con este *overhead*. Puedes encontrar el Dockerfile [aquí](https://github.com/Asmilex/Raytracing/blob/main/Dockerfile).
+
+### Issues y Github Projects
 
 > TODO - Hablar de cómo se gestiona el trabajo mediante issues, recapitulados todos con Projects.
 
 ### Estilo de commits
+
 
 
 <hr>
@@ -135,4 +164,4 @@ El contenedor se encuentra en el [repositorio de Dockerhub][https://hub.docker.c
 
 ## Referencias {.unlisted .unnumbered}
 
-\end
+[@digital-foundry-2020], [@nature-2016], [@beck2001agile], [@merelo-2021]
