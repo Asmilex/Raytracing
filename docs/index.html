@@ -320,8 +320,7 @@ spotlights</a></li>
 <li><a href="#análisis-de-rendimiento">Análisis de rendimiento</a></li>
 <li><a href="#el-futuro-de-ray-tracing">El futuro de Ray
 Tracing</a></li>
-<li><a href="#metodología-o-cómo-se-hizo-este-trabajo">Metodología; o
-cómo se hizo este trabajo</a>
+<li><a href="#metodología-de-trabajo">Metodología de trabajo</a>
 <ul>
 <li><a href="#influencias">Influencias</a></li>
 <li><a href="#ciclos-de-desarrollo">Ciclos de desarrollo</a></li>
@@ -329,12 +328,22 @@ cómo se hizo este trabajo</a>
 <ul>
 <li><a href="#bases-del-diseño">Bases del diseño</a></li>
 <li><a href="#tipografías">Tipografías</a></li>
+<li><a href="#paleta-de-colores">Paleta de colores</a></li>
 </ul></li>
-<li><a href="#herramientas">Herramientas</a></li>
+<li><a href="#flujo-de-trabajo-y-herramientas">Flujo de trabajo y
+herramientas</a>
+<ul>
+<li><a href="#pandoc">Pandoc</a></li>
+<li><a href="#figma">Figma</a></li>
+<li><a href="#otros-programas">Otros programas</a></li>
+</ul></li>
 <li><a href="#github">Github</a>
 <ul>
-<li><a href="#github-actions">Github Actions</a></li>
-<li><a href="#github-projects">Github Projects</a></li>
+<li><a
+href="#integración-continua-con-github-actions-y-github-pages">Integración
+continua con Github Actions y Github Pages</a></li>
+<li><a href="#issues-y-github-projects">Issues y Github
+Projects</a></li>
 <li><a href="#estilo-de-commits">Estilo de commits</a></li>
 </ul></li>
 </ul></li>
@@ -2608,8 +2617,7 @@ preguntarle a Kako que tire benchmark en su 2060, y a Manu con su 3060
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-6">Referencias</h2>
 
-<h1 id="metodología-o-cómo-se-hizo-este-trabajo">Metodología; o cómo se
-hizo este trabajo</h1>
+<h1 id="metodología-de-trabajo">Metodología de trabajo</h1>
 <p>Cualquier proyecto de una envergadura considerable necesita ser
 planificado con antelación. En este capítulo vamos a hablar de cómo se
 ha realizado este trabajo: mostraremos las herramientas usadas, los
@@ -2702,7 +2710,11 @@ microframework de css <a
 href="https://github.com/rilwis/bamboo">Bamboo</a> y unas modificaciones
 personales.</p>
 <h3 id="tipografías">Tipografías</h3>
-<p>Se ha utilizado una combinación de las siguietes tipografías:</p>
+<p>Un apartado al que se le debe prestar especial énfasis es a la
+combinación de tipografías. A fin de cuentas, esto es un libro; así que
+escoger un tipo de letra correcto facilitará al lector comprender los
+conceptos. Puede parecer trivial a priori, pero es importante.</p>
+<p>Para este trabajo, se han escogido las siguientes tipografías:</p>
 <ul>
 <li><a href="https://fonts.google.com/specimen/Crimson+Pro">Crimson
 Pro</a>: una tipografía serif clara, legible y contemporánea. Funciona
@@ -2733,34 +2745,224 @@ producida por la compañía Jetbrains. Se utiliza en la web para los
 bloques de código.</li>
 </ul>
 <p>Todas estas fuentes permiten un uso no comercial gratuito.</p>
-<h2 id="herramientas">Herramientas</h2>
 <blockquote>
-<p>TODO: hablar de <a href="https://www.figma.com/">Figma</a>, LTeX…
-(Issue <a
-href="https://github.com/Asmilex/Raytracing/issues/40">#40</a>),
-bamboo.css</p>
+<p>TODO: Añadir imagen comparativa con las fuentes</p>
 </blockquote>
+<h3 id="paleta-de-colores">Paleta de colores</h3>
+<p>A fin de mantener consistencia, se ha creado una paleta de colores
+específica.</p>
+<figure>
+<img src="./img/Paleta%20de%20colores.png" width="400"
+alt="La paleta de colores del proyecto" />
+<figcaption aria-hidden="true">La paleta de colores del
+proyecto</figcaption>
+</figure>
+<p>El principal objetivo es <strong>transmitir tranquilidad</strong>,
+pero a la misma vez, <strong>profesionalidad</strong>. De nuevo,
+buscamos la idea de profesionalidad distendida que ya hemos repetido un
+par de veces.</p>
+<p>Partiendo del rojo que traía Eisvogel (lo que para nosotros sería el
+rojo primario), se han creado el resto. En principio, con 5 tonalidades
+diferentes nos basta. Todas ellas vienen acompañadas de sus respectivas
+variaciones oscuras, muy oscuras, claras y muy claras. Corresponderían a
+los <code>color-100, color-300, color-500, color-700, color-900</code>
+que estamos acostumbrados en diseño web. Para la escala de grises, se
+han escogido 7 colores en vez de 9. Son más que suficientes para lo que
+necesitamos. Puedes encontrar las definiciones en el <a
+href="https://github.com/Asmilex/Raytracing/blob/main/docs/headers/style.css">fichero
+de estilos</a>.</p>
+<p>Todos los colores que puedes ver en este documento se han extraído de
+la paleta. ¡La consistencia es clave!</p>
+<h2 id="flujo-de-trabajo-y-herramientas">Flujo de trabajo y
+herramientas</h2>
+<p>Encontrar una herramienta que se adapte a un <em>workflow</em> es
+complicado. Aunque hay muchos programas maravilosos, debemos hacerlos
+funcionar en conjunto. En este apartado, vamos a describir cuáles son
+las que hemos usado.</p>
+<p>Principalmente destacan tres de ellas: <strong>Github</strong>,
+<strong>Pandoc</strong> y <strong>Figma</strong>. La primera tendrá <a
+href="#github">su propia sección</a>, así que hablaremos de las
+otras.</p>
+<blockquote>
+<p>TODO: foto del workflow.</p>
+</blockquote>
+<h3 id="pandoc">Pandoc</h3>
+<p><a href="https://pandoc.org/">Pandoc</a> es una estupendísima de
+conversión de documentos. Se puede usar para convertir un tipo de
+archivo a otro. En este caso, se usa para convertir una serie de
+ficheros Markdown (los capítulos) a un fichero HTML (la web) y a PDF. Su
+punto más fuerte es que permite escribir LaTeX de forma simplificada,
+como si se tratara de <em>sugar syntax</em>. Combina la simplicidad de
+Markdown y la correctitud de LaTeX.</p>
+<p>Su funcionamiento en este proyecto es el siguiente: Primero, recoge
+los capítulos que se encuentra en <code>docs/chapters</code>, usando una
+serie de cabeceras en YAML que especifican ciertos parámetros (como
+autor, fecha, título, etc.), así como scripts de Lua. Estas caceberas se
+encuentran en <code>docs/headers</code>. En particular:</p>
+<ol type="1">
+<li><code>meta.md</code> recoge los parámetros base del trabajo.</li>
+<li><code>pdf.md</code> y <code>web.md</code> contienen algunas
+definiciones específicas de sus respectivos formatos. Por ejemplo, el
+YAML del PDF asigna las variables disponibles de la plantilla Eisvogel;
+mientras que para la web se incluyen las referencias a algunas
+bibliotecas de Javascript necesarias o los estilos
+(<code>docs/headers/style.css</code>, usando como base <a
+href="https://github.com/rilwis/bamboo">Bamboo.css</a>).</li>
+<li><code>math.md</code> contiene las definiciones de LaTeX.</li>
+<li>Se utilizan algunos filtros específicos de Lua para simplificar la
+escritura. En específico, <code>standard-code.lua</code> formatea
+correctamente los bloques de código para la web.</li>
+</ol>
+<p>Un fichero Makefile (<code>docs/Makefile</code>) contiene varias
+órdenes para generar ambos formatos. Tienen varios parámetros
+adicionales de por sí, como puede ser la bibliografía
+(<code>docs/chapters/bibliography.bib</code>).</p>
+<h3 id="figma">Figma</h3>
+<p><a href="https://www.figma.com/">Figma</a> es otro de esos programas
+que te hace preguntarte por qué es gratis. Es una aplicación en la web
+usada para diseño gráfico. Es muy potente, intuitiva, y genera unos
+resultados muy buenos en poco tiempo. Todos los diseños de este trabajo
+se han hecho con esta herramienta.</p>
+<figure>
+<img src="./img/Figma.png"
+alt="Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
+<figcaption aria-hidden="true">Tablón principal del proyecto de Figma, a
+día 15 de abril de 2022</figcaption>
+</figure>
+<p>Una de las características más útiles es poder exportar rápidamente
+la imagen. Esto permite hacer cambios rápidos y registrarlos en el
+repositorio fácilmente. Además, permite instalar plugins. Uno de ellos
+ha resultado especialmente útil: <a
+href="https://www.figma.com/community/plugin/793023817364007801/LaTeX-Complete">Latex
+Complete</a>. Esto nos permite incrustar código LaTeX en el documento en
+forma de SVG.</p>
+<h3 id="otros-programas">Otros programas</h3>
+<p>Como es normal, hay muchos otros programas que han intervenido en el
+desarrollo. Estos son algunos de ellos:</p>
+<ul>
+<li>El editor por excelencia <a
+href="https://code.visualstudio.com/">VSCode</a>. Ha facilitado en gran
+medida el desarrollo de la aplicación y la documentación. En particular,
+se ha usado una extensión denominada <a
+href="https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.triggertaskonsave">Trigger
+task on save</a> que compila la documentación HTML automáticamente al
+guardar un fichero. ¡Muy útil y rápido!</li>
+<li><a href="https://www.vectary.com/">Vectary</a> para hacer los
+diseños en 3D fácilmente. Permite exportar una escena rápidamente a png
+para editarla en Figma.</li>
+<li>Como veremos más adelante, la documentación se compila en el
+repositorio usando un contenedor de <a
+href="https://www.docker.com/">Docker</a>.</li>
+<li>Cualquier proyecto informático debería usar <code>git</code>. Este
+no es una excepción.</li>
+</ul>
 <h2 id="github">Github</h2>
-<blockquote>
-<p>TODO - Hablar de cómo se utiliza Github y sus tecnologías para
-agrupar todo el trabajo. Hablar de la guía de estilos, y cómo los emojis
-ayudan a identificar rápidamente secciones.</p>
-</blockquote>
-<p><a href="https://github.com">Github</a></p>
-<h3 id="github-actions">Github Actions</h3>
-<blockquote>
-<p>TODO - Hablar de cómo se usa el sistema de integración continua para
-construir la web y el pdf</p>
-</blockquote>
-<h3 id="github-projects">Github Projects</h3>
+<p>La página <a href="https://github.com">Github</a> ha alojado
+prácticamente todo el contenido del trabajo; desde el programa, hasta la
+documentación online. El repositorio se puede consultar en <a
+href="https://github.com/Asmilex/Raytracing">Github.com/Asmilex/Raytracing</a>.</p>
+<p>Se ha escogido Github en vez de sus competidores por los siguientes
+motivos:</p>
+<ol type="1">
+<li>Llevo usándola toda la carrera. Es mi página de hosting de
+repositorios favorita.</li>
+<li>Los repositorios de Nvidia se encontraban en Github, por lo que
+resulta más fácil sincronizarlos.</li>
+<li>La documentación se puede desplegar usando Github Pages.</li>
+<li>Las Github Actions son particularmente cómodas y sencillas de
+usar.</li>
+</ol>
+<p>Entremos en detalle en algunos de los puntos anteriores:</p>
+<h3
+id="integración-continua-con-github-actions-y-github-pages">Integración
+continua con Github Actions y Github Pages</h3>
+<p>Cuando hablamos de <strong>integración continua</strong>, nos
+referimos a ciertos programas que corren en un repositorio y se encargan
+de hacer ciertas transformaciones al código, de forma que este se
+prepare para su presentación final. En esencia, automatizan algunas
+tareas habituales de un desarrollo de software.</p>
+<p>En este trabajo lo usaremos para compilar la documentación. De esta
+forma, no necesitamos lidiar con “proyecto final”, “proyecto final
+definitivo”, “proyecto final final v2”, etc. Simplemente, cuando
+registremos un cambio en los ficheros Markdown (lo que se conoce en git
+como un <code>commit</code>), y lo subamos a Github (acción de
+<code>push</code>), se ejecutará un denominado <code>Action</code> que
+operará sobre nuestros archivos.</p>
+<p>Tendremos dos tipos de <code>Actions</code>: uno que se encarga de
+compilar la web, y otro el PDF. En esencia, operan de la siguiente
+manera:</p>
+<ol type="1">
+<li>Comprueba si se ha modificado algún fichero <code>.md</code> en el
+último commit subido. Si no es el caso, para.</li>
+<li>Si sí se ha modificado, accede a la carpeta del repositorio y
+compila la documentación mediante <code>pandoc</code>.
+<ol type="1">
+<li>La web se genera en <code>docs/index.html</code>. Publica la web a
+Github Pages.</li>
+<li>El PDF se crea en <code>docs/TFG.pdf</code></li>
+</ol></li>
+<li>Commitea los archivos y termina.</li>
+</ol>
+<figure>
+<img src="./img/Github%20Actions.png"
+alt="Pantallazo de los workflows" />
+<figcaption aria-hidden="true">Pantallazo de los workflows</figcaption>
+</figure>
+<p>El workflow de la web corre automáticamente, mientras que para
+generar el PDF hace falta activación manual. Aunque no es <em>del
+todo</em> correcto almacenar ficheros binarios en un repositorio de git,
+no me resulta molesto personalmente. Así que, cuando considero que es el
+momento oportuno, lo hago manualmente. Además, también se activa por
+cada <em>release</em> que se crea.</p>
+<p>Volviendo a la web, Github permite alojar páginas web para un
+repositorio. Activando el parámetro correcto en las opciones del
+repositorio, y configurándolo debidamente, conseguimos que lea el
+archivo <code>index.html</code> generado por el Action y lo despliegue.
+Esto es potentísimo: con solo editar una línea de código y subir los
+cambios, conseguimos que la web se actualice al instante.</p>
+<p>Para generar los archivos nos hace falta una distribución de LaTeX,
+Pandoc, y todas las dependencias (como filtros). Como no encontré ningún
+contenedor que sirviera mi propósito, decidí crear uno. Se encuentra en
+el [repositorio de
+Dockerhub][https://hub.docker.com/r/asmilex/raytracing]. Esta imagen
+está basada en <a
+href="https://hub.docker.com/r/dockershelf/latex">dockershelf/latex:full</a>.
+Por desgracia, es <em>muy</em> pesada para ser un contenedor.
+Desafortunadamente, una instalación de LaTeX ocupa una cantidad de
+espacio considerable; y para compilar el PDF necesitamos una muy
+completa, por lo que debemos lidiar con este <em>overhead</em>. Puedes
+encontrar el Dockerfile <a
+href="https://github.com/Asmilex/Raytracing/blob/main/Dockerfile">aquí</a>.</p>
+<h3 id="issues-y-github-projects">Issues y Github Projects</h3>
 <blockquote>
 <p>TODO - Hablar de cómo se gestiona el trabajo mediante issues,
 recapitulados todos con Projects.</p>
 </blockquote>
 <h3 id="estilo-de-commits">Estilo de commits</h3>
+<p>Una de los detalles que has podido apreciar si has entrado al
+repositorio es un estilo de commit un tanto inusual. Aunque parece un
+detalle de lo más insustancial, añadir emojis a los mensajes de commits
+añade un toque particular al repositorio, y permite identificar
+rápidamente el tipo de cambio.</p>
+<p>Cada uno tiene un significado particular. En esta tabla se recogen
+sus significados:</p>
+<figure>
+<img src="./img/Commits.png"
+alt="Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
+<figcaption aria-hidden="true">Los emojis permiten reconocer el objetivo
+de cada commit. Esta tabla recoge el significado de cada
+uno</figcaption>
+</figure>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-7">Referencias</h2>
-<p>\end</p>
+<p><span class="citation" data-cites="digital-foundry-2020">(<a
+href="#ref-digital-foundry-2020" role="doc-biblioref">Digital Foundry
+2020</a>)</span>, <span class="citation" data-cites="nature-2016">(<a
+href="#ref-nature-2016" role="doc-biblioref">Nature 2016</a>)</span>,
+<span class="citation" data-cites="beck2001agile">(<a
+href="#ref-beck2001agile" role="doc-biblioref">Beck et al.
+2001</a>)</span>, <span class="citation" data-cites="merelo-2021">(<a
+href="#ref-merelo-2021" role="doc-biblioref">Merelo 2021</a>)</span></p>
 <h1 id="glosario-de-términos">Glosario de términos</h1>
 <blockquote>
 <p><em>It’s dangerous to go alone, take this.</em></p>
@@ -2997,6 +3199,10 @@ href="https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf
 Haines, Eric, and Tomas Akenine-Möller, eds. 2019. <span>“Ray Tracing
 Gems.”</span> Apress. 2019. <a
 href="http://raytracinggems.com">http://raytracinggems.com</a>.
+</div>
+<div id="ref-merelo-2021" class="csl-entry" role="doc-biblioentry">
+Merelo. 2021. <span>“Infraestructura Virtual.”</span> 2021. <a
+href="http://jj.github.io/IV/documentos/temas/Integracion_continua">http://jj.github.io/IV/documentos/temas/Integracion_continua</a>.
 </div>
 <div id="ref-nature-2016" class="csl-entry" role="doc-biblioentry">
 Nature. 2016. <span>“Scientific Language Is Becoming More
