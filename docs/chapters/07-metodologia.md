@@ -50,7 +50,9 @@ La web utiliza como base el estilo generado por Pandoc, el microframework de css
 
 ### Tipografías
 
-Se ha utilizado una combinación de las siguietes tipografías:
+Un apartado al que se le debe prestar especial énfasis es a la combinación de tipografías. A fin de cuentas, esto es un libro; así que escoger un tipo de letra correcto facilitará al lector comprender los conceptos. Puede parecer trivial a priori, pero es importante.
+
+Para este trabajo, se han escogido las siguientes tipografías:
 
 - [Crimson Pro](https://fonts.google.com/specimen/Crimson+Pro): una tipografía serif clara, legible y contemporánea. Funciona muy bien en densidades más bajas, como 11pt. Es ideal para la versión en PDF. Además, liga estupendamente con Source Sans Pro, utilizada para los títulos en la plantilla Eisvogel.
 - [Fraunces](https://fonts.google.com/specimen/Fraunces): de lejos, la fuente más interesante de todo este proyecto. Es una soft-serif *old style*, pensada para títulos y similares (lo que se conoce como *display*). Es usada en los títulos de la web. Una de sus propiedades más curiosas es que modifica activamente los glifos dependiendo del valor del *optical size axis*, el peso y similares. Recomiendo echarle un ojo a su [repositorio de Github](https://github.com/undercasetype/Fraunces).
@@ -60,9 +62,54 @@ Se ha utilizado una combinación de las siguietes tipografías:
 
 Todas estas fuentes permiten un uso no comercial gratuito.
 
-## Herramientas
+### Paleta de colores
 
-> TODO: hablar de [Figma](https://www.figma.com/), LTeX... (Issue [#40](https://github.com/Asmilex/Raytracing/issues/40)), bamboo.css
+A fin de mantener consistencia, se ha creado una paleta de colores específica.
+
+![La paleta de colores del proyecto](./img/Paleta%20de%20colores.png)
+
+El principal objetivo es **transmitir tranquilidad**, pero a la misma vez, **profesionalidad**. De nuevo, buscamos la idea de profesionalidad distendida que ya hemos repetido un par de veces.
+
+Partiendo del rojo que traía Eisvogel (lo que para nosotros sería el rojo primario), se han creado el resto. En principio, con 5 tonalidades diferentes nos basta. Todas ellas vienen acompañadas de sus respectivas variaciones oscuras, muy oscuras, claras y muy claras. Corresponderían a los `color-100, color-300, color-500, color-700, color-900` que estamos acostumbrados en diseño web. Para la escala de grises, se han escogido 7 colores en vez de 9. Son más que suficientes para lo que necesitamos. Puedes encontrar las definiciones en el [fichero de estilos](https://github.com/Asmilex/Raytracing/blob/main/docs/headers/style.css).
+
+Todos los colores que puedes ver en este documento se han extraído de la paleta. ¡La consistencia es clave!
+
+## Flujo de trabajo y herramientas
+
+Encontrar una herramienta que se adapte a un *workflow* es complicado. Aunque hay muchos programas maravilosos, debemos hacerlos funcionar en conjunto. En este apartado, vamos a describir cuáles son las que hemos usado.
+
+Principalmente destacan tres de ellas: **Github**, **Pandoc** y **Figma**. La primera tendrá [su propia sección](#github), así que hablaremos de las otras.
+
+> TODO: foto del workflow.
+
+### Pandoc
+
+[Pandoc](https://pandoc.org/) es una estupendísima de conversión de documentos. Se puede usar para convertir un tipo de archivo a otro. En este caso, se usa para convertir una serie de ficheros Markdown (los capítulos) a un fichero HTML (la web) y a PDF. Su punto más fuerte es que permite escribir LaTeX de forma simplificada, como si se tratara de *sugar syntax*. Combina la simplicidad de Markdown y la correctitud de LaTeX.
+
+Su funcionamiento en este proyecto es el siguiente: Primero, recoge los capítulos que se encuentra en `docs/chapters`, usando una serie de cabeceras en YAML que especifican ciertos parámetros (como autor, fecha, título, etc.), así como scripts de Lua. Estas caceberas se encuentran en `docs/headers`. En particular:
+
+1. `meta.md` recoge los parámetros base del trabajo.
+2. `pdf.md` y `web.md` contienen algunas definiciones específicas de sus respectivos formatos. Por ejemplo, el YAML del PDF asigna las variables disponibles de la plantilla Eisvogel; mientras que para la web se incluyen las referencias a algunas bibliotecas de Javascript necesarias o los estilos (`docs/headers/style.css`, usando como base [Bamboo.css](https://github.com/rilwis/bamboo)).
+3. `math.md` contiene las definiciones de LaTeX.
+4. Se utilizan algunos filtros específicos de Lua para simplificar la escritura. En específico, `standard-code.lua`  formatea correctamente los bloques de código para la web.
+
+Un fichero Makefile (`docs/Makefile`) contiene varias órdenes para generar ambos formatos. Tienen varios parámetros adicionales de por sí, como puede ser la bibliografía (`docs/chapters/bibliography.bib`).
+
+### Figma
+
+[Figma](https://www.figma.com/) es otro de esos programas que te hace preguntarte por qué es gratis. Es una aplicación en la web usada para diseño gráfico. Es muy potente, intuitiva, y genera unos resultados muy buenos en poco tiempo. Todos los diseños de este trabajo se han hecho con esta herramienta.
+
+![Tablón principal del proyecto, a día 15 de abril de 2022](./img/Figma.png)
+
+Una de las características más útiles es poder exportar rápidamente la imagen. Esto permite hacer cambios rápidos y registrarlos en el repositorio fácilmente. Además, permite instalar plugins. Uno de ellos ha resultado especialmente útil: [Latex Complete](https://www.figma.com/community/plugin/793023817364007801/LaTeX-Complete). Esto nos permite incrustar código LaTeX en el documento en forma de SVG.
+
+### Otros programas
+
+Como es normal, hay muchos otros programas que han intervenido en el desarrollo. Estos son algunos de ellos:
+
+- El editor por excelencia [VSCode](https://code.visualstudio.com/). Ha facilitado en gran medida el desarrollo de la aplicación y la documentación. En particular, se ha usado una extensión denominada [Trigger task on save](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.triggertaskonsave) que compila la documentación HTML automáticamente al guardar un fichero. ¡Muy útil y rápido!
+- [Vectary](https://www.vectary.com/) para hacer los diseños en 3D fácilmente. Permite exportar una escena rápidamente a png para editarla en Figma.
+- Como veremos más adelante, la documentación se compila en el repositorio usando un contenedor de [Docker](https://www.docker.com/).
 
 ## Github
 
@@ -70,9 +117,11 @@ Todas estas fuentes permiten un uso no comercial gratuito.
 
 [Github](https://github.com)
 
-### Github Actions
+### Integración continua con Github Actions
 
 > TODO - Hablar de cómo se usa el sistema de integración continua para construir la web y el pdf
+
+El contenedor se encuentra en el [repositorio de Dockerhub][https://hub.docker.com/r/asmilex/raytracing]. Esta imagen está basada en [dockershelf/latex:full](https://hub.docker.com/r/dockershelf/latex). Por desgracia, es *muy* pesada para ser un contenedor. Desafortunadamente, una instalación de LaTeX ocupa una cantidad de espacio considerable; y para compilar el PDF necesitamos una muy completa. El Dockerfile, además, carga los ficheros fuentes necesarios en el sistema. Puedes encontrar el Dockerfile [aquí](https://github.com/Asmilex/Raytracing/blob/main/Dockerfile).
 
 ### Github Projects
 
@@ -82,6 +131,7 @@ Todas estas fuentes permiten un uso no comercial gratuito.
 
 
 <hr>
+
 
 ## Referencias {.unlisted .unnumbered}
 
