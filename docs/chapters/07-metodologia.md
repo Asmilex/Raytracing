@@ -1,6 +1,6 @@
 \appendix
 
-# Metodología; o cómo se hizo este trabajo
+# Metodología de trabajo
 
 Cualquier proyecto de una envergadura considerable necesita ser planificado con antelación. En este capítulo vamos a hablar de cómo se ha realizado este trabajo: mostraremos las herramientas usadas, los ciclos de desarrollo, integración entre documentación y path tracer, y otras influencias que han afectado al producto final.
 
