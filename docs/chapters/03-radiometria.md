@@ -48,7 +48,7 @@ E = \frac{\Phi}{A} (\text{W/m}^2)
 $$
 
 
-![La irradiancia es la potencia por metro cuadrado incidente en una superficie. Es proporcional al coseno del ángulo entre la dirección de la luz y la normal a la superficie.](./img/Irradiancia.png)
+![La irradiancia es la potencia por metro cuadrado incidente en una superficie. Es proporcional al coseno del ángulo entre la dirección de la luz y la normal a la superficie.](./img/03/Irradiancia.png)
 
 Ahora que tenemos la potencia emitida en una cierta área, nos surge una pregunta: *¿y en un cierto punto $p$?*. Tomando límites en la expresión anterior, encontramos la respuesta:
 
@@ -74,7 +74,7 @@ Ilustremos el sentido de estos ángulos: imaginemos que tenemos un cierto objeto
 
 Parece difícil responder a estas preguntas. Sin embargo, sí que podemos determinar *cómo de grandes nos parecen* desde nuestro punto de vista. Para ello, describimos una circunferencia de radio $r$ alrededor nuestra. Si trazamos un par de líneas desde nuestra posición a las partes más alejadas de este objeto, y las cortamos con nuestra circunferencia, obtendremos un par de puntos inscritos en ella. Pues bien, al arco que encapsulan dichos puntos le vamos a hacer corresponder un cierto ángulo: el ángulo planar.
 
-![La idea intuitiva de un ángulo planar](./img/Ángulo%20planar.png)
+![La idea intuitiva de un ángulo planar](./img/03/Ángulo%20planar.png)
 
 Llevando esta idea a las tres dimensiones es como conseguimos el concepto de **ángulo sólido**. Si en dos dimensiones teníamos una circunferencia, aquí tendremos una esfera. Cuando generemos las rectas proyectantes hacia el volumen, a diferencia de los ángulos planares, se inscribirá un área en la esfera. La razón entre dicha área $A$ y el cuadrado del radio $r$ nos dará un ángulo sólido:
 
@@ -82,14 +82,14 @@ $$
 \omega = \frac{A}{r^2} \text{(sr)}
 $$
 
-![Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio](./img/Ángulo%20sólido.png)
+![Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio](./img/03/Ángulo%20sólido.png)
 
 Los denotaremos por $\omega$. En física se suele usar $\Omega$, pero aquí optaremos por la minúscula. Su unidad de medida es el estereorradián ($\text{sr}$).  Se tiene que $\omega \in [0, 4\pi]$. Si $2 \pi$ radianes corresponden a la circunferencia completa, para la esfera se tiene que $4 \pi$ esteorradianes cubren toda la superficie de esta. Se tiene también que $2\pi \text{sr}$ cubren un hemisferio. Además, un esteorradián corresponde a una superficie con área $r^2$: $1 \text{sr} = \frac{r^2}{r^2}$.
 
 
 De vez en cuando, usaremos $\omega$ **un vector dirección unitario en la esfera**.
 
-![Como de costumbre, hay un xkcd relevante. [(Fuente)](https://xkcd.com/1276/)](./img/xkcd_1276.png)
+![Como de costumbre, hay un xkcd relevante. [(Fuente)](https://xkcd.com/1276/)](./img/03/xkcd_1276.png)
 
 Usualmente emplearemos coordenadas esféricas cuando trabajemos con ellos, dado que resulta más cómodo.
 

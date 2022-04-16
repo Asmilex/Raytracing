@@ -6,7 +6,7 @@ Un rayo es una función $P(t) = O + tD$, donde $O$ es el origin, $D$ la direcci�
 
 Por ejemplo, si $t = 0$, obtendremos el origen. Si $t = 1$, obtendremos el punto correspondiente a la dirección. Usando valores negativos vamos *hacia atrás*.
 
-![El parámetro $t$ nos permite controlar los puntos del rayo](./img/Rayo%20básico.png){ margin=auto }
+![El parámetro $t$ nos permite controlar los puntos del rayo](./img/01/Rayo%20básico.png){ margin=auto }
 
 Dado que estos puntos estarán generalmente en $\mathbb{R}^3$, podemos escribirlo como
 
@@ -16,7 +16,7 @@ $$
 
 Estos rayos los *dispararemos* a través de una cámara virtual, que estará enfocando a la escena. De esta forma, los haremos rebotar con los objetos que se encuentren en el camino del rayo. A este proceso lo llamaremos **ray casting**.
 
-![Diagrama de ray casting](./img/Ray%20casting.png)
+![Diagrama de ray casting](./img/01/Ray%20casting.png)
 
 Generalmente, nos quedaremos con el primer objeto que nos encontremos en su camino. Aunque, a veces, nos interesará saber todos con los que se encuentre.
 
@@ -60,7 +60,7 @@ Por ejemplo, tomando $O = (1, 3, 2), D = (1, 2, 1)$:
 
 Nos resultará especialmente útil limitar los valores que puede tomar $t$. Restringiremos los posibles puntos del dominio de forma que $t \in [t_{min}, t_{max})$, con $t_{min} < t_{max}$. En general, nos interesará separarnos de las superficies un pequeño pero no despreciable $\varepsilon$ para evitar errores de redondeo.
 
-![Separarnos un poquito del origen evitará errores de coma flotante](./img/Límites%20de%20un%20rayo.png)
+![Separarnos un poquito del origen evitará errores de coma flotante](./img/01/Límites%20de%20un%20rayo.png)
 
 Una de las principales cuestiones que debemos hacernos es saber cuándo un rayo impacta con una superficie. Lo definiremos analíticamente.
 
@@ -213,7 +213,7 @@ Debemos distinguir tres casos, atiendiendo al valor que toma el discriminante $\
 2. Si $\Delta = 0$, el rayo impacta en un punto, que toma el valor $t = \frac{-D \cdot (O - C)}{2 D \cdot D}$. Digamos que *pegaría* justo en el borde.
 3. Si $\Delta > 0$, existen dos soluciones. En ese caso, el rayo atraviesa la esfera.
 
-![Puntos de intersección con una esfera.](./img/Intersección%20rayo%20-%20esfera.png)
+![Puntos de intersección con una esfera.](./img/01/Intersección%20rayo%20-%20esfera.png)
 
 Para estos dos últimos, si consideramos $t_0$ cualquier solución válida, el vector normal resultante viene dado por
 
