@@ -2905,8 +2905,10 @@ Github Pages.</li>
 </ol>
 <figure>
 <img src="./img/Github%20Actions.png"
-alt="Pantallazo de los workflows" />
-<figcaption aria-hidden="true">Pantallazo de los workflows</figcaption>
+alt="La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
+<figcaption aria-hidden="true">La pestaña de Github Actions permite
+controlar con facilidad el resultado de un workflow y cuánto tarda en
+ejecutarse</figcaption>
 </figure>
 <p>El workflow de la web corre automáticamente, mientras que para
 generar el PDF hace falta activación manual. Aunque no es <em>del
@@ -2923,9 +2925,8 @@ cambios, conseguimos que la web se actualice al instante.</p>
 <p>Para generar los archivos nos hace falta una distribución de LaTeX,
 Pandoc, y todas las dependencias (como filtros). Como no encontré ningún
 contenedor que sirviera mi propósito, decidí crear uno. Se encuentra en
-el [repositorio de
-Dockerhub][https://hub.docker.com/r/asmilex/raytracing]. Esta imagen
-está basada en <a
+el <a href="https://hub.docker.com/r/asmilex/raytracing">repositorio de
+Dockerhub</a>. Esta imagen está basada en <a
 href="https://hub.docker.com/r/dockershelf/latex">dockershelf/latex:full</a>.
 Por desgracia, es <em>muy</em> pesada para ser un contenedor.
 Desafortunadamente, una instalación de LaTeX ocupa una cantidad de
@@ -2934,10 +2935,59 @@ completa, por lo que debemos lidiar con este <em>overhead</em>. Puedes
 encontrar el Dockerfile <a
 href="https://github.com/Asmilex/Raytracing/blob/main/Dockerfile">aquí</a>.</p>
 <h3 id="issues-y-github-projects">Issues y Github Projects</h3>
-<blockquote>
-<p>TODO - Hablar de cómo se gestiona el trabajo mediante issues,
-recapitulados todos con Projects.</p>
-</blockquote>
+<p>Las tareas pendientes se gestionan mediante issues. Cada vez que se
+tenga un objetivo particular para el desarrollo, se anota un issue.
+Cuando se genere un commit que avance dicha tarea, se etiqueta con el
+número correspondiente al issue. De esta forma, todas las confirmaciones
+relacionadas con la tarea quedan recogidas en la página web. Puedes ver
+un ejemplo en el <a
+href="https://github.com/Asmilex/Raytracing/issues/22">issue número
+22</a>.</p>
+<p>Esto permite una gestión muy eficiente de los principales problemas y
+objetivos pendientes de la aplicación.</p>
+<figure>
+<img src="./img/Issues.png"
+alt="Pestaña de issues, día 16 de abril de 2022" />
+<figcaption aria-hidden="true">Pestaña de issues, día 16 de abril de
+2022</figcaption>
+</figure>
+<p>Los issues se agrupan en <em>milestones</em>, o productos mínimamente
+viables. Estos issues suelen estar relacionados con algún apartado
+importante del desarrollo.</p>
+<figure>
+<img src="./img/Milestones.png"
+alt="Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
+<figcaption aria-hidden="true">Los <em>milestones</em> agrupan una serie
+de issues relacionados con un punto clave del desarrollo</figcaption>
+</figure>
+<p>De esta forma, podemos ver todo lo que queda pendiente para la fecha
+de entrega.</p>
+<p>Para añadir mayor granularidad a la gestión de tareas y proporcionar
+una vista informativa, se utiliza Github Projects. En esencia, esta
+aplicación es un acompañante del repositorio estilo Asana.</p>
+<figure>
+<img src="./img/Projects.png"
+alt="Projects agrupa los issues y les asigna prioridades" />
+<figcaption aria-hidden="true">Projects agrupa los issues y les asigna
+prioridades</figcaption>
+</figure>
+<p>Una de las alternativas que se planteó al inicio fue <a
+href="https://linear.app/">Linear</a>, una aplicación de gestión de
+issues similar a Projects. Sin embargo, la conveniencia de tener
+Projects integrado en Github supuso un punto a favor para este gestor.
+De todas formas, el equipo de desarrollo se compone de una persona, así
+que no hace falta complicar excesivamente el workflow.</p>
+<p>El desarrollo general de la documentación no ha seguido este sistema
+de issues, pues está sujeta a cambios constantes y cada commit está
+marcado con <code>[:notebook:]</code>. No obstante, ciertos problemas
+relacionados con ella, como puede ser el formato de entrega, sí que
+quedan recogidos como un issue.</p>
+<p>Finalmente, cuando se produce un cambio significativo en la
+aplicación (como puede ser una refactorización, una implementación
+considerablemente más compleja…) se genera una nueva rama. Cuando se ha
+cumplido el objetivo, se <em>mergea</em> la rama con la principal
+<code>main</code> mediante un <em>pull request</em>. Esto proporciona un
+mecanismo de robustez ante cambios complejos.</p>
 <h3 id="estilo-de-commits">Estilo de commits</h3>
 <p>Una de los detalles que has podido apreciar si has entrado al
 repositorio es un estilo de commit un tanto inusual. Aunque parece un
