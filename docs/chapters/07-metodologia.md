@@ -141,17 +141,37 @@ Tendremos dos tipos de `Actions`: uno que se encarga de compilar la web, y otro 
    2. El PDF se crea en `docs/TFG.pdf`
 3. Commitea los archivos y termina.
 
-![Pantallazo de los workflows](./img/Github%20Actions.png)
+![La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse](./img/Github%20Actions.png)
 
 El workflow de la web corre automáticamente, mientras que para generar el PDF hace falta activación manual. Aunque no es *del todo* correcto almacenar ficheros binarios en un repositorio de git, no me resulta molesto personalmente. Así que, cuando considero que es el momento oportuno, lo hago manualmente. Además, también se activa por cada *release* que se crea.
 
 Volviendo a la web, Github permite alojar páginas web para un repositorio. Activando el parámetro correcto en las opciones del repositorio, y configurándolo debidamente, conseguimos que lea el archivo `index.html` generado por el Action y lo despliegue. Esto es potentísimo: con solo editar una línea de código y subir los cambios, conseguimos que la web se actualice al instante.
 
-Para generar los archivos nos hace falta una distribución de LaTeX, Pandoc, y todas las dependencias (como filtros). Como no encontré ningún contenedor que sirviera mi propósito, decidí crear uno. Se encuentra en el [repositorio de Dockerhub][https://hub.docker.com/r/asmilex/raytracing]. Esta imagen está basada en [dockershelf/latex:full](https://hub.docker.com/r/dockershelf/latex). Por desgracia, es *muy* pesada para ser un contenedor. Desafortunadamente, una instalación de LaTeX ocupa una cantidad de espacio considerable; y para compilar el PDF necesitamos una muy completa, por lo que debemos lidiar con este *overhead*. Puedes encontrar el Dockerfile [aquí](https://github.com/Asmilex/Raytracing/blob/main/Dockerfile).
+Para generar los archivos nos hace falta una distribución de LaTeX, Pandoc, y todas las dependencias (como filtros). Como no encontré ningún contenedor que sirviera mi propósito, decidí crear uno. Se encuentra en el [repositorio de Dockerhub](https://hub.docker.com/r/asmilex/raytracing). Esta imagen está basada en [dockershelf/latex:full](https://hub.docker.com/r/dockershelf/latex). Por desgracia, es *muy* pesada para ser un contenedor. Desafortunadamente, una instalación de LaTeX ocupa una cantidad de espacio considerable; y para compilar el PDF necesitamos una muy completa, por lo que debemos lidiar con este *overhead*. Puedes encontrar el Dockerfile [aquí](https://github.com/Asmilex/Raytracing/blob/main/Dockerfile).
 
 ### Issues y Github Projects
 
-> TODO - Hablar de cómo se gestiona el trabajo mediante issues, recapitulados todos con Projects.
+Las tareas pendientes se gestionan mediante issues. Cada vez que se tenga un objetivo particular para el desarrollo, se anota un issue. Cuando se genere un commit que avance dicha tarea, se etiqueta con el número correspondiente al issue. De esta forma, todas las confirmaciones relacionadas con la tarea quedan recogidas en la página web. Puedes ver un ejemplo en el [issue número 22](https://github.com/Asmilex/Raytracing/issues/22).
+
+Esto permite una gestión muy eficiente de los principales problemas y objetivos pendientes de la aplicación.
+
+![Pestaña de issues, día 16 de abril de 2022](./img/Issues.png)
+
+Los issues se agrupan en *milestones*, o productos mínimamente viables. Estos issues suelen estar relacionados con algún apartado importante del desarrollo.
+
+![Los *milestones* agrupan una serie de issues relacionados con un punto clave del desarrollo](./img/Milestones.png)
+
+De esta forma, podemos ver todo lo que queda pendiente para la fecha de entrega.
+
+Para añadir mayor granularidad a la gestión de tareas y proporcionar una vista informativa, se utiliza Github Projects. En esencia, esta aplicación es un acompañante del repositorio estilo Asana.
+
+![Projects agrupa los issues y les asigna prioridades](./img/Projects.png)
+
+Una de las alternativas que se planteó al inicio fue [Linear](https://linear.app/), una aplicación de gestión de issues similar a Projects. Sin embargo, la conveniencia de tener Projects integrado en Github supuso un punto a favor para este gestor. De todas formas, el equipo de desarrollo se compone de una persona, así que no hace falta complicar excesivamente el workflow.
+
+El desarrollo general de la documentación no ha seguido este sistema de issues, pues está sujeta a cambios constantes y cada commit está marcado con `[:notebook:]`. No obstante, ciertos problemas relacionados con ella, como puede ser el formato de entrega, sí que quedan recogidos como un issue.
+
+Finalmente, cuando se produce un cambio significativo en la aplicación (como puede ser una refactorización, una implementación considerablemente más compleja...) se genera una nueva rama. Cuando se ha cumplido el objetivo, se *mergea* la rama con la principal `main` mediante un *pull request*. Esto proporciona un mecanismo de robustez ante cambios complejos.
 
 ### Estilo de commits
 
