@@ -1,14 +1,37 @@
 # ¡Construyamos un path tracer!
 
-> TODO: una pequeña introducción. Hablar de los offline renderers disponibles. Tras esto, dar paso a los frameworks de real time RT.
 > Esta sección estará fuertemente basada en el tutorial de Nvidia de [nvpro samples](https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/) + [mini path tracer](https://nvpro-samples.github.io/vk_mini_path_tracer/index.html).
+
+Ahora que hemos introducido toda la teoría necesaria, es hora de ponernos manos a la obra. En este capítulo, vamos a escoger una serie de herramientas y haremos una pequeña implementación de un motor de path tracing en tiempo real.
+
+La implementación estará basada en el motor creado en Ray Tracing In One Weekend de [@Shirley2020RTW1], y mantendrá el mismo espíritu.
 
 ## Requisitos de *real time ray tracing*
 
+Como es natural, el tiempo es una limitación enorme para cualquier programa en tiempo real. Mientras que en un *offline renderer* disponemos de un tiempo muy considerable por frame (hablamos de varios segundos), en un programa en tiempo real necesitamos que un frame salga en 16 milisegundos o menos. Este concepto se suele denominar *frame budget*: la cantidad de tiempo que disponemos para un frame.
+
+> **Nota**: cuando hablamos del tiempo disponible para un frame, solemos hablar en milisegundos (ms) o frames por segundo (FPS). Para que un motor vaya suficientemente fluido, necesitaremos que el motor corra a un mínimo de 30 FPS (que equivalen a 33 ms por frame). Hoy en día, debido al avance del área en campos como los videosjuegos, el estándar se está convirtiendo en 60 FPS (16 ms/frame).
+
+Las nociones anteriores no distinguen entre un motor en tiempo real y *offline*. Como es natural, necesitaremos introducir unos pocos conceptos más para llevarlo a tiempo real. Además, existe una serie de requisitos hardware que debemos cumplir para que un motor en tiempo real con ray tracing funcione.
+
 ### Arquitecturas de gráficas
 
-> Turing, Ampere, RDNA2, Arc...
 > NOTE: sería interesante enlazarlo con la sección de rendimiento.
+
+El requisito más importante de todos es la gráfica. Para ser capaces de realizar cálculos de ray tracing en tiempo real, necesitaremos una arquitectura moderna con núcleos dedicados a este tipo de cáclulos [^4].
+
+A día 17 de abril de 2022, para correr ray tracing en tiempo real, se necesita alguna de las siguientes tarjetas gráficas:
+
+| **Arquitectura**              | **Fabricante** | **Modelos de gráficas**                                                                              |
+|-------------------------------|----------------|------------------------------------------------------------------------------------------------------|
+| **Turing**                    | Nvidia         | RTX 2060, RTX 2060 Super, RTX 2070, RTX 2070 Super, RTX 2080, RTX 2080 Super, RTX 2080 Ti, RTX Titan |
+| **Ampere**                    | Nvidia         | RTX 3050, RTX 3060, RTX 3060 Ti, RTX 3070, RTX 3070 Ti, RTX 3080, RTX 3080 Ti, RTX 3090, RTX 3090 Ti |
+| **RDNA2** (Navi 2X, Big Navi) | AMD            | RX 6400, RX 6500 XT, RX 6600, RX 6600 XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT                |
+| **Arc Alchemist**             | Intel          | *No reveleado aún*                                                                                   |
+
+Solo se han incluido las gráficas de escritorio de consumidor.
+
+Para este trabajo se ha utilizado una **RTX 2070 Super**. En el capítulo de análisis del rendimiento se hablará con mayor profundidad de este apartado.
 
 ### Frameworks y API de ray tracing en tiempo real
 
@@ -122,3 +145,8 @@ Primero, lo mejor es asumir un cuadrado, y después, extender la interfaz para m
 - https://github.com/dannyfritz/awesome-ray-tracing
 - https://www.wikiwand.com/en/Radeon
 - https://www.wikiwand.com/en/List_of_Nvidia_graphics_processing_units#/GeForce_30_series
+- https://www.eurogamer.net/digitalfoundry-2021-the-big-intel-interview-how-intel-alchemist-gpus-and-xess-upscaling-will-change-the-market
+- https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/overview.html
+
+
+[^4]: Esto no es del todo cierto. Aunque generalmente suelen ser excepciones debido al coste computacional de RT en tiempo real, existen algunas implementaciones que son capaces de correrlo por software. Notablemente, el motor de Crytek, CryEngine, es capaz de mover ray tracing basado en hardware y en software [@crytek-2020]
