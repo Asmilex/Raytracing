@@ -88,7 +88,18 @@ Si todo funciona correctamente, debería generarse un binario en `./application/
 
 ## Estructuras de aceleración
 
-> TODO: En esencia, hablar de la parafernalia que montamos con el BLAS y el TLAS.
+El principal coste de ray tracing es el cálculo de las intersecciones con objetos; hasta un 95% del tiempo de ejecución total ([@scratchapixel-2019]). Reducir el número de test de intersección es clave.
+
+Las **estructuras de aceleración** son una forma de representar la geometría de la escena. Aunque hay varios tipos diferentes, en esencia, engloban a un objeto o varios en una estructura con la que resulta más eficiente hacer test de intersección. Son similares a los grafos de escena de un rasterizador.
+
+Uno de los tipos más comunes es la **Bounding Volume Hierarchy (BVH)**. Fue una técnica desarrollada por Kay y Kajiya en 1986. En esencia, este método encierra un objeto en una caja (lo que se denomina una **bounding box**), de forma que el test de intersección principal se hace con la caja y no con la geometría. Si un rayo impacta en la *bounding box*, entonces se pasa a testear la geometría.
+
+Se puede repetir esta idea repetidamente, de forma que agrupemos varias *bounding boxes*. Así, creamos una jerarquía de objetos --como si nodos de un árbol se trataran--. A esta jerarquía es a la que llamamos BVH.
+
+Es importante crear buenas divisiones de los objetos en la BVH. Cuanto más compacta sea una BVH, más eficiente será el test de intersección.
+
+Una forma habitual de crear la BVH es mediante la división del espacio en una rejilla. Esta técnica se llama **Axis-Aligned Bounding Box (AABB)**. Usualmente se usa el método del *slab* (también introducido por Kay y Kajilla). Se divide el espacio en una caja n-dimensional alineada con los ejes, de forma que podemos verla como $[x_0, x_1] \times$ $[y_0, y_1] \times$ $[z_0, z_1] \times \dots$ De esta forma, comprobar si un rayo impacta en una bounding box es tan sencillo como comprobar que está dentro del intervalo. Este es el método que se ha usado en Ray Tracing in One Weekend.
+
 
 ### Botom-Level Acceleration Structure (BLAS)
 ### Top-Level Acceleration Structure (TLAS)
@@ -210,10 +221,8 @@ Primero, lo mejor es asumir un cuadrado, y después, extender la interfaz para m
 - https://github.com/ValveSoftware/Proton
 - https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/
 - https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-acceleration-structure
-
-Regalitos que todavía no he usado pero que <3333
-- https://www.scratchapixel.com/lessons/3d-basic-rendering/phong-shader-BRDF
-- https://www.scratchapixel.com/lessons/3d-basic-rendering/global-illumination-path-tracing
+- https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering
+- https://raytracing.github.io/books/RayTracingTheNextWeek.html#boundingvolumehierarchies
 
 
 [^4]: Esto no es del todo cierto. Aunque generalmente suelen ser excepciones debido al coste computacional de RT en tiempo real, existen algunas implementaciones que son capaces de correrlo por software. Notablemente, el motor de Crytek, CryEngine, es capaz de mover ray tracing basado en hardware y en software [@crytek-2020]
