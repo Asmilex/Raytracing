@@ -1,10 +1,10 @@
 # ¡Construyamos un path tracer!
 
-> Esta sección estará fuertemente basada en el tutorial de Nvidia de [nvpro samples](https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/) + [mini path tracer](https://nvpro-samples.github.io/vk_mini_path_tracer/index.html).
-
 Ahora que hemos introducido toda la teoría necesaria, es hora de ponernos manos a la obra. En este capítulo, vamos a escoger una serie de herramientas y haremos una pequeña implementación de un motor de path tracing en tiempo real.
 
-La implementación estará basada en el motor creado en Ray Tracing In One Weekend de [@Shirley2020RTW1], y mantendrá el mismo espíritu.
+La implementación estará basada en Vulkan, junto al pequeño framework de nvpro-samples. El motor mantendrá el mismo espíritu que la serie de [@Shirley2020RTW1], Ray Tracing In One Weekend.
+
+Le pondremos especial atención a los conceptos claves. Vulkan tiende a crear código muy verboso, por lo que se documentarán únicamente las partes más importantes.
 
 ## Requisitos de *real time ray tracing*
 
@@ -35,8 +35,6 @@ Para este trabajo se ha utilizado una **RTX 2070 Super**. En el capítulo de an�
 
 ### Frameworks y API de ray tracing en tiempo real
 
-> TODO: hablar de DXR, Vulkan, OptiX... Hablar de por qué he escogido Vulkan + Nvidia Designworks (nv-pro samples)
-
 Una vez hemos cumplido los requisitos de hardware, es hora de escoger los frameworks de trabajo.
 
 Las API de gráficos están empezando a adaptarse a los requisitos del tiempo real, por lo que cambian frecuentemente. La mayoría adquirieron las directivas necesarias muy recientemente. Aun así, son lo suficientemente sólidas para que se pueda usar en aplicaciones empresariales de gran embergadura.
@@ -51,30 +49,62 @@ De momento, no hay mucho donde elegir.
 
 OptiX es la API más vieja de todas. Su primera versión salió en 2009, mientras que la última estable es de 2021. Tradicionalmente se ha usado para offline renderers, y no tiene un especial interés para este trabajo estando las otras dos disponibles.
 
-Tanto DXR como Vulkan son los candidatos más sólidos. DXR salió en 2018, con la llegada de Turing. Es un par de años más reciente que Vulkan KHR.  Cualquiera de las dos cumpliría con su cometido de forma exitosa. Sin embargo, para este trabajo, hemos escogido Vulkan por los siguientes motivos:
+Tanto DXR como Vulkan son los candidatos más sólidos. DXR salió en 2018, con la llegada de Turing. Es un par de años más reciente que Vulkan KHR. Cualquiera de las dos cumpliría su cometido de forma exitosa. Sin embargo, para este trabajo, **hemos escogido Vulkan** por los siguientes motivos:
 
 - DirectX 12 está destinado principalmente a plataformas de Microsoft. Es decir, está pensado para sistemas operativos Windows 10 o mayor [^5].
 - Vulkan está apoyado principalmente por AMD. Esto sigue las línas de la su política de empresa de apoyar el código abierto. Además, resulta más sencillo exportarlo a otros sistemas operativos.
 
-Al final, ambas API se comportan de manera muy similar, y no habría mucha diferencia tanto en temas de rendimiento como de desarrollo. Actualmente el proyecto solo compila en Windows 10 o mayor, por lo que estos dos puntos no resultan especialmente relevantes para el trabajo.
-
-
+Ambas API se comportan de manera muy similar, y no existe una gran diferencia entre ellas; tanto en rendimiento como en complejidad de desarrollo. Actualmente el proyecto solo compila en Windows 10 o mayor, por lo que estos dos puntos no resultan especialmente relevantes para el trabajo.
 
 ## Setup del proyecto
 
-Para acelerar el setup del proyecto
+Un proyecto de Vulkan necesita una cantidad de código inicial considerable. Para acelerar este trámite y partir de una base más sólida, se ha decidido usar un pequeño framework de trabajo de Nvidia llamado [nvpro-samples](https://github.com/nvpro-samples).
 
-## RT pipeline
+Esta serie de repositorios contienen proyectos de ray tracing de Nvidia con fines didácticos. Nosotros usaremos [vk_raytracing_tutorial_KHR](https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR), pues ejemplifica cómo añadir ray tracing en tiempo real a un proyecto de Vulkan.
+
+Nuestro repositorio utiliza los citados anteriormente para compilar su proyecto. El Makefile es una modificación del que se usa para ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una aplicación muy simple que muestra un cubo mediante rasterización.
+
+## Compilación
+
+Las dependencias necesarias para compilarlo son:
+
+1. CMake.
+2. Un driver de Nvidia compatible con la extensión `VK_KHR_ray_tracing_pipeline`.
+3. El SDK de Vulkan, versión 1.2.161 o mayor.
+
+La parte inicial del desarrollo consiste en adaptar Vulkan para usar la extensión de ray tracing, extrayendo la información de la gráfica y cargando correspondientemente el dispositivo.
+
+Para compilarlo, ejecuta los siguientes comandos:
+
+```sh
+git clone git@github.com:Asmilex/Raytracing.git
+cd .\application\vulkan_ray_tracing\
+mkdir build
+cd build
+cmake ..
+```
+
+Si todo funciona correctamente, debería generarse un binario en `./application/bin_x64/Debug` llamado `asmiray.exe`.
 
 ## Estructuras de aceleración
 
 > TODO: En esencia, hablar de la parafernalia que montamos con el BLAS y el TLAS.
 
+### Botom-Level Acceleration Structure (BLAS)
+### Top-Level Acceleration Structure (TLAS)
+
+## Ray tracing pipeline
+
 ## Shaders
 
-### Tipos de shaders en RT
-
 ### Shader binding table
+
+### Tipos de shaders
+
+#### Ray generation shader
+#### Closest hit shader
+#### Miss shader
+#### Anyhit shader
 
 ## Asmiray
 
@@ -178,6 +208,12 @@ Primero, lo mejor es asumir un cuadrado, y después, extender la interfaz para m
 - https://www.wikiwand.com/es/Valve_Corporation
 - https://www.phoronix.com/scan.php?page=news_item&px=VKD3D-Proton-2.5
 - https://github.com/ValveSoftware/Proton
+- https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/
+- https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-acceleration-structure
+
+Regalitos que todavía no he usado pero que <3333
+- https://www.scratchapixel.com/lessons/3d-basic-rendering/phong-shader-BRDF
+- https://www.scratchapixel.com/lessons/3d-basic-rendering/global-illumination-path-tracing
 
 
 [^4]: Esto no es del todo cierto. Aunque generalmente suelen ser excepciones debido al coste computacional de RT en tiempo real, existen algunas implementaciones que son capaces de correrlo por software. Notablemente, el motor de Crytek, CryEngine, es capaz de mover ray tracing basado en hardware y en software [@crytek-2020]
