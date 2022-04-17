@@ -297,13 +297,19 @@ gráficas</a></li>
 y API de ray tracing en tiempo real</a></li>
 </ul></li>
 <li><a href="#setup-del-proyecto">Setup del proyecto</a></li>
-<li><a href="#rt-pipeline">RT pipeline</a></li>
-<li><a href="#estructuras-de-aceleración">Estructuras de
-aceleración</a></li>
+<li><a href="#compilación">Compilación</a></li>
+<li><a href="#estructuras-de-aceleración">Estructuras de aceleración</a>
+<ul>
+<li><a href="#botom-level-acceleration-structure-blas">Botom-Level
+Acceleration Structure (BLAS)</a></li>
+<li><a href="#top-level-acceleration-structure-tlas">Top-Level
+Acceleration Structure (TLAS)</a></li>
+</ul></li>
+<li><a href="#ray-tracing-pipeline">Ray tracing pipeline</a></li>
 <li><a href="#shaders">Shaders</a>
 <ul>
-<li><a href="#tipos-de-shaders-en-rt">Tipos de shaders en RT</a></li>
 <li><a href="#shader-binding-table">Shader binding table</a></li>
+<li><a href="#tipos-de-shaders">Tipos de shaders</a></li>
 </ul></li>
 <li><a href="#asmiray">Asmiray</a></li>
 <li><a href="#transporte-de-luz-1">Transporte de luz</a>
@@ -2458,21 +2464,18 @@ Transmittance 2021</a>)</span></p>
 <li>https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf</li>
 </ul>
 <h1 id="construyamos-un-path-tracer">¡Construyamos un path tracer!</h1>
-<blockquote>
-<p>Esta sección estará fuertemente basada en el tutorial de Nvidia de <a
-href="https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/">nvpro
-samples</a> + <a
-href="https://nvpro-samples.github.io/vk_mini_path_tracer/index.html">mini
-path tracer</a>.</p>
-</blockquote>
 <p>Ahora que hemos introducido toda la teoría necesaria, es hora de
 ponernos manos a la obra. En este capítulo, vamos a escoger una serie de
 herramientas y haremos una pequeña implementación de un motor de path
 tracing en tiempo real.</p>
-<p>La implementación estará basada en el motor creado en Ray Tracing In
-One Weekend de <span class="citation" data-cites="Shirley2020RTW1">(<a
+<p>La implementación estará basada en Vulkan, junto al pequeño framework
+de nvpro-samples. El motor mantendrá el mismo espíritu que la serie de
+<span class="citation" data-cites="Shirley2020RTW1">(<a
 href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
-2020a</a>)</span>, y mantendrá el mismo espíritu.</p>
+2020a</a>)</span>, Ray Tracing In One Weekend.</p>
+<p>Le pondremos especial atención a los conceptos claves. Vulkan tiende
+a crear código muy verboso, por lo que se documentarán únicamente las
+partes más importantes.</p>
 <h2 id="requisitos-de-real-time-ray-tracing">Requisitos de <em>real time
 ray tracing</em></h2>
 <p>Como es natural, el tiempo es una limitación enorme para cualquier
@@ -2550,10 +2553,6 @@ Super</strong>. En el capítulo de análisis del rendimiento se hablará
 con mayor profundidad de este apartado.</p>
 <h3 id="frameworks-y-api-de-ray-tracing-en-tiempo-real">Frameworks y API
 de ray tracing en tiempo real</h3>
-<blockquote>
-<p>TODO: hablar de DXR, Vulkan, OptiX… Hablar de por qué he escogido
-Vulkan + Nvidia Designworks (nv-pro samples)</p>
-</blockquote>
 <p>Una vez hemos cumplido los requisitos de hardware, es hora de escoger
 los frameworks de trabajo.</p>
 <p>Las API de gráficos están empezando a adaptarse a los requisitos del
@@ -2576,9 +2575,9 @@ para offline renderers, y no tiene un especial interés para este trabajo
 estando las otras dos disponibles.</p>
 <p>Tanto DXR como Vulkan son los candidatos más sólidos. DXR salió en
 2018, con la llegada de Turing. Es un par de años más reciente que
-Vulkan KHR. Cualquiera de las dos cumpliría con su cometido de forma
-exitosa. Sin embargo, para este trabajo, hemos escogido Vulkan por los
-siguientes motivos:</p>
+Vulkan KHR. Cualquiera de las dos cumpliría su cometido de forma
+exitosa. Sin embargo, para este trabajo, <strong>hemos escogido
+Vulkan</strong> por los siguientes motivos:</p>
 <ul>
 <li>DirectX 12 está destinado principalmente a plataformas de Microsoft.
 Es decir, está pensado para sistemas operativos Windows 10 o mayor <a
@@ -2588,22 +2587,95 @@ role="doc-noteref"><sup>5</sup></a>.</li>
 la su política de empresa de apoyar el código abierto. Además, resulta
 más sencillo exportarlo a otros sistemas operativos.</li>
 </ul>
-<p>Al final, ambas API se comportan de manera muy similar, y no habría
-mucha diferencia tanto en temas de rendimiento como de desarrollo.
-Actualmente el proyecto solo compila en Windows 10 o mayor, por lo que
-estos dos puntos no resultan especialmente relevantes para el
+<p>Ambas API se comportan de manera muy similar, y no existe una gran
+diferencia entre ellas; tanto en rendimiento como en complejidad de
+desarrollo. Actualmente el proyecto solo compila en Windows 10 o mayor,
+por lo que estos dos puntos no resultan especialmente relevantes para el
 trabajo.</p>
 <h2 id="setup-del-proyecto">Setup del proyecto</h2>
-<p>Para acelerar el setup del proyecto</p>
-<h2 id="rt-pipeline">RT pipeline</h2>
+<p>Un proyecto de Vulkan necesita una cantidad de código inicial
+considerable. Para acelerar este trámite y partir de una base más
+sólida, se ha decidido usar un pequeño framework de trabajo de Nvidia
+llamado <a
+href="https://github.com/nvpro-samples">nvpro-samples</a>.</p>
+<p>Esta serie de repositorios contienen proyectos de ray tracing de
+Nvidia con fines didácticos. Nosotros usaremos <a
+href="https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR">vk_raytracing_tutorial_KHR</a>,
+pues ejemplifica cómo añadir ray tracing en tiempo real a un proyecto de
+Vulkan.</p>
+<p>Nuestro repositorio utiliza los citados anteriormente para compilar
+su proyecto. El Makefile es una modificación del que se usa para
+ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una aplicación muy
+simple que muestra un cubo mediante rasterización.</p>
+<h2 id="compilación">Compilación</h2>
+<p>Las dependencias necesarias para compilarlo son:</p>
+<ol type="1">
+<li>CMake.</li>
+<li>Un driver de Nvidia compatible con la extensión
+<code>VK_KHR_ray_tracing_pipeline</code>.</li>
+<li>El SDK de Vulkan, versión 1.2.161 o mayor.</li>
+</ol>
+<p>La parte inicial del desarrollo consiste en adaptar Vulkan para usar
+la extensión de ray tracing, extrayendo la información de la gráfica y
+cargando correspondientemente el dispositivo.</p>
+<p>Para compilarlo, ejecuta los siguientes comandos:</p>
+<pre class="sh"><code>git clone git@github.com:Asmilex/Raytracing.git
+cd .\application\vulkan_ray_tracing\
+mkdir build
+cd build
+cmake ..</code></pre>
+<p>Si todo funciona correctamente, debería generarse un binario en
+<code>./application/bin_x64/Debug</code> llamado
+<code>asmiray.exe</code>.</p>
 <h2 id="estructuras-de-aceleración">Estructuras de aceleración</h2>
-<blockquote>
-<p>TODO: En esencia, hablar de la parafernalia que montamos con el BLAS
-y el TLAS.</p>
-</blockquote>
+<p>El principal coste de ray tracing es el cálculo de las intersecciones
+con objetos; hasta un 95% del tiempo de ejecución total (<span
+class="citation" data-cites="scratchapixel-2019">(<a
+href="#ref-scratchapixel-2019" role="doc-biblioref">Scratchapixel
+2019</a>)</span>). Reducir el número de test de intersección es
+clave.</p>
+<p>Las <strong>estructuras de aceleración</strong> son una forma de
+representar la geometría de la escena. Aunque hay varios tipos
+diferentes, en esencia, engloban a un objeto o varios en una estructura
+con la que resulta más eficiente hacer test de intersección. Son
+similares a los grafos de escena de un rasterizador.</p>
+<p>Uno de los tipos más comunes es la <strong>Bounding Volume Hierarchy
+(BVH)</strong>. Fue una técnica desarrollada por Kay y Kajiya en 1986.
+En esencia, este método encierra un objeto en una caja (lo que se
+denomina una <strong>bounding box</strong>), de forma que el test de
+intersección principal se hace con la caja y no con la geometría. Si un
+rayo impacta en la <em>bounding box</em>, entonces se pasa a testear la
+geometría.</p>
+<p>Se puede repetir esta idea repetidamente, de forma que agrupemos
+varias <em>bounding boxes</em>. Así, creamos una jerarquía de objetos
+–como si nodos de un árbol se trataran–. A esta jerarquía es a la que
+llamamos BVH.</p>
+<p>Es importante crear buenas divisiones de los objetos en la BVH.
+Cuanto más compacta sea una BVH, más eficiente será el test de
+intersección.</p>
+<p>Una forma habitual de crear la BVH es mediante la división del
+espacio en una rejilla. Esta técnica se llama <strong>Axis-Aligned
+Bounding Box (AABB)</strong>. Usualmente se usa el método del
+<em>slab</em> (también introducido por Kay y Kajilla). Se divide el
+espacio en una caja n-dimensional alineada con los ejes, de forma que
+podemos verla como <span class="math inline">\([x_0, x_1]
+\times\)</span> <span class="math inline">\([y_0, y_1] \times\)</span>
+<span class="math inline">\([z_0, z_1] \times \dots\)</span> De esta
+forma, comprobar si un rayo impacta en una bounding box es tan sencillo
+como comprobar que está dentro del intervalo. Este es el método que se
+ha usado en Ray Tracing in One Weekend.</p>
+<h3 id="botom-level-acceleration-structure-blas">Botom-Level
+Acceleration Structure (BLAS)</h3>
+<h3 id="top-level-acceleration-structure-tlas">Top-Level Acceleration
+Structure (TLAS)</h3>
+<h2 id="ray-tracing-pipeline">Ray tracing pipeline</h2>
 <h2 id="shaders">Shaders</h2>
-<h3 id="tipos-de-shaders-en-rt">Tipos de shaders en RT</h3>
 <h3 id="shader-binding-table">Shader binding table</h3>
+<h3 id="tipos-de-shaders">Tipos de shaders</h3>
+<h4 id="ray-generation-shader">Ray generation shader</h4>
+<h4 id="closest-hit-shader">Closest hit shader</h4>
+<h4 id="miss-shader">Miss shader</h4>
+<h4 id="anyhit-shader">Anyhit shader</h4>
 <h2 id="asmiray">Asmiray</h2>
 <h2 id="transporte-de-luz-1">Transporte de luz</h2>
 <blockquote>
@@ -2722,6 +2794,10 @@ fuente</a></p>
 <li>https://www.wikiwand.com/es/Valve_Corporation</li>
 <li>https://www.phoronix.com/scan.php?page=news_item&amp;px=VKD3D-Proton-2.5</li>
 <li>https://github.com/ValveSoftware/Proton</li>
+<li>https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/</li>
+<li>https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-acceleration-structure</li>
+<li>https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</li>
+<li>https://raytracing.github.io/books/RayTracingTheNextWeek.html#boundingvolumehierarchies</li>
 </ul>
 <h1 id="análisis-de-rendimiento">Análisis de rendimiento</h1>
 <blockquote>
@@ -3413,6 +3489,12 @@ href="https://www.youtube.com/watch?v=DkcEAz09Buo">https://www.youtube.com/watch
 role="doc-biblioentry">
 <span>“Rendering.”</span> n.d. Accessed March 20, 2022. <a
 href="https://sciencebehindpixar.org/pipeline/rendering#:%7E:text=They%20said%20it%20takes%20at,to%20render%20that%20many%20frames">https://sciencebehindpixar.org/pipeline/rendering#:%7E:text=They%20said%20it%20takes%20at,to%20render%20that%20many%20frames</a>.
+</div>
+<div id="ref-scratchapixel-2019" class="csl-entry"
+role="doc-biblioentry">
+Scratchapixel. 2019. <span>“Learn Computer Graphics from
+Scratch!”</span> 2019. <a
+href="https://www.scratchapixel.com/index.php?redirect">https://www.scratchapixel.com/index.php?redirect</a>.
 </div>
 <div id="ref-Shirley2020RTW1" class="csl-entry" role="doc-biblioentry">
 Shirley, Peter. 2020a. <span>“Ray Tracing in One Weekend.”</span> 2020.
