@@ -538,7 +538,7 @@ obtendremos el origen. Si <span class="math inline">\(t = 1\)</span>,
 obtendremos el punto correspondiente a la dirección. Usando valores
 negativos vamos <em>hacia atrás</em>.</p>
 <figure>
-<img src="./img/Rayo%20básico.png" data-margin="auto"
+<img src="./img/01/Rayo%20básico.png" data-margin="auto"
 alt="El parámetro t nos permite controlar los puntos del rayo" />
 <figcaption aria-hidden="true">El parámetro <span
 class="math inline">\(t\)</span> nos permite controlar los puntos del
@@ -554,7 +554,7 @@ que estará enfocando a la escena. De esta forma, los haremos rebotar con
 los objetos que se encuentren en el camino del rayo. A este proceso lo
 llamaremos <strong>ray casting</strong>.</p>
 <figure>
-<img src="./img/Ray%20casting.png" alt="Diagrama de ray casting" />
+<img src="./img/01/Ray%20casting.png" alt="Diagrama de ray casting" />
 <figcaption aria-hidden="true">Diagrama de ray casting</figcaption>
 </figure>
 <p>Generalmente, nos quedaremos con el primer objeto que nos encontremos
@@ -622,7 +622,7 @@ superficies un pequeño pero no despreciable <span
 class="math inline">\(\varepsilon\)</span> para evitar errores de
 redondeo.</p>
 <figure>
-<img src="./img/Límites%20de%20un%20rayo.png"
+<img src="./img/01/Límites%20de%20un%20rayo.png"
 alt="Separarnos un poquito del origen evitará errores de coma flotante" />
 <figcaption aria-hidden="true">Separarnos un poquito del origen evitará
 errores de coma flotante</figcaption>
@@ -816,7 +816,7 @@ en el borde.</li>
 soluciones. En ese caso, el rayo atraviesa la esfera.</li>
 </ol>
 <figure>
-<img src="./img/Intersección%20rayo%20-%20esfera.png"
+<img src="./img/01/Intersección%20rayo%20-%20esfera.png"
 alt="Puntos de intersección con una esfera." />
 <figcaption aria-hidden="true">Puntos de intersección con una
 esfera.</figcaption>
@@ -1723,7 +1723,7 @@ class="math inline">\(A\)</span>, se define como</p>
 E = \frac{\Phi}{A} (\text{W/m}^2)
 \]</span></p>
 <figure>
-<img src="./img/Irradiancia.png"
+<img src="./img/03/Irradiancia.png"
 alt="La irradiancia es la potencia por metro cuadrado incidente en una superficie. Es proporcional al coseno del ángulo entre la dirección de la luz y la normal a la superficie." />
 <figcaption aria-hidden="true">La irradiancia es la potencia por metro
 cuadrado incidente en una superficie. Es proporcional al coseno del
@@ -1767,7 +1767,7 @@ puntos inscritos en ella. Pues bien, al arco que encapsulan dichos
 puntos le vamos a hacer corresponder un cierto ángulo: el ángulo
 planar.</p>
 <figure>
-<img src="./img/Ángulo%20planar.png"
+<img src="./img/03/Ángulo%20planar.png"
 alt="La idea intuitiva de un ángulo planar" />
 <figcaption aria-hidden="true">La idea intuitiva de un ángulo
 planar</figcaption>
@@ -1783,7 +1783,7 @@ class="math inline">\(r\)</span> nos dará un ángulo sólido:</p>
 \omega = \frac{A}{r^2} \text{(sr)}
 \]</span></p>
 <figure>
-<img src="./img/Ángulo%20sólido.png"
+<img src="./img/03/Ángulo%20sólido.png"
 alt="Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio" />
 <figcaption aria-hidden="true">Un ángulo sólido es la razón entre el
 área proyectada y el cuadrado del radio</figcaption>
@@ -1805,7 +1805,7 @@ class="math inline">\(r^2\)</span>: <span class="math inline">\(1
 class="math inline">\(\omega\)</span> <strong>un vector dirección
 unitario en la esfera</strong>.</p>
 <figure>
-<img src="./img/xkcd_1276.png"
+<img src="./img/03/xkcd_1276.png"
 alt="Como de costumbre, hay un xkcd relevante. (Fuente)" />
 <figcaption aria-hidden="true">Como de costumbre, hay un xkcd relevante.
 <a href="https://xkcd.com/1276/">(Fuente)</a></figcaption>
@@ -2459,28 +2459,142 @@ Transmittance 2021</a>)</span></p>
 </ul>
 <h1 id="construyamos-un-path-tracer">¡Construyamos un path tracer!</h1>
 <blockquote>
-<p>TODO: una pequeña introducción. Hablar de los offline renderers
-disponibles. Tras esto, dar paso a los frameworks de real time RT. Esta
-sección estará fuertemente basada en el tutorial de Nvidia de <a
+<p>Esta sección estará fuertemente basada en el tutorial de Nvidia de <a
 href="https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/">nvpro
 samples</a> + <a
 href="https://nvpro-samples.github.io/vk_mini_path_tracer/index.html">mini
 path tracer</a>.</p>
 </blockquote>
+<p>Ahora que hemos introducido toda la teoría necesaria, es hora de
+ponernos manos a la obra. En este capítulo, vamos a escoger una serie de
+herramientas y haremos una pequeña implementación de un motor de path
+tracing en tiempo real.</p>
+<p>La implementación estará basada en el motor creado en Ray Tracing In
+One Weekend de <span class="citation" data-cites="Shirley2020RTW1">(<a
+href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
+2020a</a>)</span>, y mantendrá el mismo espíritu.</p>
 <h2 id="requisitos-de-real-time-ray-tracing">Requisitos de <em>real time
 ray tracing</em></h2>
+<p>Como es natural, el tiempo es una limitación enorme para cualquier
+programa en tiempo real. Mientras que en un <em>offline renderer</em>
+disponemos de un tiempo muy considerable por frame (hablamos de varios
+segundos), en un programa en tiempo real necesitamos que un frame salga
+en 16 milisegundos o menos. Este concepto se suele denominar <em>frame
+budget</em>: la cantidad de tiempo que disponemos para un frame.</p>
+<blockquote>
+<p><strong>Nota</strong>: cuando hablamos del tiempo disponible para un
+frame, solemos hablar en milisegundos (ms) o frames por segundo (FPS).
+Para que un motor vaya suficientemente fluido, necesitaremos que el
+motor corra a un mínimo de 30 FPS (que equivalen a 33 ms por frame). Hoy
+en día, debido al avance del área en campos como los videosjuegos, el
+estándar se está convirtiendo en 60 FPS (16 ms/frame).</p>
+</blockquote>
+<p>Las nociones anteriores no distinguen entre un motor en tiempo real y
+<em>offline</em>. Como es natural, necesitaremos introducir unos pocos
+conceptos más para llevarlo a tiempo real. Además, existe una serie de
+requisitos hardware que debemos cumplir para que un motor en tiempo real
+con ray tracing funcione.</p>
 <h3 id="arquitecturas-de-gráficas">Arquitecturas de gráficas</h3>
 <blockquote>
-<p>Turing, Ampere, RDNA2, Arc… NOTE: sería interesante enlazarlo con la
-sección de rendimiento.</p>
+<p>NOTE: sería interesante enlazarlo con la sección de rendimiento.</p>
 </blockquote>
+<p>El requisito más importante de todos es la gráfica. Para ser capaces
+de realizar cálculos de ray tracing en tiempo real, necesitaremos una
+arquitectura moderna con núcleos dedicados a este tipo de cáclulos <a
+href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a>.</p>
+<p>A día 17 de abril de 2022, para correr ray tracing en tiempo real, se
+necesita alguna de las siguientes tarjetas gráficas:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 10%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Arquitectura</strong></th>
+<th><strong>Fabricante</strong></th>
+<th><strong>Modelos de gráficas</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Turing</strong></td>
+<td>Nvidia</td>
+<td>RTX 2060, RTX 2060 Super, RTX 2070, RTX 2070 Super, RTX 2080, RTX
+2080 Super, RTX 2080 Ti, RTX Titan</td>
+</tr>
+<tr class="even">
+<td><strong>Ampere</strong></td>
+<td>Nvidia</td>
+<td>RTX 3050, RTX 3060, RTX 3060 Ti, RTX 3070, RTX 3070 Ti, RTX 3080,
+RTX 3080 Ti, RTX 3090, RTX 3090 Ti</td>
+</tr>
+<tr class="odd">
+<td><strong>RDNA2</strong> (Navi 2X, Big Navi)</td>
+<td>AMD</td>
+<td>RX 6400, RX 6500 XT, RX 6600, RX 6600 XT, RX 6700 XT, RX 6800, RX
+6800 XT, RX 6900 XT</td>
+</tr>
+<tr class="even">
+<td><strong>Arc Alchemist</strong></td>
+<td>Intel</td>
+<td><em>No reveleado aún</em></td>
+</tr>
+</tbody>
+</table>
+<p>Solo se han incluido las gráficas de escritorio de consumidor.</p>
+<p>Para este trabajo se ha utilizado una <strong>RTX 2070
+Super</strong>. En el capítulo de análisis del rendimiento se hablará
+con mayor profundidad de este apartado.</p>
 <h3 id="frameworks-y-api-de-ray-tracing-en-tiempo-real">Frameworks y API
 de ray tracing en tiempo real</h3>
 <blockquote>
 <p>TODO: hablar de DXR, Vulkan, OptiX… Hablar de por qué he escogido
 Vulkan + Nvidia Designworks (nv-pro samples)</p>
 </blockquote>
+<p>Una vez hemos cumplido los requisitos de hardware, es hora de escoger
+los frameworks de trabajo.</p>
+<p>Las API de gráficos están empezando a adaptarse a los requisitos del
+tiempo real, por lo que cambian frecuentemente. La mayoría adquirieron
+las directivas necesarias muy recientemente. Aun así, son lo
+suficientemente sólidas para que se pueda usar en aplicaciones
+empresariales de gran embergadura.</p>
+<p>Esta es una lista de las API disponibles con capacidades de Ray
+Tracing disponibles para, al menos, la arquitectura Turing:</p>
+<ul>
+<li>Vulkan (los bindings de ray tracing se denominan KHR).</li>
+<li>Microsoft DirectX Ray Tracing (DXR), una extensión de DirectX
+12.</li>
+<li>Nvidia OptiX.</li>
+</ul>
+<p>De momento, no hay mucho donde elegir.</p>
+<p>OptiX es la API más vieja de todas. Su primera versión salió en 2009,
+mientras que la última estable es de 2021. Tradicionalmente se ha usado
+para offline renderers, y no tiene un especial interés para este trabajo
+estando las otras dos disponibles.</p>
+<p>Tanto DXR como Vulkan son los candidatos más sólidos. DXR salió en
+2018, con la llegada de Turing. Es un par de años más reciente que
+Vulkan KHR. Cualquiera de las dos cumpliría con su cometido de forma
+exitosa. Sin embargo, para este trabajo, hemos escogido Vulkan por los
+siguientes motivos:</p>
+<ul>
+<li>DirectX 12 está destinado principalmente a plataformas de Microsoft.
+Es decir, está pensado para sistemas operativos Windows 10 o mayor <a
+href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a>.</li>
+<li>Vulkan está apoyado principalmente por AMD. Esto sigue las línas de
+la su política de empresa de apoyar el código abierto. Además, resulta
+más sencillo exportarlo a otros sistemas operativos.</li>
+</ul>
+<p>Al final, ambas API se comportan de manera muy similar, y no habría
+mucha diferencia tanto en temas de rendimiento como de desarrollo.
+Actualmente el proyecto solo compila en Windows 10 o mayor, por lo que
+estos dos puntos no resultan especialmente relevantes para el
+trabajo.</p>
 <h2 id="setup-del-proyecto">Setup del proyecto</h2>
+<p>Para acelerar el setup del proyecto</p>
 <h2 id="rt-pipeline">RT pipeline</h2>
 <h2 id="estructuras-de-aceleración">Estructuras de aceleración</h2>
 <blockquote>
@@ -2600,6 +2714,14 @@ fuente</a></p>
 <li>https://github.com/dannyfritz/awesome-ray-tracing</li>
 <li>https://www.wikiwand.com/en/Radeon</li>
 <li>https://www.wikiwand.com/en/List_of_Nvidia_graphics_processing_units#/GeForce_30_series</li>
+<li>https://www.eurogamer.net/digitalfoundry-2021-the-big-intel-interview-how-intel-alchemist-gpus-and-xess-upscaling-will-change-the-market</li>
+<li>https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/overview.html</li>
+<li>https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html</li>
+<li>https://www.wikiwand.com/en/OptiX</li>
+<li>https://www.wikiwand.com/en/DirectX_Raytracing</li>
+<li>https://www.wikiwand.com/es/Valve_Corporation</li>
+<li>https://www.phoronix.com/scan.php?page=news_item&amp;px=VKD3D-Proton-2.5</li>
+<li>https://github.com/ValveSoftware/Proton</li>
 </ul>
 <h1 id="análisis-de-rendimiento">Análisis de rendimiento</h1>
 <blockquote>
@@ -2612,7 +2734,14 @@ preguntarle a Kako que tire benchmark en su 2060, y a Manu con su 3060
 <h2 class="unlisted unnumbered" id="referencias-5">Referencias</h2>
 <h1 id="el-futuro-de-ray-tracing">El futuro de Ray Tracing</h1>
 <blockquote>
-<p>TODO:</p>
+<p>TODO: Ideas para este capítulo:</p>
+<ul>
+<li>Hablar de los offline renderers disponibles</li>
+<li>Real time ray tracing en la industria: Minecraft RTX, Queake II,
+Cyberpunk, Metro Exodus, Control</li>
+<li>Arquitecturas modernas de consolas, y cómo el desarrollo en consola
+se ha transformado. Hablar de Insomniac Games</li>
+</ul>
 </blockquote>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-6">Referencias</h2>
@@ -2752,7 +2881,7 @@ bloques de código.</li>
 <p>A fin de mantener consistencia, se ha creado una paleta de colores
 específica.</p>
 <figure>
-<img src="./img/Paleta%20de%20colores.png" width="400"
+<img src="./img/07/Paleta%20de%20colores.png" width="400"
 alt="La paleta de colores del proyecto" />
 <figcaption aria-hidden="true">La paleta de colores del
 proyecto</figcaption>
@@ -2824,7 +2953,7 @@ usada para diseño gráfico. Es muy potente, intuitiva, y genera unos
 resultados muy buenos en poco tiempo. Todos los diseños de este trabajo
 se han hecho con esta herramienta.</p>
 <figure>
-<img src="./img/Figma.png"
+<img src="./img/07/Figma.png"
 alt="Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
 <figcaption aria-hidden="true">Tablón principal del proyecto de Figma, a
 día 15 de abril de 2022</figcaption>
@@ -2904,7 +3033,7 @@ Github Pages.</li>
 <li>Commitea los archivos y termina.</li>
 </ol>
 <figure>
-<img src="./img/Github%20Actions.png"
+<img src="./img/07/Github%20Actions.png"
 alt="La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
 <figcaption aria-hidden="true">La pestaña de Github Actions permite
 controlar con facilidad el resultado de un workflow y cuánto tarda en
@@ -2946,7 +3075,7 @@ href="https://github.com/Asmilex/Raytracing/issues/22">issue número
 <p>Esto permite una gestión muy eficiente de los principales problemas y
 objetivos pendientes de la aplicación.</p>
 <figure>
-<img src="./img/Issues.png"
+<img src="./img/07/Issues.png"
 alt="Pestaña de issues, día 16 de abril de 2022" />
 <figcaption aria-hidden="true">Pestaña de issues, día 16 de abril de
 2022</figcaption>
@@ -2955,7 +3084,7 @@ alt="Pestaña de issues, día 16 de abril de 2022" />
 viables. Estos issues suelen estar relacionados con algún apartado
 importante del desarrollo.</p>
 <figure>
-<img src="./img/Milestones.png"
+<img src="./img/07/Milestones.png"
 alt="Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
 <figcaption aria-hidden="true">Los <em>milestones</em> agrupan una serie
 de issues relacionados con un punto clave del desarrollo</figcaption>
@@ -2966,7 +3095,7 @@ de entrega.</p>
 una vista informativa, se utiliza Github Projects. En esencia, esta
 aplicación es un acompañante del repositorio estilo Asana.</p>
 <figure>
-<img src="./img/Projects.png"
+<img src="./img/07/Projects.png"
 alt="Projects agrupa los issues y les asigna prioridades" />
 <figcaption aria-hidden="true">Projects agrupa los issues y les asigna
 prioridades</figcaption>
@@ -2997,7 +3126,7 @@ rápidamente el tipo de cambio.</p>
 <p>Cada uno tiene un significado particular. En esta tabla se recogen
 sus significados:</p>
 <figure>
-<img src="./img/Commits.png"
+<img src="./img/07/Commits.png"
 alt="Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
 <figcaption aria-hidden="true">Los emojis permiten reconocer el objetivo
 de cada commit. Esta tabla recoge el significado de cada
@@ -3228,6 +3357,11 @@ Caulfield, Brian. 2020. <span>“What’s the Difference Between Ray
 Tracing, Rasterization?”</span> May 22, 2020. <a
 href="https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/">https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/</a>.
 </div>
+<div id="ref-crytek-2020" class="csl-entry" role="doc-biblioentry">
+Crytek. 2020. <span>“Crysis Remastered Brings Ray Tracing to Current-Gen
+Consoles.”</span> September 11, 2020. <a
+href="https://www.cryengine.com/news/view/crysis-remastered-brings-ray-tracing-to-current-gen-consoles">https://www.cryengine.com/news/view/crysis-remastered-brings-ray-tracing-to-current-gen-consoles</a>.
+</div>
 <div id="ref-digital-foundry-2020" class="csl-entry"
 role="doc-biblioentry">
 Digital Foundry. 2020. <span>“Cyberpunk 2077 PC: What Does Ray Tracing
@@ -3455,6 +3589,25 @@ role="doc-backlink">↩︎</a></p></li>
 <li id="fn3" role="doc-endnote"><p>Recuerda que estamos omitiendo la
 longitud de onda <span class="math inline">\(\lambda\)</span>.<a
 href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Esto no es del todo cierto. Aunque
+generalmente suelen ser excepciones debido al coste computacional de RT
+en tiempo real, existen algunas implementaciones que son capaces de
+correrlo por software. Notablemente, el motor de Crytek, CryEngine, es
+capaz de mover ray tracing basado en hardware y en software <span
+class="citation" data-cites="crytek-2020">(<a href="#ref-crytek-2020"
+role="doc-biblioref">Crytek 2020</a>)</span><a href="#fnref4"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>Afortunadamente, esto tampoco es
+completamente cierto. La compañía desarrolladora y distribuidora de
+videojuegos Valve Corporation ha creado una pieza de software
+fascinante: <a
+href="https://github.com/ValveSoftware/Proton">Proton</a>. Proton
+utiliza Wine para emular software en Linux que solo puede correr en
+plataformas Windows. La versión 2.5 añadió soporte para traducción de
+bindings de DXR a KHR, lo que permite utilizar DirectX12 ray tracing en
+sistemas basados en Linux. El motivo de este software es expandir el
+mercado de videojuegos disponibles en su consola, la Steam Deck.<a
+href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </body>
