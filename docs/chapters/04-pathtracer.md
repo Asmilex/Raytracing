@@ -37,7 +37,32 @@ Para este trabajo se ha utilizado una **RTX 2070 Super**. En el capítulo de an�
 
 > TODO: hablar de DXR, Vulkan, OptiX... Hablar de por qué he escogido Vulkan + Nvidia Designworks (nv-pro samples)
 
+Una vez hemos cumplido los requisitos de hardware, es hora de escoger los frameworks de trabajo.
+
+Las API de gráficos están empezando a adaptarse a los requisitos del tiempo real, por lo que cambian frecuentemente. La mayoría adquirieron las directivas necesarias muy recientemente. Aun así, son lo suficientemente sólidas para que se pueda usar en aplicaciones empresariales de gran embergadura.
+
+Esta es una lista de las API disponibles con capacidades de Ray Tracing disponibles para, al menos, la arquitectura Turing:
+
+- Vulkan (los bindings de ray tracing se denominan KHR).
+- Microsoft DirectX Ray Tracing (DXR), una extensión de DirectX 12.
+- Nvidia OptiX.
+
+De momento, no hay mucho donde elegir.
+
+OptiX es la API más vieja de todas. Su primera versión salió en 2009, mientras que la última estable es de 2021. Tradicionalmente se ha usado para offline renderers, y no tiene un especial interés para este trabajo estando las otras dos disponibles.
+
+Tanto DXR como Vulkan son los candidatos más sólidos. DXR salió en 2018, con la llegada de Turing. Es un par de años más reciente que Vulkan KHR.  Cualquiera de las dos cumpliría con su cometido de forma exitosa. Sin embargo, para este trabajo, hemos escogido Vulkan por los siguientes motivos:
+
+- DirectX 12 está destinado principalmente a plataformas de Microsoft. Es decir, está pensado para sistemas operativos Windows 10 o mayor [^5].
+- Vulkan está apoyado principalmente por AMD. Esto sigue las línas de la su política de empresa de apoyar el código abierto. Además, resulta más sencillo exportarlo a otros sistemas operativos.
+
+Al final, ambas API se comportan de manera muy similar, y no habría mucha diferencia tanto en temas de rendimiento como de desarrollo. Actualmente el proyecto solo compila en Windows 10 o mayor, por lo que estos dos puntos no resultan especialmente relevantes para el trabajo.
+
+
+
 ## Setup del proyecto
+
+Para acelerar el setup del proyecto
 
 ## RT pipeline
 
@@ -147,6 +172,13 @@ Primero, lo mejor es asumir un cuadrado, y después, extender la interfaz para m
 - https://www.wikiwand.com/en/List_of_Nvidia_graphics_processing_units#/GeForce_30_series
 - https://www.eurogamer.net/digitalfoundry-2021-the-big-intel-interview-how-intel-alchemist-gpus-and-xess-upscaling-will-change-the-market
 - https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/overview.html
+- https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html
+- https://www.wikiwand.com/en/OptiX
+- https://www.wikiwand.com/en/DirectX_Raytracing
+- https://www.wikiwand.com/es/Valve_Corporation
+- https://www.phoronix.com/scan.php?page=news_item&px=VKD3D-Proton-2.5
+- https://github.com/ValveSoftware/Proton
 
 
 [^4]: Esto no es del todo cierto. Aunque generalmente suelen ser excepciones debido al coste computacional de RT en tiempo real, existen algunas implementaciones que son capaces de correrlo por software. Notablemente, el motor de Crytek, CryEngine, es capaz de mover ray tracing basado en hardware y en software [@crytek-2020]
+[^5]: Afortunadamente, esto tampoco es completamente cierto. La compañía desarrolladora y distribuidora de videojuegos Valve Corporation ha creado una pieza de software fascinante: [Proton](https://github.com/ValveSoftware/Proton). Proton utiliza Wine para emular software en Linux que solo puede correr en plataformas Windows. La versión 2.5 añadió soporte para traducción de bindings de DXR a KHR, lo que permite utilizar DirectX12 ray tracing en sistemas basados en Linux. El motivo de este software es expandir el mercado de videojuegos disponibles en su consola, la Steam Deck.
