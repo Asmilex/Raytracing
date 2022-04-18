@@ -92,7 +92,7 @@ El principal coste de ray tracing es el cálculo de las intersecciones con objet
 
 Las **estructuras de aceleración** son una forma de representar la geometría de la escena. Aunque hay varios tipos diferentes, en esencia, engloban a un objeto o varios en una estructura con la que resulta más eficiente hacer test de intersección. Son similares a los grafos de escena de un rasterizador.
 
-Uno de los tipos más comunes es la **Bounding Volume Hierarchy (BVH)**. Fue una técnica desarrollada por Kay y Kajiya en 1986. En esencia, este método encierra un objeto en una caja (lo que se denomina una **bounding box**), de forma que el test de intersección principal se hace con la caja y no con la geometría. Si un rayo impacta en la *bounding box*, entonces se pasa a testear la geometría.
+Uno de los tipos más comunes es la **Bounding Volume Hierarchy (BVH)**. Fue una técnica desarrollada por Kay y Kajilla en 1986. En esencia, este método encierra un objeto en una caja (lo que se denomina una **bounding box**), de forma que el test de intersección principal se hace con la caja y no con la geometría. Si un rayo impacta en la *bounding box*, entonces se pasa a testear la geometría.
 
 Se puede repetir esta idea repetidamente, de forma que agrupemos varias *bounding boxes*. Así, creamos una jerarquía de objetos --como si nodos de un árbol se trataran--. A esta jerarquía es a la que llamamos BVH.
 
@@ -177,7 +177,18 @@ void HelloVulkan::createTopLevelAS() {
 }
 ```
 
-## Ray tracing pipeline
+## Ray tracing descriptor set y pipeline
+
+Primero, debemos introducir unas nociones básicas de Vulkan sobre cómo gestiona la información que se pasa a los shaders.
+
+
+Un ***resource descriptor*** (usualmente lo abreviaremos como descriptor) es una forma de cargar recursos como buffers o imágenes para que la tarjeta gráfica los pueda utilizar; concretamente, los shaders. El ***descriptor layout*** especifica el tipo de recurso que va a ser accedido. Finalmente, el ***descriptor set*** determina el buffer o imagen que se va a asociar al descriptor. Este set es el que se utiliza en los **drawing commands**. Un **pipeline** es una secuencia de operaciones que reciben una geometría y sus texturas, y la transforma en unos pixels.
+
+Todos estos conceptos aparecen desarrollados en [@overvoorde-2022]
+
+Tradicionalmente, en rasterización se utiliza un descriptor set por tipo de material, y consecuentemente, un pipeline por cada tipo. En ray tracing esto no es posible, puesto que no se sabe qué material se va a usar: un rayo puede impactar *cualquier* material presente en la escena, lo cual invocaría un shader específico. Debido a esto, empaquetaremos todos los recursos en un único set de descriptores.
+
+> TODO: empezar con la doc. de la pipeline (https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering)
 
 ## Shaders
 
@@ -296,6 +307,7 @@ Primero, lo mejor es asumir un cuadrado, y después, extender la interfaz para m
 - https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-acceleration-structure
 - https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering
 - https://raytracing.github.io/books/RayTracingTheNextWeek.html#boundingvolumehierarchies
+- https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_layout_and_buffer
 
 
 [^4]: Esto no es del todo cierto. Aunque generalmente suelen ser excepciones debido al coste computacional de RT en tiempo real, existen algunas implementaciones que son capaces de correrlo por software. Notablemente, el motor de Crytek, CryEngine, es capaz de mover ray tracing basado en hardware y en software [@crytek-2020]
