@@ -88,7 +88,7 @@ Si todo funciona correctamente, debería generarse un binario en `./application/
 
 ## Estructuras de aceleración
 
-El principal coste de ray tracing es el cálculo de las intersecciones con objetos; hasta un 95% del tiempo de ejecución total ([@scratchapixel-2019]). Reducir el número de test de intersección es clave.
+El principal coste de ray tracing es el cálculo de las intersecciones con objetos; hasta un 95% del tiempo de ejecución total [@scratchapixel-2019]. Reducir el número de test de intersección es clave.
 
 Las **estructuras de aceleración** son una forma de representar la geometría de la escena. Aunque hay varios tipos diferentes, en esencia, engloban a un objeto o varios en una estructura con la que resulta más eficiente hacer test de intersección. Son similares a los grafos de escena de un rasterizador.
 
@@ -100,9 +100,82 @@ Es importante crear buenas divisiones de los objetos en la BVH. Cuanto más comp
 
 Una forma habitual de crear la BVH es mediante la división del espacio en una rejilla. Esta técnica se llama **Axis-Aligned Bounding Box (AABB)**. Usualmente se usa el método del *slab* (también introducido por Kay y Kajilla). Se divide el espacio en una caja n-dimensional alineada con los ejes, de forma que podemos verla como $[x_0, x_1] \times$ $[y_0, y_1] \times$ $[z_0, z_1] \times \dots$ De esta forma, comprobar si un rayo impacta en una bounding box es tan sencillo como comprobar que está dentro del intervalo. Este es el método que se ha usado en Ray Tracing in One Weekend.
 
+Vulkan gestiona las estructuras de aceleración diviéndolas en dos partes: **Top-Level Acceleration Structure** (TLAS) y **Bottom-Level Acceleration Structure** (BLAS).
+
+![La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: Nvidia](./img/04/Acceleration%20structure.png)
+
+> TODO: Deberíamos cambiar esa foto por otra propia.
 
 ### Botom-Level Acceleration Structure (BLAS)
+
+Las Bottom-Level Acceleration Structure almacenan la geometría de un objeto individual; esto es, los vértices y los índices de los triángulos, además de una AABB que la encapsula.
+
+Pueden almacenar varios modelos, puesto que alojan uno o más buffers de vértices junto a sus matrices de transformación. Si un modelo se instancia varias veces *dentro de la misma BLAS*, la geometría se duplica. Esto se hace para mejorar el rendimiento.
+
+Como regla general, cuantas menos BLAS, mejor.
+
+El código correspondiente a la creación de la BLAS en el programa es el siguiente:
+
+
+```cpp
+void HelloVulkan::createBottomLevelAS() {
+    // BLAS - guardar cada primitiva en una geometría
+
+    std::vector<nvvk::RaytracingBuilderKHR::BlasInput> allBlas;
+    allBlas.reserve(m_objModel.size());
+
+    for (const auto& obj: m_objModel) {
+        auto blas = objectToVkGeometryKHR(obj);
+
+        // Podríamos añadir más geometrías en cada BLAS.
+        // De momento, solo una.
+        allBlas.emplace_back(blas);
+    }
+
+    m_rtBuilder.buildBlas(
+        allBlas,
+        VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR
+    );
+}
+```
+
 ### Top-Level Acceleration Structure (TLAS)
+
+Las Top-Level Acceleration Structures almacenan las instancias de los objetos, cada una con su matriz de transformación y referencia a la BLAS correspondiente.
+
+Además, guardan información sobre el *shading*. Así, los shaders pueden relacionar la geometría intersecada y el material de dicho objeto. En esta última parte jugará un papel fundamental la [Shader Binding Table](#shader-binding-table).
+
+En el programa hacemos lo siguiente para construir la TLAS:
+
+```cpp
+void HelloVulkan::createTopLevelAS() {
+    std::vector<VkAccelerationStructureInstanceKHR> tlas;
+    tlas.reserve(m_instances.size());
+
+    for (const HelloVulkan::ObjInstance& inst: m_instances) {
+        VkAccelerationStructureInstanceKHR rayInst{};
+
+        // Posición de la instancia
+        rayInst.transform = nvvk::toTransformMatrixKHR(inst.transform);
+
+        rayInst.instanceCustomIndex = inst.objIndex;
+
+        // returns the acceleration structure device address of the blasId. The id correspond to the created BLAS in buildBlas.
+        rayInst.accelerationStructureReference = m_rtBuilder.getBlasDeviceAddress(inst.objIndex);
+
+        rayInst.flags = VK_GEOMETRY_INSTANCE_TRIANGLE_FACING_CULL_DISABLE_BIT_KHR;
+        rayInst.mask  = 0xFF; // Solo registramos hit si rayMask & instance.mask != 0
+        rayInst.instanceShaderBindingTableRecordOffset = 0; // Usaremos el mismo hit group para todos los objetos
+
+        tlas.emplace_back(rayInst);
+    }
+
+    m_rtBuilder.buildTlas(
+        tlas,
+        VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR
+    );
+}
+```
 
 ## Ray tracing pipeline
 
