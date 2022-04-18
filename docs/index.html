@@ -305,7 +305,8 @@ Acceleration Structure (BLAS)</a></li>
 <li><a href="#top-level-acceleration-structure-tlas">Top-Level
 Acceleration Structure (TLAS)</a></li>
 </ul></li>
-<li><a href="#ray-tracing-pipeline">Ray tracing pipeline</a></li>
+<li><a href="#ray-tracing-descriptor-set-y-pipeline">Ray tracing
+descriptor set y pipeline</a></li>
 <li><a href="#shaders">Shaders</a>
 <ul>
 <li><a href="#shader-binding-table">Shader binding table</a></li>
@@ -2629,10 +2630,10 @@ cmake ..</code></pre>
 <code>asmiray.exe</code>.</p>
 <h2 id="estructuras-de-aceleración">Estructuras de aceleración</h2>
 <p>El principal coste de ray tracing es el cálculo de las intersecciones
-con objetos; hasta un 95% del tiempo de ejecución total (<span
+con objetos; hasta un 95% del tiempo de ejecución total <span
 class="citation" data-cites="scratchapixel-2019">(<a
 href="#ref-scratchapixel-2019" role="doc-biblioref">Scratchapixel
-2019</a>)</span>). Reducir el número de test de intersección es
+2019</a>)</span>. Reducir el número de test de intersección es
 clave.</p>
 <p>Las <strong>estructuras de aceleración</strong> son una forma de
 representar la geometría de la escena. Aunque hay varios tipos
@@ -2640,7 +2641,7 @@ diferentes, en esencia, engloban a un objeto o varios en una estructura
 con la que resulta más eficiente hacer test de intersección. Son
 similares a los grafos de escena de un rasterizador.</p>
 <p>Uno de los tipos más comunes es la <strong>Bounding Volume Hierarchy
-(BVH)</strong>. Fue una técnica desarrollada por Kay y Kajiya en 1986.
+(BVH)</strong>. Fue una técnica desarrollada por Kay y Kajilla en 1986.
 En esencia, este método encierra un objeto en una caja (lo que se
 denomina una <strong>bounding box</strong>), de forma que el test de
 intersección principal se hace con la caja y no con la geometría. Si un
@@ -2664,11 +2665,115 @@ podemos verla como <span class="math inline">\([x_0, x_1]
 forma, comprobar si un rayo impacta en una bounding box es tan sencillo
 como comprobar que está dentro del intervalo. Este es el método que se
 ha usado en Ray Tracing in One Weekend.</p>
+<p>Vulkan gestiona las estructuras de aceleración diviéndolas en dos
+partes: <strong>Top-Level Acceleration Structure</strong> (TLAS) y
+<strong>Bottom-Level Acceleration Structure</strong> (BLAS).</p>
+<figure>
+<img src="./img/04/Acceleration%20structure.png"
+alt="La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: Nvidia" />
+<figcaption aria-hidden="true">La TLAS guarda información de las
+instancias de un objeto, así como una referencia a BLAS que contiene la
+geometría correspondiente. Fuente: Nvidia</figcaption>
+</figure>
+<blockquote>
+<p>TODO: Deberíamos cambiar esa foto por otra propia.</p>
+</blockquote>
 <h3 id="botom-level-acceleration-structure-blas">Botom-Level
 Acceleration Structure (BLAS)</h3>
+<p>Las Bottom-Level Acceleration Structure almacenan la geometría de un
+objeto individual; esto es, los vértices y los índices de los
+triángulos, además de una AABB que la encapsula.</p>
+<p>Pueden almacenar varios modelos, puesto que alojan uno o más buffers
+de vértices junto a sus matrices de transformación. Si un modelo se
+instancia varias veces <em>dentro de la misma BLAS</em>, la geometría se
+duplica. Esto se hace para mejorar el rendimiento.</p>
+<p>Como regla general, cuantas menos BLAS, mejor.</p>
+<p>El código correspondiente a la creación de la BLAS en el programa es
+el siguiente:</p>
+<pre><code class="language-cpp">void HelloVulkan::createBottomLevelAS() {
+    // BLAS - guardar cada primitiva en una geometría
+
+    std::vector&lt;nvvk::RaytracingBuilderKHR::BlasInput&gt; allBlas;
+    allBlas.reserve(m_objModel.size());
+
+    for (const auto&amp; obj: m_objModel) {
+        auto blas = objectToVkGeometryKHR(obj);
+
+        // Podríamos añadir más geometrías en cada BLAS.
+        // De momento, solo una.
+        allBlas.emplace_back(blas);
+    }
+
+    m_rtBuilder.buildBlas(
+        allBlas,
+        VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR
+    );
+}</code></pre>
 <h3 id="top-level-acceleration-structure-tlas">Top-Level Acceleration
 Structure (TLAS)</h3>
-<h2 id="ray-tracing-pipeline">Ray tracing pipeline</h2>
+<p>Las Top-Level Acceleration Structures almacenan las instancias de los
+objetos, cada una con su matriz de transformación y referencia a la BLAS
+correspondiente.</p>
+<p>Además, guardan información sobre el <em>shading</em>. Así, los
+shaders pueden relacionar la geometría intersecada y el material de
+dicho objeto. En esta última parte jugará un papel fundamental la <a
+href="#shader-binding-table">Shader Binding Table</a>.</p>
+<p>En el programa hacemos lo siguiente para construir la TLAS:</p>
+<pre><code class="language-cpp">void HelloVulkan::createTopLevelAS() {
+    std::vector&lt;VkAccelerationStructureInstanceKHR&gt; tlas;
+    tlas.reserve(m_instances.size());
+
+    for (const HelloVulkan::ObjInstance&amp; inst: m_instances) {
+        VkAccelerationStructureInstanceKHR rayInst{};
+
+        // Posición de la instancia
+        rayInst.transform = nvvk::toTransformMatrixKHR(inst.transform);
+
+        rayInst.instanceCustomIndex = inst.objIndex;
+
+        // returns the acceleration structure device address of the blasId. The id correspond to the created BLAS in buildBlas.
+        rayInst.accelerationStructureReference = m_rtBuilder.getBlasDeviceAddress(inst.objIndex);
+
+        rayInst.flags = VK_GEOMETRY_INSTANCE_TRIANGLE_FACING_CULL_DISABLE_BIT_KHR;
+        rayInst.mask  = 0xFF; // Solo registramos hit si rayMask &amp; instance.mask != 0
+        rayInst.instanceShaderBindingTableRecordOffset = 0; // Usaremos el mismo hit group para todos los objetos
+
+        tlas.emplace_back(rayInst);
+    }
+
+    m_rtBuilder.buildTlas(
+        tlas,
+        VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR
+    );
+}</code></pre>
+<h2 id="ray-tracing-descriptor-set-y-pipeline">Ray tracing descriptor
+set y pipeline</h2>
+<p>Primero, debemos introducir unas nociones básicas de Vulkan sobre
+cómo gestiona la información que se pasa a los shaders.</p>
+<p>Un <strong><em>resource descriptor</em></strong> (usualmente lo
+abreviaremos como descriptor) es una forma de cargar recursos como
+buffers o imágenes para que la tarjeta gráfica los pueda utilizar;
+concretamente, los shaders. El <strong><em>descriptor
+layout</em></strong> especifica el tipo de recurso que va a ser
+accedido. Finalmente, el <strong><em>descriptor set</em></strong>
+determina el buffer o imagen que se va a asociar al descriptor. Este set
+es el que se utiliza en los <strong>drawing commands</strong>. Un
+<strong>pipeline</strong> es una secuencia de operaciones que reciben
+una geometría y sus texturas, y la transforma en unos pixels.</p>
+<p>Todos estos conceptos aparecen desarrollados en <span
+class="citation" data-cites="overvoorde-2022">(<a
+href="#ref-overvoorde-2022" role="doc-biblioref">Overvoorde
+2022</a>)</span></p>
+<p>Tradicionalmente, en rasterización se utiliza un descriptor set por
+tipo de material, y consecuentemente, un pipeline por cada tipo. En ray
+tracing esto no es posible, puesto que no se sabe qué material se va a
+usar: un rayo puede impactar <em>cualquier</em> material presente en la
+escena, lo cual invocaría un shader específico. Debido a esto,
+empaquetaremos todos los recursos en un único set de descriptores.</p>
+<blockquote>
+<p>TODO: empezar con la doc. de la pipeline
+(https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering)</p>
+</blockquote>
 <h2 id="shaders">Shaders</h2>
 <h3 id="shader-binding-table">Shader binding table</h3>
 <h3 id="tipos-de-shaders">Tipos de shaders</h3>
@@ -2798,6 +2903,7 @@ fuente</a></p>
 <li>https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-acceleration-structure</li>
 <li>https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</li>
 <li>https://raytracing.github.io/books/RayTracingTheNextWeek.html#boundingvolumehierarchies</li>
+<li>https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_layout_and_buffer</li>
 </ul>
 <h1 id="análisis-de-rendimiento">Análisis de rendimiento</h1>
 <blockquote>
@@ -3468,6 +3574,11 @@ href="http://jj.github.io/IV/documentos/temas/Integracion_continua">http://jj.gi
 Nature. 2016. <span>“Scientific Language Is Becoming More
 Informal.”</span> November 8, 2016. <a
 href="https://doi.org/10.1038/539140a">https://doi.org/10.1038/539140a</a>.
+</div>
+<div id="ref-overvoorde-2022" class="csl-entry" role="doc-biblioentry">
+Overvoorde, Alexander. 2022. <span>“Introduction - Vulkan
+Tutorial.”</span> 2022. <a
+href="https://vulkan-tutorial.com/">https://vulkan-tutorial.com/</a>.
 </div>
 <div id="ref-mcbook" class="csl-entry" role="doc-biblioentry">
 Owen, Art B. 2013. <em>Monte Carlo Theory, Methods and Examples</em>. <a
