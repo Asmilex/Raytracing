@@ -191,7 +191,7 @@ Tradicionalmente, en rasterización se utiliza un descriptor set por tipo de mat
 
 ### La Shader binding table
 
-Para solucionar esto, vamos a crear la **Shader Binding Table**. Esta estructura permitirá cargar el shader correspondiente dependiendo de dónde impacte un rayo.
+Para solucionar esto, vamos a crear la **Shader Binding Table** (SBT). Esta estructura permitirá cargar el shader correspondiente dependiendo de dónde impacte un rayo.
 
 Para cargar esta estructura, se debe hacer lo siguiente:
 
@@ -204,7 +204,25 @@ Para cargar esta estructura, se debe hacer lo siguiente:
 
 ![La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader `raygen`, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un `closest hit`, `any hit`, o `miss` shaders. Fuente: Nvidia](./img/04/Pipeline.png)
 
-Los rayos se invocarán mediante la función `traceRaysEXT()`.
+Cada entrada de la SBT contiene un handler y una serie de parámetros embebidos. A esto se le conoce como **Shader Record**. Estos records se clasifican en:
+
+- **Ray generation record**: contiene el handler del ray generation shader.
+- **Hit group record**: se encargan de los handlers del closest hit, anyhit (opcional), e intersection (opcional).
+- **Miss group record**: se encarga del miss shader.
+- **Callable group record**.
+
+Una de las partes más difíciles de la SBT es saber cómo se relacionan record y geometría. Es decir, cuando un rayo impacta en una geometría, ¿a qué record de la SBT llamamos? Esto se determina mediante los parámetros de la instancia, la llamada a *trace rays*, y el orden de la geometría en la BLAS.
+
+![Fuente: https://www.willusher.io/](./img/04/SBT.png)
+
+#### Cálculo de la entrada de la SBT
+
+El principal problema es el cálculo del índice en los hit groups.
+
+Llamemos al índice de cada instancia de una geometría en la BLAS $\mathbb{G}_{\text{ID}}$. A cada instancia se le puede asignar un desplazamiento con respecto a la SBT ($\mathbb{I}_{\text{offset}}$) desde donde empieza la subtabla de hit groups.
+
+> TODO: esto se deja temporal de momento. No sé hasta qué punto me convence poner todo esto. Lo veo importante, pero no sé si *tan* importante. El recurso que estoy usando es https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways, por si al final decidimos escribirlo.
+
 
 ### Tipos de shaders
 
@@ -356,6 +374,8 @@ Primero, lo mejor es asumir un cuadrado, y después, extender la interfaz para m
 - https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering
 - https://raytracing.github.io/books/RayTracingTheNextWeek.html#boundingvolumehierarchies
 - https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_layout_and_buffer
+- Ray tracing gems II, p.241.
+- https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways
 
 
 [^4]: Esto no es del todo cierto. Aunque generalmente suelen ser excepciones debido al coste computacional de RT en tiempo real, existen algunas implementaciones que son capaces de correrlo por software. Notablemente, el motor de Crytek, CryEngine, es capaz de mover ray tracing basado en hardware y en software [@crytek-2020]
