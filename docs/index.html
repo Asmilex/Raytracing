@@ -282,8 +282,8 @@ bidireccional</a></li>
 hemisférica</a></li>
 <li><a href="#reflejos">Reflejos</a></li>
 </ul></li>
-<li><a href="#la-rendering-equation"><strong>La rendering
-equation</strong></a></li>
+<li><a href="#la-rendering-equation">La rendering equation</a></li>
+<li><a href="#materiales">Materiales</a></li>
 </ul></li>
 <li><a href="#construyamos-un-path-tracer">¡Construyamos un path
 tracer!</a>
@@ -305,15 +305,20 @@ Acceleration Structure (BLAS)</a></li>
 <li><a href="#top-level-acceleration-structure-tlas">Top-Level
 Acceleration Structure (TLAS)</a></li>
 </ul></li>
-<li><a href="#ray-tracing-descriptor-set-y-pipeline">Ray tracing
-descriptor set y pipeline</a></li>
-<li><a href="#shaders">Shaders</a>
+<li><a href="#la-ray-tracing-pipeline">La ray tracing pipeline</a>
 <ul>
-<li><a href="#shader-binding-table">Shader binding table</a></li>
+<li><a href="#descriptores-y-conceptos-básicos">Descriptores y conceptos
+básicos</a></li>
+<li><a href="#la-shader-binding-table">La Shader binding table</a></li>
 <li><a href="#tipos-de-shaders">Tipos de shaders</a></li>
+<li><a href="#traspaso-de-información-entre-shaders">Traspaso de
+información entre shaders</a></li>
+<li><a href="#creación-de-la-ray-tracing-pipeline">Creación de la ray
+tracing pipeline</a></li>
 </ul></li>
 <li><a href="#asmiray">Asmiray</a></li>
-<li><a href="#transporte-de-luz-1">Transporte de luz</a>
+<li><a href="#transporte-de-luz-en-la-práctica">Transporte de luz en la
+práctica</a>
 <ul>
 <li><a href="#materiales-y-objetos">Materiales y objetos</a></li>
 </ul></li>
@@ -2350,8 +2355,7 @@ distribución de luz es la misma en todas direcciones. Por el contrario,
 los anisotrópicos reflejan diferentes cantidades de luz dependiendo
 desde dónde los miremos. Los ejemplos más habituales de materiales
 anisotrópicos son las rocas y la madera.</p>
-<h2 id="la-rendering-equation"><strong>La rendering
-equation</strong></h2>
+<h2 id="la-rendering-equation">La rendering equation</h2>
 <p>Y, finalmente, tras esta introducción de los principales conceptos
 radiométricos, llegamos a la ecuación más importante de todo este
 trabajo: la <strong>rendering equation</strong>; también llamada la
@@ -2441,6 +2445,7 @@ la luz. Además, no se conocen las radiancias de salida.</li>
 <p>Este último matiz es importante. Para renderizar una imagen, se
 necesita calcular la radiancia de salida para aquellos puntos visibles
 desde nuestra cámara.</p>
+<h2 id="materiales">Materiales</h2>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
 <p><span class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
@@ -2746,8 +2751,9 @@ href="#shader-binding-table">Shader Binding Table</a>.</p>
         VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR
     );
 }</code></pre>
-<h2 id="ray-tracing-descriptor-set-y-pipeline">Ray tracing descriptor
-set y pipeline</h2>
+<h2 id="la-ray-tracing-pipeline">La ray tracing pipeline</h2>
+<h3 id="descriptores-y-conceptos-básicos">Descriptores y conceptos
+básicos</h3>
 <p>Primero, debemos introducir unas nociones básicas de Vulkan sobre
 cómo gestiona la información que se pasa a los shaders.</p>
 <p>Un <strong><em>resource descriptor</em></strong> (usualmente lo
@@ -2760,29 +2766,164 @@ determina el buffer o imagen que se va a asociar al descriptor. Este set
 es el que se utiliza en los <strong>drawing commands</strong>. Un
 <strong>pipeline</strong> es una secuencia de operaciones que reciben
 una geometría y sus texturas, y la transforma en unos pixels.</p>
-<p>Todos estos conceptos aparecen desarrollados en <span
-class="citation" data-cites="overvoorde-2022">(<a
-href="#ref-overvoorde-2022" role="doc-biblioref">Overvoorde
-2022</a>)</span></p>
+<p>Si necesitas más información, todos estos conceptos aparecen
+desarrollados extensamente en <span class="citation"
+data-cites="overvoorde-2022">(<a href="#ref-overvoorde-2022"
+role="doc-biblioref">Overvoorde 2022</a>)</span></p>
 <p>Tradicionalmente, en rasterización se utiliza un descriptor set por
 tipo de material, y consecuentemente, un pipeline por cada tipo. En ray
 tracing esto no es posible, puesto que no se sabe qué material se va a
 usar: un rayo puede impactar <em>cualquier</em> material presente en la
 escena, lo cual invocaría un shader específico. Debido a esto,
 empaquetaremos todos los recursos en un único set de descriptores.</p>
+<h3 id="la-shader-binding-table">La Shader binding table</h3>
+<p>Para solucionar esto, vamos a crear la <strong>Shader Binding
+Table</strong> (SBT). Esta estructura permitirá cargar el shader
+correspondiente dependiendo de dónde impacte un rayo.</p>
+<p>Para cargar esta estructura, se debe hacer lo siguiente:</p>
+<ol type="1">
+<li>Cargar y compilar cada shader en un
+<code>VkShaderModule</code>.</li>
+<li>Juntar los cada <code>VkShaderModule</code> en un array
+<code>VkPipelineShaderStageCreateInfo</code>.</li>
+<li>Crear un array de <code>VkRayTracingShaderGroupCreateInfoKHR</code>.
+Cada elemento se convertirá al final en una entrada de la Shader Binding
+Table.</li>
+<li>Compilar los dos arrays anteriores más un pipeline layout para
+generar un <code>vkCreateRayTracingPipelineKHR</code>.</li>
+<li>Conseguir los <em>handlers</em> de los shaders usando
+<code>vkGetRayTracingShaderGroupHandlesKHR</code>.</li>
+<li>Alojar un buffer con el bit
+<code>VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR</code> y copiar los
+<em>handlers</em>.</li>
+</ol>
+<figure>
+<img src="./img/04/Pipeline.png"
+alt="La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader raygen, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un closest hit, any hit, o miss shaders. Fuente: Nvidia" />
+<figcaption aria-hidden="true">La Shader Binding Table permite
+selccionar un tipo de shader dependiendo del objeto en el que se
+impacte. Para ello, se genera un rayo desde el shader
+<code>raygen</code>, el cual viaja a través de la Acceleration
+Structure. Dependiendo de dónde impacte, se utiliza un
+<code>closest hit</code>, <code>any hit</code>, o <code>miss</code>
+shaders. Fuente: Nvidia</figcaption>
+</figure>
+<p>Cada entrada de la SBT contiene un handler y una serie de parámetros
+embebidos. A esto se le conoce como <strong>Shader Record</strong>.
+Estos records se clasifican en:</p>
+<ul>
+<li><strong>Ray generation record</strong>: contiene el handler del ray
+generation shader.</li>
+<li><strong>Hit group record</strong>: se encargan de los handlers del
+closest hit, anyhit (opcional), e intersection (opcional).</li>
+<li><strong>Miss group record</strong>: se encarga del miss shader.</li>
+<li><strong>Callable group record</strong>.</li>
+</ul>
+<p>Una de las partes más difíciles de la SBT es saber cómo se relacionan
+record y geometría. Es decir, cuando un rayo impacta en una geometría,
+¿a qué record de la SBT llamamos? Esto se determina mediante los
+parámetros de la instancia, la llamada a <em>trace rays</em>, y el orden
+de la geometría en la BLAS.</p>
+<figure>
+<img src="./img/04/SBT.png" alt="Fuente: https://www.willusher.io/" />
+<figcaption aria-hidden="true">Fuente:
+https://www.willusher.io/</figcaption>
+</figure>
+<h4 id="cálculo-de-la-entrada-de-la-sbt">Cálculo de la entrada de la
+SBT</h4>
+<p>El principal problema es el cálculo del índice en los hit groups.</p>
+<p>Llamemos al índice de cada instancia de una geometría en la BLAS
+<span class="math inline">\(\mathbb{G}_{\text{ID}}\)</span>. A cada
+instancia se le puede asignar un desplazamiento con respecto a la SBT
+(<span class="math inline">\(\mathbb{I}_{\text{offset}}\)</span>) desde
+donde empieza la subtabla de hit groups.</p>
 <blockquote>
-<p>TODO: empezar con la doc. de la pipeline
-(https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering)</p>
+<p>TODO: esto se deja temporal de momento. No sé hasta qué punto me
+convence poner todo esto. Lo veo importante, pero no sé si <em>tan</em>
+importante. El recurso que estoy usando es
+https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways, por si
+al final decidimos escribirlo.</p>
 </blockquote>
-<h2 id="shaders">Shaders</h2>
-<h3 id="shader-binding-table">Shader binding table</h3>
 <h3 id="tipos-de-shaders">Tipos de shaders</h3>
-<h4 id="ray-generation-shader">Ray generation shader</h4>
-<h4 id="closest-hit-shader">Closest hit shader</h4>
-<h4 id="miss-shader">Miss shader</h4>
-<h4 id="anyhit-shader">Anyhit shader</h4>
+<p>El pipeline soporta varios tipos de shaders diferentes que cubren la
+funcionalidad esencial de un ray tracer:</p>
+<ul>
+<li><strong>Ray generation shader</strong>: es el punto de inicio del
+viaje de un rayo. Calcula punto de inicio y procesa el resultado final.
+Idealmente, solo se invocan rayos desde aquí. Se suele invocar</li>
+<li><strong>Closest hit shader</strong>: este shader se ejecuta cuando
+un rayo impacta en una geometría por primera vez. Se pueden trazar rayos
+recursivamente desde aquí (por ejemplo, para calcular oclusión
+ambiental).</li>
+<li><strong>Any-hit shader</strong>: similar al closest hit, pero
+invocado en cada intersección del camino del rayo que cumpla <span
+class="math inline">\(t \in [t_{min}, t_{max})\)</span>. Es comúnmente
+utilizado en los cálculos de transparencias
+(<em>alpha-testing</em>).</li>
+<li><strong>Miss shader</strong>: si el rayo no choca con ninguna
+geometría –pega con el infinito–, se ejecuta este shader. Normalmente,
+añade una pequeña contribución ambiental al rayo.</li>
+<li><strong>Intersection shader</strong>: este shader es algo diferente
+al resto. Su función es calcular el punto de impacto de un rayo con una
+geometría. Por defecto se utiliza un test triángulo - rayo. En nuestro
+path tracer lo dejaremos por defecto, pero podríamos definir algún
+método como los que vimos en la sección <a
+href="#intersecciones-rayo---objeto">intersecciones rayo -
+objeto</a>.</li>
+</ul>
+<p>Este es el código de los shaders del path tracer: <a
+href="https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rgen">Raygen</a>,
+<a
+href="https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rchit">Closest
+hit</a>, <a
+href="https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rmiss">Miss</a>,
+<a
+href="https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl">Any-hit</a>.</p>
+<p>Existe otro tipo de shader adicional denominado <strong>callable
+shader</strong>. Este es un shader que se invoca desde otro shader. Por
+ejemplo, un shader de intersección puede invocar a un shader de
+oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque
+if-else por un shader para hacer cálculos de iluminación. Este tipo de
+shaders no se han implementado en el path tracer, pero se podrían añadir
+con un poco de trabajo.</p>
+<h3 id="traspaso-de-información-entre-shaders">Traspaso de información
+entre shaders</h3>
+<p>En ray tracing, los shaders por sí solos no pueden realizar todos los
+cálculos necesarios. Por ello, necesitaremos enviar información de uno a
+otro. Tenemos diferentes mecanismos para conseguirlo:</p>
+<p>El primero de ellos son las <strong>push constansts</strong>. Estas
+son variables que se pueden enviar a los shaders (es decir, de CPU a
+GPU), pero que no se pueden modificar. Únicamente podemos mandar un
+pequeño número de variables, el cual se puede consultar mediante
+<code>VkPhysicalDeviceLimits.maxPushConstantSize</code>.</p>
+<p>Nuestro path tracer tiene implementado actualmente (19 de abril de
+2022) las siguientes constantes:</p>
+<pre><code class="language-cpp">struct PushConstantRay {
+    vec4  clearColor;     // Color ambiental
+    vec3  lightPosition;
+    float lightIntensity;
+    int   lightType;
+    int   maxDepth;       // Cuántos rebotes máximos permitimos
+    int   nb_samples;     // Para antialiasing
+    int   frame;          // Para acumulación temporal
+};</code></pre>
+<p>Las push constants son, como dice su nombre, constantes. ¿Y si
+queremos pasar información mutable entre shaders?.</p>
+<p>Para eso están los <strong>payloads</strong>. Específicamente, cada
+rayo puede llevar información adicional. Como una pequeña mochila. Esto
+resulta <em>muy</em> útil, por ejemplo, a la hora de calcular la
+radiancia de un camino. Se crean mediante la estructura
+<code>rayPayloadEXT</code>, y se reciben en otro shader mediante
+<code>rayPayloadInEXT</code>. Es importante controlar que el tamaño de
+la carga no sea excesivamente grande.</p>
+<h3 id="creación-de-la-ray-tracing-pipeline">Creación de la ray tracing
+pipeline</h3>
+<p>El código de la creación de la pipeline lo encapsula la función
+<code>createRtPipeline()</code>, que se puede consultar <a
+href="https://github.com/Asmilex/Raytracing/blob/6409feb628cc048186f6279b921ebe24e9337b6a/application/vulkan_ray_tracing/src/hello_vulkan.cpp#L763">aquí</a></p>
 <h2 id="asmiray">Asmiray</h2>
-<h2 id="transporte-de-luz-1">Transporte de luz</h2>
+<h2 id="transporte-de-luz-en-la-práctica">Transporte de luz en la
+práctica</h2>
 <blockquote>
 <p>TODO: creo… que esto no debería ir aquí. Pero no quiero tampoco que
 el capítulo de radiometría sea un tocho impresionante.</p>
@@ -2904,6 +3045,8 @@ fuente</a></p>
 <li>https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</li>
 <li>https://raytracing.github.io/books/RayTracingTheNextWeek.html#boundingvolumehierarchies</li>
 <li>https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_layout_and_buffer</li>
+<li>Ray tracing gems II, p.241.</li>
+<li>https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways</li>
 </ul>
 <h1 id="análisis-de-rendimiento">Análisis de rendimiento</h1>
 <blockquote>
