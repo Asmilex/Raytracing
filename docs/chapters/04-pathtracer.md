@@ -269,7 +269,7 @@ El código de la creación de la pipeline lo encapsula la función `createRtPipe
 
 ## Asmiray
 
-## Transporte de luz
+## Transporte de luz en la práctica
 
 > TODO: creo... que esto no debería ir aquí. Pero no quiero tampoco que el capítulo de radiometría sea un tocho impresionante.
 

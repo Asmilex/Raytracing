@@ -438,7 +438,7 @@ Ten en cuenta que es muy difícil encontrar objetos físicos que imiten a la per
 
 Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, puede ser **isotrópica** o **anisotrópica**. Los materiales isotrópicos mantienen las propiedades de reflectancia invariantes ante rotaciones; es decir, la distribución de luz es la misma en todas direcciones. Por el contrario, los anisotrópicos reflejan diferentes cantidades de luz dependiendo desde dónde los miremos. Los ejemplos más habituales de materiales anisotrópicos son las rocas y la madera.
 
-## **La rendering equation**
+## La rendering equation
 
 Y, finalmente, tras esta introducción de los principales conceptos radiométricos, llegamos a la ecuación más importante de todo este trabajo: la **rendering equation**; también llamada la **ecuación del transporte de luz**.
 
@@ -494,6 +494,10 @@ Si nos paramos a pensar, la ecuación de reflexión es muy similar a la de rende
 - La *rendering equation* calcula las condiciones globales de la luz. Además, no se conocen las radiancias de salida.
 
 Este último matiz es importante. Para renderizar una imagen, se necesita calcular la radiancia de salida para aquellos puntos visibles desde nuestra cámara.
+
+## Materiales
+
+
 
 <hr>
 
