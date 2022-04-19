@@ -177,29 +177,77 @@ void HelloVulkan::createTopLevelAS() {
 }
 ```
 
-## Ray tracing descriptor set y pipeline
+## La ray tracing pipeline
+
+### Descriptores y conceptos básicos
 
 Primero, debemos introducir unas nociones básicas de Vulkan sobre cómo gestiona la información que se pasa a los shaders.
 
-
 Un ***resource descriptor*** (usualmente lo abreviaremos como descriptor) es una forma de cargar recursos como buffers o imágenes para que la tarjeta gráfica los pueda utilizar; concretamente, los shaders. El ***descriptor layout*** especifica el tipo de recurso que va a ser accedido. Finalmente, el ***descriptor set*** determina el buffer o imagen que se va a asociar al descriptor. Este set es el que se utiliza en los **drawing commands**. Un **pipeline** es una secuencia de operaciones que reciben una geometría y sus texturas, y la transforma en unos pixels.
 
-Todos estos conceptos aparecen desarrollados en [@overvoorde-2022]
+Si necesitas más información, todos estos conceptos aparecen desarrollados extensamente en [@overvoorde-2022]
 
 Tradicionalmente, en rasterización se utiliza un descriptor set por tipo de material, y consecuentemente, un pipeline por cada tipo. En ray tracing esto no es posible, puesto que no se sabe qué material se va a usar: un rayo puede impactar *cualquier* material presente en la escena, lo cual invocaría un shader específico. Debido a esto, empaquetaremos todos los recursos en un único set de descriptores.
 
-> TODO: empezar con la doc. de la pipeline (https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering)
+### La Shader binding table
 
-## Shaders
+Para solucionar esto, vamos a crear la **Shader Binding Table**. Esta estructura permitirá cargar el shader correspondiente dependiendo de dónde impacte un rayo.
 
-### Shader binding table
+Para cargar esta estructura, se debe hacer lo siguiente:
+
+1. Cargar y compilar cada shader en un `VkShaderModule`.
+2. Juntar los cada `VkShaderModule` en un array `VkPipelineShaderStageCreateInfo`.
+3. Crear un array de `VkRayTracingShaderGroupCreateInfoKHR`. Cada elemento se convertirá al final en una entrada de la Shader Binding Table.
+4. Compilar los dos arrays anteriores más un pipeline layout para generar un `vkCreateRayTracingPipelineKHR`.
+5. Conseguir los *handlers* de los shaders usando `vkGetRayTracingShaderGroupHandlesKHR`.
+6. Alojar un buffer con el bit `VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR` y copiar los *handlers*.
+
+![La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader `raygen`, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un `closest hit`, `any hit`, o `miss` shaders. Fuente: Nvidia](./img/04/Pipeline.png)
+
+Los rayos se invocarán mediante la función `traceRaysEXT()`.
 
 ### Tipos de shaders
 
-#### Ray generation shader
-#### Closest hit shader
-#### Miss shader
-#### Anyhit shader
+El pipeline soporta varios tipos de shaders diferentes que cubren la funcionalidad esencial de un ray tracer:
+
+- **Ray generation shader**: es el punto de inicio del viaje de un rayo. Calcula punto de inicio y procesa el resultado final. Idealmente, solo se invocan rayos desde aquí. Se suele invocar
+- **Closest hit shader**: este shader se ejecuta cuando un rayo impacta en una geometría por primera vez. Se pueden trazar rayos recursivamente desde aquí (por ejemplo, para calcular oclusión ambiental).
+- **Any-hit shader**: similar al closest hit, pero invocado en cada intersección del camino del rayo que cumpla $t \in [t_{min}, t_{max})$. Es comúnmente utilizado en los cálculos de transparencias (*alpha-testing*).
+- **Miss shader**: si el rayo no choca con ninguna geometría --pega con el infinito--, se ejecuta este shader. Normalmente, añade una pequeña contribución ambiental al rayo.
+- **Intersection shader**: este shader es algo diferente al resto. Su función es calcular el punto de impacto de un rayo con una geometría. Por defecto se utiliza un test triángulo - rayo. En nuestro path tracer lo dejaremos por defecto, pero podríamos definir algún método como los que vimos en la sección [intersecciones rayo - objeto](#intersecciones-rayo---objeto).
+
+Este es el código de los shaders del path tracer: [Raygen](https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rgen), [Closest hit](https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rchit), [Miss](https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rmiss), [Any-hit](https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl).
+
+Existe otro tipo de shader adicional denominado **callable shader**. Este es un shader que se invoca desde otro shader. Por ejemplo, un shader de intersección puede invocar a un shader de oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque if-else por un shader para hacer cálculos de iluminación. Este tipo de shaders no se han implementado en el path tracer, pero se podrían añadir con un poco de trabajo.
+
+### Traspaso de información entre shaders
+
+En ray tracing, los shaders por sí solos no pueden realizar todos los cálculos necesarios. Por ello, necesitaremos enviar información de uno a otro. Tenemos diferentes mecanismos para conseguirlo:
+
+El primero de ellos son las **push constansts**. Estas son variables que se pueden enviar a los shaders (es decir, de CPU a GPU), pero que no se pueden modificar. Únicamente podemos mandar un pequeño número de variables, el cual se puede consultar mediante `VkPhysicalDeviceLimits.maxPushConstantSize`.
+
+Nuestro path tracer tiene implementado actualmente (19 de abril de 2022) las siguientes constantes:
+
+```cpp
+struct PushConstantRay {
+    vec4  clearColor;     // Color ambiental
+    vec3  lightPosition;
+    float lightIntensity;
+    int   lightType;
+    int   maxDepth;       // Cuántos rebotes máximos permitimos
+    int   nb_samples;     // Para antialiasing
+    int   frame;          // Para acumulación temporal
+};
+```
+
+
+Las push constants son, como dice su nombre, constantes. ¿Y si queremos pasar información mutable entre shaders?.
+
+Para eso están los **payloads**. Específicamente, cada rayo puede llevar información adicional. Como una pequeña mochila. Esto resulta *muy* útil, por ejemplo, a la hora de calcular la radiancia de un camino. Se crean mediante la estructura `rayPayloadEXT`, y se reciben en otro shader mediante `rayPayloadInEXT`. Es importante controlar que el tamaño de la carga no sea excesivamente grande.
+
+### Creación de la ray tracing pipeline
+
+El código de la creación de la pipeline lo encapsula la función `createRtPipeline()`, que se puede consultar [aquí](https://github.com/Asmilex/Raytracing/blob/6409feb628cc048186f6279b921ebe24e9337b6a/application/vulkan_ray_tracing/src/hello_vulkan.cpp#L763)
 
 ## Asmiray
 
