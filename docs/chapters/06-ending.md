@@ -52,6 +52,10 @@ https://alain.xyz/blog/ray-tracing-filtering
   - Diferentes tipos de cámaras
   - Focal lenght, depth of field, motion blur
 
+## Posibles mejoras del trabajo
+
+- Test unitarios: *white furnace test* (01_lights.pdf, p.61)
+
 <hr>
 
 ## Referencias {.unlisted .unnumbered}

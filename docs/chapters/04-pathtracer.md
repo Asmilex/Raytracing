@@ -25,7 +25,7 @@ El requisito más importante de todos es la gráfica. Para ser capaces de realiz
 A día 17 de abril de 2022, para correr ray tracing en tiempo real, se necesita alguna de las siguientes tarjetas gráficas:
 
 | **Arquitectura**              | **Fabricante** | **Modelos de gráficas**                                                                              |
-|-------------------------------|----------------|------------------------------------------------------------------------------------------------------|
+|:------------------------------|:---------------|------------------------------------------------------------------------------------------------------|
 | **Turing**                    | Nvidia         | RTX 2060, RTX 2060 Super, RTX 2070, RTX 2070 Super, RTX 2080, RTX 2080 Super, RTX 2080 Ti, RTX Titan |
 | **Ampere**                    | Nvidia         | RTX 3050, RTX 3060, RTX 3060 Ti, RTX 3070, RTX 3070 Ti, RTX 3080, RTX 3080 Ti, RTX 3090, RTX 3090 Ti |
 | **RDNA2** (Navi 2X, Big Navi) | AMD            | RX 6400, RX 6500 XT, RX 6600, RX 6600 XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT                |
@@ -307,6 +307,8 @@ CREO que de esta manera no me va a hacer falta tocar framebuffers. Simplemente, 
 > TODO: point lights, area lights, ambient lights...
 >
 > TODO: estas son notas muy puntuales (*como las luces, jeje*). Ya las revisaré más adelante.
+>
+> TODO: 01_lights.pdf tiene información útil sobre muestreo directo de fuents de luces.
 
 La interfaz se encuentra en `host_device.h`. Describe cómo comunicarse con la GPU.
 

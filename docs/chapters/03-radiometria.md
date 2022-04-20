@@ -235,6 +235,10 @@ $$
 
 Lo que finalmente nos dice que $L_1 = L_2$, como queríamos ver.
 
+## Fotometría y radiometría
+
+> TODO: hablar sobre las diferencias. Hay información útil en 01_lights.pdf, p.43
+
 ## Integrales radiométricas
 
 En esta sección, vamos a explorar las nuevas herramientas que nos proporciona la radiancia. Veremos también cómo integrar ángulos sólidos, y cómo simplificar dichas integrales.
@@ -498,6 +502,18 @@ Este último matiz es importante. Para renderizar una imagen, se necesita calcul
 ## Materiales
 
 > TODO: https://alain.xyz/blog/advances-in-material-models este señor me acaba de solucionar la vida. Gracias por tanto.
+>
+> TODO: WIP. Bastante WIP. Basado en 02_Rendering_Zsolnai_Ray_Tracing.
+
+- La suma de las siguientes 3 componentes hacen el modelo de Phong:
+  - Ambient: $I = K_\alpha I_\alpha$, con $k_\alpha$ el coeficiente ambiental del objeto, $I_\alpha$ la intensidad ambiental de la escena/fuente de luz
+  - Diffuse (simplificada): $I = k_d(L \cdot N)$, $k_d$ coeficiente difuso del objeto, $L$ vector que apunta a la luz, $N$ normal a la superficie
+  - Specular (simplificada): $I = k_s(V * R)^n$, $k_s$ especular, $V$ vector apuntando a la cámara, $R$ vector reflejado del rayo, $()^n$ shininess factor.
+  - $I = K_\alpha I_\alpha + I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)$
+  - Aproximación muy bruta
+  - Con recursividad, $I = K_\alpha I_\alpha + I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)$ + $k_t I_t + k_r I_r$, $k_t$ fresnel transmission coefficient,  $I_t$ intensity coming from the transmission direction, $k_r$ fresnel reflection coefficient, $I_r$ intensity coming from the reflection direction.
+
+### Ecuaciones de fresnel, ley de Snell
 
 <hr>
 
