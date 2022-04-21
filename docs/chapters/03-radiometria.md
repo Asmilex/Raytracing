@@ -497,7 +497,7 @@ Este último matiz es importante. Para renderizar una imagen, se necesita calcul
 
 ## Materiales
 
-
+> TODO: https://alain.xyz/blog/advances-in-material-models este señor me acaba de solucionar la vida. Gracias por tanto.
 
 <hr>
 

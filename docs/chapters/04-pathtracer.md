@@ -17,6 +17,8 @@ Las nociones anteriores no distinguen entre un motor en tiempo real y *offline*.
 ### Arquitecturas de gráficas
 
 > NOTE: sería interesante enlazarlo con la sección de rendimiento.
+>
+> TODO: Esta [página](https://alain.xyz/blog/comparison-of-modern-graphics-apis) es maravillosa *chef kiss*
 
 El requisito más importante de todos es la gráfica. Para ser capaces de realizar cálculos de ray tracing en tiempo real, necesitaremos una arquitectura moderna con núcleos dedicados a este tipo de cáclulos [^4].
 
