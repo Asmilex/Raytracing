@@ -1,5 +1,9 @@
 # Introducción
 
+Este trabajo puede visualizarse en la web [asmilex.github.io/Raytracing](https://asmilex.github.io/Raytracing/) o en el [PDF](https://github.com/Asmilex/Raytracing/raw/main/docs/TFG.pdf) disponible en el repositorio del trabajo [Asmilex/Raytracing](https://github.com/Asmilex/Raytracing).
+
+La página web contiene la versión más actualizada, además de recursos adicionales como vídeos.
+
 ## Nota histórica
 
 Ser capaces de capturar un momento.
