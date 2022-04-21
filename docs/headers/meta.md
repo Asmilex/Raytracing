@@ -11,8 +11,7 @@ Este trabajo explorará las técnicas modernas de informática gráfica físicam
 
 Para conseguirlo, se ha diseñado un software basado en la interfaz de programación de aplicaciones gráficas Vulkan, usando como base un entorno de desarrollo de Nvidia conocido como nvpro-samples. El software implementa un motor gráfico basado en *path tracing*. Este motor será capaz de muestrear fuentes de iluminación de forma directa, lo que se conoce como *next-event estimation*. Para disminuir el tiempo de cómputo y hacerlo viable en tiempo real, se usarán técnicas de Monte Carlo para integrar radiancia. Se explorarán cómo afectan los diferentes métodos al ruido final de la imagen.
 
-Este motor se comparará con una implementación puramente en CPU basada en el software desarrollado en los libros de [@Shirley2020RTW1] Ray Tracing in One Weekend. Se han estudiado las diferencias de tiempo entre una implementación y otra, sus ventajas y desventajas y el ruido de las imágenes producidas.
-
+Este motor se comparará con una implementación puramente en CPU basada en el software desarrollado en los libros de [@Shirley2020RTW1] "Ray Tracing in One Weekend series". Se han estudiado las diferencias de tiempo entre una implementación y otra, sus ventajas y desventajas y el ruido de las imágenes producidas.
 
 *Palabras clave: raytracing, ray tracing, Monte Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan.*
 

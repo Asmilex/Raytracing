@@ -1,5 +1,7 @@
 # Introducción
 
+## Nota histórica
+
 Ser capaces de capturar un momento.
 
 Desde siempre, este ha sido uno de los sueños de la humanidad. La capacidad de retener lo que ven nuestros ojos comenzó con simples pinturas ruprestres. Con el tiempo, el arte evolucionó, así como la capacidad de retratar nuestra percepción con mayor fidelidad.
@@ -64,6 +66,10 @@ Estos son los objetivos del trabajo:
   - Comparativa de rendimiento en tiempo real *vs* offline renderer.
 - Métodos de Monte Carlo. Estudio del error producido por cada uno. Comprobar cómo de "buena" es cada solución.
 - Futuro del área.
+
+## Técnicas empleadas para la resolución
+
+## Principales fuentes consultadas
 
 <hr>
 
