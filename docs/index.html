@@ -5,8 +5,8 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Andrés Millán Muñoz" />
-  <meta name="keywords" content="TFG, Raytracing, Ray tracing, Monte
-Carlo, DGIIM" />
+  <meta name="keywords" content="raytracing, ray tracing, Monte
+Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan" />
   <title>Los fundamentos de Ray Tracing</title>
   <style>
     html {
@@ -203,12 +203,17 @@ Carlo, DGIIM" />
 <h2 id="toc-title">Tabla de contenidos</h2>
 <ul>
 <li><a href="#abstract">Abstract</a></li>
+<li><a href="#a-brief-overview">A brief overview</a></li>
 <li><a href="#dedicatoria">Dedicatoria</a></li>
 <li><a href="#introducción">Introducción</a>
 <ul>
+<li><a href="#nota-histórica">Nota histórica</a></li>
 <li><a href="#qué-es-ray-tracing">¿Qué es ray tracing?</a></li>
-<li><a href="#vale-y-qué-vamos-a-hacer-entonces">Vale, ¿y qué vamos a
-hacer entonces?</a></li>
+<li><a href="#objetivos-del-trabajo">Objetivos del trabajo</a></li>
+<li><a href="#técnicas-empleadas-para-la-resolución">Técnicas empleadas
+para la resolución</a></li>
+<li><a href="#principales-fuentes-consultadas">Principales fuentes
+consultadas</a></li>
 </ul></li>
 <li><a href="#las-bases">Las bases</a>
 <ul>
@@ -368,23 +373,35 @@ Projects</a></li>
 </ul>
 </nav>
 <h1 class="unnumbered" id="abstract">Abstract</h1>
-<p>Se procederá a analizar los algoritmos modernos de visualización 3D
-realista usando métodos de Monte-Carlo, y su implementación en hardware
-gráfico moderno (GPUs) específicamente diseñadas para aceleración de
-Ray-Tracing. Se diseñará e implementará un sistema software de síntesis
-de imágenes realistas por path tracing y muestreo directo de fuentes de
-luz, que haga uso del hardware gráfico, y se analizará su eficiencia en
-tiempo en relación a la calidad de las imágenes y en comparación con una
-implementación exclusivamente sobre CPU.</p>
-<p>Se realizará una revisión bibliográfica de los métodos de Montecarlo
-que se aplican de manera habitual para la visualización de imagenes 3D.
-Se examinarán los puntos fuertes y débiles de cada una de las técnicas,
-con el objetivo de minimizar el error en la recosntrucción de la imagen
-sin que esto suponga un alto coste computacional. Se investigarán las
-soluciones propuestas para el futuro del área.</p>
+<p>Este trabajo explorará las técnicas modernas de informática gráfica
+físicamente fieles basadas en <em>ray tracing</em> en tiempo real. Para
+ello, se usarán métodos de integración de Monte Carlo dado que
+disminuyen el tiempo necesario de cómputo.</p>
+<p>Para conseguirlo, se ha diseñado un software basado en la interfaz de
+programación de aplicaciones gráficas Vulkan, usando como base un
+entorno de desarrollo de Nvidia conocido como nvpro-samples. El software
+implementa un motor gráfico basado en <em>path tracing</em>. Este motor
+será capaz de muestrear fuentes de iluminación de forma directa, lo que
+se conoce como <em>next-event estimation</em>. Para disminuir el tiempo
+de cómputo y hacerlo viable en tiempo real, se usarán técnicas de Monte
+Carlo para integrar radiancia. Se explorarán cómo afectan los diferentes
+métodos al ruido final de la imagen.</p>
+<p>Este motor se comparará con una implementación puramente en CPU
+basada en el software desarrollado en los libros de <span
+class="citation" data-cites="Shirley2020RTW1">(<a
+href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
+2020a</a>)</span> “Ray Tracing in One Weekend series”. Se han estudiado
+las diferencias de tiempo entre una implementación y otra, sus ventajas
+y desventajas y el ruido de las imágenes producidas.</p>
+<p><em>Palabras clave: raytracing, ray tracing, Monte Carlo, Monte Carlo
+integration, radiometry, path tracing, Vulkan.</em></p>
 <hr>
-<p><em>Translation. It’ll be left as is until there’s a definitive
-abstract</em></p>
+<h1 class="unnumbered" id="a-brief-overview">A brief overview</h1>
+<blockquote>
+<p>TODO</p>
+</blockquote>
+<p><em>Keywords: raytracing, ray tracing, Monte Carlo, Monte Carlo
+integration, radiometry, path tracing, Vulkan.</em></p>
 <h1 class="unnumbered" id="dedicatoria">Dedicatoria</h1>
 <p>¡Parece que has llegado un poco pronto! Si lo has hecho
 voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado
@@ -398,6 +415,7 @@ hacia delante.</p>
 carrera. A Cristina, Jorge, Jose OC, Lucas, Mari, Marina y Sergio por
 ayudarme con el contenido, feedback del desarrollo y guía de diseño.</p>
 <h1 id="introducción">Introducción</h1>
+<h2 id="nota-histórica">Nota histórica</h2>
 <p>Ser capaces de capturar un momento.</p>
 <p>Desde siempre, este ha sido uno de los sueños de la humanidad. La
 capacidad de retener lo que ven nuestros ojos comenzó con simples
@@ -429,8 +447,9 @@ estos objetos tridimensionales se transforman en bidimensionales.
 Proyectando acordemente el entorno a una cámara, conseguimos colorear un
 pixel, de forma que represente lo que se ve en ese mundo.</p>
 <blockquote>
-<p>TODO insertar imagen rasterización. NOTE ¿quizás debería extender un
-poco más esta parte? Parece que se queda algo coja la explicación.</p>
+<p>TODO insertar imagen rasterización.</p>
+<p>NOTE ¿quizás debería extender un poco más esta parte? Parece que se
+queda algo coja la explicación.</p>
 </blockquote>
 <p>Aunque esta técnica es bastante eficiente en términos de computación
 y ha evolucionado mucho, rápidamente saturamos sus posibilidades.
@@ -444,8 +463,8 @@ aquello computacionalmente viable.</p>
 intuitiva.</p>
 <h2 id="qué-es-ray-tracing">¿Qué es ray tracing?</h2>
 <p>En resumidas cuentas, <em>ray tracing</em> (o trazado de rayos en
-español), se basa en disparar fotones desde nuestras luces digitales y
-hacerlos rebotar en la escena.</p>
+español), se basa en disparar fotones en forma de rayo desde nuestra
+cámara digital y hacerlos rebotar en la escena.</p>
 <p>De esta forma, simulamos cómo se comporta la luz. Al impactar en un
 objeto, sufre un cambio en su trayectoria. Este cambio origina nuevos
 rayos, que vuelven a dispersarse por la escena. Estos nuevos rayos
@@ -491,23 +510,60 @@ día también ocurre esto, claro está. Pero la tecnología evoluciona.</p>
 <p>Podemos bajarlo a milisegundos.</p>
 <p>Hemos entrado en la era del <strong>real time ray
 tracing</strong>.</p>
-<h2 id="vale-y-qué-vamos-a-hacer-entonces">Vale, ¿y qué vamos a hacer
-entonces?</h2>
+<h2 id="objetivos-del-trabajo">Objetivos del trabajo</h2>
+<p>Los objetivos del trabajo iniciales son los siguientes:</p>
+<ul>
+<li>Análisis de los algoritmos modernos de visualización en 3D basados
+en métodos de Monte Carlo.</li>
+<li>Revisión de las técnicas de Monte Carlo, examinando puntos fuertes y
+débiles de cada una. Se busca minimizar el error en la reconstrucción de
+la imagen y minimizar el tiempo de ejecución.</li>
+<li>Implementación de dichos algoritmos en hardware gráfico moderno
+(GPUs) específicamente diseñado para aceleración de ray tracing.</li>
+<li>Diseño e implementación de un software de síntesis de imágenes
+realistas por path tracing y muestreo directo de fuentes de luz por
+GPU.</li>
+<li>Análisis del rendimiento del motor con respecto al tiempo de
+ejecución y calidad de imagen.</li>
+<li>Comparación del motor desarrollado con una implementación por
+CPU.</li>
+<li>Investigación de las técnicas modernas y sobre el futuro del
+área.</li>
+</ul>
 <blockquote>
-<p>TODO: WIP</p>
+<p>TODO: determinar si lo siguiente es cierto.</p>
 </blockquote>
-<p>Estos son los objetivos del trabajo:</p>
+<p>Afortunadamente, <strong>se ha conseguido realizar exitosamente cada
+uno de los objetivos</strong>. Esta memoria cubrirá todo el trabajo que
+ha sido necesario realizar para lograrlo.</p>
+<h2 id="técnicas-empleadas-para-la-resolución">Técnicas empleadas para
+la resolución</h2>
+<h2 id="principales-fuentes-consultadas">Principales fuentes
+consultadas</h2>
+<p>Esencialmente, este trabajo ha sido posible gracias a los siguientes
+recursos:</p>
 <ul>
-<li>Path tracer inspirado en Shirley’s <em>RT In One Weekend</em>
-series.
-<ul>
-<li>Muestreo directo de fuentes de luz.</li>
-<li>Comparativa de rendimiento en tiempo real <em>vs</em> offline
-renderer.</li>
-</ul></li>
-<li>Métodos de Monte Carlo. Estudio del error producido por cada uno.
-Comprobar cómo de “buena” es cada solución.</li>
-<li>Futuro del área.</li>
+<li>La serie de libros de <em>Ray Tracing</em> de <em>Peter
+Shirley</em>, conocidos como “Ray tracing In One Weekend Series” <span
+class="citation" data-cites="Shirley2020RTW1">(<a
+href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
+2020a</a>)</span>, <span class="citation"
+data-cites="Shirley2020RTW2">(<a href="#ref-Shirley2020RTW2"
+role="doc-biblioref">Shirley 2020b</a>)</span>, <span class="citation"
+data-cites="Shirley2020RTW3">(<a href="#ref-Shirley2020RTW3"
+role="doc-biblioref">Shirley 2020c</a>)</span>. El motor desarrollado en
+estos libros es el que se utilizará para la comparación.</li>
+<li>Physically Based Rendering: From Theory to Implementation (3rd ed.)
+<span class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
+role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>)</span>,
+considerado como el santo grial de la informática gráfica moderna.</li>
+<li>Ray Tracing Gems I y II <span class="citation"
+data-cites="Haines2019">(<a href="#ref-Haines2019"
+role="doc-biblioref">Haines and Akenine-Möller 2019</a>)</span>, <span
+class="citation" data-cites="Marrs2021">(<a href="#ref-Marrs2021"
+role="doc-biblioref">Adam Marrs and Wald 2021</a>)</span>, una colección
+de papers esenciales sobre ray tracing publicada por Nvidia.</li>
+<li></li>
 </ul>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias">Referencias</h2>
@@ -3660,6 +3716,11 @@ role="doc-bibliography">
 <div id="ref-Sarabia" class="csl-entry" role="doc-biblioentry">
 A. Romero Sarabia. 2021. <em>Apuntes de La Asignatura Curvas y
 Superficies</em>.
+</div>
+<div id="ref-Marrs2021" class="csl-entry" role="doc-biblioentry">
+Adam Marrs, Peter Shirley, and Ingo Wald, eds. 2021. <span>“Ray Tracing
+Gems II.”</span> Apress. 2021. <a
+href="http://raytracinggems.com/rtg2">http://raytracinggems.com/rtg2</a>.
 </div>
 <div id="ref-arneback-2019" class="csl-entry" role="doc-biblioentry">
 Arnebäck. 2019. <span>“An Explanation of the Rendering Equation.”</span>

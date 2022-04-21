@@ -19,6 +19,7 @@ Así, nació la geometría, los puntos de luces, texturas, sombreados, y otros e
 La **rasterización** es el proceso mediante el cual estos objetos tridimensionales se transforman en bidimensionales. Proyectando acordemente el entorno a una cámara, conseguimos colorear un pixel, de forma que represente lo que se ve en ese mundo.
 
 > TODO insertar imagen rasterización.
+>
 > NOTE ¿quizás debería extender un poco más esta parte? Parece que se queda algo coja la explicación.
 
 Aunque esta técnica es bastante eficiente en términos de computación y ha evolucionado mucho, rápidamente saturamos sus posibilidades. Conceptos como *shadow maps*, *baked lightning*, o *reflection cubemaps* intentan solventar lo que no es posible con rasterización: preguntrarnos *qué es lo que se encuentra alrededor nuestra*.
@@ -29,7 +30,7 @@ Y, entonces, en 1960 el trazado de rayos con una simple idea intuitiva.
 
 ## ¿Qué es ray tracing?
 
-En resumidas cuentas, *ray tracing* (o trazado de rayos en español), se basa en disparar fotones desde nuestras luces digitales y hacerlos rebotar en la escena.
+En resumidas cuentas, *ray tracing* (o trazado de rayos en español), se basa en disparar fotones en forma de rayo desde nuestra cámara digital y hacerlos rebotar en la escena.
 
 De esta forma, simulamos cómo se comporta la luz. Al impactar en un objeto, sufre un cambio en su trayectoria. Este cambio origina nuevos rayos, que vuelven a dispersarse por la escena. Estos nuevos rayos dependerán de las propiedades del objeto con el que hayan impactado. Con el tiempo necesario, lo que veremos desde nuestra cámara será una representación fotorealista de lo que habita en ese universo.
 
@@ -55,21 +56,31 @@ Podemos bajarlo a milisegundos.
 
 Hemos entrado en la era del **real time ray tracing**.
 
-## Vale, ¿y qué vamos a hacer entonces?
+## Objetivos del trabajo
 
-> TODO: WIP
+Los objetivos del trabajo iniciales son los siguientes:
 
-Estos son los objetivos del trabajo:
+- Análisis de los algoritmos modernos de visualización en 3D basados en métodos de Monte Carlo.
+- Revisión de las técnicas de Monte Carlo, examinando puntos fuertes y débiles de cada una. Se busca minimizar el error en la reconstrucción de la imagen y minimizar el tiempo de ejecución.
+- Implementación de dichos algoritmos en hardware gráfico moderno (GPUs) específicamente diseñado para aceleración de ray tracing.
+- Diseño e implementación de un software de síntesis de imágenes realistas por path tracing y muestreo directo de fuentes de luz por GPU.
+- Análisis del rendimiento del motor con respecto al tiempo de ejecución y calidad de imagen.
+- Comparación del motor desarrollado con una implementación por CPU.
+- Investigación de las técnicas modernas y sobre el futuro del área.
 
-- Path tracer inspirado en Shirley's *RT In One Weekend* series.
-  - Muestreo directo de fuentes de luz.
-  - Comparativa de rendimiento en tiempo real *vs* offline renderer.
-- Métodos de Monte Carlo. Estudio del error producido por cada uno. Comprobar cómo de "buena" es cada solución.
-- Futuro del área.
+> TODO: determinar si lo siguiente es cierto.
+
+Afortunadamente, **se ha conseguido realizar exitosamente cada uno de los objetivos**. Esta memoria cubrirá todo el trabajo que ha sido necesario realizar para lograrlo.
 
 ## Técnicas empleadas para la resolución
 
 ## Principales fuentes consultadas
+
+Esencialmente, este trabajo ha sido posible gracias a los siguientes recursos:
+
+- La serie de libros de *Ray Tracing* de *Peter Shirley*, conocidos como "Ray tracing In One Weekend Series" [@Shirley2020RTW1], [@Shirley2020RTW2], [@Shirley2020RTW3]. El motor desarrollado en estos libros es el que se utilizará para la comparación.
+- Physically Based Rendering: From Theory to Implementation (3rd ed.) [@PBRT3e], considerado como el santo grial de la informática gráfica moderna.
+- Ray Tracing Gems I y II [@Haines2019], [@Marrs2021], una colección de papers esenciales sobre ray tracing publicada por Nvidia.
 
 <hr>
 
