@@ -335,12 +335,30 @@ spotlights</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#análisis-de-rendimiento">Análisis de rendimiento</a></li>
-<li><a href="#el-futuro-de-ray-tracing">El futuro de Ray
-Tracing</a></li>
+<li><a href="#el-presente-y-futuro-de-rt">El presente y futuro de RT</a>
+<ul>
+<li><a href="#denoising">Denoising</a></li>
+<li><a href="#filtering">Filtering</a></li>
+<li><a href="#offline-renderers">Offline renderers</a></li>
+<li><a href="#la-industria-del-videojuego">La industria del
+videojuego</a>
+<ul>
+<li><a href="#ray-tracing-híbrido">Ray tracing híbrido</a></li>
+<li><a href="#productos-comerciales">Productos comerciales</a></li>
+<li><a href="#unreal-engine-5">Unreal Engine 5</a></li>
+<li><a href="#la-última-generación-de-consolas">La última generación de
+consolas</a></li>
+</ul></li>
+<li><a href="#posibles-mejoras-del-trabajo">Posibles mejoras del
+trabajo</a></li>
+</ul></li>
 <li><a href="#metodología-de-trabajo">Metodología de trabajo</a>
 <ul>
 <li><a href="#influencias">Influencias</a></li>
 <li><a href="#ciclos-de-desarrollo">Ciclos de desarrollo</a></li>
+<li><a href="#presupuesto">Presupuesto</a></li>
+<li><a href="#arquitectura-del-software">Arquitectura del
+software</a></li>
 <li><a href="#diseño">Diseño</a>
 <ul>
 <li><a href="#bases-del-diseño">Bases del diseño</a></li>
@@ -415,6 +433,14 @@ hacia delante.</p>
 carrera. A Cristina, Jorge, Jose OC, Lucas, Mari, Marina y Sergio por
 ayudarme con el contenido, feedback del desarrollo y guía de diseño.</p>
 <h1 id="introducción">Introducción</h1>
+<p>Este trabajo puede visualizarse en la web <a
+href="https://asmilex.github.io/Raytracing/">asmilex.github.io/Raytracing</a>
+o en el <a
+href="https://github.com/Asmilex/Raytracing/raw/main/docs/TFG.pdf">PDF</a>
+disponible en el repositorio del trabajo <a
+href="https://github.com/Asmilex/Raytracing">Asmilex/Raytracing</a>.</p>
+<p>La página web contiene la versión más actualizada, además de recursos
+adicionales como vídeos.</p>
 <h2 id="nota-histórica">Nota histórica</h2>
 <p>Ser capaces de capturar un momento.</p>
 <p>Desde siempre, este ha sido uno de los sueños de la humanidad. La
@@ -538,6 +564,36 @@ uno de los objetivos</strong>. Esta memoria cubrirá todo el trabajo que
 ha sido necesario realizar para lograrlo.</p>
 <h2 id="técnicas-empleadas-para-la-resolución">Técnicas empleadas para
 la resolución</h2>
+<blockquote>
+<p>TODO: echarle un ojo a esto cuando termine el trabajo.</p>
+</blockquote>
+<p>Además del antedicho algoritmo ray tracing y su versión más pura path
+tracing, se han empleado técnicas de Monte Carlo para calcular la luz
+resultante de un punto.</p>
+<p>En particular, con respecto a la <a
+href="#integración-de-monte-carlo">matemática</a> empleada, estudiaremos
+diferentes formas de generar números aleatorios mediante distribuciones
+particulares, <em>(multiple) importance sampling</em>, next event
+estimation, …</p>
+<p>En un área híbrida se encuentra la <a
+href="#transporte-de-luz">radiometría</a>. Dado que estamos tratando con
+transporte de luz, será esencial introducir los conceptos más
+importantes de la radiometría. Trataremos con algunos términos como
+irradiancia, ángulos sólidos, radiancia, funciones de distribuciones de
+reflectancia y transmitancia bidireccionales, etc.</p>
+<p>Finalmente, la parte <a
+href="#construyamos-un-path-tracer">informática</a> usará en la API
+gráfica Vulkan junto a un framework de Nvidia para acelerar la adopción
+de ray tracing en KHR. Veremos qué se necesita para implementar ray
+tracing en tiempo real, lo que nos llevará aprender sobre programación
+en Vulkan, las estructuras de aceleración de nivel alto y bajo (TLAS y
+BLAS), la Shader Binding Table, comunicación con CPU y GPU, etc.</p>
+<p>Todo este programa estará alojado en Github. En el <a
+href="#metodología-de-trabajo">apéndice</a>, aprenderemos cómo se ha
+usado la plataforma para integrar la documentación, el código fuente y
+los ciclos de desarrollo.</p>
+<p>Como podemos ver, esta área relaciona íntimamente la matemática y la
+informática, con un poco de física de por medio.</p>
 <h2 id="principales-fuentes-consultadas">Principales fuentes
 consultadas</h2>
 <p>Esencialmente, este trabajo ha sido posible gracias a los siguientes
@@ -563,7 +619,6 @@ role="doc-biblioref">Haines and Akenine-Möller 2019</a>)</span>, <span
 class="citation" data-cites="Marrs2021">(<a href="#ref-Marrs2021"
 role="doc-biblioref">Adam Marrs and Wald 2021</a>)</span>, una colección
 de papers esenciales sobre ray tracing publicada por Nvidia.</li>
-<li></li>
 </ul>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias">Referencias</h2>
@@ -2502,6 +2557,10 @@ la luz. Además, no se conocen las radiancias de salida.</li>
 necesita calcular la radiancia de salida para aquellos puntos visibles
 desde nuestra cámara.</p>
 <h2 id="materiales">Materiales</h2>
+<blockquote>
+<p>TODO: https://alain.xyz/blog/advances-in-material-models este señor
+me acaba de solucionar la vida. Gracias por tanto.</p>
+</blockquote>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
 <p><span class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
@@ -2562,6 +2621,9 @@ con ray tracing funcione.</p>
 <h3 id="arquitecturas-de-gráficas">Arquitecturas de gráficas</h3>
 <blockquote>
 <p>NOTE: sería interesante enlazarlo con la sección de rendimiento.</p>
+<p>TODO: Esta <a
+href="https://alain.xyz/blog/comparison-of-modern-graphics-apis">página</a>
+es maravillosa <em>chef kiss</em></p>
 </blockquote>
 <p>El requisito más importante de todos es la gráfica. Para ser capaces
 de realizar cálculos de ray tracing en tiempo real, necesitaremos una
@@ -3113,17 +3175,68 @@ preguntarle a Kako que tire benchmark en su 2060, y a Manu con su 3060
 </blockquote>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-5">Referencias</h2>
-<h1 id="el-futuro-de-ray-tracing">El futuro de Ray Tracing</h1>
+<h1 id="el-presente-y-futuro-de-rt">El presente y futuro de RT</h1>
 <blockquote>
-<p>TODO: Ideas para este capítulo:</p>
-<ul>
-<li>Hablar de los offline renderers disponibles</li>
-<li>Real time ray tracing en la industria: Minecraft RTX, Queake II,
-Cyberpunk, Metro Exodus, Control</li>
-<li>Arquitecturas modernas de consolas, y cómo el desarrollo en consola
-se ha transformado. Hablar de Insomniac Games</li>
-</ul>
+<p>TODO: de momento, se queda como está. Es un capítulo bastante fácil
+de escribir, así que en unos tres días como muchísimo podría estar todo
+listo.</p>
 </blockquote>
+<h2 id="denoising">Denoising</h2>
+<p>https://alain.xyz/blog/ray-tracing-denoising</p>
+<h2 id="filtering">Filtering</h2>
+<p>https://alain.xyz/blog/ray-tracing-filtering</p>
+<h2 id="offline-renderers">Offline renderers</h2>
+<h2 id="la-industria-del-videojuego">La industria del videojuego</h2>
+<h3 id="ray-tracing-híbrido">Ray tracing híbrido</h3>
+<h3 id="productos-comerciales">Productos comerciales</h3>
+<ul>
+<li>Control
+<ul>
+<li>Híbrido</li>
+<li>https://alain.xyz/blog/frame-analysis-control</li>
+<li>https://www.youtube.com/watch?v=blbu0g9DAGA</li>
+</ul></li>
+<li>Minecraft RTX
+<ul>
+<li>Path tracing</li>
+<li>https://alain.xyz/blog/frame-analysis-minecraftrtx</li>
+<li>https://www.youtube.com/watch?v=s_eeWr622Ss</li>
+<li>https://www.youtube.com/watch?v=TVtSsJf86_Y</li>
+</ul></li>
+<li>Cyberpunk 2077
+<ul>
+<li>Híbrido</li>
+</ul></li>
+<li>Quake II RTX
+<ul>
+<li>Path tracing</li>
+</ul></li>
+<li>Doom RTX
+<ul>
+<li>Path tracing</li>
+</ul></li>
+<li>Metro Exodus</li>
+</ul>
+<h3 id="unreal-engine-5">Unreal Engine 5</h3>
+<h3 id="la-última-generación-de-consolas">La última generación de
+consolas</h3>
+<h2 id="posibles-mejoras-del-trabajo">Posibles mejoras del trabajo</h2>
+<ul>
+<li>Test Driven Development</li>
+<li>Debugging https://alain.xyz/blog/graphics-debugging</li>
+<li>Materiales
+<ul>
+<li>Physically based materials</li>
+<li>Diferentes tipos de materiales</li>
+<li>Subsurface scattering</li>
+</ul></li>
+<li>HDR</li>
+<li>Cámara
+<ul>
+<li>Diferentes tipos de cámaras</li>
+<li>Focal lenght, depth of field, motion blur</li>
+</ul></li>
+</ul>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-6">Referencias</h2>
 
@@ -3199,6 +3312,21 @@ sentido implementar algo que no se conoce.</p>
 <p>Para apoyar el desarrollo, se ha utilizado <a
 href="#github">Github</a>. Más adelante hablaremos de cómo esta
 plataforma ha facilitado el trabajo.</p>
+<h2 id="presupuesto">Presupuesto</h2>
+<blockquote>
+<p>TODO: ahora mismo, no tengo ni idea de cómo empezar esto.</p>
+</blockquote>
+<h2 id="arquitectura-del-software">Arquitectura del software</h2>
+<blockquote>
+<p>TODO: especificaciones de los requerimientos y metodología de
+desarrollo, así como los planos del proyecto que contendrán las
+historias de usuario o casos de uso, diagrama conceptual, de iteración,
+de diseño, esquema arquitectónico y bocetos de las interfaces de
+usuario. Se describirán las estructuras de datos no fundamentales y
+algoritmos no triviales</p>
+<p>(Odio los diagramas de clases. Me gustaría evitar como sea
+incluirlos.)</p>
+</blockquote>
 <h2 id="diseño">Diseño</h2>
 <blockquote>
 <p>TODO: hablar de paleta de colores, tipografía…</p>
