@@ -34,6 +34,16 @@ Tras esto, comenzó a [desarrollarse](#setup-del-proyecto) el motor por GPU. Cua
 
 Para apoyar el desarrollo, se ha utilizado [Github](#github). Más adelante hablaremos de cómo esta plataforma ha facilitado el trabajo.
 
+## Presupuesto
+
+> TODO: ahora mismo, no tengo ni idea de cómo empezar esto.
+
+## Arquitectura del software
+
+> TODO: especificaciones de los requerimientos y metodología de desarrollo, así como los planos del proyecto que contendrán las historias de usuario o casos de uso, diagrama conceptual, de iteración, de diseño, esquema arquitectónico y bocetos de las interfaces de usuario. Se describirán las estructuras de datos no fundamentales y algoritmos no triviales
+>
+> (Odio los diagramas de clases. Me gustaría evitar como sea incluirlos.)
+
 ## Diseño
 
 > TODO: hablar de paleta de colores, tipografía...
