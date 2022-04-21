@@ -74,6 +74,20 @@ Afortunadamente, **se ha conseguido realizar exitosamente cada uno de los objeti
 
 ## Técnicas empleadas para la resolución
 
+> TODO: echarle un ojo a esto cuando termine el trabajo.
+
+Además del antedicho algoritmo ray tracing y su versión más pura path tracing, se han empleado técnicas de Monte Carlo para calcular la luz resultante de un punto.
+
+En particular, con respecto a la [matemática](#integración-de-monte-carlo) empleada, estudiaremos diferentes formas de generar números aleatorios mediante distribuciones particulares, *(multiple) importance sampling*, next event estimation, ...
+
+En un área híbrida se encuentra la [radiometría](#transporte-de-luz). Dado que estamos tratando con transporte de luz, será esencial introducir los conceptos más importantes de la radiometría. Trataremos con algunos términos como irradiancia, ángulos sólidos, radiancia, funciones de distribuciones de reflectancia y transmitancia bidireccionales, etc.
+
+Finalmente, la parte [informática](#construyamos-un-path-tracer) usará en la API gráfica Vulkan junto a un framework de Nvidia para acelerar la adopción de ray tracing en KHR. Veremos qué se necesita para implementar ray tracing en tiempo real, lo que nos llevará aprender sobre programación en Vulkan, las estructuras de aceleración de nivel alto y bajo (TLAS y BLAS), la Shader Binding Table, comunicación con CPU y GPU, etc.
+
+Todo este programa estará alojado en Github. En el [apéndice](#metodología-de-trabajo), aprenderemos cómo se ha usado la plataforma para integrar la documentación, el código fuente y los ciclos de desarrollo.
+
+Como podemos ver, esta área relaciona íntimamente la matemática y la informática, con un poco de física de por medio.
+
 ## Principales fuentes consultadas
 
 Esencialmente, este trabajo ha sido posible gracias a los siguientes recursos:
