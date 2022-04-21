@@ -1,7 +1,7 @@
 ---
 title: Los fundamentos de Ray Tracing
 author: Andrés Millán Muñoz
-keywords: [TFG, Raytracing, Ray tracing, Monte Carlo, DGIIM]
+keywords: [raytracing, ray tracing, Monte Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan]
 link-citations: true
 ---
 
@@ -11,9 +11,13 @@ Se procederá a analizar los algoritmos modernos de visualización 3D realista u
 
 Se realizará una revisión bibliográfica de los métodos de Montecarlo que se aplican de manera habitual para la visualización de imagenes 3D. Se examinarán los puntos fuertes y débiles de cada una de las técnicas, con el objetivo de minimizar el error en la recosntrucción de la imagen sin que esto suponga un alto coste computacional. Se investigarán las soluciones propuestas para el futuro del área.
 
+*Palabras clave: raytracing, ray tracing, Monte Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan.*
+
 <hr>
 
 *Translation. It'll be left as is until there's a definitive abstract*
+
+*Keywords: raytracing, ray tracing, Monte Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan.*
 
 \newpage
 
