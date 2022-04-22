@@ -317,16 +317,16 @@ $$
   Var[\hat{I}_N]
     & = Var\left[\frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}\right] = \\
     & = \frac{1}{N^2} Var\left[ \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}} \right] = \\
-    & = \frac{1}{N^2} N Var\left[\frac{f(X_i)}{p_X(X_i)}\right] = \\
-    & = \frac{1}{N} Var\left[\frac{f(X_i)}{p_X(X_i)}\right]
+    & = \frac{1}{N^2} N Var\left[\frac{f(X)}{p_X(X)}\right] = \\
+    & = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
 \end{aligned}
-$$
+$${#eq:mc_varianza}
 
 es decir, la varianza del estimador es inversamente proporcional al número de muestras $N$.
 
 La desviación estándar es
 $$
-\sqrt{Var[\hat{I}_N]} = \frac{\sqrt{Var\left[\frac{f(X_i)}{p_X(X_i)}\right]}}{\sqrt{N}}
+\sqrt{Var[\hat{I}_N]} = \frac{\sqrt{Var\left[\frac{f(X)}{p_X(X)}\right]}}{\sqrt{N}}
 $$
 
 así que, como adelantamos al inicio del capítulo, la estimación tiene un error del orden $\mathcal{O}(N^{-1/2})$. Esto nos dice que, para reducir el error a la mitad, debemos tomar 4 veces más muestras.
@@ -417,7 +417,7 @@ Solo nos queda conseguir la muestra. Para ello,
 
 $$
 \begin{aligned}
-\xi & = F_X(x)  = \frac{x^3}{8} \iff \\
+\xi & = F_X(x)  = \frac{x^3}{8} \quad \iff \\
 x & = \sqrt[3]{8 \xi}
 \end{aligned}
 $$
@@ -451,14 +451,46 @@ El algoritmo consiste en:
    1. Si se cumple, se acepta $y$ como muestra de $p_X$
    2. En caso contrario, se rechaza $y$ y se vuelve al paso 1.
 
-## *Importance sampling*
+## Importance sampling
 
-Con la llegada de ray tracing en tiempo real surge una obligación por optimizar los pocos rayos que se pueden trazar. Una de las preguntas que nos debemos hacer es *hacia dónde* generamos el rayo.
+Si recordamos la varianza del estimador de Monte Carlo [@eq:mc_varianza],
 
-En esta sección daremos respuesta a este dilema. Estudiaremos cómo las fuentes de luz afectan a la calidad de la imagen final. Veremos técnicas de reducción del error, las cuales nos permitirán acelerar enormemente el cómputo de la escena.
+$$
+Var[\hat{I}_N] = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
+$$
 
+podemos ver que depende de dos factores: el número de muestras $N$ y la varianza de $Var\left[\frac{f(X)}{p_X(X)}\right]$. Aumentar el número de muestras haría que la varianza decrezca. Sin embargo, alcanzaríamos un punto de retornos reducidos. Por tanto, vamos a centrarnos ahora en el segundo término.
 
-[^1]: En su defecto, si tenemos una función de densidad $f_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{f_X(t)dt}$
+En esencia, la varianza de $Var\left[\frac{f(X)}{p_X(X)}\right]$ decrecerá cuanto más cercana sea la función de probabilidad $p_X$ a la función $f(X)$.
+
+Supongamos que $f$ es proporcional a $p_X$. Esto es, existe un $s$ tal que $f(x) = s p_X(x)$. Como $p_X$ debe integrar uno, podemos calcular el valor de $s$:
+
+$$
+\begin{aligned}
+  \int_{S}{p_X(x)dx} & = \int_{S}{sf(x)dx} = 1 \quad \iff \\
+  s & = \frac{1}{\int_{S}{f(x)dx}}
+\end{aligned}
+$$
+
+Y entonces, se tendría que
+
+$$
+\begin{aligned}
+  Var\left[\frac{f(X)}{p_X(X)}\right] & = Var\left[\frac{f(X)}{sf(X)}\right] = \\
+  & = Var\left[\frac{1}{s}\right] = \\
+  & = 0
+\end{aligned}
+$$
+
+En la práctica, esto es inviable. El problema que queremos resolver es calcular la integral de $f$. Y para sacar $s$, necesitaríamos el valor de la integral de $f$. ¡Estamos dando vueltas!
+
+Por fortuna, hay algoritmos que son capaces de proporcionar la constante $s$ sin necesidad de calcular la integral. Uno de los más conocidos es **Metropolis-Hastings**, el cual se basa en cadenas de Markov de Monte Carlo.
+
+En este trabajo nos centraremos en buscar funciones de densidad $p_X$ que se aproximen a $f$ lo más fielmente posible, dentro del contexto del transporte de luz.
+
+## Multiple importance sampling
+
+https://graphics.stanford.edu/courses/cs348b-03/papers/veach-chapter9.pdf
 
 <hr>
 
@@ -472,3 +504,6 @@ En esta sección daremos respuesta a este dilema. Estudiaremos cómo las fuentes
 - Gems I, p.284.
 - https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf
 - Apuntes de inferencia estadística (cómo cito este tipo de fuentes??)
+- https://www.wikiwand.com/en/Metropolis%E2%80%93Hastings_algorithm
+
+[^1]: En su defecto, si tenemos una función de densidad $f_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{f_X(t)dt}$.
