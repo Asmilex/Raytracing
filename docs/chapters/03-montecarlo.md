@@ -227,7 +227,6 @@ Hemos usado que $E[E[X]] = E[X]$ y la linealidad de la esperanza.
 
 Enunciemos un par de propiedades que tiene, similares a la de la esperanza:
 
-
 - La varianza saca constantes al cuadrado: $Var[aX] = a^2Var[X]$
 - $Var[X + Y] =$ $Var[X] + Var[Y] + 2Cov[X, Y]$, donde $Cov[X, Y]$ es la covarianza de $X$ y $Y$.
   - En el caso en el que $X$ e $Y$ sean incorreladas (es decir, la covarianza es $0$), $Var[X + Y] =$ $Var[X] + Var[Y]$.
@@ -311,19 +310,23 @@ $$
 
 Elegir correctamente la función de densidad $p_X$ será clave. Si conseguimos escogerla debidamente, reduciremos en gran medida el error que genera el estimador. Esto es lo que se conoce como [*importance sampling*](#importance-sampling).
 
-Podemos calcular el error cuadrático medio de la estimación si volvemos al estimador de la media $\hat\mu_N$ [@eq:mc_simple]. Para ello, necesitamos la varianza: como $\hat\mu_N$ es insesgado, tenemos que
+Puesto que la varianza del estimador nos dará información sobre el error que genera, vamos a calcular $Var[\hat{I}_N]$. Para ello, usamos las propiedades que vimos en la [sección anterior](#esperanza-y-varianza-de-una-variable-aleatoria):
 
 $$
 \begin{aligned}
-Var[\hat\mu_N] & = Var\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right] = \frac{1}{N^2} Var\left[\sum_{i = 1}^{N}{Y_i}\right] = \\
-               & = \frac{1}{N^2} \sum_{i = 1}^{N}{Var[Y_i]} = \frac{1}{N^2} N Var[Y] = \\
-               & = \frac{Var[Y]}{N}
+  Var[\hat{I}_N]
+    & = Var\left[\frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}\right] = \\
+    & = \frac{1}{N^2} Var\left[ \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}} \right] = \\
+    & = \frac{1}{N^2} N Var\left[\frac{f(X_i)}{p_X(X_i)}\right] = \\
+    & = \frac{1}{N} Var\left[\frac{f(X_i)}{p_X(X_i)}\right]
 \end{aligned}
 $$
 
-El error cuadrático medio es
+es decir, la varianza del estimador es inversamente proporcional al número de muestras $N$.
+
+La desviación estándar es
 $$
-\sqrt{Var[\hat\mu_N]} = \sqrt{\frac{Var[Y]}{N}} = \frac{\sqrt{Var[Y]}}{\sqrt{N}}
+\sqrt{Var[\hat{I}_N]} = \frac{\sqrt{Var\left[\frac{f(X_i)}{p_X(X_i)}\right]}}{\sqrt{N}}
 $$
 
 así que, como adelantamos al inicio del capítulo, la estimación tiene un error del orden $\mathcal{O}(N^{-1/2})$. Esto nos dice que, para reducir el error a la mitad, debemos tomar 4 veces más muestras.
@@ -461,7 +464,8 @@ En esta sección daremos respuesta a este dilema. Estudiaremos cómo las fuentes
 
 ## Referencias {.unlisted .unnumbered}
 
-[@wikipedia-contributors-2021B], [@wikipedia-contributors-2021C], [@wikipedia-contributors-2022H], [@wikipedia-contributors-2022I], [@wikipedia-contributors-2022J], [@galvin-no-date], [@wikipedia-contributors-2022K], [@wikipedia-contributors-2022L], [@wikipedia-contributors-2022M], [@wikipedia-contributors-2022N], [@ShirleyRRT], [@PBRT3e], [@mcbook], [@berkeley-cs184, Monte Carlo Integration]
+[@ShirleyRRT], [@PBRT3e], [@mcbook], [@berkeley-cs184, Monte Carlo Integration],
+[@wikipedia-contributors-2021B], [@wikipedia-contributors-2021C], [@wikipedia-contributors-2022H], [@wikipedia-contributors-2022I], [@wikipedia-contributors-2022J], [@galvin-no-date], [@wikipedia-contributors-2022K], [@wikipedia-contributors-2022L], [@wikipedia-contributors-2022M], [@wikipedia-contributors-2022N],
 
 
 - *(berkeley-cs184)* https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf

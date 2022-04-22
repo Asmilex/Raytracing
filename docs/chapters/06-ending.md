@@ -12,9 +12,17 @@ https://alain.xyz/blog/ray-tracing-filtering
 
 ## Offline renderers
 
+## Importance Resampling
+
+## ReSTIR
+
+## Low discrepancy sampling
+
 ## La industria del videojuego
 
 ### Ray tracing híbrido
+
+https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering
 
 ### Productos comerciales
 
@@ -42,6 +50,7 @@ https://alain.xyz/blog/ray-tracing-filtering
 ## Posibles mejoras del trabajo
 
 - Test Driven Development
+  - *White furnace test* (01_lights.pdf, p.61)
 - Debugging https://alain.xyz/blog/graphics-debugging
 - Materiales
   - Physically based materials
@@ -51,10 +60,6 @@ https://alain.xyz/blog/ray-tracing-filtering
 - Cámara
   - Diferentes tipos de cámaras
   - Focal lenght, depth of field, motion blur
-
-## Posibles mejoras del trabajo
-
-- Test unitarios: *white furnace test* (01_lights.pdf, p.61)
 
 <hr>
 
