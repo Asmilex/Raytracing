@@ -190,7 +190,19 @@ $$
 E[g(X)] = \int_{\Omega}{g(x) f_X(x) dx}
 $$
 
-**Esta propiedad será clave en nuestro desarrollo**.
+- La **Ley (fuerte) de los grandes números** nos dice que dada una muestra de $n$ valores $X_1, \dots, X_N$ de una variable aleatoria $X$ con esperanza $E[X] = \mu$,
+
+$$
+P\left[\lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} = \mu \right] = 1
+$$
+
+Usando que $\bar{X}_N = \frac{1}{N} \sum_{i = 1}^{N}{X_i}$, esta ley se suele escribir como
+
+$$
+P\left[\lim_{N \to \infty}{\bar{X}_N} = \mu \right] = 1
+$$
+
+Estas dos últimas propiedades resultarán claves en el desarrollo.
 
 Será habitual encontrarnos con el problema de que no conocemos la distribución de una variable aleatoria $Y$. Sin embargo, si encontramos una transformación medible de una variable aleatoria $X$ de forma que obtengamos $Y$ (esto es, $\exists g$ función medible tal que $g(X) = Y$), entonces podemos calcular la esperanza de $Y$ fácilmente. Esta propiedad hará que las variables aleatorias con distribución uniforme adquieran muchísima importancia. Generar números aleatorios en $[0, 1)$ es muy fácil, así [que obtendremos otras v.a.s a partir de $\xi$](#método-de-la-transformada-inversa).
 
@@ -228,15 +240,19 @@ A veces, no podremos conocer de antemano el valor que toma un cierto parámetro 
 
 Sea $X$ una variablea aleatoria con distribución perteneciente a una familia de distribuciones paramétricas $X \sim F \in \set{F(\theta)}{\theta \in \Theta}$. $\Theta$ es el conjunto de valores que puede tomar el parámetro. Buscamos una forma de determinar el valor de $\theta$.
 
-Diremos que $T(X_1, \dots, X_n)$ es **un estimador de $theta$** si $T$ toma valores en $\Theta$.
+Diremos que $T(X_1, \dots, X_N)$ es **un estimador de $theta$** si $T$ toma valores en $\Theta$.
+
+A los estimadores de un parámetro los solemos denotar con $\hat{\theta}$.
 
 Como vemos, la definición no es muy restrictiva. Únicamente le estamos pidiendo a la función de la muestra que pueda tomar valores viables para la distribución.
 
-Se dice que un estimador $T(X_1, \dots, X_n)$ es **insesgado** (o centrado en el parámetro $\theta$) si
+Se dice que un estimador $T(X_1, \dots, X_N)$ es **insesgado** (o centrado en el parámetro $\theta$) si
 
 $$
 E[T(X_1, \dots, X_n)] = \theta\quad \forall \theta \in \Theta
 $$
+
+Naturalmente, decimos que un estimador $T(X_1, \dots, X_N)$ está **sesgado** si $E[T(X_1, \dots, X_N] \not = \theta$.
 
 ## El estimador de Monte Carlo
 
@@ -280,20 +296,20 @@ $$
 ¡Genial! Esto nos da una forma de calcular la integral de una función usando muestras de variables aleatorias con cierta distribución. Llamaremos al estimador de Monte Carlo
 
 $$
-\hat{F}_N = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
+\hat{I}_N = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
 $${#eq:mc_integral}
 
 Es importante mencionar que $p_X(x)$ debe ser distinto de 0 cuando $f$ también lo sea.
 
+> **Nota**(ción): si te preguntas por qué lo llamamos $\hat{I}_N$, piensa que queremos calcular la intergal $I = \int_{S}{f(x)dx}$. Para ello, usamos el estimador $\hat{I}$, y marcamos explícitamente que usamos $N$ muestras.
+
 Podemos particularizar el caso en el que nuestras muestras $X_i$ sigan una distribución uniforme en $[a, b]$. Si eso ocurre, su función de densidad es $p_X(x) = \frac{1}{b - a}$, así que podemos simplificar un poco [@eq:mc_integral]:
 
 $$
-\hat{F}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
+\hat{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
 $$
 
-Elegir correctamente la función de densidad $p_X$ será clave. Si conseguimos escogerla debidamente, reduciremos mucho el error que genera el estimador. Esto es lo que se conoce como *importance sampling*.
-
-> TODO: añadir enlace al capítulo de importance sampling.
+Elegir correctamente la función de densidad $p_X$ será clave. Si conseguimos escogerla debidamente, reduciremos en gran medida el error que genera el estimador. Esto es lo que se conoce como [*importance sampling*](#importance-sampling).
 
 Podemos calcular el error cuadrático medio de la estimación si volvemos al estimador de la media $\hat\mu_N$ [@eq:mc_simple]. Para ello, necesitamos la varianza: como $\hat\mu_N$ es insesgado, tenemos que
 
@@ -321,7 +337,7 @@ $$
 mediante una variable aleatoria $X \sim U(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]})$ con función de densidad $p(x, y, z) = \frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}$, tomamos el estimador
 
 $$
-\hat{F}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)} \sum_{i = 1}^{N}{f(X_i)}
+\hat{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)} \sum_{i = 1}^{N}{f(X_i)}
 $$
 
 Otro ejemplo clásico de estimador de Monte Carlo es calcular el valor de $\pi$. Se puede hallar integrando una función que valga $1$ en el interior de la circunferencia de radio unidad y $0$ en el exterior:
@@ -439,9 +455,7 @@ Con la llegada de ray tracing en tiempo real surge una obligación por optimizar
 En esta sección daremos respuesta a este dilema. Estudiaremos cómo las fuentes de luz afectan a la calidad de la imagen final. Veremos técnicas de reducción del error, las cuales nos permitirán acelerar enormemente el cómputo de la escena.
 
 
-
 [^1]: En su defecto, si tenemos una función de densidad $f_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{f_X(t)dt}$
-
 
 <hr>
 
@@ -453,3 +467,4 @@ En esta sección daremos respuesta a este dilema. Estudiaremos cómo las fuentes
 - *(berkeley-cs184)* https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf
 - Gems I, p.284.
 - https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf
+- Apuntes de inferencia estadística (cómo cito este tipo de fuentes??)
