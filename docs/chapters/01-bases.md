@@ -329,4 +329,4 @@ $$
 
 ## Referencias {.unlisted .unnumbered}
 
-[@wikipedia-contributors-2022F], [@wikipedia-contributors-2021A], [@wikipedia-contributors-2022G], [@Sarabia], [@wikipedia-contributors-2022O]
+[@wikipedia-contributors-2022F], [@wikipedia-contributors-2021A], [@wikipedia-contributors-2022G], [@wikipedia-contributors-2022O]
