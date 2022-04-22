@@ -230,28 +230,6 @@ esferas</a></li>
 triángulos</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#integración-de-monte-carlo">Integración de Monte Carlo</a>
-<ul>
-<li><a href="#repaso-de-probabilidad">Repaso de probabilidad</a>
-<ul>
-<li><a href="#variables-aleatorias-discretas">Variables aleatorias
-discretas</a></li>
-<li><a href="#variables-aleatorias-continuas">Variables aleatorias
-continuas</a></li>
-<li><a href="#esperanza-y-varianza-de-una-variable-aleatoria">Esperanza
-y varianza de una variable aleatoria</a></li>
-</ul></li>
-<li><a href="#el-estimador-de-monte-carlo">El estimador de Monte
-Carlo</a></li>
-<li><a href="#escogiendo-puntos-aleatorios">Escogiendo puntos
-aleatorios</a>
-<ul>
-<li><a href="#método-de-la-transformada-inversa">Método de la
-transformada inversa</a></li>
-<li><a href="#método-del-rechazo">Método del rechazo</a></li>
-</ul></li>
-<li><a href="#importance-sampling"><em>Importance sampling</em></a></li>
-</ul></li>
 <li><a href="#transporte-de-luz">Transporte de luz</a>
 <ul>
 <li><a href="#unidades-radiométricas-básicas">Unidades radiométricas
@@ -295,6 +273,29 @@ hemisférica</a></li>
 <li><a href="#ecuaciones-de-fresnel-ley-de-snell">Ecuaciones de fresnel,
 ley de Snell</a></li>
 </ul></li>
+</ul></li>
+<li><a href="#integración-de-monte-carlo">Integración de Monte Carlo</a>
+<ul>
+<li><a href="#repaso-de-probabilidad">Repaso de probabilidad</a>
+<ul>
+<li><a href="#variables-aleatorias-discretas">Variables aleatorias
+discretas</a></li>
+<li><a href="#variables-aleatorias-continuas">Variables aleatorias
+continuas</a></li>
+<li><a href="#esperanza-y-varianza-de-una-variable-aleatoria">Esperanza
+y varianza de una variable aleatoria</a></li>
+<li><a href="#estimadores">Estimadores</a></li>
+</ul></li>
+<li><a href="#el-estimador-de-monte-carlo">El estimador de Monte
+Carlo</a></li>
+<li><a href="#escogiendo-puntos-aleatorios">Escogiendo puntos
+aleatorios</a>
+<ul>
+<li><a href="#método-de-la-transformada-inversa">Método de la
+transformada inversa</a></li>
+<li><a href="#método-del-rechazo">Método del rechazo</a></li>
+</ul></li>
+<li><a href="#importance-sampling"><em>Importance sampling</em></a></li>
 </ul></li>
 <li><a href="#construyamos-un-path-tracer">¡Construyamos un path
 tracer!</a>
@@ -346,6 +347,10 @@ spotlights</a></li>
 <li><a href="#denoising">Denoising</a></li>
 <li><a href="#filtering">Filtering</a></li>
 <li><a href="#offline-renderers">Offline renderers</a></li>
+<li><a href="#importance-resampling">Importance Resampling</a></li>
+<li><a href="#restir">ReSTIR</a></li>
+<li><a href="#low-discrepancy-sampling">Low discrepancy
+sampling</a></li>
 <li><a href="#la-industria-del-videojuego">La industria del
 videojuego</a>
 <ul>
@@ -356,8 +361,6 @@ videojuego</a>
 consolas</a></li>
 </ul></li>
 <li><a href="#posibles-mejoras-del-trabajo">Posibles mejoras del
-trabajo</a></li>
-<li><a href="#posibles-mejoras-del-trabajo-1">Posibles mejoras del
 trabajo</a></li>
 </ul></li>
 <li><a href="#metodología-de-trabajo">Metodología de trabajo</a>
@@ -633,21 +636,21 @@ de papers esenciales sobre ray tracing publicada por Nvidia.</li>
 <h2 class="unlisted unnumbered" id="referencias">Referencias</h2>
 <p><span class="citation" data-cites="wikipedia-contributors-2022A">(<a
 href="#ref-wikipedia-contributors-2022A" role="doc-biblioref">Wikipedia:
-history of photography 2022</a>)</span>, <span class="citation"
+history of photography n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022B">(<a
 href="#ref-wikipedia-contributors-2022B" role="doc-biblioref">Wikipedia:
-Kodak 2022</a>)</span>, <span class="citation"
+Kodak n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022C">(<a
 href="#ref-wikipedia-contributors-2022C" role="doc-biblioref">Wikipedia:
-Computer 2022</a>)</span>, <span class="citation"
+Computer n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022D">(<a
 href="#ref-wikipedia-contributors-2022D" role="doc-biblioref">Wikipedia:
-rendering (computer graphics) 2022</a>)</span>, <span class="citation"
+rendering (computer graphics) n.d.</a>)</span>, <span class="citation"
 data-cites="caulfield-2020">(<a href="#ref-caulfield-2020"
-role="doc-biblioref">Caulfield 2020</a>)</span>, <span class="citation"
+role="doc-biblioref">Caulfield n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022E">(<a
 href="#ref-wikipedia-contributors-2022E" role="doc-biblioref">tracing
-2022</a>)</span>, <span class="citation"
+n.d.</a>)</span>, <span class="citation"
 data-cites="unknown-author-no-date">(<a
 href="#ref-unknown-author-no-date"
 role="doc-biblioref"><span>“Rendering”</span> n.d.</a>)</span>, <span
@@ -767,7 +770,7 @@ analíticamente.</p>
 superficies diferenciables <span class="citation"
 data-cites="wikipedia-contributors-2022O">(<a
 href="#ref-wikipedia-contributors-2022O" role="doc-biblioref">Wikipedia:
-Differential geometry of surfaces 2022</a>)</span>, pues nos interesará
+Differential geometry of surfaces n.d.</a>)</span>, pues nos interesará
 conocer el vector normal en cada punto.</p>
 <p>Una superficie implícita es una superficie en un espacio euclidiano
 definida como</p>
@@ -1077,7 +1080,7 @@ gracias a las herramientras aportadas por KHR <span class="citation"
 data-cites="the-khronos-vulkan-working-group-2022">(<a
 href="#ref-the-khronos-vulkan-working-group-2022"
 role="doc-biblioref">The Khronos® Vulkan Working Group
-2022</a>)</span>.</p>
+n.d.</a>)</span>.</p>
 <p>Para obtener el vector normal, podemos hacer el producto vectorial de
 dos vectores que se encuentren en el plano del triángulo. Como, por
 convención, los vértices se guardan en sentido antihorario visto desde
@@ -1089,29 +1092,881 @@ fuera del objeto, entonces</p>
 <h2 class="unlisted unnumbered" id="referencias-1">Referencias</h2>
 <p><span class="citation" data-cites="wikipedia-contributors-2022F">(<a
 href="#ref-wikipedia-contributors-2022F" role="doc-biblioref">Wikipedia:
-Implicit surface 2022</a>)</span>, <span class="citation"
+Implicit surface n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2021A">(<a
 href="#ref-wikipedia-contributors-2021A" role="doc-biblioref">Wikipedia:
-Parametric surface 2021</a>)</span>, <span class="citation"
+Parametric surface n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022G">(<a
 href="#ref-wikipedia-contributors-2022G" role="doc-biblioref">Wikipedia:
-Barycentric coordinate system 2022</a>)</span>, <span class="citation"
-data-cites="Sarabia">(<a href="#ref-Sarabia" role="doc-biblioref">A.
-Romero Sarabia 2021</a>)</span>, <span class="citation"
+Barycentric coordinate system n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022O">(<a
 href="#ref-wikipedia-contributors-2022O" role="doc-biblioref">Wikipedia:
-Differential geometry of surfaces 2022</a>)</span></p>
-<h1 id="integración-de-monte-carlo">Integración de Monte Carlo</h1>
+Differential geometry of surfaces n.d.</a>)</span></p>
+<h1 id="transporte-de-luz">Transporte de luz</h1>
+<p>En este capítulo estudiaremos las bases de la radiometría. Esta área
+de la óptica nos proporcionará una serie de herramientas con las cuales
+podremos responder a la pregunta <em>cuánta luz existe en un
+punto</em>.</p>
+<h2 id="unidades-radiométricas-básicas">Unidades radiométricas
+básicas</h2>
 <blockquote>
-<p>TODO: este capítulo seguramente debería ir más tarde. De esa forma,
-puedo introducir otros conceptos antes. De momento, se queda aquí.</p>
+<p><strong>Nota</strong>: cuando usemos un paréntesis tras una ecuación,
+dentro denotaremos sus unidades de medida.</p>
 </blockquote>
-<p>Una de las partes más importante de nuestro ray tracer es saber
-calcular la cantidad de luz en un punto de la escena. Para ello,
-necesitaríamos hallar la radianza en dicha posición mediante la
-<em>rendering equation</em>. Sin embargo, es <em>muy</em> difícil
-resolverla; tanto computacional como analíticamente. Por ello, debemos
-atacar el problema desde otro punto de vista.</p>
+<p>Antes de comenzar a trabajar, necesitamos conocer <em>qué
+entendemos</em> por luz. Aunque hay muchas formas de trabajar con ella
+(a fin de cuentas, todavía seguimos discutiendo sobre <em>qué es</em>
+exactamente la luz <a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>), nosotros nos quedaremos con
+algunas pinceladas de la cuántica. Nos será suficiente quedarnos con la
+concepción de fotón. Una fuente de iluminación emite una serie de
+fotones. Estos fotones tienen<sup><span class="citation"
+data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
+role="doc-biblioref">Shirley and Morley 2003</a>)</span></sup> una
+posición, una dirección de propagación y una longitud de onda <span
+class="math inline">\(\lambda\)</span>. Un fotón también tiene asociado
+una velocidad <span class="math inline">\(c\)</span> que depende del
+índice de refracción del medio, <span
+class="math inline">\(n\)</span>.</p>
+<p>La unidad de medida de <span class="math inline">\(\lambda\)</span>
+es el nanómetro (<span class="math inline">\(\text{nm}\)</span>).
+También nos vendrá bien definir una frecuencia, <span
+class="math inline">\(f\)</span>. Su utilidad viene del hecho de que,
+cuando la luz cambia de medio al propagarse, la frecuencia se mantiene
+constante.</p>
+<p><span class="math display">\[
+f = \frac{c}{\lambda}
+\]</span></p>
+<p>Un fotón tiene asociada una carga de energía, denotada por <span
+class="math inline">\(Q\)</span>:</p>
+<p><span class="math display">\[
+Q = hf = \frac{hc}{\lambda} (\text{J})
+\]</span></p>
+<p>donde <span class="math inline">\(h = 6.62607004 \times 10^{-34}
+\text{J} \cdot \text{s}\)</span> es la constante de Plank y <span
+class="math inline">\(c = 299 792 458 \text{m/s}\)</span> la velocidad
+de la luz.</p>
+<p>En realidad, <strong>todas estas cantidades deberían tener un
+subíndice <span class="math inline">\(\lambda\)</span></strong>, puesto
+que dependen de la longitud de onda. La energía de un fotón <span
+class="math inline">\(Q\)</span>, por ejemplo, debería denotarse <span
+class="math inline">\(Q_\lambda\)</span>. Sin embargo, en la literatura
+de informática gráfica, <strong>se ha optado por omitirla</strong>.
+¡Tenlo en cuenta a partir de aquí!</p>
+<h3 id="potencia">Potencia</h3>
+<p>A partir de la energía anterior, podemos estimar <em>la tasa de
+producción de energía</em>. A esta tasa la llamaremos<sup><span
+class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
+role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>)</span></sup>
+<strong>potencia</strong>, o <strong>flujo radiante</strong> <span
+class="math inline">\(\Phi\)</span>. Esta medida nos resultará más útil
+que la energía total, puesto que nos permite estimar la energía en un
+instante:</p>
+<p><span class="math display">\[
+\Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt}
+(J/s)
+\]</span></p>
+<p>Su unidad es julios por segundo, comúnmente denotado vatio
+(<em>watts</em>, <span class="math inline">\(\text{W}\)</span>). También
+se utiliza el lumen. Podemos encontrar la energía total en un periodo de
+tiempo <span class="math inline">\([t_0, t_1]\)</span> integrando el
+flujo radiante:</p>
+<p><span class="math display">\[
+Q = \int_{t_0}^{t_1}{\Phi(t)dt}
+\]</span></p>
+<h3 id="irradiancia">Irradiancia</h3>
+<p>La <strong>irradiancia</strong> o <strong>radiancia emitida</strong>
+es el flujo radiante que recibe una superficie. Dada un área <span
+class="math inline">\(A\)</span>, se define como</p>
+<p><span class="math display">\[
+E = \frac{\Phi}{A} (\text{W/m}^2)
+\]</span></p>
+<figure>
+<img src="./img/02/Irradiancia.png"
+alt="La irradiancia es la potencia por metro cuadrado incidente en una superficie. Es proporcional al coseno del ángulo entre la dirección de la luz y la normal a la superficie." />
+<figcaption aria-hidden="true">La irradiancia es la potencia por metro
+cuadrado incidente en una superficie. Es proporcional al coseno del
+ángulo entre la dirección de la luz y la normal a la
+superficie.</figcaption>
+</figure>
+<p>Ahora que tenemos la potencia emitida en una cierta área, nos surge
+una pregunta: <em>¿y en un cierto punto <span
+class="math inline">\(p\)</span>?</em>. Tomando límites en la expresión
+anterior, encontramos la respuesta:</p>
+<p><span class="math display">\[
+E(p) = \lim_{\Delta A \to 0}{\frac{\Delta \Phi}{\Delta A}} =
+\frac{d\Phi}{dA} (\text{W/m}^2)
+\]</span></p>
+<p>De la misma manera que con la potencia, integrando <span
+class="math inline">\(E(p)\)</span> podemos obtener el flujo
+radiante:</p>
+<p><span class="math display">\[
+\Phi = \int_{A}{E(p)dp}
+\]</span></p>
+<p>El principal problema de la irradiancia es que <em>no nos dice nada
+sobre las direcciones</em> desde las que ha llegado la luz.</p>
+<h3 id="ángulos-sólidos">Ángulos sólidos</h3>
+<p>Con estas tres unidades básicas, nos surge una pregunta muy natural:
+<em>¿cómo mido cuánta luz llega a una superficie?</em></p>
+<p>Para responder a esta pregunta, necesitaremos los <strong>ángulos
+sólidos</strong>. Son la extensión de los <strong>ángulos
+planares</strong>, en dos dimensiones.</p>
+<p>Ilustremos el sentido de estos ángulos: imaginemos que tenemos un
+cierto objeto en dos dimensiones delante de nosotros, a una distancia
+desconocida. ¿Sabríamos cuál es su tamaño, solo con esta información? Es
+más, si entrara otro objeto en la escena, ¿podríamos distinguir cuál de
+ellos es más grande?</p>
+<p>Parece difícil responder a estas preguntas. Sin embargo, sí que
+podemos determinar <em>cómo de grandes nos parecen</em> desde nuestro
+punto de vista. Para ello, describimos una circunferencia de radio <span
+class="math inline">\(r\)</span> alrededor nuestra. Si trazamos un par
+de líneas desde nuestra posición a las partes más alejadas de este
+objeto, y las cortamos con nuestra circunferencia, obtendremos un par de
+puntos inscritos en ella. Pues bien, al arco que encapsulan dichos
+puntos le vamos a hacer corresponder un cierto ángulo: el ángulo
+planar.</p>
+<figure>
+<img src="./img/02/Ángulo%20planar.png"
+alt="La idea intuitiva de un ángulo planar" />
+<figcaption aria-hidden="true">La idea intuitiva de un ángulo
+planar</figcaption>
+</figure>
+<p>Llevando esta idea a las tres dimensiones es como conseguimos el
+concepto de <strong>ángulo sólido</strong>. Si en dos dimensiones
+teníamos una circunferencia, aquí tendremos una esfera. Cuando generemos
+las rectas proyectantes hacia el volumen, a diferencia de los ángulos
+planares, se inscribirá un área en la esfera. La razón entre dicha área
+<span class="math inline">\(A\)</span> y el cuadrado del radio <span
+class="math inline">\(r\)</span> nos dará un ángulo sólido:</p>
+<p><span class="math display">\[
+\omega = \frac{A}{r^2} \text{(sr)}
+\]</span></p>
+<figure>
+<img src="./img/02/Ángulo%20sólido.png"
+alt="Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio" />
+<figcaption aria-hidden="true">Un ángulo sólido es la razón entre el
+área proyectada y el cuadrado del radio</figcaption>
+</figure>
+<p>Los denotaremos por <span class="math inline">\(\omega\)</span>. En
+física se suele usar <span class="math inline">\(\Omega\)</span>, pero
+aquí optaremos por la minúscula. Su unidad de medida es el
+estereorradián (<span class="math inline">\(\text{sr}\)</span>). Se
+tiene que <span class="math inline">\(\omega \in [0, 4\pi]\)</span>. Si
+<span class="math inline">\(2 \pi\)</span> radianes corresponden a la
+circunferencia completa, para la esfera se tiene que <span
+class="math inline">\(4 \pi\)</span> esteorradianes cubren toda la
+superficie de esta. Se tiene también que <span
+class="math inline">\(2\pi \text{sr}\)</span> cubren un hemisferio.
+Además, un esteorradián corresponde a una superficie con área <span
+class="math inline">\(r^2\)</span>: <span class="math inline">\(1
+\text{sr} = \frac{r^2}{r^2}\)</span>.</p>
+<p>De vez en cuando, usaremos <span
+class="math inline">\(\omega\)</span> <strong>un vector dirección
+unitario en la esfera</strong>.</p>
+<figure>
+<img src="./img/02/xkcd_1276.png"
+alt="Como de costumbre, hay un xkcd relevante. (Fuente)" />
+<figcaption aria-hidden="true">Como de costumbre, hay un xkcd relevante.
+<a href="https://xkcd.com/1276/">(Fuente)</a></figcaption>
+</figure>
+<p>Usualmente emplearemos coordenadas esféricas cuando trabajemos con
+ellos, dado que resulta más cómodo.</p>
+<p><span class="math display">\[
+\begin{aligned}
+    \begin{cases}
+        x = \sin\theta\cos\theta \\
+        y = \sin\theta\sin\theta \\
+        z = \cos\theta
+    \end{cases}
+\end{aligned}
+\]</span></p>
+<p>A <span class="math inline">\(\theta\)</span> se le denomina ángulo
+polar, mientras que a <span class="math inline">\(\phi\)</span> se le
+llama acimut. Imaginémonos un punto en la esfera de radio <span
+class="math inline">\(r\)</span> ubicado en una posición <span
+class="math inline">\((r, \theta, \phi)\)</span>. Queremos calcular un
+área chiquitita <span class="math inline">\(dA_h\)</span>, de forma que
+el ángulo sólido asociado a dicha área debe ser <span
+class="math inline">\(d\omega\)</span>. Así, <span
+class="math inline">\(d\omega = \frac{dA_h}{r^2}\)</span>. Si
+proyectamos el área, obtenemos <span
+class="math inline">\(d\theta\)</span> y <span
+class="math inline">\(d\phi\)</span>: pequeños cambios en los ángulos
+que nos generan nuestra pequeña área.</p>
+<p><span class="math inline">\(dA_h\)</span> debe tener dos lados <span
+class="math inline">\(lado_1\)</span> y <span
+class="math inline">\(lado_2\)</span>. Podemos hallar <span
+class="math inline">\(lado_1\)</span> si lo trasladamos al eje <span
+class="math inline">\(z\)</span> de nuevo. Así, <span
+class="math inline">\(lado_1 = r \sin d\theta\)</span>. De la misma
+manera, <span class="math inline">\(lado_2 = r d\theta\)</span>.</p>
+<blockquote>
+<p>TODO: foto que explique todo esto, porque si no, no hay quien se
+entere. Quizás me sirva la de
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
+p.16 siempre que adapte <span class="math inline">\(\phi\)</span>.</p>
+</blockquote>
+<p>Poniendo estos valores en <span
+class="math inline">\(d\omega\)</span>:</p>
+<p><span id="eq:d_omega" class="eqnos"><span class="math display">\[
+\begin{aligned}
+d\omega &amp; = \frac{dA_h}{r^2} = \frac{lado_1 lado_2}{r^2} = \\
+        &amp; = \frac{r \sin\theta\ d\phi\ r\ d\theta}{r^2} = \\
+        &amp; = \sin\theta\ d\theta\ d\phi
+\end{aligned}
+\]</span><span class="eqnos-number">(2)</span></span></p>
+<p>¡Genial! Acabamos de añadir un recurso muy potente a nuestro
+inventario. Esta expresión nos permitirá convertir integrales sobre
+ángulos sólidos en integrales sobre ángulos esféricos.</p>
+<h3 id="intensidad-radiante">Intensidad radiante</h3>
+<p>Los ángulos sólidos nos proporcionan una variedad de herramientas
+nuevas considerable. Gracias a ellos, podemos desarrollar algunos
+conceptos nuevos. Uno de ellos es la <strong>intensidad
+radiante</strong>.</p>
+<p>Imaginémonos un pequeñito punto de luz encerrado en una esfera, el
+cual emite fotones en todas direcciones. Nos gustaría medir cuánta
+energía pasa por la esfera. Podríamos entonces definir</p>
+<p><span class="math display">\[
+I = \frac{\Phi}{4\pi} \text{(W/sr)}
+\]</span></p>
+<p>Otra unidad de medida es el lumen por esterorradián, <span
+class="math inline">\(\text{(lm/sr)}\)</span>. La anterior definición
+mide cuántos fotones pasan por toda la esfera. ¿Qué ocurre si
+<em>cerramos</em> el ángulo, restringiéndonos así a un área muy pequeña
+de la esfera?</p>
+<p><span class="math display">\[
+I = \lim_{\Delta\omega \to 0}{\frac{\Delta\Phi}{\Delta\omega}} =
+\frac{d\Phi}{d\omega}
+\]</span></p>
+<p>De la misma manera que con los conceptos anteriores, podemos volver a
+la potencia integrando sobre un conjunto de direcciones:</p>
+<p><span class="math display">\[
+\Phi = \int_{\Omega}{I(\omega)d\omega}
+\]</span></p>
+<h3 id="radiancia">Radiancia</h3>
+<p>Finalmente, llegamos al concepto más importante. La <strong>radiancia
+espectral</strong> (o radiancia a secas<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>) es
+una extensión de la radiancia emitida teniendo en cuenta la
+dirección:</p>
+<p><span class="math display">\[
+L(p, \omega) = \lim_{\Delta\omega \to 0}{\frac{\Delta
+E_\omega(p)}{\Delta\omega}} = \frac{dE_\omega(p)}{d\omega}
+\]</span></p>
+<p>siendo <span class="math inline">\(E_\omega(p)\)</span> la radiancia
+emitida a la superficie perpendicular a <span
+class="math inline">\(\omega\)</span>.</p>
+<blockquote>
+<p>TODO: foto como la de
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
+página 10.</p>
+</blockquote>
+<p>Podemos dar otra expresión de la radiancia en términos del flujo:</p>
+<p><span id="eq:radiancia_flujo" class="eqnos"><span
+class="math display">\[
+L(p, \omega) = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} =
+\frac{d^2\Phi(p, \omega)}{d\omega\ dA\ \cos\theta}
+\]</span><span class="eqnos-number">(3)</span></span></p>
+<p>donde <span class="math inline">\(dA^\bot\)</span> es el área
+proyectada por <span class="math inline">\(dA\)</span> en una hipotética
+superficie perpendicular a <span
+class="math inline">\(\omega\)</span>:</p>
+<blockquote>
+<p>TODO: figura similar a pbr figura 5.10
+https://www.pbr-book.org/3ed-2018/Color_and_Radiometry/Radiometry</p>
+</blockquote>
+<p>Cuando un rayo impacta en una superficie, <span
+class="math inline">\(L\)</span> puede tomar valores muy diferentes en
+un lado y otro de dicha superficie. Por ejemplo, si nos imaginamos un
+espejo, el valor un poco por encima y un poco por debajo de un punto del
+espejo es muy diferente. Para solucionarlo, podemos tomar límites para
+distinguir a ambos lados:</p>
+<p><span id="eq:L_limit" class="eqnos"><span class="math display">\[
+\begin{aligned}
+L^+(p, \omega) = \lim_{t \to 0^+}{L(p + t\mathbf{n_p}, \omega)} \\
+L^-(p, \omega) = \lim_{t \to 0^-}{L(p + t\mathbf{n_p}, \omega)}
+\end{aligned}
+\]</span><span class="eqnos-number">(4)</span></span></p>
+<p>donde <span class="math inline">\(\mathbf{n_p}\)</span> es la normal
+en el punto <span class="math inline">\(p\)</span>.</p>
+<p>Otra forma de solucionarlo (y preferible, puesto que simplifica
+entender lo que ocurre) es distinguir entre la radiancia que llega a un
+punto –la incidente–, y la saliente.</p>
+<p>La primera se llamará <span class="math inline">\(L_i(p,
+\omega)\)</span>, mientras que la segunda será <span
+class="math inline">\(L_o(p, \omega)\)</span>. Es importante destacar
+que <span class="math inline">\(\omega\)</span> apunta <em>hacia
+fuera</em> de la superficie. Quizás es contraintuitivo en <span
+class="math inline">\(L_i\)</span>, puesto que <span
+class="math inline">\(-\omega\)</span> apunta <em>hacia</em> la
+superficie. Depende del autor se utiliza una concepción u otra.</p>
+<blockquote>
+<p><strong>Nota</strong>(ción): a <span
+class="math inline">\(L_o\)</span> también se le conoce como la
+radiancia reflejada. Por eso, algunas veces aparece como <span
+class="math inline">\(L_r\)</span> en algunas fuentes.</p>
+</blockquote>
+<p>Utilizando esta notación y usando [<a href="#eq:L_limit">4</a>],
+podemos escribir <span class="math inline">\(L_i\)</span> y <span
+class="math inline">\(L_o\)</span> como</p>
+<p><span class="math display">\[
+\begin{aligned}
+    L_i(p, \omega) &amp; =
+        \begin{cases}
+            L^+(p, -\omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
+&gt; 0 \\
+            L^-(p, -\omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
+&lt; 0
+        \end{cases} \\
+    L_o(p, \omega) &amp; =
+        \begin{cases}
+            L^+(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
+&gt; 0 \\
+            L^-(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
+&lt; 0
+        \end{cases}
+\end{aligned}
+\]</span></p>
+<p>Hacemos esta distinción porque, a fin de cuentas, necesitamos
+distinguir entre los fotones que llegan a la superficie y los que
+salen.</p>
+<blockquote>
+<p>TODO:
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
+p.36</p>
+</blockquote>
+<p>Una propiedad a tener en cuenta es que, si cogemos un punto <span
+class="math inline">\(p\)</span> del espacio donde no existe ninguna
+superifcie, <span class="math inline">\(L_o(p, \omega) = L_i(p, -\omega)
+= L(p, \omega)\)</span></p>
+<p>La importancia de la radiancia se debe a un par de propiedades:</p>
+<p>La primera de ellas es que, dado <span
+class="math inline">\(L\)</span>, podemos calcular cualquier otra unidad
+básica mediante integración. Además, <strong>su valor se mantiene
+constante en rayos que viajan en el vacío en línea recta</strong> <span
+class="citation" data-cites="Pellacini-Marschner-2017">(<a
+href="#ref-Pellacini-Marschner-2017" role="doc-biblioref">Fabio
+Pellacini n.d.</a>)</span>. Esto último hace que resulte muy natural
+usarla en un ray tracer.</p>
+<p>Veamos por qué ocurre esto:</p>
+<blockquote>
+<p>TODO:
+https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf,
+página 18.</p>
+</blockquote>
+<p>Consideremos dos superficies ortogonales entre sí, <span
+class="math inline">\(S_1\)</span> y <span
+class="math inline">\(S_2\)</span> separadas una distancia <span
+class="math inline">\(r\)</span>. Debido a la conservación de la
+energía, cualquier fotón que salga de una superficie y se encuentre bajo
+el ángulo sólido de la otra debe llegar impactar en dicha superficie
+opuesta.</p>
+<p>Por tanto:</p>
+<p><span class="math display">\[
+d^2\Phi_1 = d^2\Phi_2
+\]</span></p>
+<p>Sustituyendo en la expresión de la radiancia [<a
+href="#eq:radiancia_flujo">3</a>], y teniendo en cuenta que son
+ortogonales (lo que nos dice que <span class="math inline">\(\cos\theta
+= 1\)</span>):</p>
+<p><span class="math display">\[
+L_1 d\omega_1 dA_1 = L_2 d\omega_2 dA_2
+\]</span></p>
+<p>Por construcción, podemos cambiar los ángulos sólidos:</p>
+<p><span class="math display">\[
+L_1 \frac{dA_2}{r^2} dA_1 = L_2 \frac{dA_1}{r^2} dA_2
+\]</span></p>
+<p>Lo que finalmente nos dice que <span class="math inline">\(L_1 =
+L_2\)</span>, como queríamos ver.</p>
+<h2 id="fotometría-y-radiometría">Fotometría y radiometría</h2>
+<blockquote>
+<p>TODO: hablar sobre las diferencias. Hay información útil en
+01_lights.pdf, p.43</p>
+</blockquote>
+<h2 id="integrales-radiométricas">Integrales radiométricas</h2>
+<p>En esta sección, vamos a explorar las nuevas herramientas que nos
+proporciona la radiancia. Veremos también cómo integrar ángulos sólidos,
+y cómo simplificar dichas integrales.</p>
+<h3 id="una-nueva-expresión-de-la-irradiancia-y-el-flujo">Una nueva
+expresión de la irradiancia y el flujo</h3>
+<p>Como dijimos al final de <a href="#irradiancia">la sección de la
+irradiancia</a>, esta medida no tiene en cuenta las direcciones desde
+las que llegaba la luz. A diferencia de esta, la radiancia sí que las
+utiliza. Dado que una de las ventajas de la radiancia es que nos permite
+obtener el resto de medidas radiométricas, ¿por qué no desarrollamos una
+nueva expresión de la irradiancia?</p>
+<p>Para obtener cuánta luz llega a un punto, debemos acumular la
+radiancia incidente que nos llega desde cualquier dirección.</p>
+<blockquote>
+<p>TODO: dibujo como el de la libreta roja. Me lo mandé por Telegram,
+por si no lo encuentro</p>
+</blockquote>
+<p>Dado un punto <span class="math inline">\(p\)</span> que se encuentra
+en una superficie con normal <span
+class="math inline">\(\mathbf{n}\)</span> en dicho punto, la irradiancia
+se puede expresar como</p>
+<p><span id="eq:E_abs_cos" class="eqnos"><span class="math display">\[
+E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \lvert cos\theta \rvert
+d\omega}
+\]</span><span class="eqnos-number">(5)</span></span></p>
+<p>El término <span class="math inline">\(\cos\theta\)</span> aparece en
+la integral debido a la derivada del área proyectada, <span
+class="math inline">\(dA^\bot\)</span>. <span
+class="math inline">\(\theta\)</span> es el ángulo entre la dirección
+<span class="math inline">\(\omega\)</span> y la normal <span
+class="math inline">\(\mathbf{n}\)</span>.</p>
+<p>Generalmente, la irradiancia se calcula únicamente en el hemisferio
+de direcciones asociado a la normal en el punto, <span
+class="math inline">\(H^2(\mathbf{n})\)</span>.</p>
+<p>Podemos eliminar el <span class="math inline">\(\cos\theta\)</span>
+de la integral mediante una pequeña transformación: proyectando el
+ángulo sólido sobre el disco alrededor del punto <span
+class="math inline">\(p\)</span> con normal <span
+class="math inline">\(\mathbf{n}\)</span>, obtenemos una expresión más
+sencilla: como <span class="math inline">\(d\omega^\bot = \lvert
+\cos\theta \rvert d\omega\)</span>, entonces</p>
+<p><span class="math display">\[
+\begin{aligned}
+    E(p, \mathbf{n}) = \int_{H^2(\mathbf{n})}{L_i(p, \omega)
+d\omega^\bot}
+\end{aligned}
+\]</span></p>
+<p>Usando lo que aprendimos sobre la derivada de los ángulos sólidos [<a
+href="#eq:d_omega">2</a>], se puede reescribir la ecuación anterior
+como</p>
+<p><span class="math display">\[
+E(p, \mathbf{n}) = \int_{0}^{2\pi}\int_{0}^{\pi/2}{L_i(p, \theta, \phi)
+\cos\theta\ \sin\theta\ d\theta\ d\phi}
+\]</span></p>
+<p>Haciendo el mismo juego con el flujo emitido de un cierto objeto al
+hemisferio que encapsula la normal, conseguimos:</p>
+<p><span class="math display">\[
+\begin{aligned}
+    \Phi &amp; = \int_{A}\int_{H^2(\mathbf{n})}{L_o(p, \omega)
+\cos\theta\ d\omega dA} = \\
+         &amp; = \int_{A}\int_{H^2(\mathbf{n})}{L_o(p, \omega)
+d\omega^\bot dA}
+\end{aligned}
+\]</span></p>
+<blockquote>
+<p>TODO: a lo mejor merece la pena hacer un ejemplo sobre los diferentes
+tipos de luz, como en
+https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf
+p.41? O a lo mejor un capítulo para hablar de luces en general.</p>
+</blockquote>
+<h3 id="integrando-sobre-área">Integrando sobre área</h3>
+<p>Una herramienta más que nos vendrá bien será la capacidad de
+convertir integrales sobre direcciones en integrales sobre área. Hemos
+hecho algo similar en las secciones anteriores, así que no perdemos nada
+por generalizarlo.</p>
+<p>Considera un punto <span class="math inline">\(p\)</span> sobre una
+superficie con normal en dicho punto <span
+class="math inline">\(\mathbf{n}\)</span>. Supongamos que tenemos una
+pequeña área <span class="math inline">\(dA\)</span> con normal <span
+class="math inline">\(\mathbf{n_{dA}}\)</span>. Sea <span
+class="math inline">\(\theta\)</span> el ángulo entre <span
+class="math inline">\(\mathbf{n}\)</span> y <span
+class="math inline">\(\mathbf{n_{dA}}\)</span>, y <span
+class="math inline">\(r\)</span> la distancia entre <span
+class="math inline">\(p\)</span> y <span
+class="math inline">\(dA\)</span>.</p>
+<p>Entonces, la relación entre la diferencial de un ángulo sólido y la
+de un área es</p>
+<p><span class="math display">\[
+d\omega = \frac{dA\cos\theta}{r^2}
+\]</span></p>
+<blockquote>
+<p>TODO: figura como la de pbr book 5.16.</p>
+</blockquote>
+<p>Esto nos permite, por ejemplo, expandir algunas expresiones como la
+de la irradiancia [<a href="#eq:E_abs_cos">5</a>] si partimos de un
+cuadrilátero <span class="math inline">\(dA\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+    E(p, \mathbf{n}) &amp; = \int_{\Omega}{L_i(p, \omega) \lvert
+\cos\theta \rvert d\omega} = \\
+                     &amp; = \int_{A}{L\cos\theta\
+\frac{\cos\theta_o}{r^2}dA}
+\end{aligned}
+\]</span></p>
+<p>siendo <span class="math inline">\(\theta_o\)</span> el ángulo de la
+radiancia de salida de la superficie del cuadrilátero.</p>
+<h2
+id="dispersión-de-luz-las-familias-de-funciones-de-distribución-bidireccionales">Dispersión
+de luz: las familias de funciones de distribución bidireccionales</h2>
+<p>Cuando una fuente de luz emite fotones hacia una superficie
+impactando en ella, ocurren un par de sucesos: parte de la luz se
+refleja en ella, saliendo disparada hacia alguna dirección; mientras que
+otra parte se absorbe.</p>
+<p>En informática gráfica se consideran tres tipos principales de
+dispersión de luz: <strong>dispersión en superficie</strong>
+(<em>surface scattering</em>), <strong>dispersión volumétrica</strong>
+(<em>volumetric scattering</em>) y <strong>dispersión bajo
+superficie</strong> (<em>subsurface scattering</em>)</p>
+<p>En este capítulo vamos a modelar la primera. Estudiaremos qué es lo
+que ocurre cuando los fotones alcanzan una superficie, en qué dirección
+se reflejan, y cómo cambia el comportamiento dependiendo de las
+propiedades del material.</p>
+<h3
+id="la-función-de-distribución-de-reflectancia-bidireccional-brdf">La
+función de distribución de reflectancia bidireccional (BRDF)</h3>
+<p>La <strong>función de distribución de reflectancia
+bidireccional</strong> (en inglés, <em>bidirectional reflectance
+distribution function</em>, BRDF) describe cómo la luz se refleja en una
+superficie opaca. Se encarga de informarnos sobre cuánta radiancia sale
+en dirección <span class="math inline">\(\omega_o\)</span> debido a la
+radiancia incidente desde la dirección <span
+class="math inline">\(\omega_i\)</span>, partiendo de un punto <span
+class="math inline">\(p\)</span> en una superficie con normal <span
+class="math inline">\(\mathbf{n}\)</span>. Depende de la longitud de
+onda <span class="math inline">\(\lambda\)</span>, pero, como de
+costumbre, la omitiremos.</p>
+<blockquote>
+<p><strong>Intuición</strong>: <em>¿cuál es la probabilidad de que,
+habiéndome llegado un fotón desde <span
+class="math inline">\(\omega_i\)</span>, me salga disparado hacia <span
+class="math inline">\(\omega_o\)</span>?</em></p>
+</blockquote>
+<blockquote>
+<p>TODO: esquema como el de pbr fig. 5.18, o como
+https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf
+p.20</p>
+</blockquote>
+<p>Si consideramos <span class="math inline">\(\omega_i\)</span> como un
+cono diferencial de direcciones, la irradiancia diferencial en <span
+class="math inline">\(p\)</span> viene dada por</p>
+<p><span class="math display">\[
+dE(p, \omega_i) = L_i(p, \omega_i) \cos\theta_i\ d\omega_i
+\]</span></p>
+<p>Debido a esta irradiancia, una pequeña parte de radiancia saldrá en
+dirección <span class="math inline">\(\omega_o\)</span>, proporcional a
+la irradiancia:</p>
+<p><span class="math display">\[
+dL_o(p, \omega_o) \propto dE(p, \omega_i)
+\]</span></p>
+<p>Si lo ponemos en forma de cociente, sabremos exactamente cuál es la
+proporción de luz. A este cociente lo llamaremos <span
+class="math inline">\(f_r(p, \omega_o \leftarrow \omega_i)\)</span>; la
+función de distribución de reflectancia bidireccional:</p>
+<p><span class="math display">\[
+f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p,
+\omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\
+d\omega_i} \text{(1/sr)}
+\]</span></p>
+<blockquote>
+<p><strong>Nota</strong>(ción): dependiendo de la fuente que estés
+leyendo, es posible que te encuentres una integral algo diferente. Por
+ejemplo, en tanto en Wikipedia como en <span class="citation"
+data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
+role="doc-biblioref">Shirley and Morley 2003</a>)</span> se integra con
+respecto a los ángulos de salida <span
+class="math inline">\(\omega_o\)</span>, en vez de los incidentes.</p>
+<p>Aquí, usaremos la notación de integrar con respecto a los incidentes,
+como se hace en <span class="citation" data-cites="PBRT3e">(<a
+href="#ref-PBRT3e" role="doc-biblioref">Pharr, Jakob, and Humphreys
+2016</a>)</span>.</p>
+</blockquote>
+<p>Las BRDF físicamente realistas tienen un par de propiedades
+importantes:</p>
+<ol type="1">
+<li><strong>Reciprocidad</strong>: para cualquier par de direcciones
+<span class="math inline">\(\omega_i\)</span>, <span
+class="math inline">\(\omega_o\)</span>, se tiene que <span
+class="math inline">\(f_r(p, \omega_i, \omega_o)=\ \)</span> <span
+class="math inline">\(f_r(p, \omega_o \leftarrow
+\omega_i)\)</span>.</li>
+<li><strong>Conservación de la energía</strong>: La energía reflejada
+tiene que ser menor o igual que la incidente:</li>
+</ol>
+<p><span class="math display">\[
+\int_{H^2(\mathbf{n})}{f_r(p, \omega_o \leftarrow \omega_i)
+\cos\theta_i\ d\omega_i} \leq 1
+\]</span></p>
+<h3
+id="la-función-de-distribución-de-transmitancia-bidireccional-btdf">La
+función de distribución de transmitancia bidireccional (BTDF)</h3>
+<p>Si la BRDF describe cómo se refleja la luz, la <em>bidirectional
+transmittance distribution function</em> (abreviada BTDF) nos informará
+sobre la transmitancia; es decir, cómo se comporta la luz cuando
+<em>entra</em> en un medio. Generalmente serán dos caras de la misma
+moneda: cuando la luz impacta en una superficie, parte de ella, se
+reflejará, y otra parte se transmitirá.</p>
+<p>Puedes imaginarte la BTDF como una función de reflectancia del
+hemisferio opuesto a donde se encuentra la normal de la superficie.</p>
+<p>Denotaremos a la BTDF por</p>
+<p><span class="math display">\[
+f_t(p, \omega_o \leftarrow \omega_i)
+\]</span></p>
+<p>Al contrario que en la BRDF, <span
+class="math inline">\(\omega_o\)</span> y <span
+class="math inline">\(\omega_i\)</span> se encuentran en hemisferios
+diferentes.</p>
+<h3
+id="juntando-la-brdf-y-la-btdf-en-la-función-de-distribución-de-dispersión-bidireccional">Juntando
+la BRDF y la BTDF en La función de distribución de dispersión
+bidireccional</h3>
+<p>Convenientemente, podemos unir la BRDF y la BTDF en una sola
+expresión, llamada <strong>la función de distribución de dispersión
+bidireccional</strong> (<em>bidirectional scattering distribution
+function</em>, BSDF). A la BSDF la denotaremos por</p>
+<p><span class="math display">\[
+f(p, \omega_o \leftarrow \omega_i)
+\]</span></p>
+<blockquote>
+<p><strong>Intuición:</strong> <em>la BSDF son todas las posibles
+direcciones en las que puede salir disparada la luz.</em></p>
+</blockquote>
+<p>Usando esta definición, podemos obtener</p>
+<p><span class="math display">\[
+dL_o(p, \omega_o) = f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i)
+\lvert \cos\theta_i \rvert d\omega_i
+\]</span></p>
+<p>Esto nos deja a punto de caramelo una nueva expresión de la
+randiancia en términos de la randiancia incidente en un punto <span
+class="math inline">\(p\)</span>. Integrando la expresión anterior,
+obtenemos</p>
+<p><span id="eq:scattering_equation" class="eqnos"><span
+class="math display">\[
+L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow
+\omega_i)L_i(p, \omega_i)\lvert \cos\theta_i \rvert d\omega_i}
+\]</span><span class="eqnos-number">(6)</span></span></p>
+<p>siendo <span class="math inline">\(\mathbb{S}^2\)</span> la
+esfera.</p>
+<p>Esta forma de expresar la radiancia es muy importante. Generalmente
+se le suele llamar la <em>ecuación de dispersión</em> (<em>scattering
+equation</em>, en inglés). Dado que es una integral muy importante,
+seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte
+Carlo nos vendrán de perlas! Más adelante hablaremos de ella.</p>
+<p>Las BSDFs tienen unas propiedades interesantes:</p>
+<ul>
+<li><strong>Positividad</strong>: como los fotones no se pueden reflejar
+“negativamente”, <span class="math inline">\(f(p, \omega_o \leftarrow
+\omega_i) \ge 0\)</span>.</li>
+<li><strong>Reciprocidad de Helmotz:</strong> se puede invertir un rayo
+de luz: <span class="math inline">\(f(p, \omega_o \leftarrow \omega_i) =
+f(p, \omega_i \leftarrow \omega_o)\)</span>.</li>
+<li><strong>Conservación de la energía</strong>: todos los fotones que
+llegan a la superficie deben ser reflejados o absorbidos. Es decir, no
+se emite ningún fotón nuevo:</li>
+</ul>
+<p><span class="math display">\[
+\int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) \cos\theta_i\
+d\omega_i} \le 1\ \forall \omega_o
+\]</span></p>
+<h3 id="reflectancia-hemisférica">Reflectancia hemisférica</h3>
+<p>Puede ser útil tomar el comportamiento agregado de las BRDFs y las
+BTDFs y reducirlo un cierto valor que describa su comportamiento general
+de dispersión. Sería Algo así como un resumen de su distribución. Para
+conseguirlo, vamos a introducir dos nuevas funciones:</p>
+<p>La <strong>reflectancia hemisférica-direccional</strong>
+(<em>hemispherical-directional reflectance</em>) describe la reflexión
+total sobre un hemisferio debida a una fuente de luz que proviene desde
+la dirección <span class="math inline">\(\omega_o\)</span>:</p>
+<p><span class="math display">\[
+\rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i)
+\lvert \cos\theta_i \rvert\ d\omega_i}
+\]</span></p>
+<p>Por otra parte, la <strong>reflectancia
+hemisférica-hemisférica</strong> (<em>hemispherical-hemispherical
+reflectance</em>) es un valor espectral que nos proporciona el ratio de
+luz incidente reflejada por una superficie, suponiendo que llega la
+misma luz desde todas direcciones:</p>
+<p><span class="math display">\[
+\rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o
+\leftarrow \omega_i) \lvert \cos\theta_o\ \cos\theta_i \rvert\
+d\omega_o\ d\omega_i}
+\]</span></p>
+<h3 id="reflejos">Reflejos</h3>
+<p>Una vez hemos definido las funciones de distribución bidireccionales,
+debemos encargarnos de modelar el comportamiento explícitamente. Para
+ello, veamos cómo los materiales modifican las distribuciones.</p>
+<p>En esencia, los reflejos se pueden clasificar en cuatro grandes
+tipos:</p>
+<ul>
+<li><strong>Difusos</strong> (<em>Diffuse</em>): esparcen la luz en
+todas direcciones casi equiprobablemente. Por ejemplo, la tela y el
+papel son materiales difusos.</li>
+<li><strong>Especulares brillantes</strong> (<em>Glossy specular</em>):
+la distribución de luz se asemeja a un cono. La chapa de un coche es un
+material especular brillante.</li>
+<li><strong>Especulares perfectos</strong> (<em>Perfect specular</em>):
+en esencia, son espejos. El ángulo de salida de la luz es muy pequeño,
+por lo que reflejan casi a la perfección lo que les llega.</li>
+<li><strong>Retrorreflectores</strong> (<em>Retro reflective</em>): la
+luz se refleja en dirección contraria a la de llegada. Esto es lo que
+sucede a la luna.</li>
+</ul>
+<p>Ten en cuenta que es muy difícil encontrar objetos físicos que imiten
+a la perfección un cierto modelo. Suelen recaer en un híbrido entre dos
+o más modelos.</p>
+<p>Fijado un cierto modelo, la función de distribución de reflectancia,
+BRDF, puede ser <strong>isotrópica</strong> o
+<strong>anisotrópica</strong>. Los materiales isotrópicos mantienen las
+propiedades de reflectancia invariantes ante rotaciones; es decir, la
+distribución de luz es la misma en todas direcciones. Por el contrario,
+los anisotrópicos reflejan diferentes cantidades de luz dependiendo
+desde dónde los miremos. Los ejemplos más habituales de materiales
+anisotrópicos son las rocas y la madera.</p>
+<h2 id="la-rendering-equation">La rendering equation</h2>
+<p>Y, finalmente, tras esta introducción de los principales conceptos
+radiométricos, llegamos a la ecuación más importante de todo este
+trabajo: la <strong>rendering equation</strong>; también llamada la
+<strong>ecuación del transporte de luz</strong>.</p>
+<blockquote>
+<p><strong>Nota</strong>(ción): esta vez no traduciré el concepto. Es
+cierto que afea un poco la escritura teniendo en cuenta que esto es un
+texto en castellano. Sin embargo, la otra opción es inventarme una
+traducción que nadie usa.</p>
+</blockquote>
+<p>Antes de comenzar, volvamos a plantear de nuevo la situación: nos
+encontramos observando desde nuestra pantalla una escena virtual
+mediante la cámara. Queremos saber qué color tomará un pixel específico.
+Para conseguirlo, dispararemos rayos desde nuestro punto de vista hacia
+el entorno, haciendo que reboten en los objetos. Cuando un rayo impacte
+en una superficie, adquirirá parte de las propiedades del material del
+objeto. Además, de este rayo surgirán otros nuevos (un rayo dispersado y
+otro refractado), que a su vez repetirán el proceso. La información que
+se obtiene a partir de estos caminos de rayos nos permitirá darle color
+al píxel.</p>
+<p>La <em>rendering equation</em> se va a encargar de describir
+analíticamente cómo ocurre esto.</p>
+<p>Un último concepto más: denotemos por <span
+class="math inline">\(L_e(p, \omega_o)\)</span> a <strong>la radiancia
+producida por los materiales emisivos</strong>. Por ejemplo, una luz
+emite radiancia por sí misma.</p>
+<p>Bien, partamos de la ecuación de para la radiancia reflejada:</p>
+<p><span class="math display">\[
+L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
+\omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
+\]</span></p>
+<p>Vamos a buscar expresar la radiancia incidente en términos de la
+radiancia reflejada. Para ello, usamos la propiedad de que la radiancia
+a lo largo de un rayo no cambia.</p>
+<p>Si a una superficie le llega un fotón desde alguna parte, debe ser
+porque <em>“alguien”</em> ha tenido que emitirlo. El fotón
+necesariamente ha llegado a partir de un rayo. La propiedad nos dice que
+la radiancia no ha podido cambiar en el camino.</p>
+<p>Pues bien, consideremos una función <span class="math inline">\(r:
+\mathbb{R}^3 \times \Omega \to \mathbb{R}^3\)</span> tal que, dado un
+punto <span class="math inline">\(p\)</span> y una dirección <span
+class="math inline">\(\omega\)</span>, devuelve el siguiente punto de
+impacto en una superficie. En esencia, es una función de <em>ray
+casting</em>.</p>
+<blockquote>
+<p>TODO: foto como la de
+https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf,
+p.29</p>
+</blockquote>
+<p>Esta función nos permite expresar el punto anterior de la siguiente
+forma:</p>
+<p><span class="math display">\[
+L_i(p, \omega) = L_o(r(p, \omega), -\omega)
+\]</span></p>
+<p>Esto nos permite cambiar la expresión de <span
+class="math inline">\(L_i\)</span> en la integral anterior:</p>
+<p><span class="math display">\[
+L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
+\omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\ d\omega_i}
+\]</span></p>
+<p>Finalmente, la radiancia total vendrá dada por la suma de la
+radiancia emitida y la reflejada:</p>
+<p><span id="eq:rendering_equation" class="eqnos"><span
+class="math display">\[
+L(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o
+\leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\
+d\omega_i}
+\]</span><span class="eqnos-number">(7)</span></span></p>
+<p>Y con esto, ¡hemos obtenido la <em>rendering equation</em>!</p>
+<p>Si quieres ver gráficamente cómo funciona, te recomiendo pasarte por
+<span class="citation" data-cites="arneback-2019">(<a
+href="#ref-arneback-2019" role="doc-biblioref">Arnebäck
+n.d.</a>)</span>. Es un vídeo muy intuitivo.</p>
+<iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/eo_MTI-d28s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<p>Si nos paramos a pensar, la ecuación de reflexión es muy similar a la
+de renderizado. Sin embargo, hay un par de matices que las hacen muy
+diferentes:</p>
+<ul>
+<li>La ecuación de reflexión describe cómo se comporta la luz reflejada
+en un cierto punto. Es decir, tiene un ámbito local. Además, para
+calcular la radiancia reflejada, se necesita conocer la radiancia
+incidente.</li>
+<li>La <em>rendering equation</em> calcula las condiciones globales de
+la luz. Además, no se conocen las radiancias de salida.</li>
+</ul>
+<p>Este último matiz es importante. Para renderizar una imagen, se
+necesita calcular la radiancia de salida para aquellos puntos visibles
+desde nuestra cámara.</p>
+<h2 id="materiales">Materiales</h2>
+<blockquote>
+<p>TODO: https://alain.xyz/blog/advances-in-material-models este señor
+me acaba de solucionar la vida. Gracias por tanto.</p>
+<p>TODO: WIP. Bastante WIP. Basado en
+02_Rendering_Zsolnai_Ray_Tracing.</p>
+</blockquote>
+<ul>
+<li>La suma de las siguientes 3 componentes hacen el modelo de Phong:
+<ul>
+<li>Ambient: <span class="math inline">\(I = K_\alpha I_\alpha\)</span>,
+con <span class="math inline">\(k_\alpha\)</span> el coeficiente
+ambiental del objeto, <span class="math inline">\(I_\alpha\)</span> la
+intensidad ambiental de la escena/fuente de luz</li>
+<li>Diffuse (simplificada): <span class="math inline">\(I = k_d(L \cdot
+N)\)</span>, <span class="math inline">\(k_d\)</span> coeficiente difuso
+del objeto, <span class="math inline">\(L\)</span> vector que apunta a
+la luz, <span class="math inline">\(N\)</span> normal a la
+superficie</li>
+<li>Specular (simplificada): <span class="math inline">\(I = k_s(V *
+R)^n\)</span>, <span class="math inline">\(k_s\)</span> especular, <span
+class="math inline">\(V\)</span> vector apuntando a la cámara, <span
+class="math inline">\(R\)</span> vector reflejado del rayo, <span
+class="math inline">\(()^n\)</span> shininess factor.</li>
+<li><span class="math inline">\(I = K_\alpha I_\alpha + I_i(k_d(L \cdot
+N) + k_s(V \cdot R)^n)\)</span></li>
+<li>Aproximación muy bruta</li>
+<li>Con recursividad, <span class="math inline">\(I = K_\alpha I_\alpha
++ I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)\)</span> + <span
+class="math inline">\(k_t I_t + k_r I_r\)</span>, <span
+class="math inline">\(k_t\)</span> fresnel transmission coefficient,
+<span class="math inline">\(I_t\)</span> intensity coming from the
+transmission direction, <span class="math inline">\(k_r\)</span> fresnel
+reflection coefficient, <span class="math inline">\(I_r\)</span>
+intensity coming from the reflection direction.</li>
+</ul></li>
+</ul>
+<h3 id="ecuaciones-de-fresnel-ley-de-snell">Ecuaciones de fresnel, ley
+de Snell</h3>
+<hr>
+<h2 class="unlisted unnumbered" id="referencias-2">Referencias</h2>
+<p><span class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
+role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>)</span>, <span
+class="citation" data-cites="wikipedia-contributors-2021D">(<a
+href="#ref-wikipedia-contributors-2021D" role="doc-biblioref">Wikipedia:
+Radiometry n.d.</a>)</span>, <span class="citation"
+data-cites="studysession-2021">(<a href="#ref-studysession-2021"
+role="doc-biblioref">StudySession n.d.</a>)</span>, <span
+class="citation" data-cites="berkeley-cs184">(<a
+href="#ref-berkeley-cs184" role="doc-biblioref">Berkeley cs184 n.d.</a>,
+Radiometry &amp; Photometry)</span>, <span class="citation"
+data-cites="wikipedia-funcion-de-distribucion-de-reflectancia-bidireccional-2022">(<a
+href="#ref-wikipedia-funcion-de-distribucion-de-reflectancia-bidireccional-2022"
+role="doc-biblioref">Wikipedia: Función de distribución de reflectancia
+bidireccional n.d.</a>)</span>, <span class="citation"
+data-cites="wikipedia-transmittance-2021">(<a
+href="#ref-wikipedia-transmittance-2021" role="doc-biblioref">Wikipedia:
+Transmittance n.d.</a>)</span></p>
+<ul>
+<li>https://matmatch.com/learn/property/isotropy-anisotropy</li>
+<li>https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf</li>
+</ul>
+<h1 id="integración-de-monte-carlo">Integración de Monte Carlo</h1>
+<p>Como vimos en el capítulo anterior, la clave para conseguir una
+imagen en nuestro ray tracer es calcular la cantidad de luz en un punto
+de la escena. Para ello, necesitamos hallar la radiancia en dicha
+posición mediante la <em>rendering equation</em>. Sin embargo, es
+<em>muy</em> difícil resolverla; tanto computacional como
+analíticamente. Por ello, debemos atacar el problema desde otro punto de
+vista.</p>
 <p>Las técnicas de Monte Carlo nos permitirán aproximar el valor que
 toman las integrales mediante una estimación. Utilizando muestreo
 aleatorio para evaluar puntos de una función, seremos capaces de obtener
@@ -1125,13 +1980,13 @@ correcta tiene un orden de <span
 class="math inline">\(\mathcal{O}\left(n^{-1/2}\right) =
 \mathcal{O}\left(\frac{1}{\sqrt{n}}\right)\)</span>. Es decir, para
 reducir el error a la mitad, necesitaríamos 4 veces más muestras.</p>
-<p>En este capítulo veremos el fundamento de la integración de Monte
-Carlo, cómo muestrear distribuciones específicas y cómo afinar el
-resultado final.</p>
+<p>En este capítulo veremos los fundamentos de la integración de Monte
+Carlo, cómo muestrear distribuciones específicas y métodos para afinar
+el resultado final.</p>
 <h2 id="repaso-de-probabilidad">Repaso de probabilidad</h2>
-<p>Necesitaremos unas cuantas nociones de variable aleatoria para poder
-entender la integración de Monte Carlo, así que vamos a hacer un breve
-repaso.</p>
+<p>Antes de comenzar a fondo, necesitaremos unas nociones de variable
+aleatoria para poder entender la integración de Monte Carlo, por lo que
+vamos a hacer un breve repaso.</p>
 <p>Una <strong>variable aleatoria</strong> <span
 class="math inline">\(X\)</span> (v.a.) es, esencialmente, una regla que
 asigna un valor numérico a cada posibilidad de proceso de azar.
@@ -1155,9 +2010,10 @@ de variable aleatoria. Es una movida tremenda para poca cosa que
 necesitamos. De momento, voy con lo más interesante.</p>
 </blockquote>
 <p>Una variable aleatoria <span class="math inline">\(X\)</span> puede
-clasificarse en discreta o continua, dependiendo de cómo sea su rango
-<span class="math inline">\(R_X = \left\{ x \in \mathbb{R} \,\middle|\,
-\exists \omega \in \Omega : X(\omega) = x \right\}\)</span>:</p>
+clasificarse atendiendo a cómo sea su rango <span
+class="math inline">\(R_X = \left\{x \in \mathbb{R} \,\middle|\, \exists
+\omega \in \Omega \text{ tal que } X(\omega) = x \right\}\)</span>: en
+discreta o continua.</p>
 <h3 id="variables-aleatorias-discretas">Variables aleatorias
 discretas</h3>
 <p>Las v.a. discretas son aquellas cuyo rango es un conjunto
@@ -1197,7 +2053,15 @@ adquiera un cierto valor?</p>
 <p>La <strong>función masa de probabilidad</strong> nos permite conocer
 la probabilidad de que <span class="math inline">\(X\)</span> tome un
 cierto valor <span class="math inline">\(x\)</span>. Se denota por <span
-class="math inline">\(P(X = x)\)</span>.</p>
+class="math inline">\(P(X = x)\)</span>, aunque también usaremos <span
+class="math inline">\(p_X(x)\)</span> o directamente <span
+class="math inline">\(p(x)\)</span>, cuando no haya lugar a dudas.</p>
+<blockquote>
+<p><strong>Nota</strong>(ción): Cuando <span
+class="math inline">\(X\)</span> tenga una cierta función masa de
+probabilidad, escribiremos <span class="math inline">\(X \sim
+p_X\)</span></p>
+</blockquote>
 <p>En este ejemplo, la probabilidad de que <span
 class="math inline">\(X\)</span> tome el valor <span
 class="math inline">\(4\)</span> es</p>
@@ -1378,7 +2242,23 @@ class="math inline">\(g(X)\)</span> se puede calcular como</li>
 <p><span class="math display">\[
 E[g(X)] = \int_{\Omega}{g(x) f_X(x) dx}
 \]</span></p>
-<p><strong>Esta propiedad será clave en nuestro desarrollo</strong>.</p>
+<ul>
+<li>La <strong>Ley (fuerte) de los grandes números</strong> nos dice que
+dada una muestra de <span class="math inline">\(n\)</span> valores <span
+class="math inline">\(X_1, \dots, X_N\)</span> de una variable aleatoria
+<span class="math inline">\(X\)</span> con esperanza <span
+class="math inline">\(E[X] = \mu\)</span>,</li>
+</ul>
+<p><span class="math display">\[
+P\left[\lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} = \mu
+\right] = 1
+\]</span></p>
+<p>Usando que <span class="math inline">\(\bar{X}_N = \frac{1}{N}
+\sum_{i = 1}^{N}{X_i}\)</span>, esta ley se suele escribir como</p>
+<p><span class="math display">\[
+P\left[\lim_{N \to \infty}{\bar{X}_N} = \mu \right] = 1
+\]</span></p>
+<p>Estas dos últimas propiedades resultarán claves en el desarrollo.</p>
 <p>Será habitual encontrarnos con el problema de que no conocemos la
 distribución de una variable aleatoria <span
 class="math inline">\(Y\)</span>. Sin embargo, si encontramos una
@@ -1432,6 +2312,40 @@ class="math inline">\(Var[X] + Var[Y]\)</span>.</li>
 </ul>
 <p>La varianza nos será útil a la hora de medir el error cometido por
 una estimación de Monte Carlo.</p>
+<h3 id="estimadores">Estimadores</h3>
+<p>A veces, no podremos conocer de antemano el valor que toma un cierto
+parámetro de una distribución. Sin embargo, conocemos el tipo de
+distribución que nuestra variable aleatoria <span
+class="math inline">\(X\)</span> sigue. Los estimadores nos
+proporcionarán una forma de calcular el posible valor de esos parámetros
+a partir de una muestra de <span class="math inline">\(X\)</span>.</p>
+<p>Sea <span class="math inline">\(X\)</span> una variablea aleatoria
+con distribución perteneciente a una familia de distribuciones
+paramétricas <span class="math inline">\(X \sim F \in \left\{F(\theta)
+\,\middle|\, \theta \in \Theta \right\}\)</span>. <span
+class="math inline">\(\Theta\)</span> es el conjunto de valores que
+puede tomar el parámetro. Buscamos una forma de determinar el valor de
+<span class="math inline">\(\theta\)</span>.</p>
+<p>Diremos que <span class="math inline">\(T(X_1, \dots, X_N)\)</span>
+es <strong>un estimador de <span
+class="math inline">\(theta\)</span></strong> si <span
+class="math inline">\(T\)</span> toma valores en <span
+class="math inline">\(\Theta\)</span>.</p>
+<p>A los estimadores de un parámetro los solemos denotar con <span
+class="math inline">\(\hat{\theta}\)</span>.</p>
+<p>Como vemos, la definición no es muy restrictiva. Únicamente le
+estamos pidiendo a la función de la muestra que pueda tomar valores
+viables para la distribución.</p>
+<p>Se dice que un estimador <span class="math inline">\(T(X_1, \dots,
+X_N)\)</span> es <strong>insesgado</strong> (o centrado en el parámetro
+<span class="math inline">\(\theta\)</span>) si</p>
+<p><span class="math display">\[
+E[T(X_1, \dots, X_n)] = \theta\quad \forall \theta \in \Theta
+\]</span></p>
+<p>Naturalmente, decimos que un estimador <span
+class="math inline">\(T(X_1, \dots, X_N)\)</span> está
+<strong>sesgado</strong> si <span class="math inline">\(E[T(X_1, \dots,
+X_N] \not = \theta\)</span>.</p>
 <h2 id="el-estimador-de-monte-carlo">El estimador de Monte Carlo</h2>
 <p>Tras este breve repaso de probabilidad, estamos en condiciones de
 definir el estimador de Monte Carlo. Primero, vamos con su versión más
@@ -1448,7 +2362,7 @@ data-cites="mcbook">(<a href="#ref-mcbook" role="doc-biblioref">Owen
 2013</a>)</span>:</p>
 <p><span id="eq:mc_simple" class="eqnos"><span class="math display">\[
 \hat\mu_N = \frac{1}{N} \sum_{i = 1}^{N}{Y_i}
-\]</span><span class="eqnos-number">(2)</span></span></p>
+\]</span><span class="eqnos-number">(8)</span></span></p>
 <p>Haciendo la esperanza de este estimador, vemos que</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -1459,7 +2373,7 @@ E[\hat\mu_N] &amp; = E\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right] =
              &amp; = \mu
 \end{aligned}
 \]</span></p>
-<p>A este tipo de estimadores se les llama insesgados.</p>
+<p>Por lo que el estimador es insesgado.</p>
 <p>Generalmente nos encontraremos en la situación en la que <span
 class="math inline">\(Y = f(X)\)</span>, donde <span
 class="math inline">\(X\)</span> sigue una distribución con función de
@@ -1472,7 +2386,7 @@ puede calcular como</p>
 \]</span></p>
 <p>Lo que estamos buscando es calcular <span
 class="math inline">\(\int_{S}{f(x)dx}\)</span>. Entonces, ¿qué ocurre
-si intentamos compensar en [<a href="#eq:mc_simple">2</a>] con la
+si intentamos compensar en [<a href="#eq:mc_simple">8</a>] con la
 función de densidad?</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -1489,45 +2403,55 @@ función de densidad?</p>
 usando muestras de variables aleatorias con cierta distribución.
 Llamaremos al estimador de Monte Carlo</p>
 <p><span id="eq:mc_integral" class="eqnos"><span class="math display">\[
-\hat{F}_N = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
-\]</span><span class="eqnos-number">(3)</span></span></p>
+\hat{I}_N = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
+\]</span><span class="eqnos-number">(9)</span></span></p>
 <p>Es importante mencionar que <span
 class="math inline">\(p_X(x)\)</span> debe ser distinto de 0 cuando
 <span class="math inline">\(f\)</span> también lo sea.</p>
+<blockquote>
+<p><strong>Nota</strong>(ción): si te preguntas por qué lo llamamos
+<span class="math inline">\(\hat{I}_N\)</span>, piensa que queremos
+calcular la intergal <span class="math inline">\(I =
+\int_{S}{f(x)dx}\)</span>. Para ello, usamos el estimador <span
+class="math inline">\(\hat{I}\)</span>, y marcamos explícitamente que
+usamos <span class="math inline">\(N\)</span> muestras.</p>
+</blockquote>
 <p>Podemos particularizar el caso en el que nuestras muestras <span
 class="math inline">\(X_i\)</span> sigan una distribución uniforme en
 <span class="math inline">\([a, b]\)</span>. Si eso ocurre, su función
 de densidad es <span class="math inline">\(p_X(x) = \frac{1}{b -
 a}\)</span>, así que podemos simplificar un poco [<a
-href="#eq:mc_integral">3</a>]:</p>
+href="#eq:mc_integral">9</a>]:</p>
 <p><span class="math display">\[
-\hat{F}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
+\hat{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
 \]</span></p>
 <p>Elegir correctamente la función de densidad <span
 class="math inline">\(p_X\)</span> será clave. Si conseguimos escogerla
-debidamente, reduciremos mucho el error que genera el estimador. Esto es
-lo que se conoce como <em>importance sampling</em>.</p>
-<blockquote>
-<p>TODO: añadir enlace al capítulo de importance sampling.</p>
-</blockquote>
-<p>Podemos calcular el error cuadrático medio de la estimación si
-volvemos al estimador de la media <span
-class="math inline">\(\hat\mu_N\)</span> [<a
-href="#eq:mc_simple">2</a>]. Para ello, necesitamos la varianza: como
-<span class="math inline">\(\hat\mu_N\)</span> es insesgado, tenemos
-que</p>
+debidamente, reduciremos en gran medida el error que genera el
+estimador. Esto es lo que se conoce como <a
+href="#importance-sampling"><em>importance sampling</em></a>.</p>
+<p>Puesto que la varianza del estimador nos dará información sobre el
+error que genera, vamos a calcular <span
+class="math inline">\(Var[\hat{I}_N]\)</span>. Para ello, usamos las
+propiedades que vimos en la <a
+href="#esperanza-y-varianza-de-una-variable-aleatoria">sección
+anterior</a>:</p>
 <p><span class="math display">\[
 \begin{aligned}
-Var[\hat\mu_N] &amp; = Var\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right]
-= \frac{1}{N^2} Var\left[\sum_{i = 1}^{N}{Y_i}\right] = \\
-               &amp; = \frac{1}{N^2} \sum_{i = 1}^{N}{Var[Y_i]} =
-\frac{1}{N^2} N Var[Y] = \\
-               &amp; = \frac{Var[Y]}{N}
+  Var[\hat{I}_N]
+    &amp; = Var\left[\frac{1}{N} \sum_{i =
+1}^{N}{\frac{f(X_i)}{p_X(X_i)}}\right] = \\
+    &amp; = \frac{1}{N^2} Var\left[ \sum_{i =
+1}^{N}{\frac{f(X_i)}{p_X(X_i)}} \right] = \\
+    &amp; = \frac{1}{N^2} N Var\left[\frac{f(X_i)}{p_X(X_i)}\right] = \\
+    &amp; = \frac{1}{N} Var\left[\frac{f(X_i)}{p_X(X_i)}\right]
 \end{aligned}
 \]</span></p>
-<p>El error cuadrático medio es <span class="math display">\[
-\sqrt{Var[\hat\mu_N]} = \sqrt{\frac{Var[Y]}{N}} =
-\frac{\sqrt{Var[Y]}}{\sqrt{N}}
+<p>es decir, la varianza del estimador es inversamente proporcional al
+número de muestras <span class="math inline">\(N\)</span>.</p>
+<p>La desviación estándar es <span class="math display">\[
+\sqrt{Var[\hat{I}_N]} =
+\frac{\sqrt{Var\left[\frac{f(X_i)}{p_X(X_i)}\right]}}{\sqrt{N}}
 \]</span></p>
 <p>así que, como adelantamos al inicio del capítulo, la estimación tiene
 un error del orden <span
@@ -1548,7 +2472,7 @@ función de densidad <span class="math inline">\(p(x, y, z) =
 \frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}\)</span>,
 tomamos el estimador</p>
 <p><span class="math display">\[
-\hat{F}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)}
+\hat{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)}
 \sum_{i = 1}^{N}{f(X_i)}
 \]</span></p>
 <p>Otro ejemplo clásico de estimador de Monte Carlo es calcular el valor
@@ -1565,7 +2489,7 @@ f = \begin{cases}
 y)}\ dxdy
 \end{aligned}
 \]</span></p>
-<p>Para usar el estimador de [<a href="#eq:mc_integral">3</a>],
+<p>Para usar el estimador de [<a href="#eq:mc_integral">9</a>],
 necesitamos saber la probabilidad de obtener un punto dentro de la
 circunferencia.</p>
 <p>Bien, consideremos que una circunferencia de radio <span
@@ -1583,7 +2507,7 @@ Podemos tomar <span class="math inline">\(p(x, y) =
 \]</span></p>
 <h2 id="escogiendo-puntos-aleatorios">Escogiendo puntos aleatorios</h2>
 <p>Una de las partes clave del estimador de Monte Carlo [<a
-href="#eq:mc_integral">3</a>] es saber escoger la función de densidad
+href="#eq:mc_integral">9</a>] es saber escoger la función de densidad
 <span class="math inline">\(p_X\)</span> correctamente. En esta sección,
 veremos algunos métodos para conseguir distribuciones específicas
 partiendo de funciones de densidad sencillas.</p>
@@ -1607,8 +2531,8 @@ continua a partir de variables aleatorias uniformes, siempre que se
 conozca la inversa de la función de distribución.</p>
 <p>Sea <span class="math inline">\(X\)</span> una variable aleatoria con
 función de distribución <span class="math inline">\(F_X\)</span><a
-href="#fn1" class="footnote-ref" id="fnref1"
-role="doc-noteref"><sup>1</sup></a>. Queremos buscar una transformación
+href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a>. Queremos buscar una transformación
 <span class="math inline">\(T: [0, 1] \rightarrow \mathbb{R}\)</span>
 tal que <span class="math inline">\(T(\xi) \stackrel{\text{\small d}}{=}
 X\)</span>, siendo <span class="math inline">\(\xi\)</span> una v.a.
@@ -1731,906 +2655,52 @@ las fuentes de luz afectan a la calidad de la imagen final. Veremos
 técnicas de reducción del error, las cuales nos permitirán acelerar
 enormemente el cómputo de la escena.</p>
 <hr>
-<h2 class="unlisted unnumbered" id="referencias-2">Referencias</h2>
-<p><span class="citation" data-cites="wikipedia-contributors-2021B">(<a
+<h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
+<p><span class="citation" data-cites="ShirleyRRT">(<a
+href="#ref-ShirleyRRT" role="doc-biblioref">Shirley and Morley
+2003</a>)</span>, <span class="citation" data-cites="PBRT3e">(<a
+href="#ref-PBRT3e" role="doc-biblioref">Pharr, Jakob, and Humphreys
+2016</a>)</span>, <span class="citation" data-cites="mcbook">(<a
+href="#ref-mcbook" role="doc-biblioref">Owen 2013</a>)</span>, <span
+class="citation" data-cites="berkeley-cs184">(<a
+href="#ref-berkeley-cs184" role="doc-biblioref">Berkeley cs184 n.d.</a>,
+Monte Carlo Integration)</span>, <span class="citation"
+data-cites="wikipedia-contributors-2021B">(<a
 href="#ref-wikipedia-contributors-2021B" role="doc-biblioref">Wikipedia:
-Rendering equation 2021</a>)</span>, <span class="citation"
+Rendering equation n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2021C">(<a
 href="#ref-wikipedia-contributors-2021C" role="doc-biblioref">Wikipedia:
-Variable aleatoria 2021</a>)</span>, <span class="citation"
+Variable aleatoria n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022H">(<a
 href="#ref-wikipedia-contributors-2022H" role="doc-biblioref">Wikipedia:
-Distribución de probabilidad 2022</a>)</span>, <span class="citation"
+Distribución de probabilidad n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022I">(<a
 href="#ref-wikipedia-contributors-2022I" role="doc-biblioref">Wikipedia:
-Función de probabilidad 2022</a>)</span>, <span class="citation"
+Función de probabilidad n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022J">(<a
 href="#ref-wikipedia-contributors-2022J" role="doc-biblioref">Wikipedia:
-Expected value 2022</a>)</span>, <span class="citation"
+Expected value n.d.</a>)</span>, <span class="citation"
 data-cites="galvin-no-date">(<a href="#ref-galvin-no-date"
 role="doc-biblioref">Galvin n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022K">(<a
 href="#ref-wikipedia-contributors-2022K" role="doc-biblioref">Wikipedia:
-Probability density function 2022</a>)</span>, <span class="citation"
+Probability density function n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022L">(<a
 href="#ref-wikipedia-contributors-2022L" role="doc-biblioref">Wikipedia:
-Estimador 2022</a>)</span>, <span class="citation"
+Estimador n.d.</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022M">(<a
 href="#ref-wikipedia-contributors-2022M" role="doc-biblioref">Wikipedia:
-Método de la transformada inversa 2022</a>)</span>, <span
+Método de la transformada inversa n.d.</a>)</span>, <span
 class="citation" data-cites="wikipedia-contributors-2022N">(<a
 href="#ref-wikipedia-contributors-2022N" role="doc-biblioref">Wikipedia:
-Rejection sampling 2022</a>)</span>, <span class="citation"
-data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
-role="doc-biblioref">Shirley and Morley 2003</a>)</span>, <span
-class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
-role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>)</span>, <span
-class="citation" data-cites="mcbook">(<a href="#ref-mcbook"
-role="doc-biblioref">Owen 2013</a>)</span>, <span class="citation"
-data-cites="berkeley-cs184">(<a href="#ref-berkeley-cs184"
-role="doc-biblioref">Berkeley cs184 2022</a>, Monte Carlo
-Integration)</span></p>
+Rejection sampling n.d.</a>)</span>,</p>
 <ul>
 <li><em>(berkeley-cs184)</em>
 https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf</li>
 <li>Gems I, p.284.</li>
-</ul>
-<h1 id="transporte-de-luz">Transporte de luz</h1>
-<p>En este capítulo estudiaremos las bases de la radiometría. Esta área
-de la óptica nos proporcionará una serie de herramientas con las cuales
-podremos responder a la pregunta <em>cuánta luz existe en un
-punto</em>.</p>
-<h2 id="unidades-radiométricas-básicas">Unidades radiométricas
-básicas</h2>
-<blockquote>
-<p><strong>Nota</strong>: cuando usemos un paréntesis tras una ecuación,
-dentro denotaremos sus unidades de medida.</p>
-</blockquote>
-<p>Antes de comenzar a trabajar, necesitamos conocer <em>qué
-entendemos</em> por luz. Aunque hay muchas formas de trabajar con ella
-(a fin de cuentas, todavía seguimos discutiendo sobre <em>qué es</em>
-exactamente la luz <a href="#fn2" class="footnote-ref" id="fnref2"
-role="doc-noteref"><sup>2</sup></a>), nosotros nos quedaremos con
-algunas pinceladas de la cuántica. Nos será suficiente quedarnos con la
-concepción de fotón. Una fuente de iluminación emite una serie de
-fotones. Estos fotones tienen<sup><span class="citation"
-data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
-role="doc-biblioref">Shirley and Morley 2003</a>)</span></sup> una
-posición, una dirección de propagación y una longitud de onda <span
-class="math inline">\(\lambda\)</span>. Un fotón también tiene asociado
-una velocidad <span class="math inline">\(c\)</span> que depende del
-índice de refracción del medio, <span
-class="math inline">\(n\)</span>.</p>
-<p>La unidad de medida de <span class="math inline">\(\lambda\)</span>
-es el nanómetro (<span class="math inline">\(\text{nm}\)</span>).
-También nos vendrá bien definir una frecuencia, <span
-class="math inline">\(f\)</span>. Su utilidad viene del hecho de que,
-cuando la luz cambia de medio al propagarse, la frecuencia se mantiene
-constante.</p>
-<p><span class="math display">\[
-f = \frac{c}{\lambda}
-\]</span></p>
-<p>Un fotón tiene asociada una carga de energía, denotada por <span
-class="math inline">\(Q\)</span>:</p>
-<p><span class="math display">\[
-Q = hf = \frac{hc}{\lambda} (\text{J})
-\]</span></p>
-<p>donde <span class="math inline">\(h = 6.62607004 \times 10^{-34}
-\text{J} \cdot \text{s}\)</span> es la constante de Plank y <span
-class="math inline">\(c = 299 792 458 \text{m/s}\)</span> la velocidad
-de la luz.</p>
-<p>En realidad, <strong>todas estas cantidades deberían tener un
-subíndice <span class="math inline">\(\lambda\)</span></strong>, puesto
-que dependen de la longitud de onda. La energía de un fotón <span
-class="math inline">\(Q\)</span>, por ejemplo, debería denotarse <span
-class="math inline">\(Q_\lambda\)</span>. Sin embargo, en la literatura
-de informática gráfica, <strong>se ha optado por omitirla</strong>.
-¡Tenlo en cuenta a partir de aquí!</p>
-<h3 id="potencia">Potencia</h3>
-<p>A partir de la energía anterior, podemos estimar <em>la tasa de
-producción de energía</em>. A esta tasa la llamaremos<sup><span
-class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
-role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>)</span></sup>
-<strong>potencia</strong>, o <strong>flujo radiante</strong> <span
-class="math inline">\(\Phi\)</span>. Esta medida nos resultará más útil
-que la energía total, puesto que nos permite estimar la energía en un
-instante:</p>
-<p><span class="math display">\[
-\Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt}
-(J/s)
-\]</span></p>
-<p>Su unidad es julios por segundo, comúnmente denotado vatio
-(<em>watts</em>, <span class="math inline">\(\text{W}\)</span>). También
-se utiliza el lumen. Podemos encontrar la energía total en un periodo de
-tiempo <span class="math inline">\([t_0, t_1]\)</span> integrando el
-flujo radiante:</p>
-<p><span class="math display">\[
-Q = \int_{t_0}^{t_1}{\Phi(t)dt}
-\]</span></p>
-<h3 id="irradiancia">Irradiancia</h3>
-<p>La <strong>irradiancia</strong> o <strong>radiancia emitida</strong>
-es el flujo radiante que recibe una superficie. Dada un área <span
-class="math inline">\(A\)</span>, se define como</p>
-<p><span class="math display">\[
-E = \frac{\Phi}{A} (\text{W/m}^2)
-\]</span></p>
-<figure>
-<img src="./img/03/Irradiancia.png"
-alt="La irradiancia es la potencia por metro cuadrado incidente en una superficie. Es proporcional al coseno del ángulo entre la dirección de la luz y la normal a la superficie." />
-<figcaption aria-hidden="true">La irradiancia es la potencia por metro
-cuadrado incidente en una superficie. Es proporcional al coseno del
-ángulo entre la dirección de la luz y la normal a la
-superficie.</figcaption>
-</figure>
-<p>Ahora que tenemos la potencia emitida en una cierta área, nos surge
-una pregunta: <em>¿y en un cierto punto <span
-class="math inline">\(p\)</span>?</em>. Tomando límites en la expresión
-anterior, encontramos la respuesta:</p>
-<p><span class="math display">\[
-E(p) = \lim_{\Delta A \to 0}{\frac{\Delta \Phi}{\Delta A}} =
-\frac{d\Phi}{dA} (\text{W/m}^2)
-\]</span></p>
-<p>De la misma manera que con la potencia, integrando <span
-class="math inline">\(E(p)\)</span> podemos obtener el flujo
-radiante:</p>
-<p><span class="math display">\[
-\Phi = \int_{A}{E(p)dp}
-\]</span></p>
-<p>El principal problema de la irradiancia es que <em>no nos dice nada
-sobre las direcciones</em> desde las que ha llegado la luz.</p>
-<h3 id="ángulos-sólidos">Ángulos sólidos</h3>
-<p>Con estas tres unidades básicas, nos surge una pregunta muy natural:
-<em>¿cómo mido cuánta luz llega a una superficie?</em></p>
-<p>Para responder a esta pregunta, necesitaremos los <strong>ángulos
-sólidos</strong>. Son la extensión de los <strong>ángulos
-planares</strong>, en dos dimensiones.</p>
-<p>Ilustremos el sentido de estos ángulos: imaginemos que tenemos un
-cierto objeto en dos dimensiones delante de nosotros, a una distancia
-desconocida. ¿Sabríamos cuál es su tamaño, solo con esta información? Es
-más, si entrara otro objeto en la escena, ¿podríamos distinguir cuál de
-ellos es más grande?</p>
-<p>Parece difícil responder a estas preguntas. Sin embargo, sí que
-podemos determinar <em>cómo de grandes nos parecen</em> desde nuestro
-punto de vista. Para ello, describimos una circunferencia de radio <span
-class="math inline">\(r\)</span> alrededor nuestra. Si trazamos un par
-de líneas desde nuestra posición a las partes más alejadas de este
-objeto, y las cortamos con nuestra circunferencia, obtendremos un par de
-puntos inscritos en ella. Pues bien, al arco que encapsulan dichos
-puntos le vamos a hacer corresponder un cierto ángulo: el ángulo
-planar.</p>
-<figure>
-<img src="./img/03/Ángulo%20planar.png"
-alt="La idea intuitiva de un ángulo planar" />
-<figcaption aria-hidden="true">La idea intuitiva de un ángulo
-planar</figcaption>
-</figure>
-<p>Llevando esta idea a las tres dimensiones es como conseguimos el
-concepto de <strong>ángulo sólido</strong>. Si en dos dimensiones
-teníamos una circunferencia, aquí tendremos una esfera. Cuando generemos
-las rectas proyectantes hacia el volumen, a diferencia de los ángulos
-planares, se inscribirá un área en la esfera. La razón entre dicha área
-<span class="math inline">\(A\)</span> y el cuadrado del radio <span
-class="math inline">\(r\)</span> nos dará un ángulo sólido:</p>
-<p><span class="math display">\[
-\omega = \frac{A}{r^2} \text{(sr)}
-\]</span></p>
-<figure>
-<img src="./img/03/Ángulo%20sólido.png"
-alt="Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio" />
-<figcaption aria-hidden="true">Un ángulo sólido es la razón entre el
-área proyectada y el cuadrado del radio</figcaption>
-</figure>
-<p>Los denotaremos por <span class="math inline">\(\omega\)</span>. En
-física se suele usar <span class="math inline">\(\Omega\)</span>, pero
-aquí optaremos por la minúscula. Su unidad de medida es el
-estereorradián (<span class="math inline">\(\text{sr}\)</span>). Se
-tiene que <span class="math inline">\(\omega \in [0, 4\pi]\)</span>. Si
-<span class="math inline">\(2 \pi\)</span> radianes corresponden a la
-circunferencia completa, para la esfera se tiene que <span
-class="math inline">\(4 \pi\)</span> esteorradianes cubren toda la
-superficie de esta. Se tiene también que <span
-class="math inline">\(2\pi \text{sr}\)</span> cubren un hemisferio.
-Además, un esteorradián corresponde a una superficie con área <span
-class="math inline">\(r^2\)</span>: <span class="math inline">\(1
-\text{sr} = \frac{r^2}{r^2}\)</span>.</p>
-<p>De vez en cuando, usaremos <span
-class="math inline">\(\omega\)</span> <strong>un vector dirección
-unitario en la esfera</strong>.</p>
-<figure>
-<img src="./img/03/xkcd_1276.png"
-alt="Como de costumbre, hay un xkcd relevante. (Fuente)" />
-<figcaption aria-hidden="true">Como de costumbre, hay un xkcd relevante.
-<a href="https://xkcd.com/1276/">(Fuente)</a></figcaption>
-</figure>
-<p>Usualmente emplearemos coordenadas esféricas cuando trabajemos con
-ellos, dado que resulta más cómodo.</p>
-<p><span class="math display">\[
-\begin{aligned}
-    \begin{cases}
-        x = \sin\theta\cos\theta \\
-        y = \sin\theta\sin\theta \\
-        z = \cos\theta
-    \end{cases}
-\end{aligned}
-\]</span></p>
-<p>A <span class="math inline">\(\theta\)</span> se le denomina ángulo
-polar, mientras que a <span class="math inline">\(\phi\)</span> se le
-llama acimut. Imaginémonos un punto en la esfera de radio <span
-class="math inline">\(r\)</span> ubicado en una posición <span
-class="math inline">\((r, \theta, \phi)\)</span>. Queremos calcular un
-área chiquitita <span class="math inline">\(dA_h\)</span>, de forma que
-el ángulo sólido asociado a dicha área debe ser <span
-class="math inline">\(d\omega\)</span>. Así, <span
-class="math inline">\(d\omega = \frac{dA_h}{r^2}\)</span>. Si
-proyectamos el área, obtenemos <span
-class="math inline">\(d\theta\)</span> y <span
-class="math inline">\(d\phi\)</span>: pequeños cambios en los ángulos
-que nos generan nuestra pequeña área.</p>
-<p><span class="math inline">\(dA_h\)</span> debe tener dos lados <span
-class="math inline">\(lado_1\)</span> y <span
-class="math inline">\(lado_2\)</span>. Podemos hallar <span
-class="math inline">\(lado_1\)</span> si lo trasladamos al eje <span
-class="math inline">\(z\)</span> de nuevo. Así, <span
-class="math inline">\(lado_1 = r \sin d\theta\)</span>. De la misma
-manera, <span class="math inline">\(lado_2 = r d\theta\)</span>.</p>
-<blockquote>
-<p>TODO: foto que explique todo esto, porque si no, no hay quien se
-entere. Quizás me sirva la de
-https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
-p.16 siempre que adapte <span class="math inline">\(\phi\)</span>.</p>
-</blockquote>
-<p>Poniendo estos valores en <span
-class="math inline">\(d\omega\)</span>:</p>
-<p><span id="eq:d_omega" class="eqnos"><span class="math display">\[
-\begin{aligned}
-d\omega &amp; = \frac{dA_h}{r^2} = \frac{lado_1 lado_2}{r^2} = \\
-        &amp; = \frac{r \sin\theta\ d\phi\ r\ d\theta}{r^2} = \\
-        &amp; = \sin\theta\ d\theta\ d\phi
-\end{aligned}
-\]</span><span class="eqnos-number">(4)</span></span></p>
-<p>¡Genial! Acabamos de añadir un recurso muy potente a nuestro
-inventario. Esta expresión nos permitirá convertir integrales sobre
-ángulos sólidos en integrales sobre ángulos esféricos.</p>
-<h3 id="intensidad-radiante">Intensidad radiante</h3>
-<p>Los ángulos sólidos nos proporcionan una variedad de herramientas
-nuevas considerable. Gracias a ellos, podemos desarrollar algunos
-conceptos nuevos. Uno de ellos es la <strong>intensidad
-radiante</strong>.</p>
-<p>Imaginémonos un pequeñito punto de luz encerrado en una esfera, el
-cual emite fotones en todas direcciones. Nos gustaría medir cuánta
-energía pasa por la esfera. Podríamos entonces definir</p>
-<p><span class="math display">\[
-I = \frac{\Phi}{4\pi} \text{(W/sr)}
-\]</span></p>
-<p>Otra unidad de medida es el lumen por esterorradián, <span
-class="math inline">\(\text{(lm/sr)}\)</span>. La anterior definición
-mide cuántos fotones pasan por toda la esfera. ¿Qué ocurre si
-<em>cerramos</em> el ángulo, restringiéndonos así a un área muy pequeña
-de la esfera?</p>
-<p><span class="math display">\[
-I = \lim_{\Delta\omega \to 0}{\frac{\Delta\Phi}{\Delta\omega}} =
-\frac{d\Phi}{d\omega}
-\]</span></p>
-<p>De la misma manera que con los conceptos anteriores, podemos volver a
-la potencia integrando sobre un conjunto de direcciones:</p>
-<p><span class="math display">\[
-\Phi = \int_{\Omega}{I(\omega)d\omega}
-\]</span></p>
-<h3 id="radiancia">Radiancia</h3>
-<p>Finalmente, llegamos al concepto más importante. La <strong>radiancia
-espectral</strong> (o radiancia a secas<a href="#fn3"
-class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>) es
-una extensión de la radiancia emitida teniendo en cuenta la
-dirección:</p>
-<p><span class="math display">\[
-L(p, \omega) = \lim_{\Delta\omega \to 0}{\frac{\Delta
-E_\omega(p)}{\Delta\omega}} = \frac{dE_\omega(p)}{d\omega}
-\]</span></p>
-<p>siendo <span class="math inline">\(E_\omega(p)\)</span> la radiancia
-emitida a la superficie perpendicular a <span
-class="math inline">\(\omega\)</span>.</p>
-<blockquote>
-<p>TODO: foto como la de
-https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
-página 10.</p>
-</blockquote>
-<p>Podemos dar otra expresión de la radiancia en términos del flujo:</p>
-<p><span id="eq:radiancia_flujo" class="eqnos"><span
-class="math display">\[
-L(p, \omega) = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} =
-\frac{d^2\Phi(p, \omega)}{d\omega\ dA\ \cos\theta}
-\]</span><span class="eqnos-number">(5)</span></span></p>
-<p>donde <span class="math inline">\(dA^\bot\)</span> es el área
-proyectada por <span class="math inline">\(dA\)</span> en una hipotética
-superficie perpendicular a <span
-class="math inline">\(\omega\)</span>:</p>
-<blockquote>
-<p>TODO: figura similar a pbr figura 5.10
-https://www.pbr-book.org/3ed-2018/Color_and_Radiometry/Radiometry</p>
-</blockquote>
-<p>Cuando un rayo impacta en una superficie, <span
-class="math inline">\(L\)</span> puede tomar valores muy diferentes en
-un lado y otro de dicha superficie. Por ejemplo, si nos imaginamos un
-espejo, el valor un poco por encima y un poco por debajo de un punto del
-espejo es muy diferente. Para solucionarlo, podemos tomar límites para
-distinguir a ambos lados:</p>
-<p><span id="eq:L_limit" class="eqnos"><span class="math display">\[
-\begin{aligned}
-L^+(p, \omega) = \lim_{t \to 0^+}{L(p + t\mathbf{n_p}, \omega)} \\
-L^-(p, \omega) = \lim_{t \to 0^-}{L(p + t\mathbf{n_p}, \omega)}
-\end{aligned}
-\]</span><span class="eqnos-number">(6)</span></span></p>
-<p>donde <span class="math inline">\(\mathbf{n_p}\)</span> es la normal
-en el punto <span class="math inline">\(p\)</span>.</p>
-<p>Otra forma de solucionarlo (y preferible, puesto que simplifica
-entender lo que ocurre) es distinguir entre la radiancia que llega a un
-punto –la incidente–, y la saliente.</p>
-<p>La primera se llamará <span class="math inline">\(L_i(p,
-\omega)\)</span>, mientras que la segunda será <span
-class="math inline">\(L_o(p, \omega)\)</span>. Es importante destacar
-que <span class="math inline">\(\omega\)</span> apunta <em>hacia
-fuera</em> de la superficie. Quizás es contraintuitivo en <span
-class="math inline">\(L_i\)</span>, puesto que <span
-class="math inline">\(-\omega\)</span> apunta <em>hacia</em> la
-superficie. Depende del autor se utiliza una concepción u otra.</p>
-<blockquote>
-<p><strong>Nota</strong>(ción): a <span
-class="math inline">\(L_o\)</span> también se le conoce como la
-radiancia reflejada. Por eso, algunas veces aparece como <span
-class="math inline">\(L_r\)</span> en algunas fuentes.</p>
-</blockquote>
-<p>Utilizando esta notación y usando [<a href="#eq:L_limit">6</a>],
-podemos escribir <span class="math inline">\(L_i\)</span> y <span
-class="math inline">\(L_o\)</span> como</p>
-<p><span class="math display">\[
-\begin{aligned}
-    L_i(p, \omega) &amp; =
-        \begin{cases}
-            L^+(p, -\omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
-&gt; 0 \\
-            L^-(p, -\omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
-&lt; 0
-        \end{cases} \\
-    L_o(p, \omega) &amp; =
-        \begin{cases}
-            L^+(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
-&gt; 0 \\
-            L^-(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n_p}
-&lt; 0
-        \end{cases}
-\end{aligned}
-\]</span></p>
-<p>Hacemos esta distinción porque, a fin de cuentas, necesitamos
-distinguir entre los fotones que llegan a la superficie y los que
-salen.</p>
-<blockquote>
-<p>TODO:
-https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf,
-p.36</p>
-</blockquote>
-<p>Una propiedad a tener en cuenta es que, si cogemos un punto <span
-class="math inline">\(p\)</span> del espacio donde no existe ninguna
-superifcie, <span class="math inline">\(L_o(p, \omega) = L_i(p, -\omega)
-= L(p, \omega)\)</span></p>
-<p>La importancia de la radiancia se debe a un par de propiedades:</p>
-<p>La primera de ellas es que, dado <span
-class="math inline">\(L\)</span>, podemos calcular cualquier otra unidad
-básica mediante integración. Además, <strong>su valor se mantiene
-constante en rayos que viajan en el vacío en línea recta</strong> <span
-class="citation" data-cites="Pellacini-Marschner-2017">(<a
-href="#ref-Pellacini-Marschner-2017" role="doc-biblioref">Fabio
-Pellacini 2017</a>)</span>. Esto último hace que resulte muy natural
-usarla en un ray tracer.</p>
-<p>Veamos por qué ocurre esto:</p>
-<blockquote>
-<p>TODO:
-https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf,
-página 18.</p>
-</blockquote>
-<p>Consideremos dos superficies ortogonales entre sí, <span
-class="math inline">\(S_1\)</span> y <span
-class="math inline">\(S_2\)</span> separadas una distancia <span
-class="math inline">\(r\)</span>. Debido a la conservación de la
-energía, cualquier fotón que salga de una superficie y se encuentre bajo
-el ángulo sólido de la otra debe llegar impactar en dicha superficie
-opuesta.</p>
-<p>Por tanto:</p>
-<p><span class="math display">\[
-d^2\Phi_1 = d^2\Phi_2
-\]</span></p>
-<p>Sustituyendo en la expresión de la radiancia [<a
-href="#eq:radiancia_flujo">5</a>], y teniendo en cuenta que son
-ortogonales (lo que nos dice que <span class="math inline">\(\cos\theta
-= 1\)</span>):</p>
-<p><span class="math display">\[
-L_1 d\omega_1 dA_1 = L_2 d\omega_2 dA_2
-\]</span></p>
-<p>Por construcción, podemos cambiar los ángulos sólidos:</p>
-<p><span class="math display">\[
-L_1 \frac{dA_2}{r^2} dA_1 = L_2 \frac{dA_1}{r^2} dA_2
-\]</span></p>
-<p>Lo que finalmente nos dice que <span class="math inline">\(L_1 =
-L_2\)</span>, como queríamos ver.</p>
-<h2 id="fotometría-y-radiometría">Fotometría y radiometría</h2>
-<blockquote>
-<p>TODO: hablar sobre las diferencias. Hay información útil en
-01_lights.pdf, p.43</p>
-</blockquote>
-<h2 id="integrales-radiométricas">Integrales radiométricas</h2>
-<p>En esta sección, vamos a explorar las nuevas herramientas que nos
-proporciona la radiancia. Veremos también cómo integrar ángulos sólidos,
-y cómo simplificar dichas integrales.</p>
-<h3 id="una-nueva-expresión-de-la-irradiancia-y-el-flujo">Una nueva
-expresión de la irradiancia y el flujo</h3>
-<p>Como dijimos al final de <a href="#irradiancia">la sección de la
-irradiancia</a>, esta medida no tiene en cuenta las direcciones desde
-las que llegaba la luz. A diferencia de esta, la radiancia sí que las
-utiliza. Dado que una de las ventajas de la radiancia es que nos permite
-obtener el resto de medidas radiométricas, ¿por qué no desarrollamos una
-nueva expresión de la irradiancia?</p>
-<p>Para obtener cuánta luz llega a un punto, debemos acumular la
-radiancia incidente que nos llega desde cualquier dirección.</p>
-<blockquote>
-<p>TODO: dibujo como el de la libreta roja. Me lo mandé por Telegram,
-por si no lo encuentro</p>
-</blockquote>
-<p>Dado un punto <span class="math inline">\(p\)</span> que se encuentra
-en una superficie con normal <span
-class="math inline">\(\mathbf{n}\)</span> en dicho punto, la irradiancia
-se puede expresar como</p>
-<p><span id="eq:E_abs_cos" class="eqnos"><span class="math display">\[
-E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \lvert cos\theta \rvert
-d\omega}
-\]</span><span class="eqnos-number">(7)</span></span></p>
-<p>El término <span class="math inline">\(\cos\theta\)</span> aparece en
-la integral debido a la derivada del área proyectada, <span
-class="math inline">\(dA^\bot\)</span>. <span
-class="math inline">\(\theta\)</span> es el ángulo entre la dirección
-<span class="math inline">\(\omega\)</span> y la normal <span
-class="math inline">\(\mathbf{n}\)</span>.</p>
-<p>Generalmente, la irradiancia se calcula únicamente en el hemisferio
-de direcciones asociado a la normal en el punto, <span
-class="math inline">\(H^2(\mathbf{n})\)</span>.</p>
-<p>Podemos eliminar el <span class="math inline">\(\cos\theta\)</span>
-de la integral mediante una pequeña transformación: proyectando el
-ángulo sólido sobre el disco alrededor del punto <span
-class="math inline">\(p\)</span> con normal <span
-class="math inline">\(\mathbf{n}\)</span>, obtenemos una expresión más
-sencilla: como <span class="math inline">\(d\omega^\bot = \lvert
-\cos\theta \rvert d\omega\)</span>, entonces</p>
-<p><span class="math display">\[
-\begin{aligned}
-    E(p, \mathbf{n}) = \int_{H^2(\mathbf{n})}{L_i(p, \omega)
-d\omega^\bot}
-\end{aligned}
-\]</span></p>
-<p>Usando lo que aprendimos sobre la derivada de los ángulos sólidos [<a
-href="#eq:d_omega">4</a>], se puede reescribir la ecuación anterior
-como</p>
-<p><span class="math display">\[
-E(p, \mathbf{n}) = \int_{0}^{2\pi}\int_{0}^{\pi/2}{L_i(p, \theta, \phi)
-\cos\theta\ \sin\theta\ d\theta\ d\phi}
-\]</span></p>
-<p>Haciendo el mismo juego con el flujo emitido de un cierto objeto al
-hemisferio que encapsula la normal, conseguimos:</p>
-<p><span class="math display">\[
-\begin{aligned}
-    \Phi &amp; = \int_{A}\int_{H^2(\mathbf{n})}{L_o(p, \omega)
-\cos\theta\ d\omega dA} = \\
-         &amp; = \int_{A}\int_{H^2(\mathbf{n})}{L_o(p, \omega)
-d\omega^\bot dA}
-\end{aligned}
-\]</span></p>
-<blockquote>
-<p>TODO: a lo mejor merece la pena hacer un ejemplo sobre los diferentes
-tipos de luz, como en
-https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf
-p.41? O a lo mejor un capítulo para hablar de luces en general.</p>
-</blockquote>
-<h3 id="integrando-sobre-área">Integrando sobre área</h3>
-<p>Una herramienta más que nos vendrá bien será la capacidad de
-convertir integrales sobre direcciones en integrales sobre área. Hemos
-hecho algo similar en las secciones anteriores, así que no perdemos nada
-por generalizarlo.</p>
-<p>Considera un punto <span class="math inline">\(p\)</span> sobre una
-superficie con normal en dicho punto <span
-class="math inline">\(\mathbf{n}\)</span>. Supongamos que tenemos una
-pequeña área <span class="math inline">\(dA\)</span> con normal <span
-class="math inline">\(\mathbf{n_{dA}}\)</span>. Sea <span
-class="math inline">\(\theta\)</span> el ángulo entre <span
-class="math inline">\(\mathbf{n}\)</span> y <span
-class="math inline">\(\mathbf{n_{dA}}\)</span>, y <span
-class="math inline">\(r\)</span> la distancia entre <span
-class="math inline">\(p\)</span> y <span
-class="math inline">\(dA\)</span>.</p>
-<p>Entonces, la relación entre la diferencial de un ángulo sólido y la
-de un área es</p>
-<p><span class="math display">\[
-d\omega = \frac{dA\cos\theta}{r^2}
-\]</span></p>
-<blockquote>
-<p>TODO: figura como la de pbr book 5.16.</p>
-</blockquote>
-<p>Esto nos permite, por ejemplo, expandir algunas expresiones como la
-de la irradiancia [<a href="#eq:E_abs_cos">7</a>] si partimos de un
-cuadrilátero <span class="math inline">\(dA\)</span>:</p>
-<p><span class="math display">\[
-\begin{aligned}
-    E(p, \mathbf{n}) &amp; = \int_{\Omega}{L_i(p, \omega) \lvert
-\cos\theta \rvert d\omega} = \\
-                     &amp; = \int_{A}{L\cos\theta\
-\frac{\cos\theta_o}{r^2}dA}
-\end{aligned}
-\]</span></p>
-<p>siendo <span class="math inline">\(\theta_o\)</span> el ángulo de la
-radiancia de salida de la superficie del cuadrilátero.</p>
-<h2
-id="dispersión-de-luz-las-familias-de-funciones-de-distribución-bidireccionales">Dispersión
-de luz: las familias de funciones de distribución bidireccionales</h2>
-<p>Cuando una fuente de luz emite fotones hacia una superficie
-impactando en ella, ocurren un par de sucesos: parte de la luz se
-refleja en ella, saliendo disparada hacia alguna dirección; mientras que
-otra parte se absorbe.</p>
-<p>En informática gráfica se consideran tres tipos principales de
-dispersión de luz: <strong>dispersión en superficie</strong>
-(<em>surface scattering</em>), <strong>dispersión volumétrica</strong>
-(<em>volumetric scattering</em>) y <strong>dispersión bajo
-superficie</strong> (<em>subsurface scattering</em>)</p>
-<p>En este capítulo vamos a modelar la primera. Estudiaremos qué es lo
-que ocurre cuando los fotones alcanzan una superficie, en qué dirección
-se reflejan, y cómo cambia el comportamiento dependiendo de las
-propiedades del material.</p>
-<h3
-id="la-función-de-distribución-de-reflectancia-bidireccional-brdf">La
-función de distribución de reflectancia bidireccional (BRDF)</h3>
-<p>La <strong>función de distribución de reflectancia
-bidireccional</strong> (en inglés, <em>bidirectional reflectance
-distribution function</em>, BRDF) describe cómo la luz se refleja en una
-superficie opaca. Se encarga de informarnos sobre cuánta radiancia sale
-en dirección <span class="math inline">\(\omega_o\)</span> debido a la
-radiancia incidente desde la dirección <span
-class="math inline">\(\omega_i\)</span>, partiendo de un punto <span
-class="math inline">\(p\)</span> en una superficie con normal <span
-class="math inline">\(\mathbf{n}\)</span>. Depende de la longitud de
-onda <span class="math inline">\(\lambda\)</span>, pero, como de
-costumbre, la omitiremos.</p>
-<blockquote>
-<p><strong>Intuición</strong>: <em>¿cuál es la probabilidad de que,
-habiéndome llegado un fotón desde <span
-class="math inline">\(\omega_i\)</span>, me salga disparado hacia <span
-class="math inline">\(\omega_o\)</span>?</em></p>
-</blockquote>
-<blockquote>
-<p>TODO: esquema como el de pbr fig. 5.18, o como
-https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf
-p.20</p>
-</blockquote>
-<p>Si consideramos <span class="math inline">\(\omega_i\)</span> como un
-cono diferencial de direcciones, la irradiancia diferencial en <span
-class="math inline">\(p\)</span> viene dada por</p>
-<p><span class="math display">\[
-dE(p, \omega_i) = L_i(p, \omega_i) \cos\theta_i\ d\omega_i
-\]</span></p>
-<p>Debido a esta irradiancia, una pequeña parte de radiancia saldrá en
-dirección <span class="math inline">\(\omega_o\)</span>, proporcional a
-la irradiancia:</p>
-<p><span class="math display">\[
-dL_o(p, \omega_o) \propto dE(p, \omega_i)
-\]</span></p>
-<p>Si lo ponemos en forma de cociente, sabremos exactamente cuál es la
-proporción de luz. A este cociente lo llamaremos <span
-class="math inline">\(f_r(p, \omega_o \leftarrow \omega_i)\)</span>; la
-función de distribución de reflectancia bidireccional:</p>
-<p><span class="math display">\[
-f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p,
-\omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\
-d\omega_i} \text{(1/sr)}
-\]</span></p>
-<blockquote>
-<p><strong>Nota</strong>(ción): dependiendo de la fuente que estés
-leyendo, es posible que te encuentres una integral algo diferente. Por
-ejemplo, en tanto en Wikipedia como en <span class="citation"
-data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
-role="doc-biblioref">Shirley and Morley 2003</a>)</span> se integra con
-respecto a los ángulos de salida <span
-class="math inline">\(\omega_o\)</span>, en vez de los incidentes.</p>
-<p>Aquí, usaremos la notación de integrar con respecto a los incidentes,
-como se hace en <span class="citation" data-cites="PBRT3e">(<a
-href="#ref-PBRT3e" role="doc-biblioref">Pharr, Jakob, and Humphreys
-2016</a>)</span>.</p>
-</blockquote>
-<p>Las BRDF físicamente realistas tienen un par de propiedades
-importantes:</p>
-<ol type="1">
-<li><strong>Reciprocidad</strong>: para cualquier par de direcciones
-<span class="math inline">\(\omega_i\)</span>, <span
-class="math inline">\(\omega_o\)</span>, se tiene que <span
-class="math inline">\(f_r(p, \omega_i, \omega_o)=\ \)</span> <span
-class="math inline">\(f_r(p, \omega_o \leftarrow
-\omega_i)\)</span>.</li>
-<li><strong>Conservación de la energía</strong>: La energía reflejada
-tiene que ser menor o igual que la incidente:</li>
-</ol>
-<p><span class="math display">\[
-\int_{H^2(\mathbf{n})}{f_r(p, \omega_o \leftarrow \omega_i)
-\cos\theta_i\ d\omega_i} \leq 1
-\]</span></p>
-<h3
-id="la-función-de-distribución-de-transmitancia-bidireccional-btdf">La
-función de distribución de transmitancia bidireccional (BTDF)</h3>
-<p>Si la BRDF describe cómo se refleja la luz, la <em>bidirectional
-transmittance distribution function</em> (abreviada BTDF) nos informará
-sobre la transmitancia; es decir, cómo se comporta la luz cuando
-<em>entra</em> en un medio. Generalmente serán dos caras de la misma
-moneda: cuando la luz impacta en una superficie, parte de ella, se
-reflejará, y otra parte se transmitirá.</p>
-<p>Puedes imaginarte la BTDF como una función de reflectancia del
-hemisferio opuesto a donde se encuentra la normal de la superficie.</p>
-<p>Denotaremos a la BTDF por</p>
-<p><span class="math display">\[
-f_t(p, \omega_o \leftarrow \omega_i)
-\]</span></p>
-<p>Al contrario que en la BRDF, <span
-class="math inline">\(\omega_o\)</span> y <span
-class="math inline">\(\omega_i\)</span> se encuentran en hemisferios
-diferentes.</p>
-<h3
-id="juntando-la-brdf-y-la-btdf-en-la-función-de-distribución-de-dispersión-bidireccional">Juntando
-la BRDF y la BTDF en La función de distribución de dispersión
-bidireccional</h3>
-<p>Convenientemente, podemos unir la BRDF y la BTDF en una sola
-expresión, llamada <strong>la función de distribución de dispersión
-bidireccional</strong> (<em>bidirectional scattering distribution
-function</em>, BSDF). A la BSDF la denotaremos por</p>
-<p><span class="math display">\[
-f(p, \omega_o \leftarrow \omega_i)
-\]</span></p>
-<blockquote>
-<p><strong>Intuición:</strong> <em>la BSDF son todas las posibles
-direcciones en las que puede salir disparada la luz.</em></p>
-</blockquote>
-<p>Usando esta definición, podemos obtener</p>
-<p><span class="math display">\[
-dL_o(p, \omega_o) = f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i)
-\lvert \cos\theta_i \rvert d\omega_i
-\]</span></p>
-<p>Esto nos deja a punto de caramelo una nueva expresión de la
-randiancia en términos de la randiancia incidente en un punto <span
-class="math inline">\(p\)</span>. Integrando la expresión anterior,
-obtenemos</p>
-<p><span id="eq:scattering_equation" class="eqnos"><span
-class="math display">\[
-L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow
-\omega_i)L_i(p, \omega_i)\lvert \cos\theta_i \rvert d\omega_i}
-\]</span><span class="eqnos-number">(8)</span></span></p>
-<p>siendo <span class="math inline">\(\mathbb{S}^2\)</span> la
-esfera.</p>
-<p>Esta forma de expresar la radiancia es muy importante. Generalmente
-se le suele llamar la <em>ecuación de dispersión</em> (<em>scattering
-equation</em>, en inglés). Dado que es una integral muy importante,
-seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte
-Carlo nos vendrán de perlas! Más adelante hablaremos de ella.</p>
-<p>Las BSDFs tienen unas propiedades interesantes:</p>
-<ul>
-<li><strong>Positividad</strong>: como los fotones no se pueden reflejar
-“negativamente”, <span class="math inline">\(f(p, \omega_o \leftarrow
-\omega_i) \ge 0\)</span>.</li>
-<li><strong>Reciprocidad de Helmotz:</strong> se puede invertir un rayo
-de luz: <span class="math inline">\(f(p, \omega_o \leftarrow \omega_i) =
-f(p, \omega_i \leftarrow \omega_o)\)</span>.</li>
-<li><strong>Conservación de la energía</strong>: todos los fotones que
-llegan a la superficie deben ser reflejados o absorbidos. Es decir, no
-se emite ningún fotón nuevo:</li>
-</ul>
-<p><span class="math display">\[
-\int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) \cos\theta_i\
-d\omega_i} \le 1\ \forall \omega_o
-\]</span></p>
-<h3 id="reflectancia-hemisférica">Reflectancia hemisférica</h3>
-<p>Puede ser útil tomar el comportamiento agregado de las BRDFs y las
-BTDFs y reducirlo un cierto valor que describa su comportamiento general
-de dispersión. Sería Algo así como un resumen de su distribución. Para
-conseguirlo, vamos a introducir dos nuevas funciones:</p>
-<p>La <strong>reflectancia hemisférica-direccional</strong>
-(<em>hemispherical-directional reflectance</em>) describe la reflexión
-total sobre un hemisferio debida a una fuente de luz que proviene desde
-la dirección <span class="math inline">\(\omega_o\)</span>:</p>
-<p><span class="math display">\[
-\rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i)
-\lvert \cos\theta_i \rvert\ d\omega_i}
-\]</span></p>
-<p>Por otra parte, la <strong>reflectancia
-hemisférica-hemisférica</strong> (<em>hemispherical-hemispherical
-reflectance</em>) es un valor espectral que nos proporciona el ratio de
-luz incidente reflejada por una superficie, suponiendo que llega la
-misma luz desde todas direcciones:</p>
-<p><span class="math display">\[
-\rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o
-\leftarrow \omega_i) \lvert \cos\theta_o\ \cos\theta_i \rvert\
-d\omega_o\ d\omega_i}
-\]</span></p>
-<h3 id="reflejos">Reflejos</h3>
-<p>Una vez hemos definido las funciones de distribución bidireccionales,
-debemos encargarnos de modelar el comportamiento explícitamente. Para
-ello, veamos cómo los materiales modifican las distribuciones.</p>
-<p>En esencia, los reflejos se pueden clasificar en cuatro grandes
-tipos:</p>
-<ul>
-<li><strong>Difusos</strong> (<em>Diffuse</em>): esparcen la luz en
-todas direcciones casi equiprobablemente. Por ejemplo, la tela y el
-papel son materiales difusos.</li>
-<li><strong>Especulares brillantes</strong> (<em>Glossy specular</em>):
-la distribución de luz se asemeja a un cono. La chapa de un coche es un
-material especular brillante.</li>
-<li><strong>Especulares perfectos</strong> (<em>Perfect specular</em>):
-en esencia, son espejos. El ángulo de salida de la luz es muy pequeño,
-por lo que reflejan casi a la perfección lo que les llega.</li>
-<li><strong>Retrorreflectores</strong> (<em>Retro reflective</em>): la
-luz se refleja en dirección contraria a la de llegada. Esto es lo que
-sucede a la luna.</li>
-</ul>
-<p>Ten en cuenta que es muy difícil encontrar objetos físicos que imiten
-a la perfección un cierto modelo. Suelen recaer en un híbrido entre dos
-o más modelos.</p>
-<p>Fijado un cierto modelo, la función de distribución de reflectancia,
-BRDF, puede ser <strong>isotrópica</strong> o
-<strong>anisotrópica</strong>. Los materiales isotrópicos mantienen las
-propiedades de reflectancia invariantes ante rotaciones; es decir, la
-distribución de luz es la misma en todas direcciones. Por el contrario,
-los anisotrópicos reflejan diferentes cantidades de luz dependiendo
-desde dónde los miremos. Los ejemplos más habituales de materiales
-anisotrópicos son las rocas y la madera.</p>
-<h2 id="la-rendering-equation">La rendering equation</h2>
-<p>Y, finalmente, tras esta introducción de los principales conceptos
-radiométricos, llegamos a la ecuación más importante de todo este
-trabajo: la <strong>rendering equation</strong>; también llamada la
-<strong>ecuación del transporte de luz</strong>.</p>
-<blockquote>
-<p><strong>Nota</strong>(ción): esta vez no traduciré el concepto. Es
-cierto que afea un poco la escritura teniendo en cuenta que esto es un
-texto en castellano. Sin embargo, la otra opción es inventarme una
-traducción que nadie usa.</p>
-</blockquote>
-<p>Antes de comenzar, volvamos a plantear de nuevo la situación: nos
-encontramos observando desde nuestra pantalla una escena virtual
-mediante la cámara. Queremos saber qué color tomará un pixel específico.
-Para conseguirlo, dispararemos rayos desde nuestro punto de vista hacia
-el entorno, haciendo que reboten en los objetos. Cuando un rayo impacte
-en una superficie, adquirirá parte de las propiedades del material del
-objeto. Además, de este rayo surgirán otros nuevos (un rayo dispersado y
-otro refractado), que a su vez repetirán el proceso. La información que
-se obtiene a partir de estos caminos de rayos nos permitirá darle color
-al píxel.</p>
-<p>La <em>rendering equation</em> se va a encargar de describir
-analíticamente cómo ocurre esto.</p>
-<p>Un último concepto más: denotemos por <span
-class="math inline">\(L_e(p, \omega_o)\)</span> a <strong>la radiancia
-producida por los materiales emisivos</strong>. Por ejemplo, una luz
-emite radiancia por sí misma.</p>
-<p>Bien, partamos de la ecuación de para la radiancia reflejada:</p>
-<p><span class="math display">\[
-L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
-\omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
-\]</span></p>
-<p>Vamos a buscar expresar la radiancia incidente en términos de la
-radiancia reflejada. Para ello, usamos la propiedad de que la radiancia
-a lo largo de un rayo no cambia.</p>
-<p>Si a una superficie le llega un fotón desde alguna parte, debe ser
-porque <em>“alguien”</em> ha tenido que emitirlo. El fotón
-necesariamente ha llegado a partir de un rayo. La propiedad nos dice que
-la radiancia no ha podido cambiar en el camino.</p>
-<p>Pues bien, consideremos una función <span class="math inline">\(r:
-\mathbb{R}^3 \times \Omega \to \mathbb{R}^3\)</span> tal que, dado un
-punto <span class="math inline">\(p\)</span> y una dirección <span
-class="math inline">\(\omega\)</span>, devuelve el siguiente punto de
-impacto en una superficie. En esencia, es una función de <em>ray
-casting</em>.</p>
-<blockquote>
-<p>TODO: foto como la de
-https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf,
-p.29</p>
-</blockquote>
-<p>Esta función nos permite expresar el punto anterior de la siguiente
-forma:</p>
-<p><span class="math display">\[
-L_i(p, \omega) = L_o(r(p, \omega), -\omega)
-\]</span></p>
-<p>Esto nos permite cambiar la expresión de <span
-class="math inline">\(L_i\)</span> en la integral anterior:</p>
-<p><span class="math display">\[
-L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
-\omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\ d\omega_i}
-\]</span></p>
-<p>Finalmente, la radiancia total vendrá dada por la suma de la
-radiancia emitida y la reflejada:</p>
-<p><span id="eq:rendering_equation" class="eqnos"><span
-class="math display">\[
-L(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o
-\leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\
-d\omega_i}
-\]</span><span class="eqnos-number">(9)</span></span></p>
-<p>Y con esto, ¡hemos obtenido la <em>rendering equation</em>!</p>
-<p>Si quieres ver gráficamente cómo funciona, te recomiendo pasarte por
-<span class="citation" data-cites="arneback-2019">(<a
-href="#ref-arneback-2019" role="doc-biblioref">Arnebäck
-2019</a>)</span>. Es un vídeo muy intuitivo.</p>
-<iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/eo_MTI-d28s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-</iframe>
-<p>Si nos paramos a pensar, la ecuación de reflexión es muy similar a la
-de renderizado. Sin embargo, hay un par de matices que las hacen muy
-diferentes:</p>
-<ul>
-<li>La ecuación de reflexión describe cómo se comporta la luz reflejada
-en un cierto punto. Es decir, tiene un ámbito local. Además, para
-calcular la radiancia reflejada, se necesita conocer la radiancia
-incidente.</li>
-<li>La <em>rendering equation</em> calcula las condiciones globales de
-la luz. Además, no se conocen las radiancias de salida.</li>
-</ul>
-<p>Este último matiz es importante. Para renderizar una imagen, se
-necesita calcular la radiancia de salida para aquellos puntos visibles
-desde nuestra cámara.</p>
-<h2 id="materiales">Materiales</h2>
-<blockquote>
-<p>TODO: https://alain.xyz/blog/advances-in-material-models este señor
-me acaba de solucionar la vida. Gracias por tanto.</p>
-<p>TODO: WIP. Bastante WIP. Basado en
-02_Rendering_Zsolnai_Ray_Tracing.</p>
-</blockquote>
-<ul>
-<li>La suma de las siguientes 3 componentes hacen el modelo de Phong:
-<ul>
-<li>Ambient: <span class="math inline">\(I = K_\alpha I_\alpha\)</span>,
-con <span class="math inline">\(k_\alpha\)</span> el coeficiente
-ambiental del objeto, <span class="math inline">\(I_\alpha\)</span> la
-intensidad ambiental de la escena/fuente de luz</li>
-<li>Diffuse (simplificada): <span class="math inline">\(I = k_d(L \cdot
-N)\)</span>, <span class="math inline">\(k_d\)</span> coeficiente difuso
-del objeto, <span class="math inline">\(L\)</span> vector que apunta a
-la luz, <span class="math inline">\(N\)</span> normal a la
-superficie</li>
-<li>Specular (simplificada): <span class="math inline">\(I = k_s(V *
-R)^n\)</span>, <span class="math inline">\(k_s\)</span> especular, <span
-class="math inline">\(V\)</span> vector apuntando a la cámara, <span
-class="math inline">\(R\)</span> vector reflejado del rayo, <span
-class="math inline">\(()^n\)</span> shininess factor.</li>
-<li><span class="math inline">\(I = K_\alpha I_\alpha + I_i(k_d(L \cdot
-N) + k_s(V \cdot R)^n)\)</span></li>
-<li>Aproximación muy bruta</li>
-<li>Con recursividad, <span class="math inline">\(I = K_\alpha I_\alpha
-+ I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)\)</span> + <span
-class="math inline">\(k_t I_t + k_r I_r\)</span>, <span
-class="math inline">\(k_t\)</span> fresnel transmission coefficient,
-<span class="math inline">\(I_t\)</span> intensity coming from the
-transmission direction, <span class="math inline">\(k_r\)</span> fresnel
-reflection coefficient, <span class="math inline">\(I_r\)</span>
-intensity coming from the reflection direction.</li>
-</ul></li>
-</ul>
-<h3 id="ecuaciones-de-fresnel-ley-de-snell">Ecuaciones de fresnel, ley
-de Snell</h3>
-<hr>
-<h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
-<p><span class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
-role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>)</span>, <span
-class="citation" data-cites="wikipedia-contributors-2021D">(<a
-href="#ref-wikipedia-contributors-2021D" role="doc-biblioref">Wikipedia:
-Radiometry 2021</a>)</span>, <span class="citation"
-data-cites="studysession-2021">(<a href="#ref-studysession-2021"
-role="doc-biblioref">StudySession 2021</a>)</span>, <span
-class="citation" data-cites="berkeley-cs184">(<a
-href="#ref-berkeley-cs184" role="doc-biblioref">Berkeley cs184 2022</a>,
-Radiometry &amp; Photometry)</span>, <span class="citation"
-data-cites="wikipedia-funcion-de-distribucion-de-reflectancia-bidireccional-2022">(<a
-href="#ref-wikipedia-funcion-de-distribucion-de-reflectancia-bidireccional-2022"
-role="doc-biblioref">Wikipedia: Función de distribución de reflectancia
-bidireccional 2022</a>)</span>, <span class="citation"
-data-cites="wikipedia-transmittance-2021">(<a
-href="#ref-wikipedia-transmittance-2021" role="doc-biblioref">Wikipedia:
-Transmittance 2021</a>)</span></p>
-<ul>
-<li>https://matmatch.com/learn/property/isotropy-anisotropy</li>
 <li>https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf</li>
+<li>Apuntes de inferencia estadística (cómo cito este tipo de
+fuentes??)</li>
 </ul>
 <h1 id="construyamos-un-path-tracer">¡Construyamos un path tracer!</h1>
 <p>Ahora que hemos introducido toda la teoría necesaria, es hora de
@@ -2805,7 +2875,7 @@ cmake ..</code></pre>
 con objetos; hasta un 95% del tiempo de ejecución total <span
 class="citation" data-cites="scratchapixel-2019">(<a
 href="#ref-scratchapixel-2019" role="doc-biblioref">Scratchapixel
-2019</a>)</span>. Reducir el número de test de intersección es
+n.d.</a>)</span>. Reducir el número de test de intersección es
 clave.</p>
 <p>Las <strong>estructuras de aceleración</strong> son una forma de
 representar la geometría de la escena. Aunque hay varios tipos
@@ -2936,7 +3006,7 @@ una geometría y sus texturas, y la transforma en unos pixels.</p>
 <p>Si necesitas más información, todos estos conceptos aparecen
 desarrollados extensamente en <span class="citation"
 data-cites="overvoorde-2022">(<a href="#ref-overvoorde-2022"
-role="doc-biblioref">Overvoorde 2022</a>)</span></p>
+role="doc-biblioref">Overvoorde n.d.</a>)</span></p>
 <p>Tradicionalmente, en rasterización se utiliza un descriptor set por
 tipo de material, y consecuentemente, un pipeline por cada tipo. En ray
 tracing esto no es posible, puesto que no se sabe qué material se va a
@@ -3099,7 +3169,7 @@ el capítulo de radiometría sea un tocho impresionante.</p>
 el momento de poner en concordancia todo lo que hemos visto a lo largo
 de los capítulos anteriores.</p>
 <p>Empecemos por la dispersión. ¿Recuerdas la ecuación de dispersión [<a
-href="#eq:scattering_equation">8</a>]? Podemos estimarla utilizando
+href="#eq:scattering_equation">6</a>]? Podemos estimarla utilizando
 Monte Carlo:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -3237,8 +3307,12 @@ listo.</p>
 <h2 id="filtering">Filtering</h2>
 <p>https://alain.xyz/blog/ray-tracing-filtering</p>
 <h2 id="offline-renderers">Offline renderers</h2>
+<h2 id="importance-resampling">Importance Resampling</h2>
+<h2 id="restir">ReSTIR</h2>
+<h2 id="low-discrepancy-sampling">Low discrepancy sampling</h2>
 <h2 id="la-industria-del-videojuego">La industria del videojuego</h2>
 <h3 id="ray-tracing-híbrido">Ray tracing híbrido</h3>
+<p>https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</p>
 <h3 id="productos-comerciales">Productos comerciales</h3>
 <ul>
 <li>Control
@@ -3273,7 +3347,10 @@ listo.</p>
 consolas</h3>
 <h2 id="posibles-mejoras-del-trabajo">Posibles mejoras del trabajo</h2>
 <ul>
-<li>Test Driven Development</li>
+<li>Test Driven Development
+<ul>
+<li><em>White furnace test</em> (01_lights.pdf, p.61)</li>
+</ul></li>
 <li>Debugging https://alain.xyz/blog/graphics-debugging</li>
 <li>Materiales
 <ul>
@@ -3287,12 +3364,6 @@ consolas</h3>
 <li>Diferentes tipos de cámaras</li>
 <li>Focal lenght, depth of field, motion blur</li>
 </ul></li>
-</ul>
-<h2 id="posibles-mejoras-del-trabajo-1">Posibles mejoras del
-trabajo</h2>
-<ul>
-<li>Test unitarios: <em>white furnace test</em> (01_lights.pdf,
-p.61)</li>
 </ul>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-6">Referencias</h2>
@@ -3320,7 +3391,7 @@ tracing en tiempo real les llevó a dedicar una serie de vídeos y
 artículos a esta tecnología, y a las diferentes maneras en las que se ha
 implementado. Se puede ver un ejemplo en <span class="citation"
 data-cites="digital-foundry-2020">(<a href="#ref-digital-foundry-2020"
-role="doc-biblioref">Digital Foundry 2020</a>)</span>.</p>
+role="doc-biblioref">Digital Foundry n.d.</a>)</span>.</p>
 <p>Dado que esta área combina tanto informática, matemáticas y una
 visión artística, ¿por qué no explorarlo a fondo?</p>
 <p>Ahora que se ha decidido el tema, es hora de ver cómo atacarlo.</p>
@@ -3338,7 +3409,7 @@ capaz de llevarlo.</p>
 especialmente la escritura formal. Prefiero ser distendido. Por suerte,
 parece que el mundo científico se está volviendo más informal <span
 class="citation" data-cites="nature-2016">(<a href="#ref-nature-2016"
-role="doc-biblioref">Nature 2016</a>)</span>, así que no soy el único
+role="doc-biblioref">Nature n.d.</a>)</span>, así que no soy el único
 que aprueba esta tendencia. Además, la estructura clásica de un escrito
 matemático de “teorema, lema, demostración, corolario” no me agrada
 especialmente. He intentado preservar su estructura, pero sin ser tan
@@ -3702,12 +3773,12 @@ uno</figcaption>
 <h2 class="unlisted unnumbered" id="referencias-7">Referencias</h2>
 <p><span class="citation" data-cites="digital-foundry-2020">(<a
 href="#ref-digital-foundry-2020" role="doc-biblioref">Digital Foundry
-2020</a>)</span>, <span class="citation" data-cites="nature-2016">(<a
-href="#ref-nature-2016" role="doc-biblioref">Nature 2016</a>)</span>,
+n.d.</a>)</span>, <span class="citation" data-cites="nature-2016">(<a
+href="#ref-nature-2016" role="doc-biblioref">Nature n.d.</a>)</span>,
 <span class="citation" data-cites="beck2001agile">(<a
 href="#ref-beck2001agile" role="doc-biblioref">Beck et al.
 2001</a>)</span>, <span class="citation" data-cites="merelo-2021">(<a
-href="#ref-merelo-2021" role="doc-biblioref">Merelo 2021</a>)</span></p>
+href="#ref-merelo-2021" role="doc-biblioref">Merelo n.d.</a>)</span></p>
 <h1 id="glosario-de-términos">Glosario de términos</h1>
 <blockquote>
 <p><em>It’s dangerous to go alone, take this.</em></p>
@@ -3790,7 +3861,7 @@ aleatoria con distribución uniforme en <span class="math inline">\([0,
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><a href="#ángulos-sólidos"><strong>Ángulo
-sólido</strong></a>, derivada [<a href="#eq:d_omega">4</a>]</td>
+sólido</strong></a>, derivada [<a href="#eq:d_omega">2</a>]</td>
 <td style="text-align: left;"><span
 class="math inline">\(\begin{aligned} &amp;\omega = \frac{A}{r^2} \\
 &amp; d\omega = \sin\theta\ d\theta\ d\phi\end{aligned}\)</span></td>
@@ -3898,18 +3969,14 @@ href="#juntando-la-brdf-y-la-btdf">BSDF</a></strong></td>
 <h1 class="unnumbered" id="bibliografía">Bibliografía</h1>
 <div id="refs" class="references csl-bib-body hanging-indent"
 role="doc-bibliography">
-<div id="ref-Sarabia" class="csl-entry" role="doc-biblioentry">
-A. Romero Sarabia. 2021. <em>Apuntes de La Asignatura Curvas y
-Superficies</em>.
-</div>
 <div id="ref-Marrs2021" class="csl-entry" role="doc-biblioentry">
 Adam Marrs, Peter Shirley, and Ingo Wald, eds. 2021. <span>“Ray Tracing
 Gems II.”</span> Apress. 2021. <a
 href="http://raytracinggems.com/rtg2">http://raytracinggems.com/rtg2</a>.
 </div>
 <div id="ref-arneback-2019" class="csl-entry" role="doc-biblioentry">
-Arnebäck. 2019. <span>“An Explanation of the Rendering Equation.”</span>
-January 10, 2019. <a
+Arnebäck. n.d. <span>“An Explanation of the Rendering Equation.”</span>
+Accessed April 9, 2022. <a
 href="https://www.youtube.com/watch?v=eo_MTI-d28s">https://www.youtube.com/watch?v=eo_MTI-d28s</a>.
 </div>
 <div id="ref-beck2001agile" class="csl-entry" role="doc-biblioentry">
@@ -3919,30 +3986,30 @@ for Agile Software Development.”</span> <a
 href="http://www.agilemanifesto.org/">http://www.agilemanifesto.org/</a>.
 </div>
 <div id="ref-berkeley-cs184" class="csl-entry" role="doc-biblioentry">
-Berkeley cs184. 2022. <span>“Monte Carlo Integration Cs184/284a.”</span>
-2022. <a
+Berkeley cs184. n.d. <span>“Monte Carlo Integration Cs184/284a.”</span>
+Accessed March 20, 2022. <a
 href="https://cs184.eecs.berkeley.edu/sp22">https://cs184.eecs.berkeley.edu/sp22</a>.
 </div>
 <div id="ref-caulfield-2020" class="csl-entry" role="doc-biblioentry">
-Caulfield, Brian. 2020. <span>“What’s the Difference Between Ray
-Tracing, Rasterization?”</span> May 22, 2020. <a
+Caulfield, Brian. n.d. <span>“What’s the Difference Between Ray Tracing,
+Rasterization?”</span> Accessed April 22, 2022. <a
 href="https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/">https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/</a>.
 </div>
 <div id="ref-crytek-2020" class="csl-entry" role="doc-biblioentry">
-Crytek. 2020. <span>“Crysis Remastered Brings Ray Tracing to Current-Gen
-Consoles.”</span> September 11, 2020. <a
+Crytek. n.d. <span>“Crysis Remastered Brings Ray Tracing to Current-Gen
+Consoles.”</span> Accessed April 17, 2022. <a
 href="https://www.cryengine.com/news/view/crysis-remastered-brings-ray-tracing-to-current-gen-consoles">https://www.cryengine.com/news/view/crysis-remastered-brings-ray-tracing-to-current-gen-consoles</a>.
 </div>
 <div id="ref-digital-foundry-2020" class="csl-entry"
 role="doc-biblioentry">
-Digital Foundry. 2020. <span>“Cyberpunk 2077 PC: What Does Ray Tracing
-Deliver... And Is It Worth It?”</span> December 19, 2020. <a
+Digital Foundry. n.d. <span>“Cyberpunk 2077 PC: What Does Ray Tracing
+Deliver... And Is It Worth It?”</span> Accessed April 10, 2022. <a
 href="https://www.youtube.com/watch?v=6bqA8F6B6NQ">https://www.youtube.com/watch?v=6bqA8F6B6NQ</a>.
 </div>
 <div id="ref-Pellacini-Marschner-2017" class="csl-entry"
 role="doc-biblioentry">
-Fabio Pellacini, Steve Marschner. 2017. <span>“Fundamentals of Computer
-Graphics.”</span> 2017. <a
+Fabio Pellacini, Steve Marschner. n.d. <span>“Fundamentals of Computer
+Graphics.”</span> Accessed April 9, 2022. <a
 href="https://pellacini.di.uniroma1.it/teaching/graphics17b/">https://pellacini.di.uniroma1.it/teaching/graphics17b/</a>.
 </div>
 <div id="ref-galvin-no-date" class="csl-entry" role="doc-biblioentry">
@@ -3956,17 +4023,18 @@ Gems.”</span> Apress. 2019. <a
 href="http://raytracinggems.com">http://raytracinggems.com</a>.
 </div>
 <div id="ref-merelo-2021" class="csl-entry" role="doc-biblioentry">
-Merelo. 2021. <span>“Infraestructura Virtual.”</span> 2021. <a
+Merelo. n.d. <span>“Infraestructura Virtual.”</span> Accessed April 16,
+2022. <a
 href="http://jj.github.io/IV/documentos/temas/Integracion_continua">http://jj.github.io/IV/documentos/temas/Integracion_continua</a>.
 </div>
 <div id="ref-nature-2016" class="csl-entry" role="doc-biblioentry">
-Nature. 2016. <span>“Scientific Language Is Becoming More
-Informal.”</span> November 8, 2016. <a
+Nature. n.d. <span>“Scientific Language Is Becoming More
+Informal.”</span> Accessed April 10, 2022. <a
 href="https://doi.org/10.1038/539140a">https://doi.org/10.1038/539140a</a>.
 </div>
 <div id="ref-overvoorde-2022" class="csl-entry" role="doc-biblioentry">
-Overvoorde, Alexander. 2022. <span>“Introduction - Vulkan
-Tutorial.”</span> 2022. <a
+Overvoorde, Alexander. n.d. <span>“Introduction - Vulkan
+Tutorial.”</span> Accessed April 18, 2022. <a
 href="https://vulkan-tutorial.com/">https://vulkan-tutorial.com/</a>.
 </div>
 <div id="ref-mcbook" class="csl-entry" role="doc-biblioentry">
@@ -3981,8 +4049,8 @@ href="https://www.pbr-book.org/3ed-2018/contents">https://www.pbr-book.org/3ed-2
 </div>
 <div id="ref-quantumfracture-2021" class="csl-entry"
 role="doc-biblioentry">
-QuantumFracture. 2021. <span>“Ya, En Serio, ¿Qué Es La Luz?”</span>
-December 10, 2021. <a
+QuantumFracture. n.d. <span>“Ya, En Serio, ¿Qué Es La Luz?”</span>
+Accessed April 22, 2022. <a
 href="https://www.youtube.com/watch?v=DkcEAz09Buo">https://www.youtube.com/watch?v=DkcEAz09Buo</a>.
 </div>
 <div id="ref-unknown-author-no-date" class="csl-entry"
@@ -3992,8 +4060,8 @@ href="https://sciencebehindpixar.org/pipeline/rendering#:%7E:text=They%20said%20
 </div>
 <div id="ref-scratchapixel-2019" class="csl-entry"
 role="doc-biblioentry">
-Scratchapixel. 2019. <span>“Learn Computer Graphics from
-Scratch!”</span> 2019. <a
+Scratchapixel. n.d. <span>“Learn Computer Graphics from Scratch!”</span>
+Accessed April 17, 2022. <a
 href="https://www.scratchapixel.com/index.php?redirect">https://www.scratchapixel.com/index.php?redirect</a>.
 </div>
 <div id="ref-Shirley2020RTW1" class="csl-entry" role="doc-biblioentry">
@@ -4016,139 +4084,141 @@ href="https://www.taylorfrancis.com/books/mono/10.1201/9780429294891/realistic-r
 </div>
 <div id="ref-studysession-2021" class="csl-entry"
 role="doc-biblioentry">
-StudySession. 2021. <span>“Solid Angle Derivation &amp;
-Intuition.”</span> March 4, 2021. <a
+StudySession. n.d. <span>“Solid Angle Derivation &amp;
+Intuition.”</span> Accessed April 22, 2022. <a
 href="https://www.youtube.com/watch?v=WrKsgBElPWA">https://www.youtube.com/watch?v=WrKsgBElPWA</a>.
 </div>
 <div id="ref-the-khronos-vulkan-working-group-2022" class="csl-entry"
 role="doc-biblioentry">
-The Khronos® Vulkan Working Group. 2022. <span>“Vulkan® 1.2.210 - KHR
-Extensions: 33. Ray Intersection.”</span> March 29, 2022. <a
+The Khronos® Vulkan Working Group. n.d. <span>“Vulkan® 1.2.210 - KHR
+Extensions: 33. Ray Intersection.”</span> Accessed April 1, 2022. <a
 href="https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap33.html#ray-intersection-candidate-determination">https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap33.html#ray-intersection-candidate-determination</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022E" class="csl-entry"
 role="doc-biblioentry">
-tracing, Wikipedia: Ray. 2022. <span>“Ray Tracing (Graphics).”</span>
-March 7, 2022. <a
+tracing, Wikipedia: Ray. n.d. <span>“Ray Tracing (Graphics).”</span>
+Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Ray_tracing_(graphics)">https://en.wikipedia.org/wiki/Ray_tracing_(graphics)</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022G" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Barycentric coordinate system. 2022. <span>“Barycentric
-Coordinate System.”</span> March 14, 2022. <a
+Wikipedia: Barycentric coordinate system. n.d. <span>“Barycentric
+Coordinate System.”</span> Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Barycentric_coordinate_system">https://en.wikipedia.org/wiki/Barycentric_coordinate_system</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022C" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Computer. 2022. <span>“Computer.”</span> March 13, 2022. <a
+Wikipedia: Computer. n.d. <span>“Computer.”</span> Accessed April 22,
+2022. <a
 href="https://en.wikipedia.org/wiki/Computer">https://en.wikipedia.org/wiki/Computer</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022O" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Differential geometry of surfaces. 2022. <span>“Differential
-Geometry of Surfaces.”</span> January 14, 2022. <a
+Wikipedia: Differential geometry of surfaces. n.d. <span>“Differential
+Geometry of Surfaces.”</span> Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Differential_geometry_of_surfaces">https://en.wikipedia.org/wiki/Differential_geometry_of_surfaces</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022H" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Distribución de probabilidad. 2022. <span>“Distribución de
-Probabilidad.”</span> February 28, 2022. <a
+Wikipedia: Distribución de probabilidad. n.d. <span>“Distribución de
+Probabilidad.”</span> Accessed April 22, 2022. <a
 href="https://es.wikipedia.org/wiki/Distribuci%C3%B3n_de_probabilidad">https://es.wikipedia.org/wiki/Distribuci%C3%B3n_de_probabilidad</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022L" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Estimador. 2022. <span>“Estimador.”</span> March 14, 2022. <a
+Wikipedia: Estimador. n.d. <span>“Estimador.”</span> Accessed April 22,
+2022. <a
 href="https://es.wikipedia.org/wiki/Estimador?oldformat=true">https://es.wikipedia.org/wiki/Estimador?oldformat=true</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022J" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Expected value. 2022. <span>“Expected Value.”</span> March
-14, 2022. <a
+Wikipedia: Expected value. n.d. <span>“Expected Value.”</span> Accessed
+April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Expected_value">https://en.wikipedia.org/wiki/Expected_value</a>.
 </div>
 <div
 id="ref-wikipedia-funcion-de-distribucion-de-reflectancia-bidireccional-2022"
 class="csl-entry" role="doc-biblioentry">
-Wikipedia: Función de distribución de reflectancia bidireccional. 2022.
+Wikipedia: Función de distribución de reflectancia bidireccional. n.d.
 <span>“Función de Distribución de Reflectancia Bidireccional.”</span>
-January 28, 2022. <a
+Accessed April 22, 2022. <a
 href="https://es.wikipedia.org/wiki/Funci%C3%B3n_de_distribuci%C3%B3n_de_reflectancia_bidireccional">https://es.wikipedia.org/wiki/Funci%C3%B3n_de_distribuci%C3%B3n_de_reflectancia_bidireccional</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022I" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Función de probabilidad. 2022. <span>“Función de
-Probabilidad.”</span> February 10, 2022. <a
+Wikipedia: Función de probabilidad. n.d. <span>“Función de
+Probabilidad.”</span> Accessed April 22, 2022. <a
 href="https://es.wikipedia.org/wiki/Funci%C3%B3n_de_probabilidad">https://es.wikipedia.org/wiki/Funci%C3%B3n_de_probabilidad</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022A" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: history of photography. 2022. <span>“History of
-Photography.”</span> March 18, 2022. <a
+Wikipedia: history of photography. n.d. <span>“History of
+Photography.”</span> Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/History_of_photography">https://en.wikipedia.org/wiki/History_of_photography</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022F" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Implicit surface. 2022. <span>“Implicit Surface.”</span>
-March 13, 2022. <a
+Wikipedia: Implicit surface. n.d. <span>“Implicit Surface.”</span>
+Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Implicit_surface">https://en.wikipedia.org/wiki/Implicit_surface</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022B" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Kodak. 2022. <span>“Kodak.”</span> March 14, 2022. <a
+Wikipedia: Kodak. n.d. <span>“Kodak.”</span> Accessed April 22, 2022. <a
 href="https://es.wikipedia.org/wiki/Kodak">https://es.wikipedia.org/wiki/Kodak</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022M" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Método de la transformada inversa. 2022. <span>“Método de La
-Transformada Inversa.”</span> February 20, 2022. <a
+Wikipedia: Método de la transformada inversa. n.d. <span>“Método de La
+Transformada Inversa.”</span> Accessed April 22, 2022. <a
 href="https://es.wikipedia.org/wiki/M%C3%A9todo_de_la_transformada_inversa">https://es.wikipedia.org/wiki/M%C3%A9todo_de_la_transformada_inversa</a>.
 </div>
 <div id="ref-wikipedia-contributors-2021A" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Parametric surface. 2021. <span>“Parametric Surface.”</span>
-December 15, 2021. <a
+Wikipedia: Parametric surface. n.d. <span>“Parametric Surface.”</span>
+Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Parametric_surface">https://en.wikipedia.org/wiki/Parametric_surface</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022K" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Probability density function. 2022. <span>“Probability
-Density Function.”</span> March 17, 2022. <a
+Wikipedia: Probability density function. n.d. <span>“Probability Density
+Function.”</span> Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Probability_density_function">https://en.wikipedia.org/wiki/Probability_density_function</a>.
 </div>
 <div id="ref-wikipedia-contributors-2021D" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Radiometry. 2021. <span>“Radiometry.”</span> September 12,
-2021. <a
+Wikipedia: Radiometry. n.d. <span>“Radiometry.”</span> Accessed March
+20, 2022. <a
 href="https://en.wikipedia.org/wiki/Radiometry">https://en.wikipedia.org/wiki/Radiometry</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022N" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Rejection sampling. 2022. <span>“Rejection Sampling.”</span>
-February 4, 2022. <a
+Wikipedia: Rejection sampling. n.d. <span>“Rejection Sampling.”</span>
+Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Rejection_sampling">https://en.wikipedia.org/wiki/Rejection_sampling</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022D" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: rendering (computer graphics). 2022. <span>“Rendering
-(Computer Graphics).”</span> March 8, 2022. <a
+Wikipedia: rendering (computer graphics). n.d. <span>“Rendering
+(Computer Graphics).”</span> Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Rendering_(computer_graphics)">https://en.wikipedia.org/wiki/Rendering_(computer_graphics)</a>.
 </div>
 <div id="ref-wikipedia-contributors-2021B" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Rendering equation. 2021. <span>“Rendering Equation.”</span>
-March 9, 2021. <a
+Wikipedia: Rendering equation. n.d. <span>“Rendering Equation.”</span>
+Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Rendering_equation">https://en.wikipedia.org/wiki/Rendering_equation</a>.
 </div>
 <div id="ref-wikipedia-transmittance-2021" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Transmittance. 2021. <span>“Transmittance.”</span> January 3,
-2021. <a
+Wikipedia: Transmittance. n.d. <span>“Transmittance.”</span> Accessed
+April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Transmittance">https://en.wikipedia.org/wiki/Transmittance</a>.
 </div>
 <div id="ref-wikipedia-contributors-2021C" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Variable aleatoria. 2021. <span>“Variable Aleatoria.”</span>
-August 30, 2021. <a
+Wikipedia: Variable aleatoria. n.d. <span>“Variable Aleatoria.”</span>
+Accessed April 22, 2022. <a
 href="https://es.wikipedia.org/wiki/Variable_aleatoria">https://es.wikipedia.org/wiki/Variable_aleatoria</a>.
 </div>
 </div>
@@ -4156,28 +4226,28 @@ href="https://es.wikipedia.org/wiki/Variable_aleatoria">https://es.wikipedia.org
 role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>En su defecto, si tenemos una función
-de densidad <span class="math inline">\(f_X\)</span>, podemos hallar la
-función de distribución haciendo <span class="math inline">\(F_X(x) =
-P[X &lt; x] = \int_{x_{min}}^{x}{f_X(t)dt}\)</span><a href="#fnref1"
-class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>No entraremos en detalle sobre la
+<li id="fn1" role="doc-endnote"><p>No entraremos en detalle sobre la
 naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos
 divulgadores como <span class="citation"
 data-cites="quantumfracture-2021">(<a href="#ref-quantumfracture-2021"
-role="doc-biblioref">QuantumFracture 2021</a>)</span> que han tratado el
-tema con suficiente profundidad.<a href="#fnref2" class="footnote-back"
+role="doc-biblioref">QuantumFracture n.d.</a>)</span> que han tratado el
+tema con suficiente profundidad.<a href="#fnref1" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>Recuerda que estamos omitiendo la
+<li id="fn2" role="doc-endnote"><p>Recuerda que estamos omitiendo la
 longitud de onda <span class="math inline">\(\lambda\)</span>.<a
-href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>En su defecto, si tenemos una función
+de densidad <span class="math inline">\(f_X\)</span>, podemos hallar la
+función de distribución haciendo <span class="math inline">\(F_X(x) =
+P[X &lt; x] = \int_{x_{min}}^{x}{f_X(t)dt}\)</span><a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4" role="doc-endnote"><p>Esto no es del todo cierto. Aunque
 generalmente suelen ser excepciones debido al coste computacional de RT
 en tiempo real, existen algunas implementaciones que son capaces de
 correrlo por software. Notablemente, el motor de Crytek, CryEngine, es
 capaz de mover ray tracing basado en hardware y en software <span
 class="citation" data-cites="crytek-2020">(<a href="#ref-crytek-2020"
-role="doc-biblioref">Crytek 2020</a>)</span><a href="#fnref4"
+role="doc-biblioref">Crytek n.d.</a>)</span><a href="#fnref4"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5" role="doc-endnote"><p>Afortunadamente, esto tampoco es
 completamente cierto. La compañía desarrolladora y distribuidora de
