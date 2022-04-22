@@ -1,18 +1,16 @@
 # Integración de Monte Carlo
 
-> TODO: este capítulo seguramente debería ir más tarde. De esa forma, puedo introducir otros conceptos antes. De momento, se queda aquí.
-
-Una de las partes más importante de nuestro ray tracer es saber calcular la cantidad de luz en un punto de la escena. Para ello, necesitaríamos hallar la radianza en dicha posición mediante la *rendering equation*. Sin embargo, es *muy* difícil resolverla; tanto computacional como analíticamente. Por ello, debemos atacar el problema desde otro punto de vista.
+Como vimos en el capítulo anterior, la clave para conseguir una imagen en nuestro ray tracer es calcular la cantidad de luz en un punto de la escena. Para ello, necesitamos hallar la radiancia en dicha posición mediante la *rendering equation*. Sin embargo, es *muy* difícil resolverla; tanto computacional como analíticamente. Por ello, debemos atacar el problema desde otro punto de vista.
 
 Las técnicas de Monte Carlo nos permitirán aproximar el valor que toman las integrales mediante una estimación. Utilizando muestreo aleatorio para evaluar puntos de una función, seremos capaces de obtener un resultado suficientemente bueno.
 
 Una de las propiedades que hacen interesantes a este tipo de métodos es la **independencia del ratio de convergencia y la dimensionalidad del integrando**. Sin embargo, conseguir un mejor rendimiento tiene un precio a pagar. Dadas $n$ muestras, la convergencia a la solución correcta tiene un orden de $\mathcal{O}\left(n^{-1/2}\right) = \mathcal{O}\left(\frac{1}{\sqrt{n}}\right)$. Es decir, para reducir el error a la mitad, necesitaríamos 4 veces más muestras.
 
-En este capítulo veremos el fundamento de la integración de Monte Carlo, cómo muestrear distribuciones específicas y cómo afinar el resultado final.
+En este capítulo veremos los fundamentos de la integración de Monte Carlo, cómo muestrear distribuciones específicas y métodos para afinar el resultado final.
 
 ## Repaso de probabilidad
 
-Necesitaremos unas cuantas nociones de variable aleatoria para poder entender la integración de Monte Carlo, así que vamos a hacer un breve repaso.
+Antes de comenzar a fondo, necesitaremos unas nociones de variable aleatoria para poder entender la integración de Monte Carlo, por lo que vamos a hacer un breve repaso.
 
 Una **variable aleatoria** $X$ (v.a.) es, esencialmente, una regla que asigna un valor numérico a cada posibilidad de proceso de azar. Formalmente, es una función definida en un espacio de probabilidad $(\Omega, \mathcal{A}, P)$ asociado a un exprimento aleatorio:
 
@@ -24,7 +22,7 @@ A $\Omega$ lo conocemos como espacio muestral (conjunto de todas las posibilidad
 
 > NOTE: no sé hasta qué punto debería meterme en la definición formal de variable aleatoria. Es una movida tremenda para poca cosa que necesitamos. De momento, voy con lo más interesante.
 
-Una variable aleatoria $X$ puede clasificarse en discreta o continua, dependiendo de cómo sea su rango $R_X = \left\{ x \in \mathbb{R} \,\middle|\, \exists \omega \in \Omega : X(\omega) = x \right\}$:
+Una variable aleatoria $X$ puede clasificarse atendiendo a cómo sea su rango $R_X = \set{x \in \mathbb{R}}{\exists \omega \in \Omega \text{ tal que } X(\omega) = x}$: en discreta o continua.
 
 ### Variables aleatorias discretas
 
@@ -48,7 +46,9 @@ Cada resultado tiene la misma probabilidad de ocurrir (claro está, si el dado n
 
 La v.a. $X$ denotará la suma de los valores obtenidos en cada uno. Así, por ejemplo, si al lanzar los dados hemos obtenido $(1, 3)$, $X$ tomará el valor $4$. En total, $X$ puede tomar todos los valores comprendidos entre $2$ y $12$. Este sería el **espacio muestral**. Cada pareja no está asociada a un único valor de $X$. Por ejemplo, $(1, 2)$ suma lo mismo que $(2, 1)$. Esto nos lleva a preguntarnos... ¿Cuál es la probabilidad de que $X$ adquiera un cierto valor?
 
-La **función masa de probabilidad** nos permite conocer la probabilidad de que $X$ tome un cierto valor $x$. Se denota por $P(X = x)$.
+La **función masa de probabilidad** nos permite conocer la probabilidad de que $X$ tome un cierto valor $x$. Se denota por $P(X = x)$, aunque también usaremos $p_X(x)$ o directamente $p(x)$, cuando no haya lugar a dudas.
+
+> **Nota**(ción): Cuando $X$ tenga una cierta función masa de probabilidad, escribiremos $X \sim p_X$
 
 En este ejemplo, la probabilidad de que $X$ tome el valor $4$ es
 
@@ -72,8 +72,6 @@ Muchas veces nos interesará conocer la probabilidad de que $X$ se quede por deb
 $$
 F_X(x) = P(X \le x) = \sum_{\substack{k \in \Omega \\ k \le x}}{P(X = k)}
 $$
-
-
 
 Es una función continua por la derecha y monótona no decreciente. Además, se cumple que $0 \le F_X \le 1(x)$ y $\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$.
 
@@ -224,6 +222,22 @@ Enunciemos un par de propiedades que tiene, similares a la de la esperanza:
 
 La varianza nos será útil a la hora de medir el error cometido por una estimación de Monte Carlo.
 
+### Estimadores
+
+A veces, no podremos conocer de antemano el valor que toma un cierto parámetro de una distribución. Sin embargo, conocemos el tipo de distribución que nuestra variable aleatoria $X$ sigue. Los estimadores nos proporcionarán una forma de calcular el posible valor de esos parámetros a partir de una muestra de $X$.
+
+Sea $X$ una variablea aleatoria con distribución perteneciente a una familia de distribuciones paramétricas $X \sim F \in \set{F(\theta)}{\theta \in \Theta}$. $\Theta$ es el conjunto de valores que puede tomar el parámetro. Buscamos una forma de determinar el valor de $\theta$.
+
+Diremos que $T(X_1, \dots, X_n)$ es **un estimador de $theta$** si $T$ toma valores en $\Theta$.
+
+Como vemos, la definición no es muy restrictiva. Únicamente le estamos pidiendo a la función de la muestra que pueda tomar valores viables para la distribución.
+
+Se dice que un estimador $T(X_1, \dots, X_n)$ es **insesgado** (o centrado en el parámetro $\theta$) si
+
+$$
+E[T(X_1, \dots, X_n)] = \theta\quad \forall \theta \in \Theta
+$$
+
 ## El estimador de Monte Carlo
 
 Tras este breve repaso de probabilidad, estamos en condiciones de definir el estimador de Monte Carlo. Primero, vamos con su versión más sencilla.
@@ -244,7 +258,7 @@ E[\hat\mu_N] & = E\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right] = \frac{1}{N} E
 \end{aligned}
 $$
 
-A este tipo de estimadores se les llama insesgados.
+Por lo que el estimador es insesgado.
 
 Generalmente nos encontraremos en la situación en la que $Y = f(X)$, donde $X$ sigue una distribución con función de densidad $p_X(x)$, y $f: S \rightarrow \mathbb{R}$. En ese caso, sabemos que la esperanza de $Y$ se puede calcular como
 
@@ -438,3 +452,4 @@ En esta sección daremos respuesta a este dilema. Estudiaremos cómo las fuentes
 
 - *(berkeley-cs184)* https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf
 - Gems I, p.284.
+- https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf
