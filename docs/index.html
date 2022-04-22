@@ -295,7 +295,9 @@ aleatorios</a>
 transformada inversa</a></li>
 <li><a href="#método-del-rechazo">Método del rechazo</a></li>
 </ul></li>
-<li><a href="#importance-sampling"><em>Importance sampling</em></a></li>
+<li><a href="#importance-sampling">Importance sampling</a></li>
+<li><a href="#multiple-importance-sampling">Multiple importance
+sampling</a></li>
 </ul></li>
 <li><a href="#construyamos-un-path-tracer">¡Construyamos un path
 tracer!</a>
@@ -2436,22 +2438,22 @@ class="math inline">\(Var[\hat{I}_N]\)</span>. Para ello, usamos las
 propiedades que vimos en la <a
 href="#esperanza-y-varianza-de-una-variable-aleatoria">sección
 anterior</a>:</p>
-<p><span class="math display">\[
+<p><span id="eq:mc_varianza" class="eqnos"><span class="math display">\[
 \begin{aligned}
   Var[\hat{I}_N]
     &amp; = Var\left[\frac{1}{N} \sum_{i =
 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}\right] = \\
     &amp; = \frac{1}{N^2} Var\left[ \sum_{i =
 1}^{N}{\frac{f(X_i)}{p_X(X_i)}} \right] = \\
-    &amp; = \frac{1}{N^2} N Var\left[\frac{f(X_i)}{p_X(X_i)}\right] = \\
-    &amp; = \frac{1}{N} Var\left[\frac{f(X_i)}{p_X(X_i)}\right]
+    &amp; = \frac{1}{N^2} N Var\left[\frac{f(X)}{p_X(X)}\right] = \\
+    &amp; = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
 \end{aligned}
-\]</span></p>
+\]</span><span class="eqnos-number">(10)</span></span></p>
 <p>es decir, la varianza del estimador es inversamente proporcional al
 número de muestras <span class="math inline">\(N\)</span>.</p>
 <p>La desviación estándar es <span class="math display">\[
 \sqrt{Var[\hat{I}_N]} =
-\frac{\sqrt{Var\left[\frac{f(X_i)}{p_X(X_i)}\right]}}{\sqrt{N}}
+\frac{\sqrt{Var\left[\frac{f(X)}{p_X(X)}\right]}}{\sqrt{N}}
 \]</span></p>
 <p>así que, como adelantamos al inicio del capítulo, la estimación tiene
 un error del orden <span
@@ -2581,7 +2583,7 @@ F_X(x) = \int_{0}^{x}{p_X(x)dx} = \int_{0}^{x}{\frac{3x^2}{8}} =
 <p>Solo nos queda conseguir la muestra. Para ello,</p>
 <p><span class="math display">\[
 \begin{aligned}
-\xi &amp; = F_X(x)  = \frac{x^3}{8} \iff \\
+\xi &amp; = F_X(x)  = \frac{x^3}{8} \quad \iff \\
 x &amp; = \sqrt[3]{8 \xi}
 \end{aligned}
 \]</span></p>
@@ -2646,14 +2648,60 @@ muestra de <span class="math inline">\(p_X\)</span></li>
 y se vuelve al paso 1.</li>
 </ol></li>
 </ol>
-<h2 id="importance-sampling"><em>Importance sampling</em></h2>
-<p>Con la llegada de ray tracing en tiempo real surge una obligación por
-optimizar los pocos rayos que se pueden trazar. Una de las preguntas que
-nos debemos hacer es <em>hacia dónde</em> generamos el rayo.</p>
-<p>En esta sección daremos respuesta a este dilema. Estudiaremos cómo
-las fuentes de luz afectan a la calidad de la imagen final. Veremos
-técnicas de reducción del error, las cuales nos permitirán acelerar
-enormemente el cómputo de la escena.</p>
+<h2 id="importance-sampling">Importance sampling</h2>
+<p>Si recordamos la varianza del estimador de Monte Carlo [<a
+href="#eq:mc_varianza">10</a>],</p>
+<p><span class="math display">\[
+Var[\hat{I}_N] = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
+\]</span></p>
+<p>podemos ver que depende de dos factores: el número de muestras <span
+class="math inline">\(N\)</span> y la varianza de <span
+class="math inline">\(Var\left[\frac{f(X)}{p_X(X)}\right]\)</span>.
+Aumentar el número de muestras haría que la varianza decrezca. Sin
+embargo, alcanzaríamos un punto de retornos reducidos. Por tanto, vamos
+a centrarnos ahora en el segundo término.</p>
+<p>En esencia, la varianza de <span
+class="math inline">\(Var\left[\frac{f(X)}{p_X(X)}\right]\)</span>
+decrecerá cuanto más cercana sea la función de probabilidad <span
+class="math inline">\(p_X\)</span> a la función <span
+class="math inline">\(f(X)\)</span>.</p>
+<p>Supongamos que <span class="math inline">\(f\)</span> es proporcional
+a <span class="math inline">\(p_X\)</span>. Esto es, existe un <span
+class="math inline">\(s\)</span> tal que <span
+class="math inline">\(f(x) = s p_X(x)\)</span>. Como <span
+class="math inline">\(p_X\)</span> debe integrar uno, podemos calcular
+el valor de <span class="math inline">\(s\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \int_{S}{p_X(x)dx} &amp; = \int_{S}{sf(x)dx} = 1 \quad \iff \\
+  s &amp; = \frac{1}{\int_{S}{f(x)dx}}
+\end{aligned}
+\]</span></p>
+<p>Y entonces, se tendría que</p>
+<p><span class="math display">\[
+\begin{aligned}
+  Var\left[\frac{f(X)}{p_X(X)}\right] &amp; =
+Var\left[\frac{f(X)}{sf(X)}\right] = \\
+  &amp; = Var\left[\frac{1}{s}\right] = \\
+  &amp; = 0
+\end{aligned}
+\]</span></p>
+<p>En la práctica, esto es inviable. El problema que queremos resolver
+es calcular la integral de <span class="math inline">\(f\)</span>. Y
+para sacar <span class="math inline">\(s\)</span>, necesitaríamos el
+valor de la integral de <span class="math inline">\(f\)</span>. ¡Estamos
+dando vueltas!</p>
+<p>Por fortuna, hay algoritmos que son capaces de proporcionar la
+constante <span class="math inline">\(s\)</span> sin necesidad de
+calcular la integral. Uno de los más conocidos es
+<strong>Metropolis-Hastings</strong>, el cual se basa en cadenas de
+Markov de Monte Carlo.</p>
+<p>En este trabajo nos centraremos en buscar funciones de densidad <span
+class="math inline">\(p_X\)</span> que se aproximen a <span
+class="math inline">\(f\)</span> lo más fielmente posible, dentro del
+contexto del transporte de luz.</p>
+<h2 id="multiple-importance-sampling">Multiple importance sampling</h2>
+<p>https://graphics.stanford.edu/courses/cs348b-03/papers/veach-chapter9.pdf</p>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
 <p><span class="citation" data-cites="ShirleyRRT">(<a
@@ -2701,6 +2749,7 @@ https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integrat
 <li>https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf</li>
 <li>Apuntes de inferencia estadística (cómo cito este tipo de
 fuentes??)</li>
+<li>https://www.wikiwand.com/en/Metropolis%E2%80%93Hastings_algorithm</li>
 </ul>
 <h1 id="construyamos-un-path-tracer">¡Construyamos un path tracer!</h1>
 <p>Ahora que hemos introducido toda la teoría necesaria, es hora de
@@ -4239,7 +4288,7 @@ href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3" role="doc-endnote"><p>En su defecto, si tenemos una función
 de densidad <span class="math inline">\(f_X\)</span>, podemos hallar la
 función de distribución haciendo <span class="math inline">\(F_X(x) =
-P[X &lt; x] = \int_{x_{min}}^{x}{f_X(t)dt}\)</span><a href="#fnref3"
+P[X &lt; x] = \int_{x_{min}}^{x}{f_X(t)dt}\)</span>.<a href="#fnref3"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4" role="doc-endnote"><p>Esto no es del todo cierto. Aunque
 generalmente suelen ser excepciones debido al coste computacional de RT
