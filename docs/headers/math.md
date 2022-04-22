@@ -1,5 +1,7 @@
 \newcommand*\Eval[3]{\left.#1\right\rvert_{#2}^{#3}}
 \newcommand*\abs[1]{\lvert #1 \rvert}
+\newcommand*\set[1]{\left\{ #1 \right\}}
+\newcommand*\set[2]{\left\{#1 \,\middle|\, #2 \right\}}
 
 \definecolor{blanco-100}{HTML}{fcfcfc}
 \definecolor{blanco-200}{HTML}{f1f1f3}
