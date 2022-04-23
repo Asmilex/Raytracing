@@ -2,7 +2,7 @@
 
 En este capítulo estudiaremos las bases de la radiometría. Esta área de la óptica nos proporcionará una serie de herramientas con las cuales podremos responder a la pregunta *cuánta luz existe en un punto*.
 
-## Unidades radiométricas básicas
+## Introducción a la radiometría
 
 > **Nota**: cuando usemos un paréntesis tras una ecuación, dentro denotaremos sus unidades de medida.
 
@@ -85,7 +85,6 @@ $$
 ![Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio](./img/02/Ángulo%20sólido.png)
 
 Los denotaremos por $\omega$. En física se suele usar $\Omega$, pero aquí optaremos por la minúscula. Su unidad de medida es el estereorradián ($\text{sr}$).  Se tiene que $\omega \in [0, 4\pi]$. Si $2 \pi$ radianes corresponden a la circunferencia completa, para la esfera se tiene que $4 \pi$ esteorradianes cubren toda la superficie de esta. Se tiene también que $2\pi \text{sr}$ cubren un hemisferio. Además, un esteorradián corresponde a una superficie con área $r^2$: $1 \text{sr} = \frac{r^2}{r^2}$.
-
 
 De vez en cuando, usaremos $\omega$ **un vector dirección unitario en la esfera**.
 
@@ -235,15 +234,11 @@ $$
 
 Lo que finalmente nos dice que $L_1 = L_2$, como queríamos ver.
 
-## Fotometría y radiometría
-
-> TODO: hablar sobre las diferencias. Hay información útil en 01_lights.pdf, p.43
-
-## Integrales radiométricas
+### Integrales radiométricas
 
 En esta sección, vamos a explorar las nuevas herramientas que nos proporciona la radiancia. Veremos también cómo integrar ángulos sólidos, y cómo simplificar dichas integrales.
 
-### Una nueva expresión de la irradiancia y el flujo
+#### Una nueva expresión de la irradiancia y el flujo
 
 Como dijimos al final de [la sección de la irradiancia](#irradiancia), esta medida no tiene en cuenta las direcciones desde las que llegaba la luz. A diferencia de esta, la radiancia sí que las utiliza. Dado que una de las ventajas de la radiancia es que nos permite obtener el resto de medidas radiométricas, ¿por qué no desarrollamos una nueva expresión de la irradiancia?
 
@@ -286,7 +281,7 @@ $$
 
 > TODO: a lo mejor merece la pena hacer un ejemplo sobre los diferentes tipos de luz, como en https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf p.41? O a lo mejor un capítulo para hablar de luces en general.
 
-### Integrando sobre área
+#### Integrando sobre área
 
 Una herramienta más que nos vendrá bien será la capacidad de convertir integrales sobre direcciones en integrales sobre área. Hemos hecho algo similar en las secciones anteriores, así que no perdemos nada por generalizarlo.
 
@@ -311,9 +306,15 @@ $$
 
 siendo $\theta_o$ el ángulo de la radiancia de salida de la superficie del cuadrilátero.
 
-## Dispersión de luz: las familias de funciones de distribución bidireccionales
+### Fotometría y radiometría
 
-Cuando una fuente de luz emite fotones hacia una superficie impactando en ella, ocurren un par de sucesos: parte de la luz se refleja en ella, saliendo disparada hacia alguna dirección; mientras que otra parte se absorbe.
+> TODO: hablar sobre las diferencias. Hay información útil en 01_lights.pdf, p.43
+
+## Dispersión de luz
+
+Cuando una luz impacta en una superficie, ocurren un par de sucesos: parte de los fotones se reflejan saliendo disparados hacia alguna dirección, mientras que otros se absorben.
+
+La forma en la que se comportan depende de cómo sea la superficie. Específicamente, del material del que esté hecha.
 
 En informática gráfica se consideran tres tipos principales de dispersión de luz: **dispersión en superficie** (*surface scattering*), **dispersión volumétrica** (*volumetric scattering*) y **dispersión bajo superficie** (*subsurface scattering*)
 
@@ -349,8 +350,6 @@ $$
 >
 > Aquí, usaremos la notación de integrar con respecto a los incidentes, como se hace en [@PBRT3e].
 
-
-
 Las BRDF físicamente realistas tienen un par de propiedades importantes:
 
 1. **Reciprocidad**: para cualquier par de direcciones $\omega_i$, $\omega_o$, se tiene que $f_r(p, \omega_i, \omega_o)=\ $ $f_r(p, \omega_o \leftarrow \omega_i)$.
@@ -374,7 +373,7 @@ $$
 
 Al contrario que en la BRDF, $\omega_o$ y $\omega_i$ se encuentran en hemisferios diferentes.
 
-### Juntando la BRDF y la BTDF en La función de distribución de dispersión bidireccional
+### La función de distribución de dispersión bidireccional (BSDF)
 
 Convenientemente, podemos unir la BRDF y la BTDF en una sola expresión, llamada **la función de distribución de dispersión bidireccional** (*bidirectional scattering distribution function*, BSDF). A la BSDF la denotaremos por
 
@@ -382,7 +381,7 @@ $$
 f(p, \omega_o \leftarrow \omega_i)
 $$
 
-> **Intuición:** *la BSDF son todas las posibles direcciones en las que puede salir disparada la luz.*
+> **Nota**(ción): también se suele utilizar BxDF en vez de BSDF.
 
 Usando esta definición, podemos obtener
 
@@ -398,12 +397,15 @@ $${#eq:scattering_equation}
 
 siendo $\mathbb{S}^2$ la esfera.
 
+> **Intuición:** *la BSDF son todas las posibles direcciones en las que puede salir disparada la luz.*
+
 Esta forma de expresar la radiancia es muy importante. Generalmente se le suele llamar la *ecuación de dispersión* (*scattering equation*, en inglés). Dado que es una integral muy importante, seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte Carlo nos vendrán de perlas! Más adelante hablaremos de ella.
 
 Las BSDFs tienen unas propiedades interesantes:
 
 - **Positividad**: como los fotones no se pueden reflejar "negativamente", $f(p, \omega_o \leftarrow \omega_i) \ge 0$.
-- **Reciprocidad de Helmotz:** se puede invertir un rayo de luz: $f(p, \omega_o \leftarrow \omega_i) = f(p, \omega_i \leftarrow \omega_o)$.
+- **Reciprocidad de Helmotz:** se puede invertir la dirección de un rayo: $f(p, \omega_o \leftarrow \omega_i) = f(p, \omega_i \leftarrow \omega_o)$.
+- **White furnace test**: Toda la luz incidente debe ser reflejada cuando la reflectividad de la superficie es 1.
 - **Conservación de la energía**: todos los fotones que llegan a la superficie deben ser reflejados o absorbidos. Es decir, no se emite ningún fotón nuevo:
 
 $$
@@ -420,14 +422,13 @@ $$
 \rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_i}\ d\omega_i}
 $$
 
-
 Por otra parte, la **reflectancia hemisférica-hemisférica** (*hemispherical-hemispherical reflectance*) es un valor espectral que nos proporciona el ratio de luz incidente reflejada por una superficie, suponiendo que llega la misma luz desde todas direcciones:
 
 $$
 \rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_o\ \cos\theta_i}\ d\omega_o\ d\omega_i}
 $$
 
-### Reflejos
+### Tipos de reflejos
 
 Una vez hemos definido las funciones de distribución bidireccionales, debemos encargarnos de modelar el comportamiento explícitamente. Para ello, veamos cómo los materiales modifican las distribuciones.
 
@@ -441,6 +442,68 @@ En esencia, los reflejos se pueden clasificar en cuatro grandes tipos:
 Ten en cuenta que es muy difícil encontrar objetos físicos que imiten a la perfección un cierto modelo. Suelen recaer en un híbrido entre dos o más modelos.
 
 Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, puede ser **isotrópica** o **anisotrópica**. Los materiales isotrópicos mantienen las propiedades de reflectancia invariantes ante rotaciones; es decir, la distribución de luz es la misma en todas direcciones. Por el contrario, los anisotrópicos reflejan diferentes cantidades de luz dependiendo desde dónde los miremos. Los ejemplos más habituales de materiales anisotrópicos son las rocas y la madera.
+
+### Modelos analíticos de *shading*
+
+Los modelos analíticos de shading surgen como simplificaciones de las BRDFs. En esta sección, vamos a ver algunos de los más famosos
+
+> TODO: https://alain.xyz/blog/advances-in-material-models este señor me acaba de solucionar la vida. Gracias por tanto.
+
+#### Lambertiano
+
+Este es uno de los modelos más sencillos. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador.
+
+Se describe como
+
+$$
+L_o^d(p, \omega_o \leftarrow \omega_i) = k_d \max\{0, \mathbf{n} \cdot \mathbf{l}\}
+$$
+
+siendo $k_d$ el coeficiente de reflectancia (que mide cuánta luz se absorbe por la superficie, conocido como albedo), $\mathbf{n}$ la normal al punto en la superficie, y $\mathbf{l}$ la dirección de la luz.
+
+El producto escalar de los vectores $\mathbf{n}$ y $\mathbf{l}$ hace que, cuando el ángulo de incidencia de la luz es muy cerrado, la radiancia será prácticamente 0.
+
+La implementación es muy sencilla:
+
+```glsl
+float lambertian_pdf(vec3 normal, vec3 light_dir) {
+    return max(
+        0.0,
+        dot(normal, light_dir)
+    ) * (1.0 / PI);
+}
+
+float lambiertian_light(Superficie s, Luz light) {
+    return s.albedo * lambertian_pdf(s.normal, light.dir);
+}
+```
+
+Este modelo está muy limitado, pues en la vida real, los objetos muestran algún tipo de interacción especular.
+
+#### Phong
+
+#### Blinn - Phong
+
+#### Shlick
+
+#### Oren - Nayar
+
+#### GGX
+
+### Ecuaciones de fresnel, ley de Snell
+
+>
+> TODO: WIP. Bastante WIP. Basado en 02_Rendering_Zsolnai_Ray_Tracing.
+
+- La suma de las siguientes 3 componentes hacen el modelo de Phong:
+  - Ambient: $I = K_\alpha I_\alpha$, con $k_\alpha$ el coeficiente ambiental del objeto, $I_\alpha$ la intensidad ambiental de la escena/fuente de luz
+  - Diffuse (simplificada): $I = k_d(L \cdot N)$, $k_d$ coeficiente difuso del objeto, $L$ vector que apunta a la luz, $N$ normal a la superficie
+  - Specular (simplificada): $I = k_s(V * R)^n$, $k_s$ especular, $V$ vector apuntando a la cámara, $R$ vector reflejado del rayo, $()^n$ shininess factor.
+  - $I = K_\alpha I_\alpha + I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)$
+  - Aproximación muy bruta
+  - Con recursividad, $I = K_\alpha I_\alpha + I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)$ + $k_t I_t + k_r I_r$, $k_t$ fresnel transmission coefficient,  $I_t$ intensity coming from the transmission direction, $k_r$ fresnel reflection coefficient, $I_r$ intensity coming from the reflection direction.
+
+
 
 ## La rendering equation
 
@@ -499,22 +562,6 @@ Si nos paramos a pensar, la ecuación de reflexión es muy similar a la de rende
 
 Este último matiz es importante. Para renderizar una imagen, se necesita calcular la radiancia de salida para aquellos puntos visibles desde nuestra cámara.
 
-## Materiales
-
-> TODO: https://alain.xyz/blog/advances-in-material-models este señor me acaba de solucionar la vida. Gracias por tanto.
->
-> TODO: WIP. Bastante WIP. Basado en 02_Rendering_Zsolnai_Ray_Tracing.
-
-- La suma de las siguientes 3 componentes hacen el modelo de Phong:
-  - Ambient: $I = K_\alpha I_\alpha$, con $k_\alpha$ el coeficiente ambiental del objeto, $I_\alpha$ la intensidad ambiental de la escena/fuente de luz
-  - Diffuse (simplificada): $I = k_d(L \cdot N)$, $k_d$ coeficiente difuso del objeto, $L$ vector que apunta a la luz, $N$ normal a la superficie
-  - Specular (simplificada): $I = k_s(V * R)^n$, $k_s$ especular, $V$ vector apuntando a la cámara, $R$ vector reflejado del rayo, $()^n$ shininess factor.
-  - $I = K_\alpha I_\alpha + I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)$
-  - Aproximación muy bruta
-  - Con recursividad, $I = K_\alpha I_\alpha + I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)$ + $k_t I_t + k_r I_r$, $k_t$ fresnel transmission coefficient,  $I_t$ intensity coming from the transmission direction, $k_r$ fresnel reflection coefficient, $I_r$ intensity coming from the reflection direction.
-
-### Ecuaciones de fresnel, ley de Snell
-
 <hr>
 
 ## Referencias {.unlisted .unnumbered}
@@ -523,6 +570,8 @@ Este último matiz es importante. Para renderizar una imagen, se necesita calcul
 
 - https://matmatch.com/learn/property/isotropy-anisotropy
 - https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf
+- https://alain.xyz/blog/advances-in-material-models
+
 
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores como [@quantumfracture-2021] que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
