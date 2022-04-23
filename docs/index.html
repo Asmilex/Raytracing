@@ -232,26 +232,20 @@ triángulos</a></li>
 </ul></li>
 <li><a href="#transporte-de-luz">Transporte de luz</a>
 <ul>
-<li><a href="#unidades-radiométricas-básicas">Unidades radiométricas
-básicas</a>
+<li><a href="#introducción-a-la-radiometría">Introducción a la
+radiometría</a>
 <ul>
 <li><a href="#potencia">Potencia</a></li>
 <li><a href="#irradiancia">Irradiancia</a></li>
 <li><a href="#ángulos-sólidos">Ángulos sólidos</a></li>
 <li><a href="#intensidad-radiante">Intensidad radiante</a></li>
 <li><a href="#radiancia">Radiancia</a></li>
-</ul></li>
+<li><a href="#integrales-radiométricas">Integrales
+radiométricas</a></li>
 <li><a href="#fotometría-y-radiometría">Fotometría y
 radiometría</a></li>
-<li><a href="#integrales-radiométricas">Integrales radiométricas</a>
-<ul>
-<li><a href="#una-nueva-expresión-de-la-irradiancia-y-el-flujo">Una
-nueva expresión de la irradiancia y el flujo</a></li>
-<li><a href="#integrando-sobre-área">Integrando sobre área</a></li>
 </ul></li>
-<li><a
-href="#dispersión-de-luz-las-familias-de-funciones-de-distribución-bidireccionales">Dispersión
-de luz: las familias de funciones de distribución bidireccionales</a>
+<li><a href="#dispersión-de-luz">Dispersión de luz</a>
 <ul>
 <li><a
 href="#la-función-de-distribución-de-reflectancia-bidireccional-brdf">La
@@ -260,19 +254,17 @@ función de distribución de reflectancia bidireccional (BRDF)</a></li>
 href="#la-función-de-distribución-de-transmitancia-bidireccional-btdf">La
 función de distribución de transmitancia bidireccional (BTDF)</a></li>
 <li><a
-href="#juntando-la-brdf-y-la-btdf-en-la-función-de-distribución-de-dispersión-bidireccional">Juntando
-la BRDF y la BTDF en La función de distribución de dispersión
-bidireccional</a></li>
+href="#la-función-de-distribución-de-dispersión-bidireccional-bsdf">La
+función de distribución de dispersión bidireccional (BSDF)</a></li>
 <li><a href="#reflectancia-hemisférica">Reflectancia
 hemisférica</a></li>
-<li><a href="#reflejos">Reflejos</a></li>
-</ul></li>
-<li><a href="#la-rendering-equation">La rendering equation</a></li>
-<li><a href="#materiales">Materiales</a>
-<ul>
+<li><a href="#tipos-de-reflejos">Tipos de reflejos</a></li>
+<li><a href="#modelos-analíticos-de-shading">Modelos analíticos de
+<em>shading</em></a></li>
 <li><a href="#ecuaciones-de-fresnel-ley-de-snell">Ecuaciones de fresnel,
 ley de Snell</a></li>
 </ul></li>
+<li><a href="#la-rendering-equation">La rendering equation</a></li>
 </ul></li>
 <li><a href="#integración-de-monte-carlo">Integración de Monte Carlo</a>
 <ul>
@@ -288,16 +280,31 @@ y varianza de una variable aleatoria</a></li>
 </ul></li>
 <li><a href="#el-estimador-de-monte-carlo">El estimador de Monte
 Carlo</a></li>
+<li><a href="#importance-sampling">Importance sampling</a></li>
+<li><a href="#multiple-importance-sampling">Multiple importance
+sampling</a></li>
 <li><a href="#escogiendo-puntos-aleatorios">Escogiendo puntos
 aleatorios</a>
 <ul>
 <li><a href="#método-de-la-transformada-inversa">Método de la
 transformada inversa</a></li>
 <li><a href="#método-del-rechazo">Método del rechazo</a></li>
+<li><a href="#distribuciones-unidimensionales">Distribuciones
+unidimensionales</a></li>
+<li><a href="#distribuciones-bidimensionales">Distribuciones
+bidimensionales</a></li>
 </ul></li>
-<li><a href="#importance-sampling">Importance sampling</a></li>
-<li><a href="#multiple-importance-sampling">Multiple importance
-sampling</a></li>
+<li><a href="#técnicas-de-reducción-de-varianza">Técnicas de reducción
+de varianza</a>
+<ul>
+<li><a href="#ruleta-rusa">Ruleta rusa</a></li>
+<li><a href="#next-event-estimation">Next Event Estimation</a></li>
+<li><a href="#blue-noise">Blue noise</a></li>
+<li><a href="#forced-random-sampling">Forced random sampling</a></li>
+<li><a href="#sampling-importance-resampling">Sampling importance
+resampling</a></li>
+<li><a href="#section"></a></li>
+</ul></li>
 </ul></li>
 <li><a href="#construyamos-un-path-tracer">¡Construyamos un path
 tracer!</a>
@@ -349,8 +356,6 @@ spotlights</a></li>
 <li><a href="#denoising">Denoising</a></li>
 <li><a href="#filtering">Filtering</a></li>
 <li><a href="#offline-renderers">Offline renderers</a></li>
-<li><a href="#importance-resampling">Importance Resampling</a></li>
-<li><a href="#restir">ReSTIR</a></li>
 <li><a href="#low-discrepancy-sampling">Low discrepancy
 sampling</a></li>
 <li><a href="#la-industria-del-videojuego">La industria del
@@ -633,7 +638,16 @@ role="doc-biblioref">Haines and Akenine-Möller 2019</a>)</span>, <span
 class="citation" data-cites="Marrs2021">(<a href="#ref-Marrs2021"
 role="doc-biblioref">Adam Marrs and Wald 2021</a>)</span>, una colección
 de papers esenciales sobre ray tracing publicada por Nvidia.</li>
+<li>El autor <a href="https://users.cg.tuwien.ac.at/zsolnai/">Károly
+Zsolnai, de Two Minute Papers</a>. No solo ha inspirado parte del
+trabajo, sino que su curso sobre transporte de luz de la <a
+href="https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html">universidad
+de Austria</a> ha sido una gran fuente de información para el
+trabajo.</li>
 </ul>
+<blockquote>
+<p>TODO: tengo que ver exactamente cómo cito esa fuente anterior.</p>
+</blockquote>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias">Referencias</h2>
 <p><span class="citation" data-cites="wikipedia-contributors-2022A">(<a
@@ -659,7 +673,7 @@ role="doc-biblioref"><span>“Rendering”</span> n.d.</a>)</span>, <span
 class="citation" data-cites="Haines2019">(<a href="#ref-Haines2019"
 role="doc-biblioref">Haines and Akenine-Möller 2019</a>)</span></p>
 <ul>
-<li>RT IOW series</li>
+<li>https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html</li>
 </ul>
 <h1 id="las-bases">Las bases</h1>
 <p>Empecemos por definir lo que es un rayo.</p>
@@ -1109,8 +1123,8 @@ Differential geometry of surfaces n.d.</a>)</span></p>
 de la óptica nos proporcionará una serie de herramientas con las cuales
 podremos responder a la pregunta <em>cuánta luz existe en un
 punto</em>.</p>
-<h2 id="unidades-radiométricas-básicas">Unidades radiométricas
-básicas</h2>
+<h2 id="introducción-a-la-radiometría">Introducción a la
+radiometría</h2>
 <blockquote>
 <p><strong>Nota</strong>: cuando usemos un paréntesis tras una ecuación,
 dentro denotaremos sus unidades de medida.</p>
@@ -1480,17 +1494,12 @@ L_1 \frac{dA_2}{r^2} dA_1 = L_2 \frac{dA_1}{r^2} dA_2
 \]</span></p>
 <p>Lo que finalmente nos dice que <span class="math inline">\(L_1 =
 L_2\)</span>, como queríamos ver.</p>
-<h2 id="fotometría-y-radiometría">Fotometría y radiometría</h2>
-<blockquote>
-<p>TODO: hablar sobre las diferencias. Hay información útil en
-01_lights.pdf, p.43</p>
-</blockquote>
-<h2 id="integrales-radiométricas">Integrales radiométricas</h2>
+<h3 id="integrales-radiométricas">Integrales radiométricas</h3>
 <p>En esta sección, vamos a explorar las nuevas herramientas que nos
 proporciona la radiancia. Veremos también cómo integrar ángulos sólidos,
 y cómo simplificar dichas integrales.</p>
-<h3 id="una-nueva-expresión-de-la-irradiancia-y-el-flujo">Una nueva
-expresión de la irradiancia y el flujo</h3>
+<h4 id="una-nueva-expresión-de-la-irradiancia-y-el-flujo">Una nueva
+expresión de la irradiancia y el flujo</h4>
 <p>Como dijimos al final de <a href="#irradiancia">la sección de la
 irradiancia</a>, esta medida no tiene en cuenta las direcciones desde
 las que llegaba la luz. A diferencia de esta, la radiancia sí que las
@@ -1556,7 +1565,7 @@ tipos de luz, como en
 https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf
 p.41? O a lo mejor un capítulo para hablar de luces en general.</p>
 </blockquote>
-<h3 id="integrando-sobre-área">Integrando sobre área</h3>
+<h4 id="integrando-sobre-área">Integrando sobre área</h4>
 <p>Una herramienta más que nos vendrá bien será la capacidad de
 convertir integrales sobre direcciones en integrales sobre área. Hemos
 hecho algo similar en las secciones anteriores, así que no perdemos nada
@@ -1593,13 +1602,17 @@ cuadrilátero <span class="math inline">\(dA\)</span>:</p>
 \]</span></p>
 <p>siendo <span class="math inline">\(\theta_o\)</span> el ángulo de la
 radiancia de salida de la superficie del cuadrilátero.</p>
-<h2
-id="dispersión-de-luz-las-familias-de-funciones-de-distribución-bidireccionales">Dispersión
-de luz: las familias de funciones de distribución bidireccionales</h2>
-<p>Cuando una fuente de luz emite fotones hacia una superficie
-impactando en ella, ocurren un par de sucesos: parte de la luz se
-refleja en ella, saliendo disparada hacia alguna dirección; mientras que
-otra parte se absorbe.</p>
+<h3 id="fotometría-y-radiometría">Fotometría y radiometría</h3>
+<blockquote>
+<p>TODO: hablar sobre las diferencias. Hay información útil en
+01_lights.pdf, p.43</p>
+</blockquote>
+<h2 id="dispersión-de-luz">Dispersión de luz</h2>
+<p>Cuando una luz impacta en una superficie, ocurren un par de sucesos:
+parte de los fotones se reflejan saliendo disparados hacia alguna
+dirección, mientras que otros se absorben.</p>
+<p>La forma en la que se comportan depende de cómo sea la superficie.
+Específicamente, del material del que esté hecha.</p>
 <p>En informática gráfica se consideran tres tipos principales de
 dispersión de luz: <strong>dispersión en superficie</strong>
 (<em>surface scattering</em>), <strong>dispersión volumétrica</strong>
@@ -1703,10 +1716,8 @@ f_t(p, \omega_o \leftarrow \omega_i)
 class="math inline">\(\omega_o\)</span> y <span
 class="math inline">\(\omega_i\)</span> se encuentran en hemisferios
 diferentes.</p>
-<h3
-id="juntando-la-brdf-y-la-btdf-en-la-función-de-distribución-de-dispersión-bidireccional">Juntando
-la BRDF y la BTDF en La función de distribución de dispersión
-bidireccional</h3>
+<h3 id="la-función-de-distribución-de-dispersión-bidireccional-bsdf">La
+función de distribución de dispersión bidireccional (BSDF)</h3>
 <p>Convenientemente, podemos unir la BRDF y la BTDF en una sola
 expresión, llamada <strong>la función de distribución de dispersión
 bidireccional</strong> (<em>bidirectional scattering distribution
@@ -1715,8 +1726,8 @@ function</em>, BSDF). A la BSDF la denotaremos por</p>
 f(p, \omega_o \leftarrow \omega_i)
 \]</span></p>
 <blockquote>
-<p><strong>Intuición:</strong> <em>la BSDF son todas las posibles
-direcciones en las que puede salir disparada la luz.</em></p>
+<p><strong>Nota</strong>(ción): también se suele utilizar BxDF en vez de
+BSDF.</p>
 </blockquote>
 <p>Usando esta definición, podemos obtener</p>
 <p><span class="math display">\[
@@ -1734,6 +1745,10 @@ L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow
 \]</span><span class="eqnos-number">(6)</span></span></p>
 <p>siendo <span class="math inline">\(\mathbb{S}^2\)</span> la
 esfera.</p>
+<blockquote>
+<p><strong>Intuición:</strong> <em>la BSDF son todas las posibles
+direcciones en las que puede salir disparada la luz.</em></p>
+</blockquote>
 <p>Esta forma de expresar la radiancia es muy importante. Generalmente
 se le suele llamar la <em>ecuación de dispersión</em> (<em>scattering
 equation</em>, en inglés). Dado que es una integral muy importante,
@@ -1744,9 +1759,11 @@ Carlo nos vendrán de perlas! Más adelante hablaremos de ella.</p>
 <li><strong>Positividad</strong>: como los fotones no se pueden reflejar
 “negativamente”, <span class="math inline">\(f(p, \omega_o \leftarrow
 \omega_i) \ge 0\)</span>.</li>
-<li><strong>Reciprocidad de Helmotz:</strong> se puede invertir un rayo
-de luz: <span class="math inline">\(f(p, \omega_o \leftarrow \omega_i) =
-f(p, \omega_i \leftarrow \omega_o)\)</span>.</li>
+<li><strong>Reciprocidad de Helmotz:</strong> se puede invertir la
+dirección de un rayo: <span class="math inline">\(f(p, \omega_o
+\leftarrow \omega_i) = f(p, \omega_i \leftarrow \omega_o)\)</span>.</li>
+<li><strong>White furnace test</strong>: Toda la luz incidente debe ser
+reflejada cuando la reflectividad de la superficie es 1.</li>
 <li><strong>Conservación de la energía</strong>: todos los fotones que
 llegan a la superficie deben ser reflejados o absorbidos. Es decir, no
 se emite ningún fotón nuevo:</li>
@@ -1778,7 +1795,7 @@ misma luz desde todas direcciones:</p>
 \leftarrow \omega_i) \lvert \cos\theta_o\ \cos\theta_i \rvert\
 d\omega_o\ d\omega_i}
 \]</span></p>
-<h3 id="reflejos">Reflejos</h3>
+<h3 id="tipos-de-reflejos">Tipos de reflejos</h3>
 <p>Una vez hemos definido las funciones de distribución bidireccionales,
 debemos encargarnos de modelar el comportamiento explícitamente. Para
 ello, veamos cómo los materiales modifican las distribuciones.</p>
@@ -1809,6 +1826,127 @@ distribución de luz es la misma en todas direcciones. Por el contrario,
 los anisotrópicos reflejan diferentes cantidades de luz dependiendo
 desde dónde los miremos. Los ejemplos más habituales de materiales
 anisotrópicos son las rocas y la madera.</p>
+<h3 id="modelos-analíticos-de-shading">Modelos analíticos de
+<em>shading</em></h3>
+<blockquote>
+<p>TODO: https://alain.xyz/blog/advances-in-material-models este señor
+me acaba de solucionar la vida. Gracias por tanto.</p>
+</blockquote>
+<p>Los modelos analíticos de shading surgen como simplificaciones de las
+BRDFs. En esta sección, vamos a ver algunos de los más famosos.</p>
+<p>Usaremos <span class="math inline">\(L_o^d\)</span> para indicar la
+radiancia obtenida por materiales difusos, y <span
+class="math inline">\(L_o^s\)</span> para los especulares.</p>
+<h4 id="lambertiano">Lambertiano</h4>
+<p>Este es uno de los modelos más sencillos. Se asume que la superficie
+es completamente difusa, lo cual implica que la luz se refleja en todas
+direcciones equiprobablemente, independientemente del punto de vista del
+observador.</p>
+<p>Se describe como</p>
+<p><span class="math display">\[
+L_o^d(p, \omega_o \leftarrow \omega_i) = k_d \max\{0, \mathbf{n} \cdot
+\mathbf{l}\}
+\]</span></p>
+<p>siendo <span class="math inline">\(k_d\)</span> el coeficiente de
+reflectancia (que mide cuánta luz se absorbe por la superficie, conocido
+como albedo), <span class="math inline">\(\mathbf{n}\)</span> la normal
+al punto en la superficie, y <span
+class="math inline">\(\mathbf{l}\)</span> la dirección de la luz.</p>
+<p>El producto escalar de los vectores <span
+class="math inline">\(\mathbf{n}\)</span> y <span
+class="math inline">\(\mathbf{l}\)</span> hace que, cuando el ángulo de
+incidencia de la luz es muy cerrado, la radiancia será prácticamente
+0.</p>
+<p>La implementación es muy sencilla:</p>
+<pre><code class="language-glsl">float lambertian_pdf(vec3 normal, vec3 light_dir) {
+    return max(
+        0.0,
+        dot(normal, light_dir)
+    ) * (1.0 / PI);
+}
+
+float lambiertian_light(Superficie s, Luz light) {
+    return s.albedo * lambertian_pdf(s.normal, light.dir);
+}</code></pre>
+<p>Este modelo está muy limitado, pues en la vida real, los objetos
+muestran algún tipo de interacción especular.</p>
+<h4 id="phong">Phong</h4>
+<p>El modelo de Phong se basa en la observación de que, cuando el punto
+de vista se alinea con la dirección del vector de luz reflejado <span
+class="math inline">\(r = 1 - 2(\mathbf{n} \cdot
+\mathbf{l})\mathbf{n}\)</span>, aparecen puntos muy iluminados, lo que
+se conoce como resaltado especular.</p>
+<p>Esta idea se <em>refleja</em> considerando la componente especular
+como</p>
+<p><span class="math display">\[
+L_o^s(p, \omega_o \leftarrow \omega_i) =
+      k_\alpha
+    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
+    + k_s \max\{0, \omega \cdot \mathbf{r}\}^\alpha
+\]</span></p>
+<p>donde <span class="math inline">\(k_\alpha\)</span> es el coeficiente
+de luz ambiental (con <span class="math inline">\(\alpha\)</span> el
+índice de brillo) <span class="math inline">\(k_s\)</span> es la
+constante de reflectancia especular (<em>specular-reflection</em>) que
+define el ratio de luz reflejada, <span
+class="math inline">\(k_d\)</span> el de radiancia difusa <span
+class="math inline">\(L_o^d\)</span>. Usualmente, <span
+class="math inline">\(k_s \vert k_d &lt; 1\)</span>.</p>
+<p>Evidentemente, este modelo no es más que una aproximación físicamente
+poco realista de la realidad; pero funciona lo suficientemente bien como
+para usarlo en ciertas partes.</p>
+<pre><code class="language-glsl">float phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
+    return pow(
+        max(
+            0.0,
+            dot(
+                reflejar(normal, light_dir),
+                view_dir
+            )
+        ),
+        shininess
+    );
+}</code></pre>
+<h4 id="blinn---phong">Blinn - Phong</h4>
+<h4 id="shlick">Shlick</h4>
+<h4 id="oren---nayar">Oren - Nayar</h4>
+<h4 id="ggx">GGX</h4>
+<h3 id="ecuaciones-de-fresnel-ley-de-snell">Ecuaciones de fresnel, ley
+de Snell</h3>
+<blockquote>
+<p>TODO: WIP. Bastante WIP. Basado en
+02_Rendering_Zsolnai_Ray_Tracing.</p>
+</blockquote>
+<ul>
+<li>La suma de las siguientes 3 componentes hacen el modelo de Phong:
+<ul>
+<li>Ambient: <span class="math inline">\(I = K_\alpha I_\alpha\)</span>,
+con <span class="math inline">\(k_\alpha\)</span> el coeficiente
+ambiental del objeto, <span class="math inline">\(I_\alpha\)</span> la
+intensidad ambiental de la escena/fuente de luz</li>
+<li>Diffuse (simplificada): <span class="math inline">\(I = k_d(L \cdot
+N)\)</span>, <span class="math inline">\(k_d\)</span> coeficiente difuso
+del objeto, <span class="math inline">\(L\)</span> vector que apunta a
+la luz, <span class="math inline">\(N\)</span> normal a la
+superficie</li>
+<li>Specular (simplificada): <span class="math inline">\(I = k_s(V *
+R)^n\)</span>, <span class="math inline">\(k_s\)</span> especular, <span
+class="math inline">\(V\)</span> vector apuntando a la cámara, <span
+class="math inline">\(R\)</span> vector reflejado del rayo, <span
+class="math inline">\(()^n\)</span> shininess factor.</li>
+<li><span class="math inline">\(I = K_\alpha I_\alpha + I_i(k_d(L \cdot
+N) + k_s(V \cdot R)^n)\)</span></li>
+<li>Aproximación muy bruta</li>
+<li>Con recursividad, <span class="math inline">\(I = K_\alpha I_\alpha
++ I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)\)</span> + <span
+class="math inline">\(k_t I_t + k_r I_r\)</span>, <span
+class="math inline">\(k_t\)</span> fresnel transmission coefficient,
+<span class="math inline">\(I_t\)</span> intensity coming from the
+transmission direction, <span class="math inline">\(k_r\)</span> fresnel
+reflection coefficient, <span class="math inline">\(I_r\)</span>
+intensity coming from the reflection direction.</li>
+</ul></li>
+</ul>
 <h2 id="la-rendering-equation">La rendering equation</h2>
 <p>Y, finalmente, tras esta introducción de los principales conceptos
 radiométricos, llegamos a la ecuación más importante de todo este
@@ -1899,45 +2037,6 @@ la luz. Además, no se conocen las radiancias de salida.</li>
 <p>Este último matiz es importante. Para renderizar una imagen, se
 necesita calcular la radiancia de salida para aquellos puntos visibles
 desde nuestra cámara.</p>
-<h2 id="materiales">Materiales</h2>
-<blockquote>
-<p>TODO: https://alain.xyz/blog/advances-in-material-models este señor
-me acaba de solucionar la vida. Gracias por tanto.</p>
-<p>TODO: WIP. Bastante WIP. Basado en
-02_Rendering_Zsolnai_Ray_Tracing.</p>
-</blockquote>
-<ul>
-<li>La suma de las siguientes 3 componentes hacen el modelo de Phong:
-<ul>
-<li>Ambient: <span class="math inline">\(I = K_\alpha I_\alpha\)</span>,
-con <span class="math inline">\(k_\alpha\)</span> el coeficiente
-ambiental del objeto, <span class="math inline">\(I_\alpha\)</span> la
-intensidad ambiental de la escena/fuente de luz</li>
-<li>Diffuse (simplificada): <span class="math inline">\(I = k_d(L \cdot
-N)\)</span>, <span class="math inline">\(k_d\)</span> coeficiente difuso
-del objeto, <span class="math inline">\(L\)</span> vector que apunta a
-la luz, <span class="math inline">\(N\)</span> normal a la
-superficie</li>
-<li>Specular (simplificada): <span class="math inline">\(I = k_s(V *
-R)^n\)</span>, <span class="math inline">\(k_s\)</span> especular, <span
-class="math inline">\(V\)</span> vector apuntando a la cámara, <span
-class="math inline">\(R\)</span> vector reflejado del rayo, <span
-class="math inline">\(()^n\)</span> shininess factor.</li>
-<li><span class="math inline">\(I = K_\alpha I_\alpha + I_i(k_d(L \cdot
-N) + k_s(V \cdot R)^n)\)</span></li>
-<li>Aproximación muy bruta</li>
-<li>Con recursividad, <span class="math inline">\(I = K_\alpha I_\alpha
-+ I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)\)</span> + <span
-class="math inline">\(k_t I_t + k_r I_r\)</span>, <span
-class="math inline">\(k_t\)</span> fresnel transmission coefficient,
-<span class="math inline">\(I_t\)</span> intensity coming from the
-transmission direction, <span class="math inline">\(k_r\)</span> fresnel
-reflection coefficient, <span class="math inline">\(I_r\)</span>
-intensity coming from the reflection direction.</li>
-</ul></li>
-</ul>
-<h3 id="ecuaciones-de-fresnel-ley-de-snell">Ecuaciones de fresnel, ley
-de Snell</h3>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-2">Referencias</h2>
 <p><span class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
@@ -1960,6 +2059,7 @@ Transmittance n.d.</a>)</span></p>
 <ul>
 <li>https://matmatch.com/learn/property/isotropy-anisotropy</li>
 <li>https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf</li>
+<li>https://alain.xyz/blog/advances-in-material-models</li>
 </ul>
 <h1 id="integración-de-monte-carlo">Integración de Monte Carlo</h1>
 <p>Como vimos en el capítulo anterior, la clave para conseguir una
@@ -2507,12 +2607,68 @@ Podemos tomar <span class="math inline">\(p(x, y) =
 \pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con }
 (x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
 \]</span></p>
+<h2 id="importance-sampling">Importance sampling</h2>
+<p>Si recordamos la varianza del estimador de Monte Carlo [<a
+href="#eq:mc_varianza">10</a>],</p>
+<p><span class="math display">\[
+Var[\hat{I}_N] = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
+\]</span></p>
+<p>podemos ver que depende de dos factores: el número de muestras <span
+class="math inline">\(N\)</span> y la varianza de <span
+class="math inline">\(Var\left[\frac{f(X)}{p_X(X)}\right]\)</span>.
+Aumentar el número de muestras haría que la varianza decrezca. Sin
+embargo, alcanzaríamos un punto de retornos reducidos. Por tanto, vamos
+a centrarnos ahora en el segundo término.</p>
+<p>En esencia, la varianza de <span
+class="math inline">\(Var\left[\frac{f(X)}{p_X(X)}\right]\)</span>
+decrecerá cuanto más cercana sea la función de probabilidad <span
+class="math inline">\(p_X\)</span> a la función <span
+class="math inline">\(f(X)\)</span>.</p>
+<p>Supongamos que <span class="math inline">\(f\)</span> es proporcional
+a <span class="math inline">\(p_X\)</span>. Esto es, existe un <span
+class="math inline">\(s\)</span> tal que <span
+class="math inline">\(f(x) = s p_X(x)\)</span>. Como <span
+class="math inline">\(p_X\)</span> debe integrar uno, podemos calcular
+el valor de <span class="math inline">\(s\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \int_{S}{p_X(x)dx} &amp; = \int_{S}{sf(x)dx} = 1 \quad \iff \\
+  s &amp; = \frac{1}{\int_{S}{f(x)dx}}
+\end{aligned}
+\]</span></p>
+<p>Y entonces, se tendría que</p>
+<p><span class="math display">\[
+\begin{aligned}
+  Var\left[\frac{f(X)}{p_X(X)}\right] &amp; =
+Var\left[\frac{f(X)}{sf(X)}\right] = \\
+  &amp; = Var\left[\frac{1}{s}\right] = \\
+  &amp; = 0
+\end{aligned}
+\]</span></p>
+<p>En la práctica, esto es inviable. El problema que queremos resolver
+es calcular la integral de <span class="math inline">\(f\)</span>. Y
+para sacar <span class="math inline">\(s\)</span>, necesitaríamos el
+valor de la integral de <span class="math inline">\(f\)</span>. ¡Estamos
+dando vueltas!</p>
+<p>Por fortuna, hay algoritmos que son capaces de proporcionar la
+constante <span class="math inline">\(s\)</span> sin necesidad de
+calcular la integral. Uno de los más conocidos es
+<strong>Metropolis-Hastings</strong>, el cual se basa en cadenas de
+Markov de Monte Carlo.</p>
+<p>En este trabajo nos centraremos en buscar funciones de densidad <span
+class="math inline">\(p_X\)</span> que se aproximen a <span
+class="math inline">\(f\)</span> lo más fielmente posible, dentro del
+contexto del transporte de luz.</p>
+<h2 id="multiple-importance-sampling">Multiple importance sampling</h2>
+<p>https://graphics.stanford.edu/courses/cs348b-03/papers/veach-chapter9.pdf</p>
 <h2 id="escogiendo-puntos-aleatorios">Escogiendo puntos aleatorios</h2>
 <p>Una de las partes clave del estimador de Monte Carlo [<a
 href="#eq:mc_integral">9</a>] es saber escoger la función de densidad
 <span class="math inline">\(p_X\)</span> correctamente. En esta sección,
 veremos algunos métodos para conseguir distribuciones específicas
-partiendo de funciones de densidad sencillas.</p>
+partiendo de funciones de densidad sencillas, así como formas de elegir
+funciones de densidad próximas a <span
+class="math inline">\(f\)</span>.</p>
 <h3 id="método-de-la-transformada-inversa">Método de la transformada
 inversa</h3>
 <blockquote>
@@ -2648,60 +2804,47 @@ muestra de <span class="math inline">\(p_X\)</span></li>
 y se vuelve al paso 1.</li>
 </ol></li>
 </ol>
-<h2 id="importance-sampling">Importance sampling</h2>
-<p>Si recordamos la varianza del estimador de Monte Carlo [<a
-href="#eq:mc_varianza">10</a>],</p>
-<p><span class="math display">\[
-Var[\hat{I}_N] = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
-\]</span></p>
-<p>podemos ver que depende de dos factores: el número de muestras <span
-class="math inline">\(N\)</span> y la varianza de <span
-class="math inline">\(Var\left[\frac{f(X)}{p_X(X)}\right]\)</span>.
-Aumentar el número de muestras haría que la varianza decrezca. Sin
-embargo, alcanzaríamos un punto de retornos reducidos. Por tanto, vamos
-a centrarnos ahora en el segundo término.</p>
-<p>En esencia, la varianza de <span
-class="math inline">\(Var\left[\frac{f(X)}{p_X(X)}\right]\)</span>
-decrecerá cuanto más cercana sea la función de probabilidad <span
-class="math inline">\(p_X\)</span> a la función <span
-class="math inline">\(f(X)\)</span>.</p>
-<p>Supongamos que <span class="math inline">\(f\)</span> es proporcional
-a <span class="math inline">\(p_X\)</span>. Esto es, existe un <span
-class="math inline">\(s\)</span> tal que <span
-class="math inline">\(f(x) = s p_X(x)\)</span>. Como <span
-class="math inline">\(p_X\)</span> debe integrar uno, podemos calcular
-el valor de <span class="math inline">\(s\)</span>:</p>
-<p><span class="math display">\[
-\begin{aligned}
-  \int_{S}{p_X(x)dx} &amp; = \int_{S}{sf(x)dx} = 1 \quad \iff \\
-  s &amp; = \frac{1}{\int_{S}{f(x)dx}}
-\end{aligned}
-\]</span></p>
-<p>Y entonces, se tendría que</p>
-<p><span class="math display">\[
-\begin{aligned}
-  Var\left[\frac{f(X)}{p_X(X)}\right] &amp; =
-Var\left[\frac{f(X)}{sf(X)}\right] = \\
-  &amp; = Var\left[\frac{1}{s}\right] = \\
-  &amp; = 0
-\end{aligned}
-\]</span></p>
-<p>En la práctica, esto es inviable. El problema que queremos resolver
-es calcular la integral de <span class="math inline">\(f\)</span>. Y
-para sacar <span class="math inline">\(s\)</span>, necesitaríamos el
-valor de la integral de <span class="math inline">\(f\)</span>. ¡Estamos
-dando vueltas!</p>
-<p>Por fortuna, hay algoritmos que son capaces de proporcionar la
-constante <span class="math inline">\(s\)</span> sin necesidad de
-calcular la integral. Uno de los más conocidos es
-<strong>Metropolis-Hastings</strong>, el cual se basa en cadenas de
-Markov de Monte Carlo.</p>
-<p>En este trabajo nos centraremos en buscar funciones de densidad <span
-class="math inline">\(p_X\)</span> que se aproximen a <span
-class="math inline">\(f\)</span> lo más fielmente posible, dentro del
-contexto del transporte de luz.</p>
-<h2 id="multiple-importance-sampling">Multiple importance sampling</h2>
-<p>https://graphics.stanford.edu/courses/cs348b-03/papers/veach-chapter9.pdf</p>
+<h3 id="distribuciones-unidimensionales">Distribuciones
+unidimensionales</h3>
+<h4 id="uniformente">Uniformente</h4>
+<h4 id="linear">Linear</h4>
+<h4 id="gausiana">Gausiana</h4>
+<h4 id="basada-en-texturas">Basada en texturas</h4>
+<h3 id="distribuciones-bidimensionales">Distribuciones
+bidimensionales</h3>
+<h4 id="uniformemente">Uniformemente</h4>
+<h4 id="basada-en-mappeo-de-superficies-a-un-hemisferio">Basada en
+mappeo de superficies a un hemisferio</h4>
+<h4 id="brdf">BRDF</h4>
+<h4 id="basada-en-el-coseno">Basada en el coseno</h4>
+<h2 id="técnicas-de-reducción-de-varianza">Técnicas de reducción de
+varianza</h2>
+<h3 id="ruleta-rusa">Ruleta rusa</h3>
+<blockquote>
+<p><strong>Idea</strong>: A random chance that if the luminance of a ray
+is less than a given <span class="math inline">\(\varepsilon\)</span>
+the path will be discarded. Reduces variance by accepting stronger rays
+more often.</p>
+</blockquote>
+<h3 id="next-event-estimation">Next Event Estimation</h3>
+<blockquote>
+<p><strong>Idea</strong>: Tracing shadow rays to the light source on
+each bounce to see if you can terminate the current path. This involves
+shooting a shadow ray towards light sources, if it’s occluded, terminate
+the ray.</p>
+</blockquote>
+<h3 id="blue-noise">Blue noise</h3>
+<p>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</p>
+<h3 id="forced-random-sampling">Forced random sampling</h3>
+<p>http://drivenbynostalgia.com/ (ctrl + f -&gt; forced random
+sampling)</p>
+<h3 id="sampling-importance-resampling">Sampling importance
+resampling</h3>
+<ul>
+<li>https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</li>
+<li>https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf</li>
+</ul>
+<h3 id="section"></h3>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
 <p><span class="citation" data-cites="ShirleyRRT">(<a
@@ -3356,8 +3499,6 @@ listo.</p>
 <h2 id="filtering">Filtering</h2>
 <p>https://alain.xyz/blog/ray-tracing-filtering</p>
 <h2 id="offline-renderers">Offline renderers</h2>
-<h2 id="importance-resampling">Importance Resampling</h2>
-<h2 id="restir">ReSTIR</h2>
 <h2 id="low-discrepancy-sampling">Low discrepancy sampling</h2>
 <h2 id="la-industria-del-videojuego">La industria del videojuego</h2>
 <h3 id="ray-tracing-híbrido">Ray tracing híbrido</h3>
