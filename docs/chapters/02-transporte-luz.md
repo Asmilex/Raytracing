@@ -492,7 +492,7 @@ $$
 L_o^s(p, \omega_o \leftarrow \omega_i) =
       k_\alpha
     + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
-    + k_s \max\{0, \mathbf{\omega} \cdot \mathbf{r}\}^\alpha
+    + k_s \max\{0, \omega \cdot \mathbf{r}\}^\alpha
 $$
 
 donde $k_\alpha$ es el coeficiente de luz ambiental (con $\alpha$ el índice de brillo) $k_s$ es la constante de reflectancia especular (*specular-reflection*) que define el ratio de luz reflejada, $k_d$ el de radiancia difusa $L_o^d$. Usualmente, $k_s \vert k_d < 1$.
