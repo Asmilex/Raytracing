@@ -445,9 +445,11 @@ Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, pue
 
 ### Modelos analíticos de *shading*
 
-Los modelos analíticos de shading surgen como simplificaciones de las BRDFs. En esta sección, vamos a ver algunos de los más famosos
-
 > TODO: https://alain.xyz/blog/advances-in-material-models este señor me acaba de solucionar la vida. Gracias por tanto.
+
+Los modelos analíticos de shading surgen como simplificaciones de las BRDFs. En esta sección, vamos a ver algunos de los más famosos.
+
+Usaremos $L_o^d$ para indicar la radiancia obtenida por materiales difusos, y $L_o^s$ para los especulares.
 
 #### Lambertiano
 
@@ -481,6 +483,36 @@ float lambiertian_light(Superficie s, Luz light) {
 Este modelo está muy limitado, pues en la vida real, los objetos muestran algún tipo de interacción especular.
 
 #### Phong
+
+El modelo de Phong se basa en la observación de que, cuando el punto de vista se alinea con la dirección del vector de luz reflejado $r = 1 - 2(\mathbf{n} \cdot \mathbf{l})\mathbf{n}$, aparecen puntos muy iluminados, lo que se conoce como resaltado especular.
+
+Esta idea se *refleja* considerando la componente especular como
+
+$$
+L_o^s(p, \omega_o \leftarrow \omega_i) =
+      k_\alpha
+    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
+    + k_s \max\{0, \mathbf{\omega} \cdot \mathbf{r}\}^\alpha
+$$
+
+donde $k_\alpha$ es el coeficiente de luz ambiental (con $\alpha$ el índice de brillo) $k_s$ es la constante de reflectancia especular (*specular-reflection*) que define el ratio de luz reflejada, $k_d$ el de radiancia difusa $L_o^d$. Usualmente, $k_s \vert k_d < 1$.
+
+Evidentemente, este modelo no es más que una aproximación físicamente poco realista de la realidad; pero funciona lo suficientemente bien como para usarlo en ciertas partes.
+
+```glsl
+float phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
+    return pow(
+        max(
+            0.0,
+            dot(
+                reflejar(normal, light_dir),
+                view_dir
+            )
+        ),
+        shininess
+    );
+}
+```
 
 #### Blinn - Phong
 
