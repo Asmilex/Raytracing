@@ -428,7 +428,7 @@ $$
 \rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_o\ \cos\theta_i}\ d\omega_o\ d\omega_i}
 $$
 
-### Tipos de reflejos
+### Tipos de dispersión
 
 Una vez hemos definido las funciones de distribución bidireccionales, debemos encargarnos de modelar el comportamiento explícitamente. Para ello, veamos cómo los materiales modifican las distribuciones.
 
@@ -446,6 +446,19 @@ Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, pue
 ### Modelos analíticos de *shading*
 
 > TODO: https://alain.xyz/blog/advances-in-material-models este señor me acaba de solucionar la vida. Gracias por tanto.
+>
+> TODO: Completar con lo siguiente, basado en 02_Rendering_Zsolnai_Ray_Tracing.
+>
+> TODO: también estaría bien añadir el repositorio de Disney como referencia https://github.com/wdas/brdf/tree/main/src/brdfs
+
+- La suma de las siguientes 3 componentes hacen el modelo de Phong:
+  - Ambient: $I = K_\alpha I_\alpha$, con $k_\alpha$ el coeficiente ambiental del objeto, $I_\alpha$ la intensidad ambiental de la escena/fuente de luz
+  - Diffuse (simplificada): $I = k_d(L \cdot N)$, $k_d$ coeficiente difuso del objeto, $L$ vector que apunta a la luz, $N$ normal a la superficie
+  - Specular (simplificada): $I = k_s(V * R)^n$, $k_s$ especular, $V$ vector apuntando a la cámara, $R$ vector reflejado del rayo, $()^n$ shininess factor.
+  - $I = K_\alpha I_\alpha + I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)$
+  - Aproximación muy bruta
+  - Con recursividad, $I = K_\alpha I_\alpha + I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)$ + $k_t I_t + k_r I_r$, $k_t$ fresnel transmission coefficient,  $I_t$ intensity coming from the transmission direction, $k_r$ fresnel reflection coefficient, $I_r$ intensity coming from the reflection direction.
+
 
 Los modelos analíticos de shading surgen como simplificaciones de las BRDFs. En esta sección, vamos a ver algunos de los más famosos.
 
@@ -516,26 +529,72 @@ float phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess
 
 #### Blinn - Phong
 
-#### Shlick
+Este es una pequeña modificación al de Phong. En vez de usar el vector reflejado de luz, se define un vector unitario entre el observador y la luz, $h = \frac{\omega + \mathbf{l}}{\abs{\omega + \mathbf{l}}}$. Resulta más fácil calcularlo. Además, este modelo es más realista.
+
+$$
+L_o^s(p, \omega_o \leftarrow \omega_i) =
+      k_\alpha
+    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
+    + k_s \max\{0, h \cdot \mathbf{r}\}^\alpha
+$$
+
+```glsl
+float blingphong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
+    vec3 h = normalize(view_dir + light_dir);
+    return pow(
+        max(
+            0.0,
+            dot(h, normal)
+        ),
+        shininess
+    );
+}
+```
+
+#### Schlick
+
+> TODO: este está bastante cojo.
+
+El modelo de Schlick describe una aproximación de las ecuaciones de Fresnel. Se utiliza con frecuencia, por ser físicamente realista y fácilmente computable.
+
+Se define como
+
+$$
+\begin{aligned}
+    & S_\lambda(u) = C_\lambda + (1 - C_\lambda)(1 - u)^5 \\
+    & R_\lambda(t, u, v, v', w) = S_\lambda(u) D(t, v, v', w)
+\end{aligned}
+$$
+
+```glsl
+float Fresnel(float f0, float u) {
+    return f0 + (1.0 - f0) * pow(1.0 - u, 5.0);
+}
+
+vec3 BRDF(vec3 light_dir, vec3 view_dir, vec3 normal, vec3 X, vec3 Y) {
+    vec3 halfway = normalize(light_dir + view_dir);
+
+    float ior = 1   // Puede vale 1, 3, o 1.2
+    float f0  = pow((ior - 1)/(ior + 1), 2);
+    float F   = Fresnel(f0, dot(light_dir, halfway));
+
+    return vec3(F);
+}
+```
 
 #### Oren - Nayar
 
 #### GGX
 
-### Ecuaciones de fresnel, ley de Snell
+### Relejos
 
->
-> TODO: WIP. Bastante WIP. Basado en 02_Rendering_Zsolnai_Ray_Tracing.
+#### Ley de Snell
 
-- La suma de las siguientes 3 componentes hacen el modelo de Phong:
-  - Ambient: $I = K_\alpha I_\alpha$, con $k_\alpha$ el coeficiente ambiental del objeto, $I_\alpha$ la intensidad ambiental de la escena/fuente de luz
-  - Diffuse (simplificada): $I = k_d(L \cdot N)$, $k_d$ coeficiente difuso del objeto, $L$ vector que apunta a la luz, $N$ normal a la superficie
-  - Specular (simplificada): $I = k_s(V * R)^n$, $k_s$ especular, $V$ vector apuntando a la cámara, $R$ vector reflejado del rayo, $()^n$ shininess factor.
-  - $I = K_\alpha I_\alpha + I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)$
-  - Aproximación muy bruta
-  - Con recursividad, $I = K_\alpha I_\alpha + I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)$ + $k_t I_t + k_r I_r$, $k_t$ fresnel transmission coefficient,  $I_t$ intensity coming from the transmission direction, $k_r$ fresnel reflection coefficient, $I_r$ intensity coming from the reflection direction.
+#### Ecuaciones de Fresnel
 
+### Reflejos especulares perfectos
 
+https://graphicscodex.courses.nvidia.com/app.html?page=_rn_matrls mirror reflections
 
 ## La rendering equation
 
