@@ -26,6 +26,7 @@ titlepage-rule-height: 0
 titlepage-background: "./img/ugrA4.pdf"
 
 toc: true
+toc-depth: 4
 numbersections: true
 colorlinks: true
 
