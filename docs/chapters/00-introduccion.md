@@ -99,6 +99,9 @@ Esencialmente, este trabajo ha sido posible gracias a los siguientes recursos:
 - La serie de libros de *Ray Tracing* de *Peter Shirley*, conocidos como "Ray tracing In One Weekend Series" [@Shirley2020RTW1], [@Shirley2020RTW2], [@Shirley2020RTW3]. El motor desarrollado en estos libros es el que se utilizará para la comparación.
 - Physically Based Rendering: From Theory to Implementation (3rd ed.) [@PBRT3e], considerado como el santo grial de la informática gráfica moderna.
 - Ray Tracing Gems I y II [@Haines2019], [@Marrs2021], una colección de papers esenciales sobre ray tracing publicada por Nvidia.
+- El autor [Károly Zsolnai, de Two Minute Papers](https://users.cg.tuwien.ac.at/zsolnai/). No solo ha inspirado parte del trabajo, sino que su curso sobre transporte de luz de la [universidad de Austria](https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html) ha sido una gran fuente de información para el trabajo.
+
+> TODO: tengo que ver exactamente cómo cito esa fuente anterior.
 
 <hr>
 
@@ -106,4 +109,4 @@ Esencialmente, este trabajo ha sido posible gracias a los siguientes recursos:
 
 [@wikipedia-contributors-2022A], [@wikipedia-contributors-2022B], [@wikipedia-contributors-2022C], [@wikipedia-contributors-2022D], [@caulfield-2020], [@wikipedia-contributors-2022E], [@unknown-author-no-date], [@Haines2019]
 
-- RT IOW series
+- https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html

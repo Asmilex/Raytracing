@@ -362,9 +362,50 @@ $$
 \pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con } (x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
 $$
 
+## Importance sampling
+
+Si recordamos la varianza del estimador de Monte Carlo [@eq:mc_varianza],
+
+$$
+Var[\hat{I}_N] = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
+$$
+
+podemos ver que depende de dos factores: el número de muestras $N$ y la varianza de $Var\left[\frac{f(X)}{p_X(X)}\right]$. Aumentar el número de muestras haría que la varianza decrezca. Sin embargo, alcanzaríamos un punto de retornos reducidos. Por tanto, vamos a centrarnos ahora en el segundo término.
+
+En esencia, la varianza de $Var\left[\frac{f(X)}{p_X(X)}\right]$ decrecerá cuanto más cercana sea la función de probabilidad $p_X$ a la función $f(X)$.
+
+Supongamos que $f$ es proporcional a $p_X$. Esto es, existe un $s$ tal que $f(x) = s p_X(x)$. Como $p_X$ debe integrar uno, podemos calcular el valor de $s$:
+
+$$
+\begin{aligned}
+  \int_{S}{p_X(x)dx} & = \int_{S}{sf(x)dx} = 1 \quad \iff \\
+  s & = \frac{1}{\int_{S}{f(x)dx}}
+\end{aligned}
+$$
+
+Y entonces, se tendría que
+
+$$
+\begin{aligned}
+  Var\left[\frac{f(X)}{p_X(X)}\right] & = Var\left[\frac{f(X)}{sf(X)}\right] = \\
+  & = Var\left[\frac{1}{s}\right] = \\
+  & = 0
+\end{aligned}
+$$
+
+En la práctica, esto es inviable. El problema que queremos resolver es calcular la integral de $f$. Y para sacar $s$, necesitaríamos el valor de la integral de $f$. ¡Estamos dando vueltas!
+
+Por fortuna, hay algoritmos que son capaces de proporcionar la constante $s$ sin necesidad de calcular la integral. Uno de los más conocidos es **Metropolis-Hastings**, el cual se basa en cadenas de Markov de Monte Carlo.
+
+En este trabajo nos centraremos en buscar funciones de densidad $p_X$ que se aproximen a $f$ lo más fielmente posible, dentro del contexto del transporte de luz.
+
+## Multiple importance sampling
+
+https://graphics.stanford.edu/courses/cs348b-03/papers/veach-chapter9.pdf
+
 ## Escogiendo puntos aleatorios
 
-Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber escoger la función de densidad $p_X$ correctamente. En esta sección, veremos algunos métodos para conseguir distribuciones específicas partiendo de funciones de densidad sencillas.
+Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber escoger la función de densidad $p_X$ correctamente. En esta sección, veremos algunos métodos para conseguir distribuciones específicas partiendo de funciones de densidad sencillas, así como formas de elegir funciones de densidad próximas a $f$.
 
 ### Método de la transformada inversa
 
@@ -388,7 +429,6 @@ F_X(x) & = P[X < x] = \\
 $$
 
 Este último paso se debe a que, como $\xi$ es uniforme en $(0, 1)$, $P[\xi < x] = x$. Es decir, hemos obtenido que $F_X$ es la inversa de $T$.
-
 
 > TODO: dibujo similar a [este: p.52](https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf)
 
@@ -451,46 +491,43 @@ El algoritmo consiste en:
    1. Si se cumple, se acepta $y$ como muestra de $p_X$
    2. En caso contrario, se rechaza $y$ y se vuelve al paso 1.
 
-## Importance sampling
+### Distribuciones unidimensionales
 
-Si recordamos la varianza del estimador de Monte Carlo [@eq:mc_varianza],
+#### Uniformente
+#### Linear
+#### Gausiana
+#### Basada en texturas
 
-$$
-Var[\hat{I}_N] = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
-$$
+### Distribuciones bidimensionales
+#### Uniformemente
+#### Basada en mappeo de superficies a un hemisferio
+#### BRDF
+#### Basada en el coseno
 
-podemos ver que depende de dos factores: el número de muestras $N$ y la varianza de $Var\left[\frac{f(X)}{p_X(X)}\right]$. Aumentar el número de muestras haría que la varianza decrezca. Sin embargo, alcanzaríamos un punto de retornos reducidos. Por tanto, vamos a centrarnos ahora en el segundo término.
+## Técnicas de reducción de varianza
 
-En esencia, la varianza de $Var\left[\frac{f(X)}{p_X(X)}\right]$ decrecerá cuanto más cercana sea la función de probabilidad $p_X$ a la función $f(X)$.
+### Ruleta rusa
 
-Supongamos que $f$ es proporcional a $p_X$. Esto es, existe un $s$ tal que $f(x) = s p_X(x)$. Como $p_X$ debe integrar uno, podemos calcular el valor de $s$:
+> **Idea**: A random chance that if the luminance of a ray is less than a given $\varepsilon$ the path will be discarded. Reduces variance by accepting stronger rays more often.
 
-$$
-\begin{aligned}
-  \int_{S}{p_X(x)dx} & = \int_{S}{sf(x)dx} = 1 \quad \iff \\
-  s & = \frac{1}{\int_{S}{f(x)dx}}
-\end{aligned}
-$$
+### Next Event Estimation
 
-Y entonces, se tendría que
+> **Idea**: Tracing shadow rays to the light source on each bounce to see if you can terminate the current path. This involves shooting a shadow ray towards light sources, if it's occluded, terminate the ray.
 
-$$
-\begin{aligned}
-  Var\left[\frac{f(X)}{p_X(X)}\right] & = Var\left[\frac{f(X)}{sf(X)}\right] = \\
-  & = Var\left[\frac{1}{s}\right] = \\
-  & = 0
-\end{aligned}
-$$
+### Blue noise
 
-En la práctica, esto es inviable. El problema que queremos resolver es calcular la integral de $f$. Y para sacar $s$, necesitaríamos el valor de la integral de $f$. ¡Estamos dando vueltas!
+https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/
 
-Por fortuna, hay algoritmos que son capaces de proporcionar la constante $s$ sin necesidad de calcular la integral. Uno de los más conocidos es **Metropolis-Hastings**, el cual se basa en cadenas de Markov de Monte Carlo.
+### Forced random sampling
 
-En este trabajo nos centraremos en buscar funciones de densidad $p_X$ que se aproximen a $f$ lo más fielmente posible, dentro del contexto del transporte de luz.
+http://drivenbynostalgia.com/ (ctrl + f -> forced random sampling)
 
-## Multiple importance sampling
+### Sampling importance resampling
 
-https://graphics.stanford.edu/courses/cs348b-03/papers/veach-chapter9.pdf
+- https://blog.demofox.org/2022/03/02/sampling-importance-resampling/
+- https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf
+
+###
 
 <hr>
 

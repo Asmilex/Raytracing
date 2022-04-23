@@ -12,10 +12,6 @@ https://alain.xyz/blog/ray-tracing-filtering
 
 ## Offline renderers
 
-## Importance Resampling
-
-## ReSTIR
-
 ## Low discrepancy sampling
 
 ## La industria del videojuego
