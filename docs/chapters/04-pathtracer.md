@@ -308,11 +308,45 @@ $$
 
 $$
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j) \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j = 1}^{N}{L_i(p, \omega_j) \rho}
-$$
+$${#eq:rendering_eq_lambertian}
+
+Lo cual nos proporciona una expresión muy agradable para los materiales difusos. Solo es cuestión de calcular la radiancia del punto.
 
 ### Pseudocódigo de un path tracer
 
-03_Rendering_Zsolnai_Global_Illumination.pdf
+Con lo que conocemos hasta ahora, podemos empezar a programar los shaders. Una primera implementación basada en [@eq:rendering_eq_lambertian] sería similar a lo siguiente:
+
+```cpp
+vec3 path_trace(Rayo r, profundidad) {
+    if (profundidad == profundidad_maxima) {
+        return contribucion_ambiental;
+    }
+
+    r.trazar_rayo()
+
+    if (!r.ha_impactado()) {
+        return contribucion_ambiental;
+    }
+
+    hit_info = r.hit_info
+    material = hit_info.material
+    emission = material.emission
+
+    nuevo_rayo = Rayo(
+        origen = hit_info.punto_impacto,
+        direccion = aleatorio_en_hemisferio(hit_info.normal)
+    // ¡Importante! ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+
+    // Usando reflexión lambertiana, tendríamos
+    cos_theta = dot(nuevo_rayo.direccion, hit_info.normal)
+    BRDF = material.reflectancia * cos_theta
+    reflejado = path_trace(nuevo_rayo, profundidad + 1)
+
+    return emission + BRDF * reflejado
+}
+```
+El término `emission` corresponde a $L_e(p, \omega_o)$. Siempre lo añadimos, pues en caso de que el objeto no emita luz, la contribución de este término sería 0.
 
 ### Antialiasing mediante jittering
 
