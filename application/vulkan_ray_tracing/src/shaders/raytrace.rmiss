@@ -30,7 +30,7 @@ void main()
         prd.hitValue = pcRay.clearColor.xyz;
     }
     else {
-        prd.hitValue = vec3(0.3);   // Tiny contribution from environment
+        prd.hitValue = vec3(0.01);   // Tiny contribution from environment
     }
 
     // Como no hemos fallado, no hay necesidad de continuar; así que paramos la generación.

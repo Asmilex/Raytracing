@@ -84,7 +84,8 @@ void main()
 
     prd.rayOrigin = ray_origin;
     prd.rayDir    = ray_dir;
-    prd.hitValue  = mat.emission;
+    //              vvvv h5ay que cambiar eso!!!
+    prd.hitValue  = 0.11 * mat.ambient;
     prd.weight    = BRDF * cos_theta / p;
 
 /* Código viejo antes de pasar a path tracing
