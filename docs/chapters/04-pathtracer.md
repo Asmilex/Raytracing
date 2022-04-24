@@ -269,22 +269,50 @@ Para eso están los **payloads**. Específicamente, cada rayo puede llevar infor
 
 El código de la creación de la pipeline lo encapsula la función `createRtPipeline()`, que se puede consultar [aquí](https://github.com/Asmilex/Raytracing/blob/6409feb628cc048186f6279b921ebe24e9337b6a/application/vulkan_ray_tracing/src/hello_vulkan.cpp#L763)
 
-## Asmiray
-
 ## Transporte de luz en la práctica
 
-> TODO: creo... que esto no debería ir aquí. Pero no quiero tampoco que el capítulo de radiometría sea un tocho impresionante.
+### Estimando la rendering equation con Monte Carlo
 
 Hemos llegado a una de las partes más importantes de este trabajo. Es el momento de poner en concordancia todo lo que hemos visto a lo largo de los capítulos anteriores.
 
-Empecemos por la dispersión. ¿Recuerdas la ecuación de dispersión [@eq:scattering_equation]? Podemos estimarla utilizando Monte Carlo:
+Empecemos por la dispersión. ¿Recuerdas la ecuación de dispersión [@eq:scattering_equation]?
+
+$$
+L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i
+$$
+
+Añadamos el término de radiancia emitida:
+
+$$
+L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i
+$$
+
+Podemos aproximar el valor de la integral utilizando Monte Carlo:
 
 $$
 \begin{aligned}
-L_o(p, \omega_o) & = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\abs{\cos\theta_i} d\omega_i} \\
-                 & \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \abs{\cos\theta_j}}{p(\omega_j)}}
+L_o(p, \omega_o) & = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
+                 & \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{p(\omega_j)}}
 \end{aligned}
 $$
+
+Fijémonos en el denominador. Lo que estamos haciendo es tomar una muestra de un vector en la esfera. Si trabajamos con una BRDF en vez de una BSDF, usaríamos un hemisferio en vez de la esfera.
+
+En el caso de la componente difusa, sabemos que la BRDF es $f_r(p, \omega_o \leftarrow \omega_i) = \frac{\rho}{\pi}$, así que
+
+$$
+\frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j) \cos\theta_j}{p(\omega_j)}}
+$$
+
+¿Recuerdas la sección de [importance sampling](#importance-sampling)? La idea es buscar una función proporcional a $f$ para reducir el error. Podemos usar $p(\omega) = \frac{\cos\theta}{\pi}$, de forma que
+
+$$
+\frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j) \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j = 1}^{N}{L_i(p, \omega_j) \rho}
+$$
+
+### Pseudocódigo de un path tracer
+
+03_Rendering_Zsolnai_Global_Illumination.pdf
 
 ### Antialiasing mediante jittering
 
