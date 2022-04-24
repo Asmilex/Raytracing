@@ -504,7 +504,7 @@ El algoritmo consiste en:
 #### BRDF
 #### Basada en el coseno
 
-## Técnicas de reducción de varianza
+## Técnicas de reducción de varianza basadas en muestras
 
 ### Ruleta rusa
 
@@ -516,7 +516,8 @@ El algoritmo consiste en:
 
 ### Blue noise
 
-https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/
+- https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/
+- https://alain.xyz/blog/ray-tracing-filtering
 
 ### Forced random sampling
 
@@ -527,7 +528,7 @@ http://drivenbynostalgia.com/ (ctrl + f -> forced random sampling)
 - https://blog.demofox.org/2022/03/02/sampling-importance-resampling/
 - https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf
 
-###
+### Low discrepancy sampling
 
 <hr>
 

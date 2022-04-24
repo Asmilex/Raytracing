@@ -481,15 +481,15 @@ El producto escalar de los vectores $\mathbf{n}$ y $\mathbf{l}$ hace que, cuando
 La implementación es muy sencilla:
 
 ```glsl
-float lambertian_pdf(vec3 normal, vec3 light_dir) {
+float Lambertian_pdf(vec3 normal, vec3 light_dir) {
     return max(
         0.0,
         dot(normal, light_dir)
     ) * (1.0 / PI);
 }
 
-float lambiertian_light(Superficie s, Luz light) {
-    return s.albedo * lambertian_pdf(s.normal, light.dir);
+float Lambiertian_light(Superficie s, Luz light) {
+    return s.albedo * Lambertian_pdf(s.normal, light.dir);
 }
 ```
 
@@ -513,7 +513,7 @@ donde $k_\alpha$ es el coeficiente de luz ambiental (con $\alpha$ el índice de 
 Evidentemente, este modelo no es más que una aproximación físicamente poco realista de la realidad; pero funciona lo suficientemente bien como para usarlo en ciertas partes.
 
 ```glsl
-float phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
+float Phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
     return pow(
         max(
             0.0,
@@ -529,17 +529,17 @@ float phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess
 
 #### Blinn - Phong
 
-Este es una pequeña modificación al de Phong. En vez de usar el vector reflejado de luz, se define un vector unitario entre el observador y la luz, $h = \frac{\omega + \mathbf{l}}{\abs{\omega + \mathbf{l}}}$. Resulta más fácil calcularlo. Además, este modelo es más realista.
+Este es una pequeña modificación al de Phong. En vez de usar el vector reflejado de luz, se define un vector unitario entre el observador y la luz, $\mathbf{h} = \frac{\omega + \mathbf{l}}{\norm{\omega + \mathbf{l}}}$. Resulta más fácil calcularlo. Además, este modelo es más realista.
 
 $$
 L_o^s(p, \omega_o \leftarrow \omega_i) =
       k_\alpha
     + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
-    + k_s \max\{0, h \cdot \mathbf{r}\}^\alpha
+    + k_s \max\{0, \mathbf{h} \cdot \mathbf{n}\}^\alpha
 $$
 
 ```glsl
-float blingphong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
+float BlingPhong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
     vec3 h = normalize(view_dir + light_dir);
     return pow(
         max(
@@ -553,7 +553,7 @@ float blingphong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shin
 
 #### Schlick
 
-> TODO: este está bastante cojo.
+> TODO: este está bastante cojo. Parece que está medianamente bien descrito en RT IOW, así que podría revisarlo de ahí.
 
 El modelo de Schlick describe una aproximación de las ecuaciones de Fresnel. Se utiliza con frecuencia, por ser físicamente realista y fácilmente computable.
 
@@ -584,9 +584,38 @@ vec3 BRDF(vec3 light_dir, vec3 view_dir, vec3 normal, vec3 X, vec3 Y) {
 
 #### Oren - Nayar
 
+Este modelo intenta aproximar superficies difusas utilizando un ratio de lambertiano, lo cual mejora el rendimiento el *white furnace test*:
+
+```
+float OrenNayar_diffuse(vec3 normal, vec3 light_dir, vec3 view_dir, material m) {
+    float L_dot_V = dot(light_dir, view_dir);
+    float N_dot_L = dot(light_dir, noral);
+    float N_dot_V = dot(normal, view_dir);
+
+    float s = L_dot_V - N_dot_L * N_dot_V;
+    float t = mix(
+        1.0,
+        ma(N_dot_L, N_dot_V),
+        step(0.0, s)
+    );
+
+    float sigma2 = m.roughness * m.roughness;
+    float A = 1.0 + sigma2 * (m.albedo / (sigma2 + 0.13) + 0.5 / (sigma2 + 0.33));
+    float B = 0.45 * sigma2 / (sigma2 + 0.09);
+
+    return m.albedo * max(0.0, N_dot_L) * (A + B * s / t) / PI;
+}
+```
+
 #### GGX
 
+El modelo Ground Glass Unknown es una BSDF analítica que se basa en la distribución de microfacetas del material subyacente. Es una de las técnicas más avanzadas y exploradas recientemente. Los motores modernos como Unreal Engine 4 y Unity lo utilizan en sus pipelines físicamente realistas.
+
+A diferencia de los otros modelos, no entraremos en detalles de la implementación.
+
 ### Relejos
+
+> TODO: IOW está bien documentado. Podría sacar esto de ahí.
 
 #### Ley de Snell
 

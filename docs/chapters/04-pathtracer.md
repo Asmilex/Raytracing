@@ -286,6 +286,10 @@ L_o(p, \omega_o) & = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p
 \end{aligned}
 $$
 
+### Antialiasing mediante jittering
+
+https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR/tree/master/ray_tracing_jitter_cam
+
 ### Materiales y objetos
 
 > NOTE: esto son notas para el Andrés del futuro. Sí, lo sé, está bastante claro solo con leerlo (⊙_⊙;)

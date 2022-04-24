@@ -12,7 +12,7 @@ https://alain.xyz/blog/ray-tracing-filtering
 
 ## Offline renderers
 
-## Low discrepancy sampling
+
 
 ## La industria del videojuego
 
