@@ -48,12 +48,10 @@ vec3 pathtrace(vec4 ray_origin, vec4 ray_dir, float t_min, float t_max, uint ray
 }
 
 vec3 sample_pixel(ivec2 image_coords, ivec2 image_res) {
-    vec3 hit_value = vec3(0);
-
     float r1 = rnd(prd.seed);
     float r2 = rnd(prd.seed);
 
-    // Subpixel jitter: send the ray through a different position inside the pixel each time to provide antialiasing
+    // Subpixel jitter: mandar el rayo desde una pequeña perturbación del pixel para aplicar antialiasing
     vec2 subpixel_jitter = pcRay.frame == 0
         ? vec2(0.5f, 0.5f)
         : vec2(r1, r2);
@@ -71,6 +69,12 @@ vec3 sample_pixel(ivec2 image_coords, ivec2 image_res) {
     float t_max     = 10000.0;
 
     vec3 radiance = pathtrace(origin, direction, t_min, t_max, ray_flags);
+
+    // Quitar las luciérnagas
+    float lum = dot(radiance, vec3(0.212671f, 0.715160f, 0.072169f));
+    if (lum > pcRay.firefly_clamp_threshold) {
+        radiance *= pcRay.firefly_clamp_threshold / lum;
+    }
 
     return radiance;
 }

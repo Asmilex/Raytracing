@@ -91,6 +91,7 @@ struct PushConstantRay
   int   max_depth;
   int   nb_samples;     // For the antialiasing
   int   frame;
+  int   firefly_clamp_threshold;
 };
 
 struct Vertex  // See ObjLoader, copy of VertexObj, could be compressed for device

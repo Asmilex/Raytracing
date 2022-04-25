@@ -165,7 +165,9 @@ public:
         0,      // light type
         10,     // max depth
         5,      // number of samples
-    };
+        0,      // actual frame
+        30,     // firefly clamp threshold. ¡Valor temporal!
+};
     int m_maxAcumFrames {20};
 
     // Miembros para el Shader Binding Table
