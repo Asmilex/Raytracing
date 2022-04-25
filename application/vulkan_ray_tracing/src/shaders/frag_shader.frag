@@ -35,7 +35,7 @@ layout(push_constant) uniform _PushConstantRaster
 };
 
 // clang-format off
-// Incoming 
+// Incoming
 layout(location = 1) in vec3 i_worldPos;
 layout(location = 2) in vec3 i_worldNrm;
 layout(location = 3) in vec3 i_viewDir;
@@ -67,17 +67,17 @@ void main()
 
   // Vector toward light
   vec3  L;
-  float lightIntensity = pcRaster.lightIntensity;
-  if(pcRaster.lightType == 0)
+  float light_intensity = pcRaster.light_intensity;
+  if(pcRaster.light_type == 0)
   {
-    vec3  lDir     = pcRaster.lightPosition - i_worldPos;
+    vec3  lDir     = pcRaster.light_position - i_worldPos;
     float d        = length(lDir);
-    lightIntensity = pcRaster.lightIntensity / (d * d);
+    light_intensity = pcRaster.light_intensity / (d * d);
     L              = normalize(lDir);
   }
   else
   {
-    L = normalize(pcRaster.lightPosition);
+    L = normalize(pcRaster.light_position);
   }
 
 
@@ -95,5 +95,5 @@ void main()
   vec3 specular = computeSpecular(mat, i_viewDir, L, N);
 
   // Result
-  o_color = vec4(lightIntensity * (diffuse + specular), 1);
+  o_color = vec4(light_intensity * (diffuse + specular), 1);
 }

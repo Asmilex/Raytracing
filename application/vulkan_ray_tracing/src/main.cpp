@@ -61,16 +61,16 @@ void renderUI(HelloVulkan& helloVk) {
     if (ImGui::CollapsingHeader("Light")) {
         auto& pc = helloVk.m_pcRaster;
 
-        changed |= ImGui::RadioButton("Point", &pc.lightType, 0);
+        changed |= ImGui::RadioButton("Point", &pc.light_type, 0);
         ImGui::SameLine();
-        changed |= ImGui::RadioButton("Infinite", &pc.lightType, 1);
+        changed |= ImGui::RadioButton("Infinite", &pc.light_type, 1);
 
-        changed |= ImGui::SliderFloat3("Position", &pc.lightPosition.x, -20.f, 20.f);
-        changed |= ImGui::SliderFloat("Intensity", &pc.lightIntensity, 0.f, 150.f);
+        changed |= ImGui::SliderFloat3("Position", &pc.light_position.x, -20.f, 20.f);
+        changed |= ImGui::SliderFloat("Intensity", &pc.light_intensity, 0.f, 150.f);
     }
 
     if (ImGui::CollapsingHeader("Ray tracing options")) {
-        changed |= ImGui::SliderInt("Max depth of ray", &helloVk.m_pcRay.maxDepth, 1, 50);
+        changed |= ImGui::SliderInt("Max depth of ray", &helloVk.m_pcRay.max_depth, 1, 50);
         changed |= ImGui::SliderInt("Max accum frames", &helloVk.m_maxAcumFrames, 1, 100);
         changed |= ImGui::SliderInt("Number of samples", &helloVk.m_pcRay.nb_samples, 1, 20);
     }
@@ -251,7 +251,7 @@ int main(int argc, char** argv) {
     helloVk.createPostDescriptor();
     helloVk.createPostPipeline();
     helloVk.updatePostDescriptorSet();
-    nvmath::vec4f clearColor = nvmath::vec4f(1, 1, 1, 1.00f);
+    nvmath::vec4f clear_color = nvmath::vec4f(1, 1, 1, 1.00f);
 
 
     helloVk.setupGlfwCallbacks(window);
@@ -274,7 +274,7 @@ int main(int argc, char** argv) {
         // Show UI window.
         if(helloVk.showGui()) {
             ImGuiH::Panel::Begin();
-            ImGui::ColorEdit3("Clear color", reinterpret_cast<float*>(&clearColor));
+            ImGui::ColorEdit3("Clear color", reinterpret_cast<float*>(&clear_color));
             ImGui::Checkbox("Ray tracer mode", &useRaytracer);  // Para cambiar entre raster y ray tracing.
             renderUI(helloVk);
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
@@ -299,7 +299,7 @@ int main(int argc, char** argv) {
 
         // Clearing screen
         std::array<VkClearValue, 2> clearValues{};
-        clearValues[0].color        = {{clearColor[0], clearColor[1], clearColor[2], clearColor[3]}};
+        clearValues[0].color        = {{clear_color[0], clear_color[1], clear_color[2], clear_color[3]}};
         clearValues[1].depthStencil = {1.0f, 0};
 
         // Offscreen render pass
@@ -313,7 +313,7 @@ int main(int argc, char** argv) {
 
             // Rendering Scene
             if (useRaytracer) {
-                helloVk.raytrace(cmdBuf, clearColor);
+                helloVk.raytrace(cmdBuf, clear_color);
             }
             else {
                 vkCmdBeginRenderPass(cmdBuf, &offscreenRenderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);

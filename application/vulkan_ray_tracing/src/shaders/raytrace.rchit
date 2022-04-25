@@ -92,17 +92,17 @@ void main()
 
     // Vector toward the light
     vec3 L;
-    float lightIntensity = pcRay.lightIntensity;
+    float light_intensity = pcRay.light_intensity;
     float lightDistance = 100000.0;
 
-    if (pcRay.lightType == 0) {         // Point light
-        vec3 lDir      = pcRay.lightPosition - worldPos;
+    if (pcRay.light_type == 0) {         // Point light
+        vec3 lDir      = pcRay.light_position - worldPos;
         lightDistance  = length(lDir);
-        lightIntensity = pcRay.lightIntensity / (lightDistance * lightDistance);
+        light_intensity = pcRay.light_intensity / (lightDistance * lightDistance);
         L              = normalize(lDir);
     }
     else {                            // Directional light
-        L = normalize(pcRay.lightPosition);
+        L = normalize(pcRay.light_position);
     }
 
     // Material of the object
@@ -168,6 +168,6 @@ void main()
         prd.rayDir       = rayDir;
     }
 
-    prd.hitValue = vec3(lightIntensity * attenuation * (diffuse + specular));
+    prd.hitValue = vec3(light_intensity * attenuation * (diffuse + specular));
 */
 }

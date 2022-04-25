@@ -1018,7 +1018,7 @@ void HelloVulkan::createRtShaderBindingTable() {
 // ────────────────────────────────────────────────────────────────────────────────
 // Ray tracing the scene
 //
-void HelloVulkan::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clearColor) {
+void HelloVulkan::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clear_color) {
     m_debug.beginLabel(cmdBuf, "Ray trace");
 
     updateFrame();
@@ -1030,10 +1030,10 @@ void HelloVulkan::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& 
     }
 
     // Inicializar las push constant
-    m_pcRay.clearColor     = clearColor;
-    m_pcRay.lightPosition  = m_pcRaster.lightPosition;
-    m_pcRay.lightIntensity = m_pcRaster.lightIntensity;
-    m_pcRay.lightType      = m_pcRaster.lightType;
+    m_pcRay.clear_color     = clear_color;
+    m_pcRay.light_position  = m_pcRaster.light_position;
+    m_pcRay.light_intensity = m_pcRaster.light_intensity;
+    m_pcRay.light_type      = m_pcRaster.light_type;
 
     std::vector<VkDescriptorSet> descSets {m_rtDescSet, m_descSet};
     vkCmdBindPipeline(cmdBuf, VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR, m_rtPipeline);

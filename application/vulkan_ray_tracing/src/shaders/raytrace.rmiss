@@ -10,7 +10,7 @@
     We share the clear color of the rasterization with the ray tracer.
 
     While the Constants struct contains more members, here we use the fact that
-    clearColor is the first member in the struct, and do not even declare the subsequent members.
+    clear_color is the first member in the struct, and do not even declare the subsequent members.
 */
 
 layout(location = 0) rayPayloadInEXT hitPayload prd;
@@ -27,7 +27,7 @@ void main()
             Primer rayo => hemos impactado con el cielo.
             No hacemos nada, devolvemos simplemente el color del cielo
         */
-        prd.hitValue = pcRay.clearColor.xyz;
+        prd.hitValue = pcRay.clear_color.xyz;
     }
     else {
         prd.hitValue = vec3(0.01);   // Tiny contribution from environment

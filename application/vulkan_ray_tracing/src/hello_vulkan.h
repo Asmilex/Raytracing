@@ -139,7 +139,7 @@ public:
 
     void createRtShaderBindingTable();
 
-    void raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clearColor);
+    void raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clear_color);
 
     // Jitter camera
     void resetFrame();
