@@ -2153,10 +2153,10 @@ aleatoria para poder entender la integración de Monte Carlo, por lo que
 vamos a hacer un breve repaso.</p>
 <p>Una <strong>variable aleatoria</strong> <span
 class="math inline">\(X\)</span> (v.a.) es, esencialmente, una regla que
-asigna un valor numérico a cada posibilidad de proceso de azar.
+asigna un valor numérico a cada posibilidad de un proceso de azar.
 Formalmente, es una función definida en un espacio de probabilidad <span
 class="math inline">\((\Omega, \mathcal{A}, P)\)</span> asociado a un
-exprimento aleatorio:</p>
+experimento aleatorio:</p>
 <p><span class="math display">\[
 X: \Omega \rightarrow \mathbb{R}
 \]</span></p>
@@ -2168,11 +2168,6 @@ class="math inline">\(\Omega\)</span> que refleja todas las
 posibilidades de eventos aleatorios, y <span
 class="math inline">\(P\)</span> es una función probabilidad, que asigna
 a cada evento una probabilidad.</p>
-<blockquote>
-<p>NOTE: no sé hasta qué punto debería meterme en la definición formal
-de variable aleatoria. Es una movida tremenda para poca cosa que
-necesitamos. De momento, voy con lo más interesante.</p>
-</blockquote>
 <p>Una variable aleatoria <span class="math inline">\(X\)</span> puede
 clasificarse atendiendo a cómo sea su rango <span
 class="math inline">\(R_X = \left\{x \in \mathbb{R} \,\middle|\, \exists
@@ -2187,7 +2182,7 @@ Consideremos un experimento en el que lanzamos dos dados, anotando lo
 que sale en cada uno. Los posibles valores que toman serán</p>
 <p><span class="math display">\[
 \begin{aligned}
-\{ &amp; (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),  \\
+\Omega = \{ &amp; (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),  \\
    &amp; (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6),  \\
    &amp; (3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6),  \\
    &amp; (4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 6),  \\
@@ -2207,19 +2202,20 @@ class="math inline">\(X\)</span> tomará el valor <span
 class="math inline">\(4\)</span>. En total, <span
 class="math inline">\(X\)</span> puede tomar todos los valores
 comprendidos entre <span class="math inline">\(2\)</span> y <span
-class="math inline">\(12\)</span>. Este sería el <strong>espacio
-muestral</strong>. Cada pareja no está asociada a un único valor de
-<span class="math inline">\(X\)</span>. Por ejemplo, <span
-class="math inline">\((1, 2)\)</span> suma lo mismo que <span
+class="math inline">\(12\)</span>. Cada pareja no está asociada a un
+único valor de <span class="math inline">\(X\)</span>. Por ejemplo,
+<span class="math inline">\((1, 2)\)</span> suma lo mismo que <span
 class="math inline">\((2, 1)\)</span>. Esto nos lleva a preguntarnos…
 ¿Cuál es la probabilidad de que <span class="math inline">\(X\)</span>
 adquiera un cierto valor?</p>
 <p>La <strong>función masa de probabilidad</strong> nos permite conocer
 la probabilidad de que <span class="math inline">\(X\)</span> tome un
 cierto valor <span class="math inline">\(x\)</span>. Se denota por <span
-class="math inline">\(P(X = x)\)</span>, aunque también usaremos <span
-class="math inline">\(p_X(x)\)</span> o directamente <span
-class="math inline">\(p(x)\)</span>, cuando no haya lugar a dudas.</p>
+class="math inline">\(P(X = x)\)</span>.</p>
+<p>También se suele usar <span class="math inline">\(p_X(x)\)</span> o,
+directamente <span class="math inline">\(p(x)\)</span>, cuando no haya
+lugar a dudas. Sin embargo, en este trabajo reservaremos este nombre a
+otro tipo de funciones.</p>
 <blockquote>
 <p><strong>Nota</strong>(ción): Cuando <span
 class="math inline">\(X\)</span> tenga una cierta función masa de
@@ -2238,10 +2234,10 @@ P(X = 4) &amp; = \sum{\small{\text{nº parejas que suman 4}} \cdot
 \]</span></p>
 <p>Las parejas serían <span class="math inline">\((1, 3), (2,
 2)\)</span> y <span class="math inline">\((3, 1)\)</span>.</p>
-<p>Por definición, si el espacio muestral de <span
-class="math inline">\(X\)</span> es <span class="math inline">\(\Omega =
-\{x_1, \dots, x_n\}\)</span>, la función masa de probabilidad debe
-cumplir que</p>
+<p>Por definición, si el conjunto de valores que puede tomar <span
+class="math inline">\(X\)</span> es <span class="math inline">\(\{x_1,
+\dots, x_n\}\)</span>, la función masa de probabilidad debe cumplir
+que</p>
 <p><span class="math display">\[
 \sum_{i = 1}^{n}{P(X = x_i)} = 1
 \]</span></p>
@@ -2251,8 +2247,8 @@ class="math inline">\(X\)</span> se quede por debajo de un cierto valor
 distribuciones aleatorias gracias a esto). Para ello, usamos la
 <strong>función de distribución</strong>:</p>
 <p><span class="math display">\[
-F_X(x) = P(X \le x) = \sum_{\substack{k \in \Omega \\ k \le x}}{P(X =
-k)}
+F_X(x) = P(X \le x) = \sum_{\substack{k \in \mathbb{R} \\ k \le x}}{P(X
+= k)}
 \]</span></p>
 <p>Es una función continua por la derecha y monótona no decreciente.
 Además, se cumple que <span class="math inline">\(0 \le F_X \le
@@ -2292,13 +2288,18 @@ P(a \le X \le b) = \int_{a}^{b}{f_X(x)dx}
 <ol type="1">
 <li><span class="math inline">\(f_X\)</span> es no negativa; esto es,
 <span class="math inline">\(f_X(x) \ge 0\ \forall x \in
-\Omega\)</span></li>
-<li><span class="math inline">\(f_X\)</span> integra uno en todo el
-espacio muestral:</li>
+\mathbb{R}\)</span></li>
+<li><span class="math inline">\(f_X\)</span> integra uno en todo <span
+class="math inline">\(\mathbb{R}\)</span>:</li>
 </ol>
 <p><span class="math display">\[
-\int_{\Omega}{f_X(x)} = 1
+\int_{-\infty}^{\infty}{f_X(x)} = 1
 \]</span></p>
+<p>Estas dos propiedades caracterizan a una función de densidad; es
+decir, toda función <span class="math inline">\(f: \mathbb{R}
+\rightarrow \mathbb{R}\)</span> no negativa e integrable tal que <span
+class="math inline">\(\int_{\infty}^{\infty}{f_X(x)} = 1\)</span> es la
+función de densidad de alguna variable continua.</p>
 <p>Intuitivamente, podemos ver esta última propiedad como <em>si
 acumulamos todos los valores que puede tomar la variable aleatoria, la
 probabilidad de que te encuentres en el conjunto debe ser 1</em>. Si
@@ -2307,24 +2308,23 @@ como <span class="math inline">\(\int_{-\infty}^{\infty}{f_X(x)} =
 1\)</span>.</p>
 <p>Una de las variables aleatorias que más juego nos darán en el futuro
 será la <strong>v.a. con distribución uniforme en <span
-class="math inline">\([0, 1)\)</span></strong>. La denotaremos como
-<span class="math inline">\(\xi\)</span>, y escribiremos <span
-class="math inline">\(\xi \sim U\left([0, 1)\right)\)</span>. La
+class="math inline">\([0, 1)\)</span></strong>. La denotaremos <span
+class="math inline">\(\Xi \sim U\left([0, 1)\right)\)</span>. La
 probabilidad de que <span class="math inline">\(\xi\)</span> tome un
 valor es constante, por lo que podemos definir su función de densidad
 como</p>
 <p><span class="math display">\[
-f(\xi) = \left\{  \begin{array}{llc}
+f_\Xi(\xi) = \left\{  \begin{array}{llc}
                   1 &amp; \text{si } \xi \in [0, 1) \\
                   0 &amp; \text{en otro caso.}
                   \end{array}
          \right.
 \]</span></p>
-<p>La probabilidad de <span class="math inline">\(\xi\)</span> tome un
+<p>La probabilidad de <span class="math inline">\(\Xi\)</span> tome un
 valor entre dos elementos <span class="math inline">\(a, b \in [0,
 1)\)</span> es</p>
 <p><span class="math display">\[
-P(\xi \in [a, b]) = \int_{a}^{b}{1dx} = b - a
+P(\Xi \in [a, b]) = \int_{a}^{b}{1dx} = b - a
 \]</span></p>
 <p>Como veremos más adelante, definiendo correctamente una función de
 densidad conseguiremos mejorar el rendimiento del path tracer.</p>
@@ -2349,7 +2349,7 @@ media ponderada. Nos informa del <em>valor esperado</em> de dicha
 variable aleatoria.</p>
 <p>En el caso de las variables discretas, se define como</p>
 <p><span class="math display">\[
-E[X] = \sum_{x_i \in \Omega}{x_i p_i}
+E[X] = \sum_{i}{x_i p_i}
 \]</span></p>
 <p>donde <span class="math inline">\(x_i\)</span> son los posibles
 valores que puede tomar la v.a., y <span
@@ -2361,24 +2361,18 @@ por</p>
 <p><span class="math display">\[
 E[X] = \int_{-\infty}^{\infty}{x f_X(x) dx}
 \]</span></p>
-<p>aunque, generalizando a una v.a. con espacio muestral <span
-class="math inline">\(\Omega\)</span>, la esperanza se puede generalizar
-como</p>
-<p><span class="math display">\[
-E[X] = \int_{\Omega}{x f_X(x) dx}
-\]</span></p>
 <p>Pongamos un par de ejemplos del cálculo de la esperanza. En el <a
 href="#variables-aleatorias-discretas">ejemplo de las variables
 discretas</a>, la esperanza venía dada por</p>
 <p><span class="math display">\[
-E[X] = \sum_{i = 2}^{12}{i \cdot P[X = i]} = 2 \cdot \frac{1}{36} + 3
-\cdot \frac{2}{36} + \dots + 12 \cdot \frac{1}{36} = 7
+E[X] = \sum_{i = 2}^{12}{i P[X = i]} = 2\frac{1}{36} + 3 \frac{2}{36} +
+\dots + 12 \frac{1}{36} = 7
 \]</span></p>
 <p>Para variables aleatorias uniformes en <span
 class="math inline">\((a, b)\)</span> (es decir, <span
 class="math inline">\(X \sim U(a, b)\)</span>), la esperanza es</p>
 <p><span class="math display">\[
-E[X] = \int_{a}^{b}{x \cdot \frac{1}{b - a}dx} = \frac{a + b}{2}
+E[X] = \int_{a}^{b}{x \frac{1}{b - a}dx} = \frac{a + b}{2}
 \]</span></p>
 <p>La esperanza tiene unas cuantas propiedades que nos resultarán muy
 útiles. Estas son:</p>
@@ -2404,7 +2398,7 @@ class="math inline">\(g\)</span>, la esperanza de <span
 class="math inline">\(g(X)\)</span> se puede calcular como</li>
 </ul>
 <p><span class="math display">\[
-E[g(X)] = \int_{\Omega}{g(x) f_X(x) dx}
+E[g(X)] = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
 \]</span></p>
 <ul>
 <li>La <strong>Ley (fuerte) de los grandes números</strong> nos dice que
@@ -2435,7 +2429,7 @@ esperanza de <span class="math inline">\(Y\)</span> fácilmente. Esta
 propiedad hará que las variables aleatorias con distribución uniforme
 adquieran muchísima importancia. Generar números aleatorios en <span
 class="math inline">\([0, 1)\)</span> es muy fácil, así <a
-href="#método-de-la-transformada-inversa">que obtendremos otras v.a.s a
+href="#método-de-la-transformada-inversa">que obtendremos otras vv.aa a
 partir de <span class="math inline">\(\xi\)</span></a>.</p>
 <p>Otra medida muy útil de una variable aleatoria es <strong>la
 varianza</strong>. Nos permitirá medir cómo de dispersa es la
@@ -2492,7 +2486,7 @@ puede tomar el parámetro. Buscamos una forma de determinar el valor de
 <span class="math inline">\(\theta\)</span>.</p>
 <p>Diremos que <span class="math inline">\(T(X_1, \dots, X_N)\)</span>
 es <strong>un estimador de <span
-class="math inline">\(theta\)</span></strong> si <span
+class="math inline">\(\theta\)</span></strong> si <span
 class="math inline">\(T\)</span> toma valores en <span
 class="math inline">\(\Theta\)</span>.</p>
 <p>A los estimadores de un parámetro los solemos denotar con <span
@@ -2660,7 +2654,7 @@ circunferencia.</p>
 class="math inline">\(r\)</span> se encuentra inscrita en un cuadrado.
 El área de la circunferencia es <span class="math inline">\(\pi
 r^2\)</span>, mientras que la del cuadrado es <span
-class="math inline">\((2r)^2 = 4r^2\)</span>. Por tanto, la probabilida
+class="math inline">\((2r)^2 = 4r^2\)</span>. Por tanto, la probabilidad
 de obtener un punto dentro de la circunferencia es <span
 class="math inline">\(\frac{\pi r^2}{4r^2} = \frac{\pi}{4}\)</span>.
 Podemos tomar <span class="math inline">\(p(x, y) =
@@ -2807,7 +2801,7 @@ x &amp; = \sqrt[3]{8 \xi}
 \]</span></p>
 <p>Sacando un número aleatorio <span class="math inline">\(\xi\)</span>,
 y pasándolo por la función obtenida, conseguimos un elemento con
-distribución <span class="math inline">\(f(x)\)</span>.</p>
+distribución <span class="math inline">\(F(x)\)</span>.</p>
 <h3 id="método-del-rechazo">Método del rechazo</h3>
 <blockquote>
 <p><strong>En resumen</strong>: Para conseguir una muestra de una
