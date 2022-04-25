@@ -6,7 +6,7 @@
 #extension GL_EXT_buffer_reference2 : require
 
 #include "random.glsl"
-#include "raycommon.glsl"
+#include "globals.glsl"
 #include "wavefront.glsl"
 
 #ifdef PAYLOAD_0

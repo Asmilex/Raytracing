@@ -3,7 +3,7 @@
 #extension GL_GOOGLE_include_directive : enable
 #extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
 
-#include "raycommon.glsl"
+#include "globals.glsl"
 #include "host_device.h"
 #include "random.glsl"
 
@@ -78,7 +78,7 @@ void main()
              hitValue       = vec3(0);
 
         // Con este bucle evitamos generar rayos desde el closest hit
-        for (; prd.depth < pcRay.maxDepth; prd.depth++) {
+        for (; prd.depth < pcRay.max_depth; prd.depth++) {
             // Cada vez que impactemos con algo, se actualizará el origen y la nueva dirección.
             // Dependerá del closest hit poner los parámetros de impacto correctos.
             traceRayEXT(topLevelAS, // acceleration structure

@@ -3,7 +3,7 @@
 #extension GL_GOOGLE_include_directive : enable
 #extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
 
-#include "raycommon.glsl"
+#include "globals.glsl"
 #include "wavefront.glsl"
 
 /*
@@ -34,5 +34,5 @@ void main()
     }
 
     // Como no hemos fallado, no hay necesidad de continuar; así que paramos la generación.
-    prd.depth = pcRay.maxDepth;
+    prd.depth = pcRay.max_depth;
 }
