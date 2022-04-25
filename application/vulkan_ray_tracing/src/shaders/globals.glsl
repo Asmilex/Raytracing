@@ -1,9 +1,9 @@
+#ifndef GLOBALS_GLSL
+#define GLOBALS_GLSL
+
 //
 // ────────────────────────────────────────────────────── CONSTANTES GLOBALES ─────
 //
-
-#ifndef GLOBALS_GLSL
-#define GLOBALS_GLSL
 
 #define PI 3.14159265358979323
 #define TWO_PI 6.28318530717958648

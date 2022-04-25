@@ -258,11 +258,12 @@ href="#la-función-de-distribución-de-dispersión-bidireccional-bsdf">La
 función de distribución de dispersión bidireccional (BSDF)</a></li>
 <li><a href="#reflectancia-hemisférica">Reflectancia
 hemisférica</a></li>
-<li><a href="#tipos-de-reflejos">Tipos de reflejos</a></li>
+<li><a href="#tipos-de-dispersión">Tipos de dispersión</a></li>
 <li><a href="#modelos-analíticos-de-shading">Modelos analíticos de
 <em>shading</em></a></li>
-<li><a href="#ecuaciones-de-fresnel-ley-de-snell">Ecuaciones de fresnel,
-ley de Snell</a></li>
+<li><a href="#relejos">Relejos</a></li>
+<li><a href="#reflejos-especulares-perfectos">Reflejos especulares
+perfectos</a></li>
 </ul></li>
 <li><a href="#la-rendering-equation">La rendering equation</a></li>
 </ul></li>
@@ -294,8 +295,9 @@ unidimensionales</a></li>
 <li><a href="#distribuciones-bidimensionales">Distribuciones
 bidimensionales</a></li>
 </ul></li>
-<li><a href="#técnicas-de-reducción-de-varianza">Técnicas de reducción
-de varianza</a>
+<li><a
+href="#técnicas-de-reducción-de-varianza-basadas-en-muestras">Técnicas
+de reducción de varianza basadas en muestras</a>
 <ul>
 <li><a href="#ruleta-rusa">Ruleta rusa</a></li>
 <li><a href="#next-event-estimation">Next Event Estimation</a></li>
@@ -303,7 +305,8 @@ de varianza</a>
 <li><a href="#forced-random-sampling">Forced random sampling</a></li>
 <li><a href="#sampling-importance-resampling">Sampling importance
 resampling</a></li>
-<li><a href="#section"></a></li>
+<li><a href="#low-discrepancy-sampling">Low discrepancy
+sampling</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#construyamos-un-path-tracer">¡Construyamos un path
@@ -337,10 +340,15 @@ información entre shaders</a></li>
 <li><a href="#creación-de-la-ray-tracing-pipeline">Creación de la ray
 tracing pipeline</a></li>
 </ul></li>
-<li><a href="#asmiray">Asmiray</a></li>
 <li><a href="#transporte-de-luz-en-la-práctica">Transporte de luz en la
 práctica</a>
 <ul>
+<li><a href="#estimando-la-rendering-equation-con-monte-carlo">Estimando
+la rendering equation con Monte Carlo</a></li>
+<li><a href="#pseudocódigo-de-un-path-tracer">Pseudocódigo de un path
+tracer</a></li>
+<li><a href="#antialiasing-mediante-jittering">Antialiasing mediante
+jittering</a></li>
 <li><a href="#materiales-y-objetos">Materiales y objetos</a></li>
 </ul></li>
 <li><a href="#fuentes-de-luz">Fuentes de luz</a>
@@ -356,8 +364,6 @@ spotlights</a></li>
 <li><a href="#denoising">Denoising</a></li>
 <li><a href="#filtering">Filtering</a></li>
 <li><a href="#offline-renderers">Offline renderers</a></li>
-<li><a href="#low-discrepancy-sampling">Low discrepancy
-sampling</a></li>
 <li><a href="#la-industria-del-videojuego">La industria del
 videojuego</a>
 <ul>
@@ -1795,7 +1801,7 @@ misma luz desde todas direcciones:</p>
 \leftarrow \omega_i) \lvert \cos\theta_o\ \cos\theta_i \rvert\
 d\omega_o\ d\omega_i}
 \]</span></p>
-<h3 id="tipos-de-reflejos">Tipos de reflejos</h3>
+<h3 id="tipos-de-dispersión">Tipos de dispersión</h3>
 <p>Una vez hemos definido las funciones de distribución bidireccionales,
 debemos encargarnos de modelar el comportamiento explícitamente. Para
 ello, veamos cómo los materiales modifican las distribuciones.</p>
@@ -1831,6 +1837,10 @@ anisotrópicos son las rocas y la madera.</p>
 <blockquote>
 <p>TODO: https://alain.xyz/blog/advances-in-material-models este señor
 me acaba de solucionar la vida. Gracias por tanto.</p>
+<p>TODO: Completar con lo siguiente, basado en
+02_Rendering_Zsolnai_Ray_Tracing.</p>
+<p>TODO: también estaría bien añadir el repositorio de Disney como
+referencia https://github.com/wdas/brdf/tree/main/src/brdfs</p>
 </blockquote>
 <p>Los modelos analíticos de shading surgen como simplificaciones de las
 BRDFs. En esta sección, vamos a ver algunos de los más famosos.</p>
@@ -1858,15 +1868,15 @@ class="math inline">\(\mathbf{l}\)</span> hace que, cuando el ángulo de
 incidencia de la luz es muy cerrado, la radiancia será prácticamente
 0.</p>
 <p>La implementación es muy sencilla:</p>
-<pre><code class="language-glsl">float lambertian_pdf(vec3 normal, vec3 light_dir) {
+<pre><code class="language-glsl">float Lambertian_pdf(vec3 normal, vec3 light_dir) {
     return max(
         0.0,
         dot(normal, light_dir)
     ) * (1.0 / PI);
 }
 
-float lambiertian_light(Superficie s, Luz light) {
-    return s.albedo * lambertian_pdf(s.normal, light.dir);
+float Lambiertian_light(Superficie s, Luz light) {
+    return s.albedo * Lambertian_pdf(s.normal, light.dir);
 }</code></pre>
 <p>Este modelo está muy limitado, pues en la vida real, los objetos
 muestran algún tipo de interacción especular.</p>
@@ -1895,7 +1905,7 @@ class="math inline">\(k_s \vert k_d &lt; 1\)</span>.</p>
 <p>Evidentemente, este modelo no es más que una aproximación físicamente
 poco realista de la realidad; pero funciona lo suficientemente bien como
 para usarlo en ciertas partes.</p>
-<pre><code class="language-glsl">float phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
+<pre><code class="language-glsl">float Phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
     return pow(
         max(
             0.0,
@@ -1908,45 +1918,96 @@ para usarlo en ciertas partes.</p>
     );
 }</code></pre>
 <h4 id="blinn---phong">Blinn - Phong</h4>
-<h4 id="shlick">Shlick</h4>
-<h4 id="oren---nayar">Oren - Nayar</h4>
-<h4 id="ggx">GGX</h4>
-<h3 id="ecuaciones-de-fresnel-ley-de-snell">Ecuaciones de fresnel, ley
-de Snell</h3>
+<p>Este es una pequeña modificación al de Phong. En vez de usar el
+vector reflejado de luz, se define un vector unitario entre el
+observador y la luz, <span class="math inline">\(\mathbf{h} =
+\frac{\omega + \mathbf{l}}{\lVert \omega + \mathbf{l} \rVert}\)</span>.
+Resulta más fácil calcularlo. Además, este modelo es más realista.</p>
+<p><span class="math display">\[
+L_o^s(p, \omega_o \leftarrow \omega_i) =
+      k_\alpha
+    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
+    + k_s \max\{0, \mathbf{h} \cdot \mathbf{n}\}^\alpha
+\]</span></p>
+<pre><code class="language-glsl">float BlingPhong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
+    vec3 h = normalize(view_dir + light_dir);
+    return pow(
+        max(
+            0.0,
+            dot(h, normal)
+        ),
+        shininess
+    );
+}</code></pre>
+<h4 id="schlick">Schlick</h4>
 <blockquote>
-<p>TODO: WIP. Bastante WIP. Basado en
-02_Rendering_Zsolnai_Ray_Tracing.</p>
+<p>TODO: este está bastante cojo. Parece que está medianamente bien
+descrito en RT IOW, así que podría revisarlo de ahí.</p>
 </blockquote>
-<ul>
-<li>La suma de las siguientes 3 componentes hacen el modelo de Phong:
-<ul>
-<li>Ambient: <span class="math inline">\(I = K_\alpha I_\alpha\)</span>,
-con <span class="math inline">\(k_\alpha\)</span> el coeficiente
-ambiental del objeto, <span class="math inline">\(I_\alpha\)</span> la
-intensidad ambiental de la escena/fuente de luz</li>
-<li>Diffuse (simplificada): <span class="math inline">\(I = k_d(L \cdot
-N)\)</span>, <span class="math inline">\(k_d\)</span> coeficiente difuso
-del objeto, <span class="math inline">\(L\)</span> vector que apunta a
-la luz, <span class="math inline">\(N\)</span> normal a la
-superficie</li>
-<li>Specular (simplificada): <span class="math inline">\(I = k_s(V *
-R)^n\)</span>, <span class="math inline">\(k_s\)</span> especular, <span
-class="math inline">\(V\)</span> vector apuntando a la cámara, <span
-class="math inline">\(R\)</span> vector reflejado del rayo, <span
-class="math inline">\(()^n\)</span> shininess factor.</li>
-<li><span class="math inline">\(I = K_\alpha I_\alpha + I_i(k_d(L \cdot
-N) + k_s(V \cdot R)^n)\)</span></li>
-<li>Aproximación muy bruta</li>
-<li>Con recursividad, <span class="math inline">\(I = K_\alpha I_\alpha
-+ I_i(k_d(L \cdot N) + k_s(V \cdot R)^n)\)</span> + <span
-class="math inline">\(k_t I_t + k_r I_r\)</span>, <span
-class="math inline">\(k_t\)</span> fresnel transmission coefficient,
-<span class="math inline">\(I_t\)</span> intensity coming from the
-transmission direction, <span class="math inline">\(k_r\)</span> fresnel
-reflection coefficient, <span class="math inline">\(I_r\)</span>
-intensity coming from the reflection direction.</li>
-</ul></li>
-</ul>
+<p>El modelo de Schlick describe una aproximación de las ecuaciones de
+Fresnel. Se utiliza con frecuencia, por ser físicamente realista y
+fácilmente computable.</p>
+<p>Se define como</p>
+<p><span class="math display">\[
+\begin{aligned}
+    &amp; S_\lambda(u) = C_\lambda + (1 - C_\lambda)(1 - u)^5 \\
+    &amp; R_\lambda(t, u, v, v&#39;, w) = S_\lambda(u) D(t, v, v&#39;,
+w)
+\end{aligned}
+\]</span></p>
+<pre><code class="language-glsl">float Fresnel(float f0, float u) {
+    return f0 + (1.0 - f0) * pow(1.0 - u, 5.0);
+}
+
+vec3 BRDF(vec3 light_dir, vec3 view_dir, vec3 normal, vec3 X, vec3 Y) {
+    vec3 halfway = normalize(light_dir + view_dir);
+
+    float ior = 1   // Puede vale 1, 3, o 1.2
+    float f0  = pow((ior - 1)/(ior + 1), 2);
+    float F   = Fresnel(f0, dot(light_dir, halfway));
+
+    return vec3(F);
+}</code></pre>
+<h4 id="oren---nayar">Oren - Nayar</h4>
+<p>Este modelo intenta aproximar superficies difusas utilizando un ratio
+de lambertiano, lo cual mejora el rendimiento el <em>white furnace
+test</em>:</p>
+<pre><code>float OrenNayar_diffuse(vec3 normal, vec3 light_dir, vec3 view_dir, material m) {
+    float L_dot_V = dot(light_dir, view_dir);
+    float N_dot_L = dot(light_dir, noral);
+    float N_dot_V = dot(normal, view_dir);
+
+    float s = L_dot_V - N_dot_L * N_dot_V;
+    float t = mix(
+        1.0,
+        ma(N_dot_L, N_dot_V),
+        step(0.0, s)
+    );
+
+    float sigma2 = m.roughness * m.roughness;
+    float A = 1.0 + sigma2 * (m.albedo / (sigma2 + 0.13) + 0.5 / (sigma2 + 0.33));
+    float B = 0.45 * sigma2 / (sigma2 + 0.09);
+
+    return m.albedo * max(0.0, N_dot_L) * (A + B * s / t) / PI;
+}</code></pre>
+<h4 id="ggx">GGX</h4>
+<p>El modelo Ground Glass Unknown es una BSDF analítica que se basa en
+la distribución de microfacetas del material subyacente. Es una de las
+técnicas más avanzadas y exploradas recientemente. Los motores modernos
+como Unreal Engine 4 y Unity lo utilizan en sus pipelines físicamente
+realistas.</p>
+<p>A diferencia de los otros modelos, no entraremos en detalles de la
+implementación.</p>
+<h3 id="relejos">Relejos</h3>
+<blockquote>
+<p>TODO: IOW está bien documentado. Podría sacar esto de ahí.</p>
+</blockquote>
+<h4 id="ley-de-snell">Ley de Snell</h4>
+<h4 id="ecuaciones-de-fresnel">Ecuaciones de Fresnel</h4>
+<h3 id="reflejos-especulares-perfectos">Reflejos especulares
+perfectos</h3>
+<p>https://graphicscodex.courses.nvidia.com/app.html?page=_rn_matrls
+mirror reflections</p>
 <h2 id="la-rendering-equation">La rendering equation</h2>
 <p>Y, finalmente, tras esta introducción de los principales conceptos
 radiométricos, llegamos a la ecuación más importante de todo este
@@ -2060,6 +2121,7 @@ Transmittance n.d.</a>)</span></p>
 <li>https://matmatch.com/learn/property/isotropy-anisotropy</li>
 <li>https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf</li>
 <li>https://alain.xyz/blog/advances-in-material-models</li>
+<li>https://github.com/Corralx/BRDFExplorer</li>
 </ul>
 <h1 id="integración-de-monte-carlo">Integración de Monte Carlo</h1>
 <p>Como vimos en el capítulo anterior, la clave para conseguir una
@@ -2817,8 +2879,8 @@ bidimensionales</h3>
 mappeo de superficies a un hemisferio</h4>
 <h4 id="brdf">BRDF</h4>
 <h4 id="basada-en-el-coseno">Basada en el coseno</h4>
-<h2 id="técnicas-de-reducción-de-varianza">Técnicas de reducción de
-varianza</h2>
+<h2 id="técnicas-de-reducción-de-varianza-basadas-en-muestras">Técnicas
+de reducción de varianza basadas en muestras</h2>
 <h3 id="ruleta-rusa">Ruleta rusa</h3>
 <blockquote>
 <p><strong>Idea</strong>: A random chance that if the luminance of a ray
@@ -2834,7 +2896,10 @@ shooting a shadow ray towards light sources, if it’s occluded, terminate
 the ray.</p>
 </blockquote>
 <h3 id="blue-noise">Blue noise</h3>
-<p>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</p>
+<ul>
+<li>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</li>
+<li>https://alain.xyz/blog/ray-tracing-filtering</li>
+</ul>
 <h3 id="forced-random-sampling">Forced random sampling</h3>
 <p>http://drivenbynostalgia.com/ (ctrl + f -&gt; forced random
 sampling)</p>
@@ -2844,7 +2909,7 @@ resampling</h3>
 <li>https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</li>
 <li>https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf</li>
 </ul>
-<h3 id="section"></h3>
+<h3 id="low-discrepancy-sampling">Low discrepancy sampling</h3>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
 <p><span class="citation" data-cites="ShirleyRRT">(<a
@@ -3328,7 +3393,7 @@ pequeño número de variables, el cual se puede consultar mediante
 <p>Nuestro path tracer tiene implementado actualmente (19 de abril de
 2022) las siguientes constantes:</p>
 <pre><code class="language-cpp">struct PushConstantRay {
-    vec4  clearColor;     // Color ambiental
+    vec4  clear_color;     // Color ambiental
     vec3  lightPosition;
     float lightIntensity;
     int   lightType;
@@ -3350,28 +3415,100 @@ pipeline</h3>
 <p>El código de la creación de la pipeline lo encapsula la función
 <code>createRtPipeline()</code>, que se puede consultar <a
 href="https://github.com/Asmilex/Raytracing/blob/6409feb628cc048186f6279b921ebe24e9337b6a/application/vulkan_ray_tracing/src/hello_vulkan.cpp#L763">aquí</a></p>
-<h2 id="asmiray">Asmiray</h2>
 <h2 id="transporte-de-luz-en-la-práctica">Transporte de luz en la
 práctica</h2>
-<blockquote>
-<p>TODO: creo… que esto no debería ir aquí. Pero no quiero tampoco que
-el capítulo de radiometría sea un tocho impresionante.</p>
-</blockquote>
+<h3 id="estimando-la-rendering-equation-con-monte-carlo">Estimando la
+rendering equation con Monte Carlo</h3>
 <p>Hemos llegado a una de las partes más importantes de este trabajo. Es
 el momento de poner en concordancia todo lo que hemos visto a lo largo
 de los capítulos anteriores.</p>
 <p>Empecemos por la dispersión. ¿Recuerdas la ecuación de dispersión [<a
-href="#eq:scattering_equation">6</a>]? Podemos estimarla utilizando
-Monte Carlo:</p>
+href="#eq:scattering_equation">6</a>]?</p>
+<p><span class="math display">\[
+L_o(p, \omega_o \leftarrow \omega_i) = \int_{\mathbb{S}^2}{f(p, \omega_o
+\leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i
+\]</span></p>
+<p>Añadamos el término de radiancia emitida:</p>
+<p><span class="math display">\[
+L_o(p, \omega_o \leftarrow \omega_i) = L_e(p, \omega_o) +
+\int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p,
+\omega_i)\cos\theta_i} d\omega_i
+\]</span></p>
+<p>Podemos aproximar el valor de la integral utilizando Monte Carlo:</p>
 <p><span class="math display">\[
 \begin{aligned}
-L_o(p, \omega_o) &amp; = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow
-\omega_i)L_i(p, \omega_i)\lvert \cos\theta_i \rvert d\omega_i} \\
+L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
+\omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
                  &amp; \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p,
-\omega_o \leftarrow \omega_j) L_i(p, \omega_j) \lvert \cos\theta_j
-\rvert}{p(\omega_j)}}
+\omega_o \leftarrow \omega_j) L_i(p, \omega_j)
+\cos\theta_j}{p(\omega_j)}}
 \end{aligned}
 \]</span></p>
+<p>Fijémonos en el denominador. Lo que estamos haciendo es tomar una
+muestra de un vector en la esfera. Si trabajamos con una BRDF en vez de
+una BSDF, usaríamos un hemisferio en vez de la esfera.</p>
+<p>En el caso de la componente difusa, sabemos que la BRDF es <span
+class="math inline">\(f_r(p, \omega_o \leftarrow \omega_i) =
+\frac{\rho}{\pi}\)</span>, así que</p>
+<p><span class="math display">\[
+\frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
+\cos\theta_j}{p(\omega_j)}}
+\]</span></p>
+<p>¿Recuerdas la sección de <a href="#importance-sampling">importance
+sampling</a>? La idea es buscar una función proporcional a <span
+class="math inline">\(f\)</span> para reducir el error. Podemos usar
+<span class="math inline">\(p(\omega) = \frac{\cos\theta}{\pi}\)</span>,
+de forma que</p>
+<p><span id="eq:rendering_eq_lambertian" class="eqnos"><span
+class="math display">\[
+\frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
+\cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j =
+1}^{N}{L_i(p, \omega_j) \rho}
+\]</span><span class="eqnos-number">(11)</span></span></p>
+<p>Lo cual nos proporciona una expresión muy agradable para los
+materiales difusos. Solo es cuestión de calcular la radiancia del
+punto.</p>
+<h3 id="pseudocódigo-de-un-path-tracer">Pseudocódigo de un path
+tracer</h3>
+<p>Con lo que conocemos hasta ahora, podemos empezar a programar los
+shaders. Una primera implementación basada en [<a
+href="#eq:rendering_eq_lambertian">11</a>] sería similar a lo
+siguiente:</p>
+<pre><code class="language-cpp">vec3 path_trace(Rayo r, profundidad) {
+    if (profundidad == profundidad_maxima) {
+        return contribucion_ambiental;
+    }
+
+    r.trazar_rayo()
+
+    if (!r.ha_impactado()) {
+        return contribucion_ambiental;
+    }
+
+    hit_info = r.hit_info
+    material = hit_info.material
+    emission = material.emission
+
+    nuevo_rayo = Rayo(
+        origen = hit_info.punto_impacto,
+        direccion = aleatorio_en_hemisferio(hit_info.normal)
+    // ¡Importante! ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+
+    // Usando reflexión lambertiana, tendríamos
+    cos_theta = dot(nuevo_rayo.direccion, hit_info.normal)
+    BRDF = material.reflectancia * cos_theta
+    reflejado = path_trace(nuevo_rayo, profundidad + 1)
+
+    return emission + BRDF * reflejado
+}</code></pre>
+<p>El término <code>emission</code> corresponde a <span
+class="math inline">\(L_e(p, \omega_o)\)</span>. Siempre lo añadimos,
+pues en caso de que el objeto no emita luz, la contribución de este
+término sería 0.</p>
+<h3 id="antialiasing-mediante-jittering">Antialiasing mediante
+jittering</h3>
+<p>https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR/tree/master/ray_tracing_jitter_cam</p>
 <h3 id="materiales-y-objetos">Materiales y objetos</h3>
 <blockquote>
 <p>NOTE: esto son notas para el Andrés del futuro. Sí, lo sé, está
@@ -3499,7 +3636,6 @@ listo.</p>
 <h2 id="filtering">Filtering</h2>
 <p>https://alain.xyz/blog/ray-tracing-filtering</p>
 <h2 id="offline-renderers">Offline renderers</h2>
-<h2 id="low-discrepancy-sampling">Low discrepancy sampling</h2>
 <h2 id="la-industria-del-videojuego">La industria del videojuego</h2>
 <h3 id="ray-tracing-híbrido">Ray tracing híbrido</h3>
 <p>https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</p>
