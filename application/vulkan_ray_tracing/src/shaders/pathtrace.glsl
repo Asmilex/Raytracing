@@ -1,6 +1,8 @@
 #include "globals.glsl"
 #include "layouts.glsl"
 
+layout(location = 0) rayPayloadEXT HitPayload prd;
+
 vec3 sample_pixel(
     ivec2 image_coords,
     ivec2 image_res

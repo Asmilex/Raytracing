@@ -9,6 +9,8 @@
 #include "random.glsl"
 #include "pathtrace.glsl"
 
+//layout(location = 0) rayPayloadEXT HitPayload prd;
+
 void main()
 {
     /*

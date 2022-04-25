@@ -6,26 +6,14 @@
 #extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
 #extension GL_EXT_buffer_reference2 : require
 
+
 #include "globals.glsl"
+#include "layouts.glsl"
 #include "wavefront.glsl"
 #include "sampling.glsl"
 
 hitAttributeEXT vec3 attribs;
-
 layout(location = 0) rayPayloadInEXT HitPayload prd;
-layout(location = 1) rayPayloadEXT ShadowPayload prdShadow;
-
-layout(set = 0, binding = eTlas) uniform accelerationStructureEXT topLevelAS;
-
-layout(buffer_reference, scalar) buffer Vertices   { Vertex v[]; };             // Posición del objeto
-layout(buffer_reference, scalar) buffer Indices    { ivec3 i[]; };              // Indices del triángulo
-layout(buffer_reference, scalar) buffer Materials  { WaveFrontMaterial m[]; };  // Array con todos los materiales
-layout(buffer_reference, scalar) buffer MatIndices { int i[]; };                // ID del material para cada triángulo
-
-layout(set = 1, binding = eObjDescs, scalar) buffer ObjDesc_ { ObjDesc i[]; } objDesc;
-layout(set = 1, binding = eTextures) uniform sampler2D textureSamplers[];
-
-layout (push_constant) uniform _PushConstantRay { PushConstantRay pcRay; };
 
 void main()
 {
