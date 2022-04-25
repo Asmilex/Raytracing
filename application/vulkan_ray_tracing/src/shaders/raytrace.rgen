@@ -33,13 +33,19 @@ void main()
         than calling raytrace() with NBSAMPLE=1 10 times in a row.
     */
 
-    prd.seed = tea(gl_LaunchIDEXT.y * gl_LaunchIDEXT.x + gl_LaunchIDEXT.x, pcRay.frame);
+    ivec2 image_res    = ivec2(gl_LaunchSizeEXT.x, gl_LaunchSizeEXT.y);
+    ivec2 image_coords = ivec2(gl_LaunchIDEXT.xy);
 
-    vec3 hit_value  = vec3(0);  // For current frame
-    vec3 hitValues = vec3(0);  // For all accumulated frames
+    prd.seed     = tea(image_coords.y * image_coords.x + image_coords.x, pcRay.frame);
 
-    // sample is a keyword, so we use smpl
-    for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {
+    vec3 hit_value   = vec3(0);  // Para el frame actual
+    vec3 pixel_color = vec3(0);  // El color final de la imagen
+
+
+
+// ────────────────────────────────────── BUCLE CORRESPONDIENTE A UNA MUESTRA ─────
+
+    for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {     // sample is a keyword, so we use smpl
         float r1 = rnd(prd.seed);
         float r2 = rnd(prd.seed);
 
@@ -48,8 +54,8 @@ void main()
             ? vec2(0.5f, 0.5f)
             : vec2(r1, r2);
 
-        const vec2 pixelCenter = vec2(gl_LaunchIDEXT.xy) + subpixel_jitter;
-        const vec2 inUV        = pixelCenter/vec2(gl_LaunchSizeEXT.xy);
+        const vec2 pixelCenter = vec2(image_coords.xy) + subpixel_jitter;
+        const vec2 inUV        = pixelCenter/vec2(image_res.xy);
         vec2  d                = inUV * 2.0 - 1.0;
 
         vec4 origin    = uni.viewInverse * vec4(0, 0, 0, 1);
@@ -99,21 +105,26 @@ void main()
             current_weight *= prd.weight;
         }
 
-        hitValues += hit_value;
+        pixel_color += hit_value;
     }
 
-    // Tenemos varios frames acumulados en hitValues -> dividimos por el número de samples
+// ──────────────────────────────────────────────────────── FIN DE LA MUESTRA ─────
+
+    // Tenemos varios frames acumulados en pixel_color -> dividimos por el número de samples
     // para obtener el frame resultante.
-    hit_value = hitValues / pcRay.nb_samples;
+    pixel_color = pixel_color / pcRay.nb_samples;
 
-    // Hacer acumulación de frames cuando no nos encontremos en el primero (aka el 0)
     if (pcRay.frame > 0) {
-        float a         = 1.0f / float(pcRay.frame + 1);        // Atenuación, creo
-        vec3  old_color = imageLoad(image, ivec2(gl_LaunchIDEXT.xy)).xyz;
+        vec3 old_color = imageLoad(image, image_coords).xyz;
+        vec3 new_result = mix(
+            old_color,
+            pixel_color,
+            1.f / float(pcRay.frame + 1)
+        );
 
-        imageStore(image, ivec2(gl_LaunchIDEXT.xy), vec4(mix(old_color, hit_value, a), 1.f));
+        imageStore(image, image_coords, vec4(new_result, 1.f));
     }
     else {
-        imageStore(image, ivec2(gl_LaunchIDEXT.xy), vec4(hit_value, 1.0));
+        imageStore(image, image_coords, vec4(pixel_color, 1.0));
     }
 }

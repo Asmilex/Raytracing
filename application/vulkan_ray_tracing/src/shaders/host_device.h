@@ -81,7 +81,6 @@ struct PushConstantRaster
   int   light_type;
 };
 
-
 // Push constant structure for the ray tracer
 struct PushConstantRay
 {

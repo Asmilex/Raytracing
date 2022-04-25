@@ -25,11 +25,12 @@ layout(buffer_reference, scalar) buffer MatIndices { int i[]; };                
 layout(set = 1, binding = eObjDescs, scalar) buffer ObjDesc_ { ObjDesc i[]; } objDesc;
 layout(set = 1, binding = eTextures) uniform sampler2D textureSamplers[];
 
-
 layout (push_constant) uniform _PushConstantRay { PushConstantRay pcRay; };
 
 void main()
 {
+// ────────────────── CALCULAR ELEMENTOS RELACIONADOS CON EL OBJETO IMPACTADO ─────
+
     // gl_InstanceCustomIndexEXT -> qué objeto fue impactado
     ObjDesc    objResource = objDesc.i[gl_InstanceCustomIndexEXT];
     MatIndices matIndices  = MatIndices(objResource.materialIndexAddress);
@@ -58,6 +59,9 @@ void main()
     // Material of the object
     int               matIdx    = matIndices.i[gl_PrimitiveID];
     WaveFrontMaterial mat       = materials.m[matIdx];
+
+// ────────────────────────────────────────────────────────── FIN DEL CALCULO ─────
+
     vec3              emittance = mat.emission;
 
     // Pick a random direction from here and keep going
