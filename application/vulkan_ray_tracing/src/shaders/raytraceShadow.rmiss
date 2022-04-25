@@ -4,9 +4,9 @@
 
 #include "globals.glsl"
 
-layout(location = 1) rayPayloadInEXT shadowPayload prd;   //rayPayloadInNV?
+layout(location = 1) rayPayloadInEXT ShadowPayload prd;   //rayPayloadInNV?
 
 void main()
 {
-  prd.isHit = false;
+  prd.is_hit = false;
 }

@@ -12,8 +12,8 @@
 
 hitAttributeEXT vec3 attribs;
 
-layout(location = 0) rayPayloadInEXT hitPayload prd;
-layout(location = 1) rayPayloadEXT shadowPayload prdShadow;
+layout(location = 0) rayPayloadInEXT HitPayload prd;
+layout(location = 1) rayPayloadEXT ShadowPayload prdShadow;
 
 layout(set = 0, binding = eTlas) uniform accelerationStructureEXT topLevelAS;
 
@@ -82,10 +82,10 @@ void main()
 
     vec3 BRDF = diffuse / M_PI;
 
-    prd.rayOrigin = ray_origin;
-    prd.rayDir    = ray_dir;
+    prd.ray_origin = ray_origin;
+    prd.ray_dir    = ray_dir;
     //              vvvv h5ay que cambiar eso!!!
-    prd.hitValue  = 0.11 * mat.ambient;
+    prd.hit_value  = 0.11 * mat.ambient;
     prd.weight    = BRDF * cos_theta / p;
 
 /* Código viejo antes de pasar a path tracing
@@ -128,10 +128,10 @@ void main()
         float tMax = lightDistance;
 
         vec3 origin = gl_WorldRayOriginEXT + gl_WorldRayDirectionEXT * gl_HitTEXT;
-        vec3 rayDir = L;
+        vec3 ray_dir = L;
 
         uint flags = gl_RayFlagsSkipClosestHitShaderEXT;
-        prdShadow.isHit = true;
+        prdShadow.is_hit = true;
         prdShadow.seed = prd.seed;
 
         traceRayEXT(topLevelAS,
@@ -142,14 +142,14 @@ void main()
             1,           // missIndex
             origin,      // ray origin
             tMin,        // ray min range
-            rayDir,      // ray direction
+            ray_dir,      // ray direction
             tMax,        // ray max range
             1            // payload (location = 1)
         );
 
         prd.seed = prdShadow.seed;
 
-        if (prdShadow.isHit) {
+        if (prdShadow.is_hit) {
             attenuation = 1.0 / (1.0 + lightDistance);
         }
         else {
@@ -160,14 +160,14 @@ void main()
     // Si el material es reflectivo, disparamos un rayo
     if (mat.illum == 3) {
         vec3 origin = worldPos;
-        vec3 rayDir = reflect(gl_WorldRayDirectionEXT, normal);
+        vec3 ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
 
         prd.attenuation *= mat.specular;
         prd.done         = 0;
-        prd.rayOrigin    = origin;
-        prd.rayDir       = rayDir;
+        prd.ray_origin    = origin;
+        prd.ray_dir       = ray_dir;
     }
 
-    prd.hitValue = vec3(light_intensity * attenuation * (diffuse + specular));
+    prd.hit_value = vec3(light_intensity * attenuation * (diffuse + specular));
 */
 }

@@ -10,9 +10,9 @@
 #include "wavefront.glsl"
 
 #ifdef PAYLOAD_0
-layout(location = 0) rayPayloadInEXT hitPayload prd;
+layout(location = 0) rayPayloadInEXT HitPayload prd;
 #elif defined(PAYLOAD_1)
-layout(location = 1) rayPayloadInEXT shadowPayload prd;
+layout(location = 1) rayPayloadInEXT ShadowPayload prd;
 #endif
 
 layout(buffer_reference, scalar) buffer Vertices { Vertex v[]; };               // Positions of an object

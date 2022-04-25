@@ -1,12 +1,13 @@
-struct hitPayload
+struct HitPayload
 {
-    vec3 hitValue;
+    vec3 hit_value;
 
     // Reflections
     int  depth;
+
     //vec3 attenuation;
-    vec3 rayOrigin;
-    vec3 rayDir;
+    vec3 ray_origin;
+    vec3 ray_dir;
 
     uint seed;
 
@@ -14,8 +15,8 @@ struct hitPayload
     vec3 weight;
 };
 
-struct shadowPayload
+struct ShadowPayload
 {
-    bool isHit;
+    bool is_hit;
     uint seed;
 };

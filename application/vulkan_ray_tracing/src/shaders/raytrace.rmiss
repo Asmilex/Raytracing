@@ -13,7 +13,7 @@
     clear_color is the first member in the struct, and do not even declare the subsequent members.
 */
 
-layout(location = 0) rayPayloadInEXT hitPayload prd;
+layout(location = 0) rayPayloadInEXT HitPayload prd;
 
 layout(push_constant) uniform _PushConstantRay
 {
@@ -27,10 +27,10 @@ void main()
             Primer rayo => hemos impactado con el cielo.
             No hacemos nada, devolvemos simplemente el color del cielo
         */
-        prd.hitValue = pcRay.clear_color.xyz;
+        prd.hit_value = pcRay.clear_color.xyz;
     }
     else {
-        prd.hitValue = vec3(0.01);   // Tiny contribution from environment
+        prd.hit_value = vec3(0.01);   // Tiny contribution from environment
     }
 
     // Como no hemos fallado, no hay necesidad de continuar; así que paramos la generación.

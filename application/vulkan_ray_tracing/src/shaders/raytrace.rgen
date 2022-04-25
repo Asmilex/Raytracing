@@ -7,7 +7,7 @@
 #include "host_device.h"
 #include "random.glsl"
 
-layout(location = 0) rayPayloadEXT hitPayload prd;
+layout(location = 0) rayPayloadEXT HitPayload prd;
 
 layout(set = 0, binding = eTlas) uniform accelerationStructureEXT topLevelAS;
 layout(set = 0, binding = eOutImage, rgba32f) uniform image2D image;
@@ -35,7 +35,7 @@ void main()
 
     prd.seed = tea(gl_LaunchIDEXT.y * gl_LaunchIDEXT.x + gl_LaunchIDEXT.x, pcRay.frame);
 
-    vec3 hitValue  = vec3(0);  // For current frame
+    vec3 hit_value  = vec3(0);  // For current frame
     vec3 hitValues = vec3(0);  // For all accumulated frames
 
     // sample is a keyword, so we use smpl
@@ -67,15 +67,15 @@ void main()
 
         // Inicializar el payload correctamente
         prd.depth     = 0;
-        prd.hitValue  = vec3(0);
-        prd.rayOrigin = origin.xyz;
-        prd.rayDir    = direction.xyz;
+        prd.hit_value  = vec3(0);
+        prd.ray_origin = origin.xyz;
+        prd.ray_dir    = direction.xyz;
         prd.weight    = vec3(0);
         //prd.attenuation = vec3(1.f, 1.f, 1.f);    // No debería ser necesario con path tracing
         // seed ya estaba puesto
 
         vec3 current_weight = vec3(1);
-             hitValue       = vec3(0);
+             hit_value       = vec3(0);
 
         // Con este bucle evitamos generar rayos desde el closest hit
         for (; prd.depth < pcRay.max_depth; prd.depth++) {
@@ -87,33 +87,33 @@ void main()
                 0,              // sbtRecordOffset
                 0,              // sbtRecordStride
                 0,              // missIndex
-                prd.rayOrigin,  // ray origin
+                prd.ray_origin,  // ray origin
                 tMin,           // ray min range
-                prd.rayDir,     // ray direction
+                prd.ray_dir,     // ray direction
                 tMax,           // ray max range
                 0               // payload (location = 0)
             );
 
             // A partir de aquí, debemos determinar el color que vaya adquiriendo.
-            hitValue += prd.hitValue * current_weight;
+            hit_value += prd.hit_value * current_weight;
             current_weight *= prd.weight;
         }
 
-        hitValues += hitValue;
+        hitValues += hit_value;
     }
 
     // Tenemos varios frames acumulados en hitValues -> dividimos por el número de samples
     // para obtener el frame resultante.
-    hitValue = hitValues / pcRay.nb_samples;
+    hit_value = hitValues / pcRay.nb_samples;
 
     // Hacer acumulación de frames cuando no nos encontremos en el primero (aka el 0)
     if (pcRay.frame > 0) {
         float a         = 1.0f / float(pcRay.frame + 1);        // Atenuación, creo
         vec3  old_color = imageLoad(image, ivec2(gl_LaunchIDEXT.xy)).xyz;
 
-        imageStore(image, ivec2(gl_LaunchIDEXT.xy), vec4(mix(old_color, hitValue, a), 1.f));
+        imageStore(image, ivec2(gl_LaunchIDEXT.xy), vec4(mix(old_color, hit_value, a), 1.f));
     }
     else {
-        imageStore(image, ivec2(gl_LaunchIDEXT.xy), vec4(hitValue, 1.0));
+        imageStore(image, ivec2(gl_LaunchIDEXT.xy), vec4(hit_value, 1.0));
     }
 }
