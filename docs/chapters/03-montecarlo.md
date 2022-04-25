@@ -12,15 +12,13 @@ En este capítulo veremos los fundamentos de la integración de Monte Carlo, có
 
 Antes de comenzar a fondo, necesitaremos unas nociones de variable aleatoria para poder entender la integración de Monte Carlo, por lo que vamos a hacer un breve repaso.
 
-Una **variable aleatoria** $X$ (v.a.) es, esencialmente, una regla que asigna un valor numérico a cada posibilidad de proceso de azar. Formalmente, es una función definida en un espacio de probabilidad $(\Omega, \mathcal{A}, P)$ asociado a un exprimento aleatorio:
+Una **variable aleatoria** $X$ (v.a.) es, esencialmente, una regla que asigna un valor numérico a cada posibilidad de un proceso de azar. Formalmente, es una función definida en un espacio de probabilidad $(\Omega, \mathcal{A}, P)$ asociado a un experimento aleatorio:
 
 $$
 X: \Omega \rightarrow \mathbb{R}
 $$
 
 A $\Omega$ lo conocemos como espacio muestral (conjunto de todas las posibilidades), $\mathcal{A}$ es una $\sigma$-álgebra de subconjuntos de $\Omega$ que refleja todas las posibilidades de eventos aleatorios, y $P$ es una función probabilidad, que asigna a cada evento una probabilidad.
-
-> NOTE: no sé hasta qué punto debería meterme en la definición formal de variable aleatoria. Es una movida tremenda para poca cosa que necesitamos. De momento, voy con lo más interesante.
 
 Una variable aleatoria $X$ puede clasificarse atendiendo a cómo sea su rango $R_X = \set{x \in \mathbb{R}}{\exists \omega \in \Omega \text{ tal que } X(\omega) = x}$: en discreta o continua.
 
@@ -33,7 +31,7 @@ Consideremos un experimento en el que lanzamos dos dados, anotando lo que sale e
 
 $$
 \begin{aligned}
-\{ & (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),  \\
+\Omega = \{ & (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),  \\
    & (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6),  \\
    & (3, 1), (3, 2), (3, 3), (3, 4), (3, 5), (3, 6),  \\
    & (4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (4, 6),  \\
@@ -44,9 +42,11 @@ $$
 
 Cada resultado tiene la misma probabilidad de ocurrir (claro está, si el dado no está trucado). Como hay $36$ posibilidades, la probabilidad de obtener un cierto valor es de $\frac{1}{36}$.
 
-La v.a. $X$ denotará la suma de los valores obtenidos en cada uno. Así, por ejemplo, si al lanzar los dados hemos obtenido $(1, 3)$, $X$ tomará el valor $4$. En total, $X$ puede tomar todos los valores comprendidos entre $2$ y $12$. Este sería el **espacio muestral**. Cada pareja no está asociada a un único valor de $X$. Por ejemplo, $(1, 2)$ suma lo mismo que $(2, 1)$. Esto nos lleva a preguntarnos... ¿Cuál es la probabilidad de que $X$ adquiera un cierto valor?
+La v.a. $X$ denotará la suma de los valores obtenidos en cada uno. Así, por ejemplo, si al lanzar los dados hemos obtenido $(1, 3)$, $X$ tomará el valor $4$. En total, $X$ puede tomar todos los valores comprendidos entre $2$ y $12$. Cada pareja no está asociada a un único valor de $X$. Por ejemplo, $(1, 2)$ suma lo mismo que $(2, 1)$. Esto nos lleva a preguntarnos... ¿Cuál es la probabilidad de que $X$ adquiera un cierto valor?
 
-La **función masa de probabilidad** nos permite conocer la probabilidad de que $X$ tome un cierto valor $x$. Se denota por $P(X = x)$, aunque también usaremos $p_X(x)$ o directamente $p(x)$, cuando no haya lugar a dudas.
+La **función masa de probabilidad** nos permite conocer la probabilidad de que $X$ tome un cierto valor $x$. Se denota por $P(X = x)$.
+
+También se suele usar $p_X(x)$ o, directamente $p(x)$, cuando no haya lugar a dudas. Sin embargo, en este trabajo reservaremos este nombre a otro tipo de funciones.
 
 > **Nota**(ción): Cuando $X$ tenga una cierta función masa de probabilidad, escribiremos $X \sim p_X$
 
@@ -61,7 +61,7 @@ $$
 
 Las parejas serían $(1, 3), (2, 2)$ y $(3, 1)$.
 
-Por definición, si el espacio muestral de $X$ es $\Omega = \{x_1, \dots, x_n\}$, la función masa de probabilidad debe cumplir que
+Por definición, si el conjunto de valores que puede tomar $X$ es $\{x_1, \dots, x_n\}$, la función masa de probabilidad debe cumplir que
 
 $$
 \sum_{i = 1}^{n}{P(X = x_i)} = 1
@@ -70,7 +70,7 @@ $$
 Muchas veces nos interesará conocer la probabilidad de que $X$ se quede por debajo de un cierto valor $x$ (de hecho, podemos caracterizar distribuciones aleatorias gracias a esto). Para ello, usamos la **función de distribución**:
 
 $$
-F_X(x) = P(X \le x) = \sum_{\substack{k \in \Omega \\ k \le x}}{P(X = k)}
+F_X(x) = P(X \le x) = \sum_{\substack{k \in \mathbb{R} \\ k \le x}}{P(X = k)}
 $$
 
 Es una función continua por la derecha y monótona no decreciente. Además, se cumple que $0 \le F_X \le 1(x)$ y $\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$.
@@ -100,29 +100,31 @@ $$
 
 La función de densidad tiene dos características importantes:
 
-1. $f_X$ es no negativa; esto es, $f_X(x) \ge 0\ \forall x \in \Omega$
-2. $f_X$ integra uno en todo el espacio muestral:
+1. $f_X$ es no negativa; esto es, $f_X(x) \ge 0\ \forall x \in \mathbb{R}$
+2. $f_X$ integra uno en todo $\mathbb{R}$:
 
 $$
-\int_{\Omega}{f_X(x)} = 1
+\int_{-\infty}^{\infty}{f_X(x)} = 1
 $$
+
+Estas dos propiedades caracterizan a una función de densidad; es decir, toda función $f: \mathbb{R} \rightarrow \mathbb{R}$ no negativa e integrable tal que $\int_{\infty}^{\infty}{f_X(x)} = 1$ es la función de densidad de alguna variable continua.
 
 Intuitivamente, podemos ver esta última propiedad como *si acumulamos todos los valores que puede tomar la variable aleatoria, la probabilidad de que te encuentres en el conjunto debe ser 1*. Si tratamos con un conjunto de números reales, podemos escribir la integral como $\int_{-\infty}^{\infty}{f_X(x)} = 1$.
 
-Una de las variables aleatorias que más juego nos darán en el futuro será la **v.a. con distribución uniforme en $[0, 1)$**. La denotaremos como $\xi$, y escribiremos $\xi \sim U\left([0, 1)\right)$. La probabilidad de que $\xi$ tome un valor es constante, por lo que podemos definir su función de densidad como
+Una de las variables aleatorias que más juego nos darán en el futuro será la **v.a. con distribución uniforme en $[0, 1)$**. La denotaremos $\Xi \sim U\left([0, 1)\right)$. La probabilidad de que $\xi$ tome un valor es constante, por lo que podemos definir su función de densidad como
 
 $$
-f(\xi) = \left\{  \begin{array}{llc}
+f_\Xi(\xi) = \left\{  \begin{array}{llc}
                   1 & \text{si } \xi \in [0, 1) \\
                   0 & \text{en otro caso.}
                   \end{array}
          \right.
 $$
 
-La probabilidad de $\xi$ tome un valor entre dos elementos $a, b \in [0, 1)$ es
+La probabilidad de $\Xi$ tome un valor entre dos elementos $a, b \in [0, 1)$ es
 
 $$
-P(\xi \in [a, b]) = \int_{a}^{b}{1dx} = b - a
+P(\Xi \in [a, b]) = \int_{a}^{b}{1dx} = b - a
 $$
 
 Como veremos más adelante, definiendo correctamente una función de densidad conseguiremos mejorar el rendimiento del path tracer.
@@ -148,7 +150,7 @@ La **esperanza de una variable aleatoria**, denotada $E[X]$, es una generalizaci
 En el caso de las variables discretas, se define como
 
 $$
-E[X] = \sum_{x_i \in \Omega}{x_i p_i}
+E[X] = \sum_{i}{x_i p_i}
 $$
 
 donde $x_i$ son los posibles valores que puede tomar la v.a., y $p_i$ la probabilidad asociada a cada uno de ellos; es decir, $p_i = P[X = x_i]$
@@ -159,22 +161,16 @@ $$
 E[X] = \int_{-\infty}^{\infty}{x f_X(x) dx}
 $$
 
-aunque, generalizando a una v.a. con espacio muestral $\Omega$, la esperanza se puede generalizar como
-
-$$
-E[X] = \int_{\Omega}{x f_X(x) dx}
-$$
-
 Pongamos un par de ejemplos del cálculo de la esperanza. En el [ejemplo de las variables discretas](#variables-aleatorias-discretas), la esperanza venía dada por
 
 $$
-E[X] = \sum_{i = 2}^{12}{i \cdot P[X = i]} = 2 \cdot \frac{1}{36} + 3 \cdot \frac{2}{36} + \dots + 12 \cdot \frac{1}{36} = 7
+E[X] = \sum_{i = 2}^{12}{i P[X = i]} = 2\frac{1}{36} + 3 \frac{2}{36} + \dots + 12 \frac{1}{36} = 7
 $$
 
 Para variables aleatorias uniformes en $(a, b)$ (es decir, $X \sim U(a, b)$), la esperanza es
 
 $$
-E[X] = \int_{a}^{b}{x \cdot \frac{1}{b - a}dx} = \frac{a + b}{2}
+E[X] = \int_{a}^{b}{x \frac{1}{b - a}dx} = \frac{a + b}{2}
 $$
 
 La esperanza tiene unas cuantas propiedades que nos resultarán muy útiles. Estas son:
@@ -187,7 +183,7 @@ La esperanza tiene unas cuantas propiedades que nos resultarán muy útiles. Est
 - La **Ley del estadístico insconciente** (*Law of the unconscious statistician*, o LOTUS): dada una variable aleatoria $X$ y una función medible $g$, la esperanza de $g(X)$ se puede calcular como
 
 $$
-E[g(X)] = \int_{\Omega}{g(x) f_X(x) dx}
+E[g(X)] = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
 $$
 
 - La **Ley (fuerte) de los grandes números** nos dice que dada una muestra de $n$ valores $X_1, \dots, X_N$ de una variable aleatoria $X$ con esperanza $E[X] = \mu$,
@@ -204,7 +200,7 @@ $$
 
 Estas dos últimas propiedades resultarán claves en el desarrollo.
 
-Será habitual encontrarnos con el problema de que no conocemos la distribución de una variable aleatoria $Y$. Sin embargo, si encontramos una transformación medible de una variable aleatoria $X$ de forma que obtengamos $Y$ (esto es, $\exists g$ función medible tal que $g(X) = Y$), entonces podemos calcular la esperanza de $Y$ fácilmente. Esta propiedad hará que las variables aleatorias con distribución uniforme adquieran muchísima importancia. Generar números aleatorios en $[0, 1)$ es muy fácil, así [que obtendremos otras v.a.s a partir de $\xi$](#método-de-la-transformada-inversa).
+Será habitual encontrarnos con el problema de que no conocemos la distribución de una variable aleatoria $Y$. Sin embargo, si encontramos una transformación medible de una variable aleatoria $X$ de forma que obtengamos $Y$ (esto es, $\exists g$ función medible tal que $g(X) = Y$), entonces podemos calcular la esperanza de $Y$ fácilmente. Esta propiedad hará que las variables aleatorias con distribución uniforme adquieran muchísima importancia. Generar números aleatorios en $[0, 1)$ es muy fácil, así [que obtendremos otras vv.aa a partir de $\xi$](#método-de-la-transformada-inversa).
 
 Otra medida muy útil de una variable aleatoria es **la varianza**. Nos permitirá medir cómo de dispersa es la distribución con respecto a su media. La denotaremos como $Var[X]$, y se define como
 
@@ -239,7 +235,7 @@ A veces, no podremos conocer de antemano el valor que toma un cierto parámetro 
 
 Sea $X$ una variablea aleatoria con distribución perteneciente a una familia de distribuciones paramétricas $X \sim F \in \set{F(\theta)}{\theta \in \Theta}$. $\Theta$ es el conjunto de valores que puede tomar el parámetro. Buscamos una forma de determinar el valor de $\theta$.
 
-Diremos que $T(X_1, \dots, X_N)$ es **un estimador de $theta$** si $T$ toma valores en $\Theta$.
+Diremos que $T(X_1, \dots, X_N)$ es **un estimador de $\theta$** si $T$ toma valores en $\Theta$.
 
 A los estimadores de un parámetro los solemos denotar con $\hat{\theta}$.
 
@@ -356,7 +352,7 @@ $$
 
 Para usar el estimador de [@eq:mc_integral], necesitamos saber la probabilidad de obtener un punto dentro de la circunferencia.
 
-Bien, consideremos que una circunferencia de radio $r$ se encuentra inscrita en un cuadrado. El área de la circunferencia es $\pi r^2$, mientras que la del cuadrado es $(2r)^2 = 4r^2$. Por tanto, la probabilida de obtener un punto dentro de la circunferencia es $\frac{\pi r^2}{4r^2} = \frac{\pi}{4}$. Podemos tomar $p(x, y) = \frac{1}{4}$, de forma que
+Bien, consideremos que una circunferencia de radio $r$ se encuentra inscrita en un cuadrado. El área de la circunferencia es $\pi r^2$, mientras que la del cuadrado es $(2r)^2 = 4r^2$. Por tanto, la probabilidad de obtener un punto dentro de la circunferencia es $\frac{\pi r^2}{4r^2} = \frac{\pi}{4}$. Podemos tomar $p(x, y) = \frac{1}{4}$, de forma que
 
 $$
 \pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con } (x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
@@ -462,7 +458,7 @@ x & = \sqrt[3]{8 \xi}
 \end{aligned}
 $$
 
-Sacando un número aleatorio $\xi$, y pasándolo por la función obtenida, conseguimos un elemento con distribución $f(x)$.
+Sacando un número aleatorio $\xi$, y pasándolo por la función obtenida, conseguimos un elemento con distribución $F(x)$.
 
 ### Método del rechazo
 
