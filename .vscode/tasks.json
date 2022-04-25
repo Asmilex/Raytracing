@@ -4,6 +4,9 @@
         {
             "label": "Compile debug asmiray",
             "command": "cmake",
+            "dependsOn": [
+                "Remove .spv files",
+            ],
             "type": "shell",
             "args": [
                 "--build",
@@ -11,6 +14,18 @@
             ],
             "options": {
                 "cwd": "${workspaceFolder}/application/vulkan_ray_tracing/build"
+            }
+        },
+        {
+            "label": "Remove .spv files",
+            "command": "rm",
+            "type": "shell",
+            "args": [
+                "*.spv"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/application/vulkan_ray_tracing/src/spv"
+
             }
         },
         {
