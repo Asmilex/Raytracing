@@ -19,7 +19,7 @@
 
 #include "host_device.h"
 
-vec3 diffuse_lambertian(WaveFrontMaterial mat, vec3 light_dir, vec3 normal) {
+vec3 compute_diffuse_lambertian(WaveFrontMaterial mat, vec3 light_dir, vec3 normal) {
     float N_dot_L = max(dot(normal, light_dir), 0.0);
     vec3  c     = mat.diffuse * N_dot_L;
 
@@ -30,7 +30,7 @@ vec3 diffuse_lambertian(WaveFrontMaterial mat, vec3 light_dir, vec3 normal) {
     return c;
 }
 
-vec3 specular(WaveFrontMaterial mat, vec3 view_dir, vec3 light_dir, vec3 normal) {
+vec3 compute_specular(WaveFrontMaterial mat, vec3 view_dir, vec3 light_dir, vec3 normal) {
     if(mat.illum < 2) {
         return vec3(0);
     }

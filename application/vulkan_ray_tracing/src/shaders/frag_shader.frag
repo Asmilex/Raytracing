@@ -82,7 +82,7 @@ void main()
 
 
   // Diffuse
-  vec3 diffuse = diffuse_lambertian(mat, L, N);
+  vec3 diffuse = compute_diffuse_lambertian(mat, L, N);
   if(mat.textureId >= 0)
   {
     int  txtOffset  = objDesc.i[pcRaster.objIndex].txtOffset;
@@ -92,7 +92,7 @@ void main()
   }
 
   // Specular
-  vec3 specular = specular(mat, i_viewDir, L, N);
+  vec3 specular = compute_specular(mat, i_viewDir, L, N);
 
   // Result
   o_color = vec4(light_intensity * (diffuse + specular), 1);

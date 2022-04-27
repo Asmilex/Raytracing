@@ -47,6 +47,7 @@ vec3 pathtrace(vec4 ray_origin, vec4 ray_dir, float t_min, float t_max, uint ray
     return hit_value;
 }
 
+
 vec3 sample_pixel(ivec2 image_coords, ivec2 image_res) {
     float r1 = rnd(prd.seed);
     float r2 = rnd(prd.seed);
