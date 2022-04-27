@@ -11,8 +11,15 @@
 
 //layout(location = 0) rayPayloadEXT HitPayload prd;
 
-void main()
-{
+void main() {
+
+    ivec2 image_res    = ivec2(gl_LaunchSizeEXT.x, gl_LaunchSizeEXT.y);
+    ivec2 image_coords = ivec2(gl_LaunchIDEXT.xy);
+
+    prd.seed = tea(image_coords.y * image_coords.x + image_coords.x, pcRay.frame);
+
+// ────────────────────────────────────── BUCLE CORRESPONDIENTE A UNA MUESTRA ─────
+
     /*
         For a given value of m_maxFrames and NBSAMPLE,  the image will have
             m_maxFrames * NBSAMPLE
@@ -22,14 +29,6 @@ void main()
         However, using NBSAMPLE = 10 in the ray generation shader will be faster
         than calling raytrace() with NBSAMPLE=1 10 times in a row.
     */
-
-    ivec2 image_res    = ivec2(gl_LaunchSizeEXT.x, gl_LaunchSizeEXT.y);
-    ivec2 image_coords = ivec2(gl_LaunchIDEXT.xy);
-
-    prd.seed     = tea(image_coords.y * image_coords.x + image_coords.x, pcRay.frame);
-
-// ────────────────────────────────────── BUCLE CORRESPONDIENTE A UNA MUESTRA ─────
-
     vec3 pixel_color = vec3(0);  // El color final de la imagen
 
     for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {     // sample is a keyword, so we use smpl
@@ -41,7 +40,7 @@ void main()
 // ──────────────────────────────────────────────────────── FIN DE LA MUESTRA ─────
 
 
-    // Si enemos varios frames acumulados en pixel_color, dividimos por el número de samples
+    // Si tenemos varios frames acumulados en pixel_color, dividimos por el número de samples
     // para obtener el frame resultante, atenuando el color.
     // Si no es así, estamos en el primer frame, por lo que lo guardamos directamente.
 
