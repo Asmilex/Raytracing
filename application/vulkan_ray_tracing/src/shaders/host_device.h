@@ -92,6 +92,8 @@ struct PushConstantRay
   int   nb_samples;     // For the antialiasing
   int   frame;
   int   firefly_clamp_threshold;
+  bool  russian_roulette;
+  bool  next_event_estimation;
 };
 
 struct Vertex  // See ObjLoader, copy of VertexObj, could be compressed for device
