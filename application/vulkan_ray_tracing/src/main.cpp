@@ -82,13 +82,6 @@ void renderUI(Engine& engine) {
     }
 }
 
-// ────────────────────────────────────────────────────────────────────────────────
-
-static int const SAMPLE_WIDTH  = 1280;
-static int const SAMPLE_HEIGHT = 720;
-
-// ────────────────────────────────────────────────────────────────────────────────
-
 
 int main(int argc, char** argv) {
     UNUSED(argc);
@@ -155,7 +148,7 @@ int main(int argc, char** argv) {
     // Use a compatible device
     vkctx.initDevice(compatibleDevices[0], contextInfo);
 
-    // Create example
+    // Initialize engine
     Engine engine;
 
     // Window need to be opened to get the surface on which to draw

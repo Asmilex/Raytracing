@@ -3,6 +3,14 @@
 #include "nvvk/appbase_vk.hpp"
 #include "nvvk/resourceallocator_vk.hpp"
 
+// ────────────────────────────────────────────────────────────────────────────────
+
+static int const SAMPLE_WIDTH  = 1280;
+static int const SAMPLE_HEIGHT = 720;
+
+// ────────────────────────────────────────────────────────────────────────────────
+
+
 struct ObjModel
 {
     uint32_t     nbIndices{0};
