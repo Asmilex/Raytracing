@@ -66,7 +66,6 @@
                 "cwd": "${workspaceFolder}/docs/"
             },
             "runOptions": {
-                "runOn": "folderOpen",
                 "instanceLimit": 1
             },
             "presentation": {
