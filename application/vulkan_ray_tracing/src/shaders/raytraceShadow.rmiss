@@ -2,11 +2,11 @@
 #extension GL_EXT_ray_tracing : require   // GL_NV_ray_tracing ?
 #extension GL_GOOGLE_include_directive : enable
 
-#include "raycommon.glsl"
+#include "globals.glsl"
 
-layout(location = 1) rayPayloadInEXT shadowPayload prd;   //rayPayloadInNV?
+layout(location = 1) rayPayloadInEXT ShadowPayload prd;   //rayPayloadInNV?
 
 void main()
 {
-  prd.isHit = false;
+  prd.is_hit = false;
 }

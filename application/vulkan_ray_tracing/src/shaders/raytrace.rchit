@@ -6,30 +6,99 @@
 #extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
 #extension GL_EXT_buffer_reference2 : require
 
-#include "raycommon.glsl"
+
+#include "globals.glsl"
+#include "layouts.glsl"
 #include "wavefront.glsl"
 #include "sampling.glsl"
 
 hitAttributeEXT vec3 attribs;
-
-layout(location = 0) rayPayloadInEXT hitPayload prd;
-layout(location = 1) rayPayloadEXT shadowPayload prdShadow;
-
-layout(set = 0, binding = eTlas) uniform accelerationStructureEXT topLevelAS;
-
-layout(buffer_reference, scalar) buffer Vertices   { Vertex v[]; };             // Posición del objeto
-layout(buffer_reference, scalar) buffer Indices    { ivec3 i[]; };              // Indices del triángulo
-layout(buffer_reference, scalar) buffer Materials  { WaveFrontMaterial m[]; };  // Array con todos los materiales
-layout(buffer_reference, scalar) buffer MatIndices { int i[]; };                // ID del material para cada triángulo
-
-layout(set = 1, binding = eObjDescs, scalar) buffer ObjDesc_ { ObjDesc i[]; } objDesc;
-layout(set = 1, binding = eTextures) uniform sampler2D textureSamplers[];
+layout(location = 0) rayPayloadInEXT HitPayload prd;
 
 
-layout (push_constant) uniform _PushConstantRay { PushConstantRay pcRay; };
+VisibilityContribution luz_directa() {
+    // https://github.com/nvpro-samples/vk_raytrace/blob/master/shaders/pathtrace.glsl
+    // MUY WIP
+
+    VisibilityContribution contribucion;
+    contribucion.radiance = vec3(0);
+    contribucion.visible  = false;
+
+
+    // Vector toward the light
+    /*
+    vec3 L;
+    float light_intensity = pcRay.light_intensity;
+    float lightDistance = 100000.0;
+
+    if (pcRay.light_type == 0) {         // Point light
+        vec3 lDir = pcRay.light_position - world_position;
+
+        lightDistance   = length(lDir);
+        light_intensity = pcRay.light_intensity / (lightDistance * lightDistance);
+        L               = normalize(lDir);
+    }
+    else {                            // Directional light
+        L = normalize(pcRay.light_position);
+    }
+
+    // Diffuse
+    vec3 diffuse = compute_diffuse_lambertian(mat, L, normal);
+
+    if (mat.textureId >= 0) {
+        uint txtId = mat.textureId + objDesc.i[gl_InstanceCustomIndexEXT].txtOffset;
+        vec2 texCoord = v0.texCoord * barycentrics.x + v1.texCoord * barycentrics.y + v2.texCoord * barycentrics.z;
+        diffuse *= texture(textureSamplers[nonuniformEXT(txtId)], texCoord).xyz;
+    }
+
+    // Specular
+    vec3 specular = vec3(0);
+    float attenuation = 1;
+
+    // Trazar shadow rays solo si la luz es visible desde la superficie
+    //if (dot(normal, L) > 0) {
+    if (contribucion_luces.visible) {
+        float tMin = 0.001;
+        float tMax = lightDistance;
+
+        vec3 origin = gl_WorldRayOriginEXT + gl_WorldRayDirectionEXT * gl_HitTEXT;
+        vec3 ray_dir = L;
+
+        uint flags = gl_RayFlagsSkipClosestHitShaderEXT;
+        prdShadow.is_hit = true;
+        prdShadow.seed = prd.seed;
+
+        traceRayEXT(topLevelAS,
+            flags,       // rayFlags
+            0xFF,        // cullMask
+            1,           // sbtRecordOffset
+            0,           // sbtRecordStride
+            1,           // missIndex
+            origin,      // ray origin
+            tMin,        // ray min range
+            ray_dir,      // ray direction
+            tMax,        // ray max range
+            1            // payload (location = 1)
+        );
+
+        prd.seed = prdShadow.seed;
+
+        if (prdShadow.is_hit) {
+            attenuation = 1.0 / (1.0 + lightDistance);
+        }
+        else {
+            specular = compute_diffuse_lambertian(mat, L, normal);
+        }
+    }
+    */
+
+    return contribucion;
+}
 
 void main()
 {
+// ────────────────── CALCULAR ELEMENTOS RELACIONADOS CON EL OBJETO IMPACTADO ─────
+
     // gl_InstanceCustomIndexEXT -> qué objeto fue impactado
     ObjDesc    objResource = objDesc.i[gl_InstanceCustomIndexEXT];
     MatIndices matIndices  = MatIndices(objResource.materialIndexAddress);
@@ -58,14 +127,20 @@ void main()
     // Material of the object
     int               matIdx    = matIndices.i[gl_PrimitiveID];
     WaveFrontMaterial mat       = materials.m[matIdx];
-    vec3              emittance = mat.emission;
+
+
+// ──────────────────────────────────────────────────── CONTRIBUCION DE LUCES ─────
+
+    VisibilityContribution contribucion_luces = luz_directa();
+
+// ────────────────────────────────────────────────────── SIGUIENTE DIRECCION ─────
 
     // Pick a random direction from here and keep going
     vec3 tangent, bitangent;
     create_coordinate_system(world_normal, tangent, bitangent);
+
     vec3 ray_origin = world_position;
     vec3 ray_dir    = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
-
 
     // Probability of the new ray (cosine distributed)
     const float p = 1 / M_PI;
@@ -82,92 +157,20 @@ void main()
 
     vec3 BRDF = diffuse / M_PI;
 
-    prd.rayOrigin = ray_origin;
-    prd.rayDir    = ray_dir;
-    //              vvvv h5ay que cambiar eso!!!
-    prd.hitValue  = 0.11 * mat.ambient;
+    prd.ray_origin = ray_origin;
+    prd.ray_dir    = ray_dir;
+    //              vvvv hay que cambiar eso!!!
+    prd.hit_value  = 0.11 * mat.ambient;
     prd.weight    = BRDF * cos_theta / p;
-
-/* Código viejo antes de pasar a path tracing
-
-    // Vector toward the light
-    vec3 L;
-    float lightIntensity = pcRay.lightIntensity;
-    float lightDistance = 100000.0;
-
-    if (pcRay.lightType == 0) {         // Point light
-        vec3 lDir      = pcRay.lightPosition - worldPos;
-        lightDistance  = length(lDir);
-        lightIntensity = pcRay.lightIntensity / (lightDistance * lightDistance);
-        L              = normalize(lDir);
-    }
-    else {                            // Directional light
-        L = normalize(pcRay.lightPosition);
-    }
-
-    // Material of the object
-    int               matIdx = matIndices.i[gl_PrimitiveID];
-    WaveFrontMaterial mat    = materials.m[matIdx];
-
-    // Diffuse
-    vec3 diffuse = computeDiffuse(mat, L, normal);
-
-    if (mat.textureId >= 0) {
-        uint txtId = mat.textureId + objDesc.i[gl_InstanceCustomIndexEXT].txtOffset;
-        vec2 texCoord = v0.texCoord * barycentrics.x + v1.texCoord * barycentrics.y + v2.texCoord * barycentrics.z;
-        diffuse *= texture(textureSamplers[nonuniformEXT(txtId)], texCoord).xyz;
-    }
-
-    // Specular
-    vec3 specular = vec3(0);
-    float attenuation = 1;
-
-    // Trazar shadow rays solo si la luz es visible desde la superficie
-    if (dot(normal, L) > 0) {
-        float tMin = 0.001;
-        float tMax = lightDistance;
-
-        vec3 origin = gl_WorldRayOriginEXT + gl_WorldRayDirectionEXT * gl_HitTEXT;
-        vec3 rayDir = L;
-
-        uint flags = gl_RayFlagsSkipClosestHitShaderEXT;
-        prdShadow.isHit = true;
-        prdShadow.seed = prd.seed;
-
-        traceRayEXT(topLevelAS,
-            flags,       // rayFlags
-            0xFF,        // cullMask
-            1,           // sbtRecordOffset
-            0,           // sbtRecordStride
-            1,           // missIndex
-            origin,      // ray origin
-            tMin,        // ray min range
-            rayDir,      // ray direction
-            tMax,        // ray max range
-            1            // payload (location = 1)
-        );
-
-        prd.seed = prdShadow.seed;
-
-        if (prdShadow.isHit) {
-            attenuation = 1.0 / (1.0 + lightDistance);
-        }
-        else {
-            specular = computeSpecular(mat, gl_WorldRayDirectionEXT, L, normal);
-        }
-    }
 
     // Si el material es reflectivo, disparamos un rayo
     if (mat.illum == 3) {
-        vec3 origin = worldPos;
-        vec3 rayDir = reflect(gl_WorldRayDirectionEXT, normal);
+        vec3 origin = world_position;
+        vec3 ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
 
         prd.attenuation *= mat.specular;
-        prd.done         = 0;
-        prd.rayOrigin    = origin;
-        prd.rayDir       = rayDir;
+        //prd.done         = 0;
+        prd.ray_origin   = origin;
+        prd.ray_dir      = ray_dir;
     }
-
-    prd.hitValue = vec3(lightIntensity * attenuation * (diffuse + specular));
-*/
 }

@@ -75,23 +75,25 @@ struct GlobalUniforms
 struct PushConstantRaster
 {
   mat4  modelMatrix;  // matrix of the instance
-  vec3  lightPosition;
+  vec3  light_position;
   uint  objIndex;
-  float lightIntensity;
-  int   lightType;
+  float light_intensity;
+  int   light_type;
 };
-
 
 // Push constant structure for the ray tracer
 struct PushConstantRay
 {
-  vec4  clearColor;
-  vec3  lightPosition;
-  float lightIntensity;
-  int   lightType;
-  int   maxDepth;
+  vec4  clear_color;
+  vec3  light_position;
+  float light_intensity;
+  int   light_type;
+  int   max_depth;
   int   nb_samples;     // For the antialiasing
   int   frame;
+  int   firefly_clamp_threshold;
+  bool  russian_roulette;
+  bool  next_event_estimation;
 };
 
 struct Vertex  // See ObjLoader, copy of VertexObj, could be compressed for device
