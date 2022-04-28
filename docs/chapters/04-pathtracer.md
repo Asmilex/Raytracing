@@ -66,6 +66,23 @@ Esta serie de repositorios contienen proyectos de ray tracing de Nvidia con fine
 
 Nuestro repositorio utiliza los citados anteriormente para compilar su proyecto. El Makefile es una modificación del que se usa para ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una aplicación muy simple que muestra un cubo mediante rasterización.
 
+### Vistazo general a la estructura
+
+La estructura final del proyecto (es decir, la carpeta `application`) es la siguiente:
+
+- La carpeta **./build** contiene todo lo relacionado con CMake y el ejecutable final.
+- En **./media** se encuentran todos los archivos `.obj`, `.mtl` y las texturas.
+- La subcarpeta **./src** contiene el código fuente de la propia aplicación.
+  - Toda la implementación relacionada con el motor (y por tanto, Vulkan), se halla en `engine.h/cpp`. Una de las desventajas de seguir un framework "de juguete" es que el acoplamiento es considerablemente alto. Más adelante comentaremos los motivos.
+  - Los parámetros de la aplicación (como tamaño de pantalla y otras estructuras comunes) se encuetran en `globals.hpp`.
+  - La carga de escenas y los objetos se gestionan en `scene.hpp`.
+  - En `main.cpp` se gestiona tanto el punto de entrada de la aplicación como la actualización de la interfaz gráfica.
+  - La carpeta `./src/shaders` contiene todos los shaders; tanto de rasterización, como de ray tracing.
+    - Para ray tracing, se utilizan los `raytrace.*`, `pathtrace.glsl` (que contiene el grueso del path tracer).
+    - En rasterización se usan principalmente `frag_shader.frag`, `passthrough.vert`, `post.frag`, `vert_shader.vert`.
+    - El resto de shaders son archivos comunes a ambos o utilidades varias.
+  - Finalmente, la carpeta `./src/spv` contiene los shaders compilados a SPIR-V.
+
 ## Compilación
 
 Las dependencias necesarias para compilarlo son:
