@@ -137,7 +137,7 @@ El código correspondiente a la creación de la BLAS en el programa es el siguie
 
 
 ```cpp
-void HelloVulkan::createBottomLevelAS() {
+void Engine::createBottomLevelAS() {
     // BLAS - guardar cada primitiva en una geometría
 
     std::vector<nvvk::RaytracingBuilderKHR::BlasInput> allBlas;
@@ -167,7 +167,7 @@ Además, guardan información sobre el *shading*. Así, los shaders pueden relac
 En el programa hacemos lo siguiente para construir la TLAS:
 
 ```cpp
-void HelloVulkan::createTopLevelAS() {
+void Engine::createTopLevelAS() {
     std::vector<VkAccelerationStructureInstanceKHR> tlas;
     tlas.reserve(m_instances.size());
 
