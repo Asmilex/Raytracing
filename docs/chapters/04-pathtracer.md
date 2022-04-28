@@ -96,14 +96,15 @@ La parte inicial del desarrollo consiste en adaptar Vulkan para usar la extensi�
 Para compilarlo, ejecuta los siguientes comandos:
 
 ```sh
-git clone git@github.com:Asmilex/Raytracing.git
-cd .\application\vulkan_ray_tracing\
+git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git
+cd .\Raytracing\application\vulkan_ray_tracing\
 mkdir build
 cd build
 cmake ..
+cmake --build .
 ```
 
-Si todo funciona correctamente, debería generarse un binario en `./application/bin_x64/Debug` llamado `asmiray.exe`.
+Si todo funciona correctamente, debería generarse un binario en `./application/bin_x64/Debug` llamado `asmiray.exe`. Desde la carpeta en la que estás, puedes ejecutarlo con `..\..\bin_x64\Debug\asmiray.exe`.
 
 ## Estructuras de aceleración
 

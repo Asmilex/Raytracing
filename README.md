@@ -41,15 +41,16 @@ Actualmente se encuentra en una fase temprana de desarrollo. Con un poco de suer
 
 Requiere tener Vulkan instalado, un driver de Nvidia compatible con Vulkan, Cmake.
 
-Clona este repositorio con `git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git`.
-
-Para construir el motor, hace falta lo siguiente:
+Para compilar y ejecutar el proyecto, haz lo siguiente:
 
 ```
-cd .\application\vulkan_ray_tracing\
+git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git
+cd .\Raytracing\application\vulkan_ray_tracing\
 mkdir build
 cd build
 cmake ..
+cmake --build .
+..\..\bin_x64\Debug\asmiray.exe
 ```
 
 Cuando se haya ejecutado, deberían haber aparecido los makefiles necesarios. Si abres VSCode, en la pestaña de *Run and Debug*, deberías tener una opción para lanzar Asmiray. Debería ir.
