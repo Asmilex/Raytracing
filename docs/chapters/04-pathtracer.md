@@ -6,7 +6,7 @@ La implementación estará basada en Vulkan, junto al pequeño framework de nvpr
 
 Le pondremos especial atención a los conceptos claves. Vulkan tiende a crear código muy verboso, por lo que se documentarán únicamente las partes más importantes.
 
-## Requisitos de *real time ray tracing*
+## Requisitos de ray tracing en tiempo real
 
 Como es natural, el tiempo es una limitación enorme para cualquier programa en tiempo real. Mientras que en un *offline renderer* disponemos de un tiempo muy considerable por frame (hablamos de varios segundos), en un programa en tiempo real necesitamos que un frame salga en 16 milisegundos o menos. Este concepto se suele denominar *frame budget*: la cantidad de tiempo que disponemos para un frame.
 
@@ -64,7 +64,9 @@ Un proyecto de Vulkan necesita una cantidad de código inicial considerable. Par
 
 Esta serie de repositorios contienen proyectos de ray tracing de Nvidia con fines didácticos. Nosotros usaremos [vk_raytracing_tutorial_KHR](https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR), pues ejemplifica cómo añadir ray tracing en tiempo real a un proyecto de Vulkan.
 
-Nuestro repositorio utiliza los citados anteriormente para compilar su proyecto. El Makefile es una modificación del que se usa para ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una aplicación muy simple que muestra un cubo mediante rasterización.
+Estos frameworks contienen asimismo otras utilidades menores. Destacan GLFW (gestión de ventanas en C++), imgui (interfaz de usuario) y tinyobjloader (carga de `.obj` y `.mtl`).
+
+Nuestro repositorio utiliza las herramientas citadas anteriormente para compilar su proyecto. El Makefile es una modificación del que se usa para ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una aplicación muy simple que muestra un cubo mediante rasterización, la cual modificaremos hasta añadir ray tracing en tiempo real.
 
 ### Vistazo general a la estructura
 
@@ -366,9 +368,76 @@ vec3 path_trace(Rayo r, profundidad) {
 ```
 El término `emission` corresponde a $L_e(p, \omega_o)$. Siempre lo añadimos, pues en caso de que el objeto no emita luz, la contribución de este término sería 0.
 
-### Antialiasing mediante jittering
+### Antialiasing mediante jittering y acumulación temporal
 
-https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR/tree/master/ray_tracing_jitter_cam
+Normalmente, mandamos los rayos desde el centro de un pixel. Podemos conseguir una mejora sustancial de la calidad con un pequeño truco: en vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña perturbación (*jittering*). Así, tendremos diferentes colores para un mismo pixel, por lo que podemos hacer una ponderación del color que se obtiene (a lo que llamamos *acumulación temporal*).
+
+Es importante destacar que el efecto de esta técnica solo es válido cuando la **cámara se queda estática**.
+
+La implementación es muy sencilla. Debemos modificar tanto el motor como los shaders para llevar una cuenta de ciertos frames, definiendo un máximo de frames que se pueden acumular:
+
+```cpp
+// engine.h
+class Engine {
+    //...
+    int m_maxAcumFrames {20};
+}
+```
+
+Las push constant deberán llevar un registro del frame en el que se encuentran, así como un número máximo de muestras a acumular para un pixel:
+
+
+```cpp
+// host_device.h
+struct PushConstantRay {
+    //...
+    int   frame;
+    int   nb_samples
+}
+```
+
+El número de frame se reseteará cuando la cámara se mueva, la ventana se reescale, o se produzca algún efecto similar en la aplicación.
+
+Finalmente, en los shaders podemos implementar lo siguiente:
+
+```glsl
+// raytrace.rgen
+vec3 pixel_color = vec3(0);
+
+for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {
+    pixel_color += sample_pixel(image_coords, image_res);
+}
+
+pixel_color = pixel_color / pcRay.nb_samples;
+
+if (!primer_frame) {
+    guardar una mezcla de las anteriores imágenes junto con la actual
+}
+else {
+    guardar la imagen directamente
+}
+
+```
+
+```glsl
+// pathtrace.glsl
+vec3 sample_pixel() {
+    float r1 = rnd(prd.seed);
+    float r2 = rnd(prd.seed);
+
+    // Subpixel jitter: mandar el rayo desde una pequeña perturbación del pixel para aplicar antialiasing
+    vec2 subpixel_jitter = pcRay.frame == 0
+        ? vec2(0.5f, 0.5f)
+        : vec2(r1, r2);
+
+    const vec2 pixelCenter = vec2(image_coords.xy) + subpixel_jitter;
+
+    // ...
+
+    vec3 radiance = pathtrace(rayo);
+}
+```
+
 
 ### Materiales y objetos
 
