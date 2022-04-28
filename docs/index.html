@@ -312,15 +312,19 @@ sampling</a></li>
 <li><a href="#construyamos-un-path-tracer">¡Construyamos un path
 tracer!</a>
 <ul>
-<li><a href="#requisitos-de-real-time-ray-tracing">Requisitos de
-<em>real time ray tracing</em></a>
+<li><a href="#requisitos-de-ray-tracing-en-tiempo-real">Requisitos de
+ray tracing en tiempo real</a>
 <ul>
 <li><a href="#arquitecturas-de-gráficas">Arquitecturas de
 gráficas</a></li>
 <li><a href="#frameworks-y-api-de-ray-tracing-en-tiempo-real">Frameworks
 y API de ray tracing en tiempo real</a></li>
 </ul></li>
-<li><a href="#setup-del-proyecto">Setup del proyecto</a></li>
+<li><a href="#setup-del-proyecto">Setup del proyecto</a>
+<ul>
+<li><a href="#vistazo-general-a-la-estructura">Vistazo general a la
+estructura</a></li>
+</ul></li>
 <li><a href="#compilación">Compilación</a></li>
 <li><a href="#estructuras-de-aceleración">Estructuras de aceleración</a>
 <ul>
@@ -347,8 +351,9 @@ práctica</a>
 la rendering equation con Monte Carlo</a></li>
 <li><a href="#pseudocódigo-de-un-path-tracer">Pseudocódigo de un path
 tracer</a></li>
-<li><a href="#antialiasing-mediante-jittering">Antialiasing mediante
-jittering</a></li>
+<li><a
+href="#antialiasing-mediante-jittering-y-acumulación-temporal">Antialiasing
+mediante jittering y acumulación temporal</a></li>
 <li><a href="#materiales-y-objetos">Materiales y objetos</a></li>
 </ul></li>
 <li><a href="#fuentes-de-luz">Fuentes de luz</a>
@@ -2966,8 +2971,8 @@ href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 <p>Le pondremos especial atención a los conceptos claves. Vulkan tiende
 a crear código muy verboso, por lo que se documentarán únicamente las
 partes más importantes.</p>
-<h2 id="requisitos-de-real-time-ray-tracing">Requisitos de <em>real time
-ray tracing</em></h2>
+<h2 id="requisitos-de-ray-tracing-en-tiempo-real">Requisitos de ray
+tracing en tiempo real</h2>
 <p>Como es natural, el tiempo es una limitación enorme para cualquier
 programa en tiempo real. Mientras que en un <em>offline renderer</em>
 disponemos de un tiempo muy considerable por frame (hablamos de varios
@@ -3097,10 +3102,52 @@ Nvidia con fines didácticos. Nosotros usaremos <a
 href="https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR">vk_raytracing_tutorial_KHR</a>,
 pues ejemplifica cómo añadir ray tracing en tiempo real a un proyecto de
 Vulkan.</p>
-<p>Nuestro repositorio utiliza los citados anteriormente para compilar
-su proyecto. El Makefile es una modificación del que se usa para
-ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una aplicación muy
-simple que muestra un cubo mediante rasterización.</p>
+<p>Estos frameworks contienen asimismo otras utilidades menores.
+Destacan GLFW (gestión de ventanas en C++), imgui (interfaz de usuario)
+y tinyobjloader (carga de <code>.obj</code> y <code>.mtl</code>).</p>
+<p>Nuestro repositorio utiliza las herramientas citadas anteriormente
+para compilar su proyecto. El Makefile es una modificación del que se
+usa para ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una
+aplicación muy simple que muestra un cubo mediante rasterización, la
+cual modificaremos hasta añadir ray tracing en tiempo real.</p>
+<h3 id="vistazo-general-a-la-estructura">Vistazo general a la
+estructura</h3>
+<p>La estructura final del proyecto (es decir, la carpeta
+<code>application</code>) es la siguiente:</p>
+<ul>
+<li>La carpeta <strong>./build</strong> contiene todo lo relacionado con
+CMake y el ejecutable final.</li>
+<li>En <strong>./media</strong> se encuentran todos los archivos
+<code>.obj</code>, <code>.mtl</code> y las texturas.</li>
+<li>La subcarpeta <strong>./src</strong> contiene el código fuente de la
+propia aplicación.
+<ul>
+<li>Toda la implementación relacionada con el motor (y por tanto,
+Vulkan), se halla en <code>engine.h/cpp</code>. Una de las desventajas
+de seguir un framework “de juguete” es que el acoplamiento es
+considerablemente alto. Más adelante comentaremos los motivos.</li>
+<li>Los parámetros de la aplicación (como tamaño de pantalla y otras
+estructuras comunes) se encuetran en <code>globals.hpp</code>.</li>
+<li>La carga de escenas y los objetos se gestionan en
+<code>scene.hpp</code>.</li>
+<li>En <code>main.cpp</code> se gestiona tanto el punto de entrada de la
+aplicación como la actualización de la interfaz gráfica.</li>
+<li>La carpeta <code>./src/shaders</code> contiene todos los shaders;
+tanto de rasterización, como de ray tracing.
+<ul>
+<li>Para ray tracing, se utilizan los <code>raytrace.*</code>,
+<code>pathtrace.glsl</code> (que contiene el grueso del path
+tracer).</li>
+<li>En rasterización se usan principalmente
+<code>frag_shader.frag</code>, <code>passthrough.vert</code>,
+<code>post.frag</code>, <code>vert_shader.vert</code>.</li>
+<li>El resto de shaders son archivos comunes a ambos o utilidades
+varias.</li>
+</ul></li>
+<li>Finalmente, la carpeta <code>./src/spv</code> contiene los shaders
+compilados a SPIR-V.</li>
+</ul></li>
+</ul>
 <h2 id="compilación">Compilación</h2>
 <p>Las dependencias necesarias para compilarlo son:</p>
 <ol type="1">
@@ -3113,14 +3160,16 @@ simple que muestra un cubo mediante rasterización.</p>
 la extensión de ray tracing, extrayendo la información de la gráfica y
 cargando correspondientemente el dispositivo.</p>
 <p>Para compilarlo, ejecuta los siguientes comandos:</p>
-<pre class="sh"><code>git clone git@github.com:Asmilex/Raytracing.git
-cd .\application\vulkan_ray_tracing\
+<pre class="sh"><code>git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git
+cd .\Raytracing\application\vulkan_ray_tracing\
 mkdir build
 cd build
-cmake ..</code></pre>
+cmake ..
+cmake --build .</code></pre>
 <p>Si todo funciona correctamente, debería generarse un binario en
 <code>./application/bin_x64/Debug</code> llamado
-<code>asmiray.exe</code>.</p>
+<code>asmiray.exe</code>. Desde la carpeta en la que estás, puedes
+ejecutarlo con <code>..\..\bin_x64\Debug\asmiray.exe</code>.</p>
 <h2 id="estructuras-de-aceleración">Estructuras de aceleración</h2>
 <p>El principal coste de ray tracing es el cálculo de las intersecciones
 con objetos; hasta un 95% del tiempo de ejecución total <span
@@ -3183,7 +3232,7 @@ duplica. Esto se hace para mejorar el rendimiento.</p>
 <p>Como regla general, cuantas menos BLAS, mejor.</p>
 <p>El código correspondiente a la creación de la BLAS en el programa es
 el siguiente:</p>
-<pre><code class="language-cpp">void HelloVulkan::createBottomLevelAS() {
+<pre><code class="language-cpp">void Engine::createBottomLevelAS() {
     // BLAS - guardar cada primitiva en una geometría
 
     std::vector&lt;nvvk::RaytracingBuilderKHR::BlasInput&gt; allBlas;
@@ -3212,7 +3261,7 @@ shaders pueden relacionar la geometría intersecada y el material de
 dicho objeto. En esta última parte jugará un papel fundamental la <a
 href="#shader-binding-table">Shader Binding Table</a>.</p>
 <p>En el programa hacemos lo siguiente para construir la TLAS:</p>
-<pre><code class="language-cpp">void HelloVulkan::createTopLevelAS() {
+<pre><code class="language-cpp">void Engine::createTopLevelAS() {
     std::vector&lt;VkAccelerationStructureInstanceKHR&gt; tlas;
     tlas.reserve(m_instances.size());
 
@@ -3387,7 +3436,7 @@ pequeño número de variables, el cual se puede consultar mediante
 <p>Nuestro path tracer tiene implementado actualmente (19 de abril de
 2022) las siguientes constantes:</p>
 <pre><code class="language-cpp">struct PushConstantRay {
-    vec4  clear_color;     // Color ambiental
+    vec4  clearColor;     // Color ambiental
     vec3  lightPosition;
     float lightIntensity;
     int   lightType;
@@ -3500,9 +3549,69 @@ siguiente:</p>
 class="math inline">\(L_e(p, \omega_o)\)</span>. Siempre lo añadimos,
 pues en caso de que el objeto no emita luz, la contribución de este
 término sería 0.</p>
-<h3 id="antialiasing-mediante-jittering">Antialiasing mediante
-jittering</h3>
-<p>https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR/tree/master/ray_tracing_jitter_cam</p>
+<h3
+id="antialiasing-mediante-jittering-y-acumulación-temporal">Antialiasing
+mediante jittering y acumulación temporal</h3>
+<p>Normalmente, mandamos los rayos desde el centro de un pixel. Podemos
+conseguir una mejora sustancial de la calidad con un pequeño truco: en
+vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña
+perturbación (<em>jittering</em>). Así, tendremos diferentes colores
+para un mismo pixel, por lo que podemos hacer una ponderación del color
+que se obtiene (a lo que llamamos <em>acumulación temporal</em>).</p>
+<p>Es importante destacar que el efecto de esta técnica solo es válido
+cuando la <strong>cámara se queda estática</strong>.</p>
+<p>La implementación es muy sencilla. Debemos modificar tanto el motor
+como los shaders para llevar una cuenta de ciertos frames, definiendo un
+máximo de frames que se pueden acumular:</p>
+<pre><code class="language-cpp">// engine.h
+class Engine {
+    //...
+    int m_maxAcumFrames {20};
+}</code></pre>
+<p>Las push constant deberán llevar un registro del frame en el que se
+encuentran, así como un número máximo de muestras a acumular para un
+pixel:</p>
+<pre><code class="language-cpp">// host_device.h
+struct PushConstantRay {
+    //...
+    int   frame;
+    int   nb_samples
+}</code></pre>
+<p>El número de frame se reseteará cuando la cámara se mueva, la ventana
+se reescale, o se produzca algún efecto similar en la aplicación.</p>
+<p>Finalmente, en los shaders podemos implementar lo siguiente:</p>
+<pre><code class="language-glsl">// raytrace.rgen
+vec3 pixel_color = vec3(0);
+
+for (int smpl = 0; smpl &lt; pcRay.nb_samples; smpl++) {
+    pixel_color += sample_pixel(image_coords, image_res);
+}
+
+pixel_color = pixel_color / pcRay.nb_samples;
+
+if (!primer_frame) {
+    guardar una mezcla de las anteriores imágenes junto con la actual
+}
+else {
+    guardar la imagen directamente
+}
+</code></pre>
+<pre><code class="language-glsl">// pathtrace.glsl
+vec3 sample_pixel() {
+    float r1 = rnd(prd.seed);
+    float r2 = rnd(prd.seed);
+
+    // Subpixel jitter: mandar el rayo desde una pequeña perturbación del pixel para aplicar antialiasing
+    vec2 subpixel_jitter = pcRay.frame == 0
+        ? vec2(0.5f, 0.5f)
+        : vec2(r1, r2);
+
+    const vec2 pixelCenter = vec2(image_coords.xy) + subpixel_jitter;
+
+    // ...
+
+    vec3 radiance = pathtrace(rayo);
+}</code></pre>
 <h3 id="materiales-y-objetos">Materiales y objetos</h3>
 <blockquote>
 <p>NOTE: esto son notas para el Andrés del futuro. Sí, lo sé, está
