@@ -65,7 +65,6 @@ public:
         0                   // light type
     };
 
-
     void updateDescriptorSet();
     void createUniformBuffer();
     void rasterize(const VkCommandBuffer& cmdBuff);

@@ -584,9 +584,16 @@ void Engine::drawPost(VkCommandBuffer cmdBuf)
   m_debug.endLabel(cmdBuf);
 }
 
+
+//
+// ────────────────────────────────────────────────────────────── I ──────────
+//   :::::: R A Y   T R A C I N G : :  :   :    :     :        :          :
+// ────────────────────────────────────────────────────────────────────────
+//
+
 // ────────────────────────────────────────────────────────────────────────────────
 // Inicializar Vulkan ray tracing
-// #VkRay
+//
 void Engine::initRayTracing() {
     // Mirar las propiedades de ray tracing
     VkPhysicalDeviceProperties2 prop2 {
@@ -656,8 +663,6 @@ auto Engine::objectToVkGeometryKHR(const ObjModel& model) {
 
         (Suena mal eso. No sé realmente qué está pasando aquí pero va)
     */
-
-
     return input;
 }
 
@@ -1025,8 +1030,6 @@ void Engine::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clear
 
     updateFrame();
 
-    // NOTE Tengo que pensar seriamente esto. ¿Quizás esté limitando de forma artificial el framerate?
-    // Así es como se indica en el tutorial, pero me escama.
     if (m_pcRay.frame >= m_maxAcumFrames) {
         return ;
     }
