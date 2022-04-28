@@ -27,7 +27,7 @@
 #include "backends/imgui_impl_glfw.h"
 #include "imgui.h"
 
-#include "hello_vulkan.h"
+#include "engine.h"
 #include "imgui/imgui_camera_widget.h"
 #include "nvh/cameramanipulator.hpp"
 #include "nvh/fileoperations.hpp"
@@ -52,7 +52,7 @@ static void onErrorCallback(int error, const char* description) {
 
 
 // Extra UI
-void renderUI(HelloVulkan& helloVk) {
+void renderUI(Engine& helloVk) {
     bool changed = false;
 
     changed |= ImGuiH::CameraWidget();
@@ -89,7 +89,7 @@ enum Scene {
     cornell_box_multimaterial,
 };
 
-void load_scene(Scene scene, HelloVulkan& helloVk) {
+void load_scene(Scene scene, Engine& helloVk) {
     CameraManip.setLookat(nvmath::vec3f(4.0f, 4.0f, 4.0f), nvmath::vec3f(0, 1, 0), nvmath::vec3f(0, 1, 0));
 
     switch (scene) {
@@ -214,7 +214,7 @@ int main(int argc, char** argv) {
     vkctx.initDevice(compatibleDevices[0], contextInfo);
 
     // Create example
-    HelloVulkan helloVk;
+    Engine helloVk;
 
     // Window need to be opened to get the surface on which to draw
     const VkSurfaceKHR surface = helloVk.getVkSurface(vkctx.m_instance, window);

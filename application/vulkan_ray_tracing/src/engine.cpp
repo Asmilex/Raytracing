@@ -25,7 +25,9 @@
 #include "obj_loader.h"
 #include "stb_image.h"
 
-#include "hello_vulkan.h"
+#include "engine.h"
+#include "globals.hpp"
+
 #include "nvh/alignment.hpp"
 #include "nvh/cameramanipulator.hpp"
 #include "nvh/fileoperations.hpp"
@@ -44,7 +46,7 @@ extern std::vector<std::string> defaultSearchPaths;
 // Keep the handle on the device
 // Initialize the tool to do all our allocations: buffers, images
 //
-void HelloVulkan::setup(const VkInstance& instance, const VkDevice& device, const VkPhysicalDevice& physicalDevice, uint32_t queueFamily)
+void Engine::setup(const VkInstance& instance, const VkDevice& device, const VkPhysicalDevice& physicalDevice, uint32_t queueFamily)
 {
   AppBaseVk::setup(instance, device, physicalDevice, queueFamily);
   m_alloc.init(instance, device, physicalDevice);
@@ -55,7 +57,7 @@ void HelloVulkan::setup(const VkInstance& instance, const VkDevice& device, cons
 //--------------------------------------------------------------------------------------------------
 // Called at each frame to update the camera matrix
 //
-void HelloVulkan::updateUniformBuffer(const VkCommandBuffer& cmdBuf)
+void Engine::updateUniformBuffer(const VkCommandBuffer& cmdBuf)
 {
   // Prepare new UBO contents on host.
   const float    aspectRatio = m_size.width / static_cast<float>(m_size.height);
@@ -101,7 +103,7 @@ void HelloVulkan::updateUniformBuffer(const VkCommandBuffer& cmdBuf)
 //--------------------------------------------------------------------------------------------------
 // Describing the layout pushed when rendering
 //
-void HelloVulkan::createDescriptorSetLayout()
+void Engine::createDescriptorSetLayout()
 {
   auto nbTxt = static_cast<uint32_t>(m_textures.size());
 
@@ -126,7 +128,7 @@ void HelloVulkan::createDescriptorSetLayout()
 //--------------------------------------------------------------------------------------------------
 // Setting up the buffers in the descriptor set
 //
-void HelloVulkan::updateDescriptorSet()
+void Engine::updateDescriptorSet()
 {
   std::vector<VkWriteDescriptorSet> writes;
 
@@ -153,7 +155,7 @@ void HelloVulkan::updateDescriptorSet()
 //--------------------------------------------------------------------------------------------------
 // Creating the pipeline layout
 //
-void HelloVulkan::createGraphicsPipeline()
+void Engine::createGraphicsPipeline()
 {
   VkPushConstantRange pushConstantRanges = {VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(PushConstantRaster)};
 
@@ -187,7 +189,7 @@ void HelloVulkan::createGraphicsPipeline()
 //--------------------------------------------------------------------------------------------------
 // Loading the OBJ file and setting up all buffers
 //
-void HelloVulkan::loadModel(const std::string& filename, nvmath::mat4f transform)
+void Engine::loadModel(const std::string& filename, nvmath::mat4f transform)
 {
   LOGI("Loading File:  %s \n", filename.c_str());
   ObjLoader loader;
@@ -251,7 +253,7 @@ void HelloVulkan::loadModel(const std::string& filename, nvmath::mat4f transform
 // Creating the uniform buffer holding the camera matrices
 // - Buffer is host visible
 //
-void HelloVulkan::createUniformBuffer()
+void Engine::createUniformBuffer()
 {
   m_bGlobals = m_alloc.createBuffer(sizeof(GlobalUniforms), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
                                     VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
@@ -264,7 +266,7 @@ void HelloVulkan::createUniformBuffer()
 // - Transformation
 // - Offset for texture
 //
-void HelloVulkan::createObjDescriptionBuffer()
+void Engine::createObjDescriptionBuffer()
 {
   nvvk::CommandPool cmdGen(m_device, m_graphicsQueueIndex);
 
@@ -278,7 +280,7 @@ void HelloVulkan::createObjDescriptionBuffer()
 //--------------------------------------------------------------------------------------------------
 // Creating all textures and samplers
 //
-void HelloVulkan::createTextureImages(const VkCommandBuffer& cmdBuf, const std::vector<std::string>& textures)
+void Engine::createTextureImages(const VkCommandBuffer& cmdBuf, const std::vector<std::string>& textures)
 {
   VkSamplerCreateInfo samplerCreateInfo{VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO};
   samplerCreateInfo.minFilter  = VK_FILTER_LINEAR;
@@ -351,7 +353,7 @@ void HelloVulkan::createTextureImages(const VkCommandBuffer& cmdBuf, const std::
 //--------------------------------------------------------------------------------------------------
 // Destroying all allocations
 //
-void HelloVulkan::destroyResources()
+void Engine::destroyResources()
 {
   vkDestroyPipeline(m_device, m_graphicsPipeline, nullptr);
   vkDestroyPipelineLayout(m_device, m_pipelineLayout, nullptr);
@@ -400,7 +402,7 @@ void HelloVulkan::destroyResources()
 //--------------------------------------------------------------------------------------------------
 // Drawing the scene in raster mode
 //
-void HelloVulkan::rasterize(const VkCommandBuffer& cmdBuf)
+void Engine::rasterize(const VkCommandBuffer& cmdBuf)
 {
   VkDeviceSize offset{0};
 
@@ -414,7 +416,7 @@ void HelloVulkan::rasterize(const VkCommandBuffer& cmdBuf)
   vkCmdBindDescriptorSets(cmdBuf, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipelineLayout, 0, 1, &m_descSet, 0, nullptr);
 
 
-  for(const HelloVulkan::ObjInstance& inst : m_instances)
+  for(const ObjInstance& inst : m_instances)
   {
     auto& model            = m_objModel[inst.objIndex];
     m_pcRaster.objIndex    = inst.objIndex;  // Telling which object is drawn
@@ -432,7 +434,7 @@ void HelloVulkan::rasterize(const VkCommandBuffer& cmdBuf)
 //--------------------------------------------------------------------------------------------------
 // Handling resize of the window
 //
-void HelloVulkan::onResize(int /*w*/, int /*h*/)
+void Engine::onResize(int /*w*/, int /*h*/)
 {
   createOffscreenRender();
   updatePostDescriptorSet();
@@ -448,7 +450,7 @@ void HelloVulkan::onResize(int /*w*/, int /*h*/)
 //--------------------------------------------------------------------------------------------------
 // Creating an offscreen frame buffer and the associated render pass
 //
-void HelloVulkan::createOffscreenRender()
+void Engine::createOffscreenRender()
 {
   m_alloc.destroy(m_offscreenColor);
   m_alloc.destroy(m_offscreenDepth);
@@ -518,7 +520,7 @@ void HelloVulkan::createOffscreenRender()
 //--------------------------------------------------------------------------------------------------
 // The pipeline is how things are rendered, which shaders, type of primitives, depth test and more
 //
-void HelloVulkan::createPostPipeline()
+void Engine::createPostPipeline()
 {
   // Push constants in the fragment shader
   VkPushConstantRange pushConstantRanges = {VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(float)};
@@ -545,7 +547,7 @@ void HelloVulkan::createPostPipeline()
 // The descriptor layout is the description of the data that is passed to the vertex or the
 // fragment program.
 //
-void HelloVulkan::createPostDescriptor()
+void Engine::createPostDescriptor()
 {
   m_postDescSetLayoutBind.addBinding(0, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1, VK_SHADER_STAGE_FRAGMENT_BIT);
   m_postDescSetLayout = m_postDescSetLayoutBind.createLayout(m_device);
@@ -557,7 +559,7 @@ void HelloVulkan::createPostDescriptor()
 //--------------------------------------------------------------------------------------------------
 // Update the output
 //
-void HelloVulkan::updatePostDescriptorSet()
+void Engine::updatePostDescriptorSet()
 {
   VkWriteDescriptorSet writeDescriptorSets = m_postDescSetLayoutBind.makeWrite(m_postDescSet, 0, &m_offscreenColor.descriptor);
   vkUpdateDescriptorSets(m_device, 1, &writeDescriptorSets, 0, nullptr);
@@ -566,7 +568,7 @@ void HelloVulkan::updatePostDescriptorSet()
 //--------------------------------------------------------------------------------------------------
 // Draw a full screen quad with the attached image
 //
-void HelloVulkan::drawPost(VkCommandBuffer cmdBuf)
+void Engine::drawPost(VkCommandBuffer cmdBuf)
 {
   m_debug.beginLabel(cmdBuf, "Post");
 
@@ -585,7 +587,7 @@ void HelloVulkan::drawPost(VkCommandBuffer cmdBuf)
 // ────────────────────────────────────────────────────────────────────────────────
 // Inicializar Vulkan ray tracing
 // #VkRay
-void HelloVulkan::initRayTracing() {
+void Engine::initRayTracing() {
     // Mirar las propiedades de ray tracing
     VkPhysicalDeviceProperties2 prop2 {
         VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2
@@ -600,7 +602,7 @@ void HelloVulkan::initRayTracing() {
 // ────────────────────────────────────────────────────────────────────────────────
 // Convertir un modelo OBJ en geometría de ray tracing para construir el BLAS
 //
-auto HelloVulkan::objectToVkGeometryKHR(const ObjModel& model) {
+auto Engine::objectToVkGeometryKHR(const ObjModel& model) {
     // El constructor BLAS requiere las direcciones del dispositivo en raw
     VkDeviceAddress vertexAddress = nvvk::getBufferDeviceAddress(m_device, model.vertexBuffer.buffer);
     VkDeviceAddress indexAddress  = nvvk::getBufferDeviceAddress(m_device, model.indexBuffer.buffer);
@@ -660,7 +662,7 @@ auto HelloVulkan::objectToVkGeometryKHR(const ObjModel& model) {
 }
 
 
-void HelloVulkan::createBottomLevelAS() {
+void Engine::createBottomLevelAS() {
     // BLAS - guardar cada primitiva en una geometría
 
     std::vector<nvvk::RaytracingBuilderKHR::BlasInput> allBlas;
@@ -679,11 +681,11 @@ void HelloVulkan::createBottomLevelAS() {
 
 // ────────────────────────────────────────────────────────────────────────────────
 
-void HelloVulkan::createTopLevelAS() {
+void Engine::createTopLevelAS() {
     std::vector<VkAccelerationStructureInstanceKHR> tlas;
     tlas.reserve(m_instances.size());
 
-    for (const HelloVulkan::ObjInstance& inst: m_instances) {
+    for (const ObjInstance& inst: m_instances) {
         VkAccelerationStructureInstanceKHR rayInst{};
         rayInst.transform                              = nvvk::toTransformMatrixKHR(inst.transform);                 // Posición de la instancia
         rayInst.instanceCustomIndex                    = inst.objIndex;                                              // gl_InstanceCustomIndexEXT
@@ -702,7 +704,7 @@ void HelloVulkan::createTopLevelAS() {
 // ────────────────────────────────────────────────────────────────────────────────
 // Este conjunto de descriptores contiene la estructura de aceleración y la imagen de salida
 //
-void HelloVulkan::createRtDescriptorSet() {
+void Engine::createRtDescriptorSet() {
     m_rtDescSetLayoutBind.addBinding(
         RtxBindings::eTlas, VK_DESCRIPTOR_TYPE_ACCELERATION_STRUCTURE_KHR, 1,
         VK_SHADER_STAGE_RAYGEN_BIT_KHR | VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR
@@ -746,7 +748,7 @@ void HelloVulkan::createRtDescriptorSet() {
 // Escribir la imagen de salida al conjunto de descriptores
 // - Necesario cuando se cambia la resolución; i.e. cuando se redimensiona la ventana
 //
-void HelloVulkan::updateRtDescriptorSet() {
+void Engine::updateRtDescriptorSet() {
     // (1) Output buffer
     VkDescriptorImageInfo imageInfo {
         {},
@@ -760,7 +762,7 @@ void HelloVulkan::updateRtDescriptorSet() {
 // ────────────────────────────────────────────────────────────────────────────────
 // Pipeline for the ray tracer: all shaders, raygen, close hit, miss
 //
-void HelloVulkan::createRtPipeline() {
+void Engine::createRtPipeline() {
     enum StageIndices {
         eRaygen,
         eMiss,
@@ -937,7 +939,7 @@ void HelloVulkan::createRtPipeline() {
 // - getting all shader handles and write them in a SBT buffer
 // - Besides exception, this could always be done like this
 //
-void HelloVulkan::createRtShaderBindingTable() {
+void Engine::createRtShaderBindingTable() {
     // Miss count: miss y shadows
     // Hit count: solo hit.
     uint32_t missCount{2};
@@ -1018,7 +1020,7 @@ void HelloVulkan::createRtShaderBindingTable() {
 // ────────────────────────────────────────────────────────────────────────────────
 // Ray tracing the scene
 //
-void HelloVulkan::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clear_color) {
+void Engine::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clear_color) {
     m_debug.beginLabel(cmdBuf, "Ray trace");
 
     updateFrame();
@@ -1053,7 +1055,7 @@ void HelloVulkan::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& 
 // Si la matriz de cámara o el FOV cambia, reseteamos el frame
 // En otro caso, lo incrementamos
 //
-void HelloVulkan::updateFrame() {
+void Engine::updateFrame() {
     static nvmath::mat4f refCamMatrix;
     static float refFov {CameraManip.getFov()};
 
@@ -1069,7 +1071,7 @@ void HelloVulkan::updateFrame() {
     m_pcRay.frame++;
 }
 
-void HelloVulkan::resetFrame() {
+void Engine::resetFrame() {
     // Como resetFrame() se llama antes de que se incremente el contador en updateFrame(),
     // ponemos el contador a -1.
     m_pcRay.frame = -1;
