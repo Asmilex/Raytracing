@@ -52,14 +52,14 @@ static void onErrorCallback(int error, const char* description) {
 
 
 // Extra UI
-void renderUI(Engine& helloVk) {
+void renderUI(Engine& engine) {
     bool changed = false;
 
     changed |= ImGuiH::CameraWidget();
 
 
     if (ImGui::CollapsingHeader("Light")) {
-        auto& pc = helloVk.m_pcRaster;
+        auto& pc = engine.m_pcRaster;
 
         changed |= ImGui::RadioButton("Point", &pc.light_type, 0);
         ImGui::SameLine();
@@ -70,13 +70,13 @@ void renderUI(Engine& helloVk) {
     }
 
     if (ImGui::CollapsingHeader("Ray tracing options")) {
-        changed |= ImGui::SliderInt("Max depth of ray", &helloVk.m_pcRay.max_depth, 1, 50);
-        changed |= ImGui::SliderInt("Max accum frames", &helloVk.m_maxAcumFrames, 1, 100);
-        changed |= ImGui::SliderInt("Number of samples", &helloVk.m_pcRay.nb_samples, 1, 20);
+        changed |= ImGui::SliderInt("Max depth of ray", &engine.m_pcRay.max_depth, 1, 50);
+        changed |= ImGui::SliderInt("Max accum frames", &engine.m_maxAcumFrames, 1, 100);
+        changed |= ImGui::SliderInt("Number of samples", &engine.m_pcRay.nb_samples, 1, 20);
     }
 
     if (changed) {
-        helloVk.resetFrame();
+        engine.resetFrame();
     }
 }
 
@@ -89,51 +89,51 @@ enum Scene {
     cornell_box_multimaterial,
 };
 
-void load_scene(Scene scene, Engine& helloVk) {
+void load_scene(Scene scene, Engine& engine) {
     CameraManip.setLookat(nvmath::vec3f(4.0f, 4.0f, 4.0f), nvmath::vec3f(0, 1, 0), nvmath::vec3f(0, 1, 0));
 
     switch (scene) {
         case Scene::cube_default:
-            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
+            engine.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
             break;
 
         case Scene::medieval_building:
-            helloVk.loadModel(nvh::findFile("media/scenes/Medieval_building.obj", defaultSearchPaths, true));
-            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
+            engine.loadModel(nvh::findFile("media/scenes/Medieval_building.obj", defaultSearchPaths, true));
+            engine.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
             break;
 
         case Scene::cube_reflective:
-            helloVk.loadModel (
+            engine.loadModel (
                 nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
                 nvmath::translation_mat4(nvmath::vec3f(-2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
             );
-            helloVk.loadModel(
+            engine.loadModel(
                 nvh::findFile("media/scenes/cube_no_diffuse.obj", defaultSearchPaths, true),
                 nvmath::translation_mat4(nvmath::vec3f(2, 0, 0)) * nvmath::scale_mat4(nvmath::vec3f(.1f, 5.f, 5.f))
             );
-            helloVk.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
-            helloVk.loadModel(
+            engine.loadModel(nvh::findFile("media/scenes/cube_multi.obj", defaultSearchPaths, true));
+            engine.loadModel(
                 nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true),
                 nvmath::translation_mat4(nvmath::vec3f(0, -1, 0))
             );
             break;
 
         case Scene::any_hit:
-            helloVk.loadModel(nvh::findFile("media/scenes/wuson_transparent.obj", defaultSearchPaths, true));
-            helloVk.loadModel(
+            engine.loadModel(nvh::findFile("media/scenes/wuson_transparent.obj", defaultSearchPaths, true));
+            engine.loadModel(
                 nvh::findFile("media/scenes/sphere.obj", defaultSearchPaths, true),
                 nvmath::scale_mat4(nvmath::vec3f(1.5f)) * nvmath::translation_mat4(nvmath::vec3f(0.0f, 1.0f, 0.0f))
             );
-            helloVk.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
+            engine.loadModel(nvh::findFile("media/scenes/plane.obj", defaultSearchPaths, true));
             break;
 
         case Scene::cornell_box:
-            helloVk.loadModel(nvh::findFile("media/scenes/cornell_box.obj", defaultSearchPaths, true));
+            engine.loadModel(nvh::findFile("media/scenes/cornell_box.obj", defaultSearchPaths, true));
             CameraManip.setLookat(nvmath::vec3f(233.665, 324.268, -508.527), nvmath::vec3f(232.440, 297.224, 11.248), nvmath::vec3f(0, 1, 0));
             break;
 
         case Scene::cornell_box_multimaterial:
-            helloVk.loadModel(nvh::findFile("media/scenes/cornell_box_multimaterial.obj", defaultSearchPaths, true));
+            engine.loadModel(nvh::findFile("media/scenes/cornell_box_multimaterial.obj", defaultSearchPaths, true));
             CameraManip.setLookat(nvmath::vec3f(233.665, 324.268, -508.527), nvmath::vec3f(232.440, 297.224, 11.248), nvmath::vec3f(0, 1, 0));
             break;
 
@@ -214,47 +214,47 @@ int main(int argc, char** argv) {
     vkctx.initDevice(compatibleDevices[0], contextInfo);
 
     // Create example
-    Engine helloVk;
+    Engine engine;
 
     // Window need to be opened to get the surface on which to draw
-    const VkSurfaceKHR surface = helloVk.getVkSurface(vkctx.m_instance, window);
+    const VkSurfaceKHR surface = engine.getVkSurface(vkctx.m_instance, window);
     vkctx.setGCTQueueWithPresent(surface);
 
-    helloVk.setup(vkctx.m_instance, vkctx.m_device, vkctx.m_physicalDevice, vkctx.m_queueGCT.familyIndex);
-    helloVk.createSwapchain(surface, SAMPLE_WIDTH, SAMPLE_HEIGHT);
-    helloVk.createDepthBuffer();
-    helloVk.createRenderPass();
-    helloVk.createFrameBuffers();
+    engine.setup(vkctx.m_instance, vkctx.m_device, vkctx.m_physicalDevice, vkctx.m_queueGCT.familyIndex);
+    engine.createSwapchain(surface, SAMPLE_WIDTH, SAMPLE_HEIGHT);
+    engine.createDepthBuffer();
+    engine.createRenderPass();
+    engine.createFrameBuffers();
 
     // Setup Imgui
-    helloVk.initGUI(0);  // Using sub-pass 0
+    engine.initGUI(0);  // Using sub-pass 0
 
-    load_scene(Scene::cornell_box, helloVk);
+    load_scene(Scene::cornell_box, engine);
 
-    helloVk.createOffscreenRender();
-    helloVk.createDescriptorSetLayout();
-    helloVk.createGraphicsPipeline();
-    helloVk.createUniformBuffer();
-    helloVk.createObjDescriptionBuffer();
-    helloVk.updateDescriptorSet();
+    engine.createOffscreenRender();
+    engine.createDescriptorSetLayout();
+    engine.createGraphicsPipeline();
+    engine.createUniformBuffer();
+    engine.createObjDescriptionBuffer();
+    engine.updateDescriptorSet();
 
     // #VkRay
-    helloVk.initRayTracing();
-    helloVk.createBottomLevelAS();
-    helloVk.createTopLevelAS();
-    helloVk.createRtDescriptorSet();
-    helloVk.createRtPipeline();
-    helloVk.createRtShaderBindingTable();
+    engine.initRayTracing();
+    engine.createBottomLevelAS();
+    engine.createTopLevelAS();
+    engine.createRtDescriptorSet();
+    engine.createRtPipeline();
+    engine.createRtShaderBindingTable();
 
     bool useRaytracer = true;
 
-    helloVk.createPostDescriptor();
-    helloVk.createPostPipeline();
-    helloVk.updatePostDescriptorSet();
+    engine.createPostDescriptor();
+    engine.createPostPipeline();
+    engine.updatePostDescriptorSet();
     nvmath::vec4f clear_color = nvmath::vec4f(1, 1, 1, 1.00f);
 
 
-    helloVk.setupGlfwCallbacks(window);
+    engine.setupGlfwCallbacks(window);
     ImGui_ImplGlfw_InitForVulkan(window, true);
 
 //
@@ -264,7 +264,7 @@ int main(int argc, char** argv) {
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
 
-        if(helloVk.isMinimized())
+        if(engine.isMinimized())
             continue;
 
         // Start the Dear ImGui frame
@@ -272,30 +272,30 @@ int main(int argc, char** argv) {
         ImGui::NewFrame();
 
         // Show UI window.
-        if(helloVk.showGui()) {
+        if(engine.showGui()) {
             ImGuiH::Panel::Begin();
             ImGui::ColorEdit3("Clear color", reinterpret_cast<float*>(&clear_color));
             ImGui::Checkbox("Ray tracer mode", &useRaytracer);  // Para cambiar entre raster y ray tracing.
-            renderUI(helloVk);
+            renderUI(engine);
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             ImGuiH::Control::Info("", "", "(F10) Toggle Pane", ImGuiH::Control::Flags::Disabled);
-            ImGui::Text("Total samples = %i", helloVk.m_maxAcumFrames * helloVk.m_pcRay.nb_samples);
+            ImGui::Text("Total samples = %i", engine.m_maxAcumFrames * engine.m_pcRay.nb_samples);
             ImGuiH::Panel::End();
         }
 
         // Start rendering the scene
-        helloVk.prepareFrame();
+        engine.prepareFrame();
 
         // Start command buffer of this frame
-        auto                   curFrame = helloVk.getCurFrame();
-        const VkCommandBuffer& cmdBuf   = helloVk.getCommandBuffers()[curFrame];
+        auto                   curFrame = engine.getCurFrame();
+        const VkCommandBuffer& cmdBuf   = engine.getCommandBuffers()[curFrame];
 
         VkCommandBufferBeginInfo beginInfo{VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO};
         beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
         vkBeginCommandBuffer(cmdBuf, &beginInfo);
 
         // Updating camera buffer
-        helloVk.updateUniformBuffer(cmdBuf);
+        engine.updateUniformBuffer(cmdBuf);
 
         // Clearing screen
         std::array<VkClearValue, 2> clearValues{};
@@ -307,17 +307,17 @@ int main(int argc, char** argv) {
             VkRenderPassBeginInfo offscreenRenderPassBeginInfo{VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO};
             offscreenRenderPassBeginInfo.clearValueCount = 2;
             offscreenRenderPassBeginInfo.pClearValues    = clearValues.data();
-            offscreenRenderPassBeginInfo.renderPass      = helloVk.m_offscreenRenderPass;
-            offscreenRenderPassBeginInfo.framebuffer     = helloVk.m_offscreenFramebuffer;
-            offscreenRenderPassBeginInfo.renderArea      = {{0, 0}, helloVk.getSize()};
+            offscreenRenderPassBeginInfo.renderPass      = engine.m_offscreenRenderPass;
+            offscreenRenderPassBeginInfo.framebuffer     = engine.m_offscreenFramebuffer;
+            offscreenRenderPassBeginInfo.renderArea      = {{0, 0}, engine.getSize()};
 
             // Rendering Scene
             if (useRaytracer) {
-                helloVk.raytrace(cmdBuf, clear_color);
+                engine.raytrace(cmdBuf, clear_color);
             }
             else {
                 vkCmdBeginRenderPass(cmdBuf, &offscreenRenderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-                helloVk.rasterize(cmdBuf);
+                engine.rasterize(cmdBuf);
                 vkCmdEndRenderPass(cmdBuf);
             }
         }
@@ -328,13 +328,13 @@ int main(int argc, char** argv) {
             VkRenderPassBeginInfo postRenderPassBeginInfo{VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO};
             postRenderPassBeginInfo.clearValueCount = 2;
             postRenderPassBeginInfo.pClearValues    = clearValues.data();
-            postRenderPassBeginInfo.renderPass      = helloVk.getRenderPass();
-            postRenderPassBeginInfo.framebuffer     = helloVk.getFramebuffers()[curFrame];
-            postRenderPassBeginInfo.renderArea      = {{0, 0}, helloVk.getSize()};
+            postRenderPassBeginInfo.renderPass      = engine.getRenderPass();
+            postRenderPassBeginInfo.framebuffer     = engine.getFramebuffers()[curFrame];
+            postRenderPassBeginInfo.renderArea      = {{0, 0}, engine.getSize()};
 
             // Rendering tonemapper
             vkCmdBeginRenderPass(cmdBuf, &postRenderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-            helloVk.drawPost(cmdBuf);
+            engine.drawPost(cmdBuf);
             // Rendering UI
             ImGui::Render();
             ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), cmdBuf);
@@ -343,14 +343,14 @@ int main(int argc, char** argv) {
 
         // Submit for display
         vkEndCommandBuffer(cmdBuf);
-        helloVk.submitFrame();
+        engine.submitFrame();
     }
 
     // Cleanup
-    vkDeviceWaitIdle(helloVk.getDevice());
+    vkDeviceWaitIdle(engine.getDevice());
 
-    helloVk.destroyResources();
-    helloVk.destroy();
+    engine.destroyResources();
+    engine.destroy();
     vkctx.deinit();
 
     glfwDestroyWindow(window);
