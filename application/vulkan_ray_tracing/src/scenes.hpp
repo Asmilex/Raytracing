@@ -106,10 +106,11 @@ public:
         case Scene::cornell_box:
             models.push_back(ModelInfo{
                 "media/scenes/cornell_box.obj",
+                nvmath::scale_mat4(nvmath::vec3f(0.01f))
             });
 
-            eye    = nvmath::vec3f(233.665, 324.268, -508.527);
-            center = nvmath::vec3f(232.440, 297.224, 11.248);
+            eye    = nvmath::vec3f(2.33665, 3.24268, -5.08527);
+            center = nvmath::vec3f(2.32440, 2.97224, 0.11248);
             up     = nvmath::vec3f(0, 1, 0);
 
             break;
@@ -118,11 +119,12 @@ public:
 
         case Scene::cornell_box_multimaterial:
             models.push_back(ModelInfo{
-                "media/scenes/cornell_box_multimaterial.obj"
+                "media/scenes/cornell_box_multimaterial.obj",
+                nvmath::scale_mat4(nvmath::vec3f(0.01f))
             });
 
-            eye    = nvmath::vec3f(233.665, 324.268, -508.527);
-            center = nvmath::vec3f(232.440, 297.224, 11.248);
+            eye    = nvmath::vec3f(2.33665, 3.24268, -5.08527);
+            center = nvmath::vec3f(2.32440, 2.97224, 0.11248);
             up     = nvmath::vec3f(0, 1, 0);
 
             break;
