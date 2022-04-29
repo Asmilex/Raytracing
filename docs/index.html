@@ -351,6 +351,8 @@ práctica</a>
 la rendering equation con Monte Carlo</a></li>
 <li><a href="#pseudocódigo-de-un-path-tracer">Pseudocódigo de un path
 tracer</a></li>
+<li><a href="#evitando-la-recursividad">Evitando la
+recursividad</a></li>
 <li><a
 href="#antialiasing-mediante-jittering-y-acumulación-temporal">Antialiasing
 mediante jittering y acumulación temporal</a></li>
@@ -3478,7 +3480,8 @@ L_o(p, \omega_o \leftarrow \omega_i) = L_e(p, \omega_o) +
 \omega_i)\cos\theta_i} d\omega_i
 \]</span></p>
 <p>Podemos aproximar el valor de la integral utilizando Monte Carlo:</p>
-<p><span class="math display">\[
+<p><span id="eq:rendering_equation_mc" class="eqnos"><span
+class="math display">\[
 \begin{aligned}
 L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
 \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
@@ -3486,7 +3489,7 @@ L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
 \omega_o \leftarrow \omega_j) L_i(p, \omega_j)
 \cos\theta_j}{p(\omega_j)}}
 \end{aligned}
-\]</span></p>
+\]</span><span class="eqnos-number">(11)</span></span></p>
 <p>Fijémonos en el denominador. Lo que estamos haciendo es tomar una
 muestra de un vector en la esfera. Si trabajamos con una BRDF en vez de
 una BSDF, usaríamos un hemisferio en vez de la esfera.</p>
@@ -3507,7 +3510,7 @@ class="math display">\[
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
 \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j =
 1}^{N}{L_i(p, \omega_j) \rho}
-\]</span><span class="eqnos-number">(11)</span></span></p>
+\]</span><span class="eqnos-number">(12)</span></span></p>
 <p>Lo cual nos proporciona una expresión muy agradable para los
 materiales difusos. Solo es cuestión de calcular la radiancia del
 punto.</p>
@@ -3515,9 +3518,9 @@ punto.</p>
 tracer</h3>
 <p>Con lo que conocemos hasta ahora, podemos empezar a programar los
 shaders. Una primera implementación basada en [<a
-href="#eq:rendering_eq_lambertian">11</a>] sería similar a lo
+href="#eq:rendering_equation_mc">11</a>] sería similar a lo
 siguiente:</p>
-<pre><code class="language-cpp">vec3 path_trace(Rayo r, profundidad) {
+<pre><code class="language-cpp">vec3 pathtrace(Rayo r, profundidad) {
     if (profundidad == profundidad_maxima) {
         return contribucion_ambiental;
     }
@@ -3530,25 +3533,141 @@ siguiente:</p>
 
     hit_info = r.hit_info
     material = hit_info.material
-    emission = material.emission
+    emision = material.emision
 
     nuevo_rayo = Rayo(
         origen = hit_info.punto_impacto,
-        direccion = aleatorio_en_hemisferio(hit_info.normal)
-    // ¡Importante! ^^^^^^^^^^^^^^^^^^^^^^^
+        direccion = random_direction(hit_info.normal)
     )
 
-    // Usando reflexión lambertiana, tendríamos
     cos_theta = dot(nuevo_rayo.direccion, hit_info.normal)
-    BRDF = material.reflectancia * cos_theta
-    reflejado = path_trace(nuevo_rayo, profundidad + 1)
+    BRDF = ... // BRDF específica del material
+    pdf = ... // función de densidad que nos informa de la probabilidad de la nueva dirección.
 
-    return emission + BRDF * reflejado
+    return emission + (BRDF * pathtrace(nuevo_rayo, profundidad + 1) * cos_theta) / pdf;
 }</code></pre>
 <p>El término <code>emission</code> corresponde a <span
 class="math inline">\(L_e(p, \omega_o)\)</span>. Siempre lo añadimos,
 pues en caso de que el objeto no emita luz, la contribución de este
 término sería 0.</p>
+<p>La principal desventaja de esta implementación es que utiliza
+recursividad. Como bien es conocido, abusar de recursividad provoca que
+el tiempo de ejecución aumente significativamente. Además, con la
+implementación anterior, necesariamente se generan rayos desde el
+closest hit shader, lo cual no es ideal.</p>
+<h3 id="evitando-la-recursividad">Evitando la recursividad</h3>
+<p>Podemos evitar los problemas de la implementación anterior con una
+pequeña modificación. En vez de calcular la radiancia desde el closest
+hit, nos traemos la información necesaria al raygen shader, y calculamos
+la radiancia total desde allí.</p>
+<p>Para conseguirlo, debemos hacer que el <code>HitPayload</code>
+almacene dos nuevos parámetros: <code>weight</code> y
+<code>hit_value</code>, así como el nuevo origen y la dirección del
+rayo.</p>
+<p>El pseudocódigo sería el siguiente:</p>
+<pre><code class="language-cpp">// Raygen shader
+vec3 pathtrace() {
+    HitPayload prd;
+
+    // Inicializar parámetros del primer rayo
+    prd.hit_value  = vec3(0);
+    prd.weight     = vec3(0);
+    prd.ray_origin = r.origin;
+    prd.ray_dir    = r.dir;
+
+    vec3 current_weight = vec3(1);
+    vec3 hit_value      = vec3(0);
+
+    for (profundidad in [0, profunidad_maxima]) {
+        closest_hit(prd.ray_origin, prd.ray_dir);
+        // La llamada del rayo almacena nueva información en el HitPayload prd, que podremos usar ahora
+
+        hit_value = hit_value + prd.hit_value * current_weight;
+        current_weight = current_weight * prd.weight;
+    }
+
+    return hit_value;
+}
+
+// Closest hit shader
+vec3 closest_hit() {
+    // Sacar información sobre el punto de impacto: material, normal...
+    vec3 normal = ... // normal en punto
+    Material m = ... // Material de la superficie impactada.
+
+    // Preparar información para el raygen
+    prd.ray_origin = ... // Punto de impacto.
+    prd.ray_dir = direccion_aleatoria() // ¡Dependiente del material!
+
+    float cos_theta = dot(prd.ray_dir, normal);
+    vec3 BRDF = ... // BRDF del material
+    vec3 pdf  = ... // Probabilidad de que se escoja la dirección prd.ray_dir
+
+    prd.hit_value = m.emision // Radiancia generada por el propio material; e.g. luces. Es el término L_e
+    prd.weight = (BRDF * cos_theta) / pdf
+
+    // La devolución de prd es implícita.
+}</code></pre>
+<p>Esta versión no es tan intuitiva, así que ejemplifiquemos lo está
+ocurriendo.</p>
+<p>Sea <span class="math inline">\(h\)</span> el hit_value, <span
+class="math inline">\(w\)</span> el peso, <span
+class="math inline">\(f_i\)</span> la BRDF <span
+class="math inline">\(i\)</span>, <span
+class="math inline">\(e_i\)</span> la emisión, <span
+class="math inline">\(\cos\theta_i\)</span> el coseno del ángulo que
+forman la nueva dirección del rayo y la normal, y <span
+class="math inline">\(p_i\)</span> la función de densidad que, dada una
+dirección, proporciona la probabilidad de que se escoja. El subíndice
+denota el <span class="math inline">\(i\)</span>-ésimo punto de
+impacto.</p>
+<p>En esencia, estamos descomponiendo lo que recogemos en
+<code>weight</code>, que es <span class="math inline">\(f_i \cos\theta_i
+/ p_i\)</span></p>
+<p>Inicialmente, para el primer envío del rayo, <span
+class="math inline">\(h = (0, 0, 0)\)</span>, <span
+class="math inline">\(w = (1, 1, 1)\)</span>. Tras trazar el primer
+rayo, se tiene que</p>
+<p><span class="math display">\[
+\begin{aligned}
+    h &amp; = 0 + e_1 w = e_1 \\
+    w &amp; = 1 \frac{f_1 \cos\theta_1}{p_1}
+\end{aligned}
+\]</span></p>
+<p>Tras el segundo rayo, obtenemos</p>
+<p><span class="math display">\[
+\begin{aligned}
+    h &amp; = e_1 + e_2 w = \\
+      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} \\
+    w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
+\end{aligned}
+\]</span></p>
+<p>Y para el tercero</p>
+<p><span class="math display">\[
+\begin{aligned}
+    h &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 w = \\
+      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 \frac{f_1
+\cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} = \\
+      &amp; = e_1 + \frac{f_1
+\cos\theta_1}{p_1}\textcolor{verde-oscurisimo}{\left(e_2 + e_3 \frac{f_2
+\cos\theta_2}{p_2}\right)} \\
+    w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
+\frac{f_3 \cos\theta_3}{p_3}
+\end{aligned}
+\]</span></p>
+<p>El <span
+class="math inline">\(\textcolor{verde-oscurisimo}{\text{término que
+acompaña}}\)</span> a <span class="math inline">\(\frac{f_1
+\cos\theta_1}{p_1}\)</span> es la radiancia del tercer punto de impacto.
+Por tanto, a la larga, se tendrá que <span
+class="math inline">\(h\)</span> estima correctamente la radiancia de un
+punto. Con esto, podemos afirmar que</p>
+<p><span class="math display">\[
+h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow
+\omega_j) L_i(p, \omega_j) \cos\theta_j}{p(\omega_j)}}
+\]</span></p>
+<p>Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento
+que el recursivo.</p>
 <h3
 id="antialiasing-mediante-jittering-y-acumulación-temporal">Antialiasing
 mediante jittering y acumulación temporal</h3>
