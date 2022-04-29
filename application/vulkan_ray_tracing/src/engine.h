@@ -156,7 +156,7 @@ public:
         false,  // russian roulette
         false,  // next event estimation
     };
-    int m_maxAcumFrames {20};
+    int m_maxAcumFrames {100};
 
 
     void initRayTracing();

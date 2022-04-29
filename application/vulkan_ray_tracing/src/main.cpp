@@ -73,7 +73,7 @@ void renderUI(Engine& engine) {
 
     if (ImGui::CollapsingHeader("Ray tracing options")) {
         changed |= ImGui::SliderInt("Max depth of ray", &engine.m_pcRay.max_depth, 1, 50);
-        changed |= ImGui::SliderInt("Max accum frames", &engine.m_maxAcumFrames, 1, 100);
+        changed |= ImGui::SliderInt("Max accum frames", &engine.m_maxAcumFrames, 1, 200);
         changed |= ImGui::SliderInt("Number of samples", &engine.m_pcRay.nb_samples, 1, 20);
     }
 

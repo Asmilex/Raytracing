@@ -142,6 +142,10 @@ void main()
     vec3 ray_origin = world_position;
     vec3 ray_dir    = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
 
+    prd.ray_origin = ray_origin;
+    prd.ray_dir    = ray_dir;
+
+    /*
     // Probability of the new ray (cosine distributed)
     const float p = 1 / M_PI;
 
@@ -172,5 +176,12 @@ void main()
         //prd.done         = 0;
         prd.ray_origin   = origin;
         prd.ray_dir      = ray_dir;
-    }
+    } */
+
+    const float cos_theta = dot(ray_dir, world_normal);
+    const float pdf = 1 / M_PI;
+    const vec3 BRDF = mat.diffuse / M_PI;
+
+    prd.hit_value = mat.ambient;
+    prd.weight = (BRDF * cos_theta) / pdf;
 }

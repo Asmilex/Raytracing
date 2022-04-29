@@ -23,18 +23,14 @@
 struct HitPayload
 {
     vec3 hit_value;
-
-    // Reflections
-    int  depth;
-
+    vec3 weight;
     vec3 attenuation;
+
     vec3 ray_origin;
     vec3 ray_dir;
 
+    int  depth;
     uint seed;
-
-    // PBR
-    vec3 weight;
 };
 
 struct ShadowPayload

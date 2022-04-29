@@ -4,18 +4,13 @@
 layout(location = 0) rayPayloadEXT HitPayload prd;
 
 vec3 pathtrace(vec4 ray_origin, vec4 ray_dir, float t_min, float t_max, uint ray_flags) {
-    // Llamada a la generación del rayo.
-    // Para saber por qué ponemos esos valores en sbtRecordOffset y sbtRecordStride, mira este artículo:
-    // https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways
-    // (Y mira en general el capítulo 11 de nvpro tutorial que esto tiene mucha chicha)
-
     // Inicializar el payload correctamente
     prd.depth      = 0;
     prd.hit_value  = vec3(0);
     prd.ray_origin = ray_origin.xyz;
     prd.ray_dir    = ray_dir.xyz;
     prd.weight     = vec3(0);
-    //prd.attenuation = vec3(1.f, 1.f, 1.f);    // No debería ser necesario con path tracing
+    //prd.attenuation = vec3(1.f, 1.f, 1.f);
     // seed ya estaba puesto
 
     vec3 current_weight = vec3(1);
@@ -39,7 +34,6 @@ vec3 pathtrace(vec4 ray_origin, vec4 ray_dir, float t_min, float t_max, uint ray
             0                   // payload (location = 0)
         );
 
-        // A partir de aquí, debemos determinar el color que vaya adquiriendo.
         hit_value += prd.hit_value * current_weight;
         current_weight *= prd.weight;
     }
