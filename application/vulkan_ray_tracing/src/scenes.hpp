@@ -5,6 +5,7 @@ enum Scene {
     any_hit,
     cornell_box,
     cornell_box_multimaterial,
+    cubes,
 };
 
 class ModelInfo {
@@ -126,6 +127,15 @@ public:
             eye    = nvmath::vec3f(2.33665, 3.24268, -5.08527);
             center = nvmath::vec3f(2.32440, 2.97224, 0.11248);
             up     = nvmath::vec3f(0, 1, 0);
+
+            break;
+
+        // ─────────────────────────────────────────────────────────────────
+
+        case Scene::cubes:
+            models.push_back(ModelInfo{
+                "media/scenes/cubes.obj"
+            });
 
             break;
         }
