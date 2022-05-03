@@ -178,10 +178,17 @@ void main()
         prd.ray_dir      = ray_dir;
     } */
 
-    const float cos_theta = dot(ray_dir, world_normal);
-    const float pdf = 1 / M_PI;
-    const vec3 BRDF = mat.diffuse / M_PI;
 
-    prd.hit_value = mat.ambient;
-    prd.weight = (BRDF * cos_theta) / pdf;
+    if(mat.illum >= 3 && prd.depth < 10) {      // Materiales reflectivos
+        prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
+        prd.weight  = mat.specular;
+    }
+    else {                                      // Materiales difusos
+        const float cos_theta = dot(ray_dir, world_normal);
+        const float pdf = 1 / M_PI;
+        const vec3 BRDF = mat.diffuse / M_PI;
+
+        prd.hit_value = mat.ambient;
+        prd.weight = (BRDF * cos_theta) / pdf;
+    }
 }
