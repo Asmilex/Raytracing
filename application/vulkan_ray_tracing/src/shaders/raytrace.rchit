@@ -135,49 +135,21 @@ void main()
 
 // ────────────────────────────────────────────────────── SIGUIENTE DIRECCION ─────
 
-    // Pick a random direction from here and keep going
-    vec3 tangent, bitangent;
-    create_coordinate_system(world_normal, tangent, bitangent);
-
-    vec3 ray_origin = world_position;
-    vec3 ray_dir    = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
-
-    prd.ray_origin = ray_origin;
-    prd.ray_dir    = ray_dir;
-
-    /*
-    // Probability of the new ray (cosine distributed)
-    const float p = 1 / M_PI;
-
-    // Compute the BRDF for this ray (assuming Lambertian reflection)
-    float cos_theta = dot(ray_dir, world_normal);
-
-    vec3 BRDF = diffuse / M_PI;
-
-    prd.ray_origin = ray_origin;
-    prd.ray_dir    = ray_dir;
-    //              vvvv hay que cambiar eso!!!
-    prd.hit_value  = 0.11 * mat.ambient;
-    prd.weight    = BRDF * cos_theta / p;
-
-    // Si el material es reflectivo, disparamos un rayo
-    if (mat.illum == 3) {
-        vec3 origin = world_position;
-        vec3 ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
-
-        prd.attenuation *= mat.specular;
-        //prd.done         = 0;
-        prd.ray_origin   = origin;
-        prd.ray_dir      = ray_dir;
-    } */
-
-    prd.hit_value = mat.ambient;
+    prd.ray_origin = world_position;
+    prd.hit_value  = mat.ambient;   // Componente Le
 
     if(mat.illum >= 3) {      // Materiales reflectivos
         prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
         prd.weight  = mat.specular;
     }
     else {                                      // Materiales difusos
+        // Pick a random direction from here and keep going
+        vec3 tangent, bitangent;
+        create_coordinate_system(world_normal, tangent, bitangent);
+
+        vec3 ray_dir = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
+
+        // Aplicar BRDF de materiales puramente difusos lambertianos.
         const float cos_theta = dot(ray_dir, world_normal);
         const float pdf = 1 / M_PI;
 
@@ -192,6 +164,7 @@ void main()
 
         const vec3 BRDF = diffuse / M_PI;
 
+        prd.ray_dir = ray_dir;
         prd.weight = (BRDF * cos_theta) / pdf;
     }
 }
