@@ -151,13 +151,6 @@ void main()
 
     // Compute the BRDF for this ray (assuming Lambertian reflection)
     float cos_theta = dot(ray_dir, world_normal);
-    vec3 diffuse = mat.diffuse;
-
-    if (mat.textureId >= 0) {
-        uint txtId = mat.textureId + objDesc.i[gl_InstanceCustomIndexEXT].txtOffset;
-        vec2 texCoord = v0.texCoord * barycentrics.x + v1.texCoord * barycentrics.y + v2.texCoord * barycentrics.z;
-        diffuse *= texture(textureSamplers[nonuniformEXT(txtId)], texCoord).xyz;
-    }
 
     vec3 BRDF = diffuse / M_PI;
 
@@ -178,17 +171,27 @@ void main()
         prd.ray_dir      = ray_dir;
     } */
 
+    prd.hit_value = mat.ambient;
 
-    if(mat.illum >= 3 && prd.depth < 10) {      // Materiales reflectivos
+    if(mat.illum >= 3) {      // Materiales reflectivos
         prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
         prd.weight  = mat.specular;
     }
     else {                                      // Materiales difusos
         const float cos_theta = dot(ray_dir, world_normal);
         const float pdf = 1 / M_PI;
-        const vec3 BRDF = mat.diffuse / M_PI;
 
-        prd.hit_value = mat.ambient;
+        vec3 diffuse = mat.diffuse;
+
+        if (mat.textureId >= 0) {
+            uint txtId    = mat.textureId + objDesc.i[gl_InstanceCustomIndexEXT].txtOffset;
+            vec2 texCoord = v0.texCoord * barycentrics.x + v1.texCoord * barycentrics.y + v2.texCoord * barycentrics.z;
+
+            diffuse *= texture(textureSamplers[nonuniformEXT(txtId)], texCoord).xyz;
+        }
+
+        const vec3 BRDF = diffuse / M_PI;
+
         prd.weight = (BRDF * cos_theta) / pdf;
     }
 }
