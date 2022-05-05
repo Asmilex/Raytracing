@@ -2,6 +2,12 @@
 #define GLOBALS_GLSL
 
 //
+// ─────────────────────────────────────────────────────────────── PARAMETROS ─────
+//
+
+const bool COSINE_HEMISPHERE_SAMPLING = true;
+
+//
 // ────────────────────────────────────────────────────── CONSTANTES GLOBALES ─────
 //
 

@@ -140,21 +140,43 @@ void main()
     prd.ray_origin = world_position;
     prd.hit_value  = mat.emission;   // Componente Le
 
-    if(mat.illum >= 3) {      // Materiales reflectivos
+    if(mat.illum == 3) {            // Materiales reflectantes (sin Fresnel)
+        // Se comportan como espejos => refleja y fuera
         prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
         prd.weight  = mat.specular;
     }
-    else {                                      // Materiales difusos
+    else if (mat.illum == 2) {      // Materiales difusos y glossy.
+        // Si es glossy, entonces Ns == shininess > 10
+        // Ten en cuenta la especularidad y la difusión.
+        // Una buena medida sería sacar un aleatorio con probabilidad
+        //   |difusa| / (|difusa| + |especular|)
+        // Y coger la BRDF correspondiente a ese aleatorio.
+        // Falta por ver cómo modifica Ns
+        //
+        // También debería tener en cuenta el índice de refracción (Ni == ior)
+
+
         // Pick a random direction from here and keep going
         vec3 tangent, bitangent;
         create_coordinate_system(world_normal, tangent, bitangent);
 
-        vec3 ray_dir = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
+        vec3 ray_dir;
+        float cos_theta;
+        float pdf;
+
+        if (COSINE_HEMISPHERE_SAMPLING) {
+            float prob;
+            ray_dir = cosine_sample_hemisphere(prd.seed, tangent, bitangent, world_normal, prob);
+            cos_theta = dot(ray_dir, world_normal);
+            pdf = prob / M_PI;
+        }
+        else {
+            ray_dir = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
+            cos_theta = dot(ray_dir, world_normal);
+            pdf = cos_theta / M_PI;
+        }
 
         // Aplicar BRDF de materiales puramente difusos lambertianos.
-        const float cos_theta = dot(ray_dir, world_normal);
-        const float pdf = cos_theta / M_PI;
-
         vec3 diffuse = mat.diffuse;
 
         if (mat.textureId >= 0) {
@@ -168,5 +190,17 @@ void main()
 
         prd.ray_dir = ray_dir;
         prd.weight = (BRDF * cos_theta) / pdf;
+    }
+    else if (mat.illum == 4) {      // Espejos
+
+    }
+    else if (mat.illum == 5) {      // Materiales reflectantes (con Fresnel)
+
+    }
+    else if (mat.illum == 6) {      // Materiales refractantes (sin Fresnel)
+
+    }
+    else if (mat.illum == 7) {      // Materiales refractantes (con Fresnel)
+
     }
 }
