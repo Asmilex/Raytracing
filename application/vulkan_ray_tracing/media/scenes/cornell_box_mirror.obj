@@ -10,7 +10,7 @@
 # http://www.graphics.cornell.edu/online/box/compare.html
 #
 
-mtllib CornellBox-Mirror.mtl
+mtllib cornell_box_mirror.mtl
 
 # Object floor
 v  -1.01  0.00   0.99
@@ -22,8 +22,8 @@ g floor
 usemtl floor
 f -4 -3 -2 -1
 
-# Object ceiling 
-v  -1.02  1.99   0.99  
+# Object ceiling
+v  -1.02  1.99   0.99
 v  -1.02  1.99  -1.04
 v   1.00  1.99  -1.04
 v   1.00  1.99   0.99
@@ -32,8 +32,8 @@ g ceiling
 usemtl ceiling
 f -4 -3 -2 -1
 
-# Object backwall  
-v  -0.99  0.00  -1.04 
+# Object backwall
+v  -0.99  0.00  -1.04
 v   1.00  0.00  -1.04
 v   1.00  1.99  -1.04
 v  -1.02  1.99  -1.04
@@ -42,8 +42,8 @@ g backWall
 usemtl backWall
 f -4 -3 -2 -1
 
-## Object rightwall 
-v	1.00  0.00  -1.04   
+## Object rightwall
+v	1.00  0.00  -1.04
 v	1.00  0.00   0.99
 v	1.00  1.99   0.99
 v	1.00  1.99  -1.04
@@ -52,7 +52,7 @@ g rightWall
 usemtl rightWall
 f -4 -3 -2 -1
 
-## Object leftWall   
+## Object leftWall
 v  -1.01  0.00   0.99
 v  -0.99  0.00  -1.04
 v  -1.02  1.99  -1.04
@@ -62,20 +62,20 @@ g leftWall
 usemtl leftWall
 f -4 -3 -2 -1
 
-## Object shortBox 
+## Object shortBox
 usemtl shortBox
 
-# Top Face 
-v	0.53  0.60   0.75 
-v	0.70  0.60   0.17  
+# Top Face
+v	0.53  0.60   0.75
+v	0.70  0.60   0.17
 v	0.13  0.60   0.00
 v  -0.05  0.60   0.57
 f -4 -3 -2 -1
 
-# Left Face 
+# Left Face
 v  -0.05  0.00   0.57
 v  -0.05  0.60   0.57
-v   0.13  0.60   0.00 
+v   0.13  0.60   0.00
 v   0.13  0.00   0.00
 f -4 -3 -2 -1
 
@@ -98,11 +98,11 @@ v	0.13  0.00   0.00
 v	0.13  0.60   0.00
 v	0.70  0.60   0.17
 v	0.70  0.00   0.17
-f -4 -3 -2 -1 
+f -4 -3 -2 -1
 
 # Bottom Face
-v	0.53  0.00   0.75 
-v	0.70  0.00   0.17  
+v	0.53  0.00   0.75
+v	0.70  0.00   0.17
 v	0.13  0.00   0.00
 v  -0.05  0.00   0.57
 f -12 -11 -10 -9
@@ -110,7 +110,7 @@ f -12 -11 -10 -9
 g shortBox
 usemtl shortBox
 
-## Object tallBox 
+## Object tallBox
 usemtl tallBox
 
 # Top Face
@@ -158,7 +158,7 @@ f -8 -7 -6 -5
 g tallBox
 usemtl tallBox
 
-## Object light 
+## Object light
 v	-0.24  1.98   0.16
 v	-0.24  1.98  -0.22
 v	 0.23  1.98  -0.22
