@@ -11,7 +11,6 @@ enum Scene {
     cornell_box_esferas,
     cornell_box_glossy,
     cornell_box_blanca,
-    cornell_box_squashed,
     cubes,
 };
 
@@ -49,12 +48,12 @@ public:
     nvmath::vec3f center = nvmath::vec3f(0, 1, 0);
     nvmath::vec3f up     = nvmath::vec3f(0, 1, 0);
 
+// ────────────────────────────────────────────────────────────────────────────────
 
     SceneInfo(Scene scene) {
         // Todas las cajas tienen el mismo posicionamiento, así que lo dejamos como constantes.
         const nvmath::vec3f eye_cornell    = nvmath::vec3f(-0.007, 1.024, 2.752);
         const nvmath::vec3f center_cornell = nvmath::vec3f(0.000, 1.000, 0.000);
-        const nvmath::vec3f up_cornell     = nvmath::vec3f(0.000, 1.000, 0.000);
 
         switch (scene) {
         case Scene::cube_default:
@@ -135,7 +134,6 @@ public:
 
             eye    = nvmath::vec3f(2.33665, 3.24268, -5.08527);
             center = nvmath::vec3f(2.32440, 2.97224, 0.11248);
-            up     = nvmath::vec3f(0, 1, 0);
 
             break;
 
@@ -148,7 +146,6 @@ public:
 
             eye    = eye_cornell;
             center = center_cornell;
-            up     = up_cornell;
 
             break;
 
@@ -161,7 +158,6 @@ public:
 
             eye    = eye_cornell;
             center = center_cornell;
-            up     = up_cornell;
 
             break;
 
@@ -175,7 +171,6 @@ public:
 
             eye    = eye_cornell;
             center = center_cornell;
-            up     = up_cornell;
 
             break;
 
@@ -188,7 +183,6 @@ public:
 
             eye    = eye_cornell;
             center = center_cornell;
-            up     = up_cornell;
 
             break;
 
@@ -199,9 +193,8 @@ public:
                 "media/scenes/cornell_box_sphere.obj",
             });
 
-            eye    = eye_cornell;
-            center = center_cornell;
-            up     = up_cornell;
+            eye    = nvmath::vec3f(0, 0.75, 2.5);
+            center = nvmath::vec3f(0, 0.8, 0);
 
             break;
 
@@ -214,7 +207,6 @@ public:
 
             eye    = eye_cornell;
             center = center_cornell;
-            up     = up_cornell;
 
             break;
 
@@ -227,20 +219,6 @@ public:
 
             eye    = eye_cornell;
             center = center_cornell;
-            up     = up_cornell;
-
-            break;
-
-        // ─────────────────────────────────────────────────────────────────
-
-        case Scene::cornell_box_squashed:
-            models.push_back(ModelInfo{
-                "media/scenes/cornell_box_empty_squashed.obj",
-            });
-
-            eye    = eye_cornell;
-            center = center_cornell;
-            up     = up_cornell;
 
             break;
         }
