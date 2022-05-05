@@ -153,7 +153,7 @@ void main()
 
         // Aplicar BRDF de materiales puramente difusos lambertianos.
         const float cos_theta = dot(ray_dir, world_normal);
-        const float pdf = 1 / M_PI;
+        const float pdf = cos_theta / M_PI;
 
         vec3 diffuse = mat.diffuse;
 
