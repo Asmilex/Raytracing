@@ -3,8 +3,15 @@ enum Scene {
     medieval_building,
     cube_reflective,
     any_hit,
-    cornell_box,
-    cornell_box_multimaterial,
+    cornell_box_original,
+    cornell_box_saturada,
+    cornell_box_mirror,
+    cornell_box_vacia,
+    cornell_box_vacia_azul_naranja,
+    cornell_box_esferas,
+    cornell_box_glossy,
+    cornell_box_blanca,
+    cornell_box_squashed,
     cubes,
 };
 
@@ -44,6 +51,11 @@ public:
 
 
     SceneInfo(Scene scene) {
+        // Todas las cajas tienen el mismo posicionamiento, así que lo dejamos como constantes.
+        const nvmath::vec3f eye_cornell    = nvmath::vec3f(-0.007, 1.024, 2.752);
+        const nvmath::vec3f center_cornell = nvmath::vec3f(0.000, 1.000, 0.000);
+        const nvmath::vec3f up_cornell     = nvmath::vec3f(0.000, 1.000, 0.000);
+
         switch (scene) {
         case Scene::cube_default:
             models.push_back(ModelInfo {
@@ -104,38 +116,131 @@ public:
 
         // ─────────────────────────────────────────────────────────────────
 
-        case Scene::cornell_box:
-            models.push_back(ModelInfo{
-                "media/scenes/cornell_box.obj",
-                nvmath::scale_mat4(nvmath::vec3f(0.01f))
-            });
-
-            eye    = nvmath::vec3f(2.33665, 3.24268, -5.08527);
-            center = nvmath::vec3f(2.32440, 2.97224, 0.11248);
-            up     = nvmath::vec3f(0, 1, 0);
-
-            break;
-
-        // ─────────────────────────────────────────────────────────────────
-
-        case Scene::cornell_box_multimaterial:
-            models.push_back(ModelInfo{
-                "media/scenes/cornell_box_multimaterial.obj",
-                nvmath::scale_mat4(nvmath::vec3f(0.01f))
-            });
-
-            eye    = nvmath::vec3f(2.33665, 3.24268, -5.08527);
-            center = nvmath::vec3f(2.32440, 2.97224, 0.11248);
-            up     = nvmath::vec3f(0, 1, 0);
-
-            break;
-
-        // ─────────────────────────────────────────────────────────────────
-
         case Scene::cubes:
             models.push_back(ModelInfo{
                 "media/scenes/cubes.obj"
             });
+
+            break;
+
+    //
+    // ──────────────────────────────────────────────────────────── CORNELL BOXES ─────
+    //
+
+        case Scene::cornell_box_saturada:
+            models.push_back(ModelInfo{
+                "media/scenes/cornell_box_saturada.obj",
+                nvmath::scale_mat4(nvmath::vec3f(0.01f))
+            });
+
+            eye    = nvmath::vec3f(2.33665, 3.24268, -5.08527);
+            center = nvmath::vec3f(2.32440, 2.97224, 0.11248);
+            up     = nvmath::vec3f(0, 1, 0);
+
+            break;
+
+        // ─────────────────────────────────────────────────────────────────
+
+        case Scene::cornell_box_original:
+            models.push_back(ModelInfo{
+                "media/scenes/cornell_box_original.obj",
+            });
+
+            eye    = eye_cornell;
+            center = center_cornell;
+            up     = up_cornell;
+
+            break;
+
+        // ─────────────────────────────────────────────────────────────────
+
+        case Scene::cornell_box_mirror:
+            models.push_back(ModelInfo{
+                "media/scenes/cornell_box_mirror.obj",
+            });
+
+            eye    = eye_cornell;
+            center = center_cornell;
+            up     = up_cornell;
+
+            break;
+
+        // ─────────────────────────────────────────────────────────────────
+
+
+        case Scene::cornell_box_vacia:
+            models.push_back(ModelInfo{
+                "media/scenes/cornell_box_empty_rg.obj",
+            });
+
+            eye    = eye_cornell;
+            center = center_cornell;
+            up     = up_cornell;
+
+            break;
+
+        // ─────────────────────────────────────────────────────────────────
+
+        case Scene::cornell_box_vacia_azul_naranja:
+            models.push_back(ModelInfo{
+                "media/scenes/cornell_box_empty_co.obj",
+            });
+
+            eye    = eye_cornell;
+            center = center_cornell;
+            up     = up_cornell;
+
+            break;
+
+        // ─────────────────────────────────────────────────────────────────
+
+        case Scene::cornell_box_esferas:
+            models.push_back(ModelInfo{
+                "media/scenes/cornell_box_sphere.obj",
+            });
+
+            eye    = eye_cornell;
+            center = center_cornell;
+            up     = up_cornell;
+
+            break;
+
+        // ─────────────────────────────────────────────────────────────────
+
+        case Scene::cornell_box_glossy:
+            models.push_back(ModelInfo{
+                "media/scenes/cornell_box_glossy.obj",
+            });
+
+            eye    = eye_cornell;
+            center = center_cornell;
+            up     = up_cornell;
+
+            break;
+
+        // ─────────────────────────────────────────────────────────────────
+
+        case Scene::cornell_box_blanca:
+            models.push_back(ModelInfo{
+                "media/scenes/cornell_box_empty_white.obj",
+            });
+
+            eye    = eye_cornell;
+            center = center_cornell;
+            up     = up_cornell;
+
+            break;
+
+        // ─────────────────────────────────────────────────────────────────
+
+        case Scene::cornell_box_squashed:
+            models.push_back(ModelInfo{
+                "media/scenes/cornell_box_empty_squashed.obj",
+            });
+
+            eye    = eye_cornell;
+            center = center_cornell;
+            up     = up_cornell;
 
             break;
         }
