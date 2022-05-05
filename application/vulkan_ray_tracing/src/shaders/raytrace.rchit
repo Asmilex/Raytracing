@@ -18,6 +18,8 @@ layout(location = 0) rayPayloadInEXT HitPayload prd;
 
 VisibilityContribution luz_directa() {
     // https://github.com/nvpro-samples/vk_raytrace/blob/master/shaders/pathtrace.glsl
+    // MIRA ESTE ARCHIVO!!! QUE SE PUEDE HACER. Es simplemente tener en cuenta lo correcto,
+    // y hacer el ray trace para ver si está ocluido o no.
     // MUY WIP
 
     VisibilityContribution contribucion;
@@ -136,7 +138,7 @@ void main()
 // ────────────────────────────────────────────────────── SIGUIENTE DIRECCION ─────
 
     prd.ray_origin = world_position;
-    prd.hit_value  = mat.ambient;   // Componente Le
+    prd.hit_value  = mat.emission;   // Componente Le
 
     if(mat.illum >= 3) {      // Materiales reflectivos
         prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
