@@ -33,6 +33,6 @@ Este motor se comparará con una implementación puramente en CPU basada en el s
 
 Aun así, hay mucha gente que me ha ayudado a sacar este proyecto hacia delante.
 
-Gracias, en primer lugar, a mi familia por permitirme acabar la carrera. A Cristina, Jorge, Jose OC, Lucas, Mari, Marina y Paula, Sergio por ayudarme con el contenido, feedback del desarrollo y guía de diseño.
+Gracias, en primer lugar, a mi familia por permitirme acabar la carrera. A Blanca, Cristina, Jorge, Jose OC, Lucas, Mari, Marina y Paula, Sergio por ayudarme con el contenido, feedback del desarrollo y guía de diseño.
 
 \vspace*{\fill}
