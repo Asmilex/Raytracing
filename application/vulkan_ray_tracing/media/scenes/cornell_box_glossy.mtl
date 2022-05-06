@@ -7,9 +7,9 @@
 # Released into the Public Domain.
 #
 # http://graphics.cs.williams.edu/data
-# http://scholar.google.com/scholar?q=global+illumination+using+photon+maps+jensen&hl=en&as_sdt=0&as_vis=1&oi=scholart 
+# http://scholar.google.com/scholar?q=global+illumination+using+photon+maps+jensen&hl=en&as_sdt=0&as_vis=1&oi=scholart
 #
-newmtl sphere						
+newmtl sphere
 	Ns 32
 	d 1
 	Tr 0
@@ -34,7 +34,7 @@ newmtl floor
 	Ni 1.5000
 	d 1.0000
 	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
+	Tf 1.0000 1.0000 1.0000
 	illum 2
 	Ka 0.7250 0.7100 0.6800
 	Kd 0.7250 0.7100 0.6800
@@ -46,7 +46,7 @@ newmtl ceiling
 	Ni 1.5000
 	d 1.0000
 	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
+	Tf 1.0000 1.0000 1.0000
 	illum 2
 	Ka 0.7250 0.7100 0.6800
 	Kd 0.7250 0.7100 0.6800
@@ -77,17 +77,17 @@ newmtl rightWall
   Ni 1.5000
   illum 2
   Ka 0.3725 0.6480 0.3137 # Green
-  Kd 0.3725 0.6480 0.3137 
+  Kd 0.3725 0.6480 0.3137
   Ks 0 0 0
   Ke 0 0 0
-  
+
 
  newmtl light
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
 	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
+	Tf 1.0000 1.0000 1.0000
 	illum 2
 	Ka 0.7800 0.7800 0.7800
 	Kd 0.7800 0.7800 0.7800

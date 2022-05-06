@@ -194,8 +194,10 @@ void main()
             prd.weight = (prob_diffuse * BRDF * cos_theta) / pdf;
         }
         else {
+            // Realmente, esto es un modelo de material metálico usando el coeficiente de especularidad.
+            // Debería remodelarlo en el futuro para seguir blin-phong propiamente.
             prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
-            prd.ray_dir = prd.ray_dir + (1000 - mat.shininess) / 990 * random_in_unit_sphere(prd.seed);
+            prd.ray_dir = prd.ray_dir + (1024 - mat.shininess) / 990 * random_in_unit_sphere(prd.seed);
             prd.weight  = mat.specular * (1.0 - prob_diffuse);
         }
     }
