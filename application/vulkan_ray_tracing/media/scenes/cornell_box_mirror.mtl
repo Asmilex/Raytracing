@@ -29,7 +29,7 @@ newmtl rightWall
   Ks 0 0 0
   Ke 0 0 0
 
-  
+
 newmtl floor
   Ns 10.0000
   Ni 1.0000
@@ -48,7 +48,7 @@ newmtl ceiling
   Kd 0.725 0.71 0.68
   Ks 0 0 0
   Ke 0 0 0
-  
+
 
 newmtl backWall
   Ns 10.0000
@@ -68,9 +68,9 @@ newmtl shortBox
   Kd 0.725 0.71 0.68
   Ks 0 0 0
   Ke 0 0 0
-  
+
 #the mirror mtl
-newmtl tallBox 
+newmtl tallBox
  Ka 0.01 0.01 0.01
    Kd 0.01 0.01 0.01
    Ks 0.950 0.95 0.95

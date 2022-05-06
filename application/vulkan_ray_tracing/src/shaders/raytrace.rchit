@@ -205,7 +205,8 @@ void main()
 
     }
     else if (mat.illum == 5) {      // Materiales reflectantes (con Fresnel)
-
+        prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
+        prd.weight  = mat.specular;
     }
     else if (mat.illum == 6) {      // Materiales refractantes (sin Fresnel)
 

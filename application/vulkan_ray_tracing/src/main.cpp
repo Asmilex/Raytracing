@@ -164,7 +164,7 @@ int main(int argc, char** argv) {
     // Setup Imgui
     engine.initGUI(0);  // Using sub-pass 0
 
-    load_scene(Scene::cornell_box_glossy, engine);
+    load_scene(Scene::cornell_box_mirror, engine);
 
     engine.createOffscreenRender();
     engine.createDescriptorSetLayout();
