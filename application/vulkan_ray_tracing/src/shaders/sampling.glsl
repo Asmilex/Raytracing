@@ -33,6 +33,25 @@ vec3 cosine_sample_hemisphere(inout uint seed, in vec3 x, in vec3 y, in vec3 z, 
     return direction;
 }
 
+vec3 random_in_unit_sphere(inout uint seed) {
+    // https://datagenetics.com/blog/january32020/index.html
+    // Método Pol#2
+
+    float u = rnd(seed);
+    float v = rnd(seed);
+
+    float theta = TWO_PI * u;
+    float phi   = acos(2.0 * v - 1.0);
+
+    float r = pow(rnd(seed), 0.333);
+
+    return vec3(
+        r * sin(phi) * cos(theta),
+        r * sin(phi) * sin(theta),
+        r * cos(phi)
+    );
+}
+
 // Return the tangent and binormal from the incoming normal
 // http://www.pbr-book.org/3ed-2018/Geometry_and_Transformations/Vectors.html#CoordinateSystemfromaVector
 void create_coordinate_system(in vec3 N, out vec3 Nt, out vec3 Nb) {

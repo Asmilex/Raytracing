@@ -195,6 +195,7 @@ void main()
         }
         else {
             prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
+            prd.ray_dir = prd.ray_dir + (1000 - mat.shininess) / 990 * random_in_unit_sphere(prd.seed);
             prd.weight  = mat.specular * (1.0 - prob_diffuse);
         }
     }
