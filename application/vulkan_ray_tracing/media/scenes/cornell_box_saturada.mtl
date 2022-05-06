@@ -2,23 +2,28 @@ newmtl white
 Ka 0 0 0
 Kd 1 1 1
 Ks 0 0 0
+illum 2
 
 newmtl red
 Ka 0 0 0
 Kd 1 0 0
 Ks 0 0 0
+illum 2
 
 newmtl green
 Ka 0 0 0
 Kd 0 1 0
 Ks 0 0 0
+illum 2
 
 newmtl blue
 Ka 0 0 0
 Kd 0 0 1
 Ks 0 0 0
+illum 2
 
 newmtl light
 Ke 20 20 20
 Kd 1 1 1
 Ks 0 0 0
+illum 2
