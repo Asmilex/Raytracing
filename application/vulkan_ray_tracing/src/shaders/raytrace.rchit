@@ -209,24 +209,21 @@ void main()
         prd.weight  = mat.specular;
     }
     else if (mat.illum == 6) {      // Materiales refractantes (sin Fresnel)
-        float front_facing = dot(-gl_WorldRayDirectionEXT, normal);
+        bool front_facing = dot(-gl_WorldRayDirectionEXT, normal) > 0.0;
+        vec3 forward_normal = front_facing ? normal : -normal;
+        float eta = front_facing? (ETA_AIR / mat.ior) : mat.ior;
 
-        vec3 forward_normal = normal;
-        float eta = ETA_AIR / mat.ior;
+        vec3 unit_dir = normalize(gl_WorldRayDirectionEXT);
+        float cos_theta = min(dot(-unit_dir, forward_normal), 1.0);
+        float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
 
-        if (front_facing < 0.0) {
-            forward_normal = -normal;
-            eta = mat.ior;
-        }
+        bool cannot_refract = eta * sin_theta > 1.0;
 
-        prd.ray_dir = normalize(refract(gl_WorldRayDirectionEXT, forward_normal, eta));
+        prd.ray_dir = cannot_refract
+            ? reflect(gl_WorldRayDirectionEXT, forward_normal)
+            : refract(gl_WorldRayDirectionEXT, forward_normal, eta);
 
-        if (length(prd.ray_dir) < 0.2) {        // Reflexión interna total
-            // FIXME: ese coeficiente?
-            prd.ray_dir = reflect(gl_WorldRayDirectionEXT, forward_normal);
-        }
-
-        prd.weight = vec3(0.95);
+        prd.weight = vec3(0.98);
     }
     else if (mat.illum == 7) {      // Materiales refractantes (con Fresnel)
 
