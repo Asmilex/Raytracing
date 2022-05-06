@@ -44,6 +44,7 @@ PANDOC_FLAGS_PDF = --template ./headers/eisvogel.tex
 PANDOC_FLAGS_WEB =\
 	-s \
 	--toc \
+	--number-sections \
 	--mathjax \
 	--lua-filter ./headers/standard-code.lua \
 
