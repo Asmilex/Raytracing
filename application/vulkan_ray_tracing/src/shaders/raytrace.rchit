@@ -157,7 +157,7 @@ void main()
 
         float prob_diffuse = length(mat.diffuse) / (length(mat.diffuse) + length(mat.specular));
 
-        if (prob_diffuse > rnd(prd.seed)) {
+        if (prob_diffuse > 0.98 || prob_diffuse > rnd(prd.seed)) {
             // Pick a random direction from here and keep going
             vec3 tangent, bitangent;
             create_coordinate_system(world_normal, tangent, bitangent);
