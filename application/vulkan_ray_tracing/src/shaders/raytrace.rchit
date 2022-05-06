@@ -228,7 +228,4 @@ void main()
 
         prd.weight = vec3(0.98);
     }
-    else if (mat.illum == 7) {      // Materiales refractantes (con Fresnel)
-
-    }
 }
