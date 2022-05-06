@@ -208,7 +208,7 @@ void main()
         prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
         prd.weight  = mat.specular;
     }
-    else if (mat.illum == 6) {      // Materiales refractantes (sin Fresnel)
+    else if (mat.illum == 6 || mat.illum == 7) {      // Materiales refractantes (sin Fresnel)
         bool front_facing = dot(-gl_WorldRayDirectionEXT, normal) > 0.0;
         vec3 forward_normal = front_facing ? normal : -normal;
         float eta = front_facing? (ETA_AIR / mat.ior) : mat.ior;
@@ -218,8 +218,11 @@ void main()
         float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
 
         bool cannot_refract = eta * sin_theta > 1.0;
+        bool reflect_condition = mat.illum == 6
+            ? cannot_refract
+            : cannot_refract || reflectance(cos_theta, eta) > rnd(prd.seed);
 
-        prd.ray_dir = cannot_refract
+        prd.ray_dir = reflect_condition
             ? reflect(gl_WorldRayDirectionEXT, forward_normal)
             : refract(gl_WorldRayDirectionEXT, forward_normal, eta);
 

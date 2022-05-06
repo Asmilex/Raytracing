@@ -52,6 +52,13 @@ vec3 random_in_unit_sphere(inout uint seed) {
     );
 }
 
+float reflectance (in float cosine, in float eta) {
+    // Aproximación de Schlick para la reflectancia.
+    float r0 = (1.0 - eta) / (1.0 + eta);
+    r0 = r0 * r0;
+    return r0 + (1.0 - r0) * pow(1.0 - cosine, 5.0);
+}
+
 // Return the tangent and binormal from the incoming normal
 // http://www.pbr-book.org/3ed-2018/Geometry_and_Transformations/Vectors.html#CoordinateSystemfromaVector
 void create_coordinate_system(in vec3 N, out vec3 Nt, out vec3 Nb) {
