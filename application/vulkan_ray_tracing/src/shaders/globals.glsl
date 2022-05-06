@@ -7,6 +7,8 @@
 
 const bool COSINE_HEMISPHERE_SAMPLING = true;
 
+const float ETA_AIR = 1.0003f;
+
 //
 // ────────────────────────────────────────────────────── CONSTANTES GLOBALES ─────
 //
