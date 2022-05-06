@@ -30,9 +30,9 @@ void main()
         prd.hit_value = pcRay.clear_color.xyz;
     }
     else {
-        prd.hit_value = vec3(0.01);   // Tiny contribution from environment
+        prd.hit_value = 0.02 * pcRay.clear_color.xyz;   // Tiny contribution from environment
     }
 
-    // Como no hemos fallado, no hay necesidad de continuar; así que paramos la generación.
+    // Como hemos fallado, no hay necesidad de continuar; así que paramos la generación.
     prd.depth = pcRay.max_depth;
 }

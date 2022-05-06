@@ -164,7 +164,7 @@ int main(int argc, char** argv) {
     // Setup Imgui
     engine.initGUI(0);  // Using sub-pass 0
 
-    load_scene(Scene::cornell_box_mirror, engine);
+    load_scene(Scene::cornell_box_esferas, engine);
 
     engine.createOffscreenRender();
     engine.createDescriptorSetLayout();
@@ -186,7 +186,7 @@ int main(int argc, char** argv) {
     engine.createPostDescriptor();
     engine.createPostPipeline();
     engine.updatePostDescriptorSet();
-    nvmath::vec4f clear_color = nvmath::vec4f(1, 1, 1, 1.00f);
+    nvmath::vec4f clear_color = nvmath::vec4f(0.808, 0.839, 0.878, 0.593);
 
 
     engine.setupGlfwCallbacks(window);
