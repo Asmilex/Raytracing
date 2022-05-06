@@ -155,43 +155,50 @@ void main()
         //
         // También debería tener en cuenta el índice de refracción (Ni == ior)
 
+        float prob_diffuse = length(mat.diffuse) / (length(mat.diffuse) + length(mat.specular));
 
-        // Pick a random direction from here and keep going
-        vec3 tangent, bitangent;
-        create_coordinate_system(world_normal, tangent, bitangent);
+        if (prob_diffuse > rnd(prd.seed)) {
+            // Pick a random direction from here and keep going
+            vec3 tangent, bitangent;
+            create_coordinate_system(world_normal, tangent, bitangent);
 
-        vec3 ray_dir;
-        float cos_theta;
-        float pdf;
+            vec3 ray_dir;
+            float cos_theta;
+            float pdf;
 
-        if (COSINE_HEMISPHERE_SAMPLING) {
-            float prob;
-            ray_dir = cosine_sample_hemisphere(prd.seed, tangent, bitangent, world_normal, prob);
-            cos_theta = dot(ray_dir, world_normal);
-            pdf = prob / M_PI;
+            if (COSINE_HEMISPHERE_SAMPLING) {
+                float prob;
+                ray_dir = cosine_sample_hemisphere(prd.seed, tangent, bitangent, world_normal, prob);
+                cos_theta = dot(ray_dir, world_normal);
+                pdf = prob / M_PI;
+            }
+            else {
+                ray_dir = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
+                cos_theta = dot(ray_dir, world_normal);
+                pdf = cos_theta / M_PI;
+            }
+
+            // Aplicar BRDF de materiales puramente difusos lambertianos.
+            vec3 diffuse = mat.diffuse;
+
+            if (mat.textureId >= 0) {
+                uint txtId    = mat.textureId + objDesc.i[gl_InstanceCustomIndexEXT].txtOffset;
+                vec2 texCoord = v0.texCoord * barycentrics.x + v1.texCoord * barycentrics.y + v2.texCoord * barycentrics.z;
+
+                diffuse *= texture(textureSamplers[nonuniformEXT(txtId)], texCoord).xyz;
+            }
+
+            const vec3 BRDF = diffuse / M_PI;
+
+            prd.ray_dir = ray_dir;
+            prd.weight = (prob_diffuse * BRDF * cos_theta) / pdf;
         }
         else {
-            ray_dir = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
-            cos_theta = dot(ray_dir, world_normal);
-            pdf = cos_theta / M_PI;
+            prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
+            prd.weight  = mat.specular * (1.0 - prob_diffuse);
         }
-
-        // Aplicar BRDF de materiales puramente difusos lambertianos.
-        vec3 diffuse = mat.diffuse;
-
-        if (mat.textureId >= 0) {
-            uint txtId    = mat.textureId + objDesc.i[gl_InstanceCustomIndexEXT].txtOffset;
-            vec2 texCoord = v0.texCoord * barycentrics.x + v1.texCoord * barycentrics.y + v2.texCoord * barycentrics.z;
-
-            diffuse *= texture(textureSamplers[nonuniformEXT(txtId)], texCoord).xyz;
-        }
-
-        const vec3 BRDF = diffuse / M_PI;
-
-        prd.ray_dir = ray_dir;
-        prd.weight = (BRDF * cos_theta) / pdf;
     }
-    else if (mat.illum == 4) {      // Espejos
+    else if (mat.illum == 4) {      // Transparencia: Glass on, ray traced reflections
 
     }
     else if (mat.illum == 5) {      // Materiales reflectantes (con Fresnel)
