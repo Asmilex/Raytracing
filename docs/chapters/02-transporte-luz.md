@@ -206,7 +206,7 @@ Una propiedad a tener en cuenta es que, si cogemos un punto $p$ del espacio dond
 
 La importancia de la radiancia se debe a un par de propiedades:
 
-La primera de ellas es que, dado $L$, podemos calcular cualquier otra unidad básica mediante integración. Además, **su valor se mantiene constante en rayos que viajan en el vacío en línea recta** [@Pellacini-Marschner-2017]. Esto último hace que resulte muy natural usarla en un ray tracer.
+La primera de ellas es que, dado $L$, podemos calcular cualquier otra unidad básica mediante integración. Además, **su valor se mantiene constante en rayos que viajan en el vacío en línea recta** [@pellacini-marschner-2017]. Esto último hace que resulte muy natural usarla en un ray tracer.
 
 Veamos por qué ocurre esto:
 
@@ -554,13 +554,9 @@ Esta aproximación es 32 veces más rápida de calcular que las ecuaciones de Fr
 
 ## Modelos analíticos de *shading*
 
-> TODO: https://alain.xyz/blog/advances-in-material-models este señor me acaba de solucionar la vida. Gracias por tanto.
->
-> TODO: Completar con lo siguiente, basado en 02_Rendering_Zsolnai_Ray_Tracing.
->
-> TODO: también estaría bien añadir el repositorio de Disney como referencia https://github.com/wdas/brdf/tree/main/src/brdfs
-
 Los modelos analíticos de shading surgen como simplificaciones de las BRDFs. En esta sección, vamos a ver algunos de los más famosos.
+
+Gran parte de este contenido ha sido resumido por [@alain-materials]. En dicha entrada pueden encontrarse las referencias a los papers originales, en los cuales se explica con detalle cómo funcionan. Además, todas las BxDFs pueden visualizarse en el repositorio de BRDFs de [@disney-brdfs]
 
 Usaremos $L_o^d$ para indicar la radiancia obtenida por materiales difusos, y $L_o^s$ para los especulares.
 
@@ -724,7 +720,7 @@ Antes de comenzar, volvamos a plantear de nuevo la situación: nos encontramos o
 
 La *rendering equation* se va a encargar de describir analíticamente cómo ocurre esto.
 
-Un último concepto más: denotemos por $L_e(p, \omega_o)$ a **la radiancia producida por los materiales emisivos**. Por ejemplo, una luz emite radiancia por sí misma.
+Un último concepto más: denotemos por $L_e(p, \omega_o)$ a **la radiancia producida por los materiales emisivos**. En esencia, estos materiales son fuentes de luz, pues emiten radiancia por sí mismos.
 
 Bien, partamos de la ecuación de para la radiancia reflejada:
 
@@ -736,9 +732,7 @@ Vamos a buscar expresar la radiancia incidente en términos de la radiancia refl
 
 Si a una superficie le llega un fotón desde alguna parte, debe ser porque *"alguien"* ha tenido que emitirlo. El fotón necesariamente ha llegado a partir de un rayo. La propiedad nos dice que la radiancia no ha podido cambiar en el camino.
 
-Pues bien, consideremos una función $r: \mathbb{R}^3 \times \Omega \to \mathbb{R}^3$ tal que, dado un punto $p$ y una dirección $\omega$, devuelve el siguiente punto de impacto en una superficie. En esencia, es una función de *ray casting*.
-
-> TODO: foto como la de https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf, p.29
+Pues bien, consideremos una función $r: \mathbb{R}^3 \times \Omega \to \mathbb{R}^3$ tal que, dado un punto $p$ y una dirección $\omega$, devuelve el siguiente punto de impacto en una superficie. En esencia, es una función de *ray casting* [@pellacini-marschner-2017, Path Tracing].
 
 Esta función nos permite expresar el punto anterior de la siguiente forma:
 
@@ -770,18 +764,6 @@ Si nos paramos a pensar, la ecuación de reflexión es muy similar a la de rende
 - La *rendering equation* calcula las condiciones globales de la luz. Además, no se conocen las radiancias de salida.
 
 Este último matiz es importante. Para renderizar una imagen, se necesita calcular la radiancia de salida para aquellos puntos visibles desde nuestra cámara.
-
-<hr>
-
-## Referencias {.unlisted .unnumbered}
-
-[@PBRT3e], [@wikipedia-contributors-2021D], [@studysession-2021], [@berkeley-cs184, Radiometry & Photometry], [@wikipedia-funcion-de-distribucion-de-reflectancia-bidireccional-2022], [@wikipedia-transmittance-2021]
-
-- https://matmatch.com/learn/property/isotropy-anisotropy
-- https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf
-- https://alain.xyz/blog/advances-in-material-models
-- https://github.com/Corralx/BRDFExplorer
-
 
 [^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores como [@quantumfracture-2021] que han tratado el tema con suficiente profundidad.
 [^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
