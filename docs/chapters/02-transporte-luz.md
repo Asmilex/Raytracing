@@ -443,6 +443,26 @@ Ten en cuenta que es muy difícil encontrar objetos físicos que imiten a la per
 
 Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, puede ser **isotrópica** o **anisotrópica**. Los materiales isotrópicos mantienen las propiedades de reflectancia invariantes ante rotaciones; es decir, la distribución de luz es la misma en todas direcciones. Por el contrario, los anisotrópicos reflejan diferentes cantidades de luz dependiendo desde dónde los miremos. Los ejemplos más habituales de materiales anisotrópicos son las rocas y la madera.
 
+### Fórmulas de reflexión y refracción
+
+Prácticamente toda superficie, en mayor o menor medida, refleja parte de la luz incidente. Otros tipos de materiales reflejan y refractan a la vez, como puede ser un espejo o el agua. En esta sección vamos a describir cuáles son las fórmulas utilizadas para conocer la dirección de salida de un rayo incidente en una superficie.
+
+#### Reflejos
+
+Para un material especular perfecto (es decir, espejos), la dirección reflejada $\mathbf{r}$ dado un rayo incidente $\mathbf{i}$ es [@Marrs2021, p. 154]:
+
+$$
+\mathbf{r} = \mathbf{i} - 2 (\mathbf{i} \cdot \mathbf{n}) \mathbf{n}
+$$
+
+siendo $\mathbf{n}$ la normal en el punto incidente. Con esta expresión, se necesita que $\mathbf{n}$ esté normalizado. Para los otros dos vectores no es necesario; la dirección de salida tendrá la misma norma que la de entrada.
+
+#### Refracción
+
+##### Ley de Snell
+
+##### Ecuaciones de Fresnel
+
 ### Modelos analíticos de *shading*
 
 > TODO: https://alain.xyz/blog/advances-in-material-models este señor me acaba de solucionar la vida. Gracias por tanto.
@@ -604,17 +624,6 @@ El modelo Ground Glass Unknown es una BSDF analítica que se basa en la distribu
 
 A diferencia de los otros modelos, no entraremos en detalles de la implementación.
 
-### Relejos
-
-> TODO: IOW está bien documentado. Podría sacar esto de ahí.
-
-#### Ley de Snell
-
-#### Ecuaciones de Fresnel
-
-### Reflejos especulares perfectos
-
-https://graphicscodex.courses.nvidia.com/app.html?page=_rn_matrls mirror reflections
 
 ## La rendering equation
 
