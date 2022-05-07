@@ -428,8 +428,7 @@ $$
 \rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_o\ \cos\theta_i}\ d\omega_o\ d\omega_i}
 $$
 
-
-## Reflexión y refracción
+## Modelos ópticos de materiales
 
 Prácticamente toda superficie, en mayor o menor medida, refleja parte de la luz incidente. Otros tipos de materiales reflejan y refractan a la vez, como puede ser un espejo o el agua. En esta sección vamos a describir cuáles son las fórmulas utilizadas para conocer la dirección de salida de un rayo incidente en una superficie.
 
@@ -452,7 +451,10 @@ Ten en cuenta que es muy difícil encontrar objetos físicos que imiten a la per
 
 Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, puede ser **isotrópica** o **anisotrópica**. Los materiales isotrópicos mantienen las propiedades de reflectancia invariantes ante rotaciones; es decir, la distribución de luz es la misma en todas direcciones. Por el contrario, los anisotrópicos reflejan diferentes cantidades de luz dependiendo desde dónde los miremos. Los ejemplos más habituales de materiales anisotrópicos son las rocas y la madera.
 
-### Reflejos
+
+### Reflexión
+
+#### Reflexión especular perfecta
 
 Para un material especular perfecto (es decir, espejos), la dirección reflejada $\mathbf{r}$ dado un rayo incidente $\mathbf{i}$ es [@Marrs2021, Reflection and refraction formulas, p. 105]:
 
@@ -461,6 +463,40 @@ $$
 $$
 
 siendo $\mathbf{n}$ la normal en el punto incidente. Con esta expresión, se necesita que $\mathbf{n}$ esté normalizado. Para los otros dos vectores no es necesario; la dirección de salida tendrá la misma norma que la de entrada.
+
+#### Reflexión difusa
+
+Este es uno de los modelos más sencillos. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador.
+
+Se describe como
+
+$$
+L_o^d(p, \omega_o \leftarrow \omega_i) = k_d \max\{0, \mathbf{n} \cdot \mathbf{l}\}
+$$
+
+siendo $k_d$ el coeficiente de reflectancia (que mide cuánta luz se absorbe por la superficie, conocido como albedo), $\mathbf{n}$ la normal al punto en la superficie, y $\mathbf{l}$ la dirección de la luz.
+
+El producto escalar de los vectores $\mathbf{n}$ y $\mathbf{l}$ hace que, cuando el ángulo de incidencia de la luz es muy cerrado, la radiancia será prácticamente 0.
+
+La implementación es muy sencilla:
+
+```glsl
+float Lambertian_pdf(vec3 normal, vec3 light_dir) {
+    return max(
+        0.0,
+        dot(normal, light_dir)
+    ) * (1.0 / PI);
+}
+
+float Lambiertian_light(Superficie s, Luz light) {
+    return s.albedo * Lambertian_pdf(s.normal, light.dir);
+}
+```
+
+Este modelo está muy limitado, pues en la vida real, los objetos muestran algún tipo de interacción especular.
+
+
+#### Reflexión especular no perfecta
 
 ### Refracción
 
@@ -552,7 +588,42 @@ $$
 
 Esta aproximación es 32 veces más rápida de calcular que las ecuaciones de Fresnel, generando un error medio inferior al 1% [@https://doi.org/10.1111/1467-8659.1330233]
 
-## Modelos analíticos de *shading*
+### Materiales híbridos
+
+### Otros modelos
+
+#### Oren - Nayar
+
+Este modelo intenta aproximar superficies difusas utilizando un ratio de lambertiano, lo cual mejora el rendimiento el *white furnace test*:
+
+```
+float OrenNayar_diffuse(vec3 normal, vec3 light_dir, vec3 view_dir, material m) {
+    float L_dot_V = dot(light_dir, view_dir);
+    float N_dot_L = dot(light_dir, noral);
+    float N_dot_V = dot(normal, view_dir);
+
+    float s = L_dot_V - N_dot_L * N_dot_V;
+    float t = mix(
+        1.0,
+        ma(N_dot_L, N_dot_V),
+        step(0.0, s)
+    );
+
+    float sigma2 = m.roughness * m.roughness;
+    float A = 1.0 + sigma2 * (m.albedo / (sigma2 + 0.13) + 0.5 / (sigma2 + 0.33));
+    float B = 0.45 * sigma2 / (sigma2 + 0.09);
+
+    return m.albedo * max(0.0, N_dot_L) * (A + B * s / t) / PI;
+}
+```
+
+#### GGX
+
+El modelo Ground Glass Unknown es una BSDF analítica que se basa en la distribución de microfacetas del material subyacente. Es una de las técnicas más avanzadas y exploradas recientemente. Los motores modernos como Unreal Engine 4 y Unity lo utilizan en sus pipelines físicamente realistas.
+
+A diferencia de los otros modelos, no entraremos en detalles de la implementación.
+
+### Modelos analíticos de *shading*
 
 Los modelos analíticos de shading surgen como simplificaciones de las BRDFs. En esta sección, vamos a ver algunos de los más famosos.
 
@@ -560,38 +631,7 @@ Gran parte de este contenido ha sido resumido por [@alain-materials]. En dicha e
 
 Usaremos $L_o^d$ para indicar la radiancia obtenida por materiales difusos, y $L_o^s$ para los especulares.
 
-### Lambertiano
-
-Este es uno de los modelos más sencillos. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador.
-
-Se describe como
-
-$$
-L_o^d(p, \omega_o \leftarrow \omega_i) = k_d \max\{0, \mathbf{n} \cdot \mathbf{l}\}
-$$
-
-siendo $k_d$ el coeficiente de reflectancia (que mide cuánta luz se absorbe por la superficie, conocido como albedo), $\mathbf{n}$ la normal al punto en la superficie, y $\mathbf{l}$ la dirección de la luz.
-
-El producto escalar de los vectores $\mathbf{n}$ y $\mathbf{l}$ hace que, cuando el ángulo de incidencia de la luz es muy cerrado, la radiancia será prácticamente 0.
-
-La implementación es muy sencilla:
-
-```glsl
-float Lambertian_pdf(vec3 normal, vec3 light_dir) {
-    return max(
-        0.0,
-        dot(normal, light_dir)
-    ) * (1.0 / PI);
-}
-
-float Lambiertian_light(Superficie s, Luz light) {
-    return s.albedo * Lambertian_pdf(s.normal, light.dir);
-}
-```
-
-Este modelo está muy limitado, pues en la vida real, los objetos muestran algún tipo de interacción especular.
-
-### Phong
+#### Phong
 
 El modelo de Phong se basa en la observación de que, cuando el punto de vista se alinea con la dirección del vector de luz reflejado $r = 1 - 2(\mathbf{n} \cdot \mathbf{l})\mathbf{n}$, aparecen puntos muy iluminados, lo que se conoce como resaltado especular.
 
@@ -623,7 +663,7 @@ float Phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess
 }
 ```
 
-### Blinn - Phong
+#### Blinn - Phong
 
 Este es una pequeña modificación al de Phong. En vez de usar el vector reflejado de luz, se define un vector unitario entre el observador y la luz, $\mathbf{h} = \frac{\omega + \mathbf{l}}{\norm{\omega + \mathbf{l}}}$. Resulta más fácil calcularlo. Además, este modelo es más realista.
 
@@ -646,69 +686,6 @@ float BlingPhong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shin
     );
 }
 ```
-
-### Schlick
-
-> TODO: este está bastante cojo. Parece que está medianamente bien descrito en RT IOW, así que podría revisarlo de ahí.
-
-El modelo de Schlick describe una aproximación de las ecuaciones de Fresnel. Se utiliza con frecuencia, por ser físicamente realista y fácilmente computable.
-
-Se define como
-
-$$
-\begin{aligned}
-    & S_\lambda(u) = C_\lambda + (1 - C_\lambda)(1 - u)^5 \\
-    & R_\lambda(t, u, v, v', w) = S_\lambda(u) D(t, v, v', w)
-\end{aligned}
-$$
-
-```glsl
-float Fresnel(float f0, float u) {
-    return f0 + (1.0 - f0) * pow(1.0 - u, 5.0);
-}
-
-vec3 BRDF(vec3 light_dir, vec3 view_dir, vec3 normal, vec3 X, vec3 Y) {
-    vec3 halfway = normalize(light_dir + view_dir);
-
-    float ior = 1   // Puede vale 1, 3, o 1.2
-    float f0  = pow((ior - 1)/(ior + 1), 2);
-    float F   = Fresnel(f0, dot(light_dir, halfway));
-
-    return vec3(F);
-}
-```
-
-### Oren - Nayar
-
-Este modelo intenta aproximar superficies difusas utilizando un ratio de lambertiano, lo cual mejora el rendimiento el *white furnace test*:
-
-```
-float OrenNayar_diffuse(vec3 normal, vec3 light_dir, vec3 view_dir, material m) {
-    float L_dot_V = dot(light_dir, view_dir);
-    float N_dot_L = dot(light_dir, noral);
-    float N_dot_V = dot(normal, view_dir);
-
-    float s = L_dot_V - N_dot_L * N_dot_V;
-    float t = mix(
-        1.0,
-        ma(N_dot_L, N_dot_V),
-        step(0.0, s)
-    );
-
-    float sigma2 = m.roughness * m.roughness;
-    float A = 1.0 + sigma2 * (m.albedo / (sigma2 + 0.13) + 0.5 / (sigma2 + 0.33));
-    float B = 0.45 * sigma2 / (sigma2 + 0.09);
-
-    return m.albedo * max(0.0, N_dot_L) * (A + B * s / t) / PI;
-}
-```
-
-### GGX
-
-El modelo Ground Glass Unknown es una BSDF analítica que se basa en la distribución de microfacetas del material subyacente. Es una de las técnicas más avanzadas y exploradas recientemente. Los motores modernos como Unreal Engine 4 y Unity lo utilizan en sus pipelines físicamente realistas.
-
-A diferencia de los otros modelos, no entraremos en detalles de la implementación.
-
 
 ## La rendering equation
 
