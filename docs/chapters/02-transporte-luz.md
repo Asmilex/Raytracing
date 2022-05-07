@@ -6,7 +6,7 @@ En este capítulo estudiaremos las bases de la radiometría. Esta área de la ó
 
 > **Nota**: cuando usemos un paréntesis tras una ecuación, dentro denotaremos sus unidades de medida.
 
-Antes de comenzar a trabajar, necesitamos conocer *qué entendemos* por luz. Aunque hay muchas formas de trabajar con ella (a fin de cuentas, todavía seguimos discutiendo sobre *qué es* exactamente la luz [^2]), nosotros nos quedaremos con algunas pinceladas de la cuántica. Nos será suficiente quedarnos con la concepción de fotón. Una fuente de iluminación emite una serie de fotones. Estos fotones tienen<sup>[@ShirleyRRT]</sup> una posición, una dirección de propagación y una longitud de onda $\lambda$. Un fotón también tiene asociado una velocidad $c$ que depende del índice de refracción del medio, $n$.
+Antes de comenzar a trabajar, necesitamos conocer *qué entendemos* por luz. Aunque hay muchas formas de trabajar con ella (a fin de cuentas, todavía seguimos discutiendo sobre *qué es* exactamente la luz [^2]), nosotros nos quedaremos con algunas pinceladas de la cuántica. Nos será suficiente quedarnos con la concepción de fotón. Una fuente de iluminación emite una serie de fotones. Estos fotones tienen una posición, una dirección de propagación y una longitud de onda $\lambda$ [@ShirleyRRT]. Un fotón también tiene asociado una velocidad $c$ que depende del índice de refracción del medio, $n$.
 
 La unidad de medida de $\lambda$ es el nanómetro ($\text{nm}$). También nos vendrá bien definir una frecuencia, $f$. Su utilidad viene del hecho de que, cuando la luz cambia de medio al propagarse, la frecuencia se mantiene constante.
 
@@ -26,7 +26,7 @@ En realidad, **todas estas cantidades deberían tener un subíndice $\lambda$**,
 
 ### Potencia
 
-A partir de la energía anterior, podemos estimar *la tasa de producción de energía*. A esta tasa la llamaremos<sup>[@PBRT3e]</sup> **potencia**, o **flujo radiante** $\Phi$. Esta medida nos resultará más útil que la energía total, puesto que nos permite estimar la energía en un instante:
+A partir de la energía anterior, podemos estimar *la tasa de producción de energía*. A esta tasa la llamaremos **potencia**, o **flujo radiante** $\Phi$ [@PBRT3e, Radiometry]. Esta medida nos resultará más útil que la energía total, puesto que nos permite estimar la energía en un instante:
 
 $$
 \Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt} (J/s)
@@ -88,7 +88,7 @@ Los denotaremos por $\omega$. En física se suele usar $\Omega$, pero aquí opta
 
 De vez en cuando, usaremos $\omega$ **un vector dirección unitario en la esfera**.
 
-![Como de costumbre, hay un xkcd relevante. [(Fuente)](https://xkcd.com/1276/)](./img/02/xkcd_1276.png)
+![Como de costumbre, hay un XKCD relevante [@xkcd-size]](./img/02/xkcd_1276.png)
 
 Usualmente emplearemos coordenadas esféricas cuando trabajemos con ellos, dado que resulta más cómodo.
 
@@ -102,7 +102,7 @@ $$
 \end{aligned}
 $$
 
-A $\theta$ se le denomina ángulo polar, mientras que a $\phi$ se le llama acimut. Imaginémonos un punto en la esfera de radio $r$ ubicado en una posición $(r, \theta, \phi)$. Queremos calcular un área chiquitita $dA_h$, de forma que el ángulo sólido asociado a dicha área debe ser $d\omega$. Así, $d\omega = \frac{dA_h}{r^2}$. Si proyectamos el área, obtenemos $d\theta$ y $d\phi$: pequeños cambios en los ángulos que nos generan nuestra pequeña área.
+A $\theta$ se le denomina ángulo polar, mientras que a $\phi$ se le llama acimut. Imaginémonos un punto en la esfera de radio $r$ ubicado en una posición $(r, \theta, \phi)$. Queremos calcular un área chiquitita $dA_h$, de forma que el ángulo sólido asociado a dicha área debe ser $d\omega$. Así, $d\omega = \frac{dA_h}{r^2}$. Si proyectamos el área, obtenemos $d\theta$ y $d\phi$: pequeños cambios en los ángulos que nos generan nuestra pequeña área [@berkeley-cs184, Radiometry & Photometry].
 
 $dA_h$ debe tener dos lados $lado_1$ y $lado_2$. Podemos hallar $lado_1$ si lo trasladamos al eje $z$ de nuevo. Así, $lado_1 = r \sin d\theta$. De la misma manera, $lado_2 = r d\theta$.
 
@@ -144,7 +144,7 @@ $$
 
 ### Radiancia
 
-Finalmente, llegamos al concepto más importante. La **radiancia espectral** (o radiancia a secas[^3]) es una extensión de la radiancia emitida teniendo en cuenta la dirección:
+Finalmente, llegamos al concepto más importante. La **radiancia espectral** (o radiancia a secas[^3]) [@PBRT3e, Radiometry] es una extensión de la radiancia emitida teniendo en cuenta la dirección:
 
 $$
 L(p, \omega) = \lim_{\Delta\omega \to 0}{\frac{\Delta E_\omega(p)}{\Delta\omega}} = \frac{dE_\omega(p)}{d\omega}
@@ -246,7 +246,7 @@ Para obtener cuánta luz llega a un punto, debemos acumular la radiancia inciden
 
 > TODO: dibujo como el de la libreta roja. Me lo mandé por Telegram, por si no lo encuentro
 
-Dado un punto $p$ que se encuentra en una superficie con normal $\mathbf{n}$ en dicho punto, la irradiancia se puede expresar como
+Dado un punto $p$ que se encuentra en una superficie con normal $\mathbf{n}$ en dicho punto, la irradiancia se puede expresar como [@PBRT3e, Working with Radiometric Integrals]
 
 $$
 E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \abs{cos\theta} d\omega}
@@ -322,7 +322,7 @@ En este capítulo vamos a modelar la primera. Estudiaremos qué es lo que ocurre
 
 ### La función de distribución de reflectancia bidireccional (BRDF)
 
-La **función de distribución de reflectancia bidireccional** (en inglés, *bidirectional reflectance distribution function*, BRDF) describe cómo la luz se refleja en una superficie opaca. Se encarga de informarnos sobre cuánta radiancia sale en dirección $\omega_o$ debido a la radiancia incidente desde la dirección $\omega_i$, partiendo de un punto $p$ en una superficie con normal $\mathbf{n}$. Depende de la longitud de onda $\lambda$, pero, como de costumbre, la omitiremos.
+La **función de distribución de reflectancia bidireccional** (en inglés, *bidirectional reflectance distribution function*, BRDF) [@PBRT3e, Surface Reflection] describe cómo la luz se refleja en una superficie opaca. Se encarga de informarnos sobre cuánta radiancia sale en dirección $\omega_o$ debido a la radiancia incidente desde la dirección $\omega_i$, partiendo de un punto $p$ en una superficie con normal $\mathbf{n}$. Depende de la longitud de onda $\lambda$, pero, como de costumbre, la omitiremos.
 
 > **Intuición**: *¿cuál es la probabilidad de que, habiéndome llegado un fotón desde $\omega_i$, me salga disparado hacia $\omega_o$?*
 
@@ -416,7 +416,7 @@ $$
 
 Puede ser útil tomar el comportamiento agregado de las BRDFs y las BTDFs y reducirlo un cierto valor que describa su comportamiento general de dispersión. Sería Algo así como un resumen de su distribución. Para conseguirlo, vamos a introducir dos nuevas funciones:
 
-La **reflectancia hemisférica-direccional** (*hemispherical-directional reflectance*) describe la reflexión total sobre un hemisferio debida a una fuente de luz que proviene desde la dirección $\omega_o$:
+La **reflectancia hemisférica-direccional** (*hemispherical-directional reflectance*) describe la reflexión total sobre un hemisferio debida a una fuente de luz que proviene desde la dirección $\omega_o$ [@PBRT3e, Reflection Models, Basic Interface]:
 
 $$
 \rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_i}\ d\omega_i}
@@ -435,13 +435,13 @@ Prácticamente toda superficie, en mayor o menor medida, refleja parte de la luz
 
 > TODO: cambiar por foto propia
 
-![Reflexión y refracción de luz. Fuente: Nvidia](./img/02/Reflexión%20y%20refracción.png)
+![Reflexión y refracción de luz [@Marrs2021, p. 106].](./img/02/Reflexión%20y%20refracción.png)
 
 ### Tipos de dispersión
 
 Una vez hemos definido las funciones de distribución bidireccionales, debemos encargarnos de modelar el comportamiento explícitamente. Para ello, veamos cómo los materiales modifican las distribuciones.
 
-En esencia, los reflejos se pueden clasificar en cuatro grandes tipos:
+En esencia, los reflejos se pueden clasificar en cuatro grandes tipos [@McGuire2018GraphicsCodex, Materials]:
 
 - **Difusos** (*Diffuse*): esparcen la luz en todas direcciones casi equiprobablemente. Por ejemplo, la tela y el papel son materiales difusos.
 - **Especulares brillantes** (*Glossy specular*): la distribución de luz se asemeja a un cono. La chapa de un coche es un material especular brillante.
@@ -454,7 +454,7 @@ Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, pue
 
 ### Reflejos
 
-Para un material especular perfecto (es decir, espejos), la dirección reflejada $\mathbf{r}$ dado un rayo incidente $\mathbf{i}$ es [@Marrs2021, p. 154]:
+Para un material especular perfecto (es decir, espejos), la dirección reflejada $\mathbf{r}$ dado un rayo incidente $\mathbf{i}$ es [@Marrs2021, Reflection and refraction formulas, p. 105]:
 
 $$
 \mathbf{r} = \mathbf{i} - 2 (\mathbf{i} \cdot \mathbf{n}) \mathbf{n}
@@ -512,7 +512,8 @@ Lo que ocurre en estos casos es que, en vez de pasar al segundo medio, los foton
 
 Aquellos materiales que refractan y reflejan luz (como el agua de la foto anterior) no pueden generar energía de la nada; por lo que la combinación de ambos efectos debe ser proporcional a la luz incidente. Es decir, una fracción de luz es reflejada, y otra es refractada. Las **ecuaciones de Fresnel** nos permiten conocer esta cantidad.
 
-La proporción de luz reflejada desde un rayo que viaja por un medio con índice de refracción $\eta_1$ y ángulo de incidencia $\theta_1$ a otro medio con índice de refracción $\eta_2$ es [@Marrs2021, p. 159]:
+La proporción de luz reflejada desde un rayo que viaja por un medio con índice de refracción $\eta_1$ y ángulo de incidencia $\theta_1$ a otro medio con índice de refracción $\eta_2$ es [@Marrs2021, The Schlick Fresnel
+approximation, p. 109]:
 
 $$
 \begin{aligned}
