@@ -2,7 +2,7 @@
 
 Empecemos por definir lo que es un rayo.
 
-Un rayo es una función $P(t) = O + tD$, donde $O$ es el origin, $D$ la dirección, y $t \in \mathbb{R}$. Podemos considerarlo una interpolación entre dos puntos en el espacio, donde $t$ controla la posición en la que nos encontramos.
+Un rayo [@Shirley2020RTW1] es una función $P(t) = O + tD$, donde $O$ es el origin, $D$ la dirección, y $t \in \mathbb{R}$. Podemos considerarlo una interpolación entre dos puntos en el espacio, donde $t$ controla la posición en la que nos encontramos.
 
 Por ejemplo, si $t = 0$, obtendremos el origen. Si $t = 1$, obtendremos el punto correspondiente a la dirección. Usando valores negativos vamos *hacia atrás*.
 
@@ -88,9 +88,7 @@ $$
 
 Dado un punto $Q \in \mathbb{R}^3$, queremos saber dónde interseca un rayo $P(t)$. Es decir, para qué $t$ se cumple que $F(P(t)) = 0 \iff F(O + tD) = 0$.
 
-Consideremos por ejemplo un plano, como en [@ShirleyRRT]. Para ello, nos tomamos un punto $Q_0$ del plano y un vector normal a la superficie $\mathbf{n}$.
-
-La ecuación implícita del plano será
+Consideremos ahora un plano. Para ello, nos tomamos un punto $Q_0$ del plano y un vector normal a la superficie $\mathbf{n}$. La ecuación implícita del plano será [@ShirleyRRT]
 
 $$
 F(Q) = (Q - Q_0) \cdot \mathbf{n} = 0
@@ -129,7 +127,7 @@ $$
 (x, y, z) = \left( f(u, v), g(u, v), h(u, v) \right) \\
 $$
 
-> En informática gráfica, hacemos algo similar cuando mapeamos una textura a una superficie. Se conoce como UV mapping
+> En informática gráfica, hacemos algo similar cuando mapeamos una textura a una superficie. Se conoce como **UV mapping**.
 
 Demos un par de ejemplos de superficies paramétricas:
 - El grafo de una función $f: D \rightarrow \mathbb{R}^3$,
@@ -235,7 +233,7 @@ Un triángulo viene dado por tres puntos, $A, B$, y $C$; correspondientes a sus 
 
 #### Coordenadas baricéntricas
 
-Podemos describir los puntos contenidos en el plano que forman estos vertices mediante **coordenadas baricéntricas**. Este sistema de coordenadas expresa cada punto del plano como una combinación convexa de los vértices. Es decir, que para cada punto $P$ del triángulo existen $\alpha, \beta$ y $\gamma$ tales que $\alpha + \beta + \gamma = 1$ y
+Podemos describir los puntos contenidos en el plano que forman estos vertices mediante **coordenadas baricéntricas**. Este sistema de coordenadas expresa cada punto del plano como una combinación convexa de los vértices [@wikipedia-contributors-2022G]. Es decir, que para cada punto $P$ del triángulo existen $\alpha, \beta$ y $\gamma$ tales que $\alpha + \beta + \gamma = 1$ y
 
 $$
 P = \alpha A + \beta B + \gamma C
@@ -324,9 +322,3 @@ Para obtener el vector normal, podemos hacer el producto vectorial de dos vector
 $$
 \mathbf{n} = (B - A) \times (C - A)
 $$
-
-<hr>
-
-## Referencias {.unlisted .unnumbered}
-
-[@wikipedia-contributors-2022F], [@wikipedia-contributors-2021A], [@wikipedia-contributors-2022G], [@wikipedia-contributors-2022O]
