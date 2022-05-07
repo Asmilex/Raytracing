@@ -1,6 +1,6 @@
 \newcommand*\Eval[3]{\left.#1\right\rvert_{#2}^{#3}}
-\newcommand*\abs[1]{\lvert #1 \rvert}
-\newcommand*\norm[1]{\lVert #1 \rVert}
+\newcommand*\abs[1]{\left\lvert #1 \right\rvert}
+\newcommand*\norm[1]{\left\lVert #1 \right\rVert}
 \newcommand*\set[2]{\left\{#1 \,\middle|\, #2 \right\}}
 
 
