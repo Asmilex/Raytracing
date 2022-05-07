@@ -428,6 +428,15 @@ $$
 \rho_{hh} = \frac{1}{\pi} \int_{H^2(n)} \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_o\ \cos\theta_i}\ d\omega_o\ d\omega_i}
 $$
 
+
+## Reflexión y refracción
+
+Prácticamente toda superficie, en mayor o menor medida, refleja parte de la luz incidente. Otros tipos de materiales reflejan y refractan a la vez, como puede ser un espejo o el agua. En esta sección vamos a describir cuáles son las fórmulas utilizadas para conocer la dirección de salida de un rayo incidente en una superficie.
+
+> TODO: cambiar por foto propia
+
+![Reflexión y refracción de luz. Fuente: Nvidia](./img/02/Reflexión%20y%20refracción.png)
+
 ### Tipos de dispersión
 
 Una vez hemos definido las funciones de distribución bidireccionales, debemos encargarnos de modelar el comportamiento explícitamente. Para ello, veamos cómo los materiales modifican las distribuciones.
@@ -443,11 +452,7 @@ Ten en cuenta que es muy difícil encontrar objetos físicos que imiten a la per
 
 Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, puede ser **isotrópica** o **anisotrópica**. Los materiales isotrópicos mantienen las propiedades de reflectancia invariantes ante rotaciones; es decir, la distribución de luz es la misma en todas direcciones. Por el contrario, los anisotrópicos reflejan diferentes cantidades de luz dependiendo desde dónde los miremos. Los ejemplos más habituales de materiales anisotrópicos son las rocas y la madera.
 
-### Fórmulas de reflexión y refracción
-
-Prácticamente toda superficie, en mayor o menor medida, refleja parte de la luz incidente. Otros tipos de materiales reflejan y refractan a la vez, como puede ser un espejo o el agua. En esta sección vamos a describir cuáles son las fórmulas utilizadas para conocer la dirección de salida de un rayo incidente en una superficie.
-
-#### Reflejos
+### Reflejos
 
 Para un material especular perfecto (es decir, espejos), la dirección reflejada $\mathbf{r}$ dado un rayo incidente $\mathbf{i}$ es [@Marrs2021, p. 154]:
 
@@ -457,13 +462,96 @@ $$
 
 siendo $\mathbf{n}$ la normal en el punto incidente. Con esta expresión, se necesita que $\mathbf{n}$ esté normalizado. Para los otros dos vectores no es necesario; la dirección de salida tendrá la misma norma que la de entrada.
 
-#### Refracción
+### Refracción
 
-##### Ley de Snell
+Algunos materiales permiten que la luz los atraviese. En estos casos, decimos que se produce un cambio en el medio. Para conocer cómo de rápido viajan los fotones a través de ellos, se utiliza un valor denominado **índice de refracción**, usualmente denotado por $\eta$:
 
-##### Ecuaciones de Fresnel
+$$
+\eta = \frac{c}{\nu}
+$$
 
-### Modelos analíticos de *shading*
+siendo $c$ la velocidad de la luz en el vacío y $\nu$ la velocidad de fase del medio, la cual depende de la longitud de onda. Sin embargo, como hemos comentado varias veces, no tendremos en cuenta la longitud de onda en nuestro ray tracer, por lo que no nos tenemos que preocupar de esto.
+
+Algunos materiales como el aire tienen un índice de refracción $\eta_{\text{aire}} = 1.0003$, mientras que el del agua vale $\eta_{\text{agua}} = 1.333$, y el del cristal vale $\eta_{\text{cristal}} = 1.52$.
+
+#### Ley de Snell
+
+La **ley de Snell** nos proporciona una ecuación muy sencilla que relaciona el cambio de un medio con índice de refracción $\eta_1$ a otro con índice de refracción $\eta_2$:
+
+$$
+\eta_1 \sin\theta_1 = \eta_2 \sin\theta_2
+$${#eq:ley_snell}
+
+siendo $\theta_1$ y $\theta_2$ los ángulos de entrada y salida respectivamente.
+
+Usualmente, los índices de refración son conocidos, así como el ángulo de incidencia $\theta_1$, por lo que podremos calcular el ángulo del vector refractado con facilidad:
+
+$$
+\theta_2 = \arcsin{\left(\frac{\eta_1}{\eta_2}\sin\theta_2\right)}
+$$
+
+Cuando cambiamos de un medio con índice de refracción $\eta_1$ a otro con $\eta_2 < \eta_1$, podemos encontrarnos ante un caso de **reflexión interna total**. Analíticamente, lo que ocurre es que
+
+$$
+\sin\theta_2 = \frac{\eta_1}{\eta_2}\sin\theta_1 > 1
+$$
+
+lo cual no puede ocurrir. Se denomina el ángulo crítico a aquel $\theta_1$ para la cual $\frac{\eta_1}{\eta_2}\sin\theta_1 > 1$:
+
+$$
+\theta_1 = \arcsin{\left(\frac{\eta_2}{\eta_1}\right)}
+$$
+
+Por ejemplo, si un haz de luz viaja desde un cristal hacia un cuerpo de agua, entonces $\theta_1 = \arcsin{(1.333/1.52)} \approx 1.06$ radianes $= 61.04\textdegree$.
+
+Lo que ocurre en estos casos es que, en vez de pasar al segundo medio, los fotones vuelven al primero; creando un reflejo como si de un espejo se tratara.
+
+![Como el ángulo de incidencia es considerablemente alto, por la parte de arriba la luz no puede atravesar el agua. Esto hace que podamos ver el edificio de enfrente. En el centro vemos refractado el suelo. Y, sin embargo, en la parte inferior, ¡observamos luz solar y el edificio de nuevo!](./img/02/Reflexión%20interna%20total.jpg)
+
+#### Ecuaciones de Fresnel
+
+Aquellos materiales que refractan y reflejan luz (como el agua de la foto anterior) no pueden generar energía de la nada; por lo que la combinación de ambos efectos debe ser proporcional a la luz incidente. Es decir, una fracción de luz es reflejada, y otra es refractada. Las **ecuaciones de Fresnel** nos permiten conocer esta cantidad.
+
+La proporción de luz reflejada desde un rayo que viaja por un medio con índice de refracción $\eta_1$ y ángulo de incidencia $\theta_1$ a otro medio con índice de refracción $\eta_2$ es [@Marrs2021, p. 159]:
+
+$$
+\begin{aligned}
+    R_s & = \abs{\frac
+        {\eta_1 \cos\theta_1 - \eta_2 \sqrt{1 - \left( \frac{\eta_1}{\eta_2}\sin\theta_1\right) ^2}}
+        {\eta_1 \cos\theta_1 + \eta_2 \sqrt{1 - \left( \frac{\eta_1}{\eta_2}\sin\theta_1\right) ^2}}
+    }^2 \\
+    R_p & = \abs{\frac
+        {\eta_1 \sqrt{1 - \left( \frac{\eta_1}{\eta_2}\sin\theta_1\right)^2} - \eta_2\cos\theta_1}
+        {\eta_1 \sqrt{1 - \left( \frac{\eta_1}{\eta_2}\sin\theta_1\right)^2} + \eta_2\cos\theta_1}
+    }^2
+\end{aligned}
+$${#eq:fresnel_equations}
+
+donde los subíndices $s$ y $p$ denotan la polarización de la luz: $s$ es perpendicular a la dirección de propagación, mientras que $p$ es paralela.
+
+Generalmente en los ray tracers la polarización se ignora, promediando ambas expresiones, resultando en una ecuación más simple:
+
+$$
+R = \frac{R_s + R_p}{2}
+$${#eq:fresnel_equation}
+
+#### La aproximación de Schlick
+
+Como podemos imaginarnos, calcular las expresiones de Fresnel [@eq:fresnel_equations] no es precisamente barato. En la práctica, todo el mundo utiliza una aproximación creada por Schlick, la cual funciona sorprendentemente bien. Viene dada por
+
+$$
+R(\theta_1) = R_0 + (1 - R_0)(1 - \cos\theta_1)^5
+$${#eq:schlick_aprox}
+
+siendo $R_0 = R(0)$; es decir, el valor que toma $R$ cuando el rayo incidente es paralelo al medio. Su valor es
+
+$$
+R_0 = \left(\frac{\eta_1 - \eta_2}{\eta_1 + \eta_2}\right)^2
+$$
+
+Esta aproximación es 32 veces más rápida de calcular que las ecuaciones de Fresnel, generando un error medio inferior al 1% [@https://doi.org/10.1111/1467-8659.1330233]
+
+## Modelos analíticos de *shading*
 
 > TODO: https://alain.xyz/blog/advances-in-material-models este señor me acaba de solucionar la vida. Gracias por tanto.
 >
@@ -475,7 +563,7 @@ Los modelos analíticos de shading surgen como simplificaciones de las BRDFs. En
 
 Usaremos $L_o^d$ para indicar la radiancia obtenida por materiales difusos, y $L_o^s$ para los especulares.
 
-#### Lambertiano
+### Lambertiano
 
 Este es uno de los modelos más sencillos. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador.
 
@@ -506,7 +594,7 @@ float Lambiertian_light(Superficie s, Luz light) {
 
 Este modelo está muy limitado, pues en la vida real, los objetos muestran algún tipo de interacción especular.
 
-#### Phong
+### Phong
 
 El modelo de Phong se basa en la observación de que, cuando el punto de vista se alinea con la dirección del vector de luz reflejado $r = 1 - 2(\mathbf{n} \cdot \mathbf{l})\mathbf{n}$, aparecen puntos muy iluminados, lo que se conoce como resaltado especular.
 
@@ -538,7 +626,7 @@ float Phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess
 }
 ```
 
-#### Blinn - Phong
+### Blinn - Phong
 
 Este es una pequeña modificación al de Phong. En vez de usar el vector reflejado de luz, se define un vector unitario entre el observador y la luz, $\mathbf{h} = \frac{\omega + \mathbf{l}}{\norm{\omega + \mathbf{l}}}$. Resulta más fácil calcularlo. Además, este modelo es más realista.
 
@@ -562,7 +650,7 @@ float BlingPhong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shin
 }
 ```
 
-#### Schlick
+### Schlick
 
 > TODO: este está bastante cojo. Parece que está medianamente bien descrito en RT IOW, así que podría revisarlo de ahí.
 
@@ -593,7 +681,7 @@ vec3 BRDF(vec3 light_dir, vec3 view_dir, vec3 normal, vec3 X, vec3 Y) {
 }
 ```
 
-#### Oren - Nayar
+### Oren - Nayar
 
 Este modelo intenta aproximar superficies difusas utilizando un ratio de lambertiano, lo cual mejora el rendimiento el *white furnace test*:
 
@@ -618,7 +706,7 @@ float OrenNayar_diffuse(vec3 normal, vec3 light_dir, vec3 view_dir, material m) 
 }
 ```
 
-#### GGX
+### GGX
 
 El modelo Ground Glass Unknown es una BSDF analítica que se basa en la distribución de microfacetas del material subyacente. Es una de las técnicas más avanzadas y exploradas recientemente. Los motores modernos como Unreal Engine 4 y Unity lo utilizan en sus pipelines físicamente realistas.
 
