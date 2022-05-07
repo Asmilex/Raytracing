@@ -430,7 +430,9 @@ $$
 
 ## Modelos ópticos de materiales
 
-En la práctica, cada superficie tendrá una BSDF característica. Esto hace que la luz adquiera una dirección particular al incidir en cada punto de esta. En esta sección, vamos a tratar algunas BSDFs particulares e introduciremos las fórmulas fundamentales que se usan en los modelos de materiales (también conocidos como modelos de *shading*)
+En la práctica, cada superficie tendrá una BSDF característica. Esto hace que la luz adquiera una dirección particular al incidir en cada punto de esta. En esta sección, vamos a tratar algunas BSDFs particulares e introduciremos las fórmulas fundamentales que se usan en los modelos de materiales (también conocidos como modelos de *shading*).
+
+Los tipos de materiales que vamos a tratar son las básicos. Entre ellos, se encuentran la difusa lambertiana, materiales dieléctricos, espejos y algunas BSDFs compuestas. Un repertorio de implementaciones se encuentra en el repositorio de BRDFs de [@disney-brdfs].
 
 ### Tipos de dispersión
 
@@ -474,9 +476,9 @@ $$
 
 siendo $\rho_{hd} = k_r(\abs{\mathbf{i} \cdot \mathbf{n}})$ el albedo, con $k_r$ el coeficiente de reflectividad, cuyo valor se encuentra entre 0 y 1, dependiendo de la energía que se pierda.
 
-#### Reflexión difusa
+#### Reflexión difusa o lamberiana
 
-Este es uno de los modelos más sencillos. Es conocido también como reflexión lambertiana. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador. Esto significa que
+Este es uno de los modelos más sencillos. Es conocido también como el modelo lambertiano. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador. Esto significa que
 
 $$
 f_r(\omega_o \leftarrow \omega_i) = k_d
@@ -500,9 +502,65 @@ En la práctica no se utiliza mucho, pues está muy limitado.
 
 #### Reflexión especular no perfecta
 
+##### Phong
+
+El modelo de Phong se basa en la observación de que, cuando el punto de vista se alinea con la dirección del vector de luz reflejado $r = 1 - 2(\mathbf{n} \cdot \mathbf{l})\mathbf{n}$, aparecen puntos muy iluminados, lo que se conoce como resaltado especular.
+
+Esta idea se *refleja* considerando la componente especular como
+
+$$
+L_o^s(p, \omega_o \leftarrow \omega_i) =
+      k_\alpha
+    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
+    + k_s \max\{0, \omega \cdot \mathbf{r}\}^\alpha
+$$
+
+donde $k_\alpha$ es el coeficiente de luz ambiental (con $\alpha$ el índice de brillo) $k_s$ es la constante de reflectancia especular (*specular-reflection*) que define el ratio de luz reflejada, $k_d$ el de radiancia difusa $L_o^d$. Usualmente, $k_s \vert k_d < 1$.
+
+Evidentemente, este modelo no es más que una aproximación físicamente poco realista de la realidad; pero funciona lo suficientemente bien como para usarlo en ciertas partes.
+
+```glsl
+float Phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
+    return pow(
+        max(
+            0.0,
+            dot(
+                reflejar(normal, light_dir),
+                view_dir
+            )
+        ),
+        shininess
+    );
+}
+```
+
+##### Blinn - Phong
+
+Este es una pequeña modificación al de Phong. En vez de usar el vector reflejado de luz, se define un vector unitario entre el observador y la luz, $\mathbf{h} = \frac{\omega + \mathbf{l}}{\norm{\omega + \mathbf{l}}}$. Resulta más fácil calcularlo. Además, este modelo es más realista.
+
+$$
+L_o^s(p, \omega_o \leftarrow \omega_i) =
+      k_\alpha
+    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
+    + k_s \max\{0, \mathbf{h} \cdot \mathbf{n}\}^\alpha
+$$
+
+```glsl
+float BlingPhong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
+    vec3 h = normalize(view_dir + light_dir);
+    return pow(
+        max(
+            0.0,
+            dot(h, normal)
+        ),
+        shininess
+    );
+}
+```
+
 ### Refracción
 
-Algunos materiales permiten que la luz los atraviese. En estos casos, decimos que se produce un cambio en el medio. Para conocer cómo de rápido viajan los fotones a través de ellos, se utiliza un valor denominado **índice de refracción**, usualmente denotado por $\eta$:
+Algunos materiales permiten que la luz los atraviese --conocido como transmisión--. En estos casos, decimos que se produce un cambio en el medio. Para conocer cómo de rápido viajan los fotones a través de ellos, se utiliza un valor denominado **índice de refracción**, usualmente denotado por $\eta$:
 
 $$
 \eta = \frac{c}{\nu}
@@ -624,70 +682,6 @@ float OrenNayar_diffuse(vec3 normal, vec3 light_dir, vec3 view_dir, material m) 
 El modelo Ground Glass Unknown es una BSDF analítica que se basa en la distribución de microfacetas del material subyacente. Es una de las técnicas más avanzadas y exploradas recientemente. Los motores modernos como Unreal Engine 4 y Unity lo utilizan en sus pipelines físicamente realistas.
 
 A diferencia de los otros modelos, no entraremos en detalles de la implementación.
-
-### Modelos analíticos de *shading*
-
-Los modelos analíticos de shading surgen como simplificaciones de las BRDFs. En esta sección, vamos a ver algunos de los más famosos.
-
-Gran parte de este contenido ha sido resumido por [@alain-materials]. En dicha entrada pueden encontrarse las referencias a los papers originales, en los cuales se explica con detalle cómo funcionan. Además, todas las BxDFs pueden visualizarse en el repositorio de BRDFs de [@disney-brdfs]
-
-Usaremos $L_o^d$ para indicar la radiancia obtenida por materiales difusos, y $L_o^s$ para los especulares.
-
-#### Phong
-
-El modelo de Phong se basa en la observación de que, cuando el punto de vista se alinea con la dirección del vector de luz reflejado $r = 1 - 2(\mathbf{n} \cdot \mathbf{l})\mathbf{n}$, aparecen puntos muy iluminados, lo que se conoce como resaltado especular.
-
-Esta idea se *refleja* considerando la componente especular como
-
-$$
-L_o^s(p, \omega_o \leftarrow \omega_i) =
-      k_\alpha
-    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
-    + k_s \max\{0, \omega \cdot \mathbf{r}\}^\alpha
-$$
-
-donde $k_\alpha$ es el coeficiente de luz ambiental (con $\alpha$ el índice de brillo) $k_s$ es la constante de reflectancia especular (*specular-reflection*) que define el ratio de luz reflejada, $k_d$ el de radiancia difusa $L_o^d$. Usualmente, $k_s \vert k_d < 1$.
-
-Evidentemente, este modelo no es más que una aproximación físicamente poco realista de la realidad; pero funciona lo suficientemente bien como para usarlo en ciertas partes.
-
-```glsl
-float Phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
-    return pow(
-        max(
-            0.0,
-            dot(
-                reflejar(normal, light_dir),
-                view_dir
-            )
-        ),
-        shininess
-    );
-}
-```
-
-#### Blinn - Phong
-
-Este es una pequeña modificación al de Phong. En vez de usar el vector reflejado de luz, se define un vector unitario entre el observador y la luz, $\mathbf{h} = \frac{\omega + \mathbf{l}}{\norm{\omega + \mathbf{l}}}$. Resulta más fácil calcularlo. Además, este modelo es más realista.
-
-$$
-L_o^s(p, \omega_o \leftarrow \omega_i) =
-      k_\alpha
-    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
-    + k_s \max\{0, \mathbf{h} \cdot \mathbf{n}\}^\alpha
-$$
-
-```glsl
-float BlingPhong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
-    vec3 h = normalize(view_dir + light_dir);
-    return pow(
-        max(
-            0.0,
-            dot(h, normal)
-        ),
-        shininess
-    );
-}
-```
 
 ## La rendering equation
 
