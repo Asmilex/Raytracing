@@ -416,7 +416,7 @@ $$
 
 Puede ser útil tomar el comportamiento agregado de las BRDFs y las BTDFs y reducirlo un cierto valor que describa su comportamiento general de dispersión. Sería Algo así como un resumen de su distribución. Para conseguirlo, vamos a introducir dos nuevas funciones:
 
-La **reflectancia hemisférica-direccional** (*hemispherical-directional reflectance*) describe la reflexión total sobre un hemisferio debida a una fuente de luz que proviene desde la dirección $\omega_o$ [@PBRT3e, Reflection Models, Basic Interface]:
+El albedo [@Szirmay-Kalos00monte-carlomethods], o también conocido como la **reflectancia hemisférica-direccional** (*hemispherical-directional reflectance*) [@PBRT3e, Reflection Models, Basic Interface] describe la reflexión total sobre un hemisferio debida a una fuente de luz que proviene desde la dirección $\omega_o$ :
 
 $$
 \rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_i}\ d\omega_i}
@@ -430,16 +430,17 @@ $$
 
 ## Modelos ópticos de materiales
 
-Prácticamente toda superficie, en mayor o menor medida, refleja parte de la luz incidente. Otros tipos de materiales reflejan y refractan a la vez, como puede ser un espejo o el agua. En esta sección vamos a describir cuáles son las fórmulas utilizadas para conocer la dirección de salida de un rayo incidente en una superficie.
-
-> TODO: cambiar por foto propia
-
-![Reflexión y refracción de luz [@Marrs2021, p. 106].](./img/02/Reflexión%20y%20refracción.png)
+En la práctica, cada superficie tendrá una BSDF característica. Esto hace que la luz adquiera una dirección particular al incidir en cada punto de esta. En esta sección, vamos a tratar algunas BSDFs particulares e introduciremos las fórmulas fundamentales que se usan en los modelos de materiales (también conocidos como modelos de *shading*)
 
 ### Tipos de dispersión
 
-Una vez hemos definido las funciones de distribución bidireccionales, debemos encargarnos de modelar el comportamiento explícitamente. Para ello, veamos cómo los materiales modifican las distribuciones.
+Prácticamente toda superficie, en mayor o menor medida, refleja parte de la luz incidente. Otros tipos de materiales reflejan y refractan a la vez, como puede ser un espejo o el agua.
 
+
+![Reflexión y refracción de luz [@Marrs2021, p. 106].](./img/02/Reflexión%20y%20refracción.png)
+
+> TODO: cambiar por foto propia
+>
 En esencia, los reflejos se pueden clasificar en cuatro grandes tipos [@McGuire2018GraphicsCodex, Materials]:
 
 - **Difusos** (*Diffuse*): esparcen la luz en todas direcciones casi equiprobablemente. Por ejemplo, la tela y el papel son materiales difusos.
@@ -451,8 +452,9 @@ Ten en cuenta que es muy difícil encontrar objetos físicos que imiten a la per
 
 Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, puede ser **isotrópica** o **anisotrópica**. Los materiales isotrópicos mantienen las propiedades de reflectancia invariantes ante rotaciones; es decir, la distribución de luz es la misma en todas direcciones. Por el contrario, los anisotrópicos reflejan diferentes cantidades de luz dependiendo desde dónde los miremos. Los ejemplos más habituales de materiales anisotrópicos son las rocas y la madera.
 
-
 ### Reflexión
+
+Primero, tratemos con materiales que únicamente reflejan luz; es decir, su BSDF es una BRDF.
 
 #### Reflexión especular perfecta
 
@@ -464,37 +466,37 @@ $$
 
 siendo $\mathbf{n}$ la normal en el punto incidente. Con esta expresión, se necesita que $\mathbf{n}$ esté normalizado. Para los otros dos vectores no es necesario; la dirección de salida tendrá la misma norma que la de entrada.
 
+Su BRDF se define mediante una delta de Dirac [@Szirmay-Kalos00monte-carlomethods, 3.2], [@McGuire2018GraphicsCodex, Materials]:
+
+$$
+f_r(\mathbf{r} \leftarrow \mathbf{i} ) = \frac{\delta(\mathbf{i}, \mathbf{r}) k_r(\abs{\mathbf{i} \cdot \mathbf{n}})}{\abs{\mathbf{i} \cdot \mathbf{n}}}
+$$
+
+siendo $\rho_{hd} = k_r(\abs{\mathbf{i} \cdot \mathbf{n}})$ el albedo, con $k_r$ el coeficiente de reflectividad, cuyo valor se encuentra entre 0 y 1, dependiendo de la energía que se pierda.
+
 #### Reflexión difusa
 
-Este es uno de los modelos más sencillos. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador.
-
-Se describe como
+Este es uno de los modelos más sencillos. Es conocido también como reflexión lambertiana. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador. Esto significa que
 
 $$
-L_o^d(p, \omega_o \leftarrow \omega_i) = k_d \max\{0, \mathbf{n} \cdot \mathbf{l}\}
+f_r(\omega_o \leftarrow \omega_i) = k_d
 $$
 
-siendo $k_d$ el coeficiente de reflectancia (que mide cuánta luz se absorbe por la superficie, conocido como albedo), $\mathbf{n}$ la normal al punto en la superficie, y $\mathbf{l}$ la dirección de la luz.
+con $k_d$ el coeficiente de difusión.
 
-El producto escalar de los vectores $\mathbf{n}$ y $\mathbf{l}$ hace que, cuando el ángulo de incidencia de la luz es muy cerrado, la radiancia será prácticamente 0.
+El albedo viene dado por
 
-La implementación es muy sencilla:
+$$
+\begin{aligned}
+\rho_{hd}(\omega_o) & = \int_{H^2(n)}{k_d \cos\theta_i\ d\omega_i} = \\
+                    & = \int_{\phi = 0}^{2\pi} \int_{\theta = 0}^{\pi/2}{k_d \cos\theta\ d\theta\ d\phi} = \\
+                    & = k_d \pi
+\end{aligned}
+$$
 
-```glsl
-float Lambertian_pdf(vec3 normal, vec3 light_dir) {
-    return max(
-        0.0,
-        dot(normal, light_dir)
-    ) * (1.0 / PI);
-}
+Para que se cumpla la condición de conservación de energía, necesariamente $k_d \le 1/\pi$.
 
-float Lambiertian_light(Superficie s, Luz light) {
-    return s.albedo * Lambertian_pdf(s.normal, light.dir);
-}
-```
-
-Este modelo está muy limitado, pues en la vida real, los objetos muestran algún tipo de interacción especular.
-
+En la práctica no se utiliza mucho, pues está muy limitado.
 
 #### Reflexión especular no perfecta
 
