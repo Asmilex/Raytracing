@@ -12,13 +12,13 @@ Antes de comenzar con la labor, primero uno se debe hacer una simple pregunta:
 
 Dar una respuesta contundente a este tipo de cuestiones nunca es fácil. Sin embargo, sí que puedo proporcionar motivos por los que he querido escribir sobre ray tracing.
 
-Una de las principales influencias ha sido [Digital Foundry](https://www.youtube.com/user/DigitalFoundry). Este grupo de divulgación se dedica al estudio de las técnicas utilizadas en el mundo de los videojuegos. El inicio de la era del ray tracing en tiempo real les llevó a dedicar una serie de vídeos y artículos a esta tecnología, y a las diferentes maneras en las que se ha implementado. Se puede ver un ejemplo en [@digital-foundry-2020].
+Una de las principales influencias ha sido [@digital-foundry]. Este grupo de divulgación se dedica al estudio de las técnicas utilizadas en el mundo de los videojuegos. El inicio de la era del ray tracing en tiempo real les llevó a dedicar una serie de vídeos y artículos a esta tecnología, y a las diferentes maneras en las que se ha implementado. Se puede ver un ejemplo en [@digital-foundry-2020].
 
-Dado que esta área combina tanto informática, matemáticas y una visión artística, ¿por qué no explorarlo a fondo?
+Dado que esta área combina tanto informática, matemáticas y una visión artística, ¿por qué no explorarlo a fondo
 
 Ahora que se ha decidido el tema, es hora de ver cómo atacarlo.
 
-Soy un fiel creyente del aprendizaje mediante el juego. Páginas como [Explorable Explanations](https://explorabl.es/), el [blog de Bartosz Ciechanowski](https://ciechanow.ski/lights-and-shadows/), el proyecto [*The napkin*](https://web.evanchen.cc/napkin.html) o el divulgador [3Blue1Brown](https://www.3blue1brown.com/) repercuten inevitablemente en la manera en la que te planteas cómo comunicar textos científicos. Por ello, aunque esto a fin de cuentas es un trabajo de fin de grado de una carrera, quería ver hasta dónde era capaz de llevarlo.
+Soy un fiel creyente del aprendizaje mediante el juego. Páginas como *Explorable Explanations* [@explorable-explanations], el blog de [@ciechanowski], el proyecto *The napkin* [@napkin] o el divulgador 3Blue1Brown [@3blue1brown] repercuten inevitablemente en la manera en la que te planteas cómo comunicar textos científicos. Por ello, aunque esto a fin de cuentas es un trabajo de fin de grado de una carrera, quería ver hasta dónde era capaz de llevarlo.
 
 Otro punto importante es la *manera* de escribir. No me gusta especialmente la escritura formal. Prefiero ser distendido. Por suerte, parece que el mundo científico se está volviendo más informal [@nature-2016], así que no soy el único que aprueba esta tendencia. Además, la estructura clásica de un escrito matemático de "teorema, lema, demostración, corolario" no me agrada especialmente. He intentado preservar su estructura, pero sin ser tan explícito. Estos dos puntos, en conjunto, suponen un balance entre formalidad y distensión difícil de mantener.
 
@@ -30,7 +30,7 @@ La metodología que se ha seguido es, en esencia, una versión de Agile muy laxa
 
 Para empezar, se implementaron los tres libros de Shirley de la "serie In One Weekend": In One Weekend [@Shirley2020RTW1], The Next Week [@Shirley2020RTW2], y The Rest of your Life [@Shirley2020RTW3].
 
-Tras esto, comenzó a [desarrollarse](#setup-del-proyecto) el motor por GPU. Cuando se consiguió una base sólida (que se puede ver en [este issue del repositorio](https://github.com/Asmilex/Raytracing/issues/25)), se empezó a alternar entre escritura de documentación y desarrollo del software. A fin de cuentas, no tiene sentido implementar algo que no se conoce.
+Tras esto, comenzó a [desarrollarse](#setup-del-proyecto) el motor por GPU. Cuando se consiguió una base sólida (que se puede ver en el issue del repositorio número 25), se empezó a alternar entre escritura de documentación y desarrollo del software. A fin de cuentas, no tiene sentido implementar algo que no se conoce.
 
 Para apoyar el desarrollo, se ha utilizado [Github](#github). Más adelante hablaremos de cómo esta plataforma ha facilitado el trabajo.
 
@@ -46,17 +46,15 @@ Para apoyar el desarrollo, se ha utilizado [Github](#github). Más adelante habl
 
 ## Diseño
 
-> TODO: hablar de paleta de colores, tipografía...
-
 El diseño juega un papel fundamental en este proyecto. Todos los elementos visuales han sido escogidos con cuidado, de forma que se preserve la estética.
 
 Se ha creado **un diseño que preserve el equilibrio entre la profesionalidad y la distensión**.
 
 ### Bases del diseño
 
-Para la documentación en versión PDF, usamos como base la *template* [Eisvogel](https://github.com/Wandmalfarbe/pandoc-latex-template). Esta es una elegante plantilla fácil de usar para LaTeX. Uno de sus puntos fuertes es la personalización, la cual aprovecharemos para darle un toque diferente.
+Para la documentación en versión PDF, usamos como base la *template* [@eisvogel]. Esta es una elegante plantilla fácil de usar para LaTeX. Uno de sus puntos fuertes es la personalización, la cual aprovecharemos para darle un toque diferente.
 
-La web utiliza como base el estilo generado por Pandoc, el microframework de css [Bamboo](https://github.com/rilwis/bamboo) y unas modificaciones personales.
+La web utiliza como base el estilo generado por Pandoc, el microframework de CSS [@bamboo] y unas modificaciones personales.
 
 ### Tipografías
 
@@ -64,11 +62,11 @@ Un apartado al que se le debe prestar especial énfasis es a la combinación de 
 
 Para este trabajo, se han escogido las siguientes tipografías:
 
-- [Crimson Pro](https://fonts.google.com/specimen/Crimson+Pro): una tipografía serif clara, legible y contemporánea. Funciona muy bien en densidades más bajas, como 11pt. Es ideal para la versión en PDF. Además, liga estupendamente con Source Sans Pro, utilizada para los títulos en la plantilla Eisvogel.
-- [Fraunces](https://fonts.google.com/specimen/Fraunces): de lejos, la fuente más interesante de todo este proyecto. Es una soft-serif *old style*, pensada para títulos y similares (lo que se conoce como *display*). Es usada en los títulos de la web. Una de sus propiedades más curiosas es que modifica activamente los glifos dependiendo del valor del *optical size axis*, el peso y similares. Recomiendo echarle un ojo a su [repositorio de Github](https://github.com/undercasetype/Fraunces).
-- [Rubik](https://fonts.google.com/specimen/Rubik): La elección de Rubik es peculiar. Por sí sola, no casa con el proyecto. Sin embargo, combinada con Fraunces, proporcionan un punto de elegancia y familiaridad a la web. Su principal fuerte es la facilidad para la comprensión lectora en pantallas, algo que buscamos para la página web.
-- [Julia Mono](https://juliamono.netlify.app/): monoespaciada, pensada para computación científica. Llevo usándola bastante tiempo, y combia bien con Crimson Pro.
-- [Jetbrains Mono](https://www.jetbrains.com/es-es/lp/mono/): otra tipografía monoespaciada open source muy sólida, producida por la compañía Jetbrains. Se utiliza en la web para los bloques de código.
+- **Crimson Pro**, por [@crimson-pro]: una tipografía serif clara, legible y contemporánea. Funciona muy bien en densidades más bajas, como 11pt. Es ideal para la versión en PDF. Además, liga estupendamente con Source Sans Pro, utilizada para los títulos en la plantilla Eisvogel.
+- **Fraunces**, por [@fraunces]: de lejos, la fuente más interesante de todo este proyecto. Es una soft-serif *old style*, pensada para títulos y similares (lo que se conoce como *display*). Es usada en los títulos de la web. Una de sus propiedades más curiosas es que modifica activamente los glifos dependiendo del valor del *optical size axis*, el peso y similares. Recomiendo echarle un ojo a su repositorio de Github, pues incluyen detalles sobre la implementación.
+- **Rubik**, por [@rubik]: La elección de Rubik es peculiar. Por sí sola, no casa con el proyecto. Sin embargo, combinada con Fraunces, proporcionan un punto de elegancia y familiaridad a la web. Su principal fuerte es la facilidad para la comprensión lectora en pantallas, algo que buscamos para la página web.
+- **Julia Mono**, por [@julia-mono]: monoespaciada, pensada para computación científica. Llevo usándola bastante tiempo, y combia bien con Crimson Pro.
+- **Jetbrains Mono**, por [@jetbrains-mono]: otra tipografía monoespaciada open source muy sólida, producida por la compañía Jetbrains. Se utiliza en la web para los bloques de código.
 
 Todas estas fuentes permiten un uso no comercial gratuito.
 
@@ -82,7 +80,7 @@ A fin de mantener consistencia, se ha creado una paleta de colores específica.
 
 El principal objetivo es **transmitir tranquilidad**, pero a la misma vez, **profesionalidad**. De nuevo, buscamos la idea de profesionalidad distendida que ya hemos repetido un par de veces.
 
-Partiendo del rojo que traía Eisvogel (lo que para nosotros sería el rojo primario), se han creado el resto. En principio, con 5 tonalidades diferentes nos basta. Todas ellas vienen acompañadas de sus respectivas variaciones oscuras, muy oscuras, claras y muy claras. Corresponderían a los `color-100, color-300, color-500, color-700, color-900` que estamos acostumbrados en diseño web. Para la escala de grises, se han escogido 7 colores en vez de 9. Son más que suficientes para lo que necesitamos. Puedes encontrar las definiciones en el [fichero de estilos](https://github.com/Asmilex/Raytracing/blob/main/docs/headers/style.css).
+Partiendo del rojo que traía Eisvogel (lo que para nosotros sería el rojo primario), se han creado el resto. En principio, con 5 tonalidades diferentes nos basta. Todas ellas vienen acompañadas de sus respectivas variaciones oscuras, muy oscuras, claras y muy claras. Corresponderían a los `color-100, color-300, color-500, color-700, color-900` que estamos acostumbrados en diseño web. Para la escala de grises, se han escogido 7 colores en vez de 9. Son más que suficientes para lo que necesitamos. Puedes encontrar las definiciones en el fichero de estilos, ubicado en `./docs/headers/style.css`.
 
 Todos los colores que puedes ver en este documento se han extraído de la paleta. ¡La consistencia es clave!
 
@@ -96,37 +94,37 @@ Principalmente destacan tres de ellas: **Github**, **Pandoc** y **Figma**. La pr
 
 ### Pandoc
 
-[Pandoc](https://pandoc.org/) es una estupendísima de conversión de documentos. Se puede usar para convertir un tipo de archivo a otro. En este caso, se usa para convertir una serie de ficheros Markdown (los capítulos) a un fichero HTML (la web) y a PDF. Su punto más fuerte es que permite escribir LaTeX de forma simplificada, como si se tratara de *sugar syntax*. Combina la simplicidad de Markdown y la correctitud de LaTeX.
+**Pandoc** [@pandoc] es una estupendísima de conversión de documentos. Se puede usar para convertir un tipo de archivo a otro. En este caso, se usa para convertir una serie de ficheros Markdown (los capítulos) a un fichero HTML (la web) y a PDF. Su punto más fuerte es que permite escribir LaTeX de forma simplificada, como si se tratara de *sugar syntax*. Combina la simplicidad de Markdown y la correctitud de LaTeX.
 
 Su funcionamiento en este proyecto es el siguiente: Primero, recoge los capítulos que se encuentra en `docs/chapters`, usando una serie de cabeceras en YAML que especifican ciertos parámetros (como autor, fecha, título, etc.), así como scripts de Lua. Estas caceberas se encuentran en `docs/headers`. En particular:
 
 1. `meta.md` recoge los parámetros base del trabajo.
-2. `pdf.md` y `web.md` contienen algunas definiciones específicas de sus respectivos formatos. Por ejemplo, el YAML del PDF asigna las variables disponibles de la plantilla Eisvogel; mientras que para la web se incluyen las referencias a algunas bibliotecas de Javascript necesarias o los estilos (`docs/headers/style.css`, usando como base [Bamboo.css](https://github.com/rilwis/bamboo)).
+2. `pdf.md` y `web.md` contienen algunas definiciones específicas de sus respectivos formatos. Por ejemplo, el YAML del PDF asigna las variables disponibles de la plantilla Eisvogel; mientras que para la web se incluyen las referencias a algunas bibliotecas de Javascript necesarias o los estilos (`docs/headers/style.css`, usando como base Bamboo.
 3. `math.md` contiene las definiciones de LaTeX.
-4. Se utilizan algunos filtros específicos de Lua para simplificar la escritura. En específico, `standard-code.lua`  formatea correctamente los bloques de código para la web.
+4. Se utilizan algunos filtros específicos de Lua para simplificar la escritura. En específico, `standard-code.lua` formatea correctamente los bloques de código para la web.
 
 Un fichero Makefile (`docs/Makefile`) contiene varias órdenes para generar ambos formatos. Tienen varios parámetros adicionales de por sí, como puede ser la bibliografía (`docs/chapters/bibliography.bib`).
 
 ### Figma
 
-[Figma](https://www.figma.com/) es otro de esos programas que te hace preguntarte por qué es gratis. Es una aplicación en la web usada para diseño gráfico. Es muy potente, intuitiva, y genera unos resultados muy buenos en poco tiempo. Todos los diseños de este trabajo se han hecho con esta herramienta.
+**Figma** [@figma] es otro de esos programas que te hace preguntarte por qué es gratis. Es una aplicación en la web usada para diseño gráfico. Es muy potente, intuitiva, y genera unos resultados muy buenos en poco tiempo. Todos los diseños de este trabajo se han hecho con esta herramienta.
 
 ![Tablón principal del proyecto de Figma, a día 15 de abril de 2022](./img/07/Figma.png)
 
-Una de las características más útiles es poder exportar rápidamente la imagen. Esto permite hacer cambios rápidos y registrarlos en el repositorio fácilmente. Además, permite instalar plugins. Uno de ellos ha resultado especialmente útil: [Latex Complete](https://www.figma.com/community/plugin/793023817364007801/LaTeX-Complete). Esto nos permite incrustar código LaTeX en el documento en forma de SVG.
+Una de las características más útiles es poder exportar rápidamente la imagen. Esto permite hacer cambios rápidos y registrarlos en el repositorio fácilmente. Además, permite instalar plugins. Uno de ellos ha resultado especialmente útil: Latex Complete [@latex-complete]. Esto nos permite incrustar código LaTeX en el documento en forma de SVG.
 
 ### Otros programas
 
 Como es normal, hay muchos otros programas que han intervenido en el desarrollo. Estos son algunos de ellos:
 
-- El editor por excelencia [VSCode](https://code.visualstudio.com/). Ha facilitado en gran medida el desarrollo de la aplicación y la documentación. En particular, se ha usado una extensión denominada [Trigger task on save](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.triggertaskonsave) que compila la documentación HTML automáticamente al guardar un fichero. ¡Muy útil y rápido!
-- [Vectary](https://www.vectary.com/) para hacer los diseños en 3D fácilmente. Permite exportar una escena rápidamente a png para editarla en Figma.
-- Como veremos más adelante, la documentación se compila en el repositorio usando un contenedor de [Docker](https://www.docker.com/).
+- El editor por excelencia VSCode [@vscode]. Ha facilitado en gran medida el desarrollo de la aplicación y la documentación. En particular, se ha usado una extensión denominada *Trigger Task on Save* [@trigger-task] que compila la documentación HTML automáticamente al guardar un fichero. ¡Muy útil y rápido!
+- **Vectary** [@vectary] para hacer los diseños en 3D fácilmente. Permite exportar una escena rápidamente a png para editarla en Figma.
+- Como veremos más adelante, la documentación se compila en el repositorio usando un contenedor de **Docker** [@docker]
 - Cualquier proyecto informático debería usar `git`. Este no es una excepción.
 
 ## Github
 
-La página [Github](https://github.com) ha alojado prácticamente todo el contenido del trabajo; desde el programa, hasta la documentación online. El repositorio se puede consultar en [Github.com/Asmilex/Raytracing](https://github.com/Asmilex/Raytracing).
+La página **Github** [@github] ha alojado prácticamente todo el contenido del trabajo; desde el programa, hasta la documentación online. El repositorio se puede consultar en `github.com/Asmilex/Raytracing` [@asmilex-raytracing-repo].
 
 Se ha escogido Github en vez de sus competidores por los siguientes motivos:
 
@@ -139,7 +137,7 @@ Entremos en detalle en algunos de los puntos anteriores:
 
 ### Integración continua con Github Actions y Github Pages
 
-Cuando hablamos de **integración continua**, nos referimos a ciertos programas que corren en un repositorio y se encargan de hacer ciertas transformaciones al código, de forma que este se prepare para su presentación final. En esencia, automatizan algunas tareas habituales de un desarrollo de software.
+Cuando hablamos de **integración continua**, nos referimos a ciertos programas que corren en un repositorio y se encargan de hacer ciertas transformaciones al código, de forma que este se prepare para su presentación final. En esencia, automatizan algunas tareas habituales de un desarrollo de software. [@jj]
 
 En este trabajo lo usaremos para compilar la documentación. De esta forma, no necesitamos lidiar con "proyecto final", "proyecto final definitivo", "proyecto final final v2", etc. Simplemente, cuando registremos un cambio en los ficheros Markdown (lo que se conoce en git como un `commit`), y lo subamos a Github (acción de `push`), se ejecutará un denominado `Action` que operará sobre nuestros archivos.
 
@@ -157,11 +155,11 @@ El workflow de la web corre automáticamente, mientras que para generar el PDF h
 
 Volviendo a la web, Github permite alojar páginas web para un repositorio. Activando el parámetro correcto en las opciones del repositorio, y configurándolo debidamente, conseguimos que lea el archivo `index.html` generado por el Action y lo despliegue. Esto es potentísimo: con solo editar una línea de código y subir los cambios, conseguimos que la web se actualice al instante.
 
-Para generar los archivos nos hace falta una distribución de LaTeX, Pandoc, y todas las dependencias (como filtros). Como no encontré ningún contenedor que sirviera mi propósito, decidí crear uno. Se encuentra en el [repositorio de Dockerhub](https://hub.docker.com/r/asmilex/raytracing). Esta imagen está basada en [dockershelf/latex:full](https://hub.docker.com/r/dockershelf/latex). Por desgracia, es *muy* pesada para ser un contenedor. Desafortunadamente, una instalación de LaTeX ocupa una cantidad de espacio considerable; y para compilar el PDF necesitamos una muy completa, por lo que debemos lidiar con este *overhead*. Puedes encontrar el Dockerfile [aquí](https://github.com/Asmilex/Raytracing/blob/main/Dockerfile).
+Para generar los archivos nos hace falta una distribución de LaTeX, Pandoc, y todas las dependencias (como filtros). Como no encontré ningún contenedor que sirviera mi propósito, decidí crear uno. Se encuentra en el repositorio de Dockerhub [@asmilex-raytracing-docker]. Esta imagen está basada en `dockershelf/latex:full` [@dockershelf]. Por desgracia, es *muy* pesada para ser un contenedor. Desafortunadamente, una instalación de LaTeX ocupa una cantidad de espacio considerable; y para compilar el PDF necesitamos una muy completa, por lo que debemos lidiar con este *overhead*. Puedes encontrar el Dockerfile en `./Dockerfile`.
 
 ### Issues y Github Projects
 
-Las tareas pendientes se gestionan mediante issues. Cada vez que se tenga un objetivo particular para el desarrollo, se anota un issue. Cuando se genere un commit que avance dicha tarea, se etiqueta con el número correspondiente al issue. De esta forma, todas las confirmaciones relacionadas con la tarea quedan recogidas en la página web. Puedes ver un ejemplo en el [issue número 22](https://github.com/Asmilex/Raytracing/issues/22).
+Las tareas pendientes se gestionan mediante issues. Cada vez que se tenga un objetivo particular para el desarrollo, se anota un issue. Cuando se genere un commit que avance dicha tarea, se etiqueta con el número correspondiente al issue. De esta forma, todas las confirmaciones relacionadas con la tarea quedan recogidas en la página web.
 
 Esto permite una gestión muy eficiente de los principales problemas y objetivos pendientes de la aplicación.
 
@@ -177,7 +175,7 @@ Para añadir mayor granularidad a la gestión de tareas y proporcionar una vista
 
 ![Projects agrupa los issues y les asigna prioridades](./img/07/Projects.png)
 
-Una de las alternativas que se planteó al inicio fue [Linear](https://linear.app/), una aplicación de gestión de issues similar a Projects. Sin embargo, la conveniencia de tener Projects integrado en Github supuso un punto a favor para este gestor. De todas formas, el equipo de desarrollo se compone de una persona, así que no hace falta complicar excesivamente el workflow.
+Una de las alternativas que se planteó al inicio fue **Linear** [@linear], una aplicación de gestión de issues similar a Projects. Sin embargo, la conveniencia de tener Projects integrado en Github supuso un punto a favor para este gestor. De todas formas, el equipo de desarrollo se compone de una persona, así que no hace falta complicar excesivamente el workflow.
 
 El desarrollo general de la documentación no ha seguido este sistema de issues, pues está sujeta a cambios constantes y cada commit está marcado con `[:notebook:]`. No obstante, ciertos problemas relacionados con ella, como puede ser el formato de entrega, sí que quedan recogidos como un issue.
 
@@ -190,9 +188,3 @@ Una de los detalles que has podido apreciar si has entrado al repositorio es un 
 Cada uno tiene un significado particular. En esta tabla se recogen sus significados:
 
 ![Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno](./img/07/Commits.png)
-
-<hr>
-
-## Referencias {.unlisted .unnumbered}
-
-[@digital-foundry-2020], [@nature-2016], [@beck2001agile], [@merelo-2021]
