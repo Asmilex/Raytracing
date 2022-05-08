@@ -337,7 +337,21 @@ $$
 \end{aligned}
 $${#eq:mc_integral}
 
-Como es natural, el número de muestras que usemos será clave para la proximidad de la estimación. ¿Cómo *de lejos* se queda del valor real de la integral $\E{f(X)}$?. Es decir; cómo modifica $N$ la varianza del estimador $\Var{\hat{I}_N}$?
+> **Nota**(ción): si te preguntas por qué lo llamamos $\hat{I}_N$, piensa que queremos calcular la intergal $I = \int_{S}{f(x)dx}$. Para ello, usamos el estimador $\hat{I}$, y marcamos explícitamente que usamos $N$ muestras.
+
+La varianza del estimador se puede calcular fácilmente:
+
+$$
+\begin{aligned}
+  Var[\hat{I}_N]
+    & = \Var{\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}} = \\
+    & = \frac{1}{N^2} \Var{ \sum_{i = 1}^{N}{f(X_i)}} = \\
+    & = \frac{1}{N^2} N \Var{f(X)} = \\
+    & = \frac{1}{N} \Var{f(X)}
+\end{aligned}
+$${#eq:mc_varianza}
+
+Como es natural, el número de muestras que usemos será clave para la proximidad de la estimación. ¿Cómo *de lejos* se queda del valor real de la integral $\E{f(X)}$? Es decir; ¿cómo modifica $N$ la varianza del estimador $\Var{\hat{I}_N}$?
 
 Para comprobarlo, debemos introducir dos nuevos teoremas: la desigualdad de Markov y la desigualdad de Chebyshsev [@metodos-monte-carlo, Introducción].
 
@@ -368,7 +382,7 @@ $$
 
 Esto nos dice que, usando un número de muestras relativamente grande ($N >> \frac{1}{\varepsilon}$), es prácticamente imposible que el estimador se aleje de $\E{f(X)}$.
 
-### COMIENZA LA PARTE VIEJA
+### COMIENZA LA PARTE VIEJA; PENDIENTE DE REMODELACIÓN
 
 $$
 \mu = \E{Y} = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
@@ -393,8 +407,6 @@ $$
 
 Es importante mencionar que $p_X(x)$ debe ser distinto de 0 cuando $f$ también lo sea.
 
-> **Nota**(ción): si te preguntas por qué lo llamamos $\hat{I}_N$, piensa que queremos calcular la intergal $I = \int_{S}{f(x)dx}$. Para ello, usamos el estimador $\hat{I}$, y marcamos explícitamente que usamos $N$ muestras.
-
 Podemos particularizar el caso en el que nuestras muestras $X_i$ sigan una distribución uniforme en $[a, b]$. Si eso ocurre, su función de densidad es $p_X(x) = \frac{1}{b - a}$, así que podemos simplificar un poco [@eq:mc_integral]:
 
 $$
@@ -413,7 +425,7 @@ $$
     & = \frac{1}{N^2} N \Var{\frac{f(X)}{p_X(X)}} = \\
     & = \frac{1}{N} \Var{\frac{f(X)}{p_X(X)}}
 \end{aligned}
-$${#eq:mc_varianza}
+$$
 
 es decir, la varianza del estimador es inversamente proporcional al número de muestras $N$.
 
@@ -455,9 +467,7 @@ $$
 \pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con } (x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
 $$
 
-### TERMINA LA PARTE VIEJA
-
-## Importance sampling
+#### Importance sampling
 
 Si recordamos la varianza del estimador de Monte Carlo [@eq:mc_varianza],
 
@@ -493,6 +503,9 @@ En la práctica, esto es inviable. El problema que queremos resolver es calcular
 Por fortuna, hay algoritmos que son capaces de proporcionar la constante $s$ sin necesidad de calcular la integral. Uno de los más conocidos es **Metropolis-Hastings**, el cual se basa en cadenas de Markov de Monte Carlo.
 
 En este trabajo nos centraremos en buscar funciones de densidad $p_X$ que se aproximen a $f$ lo más fielmente posible, dentro del contexto del transporte de luz.
+
+### TERMINA LA PARTE VIEJA
+
 
 ## Multiple importance sampling
 
