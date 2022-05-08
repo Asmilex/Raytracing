@@ -181,41 +181,6 @@ La esperanza tiene unas cuantas propiedades que nos resultarán muy útiles. Est
   - Análogamente, para ciertas $X_1, \dots, X_k$, $\E{\sum_{i = 1}^{k}{X_i}} = \sum_{i = 1}^{k}{\E{X_i}}$
   - Estas propiedades no necesitan que las variables aleatorias sean independientes. Este hecho será clave para las técnicas de Monte Carlo.
 
-Además de las anteriores propiedades, existen una serie de teoremas importantes que necesitaremos más adelante:
-
-**Ley del estadístico insconciente** (*Law of the unconscious statistician*, o LOTUS): dada una variable aleatoria $X$ y una función medible $g$, la esperanza de $g(X)$ se puede calcular como
-
-$$
-\E{g(X)} = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
-$${#eq:LOTUS}
-
-**Ley (fuerte) de los grandes números**: dada una muestra de $N$ valores $X_1, \dots, X_N$ de una variable aleatoria $X$ con esperanza $\E{X} = \mu$,
-
-$$
-\Prob{\lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} = \mu } = 1
-$$
-
-Usando que $\bar{X}_N = \frac{1}{N} \sum_{i = 1}^{N}{X_i}$, esta ley se suele escribir como
-
-$$
-\Prob{\lim_{N \to \infty}{\bar{X}_N} = \mu } = 1
-$${#eq:ley_numeros_grandes}
-
-Este teorema es especialmente importante. En esencia, nos dice que cuando repetimos muchas veces un experimento, al promediar los resultados obtendremos una esperanza muy cercana a la esperanza real.
-
-**Teorema Central del Límite (CLT) para variables idéntidcamente distribuidas** [@mcbook, capítulo 2]: Sean $X_1, \dots, X_N$  muestras aleatorias simples de una variable aleatoria $X$ con esperanza $\E{X} = \mu$ y varianza $Var[X] = \sigma^2$. Sea
-
-$$
-Z_N = \frac{\sum_{i = 1}^{N}{X_i - N\mu}}{\sigma \sqrt{N}}
-$$
-
-Entonces, la variable aleatoria $Z_N$ converge hacia una función de distribución normal estándar cuando $N$ es suficientemente grande:
-
-$$
-\lim_{N \to \infty}{P[Z_N \le z]} = \int_{-\infty}^{z}{\frac{1}{\sqrt{2 \pi}} e^{- \frac{x^2}{2}}dx}
-$${#eq:CLT}
-
-
 Será habitual encontrarnos con el problema de que no conocemos la distribución de una variable aleatoria $Y$. Sin embargo, si encontramos una transformación medible de una variable aleatoria $X$ de forma que obtengamos $Y$ (esto es, $\exists g$ función medible tal que $g(X) = Y$), entonces podemos calcular la esperanza de $Y$ fácilmente. Esta propiedad hará que las variables aleatorias con distribución uniforme adquieran muchísima importancia. Generar números aleatorios en $[0, 1)$ es muy fácil, así [que obtendremos otras vv.aa a partir de $\xi$](#método-de-la-transformada-inversa).
 
 Otra medida muy útil de una variable aleatoria es **la varianza**. Nos permitirá medir cómo de dispersa es la distribución con respecto a su media. La denotaremos como $Var[X]$, y se define como
@@ -244,6 +209,44 @@ Enunciemos un par de propiedades que tiene, similares a la de la esperanza:
   - En el caso en el que $X$ e $Y$ sean incorreladas (es decir, la covarianza es $0$), $Var[X + Y] =$ $Var[X] + Var[Y]$.
 
 La varianza nos será útil a la hora de medir el error cometido por una estimación de Monte Carlo.
+
+### Teoremas importantes
+
+Además de las anteriores propiedades, existen una serie de teoremas esenciales que necesitaremos más adelante:
+
+**Ley del estadístico insconciente** (*Law of the unconscious statistician*, o LOTUS): dada una variable aleatoria $X$ y una función medible $g$, la esperanza de $g(X)$ se puede calcular como
+
+$$
+\E{g(X)} = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
+$${#eq:LOTUS}
+
+**Ley (fuerte) de los grandes números**: dada una muestra de $N$ valores $X_1, \dots, X_N$ de una variable aleatoria $X$ con esperanza $\E{X} = \mu$,
+
+$$
+\Prob{\lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} = \mu } = 1
+$$
+
+Usando que $\bar{X}_N = \frac{1}{N} \sum_{i = 1}^{N}{X_i}$, esta ley se suele escribir como
+
+$$
+\Prob{\lim_{N \to \infty}{\bar{X}_N} = \mu } = 1
+$${#eq:ley_numeros_grandes}
+
+Este teorema es especialmente importante. En esencia, nos dice que cuando repetimos muchas veces un experimento, al promediar los resultados obtendremos una esperanza muy cercana a la esperanza real.
+
+**Teorema Central del Límite (CLT) para variables idénticamente distribuidas** [@mcbook, capítulo 2]: Sean $X_1, \dots, X_N$  muestras aleatorias simples de una variable aleatoria $X$ con esperanza $\E{X} = \mu$ y varianza $Var[X] = \sigma^2$. Sea
+
+$$
+Z_N = \frac{\sum_{i = 1}^{N}{X_i - N\mu}}{\sigma \sqrt{N}}
+$$
+
+Entonces, la variable aleatoria $Z_N$ converge hacia una función de distribución normal estándar cuando $N$ es suficientemente grande:
+
+$$
+\lim_{N \to \infty}{P[Z_N \le z]} = \int_{-\infty}^{z}{\frac{1}{\sqrt{2 \pi}} e^{- \frac{x^2}{2}}dx}
+$${#eq:CLT}
+
+
 
 ### Estimadores
 
