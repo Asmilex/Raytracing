@@ -309,7 +309,58 @@ $$
 
 ### Integración de Monte Carlo
 
-Generalmente nos encontraremos en la situación en la que $Y = f(X)$, donde $X \in S \subset \mathbb{R}^d$ sigue una distribución con función de densidad $p_X(x)$, y $f: S \rightarrow \mathbb{R}$.
+Generalmente nos encontraremos en la situación en la que $Y = f(X)$, donde $X \in S \subset \mathbb{R}^d$ sigue una distribución con función de densidad $p_X(x)$ con media $\mu = E[X]$, y $f: S \rightarrow \mathbb{R}$.
+
+Consideremos el promedio de $N$ muestras de $f(X)$:
+
+$$
+\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \quad X_i \text{ idénticamente distribuidas}
+$$
+
+En ese caso, la esperanza es
+
+$$
+\begin{aligned}
+E\left[\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \right] & = E\left[\frac{1}{N} \sum_{i = 1}^{N}{f(X)} \right] = \\
+                                                    & = \frac{1}{N} N E[f(X)] = \\
+                                                    & =  E[f(X)] = \\
+                                                    & = \int_S f(x) p_X(x) dx
+\end{aligned}
+$$
+
+¡Genial! Esto nos da una forma de **calcular la integral de una función** usando las imágenes de $N$ muestras $f(X_1), \dots, f(X_N)$ de una variable aleatoria $X \sim p_X$. A este estimador de Monte Carlo lo llamaremos $\hat{I}_N$:
+
+$$
+\begin{aligned}
+\hat{I}_N & = \frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \\
+          \Rightarrow E\left[\hat{I}_N\right] & = \int_S f(x) p_X(x) dx
+\end{aligned}
+$${#eq:mc_integral}
+
+Ahora nos preguntamos cómo *de lejos* se queda la estimación del valor real de la integral --la esperanza de $E[f(X)]$--. En otras palabras, ¿cuál es la varianza del estimador $\hat{I}_N$?
+
+Para calcularla, debemos introducir dos nuevos teoremas: la desigualdad de Markov y la desigualdad de Chebyshsev [@metodos-monte-carlo, Introducción].
+
+**Desigualdad de Markov**: Sea $X$ una variable aleatoria que toma valores no negativos, y sea $p_X$ su función de densidad. Entonces, $\forall x > 0$,
+
+$$
+\begin{aligned}
+E[X]  &   =  \int_0^x t p_X(t) dt + \int_x^\infty t p_X(t) dt \ge  \int_x^\infty t p_X(t) \\
+      & \ge  \int_x^\infty x p_X(t) = x P\left[X \ge x\right] \\
+      & \Rightarrow P\left[X \ge x\right] \le \frac{E[X]}{x}
+\end{aligned}
+$${#eq:desigualdad_markov}
+
+**Desigualdad de Chevyshev**: Sea $X$ una variable aleatoria con esperanza $\mu = E[X]$ y varianza $\sigma^2 = E[(X - \mu)^2]$. Entonces, aplicando la desigualdad de Markov [@eq:desigualdad_markov] a $D^2 = (X - \mu)^2$ se tiene que
+
+$$
+\begin{aligned}
+       P\left[D^2 \ge x^2\right]         & \le \frac{\sigma^2}{x^2} \\
+  \iff P\left[\abs{X - \mu} \ge x\right] & \le \frac{\sigma^2}{x^2}
+\end{aligned}
+$${#eq:desigualdad_chebyshev}
+
+### COMIENZA LA PARTE VIEJA
 
 $$
 \mu = E[Y] = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
@@ -330,7 +381,7 @@ $$
 
 $$
 \hat{I}_N = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
-$${#eq:mc_integral}
+$$
 
 Es importante mencionar que $p_X(x)$ debe ser distinto de 0 cuando $f$ también lo sea.
 
@@ -395,6 +446,8 @@ Bien, consideremos que una circunferencia de radio $r$ se encuentra inscrita en 
 $$
 \pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con } (x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
 $$
+
+### TERMINA LA PARTE VIEJA
 
 ## Importance sampling
 
