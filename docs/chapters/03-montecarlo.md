@@ -1,4 +1,4 @@
-# Integración de Monte Carlo
+# Métodos de Monte Carlo
 
 Como vimos en el capítulo anterior, la clave para conseguir una imagen en nuestro ray tracer es calcular la cantidad de luz en un punto de la escena. Para ello, necesitamos hallar la radiancia en dicha posición mediante la *rendering equation*. Sin embargo, es *muy* difícil resolverla; tanto computacional como analíticamente. Por ello, debemos atacar el problema desde otro punto de vista.
 
@@ -180,13 +180,16 @@ La esperanza tiene unas cuantas propiedades que nos resultarán muy útiles. Est
   - Si $a$ es una constante, $X$ una v.a., entonces $E[aX] = aE[X]$
   - Análogamente, para ciertas $X_1, \dots, X_k$, $E\left[\sum_{i = 1}^{k}{X_i}\right] = \sum_{i = 1}^{k}{E[X_i]}$
   - Estas propiedades no necesitan que las variables aleatorias sean independientes. Este hecho será clave para las técnicas de Monte Carlo.
-- La **Ley del estadístico insconciente** (*Law of the unconscious statistician*, o LOTUS): dada una variable aleatoria $X$ y una función medible $g$, la esperanza de $g(X)$ se puede calcular como
+
+Además de las anteriores propiedades, existen una serie de teoremas importantes que necesitaremos más adelante:
+
+**Ley del estadístico insconciente** (*Law of the unconscious statistician*, o LOTUS): dada una variable aleatoria $X$ y una función medible $g$, la esperanza de $g(X)$ se puede calcular como
 
 $$
 E[g(X)] = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
-$$
+$${#eq:LOTUS}
 
-- La **Ley (fuerte) de los grandes números** nos dice que dada una muestra de $n$ valores $X_1, \dots, X_N$ de una variable aleatoria $X$ con esperanza $E[X] = \mu$,
+**Ley (fuerte) de los grandes números**: dada una muestra de $N$ valores $X_1, \dots, X_N$ de una variable aleatoria $X$ con esperanza $E[X] = \mu$,
 
 $$
 P\left[\lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} = \mu \right] = 1
@@ -196,9 +199,22 @@ Usando que $\bar{X}_N = \frac{1}{N} \sum_{i = 1}^{N}{X_i}$, esta ley se suele es
 
 $$
 P\left[\lim_{N \to \infty}{\bar{X}_N} = \mu \right] = 1
+$${#eq:ley_numeros_grandes}
+
+Este teorema es especialmente importante. En esencia, nos dice que cuando repetimos muchas veces un experimento, al promediar los resultados obtendremos una esperanza muy cercana a la esperanza real.
+
+**Teorema Central del Límite (CLT) para variables idéntidcamente distribuidas** [@mcbook, capítulo 2]: Sean $X_1, \dots, X_N$  muestras aleatorias simples de una variable aleatoria $X$ con esperanza $E[X] = \mu$ y varianza $Var[X] = \sigma^2$. Sea
+
+$$
+Z_N = \frac{\sum_{i = 1}^{N}{X_i - N\mu}}{\sigma \sqrt{N}}
 $$
 
-Estas dos últimas propiedades resultarán claves en el desarrollo.
+Entonces, la variable aleatoria $Z_N$ converge hacia una función de distribución normal estándar cuando $N$ es suficientemente grande:
+
+$$
+\lim_{N \to \infty}{P[Z_N \le z]} = \int_{-\infty}^{z}{\frac{1}{\sqrt{2 \pi}} e^{- \frac{x^2}{2}}dx}
+$${#eq:CLT}
+
 
 Será habitual encontrarnos con el problema de que no conocemos la distribución de una variable aleatoria $Y$. Sin embargo, si encontramos una transformación medible de una variable aleatoria $X$ de forma que obtengamos $Y$ (esto es, $\exists g$ función medible tal que $g(X) = Y$), entonces podemos calcular la esperanza de $Y$ fácilmente. Esta propiedad hará que las variables aleatorias con distribución uniforme adquieran muchísima importancia. Generar números aleatorios en $[0, 1)$ es muy fácil, así [que obtendremos otras vv.aa a partir de $\xi$](#método-de-la-transformada-inversa).
 
@@ -253,11 +269,27 @@ Naturalmente, decimos que un estimador $T(X_1, \dots, X_N)$ está **sesgado** si
 
 Tras este breve repaso de probabilidad, estamos en condiciones de definir el estimador de Monte Carlo. Primero, vamos con su versión más sencilla.
 
-Los estimadores de Monte Carlo nos permiten hallar la esperanza de una variable aleatoria, digamos, $Y$, sin necesidad de calcular explícitamente su valor. Para ello, tomamos unas cuantas muestras $Y_1, \dots, Y_N$ que sigan la misma distribución que $Y$ con media $\mu$. Entonces, consideramos el estimador de $\mu$ [@mcbook]:
+### Monte Carlo básico
+
+Los estimadores de Monte Carlo nos permiten hallar la esperanza de una variable aleatoria, digamos, $Y$, sin necesidad de calcular explícitamente su valor. Para ello, tomamos $N$ muestras $Y_1, \dots, Y_N$ de $Y$, cuya  media vale $\mu$. Entonces, el estimador de $\mu$ [@mcbook, capítulo 2] es:
 
 $$
 \hat\mu_N = \frac{1}{N} \sum_{i = 1}^{N}{Y_i}
 $${#eq:mc_simple}
+
+La intuición del estimador es, esencialmente, la misma que la del teorema central del límite. Lo que buscamos es una forma de calcular la media de un cierto suceso aleatorio, pero lo único que podemos usar son muestras de su variable aleatoria. Promediando esas muestras, sacamos información de la distribución. En este caso, la media.
+
+En cualquier caso, la existencia de este estimador viene dada por la ley de los grandes números (tanto débil como fuerte [@eq:ley_numeros_grandes]). Si $\mu = E[Y]$, se tiene que
+
+$$
+\lim_{N \to \infty}P\left[\abs{\hat\mu_N - \mu} \le \varepsilon\right] = 1 \quad \forall\ \varepsilon > 0
+$$
+
+o utilizando la ley de los números grandes,
+
+$$
+\lim_{N \to \infty}P\left[\abs{\hat\mu_N - \mu} = 0\right] = 1
+$$
 
 Haciendo la esperanza de este estimador, vemos que
 
@@ -269,9 +301,15 @@ E[\hat\mu_N] & = E\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right] = \frac{1}{N} E
 \end{aligned}
 $$
 
-Por lo que el estimador es insesgado.
+Por lo que el estimador es insesgado. Además, se tiene que la varianza es
 
-Generalmente nos encontraremos en la situación en la que $Y = f(X)$, donde $X$ sigue una distribución con función de densidad $p_X(x)$, y $f: S \rightarrow \mathbb{R}$. En ese caso, sabemos que la esperanza de $Y$ se puede calcular como
+$$
+E\left[(\hat\mu_N - \mu)^2\right] = \frac{\sigma^2}{N}
+$$
+
+### Integración de Monte Carlo
+
+Generalmente nos encontraremos en la situación en la que $Y = f(X)$, donde $X \in S \subset \mathbb{R}^d$ sigue una distribución con función de densidad $p_X(x)$, y $f: S \rightarrow \mathbb{R}$.
 
 $$
 \mu = E[Y] = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
