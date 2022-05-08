@@ -356,7 +356,9 @@ continuas</a></li>
 <li><a href="#esperanza-y-varianza-de-una-variable-aleatoria"><span
 class="toc-section-number">4.1.3</span> Esperanza y varianza de una
 variable aleatoria</a></li>
-<li><a href="#estimadores"><span class="toc-section-number">4.1.4</span>
+<li><a href="#teoremas-importantes"><span
+class="toc-section-number">4.1.4</span> Teoremas importantes</a></li>
+<li><a href="#estimadores"><span class="toc-section-number">4.1.5</span>
 Estimadores</a></li>
 </ul></li>
 <li><a href="#el-estimador-de-monte-carlo"><span
@@ -2770,54 +2772,6 @@ independientes. Este hecho será clave para las técnicas de Monte
 Carlo.</li>
 </ul></li>
 </ul>
-<p>Además de las anteriores propiedades, existen una serie de teoremas
-importantes que necesitaremos más adelante:</p>
-<p><strong>Ley del estadístico insconciente</strong> (<em>Law of the
-unconscious statistician</em>, o LOTUS): dada una variable aleatoria
-<span class="math inline">\(X\)</span> y una función medible <span
-class="math inline">\(g\)</span>, la esperanza de <span
-class="math inline">\(g(X)\)</span> se puede calcular como</p>
-<p><span id="eq:LOTUS" class="eqnos"><span class="math display">\[
-E\left[ g(X) \right] = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
-\]</span><span class="eqnos-number">(12)</span></span></p>
-<p><strong>Ley (fuerte) de los grandes números</strong>: dada una
-muestra de <span class="math inline">\(N\)</span> valores <span
-class="math inline">\(X_1, \dots, X_N\)</span> de una variable aleatoria
-<span class="math inline">\(X\)</span> con esperanza <span
-class="math inline">\(E\left[ X \right] = \mu\)</span>,</p>
-<p><span class="math display">\[
-P\left[ \lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} =
-\mu  \right] = 1
-\]</span></p>
-<p>Usando que <span class="math inline">\(\bar{X}_N = \frac{1}{N}
-\sum_{i = 1}^{N}{X_i}\)</span>, esta ley se suele escribir como</p>
-<p><span id="eq:ley_numeros_grandes" class="eqnos"><span
-class="math display">\[
-P\left[ \lim_{N \to \infty}{\bar{X}_N} = \mu  \right] = 1
-\]</span><span class="eqnos-number">(13)</span></span></p>
-<p>Este teorema es especialmente importante. En esencia, nos dice que
-cuando repetimos muchas veces un experimento, al promediar los
-resultados obtendremos una esperanza muy cercana a la esperanza
-real.</p>
-<p><strong>Teorema Central del Límite (CLT) para variables
-idéntidcamente distribuidas</strong> <span class="citation"
-data-cites="mcbook">(<a href="#ref-mcbook" role="doc-biblioref">Owen
-2013</a>, capítulo 2)</span>: Sean <span class="math inline">\(X_1,
-\dots, X_N\)</span> muestras aleatorias simples de una variable
-aleatoria <span class="math inline">\(X\)</span> con esperanza <span
-class="math inline">\(E\left[ X \right] = \mu\)</span> y varianza <span
-class="math inline">\(Var[X] = \sigma^2\)</span>. Sea</p>
-<p><span class="math display">\[
-Z_N = \frac{\sum_{i = 1}^{N}{X_i - N\mu}}{\sigma \sqrt{N}}
-\]</span></p>
-<p>Entonces, la variable aleatoria <span
-class="math inline">\(Z_N\)</span> converge hacia una función de
-distribución normal estándar cuando <span
-class="math inline">\(N\)</span> es suficientemente grande:</p>
-<p><span id="eq:CLT" class="eqnos"><span class="math display">\[
-\lim_{N \to \infty}{P[Z_N \le z]} = \int_{-\infty}^{z}{\frac{1}{\sqrt{2
-\pi}} e^{- \frac{x^2}{2}}dx}
-\]</span><span class="eqnos-number">(14)</span></span></p>
 <p>Será habitual encontrarnos con el problema de que no conocemos la
 distribución de una variable aleatoria <span
 class="math inline">\(Y\)</span>. Sin embargo, si encontramos una
@@ -2874,8 +2828,58 @@ class="math inline">\(Var[X] + Var[Y]\)</span>.</li>
 </ul>
 <p>La varianza nos será útil a la hora de medir el error cometido por
 una estimación de Monte Carlo.</p>
-<h3 data-number="4.1.4" id="estimadores"><span
-class="header-section-number">4.1.4</span> Estimadores</h3>
+<h3 data-number="4.1.4" id="teoremas-importantes"><span
+class="header-section-number">4.1.4</span> Teoremas importantes</h3>
+<p>Además de las anteriores propiedades, existen una serie de teoremas
+esenciales que necesitaremos más adelante:</p>
+<p><strong>Ley del estadístico insconciente</strong> (<em>Law of the
+unconscious statistician</em>, o LOTUS): dada una variable aleatoria
+<span class="math inline">\(X\)</span> y una función medible <span
+class="math inline">\(g\)</span>, la esperanza de <span
+class="math inline">\(g(X)\)</span> se puede calcular como</p>
+<p><span id="eq:LOTUS" class="eqnos"><span class="math display">\[
+E\left[ g(X) \right] = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
+\]</span><span class="eqnos-number">(12)</span></span></p>
+<p><strong>Ley (fuerte) de los grandes números</strong>: dada una
+muestra de <span class="math inline">\(N\)</span> valores <span
+class="math inline">\(X_1, \dots, X_N\)</span> de una variable aleatoria
+<span class="math inline">\(X\)</span> con esperanza <span
+class="math inline">\(E\left[ X \right] = \mu\)</span>,</p>
+<p><span class="math display">\[
+P\left[ \lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} =
+\mu  \right] = 1
+\]</span></p>
+<p>Usando que <span class="math inline">\(\bar{X}_N = \frac{1}{N}
+\sum_{i = 1}^{N}{X_i}\)</span>, esta ley se suele escribir como</p>
+<p><span id="eq:ley_numeros_grandes" class="eqnos"><span
+class="math display">\[
+P\left[ \lim_{N \to \infty}{\bar{X}_N} = \mu  \right] = 1
+\]</span><span class="eqnos-number">(13)</span></span></p>
+<p>Este teorema es especialmente importante. En esencia, nos dice que
+cuando repetimos muchas veces un experimento, al promediar los
+resultados obtendremos una esperanza muy cercana a la esperanza
+real.</p>
+<p><strong>Teorema Central del Límite (CLT) para variables idénticamente
+distribuidas</strong> <span class="citation" data-cites="mcbook">(<a
+href="#ref-mcbook" role="doc-biblioref">Owen 2013</a>, capítulo
+2)</span>: Sean <span class="math inline">\(X_1, \dots, X_N\)</span>
+muestras aleatorias simples de una variable aleatoria <span
+class="math inline">\(X\)</span> con esperanza <span
+class="math inline">\(E\left[ X \right] = \mu\)</span> y varianza <span
+class="math inline">\(Var[X] = \sigma^2\)</span>. Sea</p>
+<p><span class="math display">\[
+Z_N = \frac{\sum_{i = 1}^{N}{X_i - N\mu}}{\sigma \sqrt{N}}
+\]</span></p>
+<p>Entonces, la variable aleatoria <span
+class="math inline">\(Z_N\)</span> converge hacia una función de
+distribución normal estándar cuando <span
+class="math inline">\(N\)</span> es suficientemente grande:</p>
+<p><span id="eq:CLT" class="eqnos"><span class="math display">\[
+\lim_{N \to \infty}{P[Z_N \le z]} = \int_{-\infty}^{z}{\frac{1}{\sqrt{2
+\pi}} e^{- \frac{x^2}{2}}dx}
+\]</span><span class="eqnos-number">(14)</span></span></p>
+<h3 data-number="4.1.5" id="estimadores"><span
+class="header-section-number">4.1.5</span> Estimadores</h3>
 <p>A veces, no podremos conocer de antemano el valor que toma un cierto
 parámetro de una distribución. Sin embargo, conocemos el tipo de
 distribución que nuestra variable aleatoria <span
