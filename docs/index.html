@@ -341,8 +341,8 @@ GGX</a></li>
 <li><a href="#la-rendering-equation"><span
 class="toc-section-number">3.4</span> La rendering equation</a></li>
 </ul></li>
-<li><a href="#integración-de-monte-carlo"><span
-class="toc-section-number">4</span> Integración de Monte Carlo</a>
+<li><a href="#métodos-de-monte-carlo"><span
+class="toc-section-number">4</span> Métodos de Monte Carlo</a>
 <ul>
 <li><a href="#repaso-de-probabilidad"><span
 class="toc-section-number">4.1</span> Repaso de probabilidad</a>
@@ -360,67 +360,80 @@ variable aleatoria</a></li>
 Estimadores</a></li>
 </ul></li>
 <li><a href="#el-estimador-de-monte-carlo"><span
-class="toc-section-number">4.2</span> El estimador de Monte
+class="toc-section-number">4.2</span> El estimador de Monte Carlo</a>
+<ul>
+<li><a href="#monte-carlo-básico"><span
+class="toc-section-number">4.2.1</span> Monte Carlo básico</a></li>
+<li><a href="#integración-de-monte-carlo"><span
+class="toc-section-number">4.2.2</span> Integración de Monte
 Carlo</a></li>
+<li><a href="#comienza-la-parte-vieja-pendiente-de-remodelación"><span
+class="toc-section-number">4.2.3</span> COMIENZA LA PARTE VIEJA;
+PENDIENTE DE REMODELACIÓN</a>
+<ul>
 <li><a href="#importance-sampling"><span
-class="toc-section-number">4.3</span> Importance sampling</a></li>
+class="toc-section-number">4.2.3.1</span> Importance sampling</a></li>
+</ul></li>
+<li><a href="#termina-la-parte-vieja"><span
+class="toc-section-number">4.2.4</span> TERMINA LA PARTE VIEJA</a></li>
+</ul></li>
 <li><a href="#multiple-importance-sampling"><span
-class="toc-section-number">4.4</span> Multiple importance
+class="toc-section-number">4.3</span> Multiple importance
 sampling</a></li>
 <li><a href="#escogiendo-puntos-aleatorios"><span
-class="toc-section-number">4.5</span> Escogiendo puntos aleatorios</a>
+class="toc-section-number">4.4</span> Escogiendo puntos aleatorios</a>
 <ul>
 <li><a href="#método-de-la-transformada-inversa"><span
-class="toc-section-number">4.5.1</span> Método de la transformada
+class="toc-section-number">4.4.1</span> Método de la transformada
 inversa</a></li>
 <li><a href="#método-del-rechazo"><span
-class="toc-section-number">4.5.2</span> Método del rechazo</a></li>
+class="toc-section-number">4.4.2</span> Método del rechazo</a></li>
 <li><a href="#distribuciones-unidimensionales"><span
-class="toc-section-number">4.5.3</span> Distribuciones
+class="toc-section-number">4.4.3</span> Distribuciones
 unidimensionales</a>
 <ul>
 <li><a href="#uniformente"><span
-class="toc-section-number">4.5.3.1</span> Uniformente</a></li>
-<li><a href="#linear"><span class="toc-section-number">4.5.3.2</span>
+class="toc-section-number">4.4.3.1</span> Uniformente</a></li>
+<li><a href="#linear"><span class="toc-section-number">4.4.3.2</span>
 Linear</a></li>
-<li><a href="#gausiana"><span class="toc-section-number">4.5.3.3</span>
+<li><a href="#gausiana"><span class="toc-section-number">4.4.3.3</span>
 Gausiana</a></li>
 <li><a href="#basada-en-texturas"><span
-class="toc-section-number">4.5.3.4</span> Basada en texturas</a></li>
+class="toc-section-number">4.4.3.4</span> Basada en texturas</a></li>
 </ul></li>
 <li><a href="#distribuciones-bidimensionales"><span
-class="toc-section-number">4.5.4</span> Distribuciones
+class="toc-section-number">4.4.4</span> Distribuciones
 bidimensionales</a>
 <ul>
 <li><a href="#uniformemente"><span
-class="toc-section-number">4.5.4.1</span> Uniformemente</a></li>
+class="toc-section-number">4.4.4.1</span> Uniformemente</a></li>
 <li><a href="#basada-en-mappeo-de-superficies-a-un-hemisferio"><span
-class="toc-section-number">4.5.4.2</span> Basada en mappeo de
+class="toc-section-number">4.4.4.2</span> Basada en mappeo de
 superficies a un hemisferio</a></li>
-<li><a href="#brdf"><span class="toc-section-number">4.5.4.3</span>
+<li><a href="#brdf"><span class="toc-section-number">4.4.4.3</span>
 BRDF</a></li>
 <li><a href="#basada-en-el-coseno"><span
-class="toc-section-number">4.5.4.4</span> Basada en el coseno</a></li>
+class="toc-section-number">4.4.4.4</span> Basada en el coseno</a></li>
 </ul></li>
 </ul></li>
 <li><a
 href="#técnicas-de-reducción-de-varianza-basadas-en-muestras"><span
-class="toc-section-number">4.6</span> Técnicas de reducción de varianza
+class="toc-section-number">4.5</span> Técnicas de reducción de varianza
 basadas en muestras</a>
 <ul>
-<li><a href="#ruleta-rusa"><span class="toc-section-number">4.6.1</span>
+<li><a href="#ruleta-rusa"><span class="toc-section-number">4.5.1</span>
 Ruleta rusa</a></li>
 <li><a href="#next-event-estimation"><span
-class="toc-section-number">4.6.2</span> Next Event Estimation</a></li>
-<li><a href="#blue-noise"><span class="toc-section-number">4.6.3</span>
+class="toc-section-number">4.5.2</span> Next Event Estimation</a></li>
+<li><a href="#blue-noise"><span class="toc-section-number">4.5.3</span>
 Blue noise</a></li>
 <li><a href="#forced-random-sampling"><span
-class="toc-section-number">4.6.4</span> Forced random sampling</a></li>
+class="toc-section-number">4.5.4</span> Forced random sampling</a></li>
 <li><a href="#sampling-importance-resampling"><span
-class="toc-section-number">4.6.5</span> Sampling importance
+class="toc-section-number">4.5.5</span> Sampling importance
 resampling</a></li>
 <li><a href="#low-discrepancy-sampling"><span
-class="toc-section-number">4.6.6</span> Low discrepancy
+class="toc-section-number">4.5.6</span> Low discrepancy
 sampling</a></li>
 </ul></li>
 </ul></li>
@@ -2480,8 +2493,8 @@ la luz. Además, no se conocen las radiancias de salida.</li>
 <p>Este último matiz es importante. Para renderizar una imagen, se
 necesita calcular la radiancia de salida para aquellos puntos visibles
 desde nuestra cámara.</p>
-<h1 data-number="4" id="integración-de-monte-carlo"><span
-class="header-section-number">4</span> Integración de Monte Carlo</h1>
+<h1 data-number="4" id="métodos-de-monte-carlo"><span
+class="header-section-number">4</span> Métodos de Monte Carlo</h1>
 <p>Como vimos en el capítulo anterior, la clave para conseguir una
 imagen en nuestro ray tracer es calcular la cantidad de luz en un punto
 de la escena. Para ello, necesitamos hallar la radiancia en dicha
@@ -2707,12 +2720,12 @@ id="esperanza-y-varianza-de-una-variable-aleatoria"><span
 class="header-section-number">4.1.3</span> Esperanza y varianza de una
 variable aleatoria</h3>
 <p>La <strong>esperanza de una variable aleatoria</strong>, denotada
-<span class="math inline">\(E[X]\)</span>, es una generalización de la
-media ponderada. Nos informa del <em>valor esperado</em> de dicha
-variable aleatoria.</p>
+<span class="math inline">\(E\left[ X \right]\)</span>, es una
+generalización de la media ponderada. Nos informa del <em>valor
+esperado</em> de dicha variable aleatoria.</p>
 <p>En el caso de las variables discretas, se define como</p>
 <p><span class="math display">\[
-E[X] = \sum_{i}{x_i p_i}
+E\left[ X \right] = \sum_{i}{x_i p_i}
 \]</span></p>
 <p>donde <span class="math inline">\(x_i\)</span> son los posibles
 valores que puede tomar la v.a., y <span
@@ -2722,20 +2735,20 @@ x_i]\)</span></p>
 <p>Para una variable aleatoria continua real, la esperanza viene dada
 por</p>
 <p><span class="math display">\[
-E[X] = \int_{-\infty}^{\infty}{x f_X(x) dx}
+E\left[ X \right] = \int_{-\infty}^{\infty}{x f_X(x) dx}
 \]</span></p>
 <p>Pongamos un par de ejemplos del cálculo de la esperanza. En el <a
 href="#variables-aleatorias-discretas">ejemplo de las variables
 discretas</a>, la esperanza venía dada por</p>
 <p><span class="math display">\[
-E[X] = \sum_{i = 2}^{12}{i P[X = i]} = 2\frac{1}{36} + 3 \frac{2}{36} +
-\dots + 12 \frac{1}{36} = 7
+E\left[ X \right] = \sum_{i = 2}^{12}{i P[X = i]} = 2\frac{1}{36} + 3
+\frac{2}{36} + \dots + 12 \frac{1}{36} = 7
 \]</span></p>
 <p>Para variables aleatorias uniformes en <span
 class="math inline">\((a, b)\)</span> (es decir, <span
 class="math inline">\(X \sim U(a, b)\)</span>), la esperanza es</p>
 <p><span class="math display">\[
-E[X] = \int_{a}^{b}{x \frac{1}{b - a}dx} = \frac{a + b}{2}
+E\left[ X \right] = \int_{a}^{b}{x \frac{1}{b - a}dx} = \frac{a + b}{2}
 \]</span></p>
 <p>La esperanza tiene unas cuantas propiedades que nos resultarán muy
 útiles. Estas son:</p>
@@ -2743,43 +2756,68 @@ E[X] = \int_{a}^{b}{x \frac{1}{b - a}dx} = \frac{a + b}{2}
 <li><strong>Linealidad</strong>:
 <ul>
 <li>Si <span class="math inline">\(X, Y\)</span> son dos v.a., <span
-class="math inline">\(E[X + Y] = E[X] + E[Y]\)</span></li>
+class="math inline">\(E\left[ X + Y \right] = E\left[ X \right] +
+E\left[ Y \right]\)</span></li>
 <li>Si <span class="math inline">\(a\)</span> es una constante, <span
 class="math inline">\(X\)</span> una v.a., entonces <span
-class="math inline">\(E[aX] = aE[X]\)</span></li>
+class="math inline">\(E\left[ aX \right] = aE\left[ X
+\right]\)</span></li>
 <li>Análogamente, para ciertas <span class="math inline">\(X_1, \dots,
-X_k\)</span>, <span class="math inline">\(E\left[\sum_{i =
-1}^{k}{X_i}\right] = \sum_{i = 1}^{k}{E[X_i]}\)</span></li>
+X_k\)</span>, <span class="math inline">\(E\left[ \sum_{i = 1}^{k}{X_i}
+\right] = \sum_{i = 1}^{k}{E\left[ X_i \right]}\)</span></li>
 <li>Estas propiedades no necesitan que las variables aleatorias sean
 independientes. Este hecho será clave para las técnicas de Monte
 Carlo.</li>
 </ul></li>
-<li>La <strong>Ley del estadístico insconciente</strong> (<em>Law of the
+</ul>
+<p>Además de las anteriores propiedades, existen una serie de teoremas
+importantes que necesitaremos más adelante:</p>
+<p><strong>Ley del estadístico insconciente</strong> (<em>Law of the
 unconscious statistician</em>, o LOTUS): dada una variable aleatoria
 <span class="math inline">\(X\)</span> y una función medible <span
 class="math inline">\(g\)</span>, la esperanza de <span
-class="math inline">\(g(X)\)</span> se puede calcular como</li>
-</ul>
-<p><span class="math display">\[
-E[g(X)] = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
-\]</span></p>
-<ul>
-<li>La <strong>Ley (fuerte) de los grandes números</strong> nos dice que
-dada una muestra de <span class="math inline">\(n\)</span> valores <span
+class="math inline">\(g(X)\)</span> se puede calcular como</p>
+<p><span id="eq:LOTUS" class="eqnos"><span class="math display">\[
+E\left[ g(X) \right] = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
+\]</span><span class="eqnos-number">(12)</span></span></p>
+<p><strong>Ley (fuerte) de los grandes números</strong>: dada una
+muestra de <span class="math inline">\(N\)</span> valores <span
 class="math inline">\(X_1, \dots, X_N\)</span> de una variable aleatoria
 <span class="math inline">\(X\)</span> con esperanza <span
-class="math inline">\(E[X] = \mu\)</span>,</li>
-</ul>
+class="math inline">\(E\left[ X \right] = \mu\)</span>,</p>
 <p><span class="math display">\[
-P\left[\lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} = \mu
-\right] = 1
+P\left[ \lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} =
+\mu  \right] = 1
 \]</span></p>
 <p>Usando que <span class="math inline">\(\bar{X}_N = \frac{1}{N}
 \sum_{i = 1}^{N}{X_i}\)</span>, esta ley se suele escribir como</p>
+<p><span id="eq:ley_numeros_grandes" class="eqnos"><span
+class="math display">\[
+P\left[ \lim_{N \to \infty}{\bar{X}_N} = \mu  \right] = 1
+\]</span><span class="eqnos-number">(13)</span></span></p>
+<p>Este teorema es especialmente importante. En esencia, nos dice que
+cuando repetimos muchas veces un experimento, al promediar los
+resultados obtendremos una esperanza muy cercana a la esperanza
+real.</p>
+<p><strong>Teorema Central del Límite (CLT) para variables
+idéntidcamente distribuidas</strong> <span class="citation"
+data-cites="mcbook">(<a href="#ref-mcbook" role="doc-biblioref">Owen
+2013</a>, capítulo 2)</span>: Sean <span class="math inline">\(X_1,
+\dots, X_N\)</span> muestras aleatorias simples de una variable
+aleatoria <span class="math inline">\(X\)</span> con esperanza <span
+class="math inline">\(E\left[ X \right] = \mu\)</span> y varianza <span
+class="math inline">\(Var[X] = \sigma^2\)</span>. Sea</p>
 <p><span class="math display">\[
-P\left[\lim_{N \to \infty}{\bar{X}_N} = \mu \right] = 1
+Z_N = \frac{\sum_{i = 1}^{N}{X_i - N\mu}}{\sigma \sqrt{N}}
 \]</span></p>
-<p>Estas dos últimas propiedades resultarán claves en el desarrollo.</p>
+<p>Entonces, la variable aleatoria <span
+class="math inline">\(Z_N\)</span> converge hacia una función de
+distribución normal estándar cuando <span
+class="math inline">\(N\)</span> es suficientemente grande:</p>
+<p><span id="eq:CLT" class="eqnos"><span class="math display">\[
+\lim_{N \to \infty}{P[Z_N \le z]} = \int_{-\infty}^{z}{\frac{1}{\sqrt{2
+\pi}} e^{- \frac{x^2}{2}}dx}
+\]</span><span class="eqnos-number">(14)</span></span></p>
 <p>Será habitual encontrarnos con el problema de que no conocemos la
 distribución de una variable aleatoria <span
 class="math inline">\(Y\)</span>. Sin embargo, si encontramos una
@@ -2799,20 +2837,23 @@ varianza</strong>. Nos permitirá medir cómo de dispersa es la
 distribución con respecto a su media. La denotaremos como <span
 class="math inline">\(Var[X]\)</span>, y se define como</p>
 <p><span class="math display">\[
-Var[X] = E\left[(X - E[X])^2\right]
+Var[X] = E\left[ (X - E\left[ X \right])^2 \right]
 \]</span></p>
 <p>Si desarrollamos esta definición, podemos conseguir una expresión
 algo más agradable:</p>
 <p><span class="math display">\[
 \begin{aligned}
-   Var[X] &amp; = E\left[(X - E[X])^2\right] = \\
-          &amp; = E\left[X^2 + E[X]^2 - 2XE[X]\right] = \\
-          &amp; = E\left[X^2\right] + E[X]^2 - 2E[X]E[X] = \\
-          &amp; = E\left[X^2\right] - E\left[X\right]^2
+   Var[X] &amp; = E\left[ (X - E\left[ X \right])^2 \right] = \\
+          &amp; = E\left[ X^2 + E\left[ X \right]^2 - 2XE\left[ X
+\right] \right] = \\
+          &amp; = E\left[ X^2 \right] + E\left[ X \right]^2 - 2E\left[ X
+\right]E\left[ X \right] = \\
+          &amp; = E\left[ X^2\right] - E\left[X \right]^2
 \end{aligned}
 \]</span></p>
-<p>Hemos usado que <span class="math inline">\(E[E[X]] = E[X]\)</span> y
-la linealidad de la esperanza.</p>
+<p>Hemos usado que <span class="math inline">\(E\left[ E\left[ X \right]
+\right] = E\left[ X \right]\)</span> y la linealidad de la
+esperanza.</p>
 <p>Enunciemos un par de propiedades que tiene, similares a la de la
 esperanza:</p>
 <ul>
@@ -2862,61 +2903,201 @@ viables para la distribución.</p>
 X_N)\)</span> es <strong>insesgado</strong> (o centrado en el parámetro
 <span class="math inline">\(\theta\)</span>) si</p>
 <p><span class="math display">\[
-E[T(X_1, \dots, X_n)] = \theta\quad \forall \theta \in \Theta
+E\left[ T(X_1, \dots, X_n) \right] = \theta\quad \forall \theta \in
+\Theta
 \]</span></p>
 <p>Naturalmente, decimos que un estimador <span
 class="math inline">\(T(X_1, \dots, X_N)\)</span> está
-<strong>sesgado</strong> si <span class="math inline">\(E[T(X_1, \dots,
-X_N] \not = \theta\)</span>.</p>
+<strong>sesgado</strong> si <span class="math inline">\(E\left[ T(X_1,
+\dots, X_N \right] \not = \theta\)</span>.</p>
 <h2 data-number="4.2" id="el-estimador-de-monte-carlo"><span
 class="header-section-number">4.2</span> El estimador de Monte
 Carlo</h2>
 <p>Tras este breve repaso de probabilidad, estamos en condiciones de
 definir el estimador de Monte Carlo. Primero, vamos con su versión más
 sencilla.</p>
+<h3 data-number="4.2.1" id="monte-carlo-básico"><span
+class="header-section-number">4.2.1</span> Monte Carlo básico</h3>
 <p>Los estimadores de Monte Carlo nos permiten hallar la esperanza de
 una variable aleatoria, digamos, <span class="math inline">\(Y\)</span>,
 sin necesidad de calcular explícitamente su valor. Para ello, tomamos
-unas cuantas muestras <span class="math inline">\(Y_1, \dots,
-Y_N\)</span> que sigan la misma distribución que <span
-class="math inline">\(Y\)</span> con media <span
-class="math inline">\(\mu\)</span>. Entonces, consideramos el estimador
-de <span class="math inline">\(\mu\)</span> <span class="citation"
+<span class="math inline">\(N\)</span> muestras <span
+class="math inline">\(Y_1, \dots, Y_N\)</span> de <span
+class="math inline">\(Y\)</span>, cuya media vale <span
+class="math inline">\(\mu\)</span>. Entonces, el estimador de <span
+class="math inline">\(\mu\)</span> <span class="citation"
 data-cites="mcbook">(<a href="#ref-mcbook" role="doc-biblioref">Owen
-2013</a>)</span>:</p>
+2013</a>, capítulo 2)</span> es:</p>
 <p><span id="eq:mc_simple" class="eqnos"><span class="math display">\[
 \hat\mu_N = \frac{1}{N} \sum_{i = 1}^{N}{Y_i}
-\]</span><span class="eqnos-number">(12)</span></span></p>
+\]</span><span class="eqnos-number">(15)</span></span></p>
+<p>La intuición del estimador es, esencialmente, la misma que la del
+teorema central del límite. Lo que buscamos es una forma de calcular la
+media de un cierto suceso aleatorio, pero lo único que podemos usar son
+muestras de su variable aleatoria. Promediando esas muestras, sacamos
+información de la distribución. En este caso, la media.</p>
+<p>En cualquier caso, la existencia de este estimador viene dada por la
+ley de los grandes números (tanto débil como fuerte [<a
+href="#eq:ley_numeros_grandes">13</a>]). Si <span
+class="math inline">\(\mu = E\left[ Y \right]\)</span>, se tiene que</p>
+<p><span class="math display">\[
+\lim_{N \to \infty}P\left[ \left\lvert \hat\mu_N - \mu \right\rvert \le
+\varepsilon \right] = 1 \quad \forall\ \varepsilon &gt; 0
+\]</span></p>
+<p>o utilizando la ley de los números grandes,</p>
+<p><span class="math display">\[
+\lim_{N \to \infty}P\left[ \left\lvert \hat\mu_N - \mu \right\rvert = 0
+\right] = 1
+\]</span></p>
 <p>Haciendo la esperanza de este estimador, vemos que</p>
 <p><span class="math display">\[
 \begin{aligned}
-E[\hat\mu_N] &amp; = E\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right] =
-\frac{1}{N} E\left[\sum_{i = 1}^{N}{Y_i}\right] \\
-             &amp; = \frac{1}{N} \sum_{i = 1}^{N}{E\left[Y_i\right]} =
+E\left[ \hat\mu_N \right] &amp; = E\left[ \frac{1}{N} \sum_{i =
+1}^{N}{Y_i}\right] = \frac{1}{N} E\left[\sum_{i = 1}^{N}{Y_i} \right] \\
+             &amp; = \frac{1}{N} \sum_{i = 1}^{N}{E\left[ Y_i \right]} =
 \frac{1}{N} \sum_{i = 1}^{N}{\mu} = \\
              &amp; = \mu
 \end{aligned}
 \]</span></p>
-<p>Por lo que el estimador es insesgado.</p>
+<p>Por lo que el estimador es insesgado. Además, se tiene que la
+varianza es</p>
+<p><span class="math display">\[
+E\left[ (\hat\mu_N - \mu)^2 \right] = \frac{\sigma^2}{N}
+\]</span></p>
+<h3 data-number="4.2.2" id="integración-de-monte-carlo"><span
+class="header-section-number">4.2.2</span> Integración de Monte
+Carlo</h3>
 <p>Generalmente nos encontraremos en la situación en la que <span
 class="math inline">\(Y = f(X)\)</span>, donde <span
-class="math inline">\(X\)</span> sigue una distribución con función de
-densidad <span class="math inline">\(p_X(x)\)</span>, y <span
-class="math inline">\(f: S \rightarrow \mathbb{R}\)</span>. En ese caso,
-sabemos que la esperanza de <span class="math inline">\(Y\)</span> se
-puede calcular como</p>
+class="math inline">\(X \in S \subset \mathbb{R}^d\)</span> sigue una
+distribución con función de densidad <span
+class="math inline">\(p_X(x)\)</span> con media <span
+class="math inline">\(\mu = E\left[ X \right]\)</span>, y <span
+class="math inline">\(f: S \rightarrow \mathbb{R}\)</span>.</p>
+<p>Consideremos el promedio de <span class="math inline">\(N\)</span>
+muestras de <span class="math inline">\(f(X)\)</span>:</p>
 <p><span class="math display">\[
-\mu = E[Y] = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
+\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}, \quad X_i \text{ idénticamente
+distribuidas}
+\]</span></p>
+<p>En ese caso, la esperanza es</p>
+<p><span class="math display">\[
+\begin{aligned}
+E\left[ \frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \right] &amp; =
+E\left[\frac{1}{N} \sum_{i = 1}^{N}{f(X)}  \right] = \\
+                                                    &amp; = \frac{1}{N}
+N E\left[ f(X) \right] = \\
+                                                    &amp; =  E\left[
+f(X) \right] = \\
+                                                    &amp; = \int_S f(x)
+p_X(x) dx
+\end{aligned}
+\]</span></p>
+<p>¡Genial! Esto nos da una forma de <strong>calcular la integral de una
+función</strong> usando las imágenes de <span
+class="math inline">\(N\)</span> muestras <span
+class="math inline">\(f(X_1), \dots, f(X_N)\)</span> de una variable
+aleatoria <span class="math inline">\(X \sim p_X\)</span>. A este
+estimador de Monte Carlo lo llamaremos <span
+class="math inline">\(\hat{I}_N\)</span>:</p>
+<p><span id="eq:mc_integral" class="eqnos"><span class="math display">\[
+\begin{aligned}
+\hat{I}_N &amp; = \frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \\
+          \Rightarrow E\left[ \hat{I}_N \right] &amp; = \int_S f(x)
+p_X(x) dx
+\end{aligned}
+\]</span><span class="eqnos-number">(16)</span></span></p>
+<blockquote>
+<p><strong>Nota</strong>(ción): si te preguntas por qué lo llamamos
+<span class="math inline">\(\hat{I}_N\)</span>, piensa que queremos
+calcular la intergal <span class="math inline">\(I =
+\int_{S}{f(x)dx}\)</span>. Para ello, usamos el estimador <span
+class="math inline">\(\hat{I}\)</span>, y marcamos explícitamente que
+usamos <span class="math inline">\(N\)</span> muestras.</p>
+</blockquote>
+<p>La varianza del estimador se puede calcular fácilmente:</p>
+<p><span id="eq:mc_varianza" class="eqnos"><span class="math display">\[
+\begin{aligned}
+  Var[\hat{I}_N]
+    &amp; = Var\left[ \frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \right] = \\
+    &amp; = \frac{1}{N^2} Var\left[  \sum_{i = 1}^{N}{f(X_i)} \right] =
+\\
+    &amp; = \frac{1}{N^2} N Var\left[ f(X) \right] = \\
+    &amp; = \frac{1}{N} Var\left[ f(X) \right]
+\end{aligned}
+\]</span><span class="eqnos-number">(17)</span></span></p>
+<p>Como es natural, el número de muestras que usemos será clave para la
+proximidad de la estimación. ¿Cómo <em>de lejos</em> se queda del valor
+real de la integral <span class="math inline">\(E\left[ f(X)
+\right]\)</span>? Es decir; ¿cómo modifica <span
+class="math inline">\(N\)</span> la varianza del estimador <span
+class="math inline">\(Var\left[ \hat{I}_N \right]\)</span>?</p>
+<p>Para comprobarlo, debemos introducir dos nuevos teoremas: la
+desigualdad de Markov y la desigualdad de Chebyshsev <span
+class="citation" data-cites="metodos-monte-carlo">(<a
+href="#ref-metodos-monte-carlo" role="doc-biblioref">Illana 2013</a>,
+Introducción)</span>.</p>
+<p><strong>Desigualdad de Markov</strong>: Sea <span
+class="math inline">\(X\)</span> una variable aleatoria que toma valores
+no negativos, y sea <span class="math inline">\(p_X\)</span> su función
+de densidad. Entonces, <span class="math inline">\(\forall x &gt;
+0\)</span>,</p>
+<p><span id="eq:desigualdad_markov" class="eqnos"><span
+class="math display">\[
+\begin{aligned}
+E\left[ X \right]  &amp;   =  \int_0^x t p_X(t) dt + \int_x^\infty t
+p_X(t) dt \ge  \int_x^\infty t p_X(t) \\
+      &amp; \ge  \int_x^\infty x p_X(t) = x P\left[ X \ge x \right] \\
+      &amp; \Rightarrow P\left[ X \ge x \right] \le \frac{E\left[ X
+\right]}{x}
+\end{aligned}
+\]</span><span class="eqnos-number">(18)</span></span></p>
+<p><strong>Desigualdad de Chebyshev</strong>: Sea <span
+class="math inline">\(X\)</span> una variable aleatoria con esperanza
+<span class="math inline">\(\mu = E\left[ X \right]\)</span> y varianza
+<span class="math inline">\(\sigma^2 = E\left[ (X - \mu)^2
+\right]\)</span>. Entonces, aplicando la desigualdad de Markov [<a
+href="#eq:desigualdad_markov">18</a>] a <span class="math inline">\(D^2
+= (X - \mu)^2\)</span> se tiene que</p>
+<p><span id="eq:desigualdad_chebyshev" class="eqnos"><span
+class="math display">\[
+\begin{aligned}
+       P\left[ D^2 \ge x^2 \right]         &amp; \le
+\frac{\sigma^2}{x^2} \\
+  \iff P\left[ \left\lvert X - \mu \right\rvert \ge x \right] &amp; \le
+\frac{\sigma^2}{x^2}
+\end{aligned}
+\]</span><span class="eqnos-number">(19)</span></span></p>
+<p>Ahora que tenemos estas dos desigualdades, apliquemos la de Chebyshev
+a [<a href="#eq:mc_integral">16</a>] con <span
+class="math inline">\(\sigma^2 = Var\left[ \hat{I}_N \right]\)</span>,
+<span class="math inline">\(x^2 = \sigma^2/\varepsilon, \varepsilon &gt;
+0\)</span>:</p>
+<p><span class="math display">\[
+P\left[ \left\lvert \hat{I}_N - E\left[ \hat{I}_N \right] \right\rvert
+\ge \left(\frac{Var[\hat{I}_N]}{\varepsilon}\right)^{1/2} \right] \le
+\varepsilon
+\]</span></p>
+<p>Esto nos dice que, usando un número de muestras relativamente grande
+(<span class="math inline">\(N &gt;&gt; \frac{1}{\varepsilon}\)</span>),
+es prácticamente imposible que el estimador se aleje de <span
+class="math inline">\(E\left[ f(X) \right]\)</span>.</p>
+<h3 data-number="4.2.3"
+id="comienza-la-parte-vieja-pendiente-de-remodelación"><span
+class="header-section-number">4.2.3</span> COMIENZA LA PARTE VIEJA;
+PENDIENTE DE REMODELACIÓN</h3>
+<p><span class="math display">\[
+\mu = E\left[ Y \right] = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
 \]</span></p>
 <p>Lo que estamos buscando es calcular <span
 class="math inline">\(\int_{S}{f(x)dx}\)</span>. Entonces, ¿qué ocurre
-si intentamos compensar en [<a href="#eq:mc_simple">12</a>] con la
+si intentamos compensar en [<a href="#eq:mc_simple">15</a>] con la
 función de densidad?</p>
 <p><span class="math display">\[
 \begin{aligned}
-&amp; E\left[\frac{1}{N} \sum_{i =
-1}^{N}{\frac{f(X_i)}{p_X(X_i)}}\right] = \frac{1}{N} \sum_{i =
-1}^{N}{E\left[\frac{f(X_i)}{p_X(X_i)}\right]} = \\
+&amp; E\left[ \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
+\right] = \frac{1}{N} \sum_{i = 1}^{N}{E\left[ \frac{f(X_i)}{p_X(X_i)}
+\right]} = \\
 &amp; = \frac{1}{N} \sum_{i =
 1}^{N}{\left(\int_{S}{\frac{f(x)}{p_X(x)}p_X(x)dx}\right)} = \\
 &amp; = \frac{1}{N} N \int_{S}{f(x)dx} = \\
@@ -2926,26 +3107,18 @@ función de densidad?</p>
 <p>¡Genial! Esto nos da una forma de calcular la integral de una función
 usando muestras de variables aleatorias con cierta distribución.
 Llamaremos al estimador de Monte Carlo</p>
-<p><span id="eq:mc_integral" class="eqnos"><span class="math display">\[
+<p><span class="math display">\[
 \hat{I}_N = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
-\]</span><span class="eqnos-number">(13)</span></span></p>
+\]</span></p>
 <p>Es importante mencionar que <span
 class="math inline">\(p_X(x)\)</span> debe ser distinto de 0 cuando
 <span class="math inline">\(f\)</span> también lo sea.</p>
-<blockquote>
-<p><strong>Nota</strong>(ción): si te preguntas por qué lo llamamos
-<span class="math inline">\(\hat{I}_N\)</span>, piensa que queremos
-calcular la intergal <span class="math inline">\(I =
-\int_{S}{f(x)dx}\)</span>. Para ello, usamos el estimador <span
-class="math inline">\(\hat{I}\)</span>, y marcamos explícitamente que
-usamos <span class="math inline">\(N\)</span> muestras.</p>
-</blockquote>
 <p>Podemos particularizar el caso en el que nuestras muestras <span
 class="math inline">\(X_i\)</span> sigan una distribución uniforme en
 <span class="math inline">\([a, b]\)</span>. Si eso ocurre, su función
 de densidad es <span class="math inline">\(p_X(x) = \frac{1}{b -
 a}\)</span>, así que podemos simplificar un poco [<a
-href="#eq:mc_integral">13</a>]:</p>
+href="#eq:mc_integral">16</a>]:</p>
 <p><span class="math display">\[
 \hat{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
 \]</span></p>
@@ -2960,22 +3133,22 @@ class="math inline">\(Var[\hat{I}_N]\)</span>. Para ello, usamos las
 propiedades que vimos en la <a
 href="#esperanza-y-varianza-de-una-variable-aleatoria">sección
 anterior</a>:</p>
-<p><span id="eq:mc_varianza" class="eqnos"><span class="math display">\[
+<p><span class="math display">\[
 \begin{aligned}
   Var[\hat{I}_N]
-    &amp; = Var\left[\frac{1}{N} \sum_{i =
-1}^{N}{\frac{f(X_i)}{p_X(X_i)}}\right] = \\
-    &amp; = \frac{1}{N^2} Var\left[ \sum_{i =
+    &amp; = Var\left[ \frac{1}{N} \sum_{i =
 1}^{N}{\frac{f(X_i)}{p_X(X_i)}} \right] = \\
-    &amp; = \frac{1}{N^2} N Var\left[\frac{f(X)}{p_X(X)}\right] = \\
-    &amp; = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
+    &amp; = \frac{1}{N^2} Var\left[  \sum_{i =
+1}^{N}{\frac{f(X_i)}{p_X(X_i)}}  \right] = \\
+    &amp; = \frac{1}{N^2} N Var\left[ \frac{f(X)}{p_X(X)} \right] = \\
+    &amp; = \frac{1}{N} Var\left[ \frac{f(X)}{p_X(X)} \right]
 \end{aligned}
-\]</span><span class="eqnos-number">(14)</span></span></p>
+\]</span></p>
 <p>es decir, la varianza del estimador es inversamente proporcional al
 número de muestras <span class="math inline">\(N\)</span>.</p>
 <p>La desviación estándar es <span class="math display">\[
-\sqrt{Var[\hat{I}_N]} =
-\frac{\sqrt{Var\left[\frac{f(X)}{p_X(X)}\right]}}{\sqrt{N}}
+\sqrt{Var[\hat{I}_N]} = \frac{\sqrt{Var\left[ \frac{f(X)}{p_X(X)}
+\right]}}{\sqrt{N}}
 \]</span></p>
 <p>así que, como adelantamos al inicio del capítulo, la estimación tiene
 un error del orden <span
@@ -3013,7 +3186,7 @@ f = \begin{cases}
 y)}\ dxdy
 \end{aligned}
 \]</span></p>
-<p>Para usar el estimador de [<a href="#eq:mc_integral">13</a>],
+<p>Para usar el estimador de [<a href="#eq:mc_integral">16</a>],
 necesitamos saber la probabilidad de obtener un punto dentro de la
 circunferencia.</p>
 <p>Bien, consideremos que una circunferencia de radio <span
@@ -3029,24 +3202,23 @@ Podemos tomar <span class="math inline">\(p(x, y) =
 \pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con }
 (x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
 \]</span></p>
-<h2 data-number="4.3" id="importance-sampling"><span
-class="header-section-number">4.3</span> Importance sampling</h2>
+<h4 data-number="4.2.3.1" id="importance-sampling"><span
+class="header-section-number">4.2.3.1</span> Importance sampling</h4>
 <p>Si recordamos la varianza del estimador de Monte Carlo [<a
-href="#eq:mc_varianza">14</a>],</p>
+href="#eq:mc_varianza">17</a>],</p>
 <p><span class="math display">\[
-Var[\hat{I}_N] = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
+Var[\hat{I}_N] = \frac{1}{N} Var\left[ \frac{f(X)}{p_X(X)} \right]
 \]</span></p>
 <p>podemos ver que depende de dos factores: el número de muestras <span
 class="math inline">\(N\)</span> y la varianza de <span
-class="math inline">\(Var\left[\frac{f(X)}{p_X(X)}\right]\)</span>.
+class="math inline">\(Var\left[ \frac{f(X)}{p_X(X)} \right]\)</span>.
 Aumentar el número de muestras haría que la varianza decrezca. Sin
 embargo, alcanzaríamos un punto de retornos reducidos. Por tanto, vamos
 a centrarnos ahora en el segundo término.</p>
-<p>En esencia, la varianza de <span
-class="math inline">\(Var\left[\frac{f(X)}{p_X(X)}\right]\)</span>
-decrecerá cuanto más cercana sea la función de probabilidad <span
-class="math inline">\(p_X\)</span> a la función <span
-class="math inline">\(f(X)\)</span>.</p>
+<p>En esencia, la varianza de <span class="math inline">\(Var\left[
+\frac{f(X)}{p_X(X)} \right]\)</span> decrecerá cuanto más cercana sea la
+función de probabilidad <span class="math inline">\(p_X\)</span> a la
+función <span class="math inline">\(f(X)\)</span>.</p>
 <p>Supongamos que <span class="math inline">\(f\)</span> es proporcional
 a <span class="math inline">\(p_X\)</span>. Esto es, existe un <span
 class="math inline">\(s\)</span> tal que <span
@@ -3062,9 +3234,9 @@ el valor de <span class="math inline">\(s\)</span>:</p>
 <p>Y entonces, se tendría que</p>
 <p><span class="math display">\[
 \begin{aligned}
-  Var\left[\frac{f(X)}{p_X(X)}\right] &amp; =
-Var\left[\frac{f(X)}{sf(X)}\right] = \\
-  &amp; = Var\left[\frac{1}{s}\right] = \\
+  Var\left[ \frac{f(X)}{p_X(X)}\right] &amp; =
+Var\left[\frac{f(X)}{sf(X)} \right] = \\
+  &amp; = Var\left[ \frac{1}{s} \right] = \\
   &amp; = 0
 \end{aligned}
 \]</span></p>
@@ -3082,22 +3254,24 @@ Markov de Monte Carlo.</p>
 class="math inline">\(p_X\)</span> que se aproximen a <span
 class="math inline">\(f\)</span> lo más fielmente posible, dentro del
 contexto del transporte de luz.</p>
-<h2 data-number="4.4" id="multiple-importance-sampling"><span
-class="header-section-number">4.4</span> Multiple importance
+<h3 data-number="4.2.4" id="termina-la-parte-vieja"><span
+class="header-section-number">4.2.4</span> TERMINA LA PARTE VIEJA</h3>
+<h2 data-number="4.3" id="multiple-importance-sampling"><span
+class="header-section-number">4.3</span> Multiple importance
 sampling</h2>
 <p>https://graphics.stanford.edu/courses/cs348b-03/papers/veach-chapter9.pdf</p>
-<h2 data-number="4.5" id="escogiendo-puntos-aleatorios"><span
-class="header-section-number">4.5</span> Escogiendo puntos
+<h2 data-number="4.4" id="escogiendo-puntos-aleatorios"><span
+class="header-section-number">4.4</span> Escogiendo puntos
 aleatorios</h2>
 <p>Una de las partes clave del estimador de Monte Carlo [<a
-href="#eq:mc_integral">13</a>] es saber escoger la función de densidad
+href="#eq:mc_integral">16</a>] es saber escoger la función de densidad
 <span class="math inline">\(p_X\)</span> correctamente. En esta sección,
 veremos algunos métodos para conseguir distribuciones específicas
 partiendo de funciones de densidad sencillas, así como formas de elegir
 funciones de densidad próximas a <span
 class="math inline">\(f\)</span>.</p>
-<h3 data-number="4.5.1" id="método-de-la-transformada-inversa"><span
-class="header-section-number">4.5.1</span> Método de la transformada
+<h3 data-number="4.4.1" id="método-de-la-transformada-inversa"><span
+class="header-section-number">4.4.1</span> Método de la transformada
 inversa</h3>
 <blockquote>
 <p><strong>En resumen</strong>: Para conseguir una muestra de una
@@ -3174,8 +3348,8 @@ x &amp; = \sqrt[3]{8 \xi}
 <p>Sacando un número aleatorio <span class="math inline">\(\xi\)</span>,
 y pasándolo por la función obtenida, conseguimos un elemento con
 distribución <span class="math inline">\(F(x)\)</span>.</p>
-<h3 data-number="4.5.2" id="método-del-rechazo"><span
-class="header-section-number">4.5.2</span> Método del rechazo</h3>
+<h3 data-number="4.4.2" id="método-del-rechazo"><span
+class="header-section-number">4.4.2</span> Método del rechazo</h3>
 <blockquote>
 <p><strong>En resumen</strong>: Para conseguir una muestra de una
 variable aleatoria <span class="math inline">\(X\)</span> con función de
@@ -3233,69 +3407,69 @@ muestra de <span class="math inline">\(p_X\)</span></li>
 y se vuelve al paso 1.</li>
 </ol></li>
 </ol>
-<h3 data-number="4.5.3" id="distribuciones-unidimensionales"><span
-class="header-section-number">4.5.3</span> Distribuciones
+<h3 data-number="4.4.3" id="distribuciones-unidimensionales"><span
+class="header-section-number">4.4.3</span> Distribuciones
 unidimensionales</h3>
-<h4 data-number="4.5.3.1" id="uniformente"><span
-class="header-section-number">4.5.3.1</span> Uniformente</h4>
-<h4 data-number="4.5.3.2" id="linear"><span
-class="header-section-number">4.5.3.2</span> Linear</h4>
-<h4 data-number="4.5.3.3" id="gausiana"><span
-class="header-section-number">4.5.3.3</span> Gausiana</h4>
-<h4 data-number="4.5.3.4" id="basada-en-texturas"><span
-class="header-section-number">4.5.3.4</span> Basada en texturas</h4>
-<h3 data-number="4.5.4" id="distribuciones-bidimensionales"><span
-class="header-section-number">4.5.4</span> Distribuciones
+<h4 data-number="4.4.3.1" id="uniformente"><span
+class="header-section-number">4.4.3.1</span> Uniformente</h4>
+<h4 data-number="4.4.3.2" id="linear"><span
+class="header-section-number">4.4.3.2</span> Linear</h4>
+<h4 data-number="4.4.3.3" id="gausiana"><span
+class="header-section-number">4.4.3.3</span> Gausiana</h4>
+<h4 data-number="4.4.3.4" id="basada-en-texturas"><span
+class="header-section-number">4.4.3.4</span> Basada en texturas</h4>
+<h3 data-number="4.4.4" id="distribuciones-bidimensionales"><span
+class="header-section-number">4.4.4</span> Distribuciones
 bidimensionales</h3>
-<h4 data-number="4.5.4.1" id="uniformemente"><span
-class="header-section-number">4.5.4.1</span> Uniformemente</h4>
-<h4 data-number="4.5.4.2"
+<h4 data-number="4.4.4.1" id="uniformemente"><span
+class="header-section-number">4.4.4.1</span> Uniformemente</h4>
+<h4 data-number="4.4.4.2"
 id="basada-en-mappeo-de-superficies-a-un-hemisferio"><span
-class="header-section-number">4.5.4.2</span> Basada en mappeo de
+class="header-section-number">4.4.4.2</span> Basada en mappeo de
 superficies a un hemisferio</h4>
-<h4 data-number="4.5.4.3" id="brdf"><span
-class="header-section-number">4.5.4.3</span> BRDF</h4>
-<h4 data-number="4.5.4.4" id="basada-en-el-coseno"><span
-class="header-section-number">4.5.4.4</span> Basada en el coseno</h4>
-<h2 data-number="4.6"
+<h4 data-number="4.4.4.3" id="brdf"><span
+class="header-section-number">4.4.4.3</span> BRDF</h4>
+<h4 data-number="4.4.4.4" id="basada-en-el-coseno"><span
+class="header-section-number">4.4.4.4</span> Basada en el coseno</h4>
+<h2 data-number="4.5"
 id="técnicas-de-reducción-de-varianza-basadas-en-muestras"><span
-class="header-section-number">4.6</span> Técnicas de reducción de
+class="header-section-number">4.5</span> Técnicas de reducción de
 varianza basadas en muestras</h2>
-<h3 data-number="4.6.1" id="ruleta-rusa"><span
-class="header-section-number">4.6.1</span> Ruleta rusa</h3>
+<h3 data-number="4.5.1" id="ruleta-rusa"><span
+class="header-section-number">4.5.1</span> Ruleta rusa</h3>
 <blockquote>
 <p><strong>Idea</strong>: A random chance that if the luminance of a ray
 is less than a given <span class="math inline">\(\varepsilon\)</span>
 the path will be discarded. Reduces variance by accepting stronger rays
 more often.</p>
 </blockquote>
-<h3 data-number="4.6.2" id="next-event-estimation"><span
-class="header-section-number">4.6.2</span> Next Event Estimation</h3>
+<h3 data-number="4.5.2" id="next-event-estimation"><span
+class="header-section-number">4.5.2</span> Next Event Estimation</h3>
 <blockquote>
 <p><strong>Idea</strong>: Tracing shadow rays to the light source on
 each bounce to see if you can terminate the current path. This involves
 shooting a shadow ray towards light sources, if it’s occluded, terminate
 the ray.</p>
 </blockquote>
-<h3 data-number="4.6.3" id="blue-noise"><span
-class="header-section-number">4.6.3</span> Blue noise</h3>
+<h3 data-number="4.5.3" id="blue-noise"><span
+class="header-section-number">4.5.3</span> Blue noise</h3>
 <ul>
 <li>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</li>
 <li>https://alain.xyz/blog/ray-tracing-filtering</li>
 </ul>
-<h3 data-number="4.6.4" id="forced-random-sampling"><span
-class="header-section-number">4.6.4</span> Forced random sampling</h3>
+<h3 data-number="4.5.4" id="forced-random-sampling"><span
+class="header-section-number">4.5.4</span> Forced random sampling</h3>
 <p>http://drivenbynostalgia.com/ (ctrl + f -&gt; forced random
 sampling)</p>
-<h3 data-number="4.6.5" id="sampling-importance-resampling"><span
-class="header-section-number">4.6.5</span> Sampling importance
+<h3 data-number="4.5.5" id="sampling-importance-resampling"><span
+class="header-section-number">4.5.5</span> Sampling importance
 resampling</h3>
 <ul>
 <li>https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</li>
 <li>https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf</li>
 </ul>
-<h3 data-number="4.6.6" id="low-discrepancy-sampling"><span
-class="header-section-number">4.6.6</span> Low discrepancy sampling</h3>
+<h3 data-number="4.5.6" id="low-discrepancy-sampling"><span
+class="header-section-number">4.5.6</span> Low discrepancy sampling</h3>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-1">Referencias</h2>
 <p><span class="citation" data-cites="ShirleyRRT">(<a
@@ -3899,7 +4073,7 @@ L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
 \omega_o \leftarrow \omega_j) L_i(p, \omega_j)
 \cos\theta_j}{p(\omega_j)}}
 \end{aligned}
-\]</span><span class="eqnos-number">(15)</span></span></p>
+\]</span><span class="eqnos-number">(20)</span></span></p>
 <p>Fijémonos en el denominador. Lo que estamos haciendo es tomar una
 muestra de un vector en la esfera. Si trabajamos con una BRDF en vez de
 una BSDF, usaríamos un hemisferio en vez de la esfera.</p>
@@ -3920,7 +4094,7 @@ class="math display">\[
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
 \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j =
 1}^{N}{L_i(p, \omega_j) \rho}
-\]</span><span class="eqnos-number">(16)</span></span></p>
+\]</span><span class="eqnos-number">(21)</span></span></p>
 <p>Lo cual nos proporciona una expresión muy agradable para los
 materiales difusos. Solo es cuestión de calcular la radiancia del
 punto.</p>
@@ -3929,7 +4103,7 @@ class="header-section-number">5.6.2</span> Pseudocódigo de un path
 tracer</h3>
 <p>Con lo que conocemos hasta ahora, podemos empezar a programar los
 shaders. Una primera implementación basada en [<a
-href="#eq:rendering_equation_mc">15</a>] sería similar a lo
+href="#eq:rendering_equation_mc">20</a>] sería similar a lo
 siguiente:</p>
 <pre><code class="language-cpp">vec3 pathtrace(Rayo r, profundidad) {
     if (profundidad == profundidad_maxima) {
@@ -5095,6 +5269,12 @@ Hubert and Fischer, Cyreal, Meir Sadan. 2022. <span>“Rubik
 Typography.”</span> 2022. <a
 href="https://fonts.google.com/specimen/Rubik">https://fonts.google.com/specimen/Rubik</a>.
 </div>
+<div id="ref-metodos-monte-carlo" class="csl-entry"
+role="doc-biblioentry">
+Illana, José Ignacio. 2013. <span>“Métodos de Monte Carlo.”</span> 2013.
+<a
+href="https://www.ugr.es/~jillana/Docencia/FM/mc.pdf">https://www.ugr.es/~jillana/Docencia/FM/mc.pdf</a>.
+</div>
 <div id="ref-crimson-pro" class="csl-entry" role="doc-biblioentry">
 Jacques Le Bailly. 2022. <span>“Crimson Pro Typography.”</span> 2022. <a
 href="https://fonts.google.com/specimen/Crimson+Pro">https://fonts.google.com/specimen/Crimson+Pro</a>.
@@ -5212,7 +5392,8 @@ href="https://www.taylorfrancis.com/books/mono/10.1201/9780429294891/realistic-r
 <div id="ref-Szirmay-Kalos00monte-carlomethods" class="csl-entry"
 role="doc-biblioentry">
 Szirmay-Kalos, László. 2000. <span>“Monte-Carlo Methods in Global
-Illumination.”</span>
+Illumination.”</span> <a
+href="https://doi.org/10.1.1.36.361">https://doi.org/10.1.1.36.361</a>.
 </div>
 <div id="ref-the-khronos-vulkan-working-group-2022" class="csl-entry"
 role="doc-biblioentry">
