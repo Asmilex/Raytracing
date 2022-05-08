@@ -314,7 +314,7 @@ Generalmente nos encontraremos en la situación en la que $Y = f(X)$, donde $X \
 Consideremos el promedio de $N$ muestras de $f(X)$:
 
 $$
-\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \quad X_i \text{ idénticamente distribuidas}
+\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}, \quad X_i \text{ idénticamente distribuidas}
 $$
 
 En ese caso, la esperanza es
@@ -337,9 +337,9 @@ $$
 \end{aligned}
 $${#eq:mc_integral}
 
-Ahora nos preguntamos cómo *de lejos* se queda la estimación del valor real de la integral --la esperanza de $E[f(X)]$--. En otras palabras, ¿cuál es la varianza del estimador $\hat{I}_N$?
+Como es natural, el número de muestras que usemos será clave para la proximidad de la estimación. ¿Cómo *de lejos* se queda del valor real de la integral $E[f(X)]$?. Es decir; cómo modifica $N$ la varianza del estimador $Var\left[\hat{I}_N\right]$?
 
-Para calcularla, debemos introducir dos nuevos teoremas: la desigualdad de Markov y la desigualdad de Chebyshsev [@metodos-monte-carlo, Introducción].
+Para comprobarlo, debemos introducir dos nuevos teoremas: la desigualdad de Markov y la desigualdad de Chebyshsev [@metodos-monte-carlo, Introducción].
 
 **Desigualdad de Markov**: Sea $X$ una variable aleatoria que toma valores no negativos, y sea $p_X$ su función de densidad. Entonces, $\forall x > 0$,
 
@@ -351,7 +351,7 @@ E[X]  &   =  \int_0^x t p_X(t) dt + \int_x^\infty t p_X(t) dt \ge  \int_x^\infty
 \end{aligned}
 $${#eq:desigualdad_markov}
 
-**Desigualdad de Chevyshev**: Sea $X$ una variable aleatoria con esperanza $\mu = E[X]$ y varianza $\sigma^2 = E[(X - \mu)^2]$. Entonces, aplicando la desigualdad de Markov [@eq:desigualdad_markov] a $D^2 = (X - \mu)^2$ se tiene que
+**Desigualdad de Chebyshev**: Sea $X$ una variable aleatoria con esperanza $\mu = E[X]$ y varianza $\sigma^2 = E[(X - \mu)^2]$. Entonces, aplicando la desigualdad de Markov [@eq:desigualdad_markov] a $D^2 = (X - \mu)^2$ se tiene que
 
 $$
 \begin{aligned}
@@ -359,6 +359,14 @@ $$
   \iff P\left[\abs{X - \mu} \ge x\right] & \le \frac{\sigma^2}{x^2}
 \end{aligned}
 $${#eq:desigualdad_chebyshev}
+
+Ahora que tenemos estas dos desigualdades, apliquemos la de Chebyshev a [@eq:mc_integral] con $\sigma^2 = Var\left[\hat{I}_N\right]$, $x^2 = \sigma^2/\varepsilon, \varepsilon > 0$:
+
+$$
+P\left[\abs{\hat{I}_N - E\left[\hat{I}_N\right]} \ge \left(\frac{Var[\hat{I}_N]}{\varepsilon}\right)^{1/2}\right] \le \varepsilon
+$$
+
+Esto nos dice que, usando un número de muestras relativamente grande ($N >> \frac{1}{\varepsilon}$), es prácticamente imposible que el estimador se aleje de $E[f(X)]$.
 
 ### COMIENZA LA PARTE VIEJA
 
