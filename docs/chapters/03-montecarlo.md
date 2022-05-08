@@ -145,12 +145,12 @@ $$
 
 ### Esperanza y varianza de una variable aleatoria
 
-La **esperanza de una variable aleatoria**, denotada $E[X]$, es una generalización de la media ponderada. Nos informa del *valor esperado* de dicha variable aleatoria.
+La **esperanza de una variable aleatoria**, denotada $\E{X}$, es una generalización de la media ponderada. Nos informa del *valor esperado* de dicha variable aleatoria.
 
 En el caso de las variables discretas, se define como
 
 $$
-E[X] = \sum_{i}{x_i p_i}
+\E{X} = \sum_{i}{x_i p_i}
 $$
 
 donde $x_i$ son los posibles valores que puede tomar la v.a., y $p_i$ la probabilidad asociada a cada uno de ellos; es decir, $p_i = P[X = x_i]$
@@ -158,27 +158,27 @@ donde $x_i$ son los posibles valores que puede tomar la v.a., y $p_i$ la probabi
 Para una variable aleatoria continua real, la esperanza viene dada por
 
 $$
-E[X] = \int_{-\infty}^{\infty}{x f_X(x) dx}
+\E{X} = \int_{-\infty}^{\infty}{x f_X(x) dx}
 $$
 
 Pongamos un par de ejemplos del cálculo de la esperanza. En el [ejemplo de las variables discretas](#variables-aleatorias-discretas), la esperanza venía dada por
 
 $$
-E[X] = \sum_{i = 2}^{12}{i P[X = i]} = 2\frac{1}{36} + 3 \frac{2}{36} + \dots + 12 \frac{1}{36} = 7
+\E{X} = \sum_{i = 2}^{12}{i P[X = i]} = 2\frac{1}{36} + 3 \frac{2}{36} + \dots + 12 \frac{1}{36} = 7
 $$
 
 Para variables aleatorias uniformes en $(a, b)$ (es decir, $X \sim U(a, b)$), la esperanza es
 
 $$
-E[X] = \int_{a}^{b}{x \frac{1}{b - a}dx} = \frac{a + b}{2}
+\E{X} = \int_{a}^{b}{x \frac{1}{b - a}dx} = \frac{a + b}{2}
 $$
 
 La esperanza tiene unas cuantas propiedades que nos resultarán muy útiles. Estas son:
 
 - **Linealidad**:
-  - Si $X, Y$ son dos v.a., $E[X + Y] = E[X] + E[Y]$
-  - Si $a$ es una constante, $X$ una v.a., entonces $E[aX] = aE[X]$
-  - Análogamente, para ciertas $X_1, \dots, X_k$, $E\left[\sum_{i = 1}^{k}{X_i}\right] = \sum_{i = 1}^{k}{E[X_i]}$
+  - Si $X, Y$ son dos v.a., $\E{X + Y} = \E{X} + \E{Y}$
+  - Si $a$ es una constante, $X$ una v.a., entonces $\E{aX} = a\E{X}$
+  - Análogamente, para ciertas $X_1, \dots, X_k$, $\E{\sum_{i = 1}^{k}{X_i}} = \sum_{i = 1}^{k}{\E{X_i}}$
   - Estas propiedades no necesitan que las variables aleatorias sean independientes. Este hecho será clave para las técnicas de Monte Carlo.
 
 Además de las anteriores propiedades, existen una serie de teoremas importantes que necesitaremos más adelante:
@@ -186,24 +186,24 @@ Además de las anteriores propiedades, existen una serie de teoremas importantes
 **Ley del estadístico insconciente** (*Law of the unconscious statistician*, o LOTUS): dada una variable aleatoria $X$ y una función medible $g$, la esperanza de $g(X)$ se puede calcular como
 
 $$
-E[g(X)] = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
+\E{g(X)} = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
 $${#eq:LOTUS}
 
-**Ley (fuerte) de los grandes números**: dada una muestra de $N$ valores $X_1, \dots, X_N$ de una variable aleatoria $X$ con esperanza $E[X] = \mu$,
+**Ley (fuerte) de los grandes números**: dada una muestra de $N$ valores $X_1, \dots, X_N$ de una variable aleatoria $X$ con esperanza $\E{X} = \mu$,
 
 $$
-P\left[\lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} = \mu \right] = 1
+\Prob{\lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} = \mu } = 1
 $$
 
 Usando que $\bar{X}_N = \frac{1}{N} \sum_{i = 1}^{N}{X_i}$, esta ley se suele escribir como
 
 $$
-P\left[\lim_{N \to \infty}{\bar{X}_N} = \mu \right] = 1
+\Prob{\lim_{N \to \infty}{\bar{X}_N} = \mu } = 1
 $${#eq:ley_numeros_grandes}
 
 Este teorema es especialmente importante. En esencia, nos dice que cuando repetimos muchas veces un experimento, al promediar los resultados obtendremos una esperanza muy cercana a la esperanza real.
 
-**Teorema Central del Límite (CLT) para variables idéntidcamente distribuidas** [@mcbook, capítulo 2]: Sean $X_1, \dots, X_N$  muestras aleatorias simples de una variable aleatoria $X$ con esperanza $E[X] = \mu$ y varianza $Var[X] = \sigma^2$. Sea
+**Teorema Central del Límite (CLT) para variables idéntidcamente distribuidas** [@mcbook, capítulo 2]: Sean $X_1, \dots, X_N$  muestras aleatorias simples de una variable aleatoria $X$ con esperanza $\E{X} = \mu$ y varianza $Var[X] = \sigma^2$. Sea
 
 $$
 Z_N = \frac{\sum_{i = 1}^{N}{X_i - N\mu}}{\sigma \sqrt{N}}
@@ -221,21 +221,21 @@ Será habitual encontrarnos con el problema de que no conocemos la distribución
 Otra medida muy útil de una variable aleatoria es **la varianza**. Nos permitirá medir cómo de dispersa es la distribución con respecto a su media. La denotaremos como $Var[X]$, y se define como
 
 $$
-Var[X] = E\left[(X - E[X])^2\right]
+Var[X] = \E{(X - \E{X})^2}
 $$
 
 Si desarrollamos esta definición, podemos conseguir una expresión algo más agradable:
 
 $$
 \begin{aligned}
-   Var[X] & = E\left[(X - E[X])^2\right] = \\
-          & = E\left[X^2 + E[X]^2 - 2XE[X]\right] = \\
-          & = E\left[X^2\right] + E[X]^2 - 2E[X]E[X] = \\
-          & = E\left[X^2\right] - E\left[X\right]^2
+   Var[X] & = \E{(X - \E{X})^2} = \\
+          & = \E{X^2 + \E{X}^2 - 2X\E{X}} = \\
+          & = \E{X^2} + \E{X}^2 - 2\E{X}\E{X} = \\
+          & = \E{X^2\right] - E\left[X}^2
 \end{aligned}
 $$
 
-Hemos usado que $E[E[X]] = E[X]$ y la linealidad de la esperanza.
+Hemos usado que $\E{\E{X}} = \E{X}$ y la linealidad de la esperanza.
 
 Enunciemos un par de propiedades que tiene, similares a la de la esperanza:
 
@@ -260,10 +260,10 @@ Como vemos, la definición no es muy restrictiva. Únicamente le estamos pidiend
 Se dice que un estimador $T(X_1, \dots, X_N)$ es **insesgado** (o centrado en el parámetro $\theta$) si
 
 $$
-E[T(X_1, \dots, X_n)] = \theta\quad \forall \theta \in \Theta
+\E{T(X_1, \dots, X_n)} = \theta\quad \forall \theta \in \Theta
 $$
 
-Naturalmente, decimos que un estimador $T(X_1, \dots, X_N)$ está **sesgado** si $E[T(X_1, \dots, X_N] \not = \theta$.
+Naturalmente, decimos que un estimador $T(X_1, \dots, X_N)$ está **sesgado** si $\E{T(X_1, \dots, X_N} \not = \theta$.
 
 ## El estimador de Monte Carlo
 
@@ -279,24 +279,24 @@ $${#eq:mc_simple}
 
 La intuición del estimador es, esencialmente, la misma que la del teorema central del límite. Lo que buscamos es una forma de calcular la media de un cierto suceso aleatorio, pero lo único que podemos usar son muestras de su variable aleatoria. Promediando esas muestras, sacamos información de la distribución. En este caso, la media.
 
-En cualquier caso, la existencia de este estimador viene dada por la ley de los grandes números (tanto débil como fuerte [@eq:ley_numeros_grandes]). Si $\mu = E[Y]$, se tiene que
+En cualquier caso, la existencia de este estimador viene dada por la ley de los grandes números (tanto débil como fuerte [@eq:ley_numeros_grandes]). Si $\mu = \E{Y}$, se tiene que
 
 $$
-\lim_{N \to \infty}P\left[\abs{\hat\mu_N - \mu} \le \varepsilon\right] = 1 \quad \forall\ \varepsilon > 0
+\lim_{N \to \infty}\Prob{\abs{\hat\mu_N - \mu} \le \varepsilon} = 1 \quad \forall\ \varepsilon > 0
 $$
 
 o utilizando la ley de los números grandes,
 
 $$
-\lim_{N \to \infty}P\left[\abs{\hat\mu_N - \mu} = 0\right] = 1
+\lim_{N \to \infty}\Prob{\abs{\hat\mu_N - \mu} = 0} = 1
 $$
 
 Haciendo la esperanza de este estimador, vemos que
 
 $$
 \begin{aligned}
-E[\hat\mu_N] & = E\left[\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right] = \frac{1}{N} E\left[\sum_{i = 1}^{N}{Y_i}\right] \\
-             & = \frac{1}{N} \sum_{i = 1}^{N}{E\left[Y_i\right]} = \frac{1}{N} \sum_{i = 1}^{N}{\mu} = \\
+\E{\hat\mu_N} & = \E{\frac{1}{N} \sum_{i = 1}^{N}{Y_i}\right] = \frac{1}{N} E\left[\sum_{i = 1}^{N}{Y_i}} \\
+             & = \frac{1}{N} \sum_{i = 1}^{N}{\E{Y_i}} = \frac{1}{N} \sum_{i = 1}^{N}{\mu} = \\
              & = \mu
 \end{aligned}
 $$
@@ -304,12 +304,12 @@ $$
 Por lo que el estimador es insesgado. Además, se tiene que la varianza es
 
 $$
-E\left[(\hat\mu_N - \mu)^2\right] = \frac{\sigma^2}{N}
+\E{(\hat\mu_N - \mu)^2} = \frac{\sigma^2}{N}
 $$
 
 ### Integración de Monte Carlo
 
-Generalmente nos encontraremos en la situación en la que $Y = f(X)$, donde $X \in S \subset \mathbb{R}^d$ sigue una distribución con función de densidad $p_X(x)$ con media $\mu = E[X]$, y $f: S \rightarrow \mathbb{R}$.
+Generalmente nos encontraremos en la situación en la que $Y = f(X)$, donde $X \in S \subset \mathbb{R}^d$ sigue una distribución con función de densidad $p_X(x)$ con media $\mu = \E{X}$, y $f: S \rightarrow \mathbb{R}$.
 
 Consideremos el promedio de $N$ muestras de $f(X)$:
 
@@ -321,9 +321,9 @@ En ese caso, la esperanza es
 
 $$
 \begin{aligned}
-E\left[\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \right] & = E\left[\frac{1}{N} \sum_{i = 1}^{N}{f(X)} \right] = \\
-                                                    & = \frac{1}{N} N E[f(X)] = \\
-                                                    & =  E[f(X)] = \\
+\E{\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \right] & = E\left[\frac{1}{N} \sum_{i = 1}^{N}{f(X)} } = \\
+                                                    & = \frac{1}{N} N \E{f(X)} = \\
+                                                    & =  \E{f(X)} = \\
                                                     & = \int_S f(x) p_X(x) dx
 \end{aligned}
 $$
@@ -333,11 +333,11 @@ $$
 $$
 \begin{aligned}
 \hat{I}_N & = \frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \\
-          \Rightarrow E\left[\hat{I}_N\right] & = \int_S f(x) p_X(x) dx
+          \Rightarrow \E{\hat{I}_N} & = \int_S f(x) p_X(x) dx
 \end{aligned}
 $${#eq:mc_integral}
 
-Como es natural, el número de muestras que usemos será clave para la proximidad de la estimación. ¿Cómo *de lejos* se queda del valor real de la integral $E[f(X)]$?. Es decir; cómo modifica $N$ la varianza del estimador $Var\left[\hat{I}_N\right]$?
+Como es natural, el número de muestras que usemos será clave para la proximidad de la estimación. ¿Cómo *de lejos* se queda del valor real de la integral $\E{f(X)}$?. Es decir; cómo modifica $N$ la varianza del estimador $\Var{\hat{I}_N}$?
 
 Para comprobarlo, debemos introducir dos nuevos teoremas: la desigualdad de Markov y la desigualdad de Chebyshsev [@metodos-monte-carlo, Introducción].
 
@@ -345,40 +345,40 @@ Para comprobarlo, debemos introducir dos nuevos teoremas: la desigualdad de Mark
 
 $$
 \begin{aligned}
-E[X]  &   =  \int_0^x t p_X(t) dt + \int_x^\infty t p_X(t) dt \ge  \int_x^\infty t p_X(t) \\
-      & \ge  \int_x^\infty x p_X(t) = x P\left[X \ge x\right] \\
-      & \Rightarrow P\left[X \ge x\right] \le \frac{E[X]}{x}
+\E{X}  &   =  \int_0^x t p_X(t) dt + \int_x^\infty t p_X(t) dt \ge  \int_x^\infty t p_X(t) \\
+      & \ge  \int_x^\infty x p_X(t) = x \Prob{X \ge x} \\
+      & \Rightarrow \Prob{X \ge x} \le \frac{\E{X}}{x}
 \end{aligned}
 $${#eq:desigualdad_markov}
 
-**Desigualdad de Chebyshev**: Sea $X$ una variable aleatoria con esperanza $\mu = E[X]$ y varianza $\sigma^2 = E[(X - \mu)^2]$. Entonces, aplicando la desigualdad de Markov [@eq:desigualdad_markov] a $D^2 = (X - \mu)^2$ se tiene que
+**Desigualdad de Chebyshev**: Sea $X$ una variable aleatoria con esperanza $\mu = \E{X}$ y varianza $\sigma^2 = \E{(X - \mu)^2}$. Entonces, aplicando la desigualdad de Markov [@eq:desigualdad_markov] a $D^2 = (X - \mu)^2$ se tiene que
 
 $$
 \begin{aligned}
-       P\left[D^2 \ge x^2\right]         & \le \frac{\sigma^2}{x^2} \\
-  \iff P\left[\abs{X - \mu} \ge x\right] & \le \frac{\sigma^2}{x^2}
+       \Prob{D^2 \ge x^2}         & \le \frac{\sigma^2}{x^2} \\
+  \iff \Prob{\abs{X - \mu} \ge x} & \le \frac{\sigma^2}{x^2}
 \end{aligned}
 $${#eq:desigualdad_chebyshev}
 
-Ahora que tenemos estas dos desigualdades, apliquemos la de Chebyshev a [@eq:mc_integral] con $\sigma^2 = Var\left[\hat{I}_N\right]$, $x^2 = \sigma^2/\varepsilon, \varepsilon > 0$:
+Ahora que tenemos estas dos desigualdades, apliquemos la de Chebyshev a [@eq:mc_integral] con $\sigma^2 = \Var{\hat{I}_N}$, $x^2 = \sigma^2/\varepsilon, \varepsilon > 0$:
 
 $$
-P\left[\abs{\hat{I}_N - E\left[\hat{I}_N\right]} \ge \left(\frac{Var[\hat{I}_N]}{\varepsilon}\right)^{1/2}\right] \le \varepsilon
+\Prob{\abs{\hat{I}_N - \E{\hat{I}_N}} \ge \left(\frac{Var[\hat{I}_N]}{\varepsilon}\right)^{1/2}} \le \varepsilon
 $$
 
-Esto nos dice que, usando un número de muestras relativamente grande ($N >> \frac{1}{\varepsilon}$), es prácticamente imposible que el estimador se aleje de $E[f(X)]$.
+Esto nos dice que, usando un número de muestras relativamente grande ($N >> \frac{1}{\varepsilon}$), es prácticamente imposible que el estimador se aleje de $\E{f(X)}$.
 
 ### COMIENZA LA PARTE VIEJA
 
 $$
-\mu = E[Y] = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
+\mu = \E{Y} = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
 $$
 
 Lo que estamos buscando es calcular $\int_{S}{f(x)dx}$. Entonces, ¿qué ocurre si intentamos compensar en [@eq:mc_simple] con la función de densidad?
 
 $$
 \begin{aligned}
-& E\left[\frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}\right] = \frac{1}{N} \sum_{i = 1}^{N}{E\left[\frac{f(X_i)}{p_X(X_i)}\right]} = \\
+& \E{\frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}} = \frac{1}{N} \sum_{i = 1}^{N}{\E{\frac{f(X_i)}{p_X(X_i)}}} = \\
 & = \frac{1}{N} \sum_{i = 1}^{N}{\left(\int_{S}{\frac{f(x)}{p_X(x)}p_X(x)dx}\right)} = \\
 & = \frac{1}{N} N \int_{S}{f(x)dx} = \\
 & = \int_{S}{f(x)dx}
@@ -408,10 +408,10 @@ Puesto que la varianza del estimador nos dará información sobre el error que g
 $$
 \begin{aligned}
   Var[\hat{I}_N]
-    & = Var\left[\frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}\right] = \\
-    & = \frac{1}{N^2} Var\left[ \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}} \right] = \\
-    & = \frac{1}{N^2} N Var\left[\frac{f(X)}{p_X(X)}\right] = \\
-    & = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
+    & = \Var{\frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}} = \\
+    & = \frac{1}{N^2} \Var{ \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}} } = \\
+    & = \frac{1}{N^2} N \Var{\frac{f(X)}{p_X(X)}} = \\
+    & = \frac{1}{N} \Var{\frac{f(X)}{p_X(X)}}
 \end{aligned}
 $${#eq:mc_varianza}
 
@@ -419,7 +419,7 @@ es decir, la varianza del estimador es inversamente proporcional al número de m
 
 La desviación estándar es
 $$
-\sqrt{Var[\hat{I}_N]} = \frac{\sqrt{Var\left[\frac{f(X)}{p_X(X)}\right]}}{\sqrt{N}}
+\sqrt{Var[\hat{I}_N]} = \frac{\sqrt{\Var{\frac{f(X)}{p_X(X)}}}}{\sqrt{N}}
 $$
 
 así que, como adelantamos al inicio del capítulo, la estimación tiene un error del orden $\mathcal{O}(N^{-1/2})$. Esto nos dice que, para reducir el error a la mitad, debemos tomar 4 veces más muestras.
@@ -462,12 +462,12 @@ $$
 Si recordamos la varianza del estimador de Monte Carlo [@eq:mc_varianza],
 
 $$
-Var[\hat{I}_N] = \frac{1}{N} Var\left[\frac{f(X)}{p_X(X)}\right]
+Var[\hat{I}_N] = \frac{1}{N} \Var{\frac{f(X)}{p_X(X)}}
 $$
 
-podemos ver que depende de dos factores: el número de muestras $N$ y la varianza de $Var\left[\frac{f(X)}{p_X(X)}\right]$. Aumentar el número de muestras haría que la varianza decrezca. Sin embargo, alcanzaríamos un punto de retornos reducidos. Por tanto, vamos a centrarnos ahora en el segundo término.
+podemos ver que depende de dos factores: el número de muestras $N$ y la varianza de $\Var{\frac{f(X)}{p_X(X)}}$. Aumentar el número de muestras haría que la varianza decrezca. Sin embargo, alcanzaríamos un punto de retornos reducidos. Por tanto, vamos a centrarnos ahora en el segundo término.
 
-En esencia, la varianza de $Var\left[\frac{f(X)}{p_X(X)}\right]$ decrecerá cuanto más cercana sea la función de probabilidad $p_X$ a la función $f(X)$.
+En esencia, la varianza de $\Var{\frac{f(X)}{p_X(X)}}$ decrecerá cuanto más cercana sea la función de probabilidad $p_X$ a la función $f(X)$.
 
 Supongamos que $f$ es proporcional a $p_X$. Esto es, existe un $s$ tal que $f(x) = s p_X(x)$. Como $p_X$ debe integrar uno, podemos calcular el valor de $s$:
 
@@ -482,8 +482,8 @@ Y entonces, se tendría que
 
 $$
 \begin{aligned}
-  Var\left[\frac{f(X)}{p_X(X)}\right] & = Var\left[\frac{f(X)}{sf(X)}\right] = \\
-  & = Var\left[\frac{1}{s}\right] = \\
+  \Var{\frac{f(X)}{p_X(X)}\right] & = Var\left[\frac{f(X)}{sf(X)}} = \\
+  & = \Var{\frac{1}{s}} = \\
   & = 0
 \end{aligned}
 $$

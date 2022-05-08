@@ -2,7 +2,9 @@
 \newcommand*\abs[1]{\left\lvert #1 \right\rvert}
 \newcommand*\norm[1]{\left\lVert #1 \right\rVert}
 \newcommand*\set[2]{\left\{#1 \,\middle|\, #2 \right\}}
-
+\newcommand*\Prob[1]{P\left[ #1 \right]}
+\newcommand*\E[1]{E\left[ #1 \right]}
+\newcommand*\Var[1]{Var\left[ #1 \right]}
 
 \definecolor{blanco-100}{HTML}{fcfcfc}
 \definecolor{blanco-200}{HTML}{f1f1f3}
