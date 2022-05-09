@@ -397,13 +397,38 @@ Es importante destacar la **ausencia del parámetro de la dimensión**. Sabemos 
 
 ### Muestreo por importancia
 
-Como hemos visto, $\Var{\hat{I}_N}$ depende del número de muestras $N$ y de $\Var{f(X)}$. Vamos a jugar con el segundo término.
+Como hemos visto, $\Var{\hat{I}_N}$ depende del número de muestras $N$ y de $\Var{f(X)}$. Aumentar el tamaño de $N$ es una forma fácil de reducir la varianza, pero, ¿podemos hacer algo con el término $\Var{f(X)}$?
 
-La integral que estamos evaluando ahora mismo es $\int_S{f(x)p_X(x)}dx$. En la práctica, únicamente nos interesará $\int_S{f(X)dx}$. Podemos conseguir haciendo esto haciendo lo siguiente:
+Vamos a jugar con él.
+
+La integral que estamos evaluando ahora mismo es $\int_S{f(x)p_X(x)}dx$, con $p_X$ una función de densidad sobre $S \subset \mathbb{R}^d$ $\Rightarrow p_X = 0\ \forall x \notin S$. Ahora bien, si $q_X$ es otra función de densidad en $\mathbb{R}^d$, entonces [@mcbook, Importance Sampling]:
 
 $$
-I = \int_S{f(x)dx} = \int_S{p_X(x) \frac{f(x)}{p_X(x)}dx} = \E{\frac{f(X)}{p_X(x)}}
+I = \int_S{f(x)p_X(x)dx} = \int_S{\frac{f(x)p_X(x)}{q_X(x)}q_X(x)dx} = \E{\frac{f(X)p_X(X)}{q_X(X)}}
 $$
+
+Esta última esperanza depende de $q_X$. Nuestro objetivo era encontrar $\E{f(X)}$, pero podemos hacerlo tomando un término nuevo para muestrear desde $q_X$ en vez de $p_X$. Al factor $\frac{p_X}{q_X}$ lo llamamos **cociente de probabilidad**, con $q_X$ la **distribución de importancia** y $p_X$ la **distribución nominal**.
+
+No es necesario que $q_X$ sea positiva en todo punto. Con que se cumpla que $q_X(x) > 0$ cuando $f(x)p_X(x) \not = 0$ es suficiente. Es decir, para $Q = \set{x}{q_X(x) > 0 }$, tenemos que $x \in Q$ cuando $f(x)p_X(x) \not = 0$. Así, si $x \in S \cap Q^c \Rightarrow f(X) = 0$, mientras que si $x \in S^c \cap Q \Rightarrow p_X(X) \neq 0$. Entonces,
+
+$$
+\begin{aligned}
+\E{\frac{f(X)p_X(X)}{q_X(X)}} & = \int_Q{\frac{f(x)p_X(x)}{q_X(x)}q_X(x)dx} = \int_Q{f(x)p_X(x)dx} = \\
+                              & = \int_Q{f(x)p_X(x)dx} + \int_{S^c \cap Q}{f(x)p_X(x)dx} - \int_{S \cap Q^c}{f(x)p_X(x)dx} =  \\
+                              & = \int_S{f(x)p_X(x)dx} = \\
+                              & = \E{f(X)}
+\end{aligned}
+$$
+
+De esta forma, hemos llegado al **estimador de Monte Carlo por importancia**:
+
+$$
+\tilde{I}_N = \frac{1}{N} \sum_{i=1}^N{\frac{f(X_i)p_X(X_i)}{q_X(X_i)}}, \quad X_i \sim q_X
+$${#eq:mc_integral_importancia}
+
+> **Nota**(ción): ¡fíjate en el gusanito! $\hat{I}_N$ [@eq:mc_integral] y $\tilde{I}_N$ tienen la misma esperanza, pero son estimadores diferentes.
+
+Esta técnica es especialmente importante en nuestra área de estudio. En transporte de luz, intentaremos buscar funciones de densidad proporcionales a la BRDF. La literatura utiliza una versión modificada de muestreo por importancia: se suele usar $\frac{1}{N} \sum_{i=1}^N{\frac{f}{p_X}}$ para que $\E{\frac{f}{p_X}} = \int_S{\frac{f}{p_X}p_X}$ y así se evalúe directamente la integral de $f$. En cualquiera de los casos, el fundamento teórico es el mismo.
 
 ### COMIENZA LA PARTE VIEJA; PENDIENTE DE REMODELACIÓN
 
