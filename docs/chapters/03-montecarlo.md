@@ -246,8 +246,6 @@ $$
 \lim_{N \to \infty}{P[Z_N \le z]} = \int_{-\infty}^{z}{\frac{1}{\sqrt{2 \pi}} e^{- \frac{x^2}{2}}dx}
 $${#eq:CLT}
 
-
-
 ### Estimadores
 
 A veces, no podremos conocer de antemano el valor que toma un cierto parámetro de una distribución. Sin embargo, conocemos el tipo de distribución que nuestra variable aleatoria $X$ sigue. Los estimadores nos proporcionarán una forma de calcular el posible valor de esos parámetros a partir de una muestra de $X$.
@@ -309,6 +307,26 @@ Por lo que el estimador es insesgado. Además, se tiene que la varianza es
 $$
 \E{(\hat\mu_N - \mu)^2} = \frac{\sigma^2}{N}
 $$
+
+Un ejemplo clásico de estimador de Monte Carlo es calcular el valor de $\pi$. Se puede hallar integrando una función que valga $1$ en el interior de la circunferencia de radio unidad y $0$ en el exterior:
+
+$$
+\begin{aligned}
+f = \begin{cases}
+      1 & \text{si } x^2 + y^2 \le 1 \\
+      0 & \text{en otro caso}
+    \end{cases} \Longrightarrow	\pi = \int_{-1}^{1} \int_{-1}^{1}{f(x, y)}\ dxdy
+\end{aligned}
+$$
+
+Para usar el estimador de [@eq:mc_integral], necesitamos saber la probabilidad de obtener un punto dentro de la circunferencia.
+
+Bien, consideremos que una circunferencia de radio $r$ se encuentra inscrita en un cuadrado. El área de la circunferencia es $\pi r^2$, mientras que la del cuadrado es $(2r)^2 = 4r^2$. Por tanto, la probabilidad de obtener un punto dentro de la circunferencia es $\frac{\pi r^2}{4r^2} = \frac{\pi}{4}$. Podemos tomar $p(x, y) = \frac{1}{4}$, de forma que
+
+$$
+\pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con } (x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
+$$
+
 
 ### Integración de Monte Carlo
 
@@ -394,6 +412,8 @@ $${#eq:desviacion_estandar}
 así que, como adelantamos al inicio del capítulo, la estimación tiene un error del orden $\mathcal{O}(N^{-1/2})$. Esto nos dice que, para reducir el error a la mitad, debemos tomar 4 veces más muestras.
 
 Es importante destacar la **ausencia del parámetro de la dimensión**. Sabemos que $X \in S \subset \mathbb{R}^d$, pero en ningún momento aparece $d$ en la expresión de la desviación estándar [@eq:desviacion_estandar]. Este hecho es una de las ventajas de la integración de Monte Carlo.
+
+## Técnicas de reducción de varianza
 
 ### Muestreo por importancia
 
@@ -489,8 +509,6 @@ Por fortuna, hay algoritmos que son capaces de proporcionar la constante $s$ sin
 
 En este trabajo nos centraremos en buscar funciones de densidad $p_X$ que se aproximen a $f$ lo más fielmente posible, dentro del contexto del transporte de luz.
 
-### Ejemplos sencillos de integración de MC
-
 Pongamos un ejemplo de estimador de Monte Carlo para una caja de dimensiones $\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]}$. Si queremos estimar la integral de la función $f: \mathbb{R}^3 \rightarrow \mathbb{R}$
 
 $$
@@ -503,28 +521,35 @@ $$
 \tilde{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)} \sum_{i = 1}^{N}{f(X_i)}
 $$
 
-Otro ejemplo clásico de estimador de Monte Carlo es calcular el valor de $\pi$. Se puede hallar integrando una función que valga $1$ en el interior de la circunferencia de radio unidad y $0$ en el exterior:
-
-$$
-\begin{aligned}
-f = \begin{cases}
-      1 & \text{si } x^2 + y^2 \le 1 \\
-      0 & \text{en otro caso}
-    \end{cases} \Longrightarrow	\pi = \int_{-1}^{1} \int_{-1}^{1}{f(x, y)}\ dxdy
-\end{aligned}
-$$
-
-Para usar el estimador de [@eq:mc_integral], necesitamos saber la probabilidad de obtener un punto dentro de la circunferencia.
-
-Bien, consideremos que una circunferencia de radio $r$ se encuentra inscrita en un cuadrado. El área de la circunferencia es $\pi r^2$, mientras que la del cuadrado es $(2r)^2 = 4r^2$. Por tanto, la probabilidad de obtener un punto dentro de la circunferencia es $\frac{\pi r^2}{4r^2} = \frac{\pi}{4}$. Podemos tomar $p(x, y) = \frac{1}{4}$, de forma que
-
-$$
-\pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con } (x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
-$$
-
-## Multiple importance sampling
+### Multiple importance sampling
 
 https://graphics.stanford.edu/courses/cs348b-03/papers/veach-chapter9.pdf
+
+### Ruleta rusa
+
+> **Idea**: A random chance that if the luminance of a ray is less than a given $\varepsilon$ the path will be discarded. Reduces variance by accepting stronger rays more often.
+
+### Next Event Estimation
+
+> **Idea**: Tracing shadow rays to the light source on each bounce to see if you can terminate the current path. This involves shooting a shadow ray towards light sources, if it's occluded, terminate the ray.
+
+### Blue noise
+
+- https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/
+- https://alain.xyz/blog/ray-tracing-filtering
+
+### Forced random sampling
+
+http://drivenbynostalgia.com/ (ctrl + f -> forced random sampling)
+
+### Sampling importance resampling
+
+- https://blog.demofox.org/2022/03/02/sampling-importance-resampling/
+- https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf
+
+### Low discrepancy sampling
+
+
 
 ## Escogiendo puntos aleatorios
 
@@ -626,32 +651,6 @@ El algoritmo consiste en:
 #### Basada en mappeo de superficies a un hemisferio
 #### BRDF
 #### Basada en el coseno
-
-## Técnicas de reducción de varianza basadas en muestras
-
-### Ruleta rusa
-
-> **Idea**: A random chance that if the luminance of a ray is less than a given $\varepsilon$ the path will be discarded. Reduces variance by accepting stronger rays more often.
-
-### Next Event Estimation
-
-> **Idea**: Tracing shadow rays to the light source on each bounce to see if you can terminate the current path. This involves shooting a shadow ray towards light sources, if it's occluded, terminate the ray.
-
-### Blue noise
-
-- https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/
-- https://alain.xyz/blog/ray-tracing-filtering
-
-### Forced random sampling
-
-http://drivenbynostalgia.com/ (ctrl + f -> forced random sampling)
-
-### Sampling importance resampling
-
-- https://blog.demofox.org/2022/03/02/sampling-importance-resampling/
-- https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf
-
-### Low discrepancy sampling
 
 <hr>
 
