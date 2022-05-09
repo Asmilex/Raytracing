@@ -605,22 +605,15 @@ Esta técnica requiere conocer si desde el punto $p$ se puede ver $y$ en la fuen
 
 ![El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: [@carlos-path-tracing]](./img/03/Next%20event%20estimation.png){ width=67% }
 
-#### Blue noise
+#### Quasi-Monte Carlo
 
-- https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/
-- https://alain.xyz/blog/ray-tracing-filtering
+Generalmente, en los estimadores de Monte Carlo se utilizan variables aleatorias distribuidas uniformemente a las que se le aplican transformaciones, pues resulta más sencillo generar un número aleatorio de la primera manera que de la segunda. La idea de los quasi-Monte Carlo es muestrear puntos que, de la manera posible, se extiendan uniformemente en $[0, 1]^d$; evitando así clústeres y zonas vacías [@mcbook, Quasi-Monte Carlo].
 
-#### Forced random sampling
+Existen varias formas de conseguir esto. Algunas de las más famosas son las secuencias de Sobol, que son computacionalmente caras pero presentan menores discrepancias; o las series de Halton, que son más fáciles de conseguir.
 
-http://drivenbynostalgia.com/ (ctrl + f -> forced random sampling)
+Se puede estudiar el tema en profundidad en [@quasi-monte-carlo]
 
-#### Sampling importance resampling
-
-- https://blog.demofox.org/2022/03/02/sampling-importance-resampling/
-- https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf
-
-#### Low discrepancy sampling
-
+![Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: [@quasi-monte-carlo]](./img/03/Quasi-Monte%20Carlo.png)
 
 ## Escogiendo puntos aleatorios
 
@@ -710,18 +703,6 @@ El algoritmo consiste en:
    1. Si se cumple, se acepta $y$ como muestra de $p_X$
    2. En caso contrario, se rechaza $y$ y se vuelve al paso 1.
 
-### Distribuciones unidimensionales
-
-#### Uniformente
-#### Linear
-#### Gausiana
-#### Basada en texturas
-
-### Distribuciones bidimensionales
-#### Uniformemente
-#### Basada en mappeo de superficies a un hemisferio
-#### BRDF
-#### Basada en el coseno
 
 <hr>
 
