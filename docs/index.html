@@ -369,15 +369,21 @@ class="toc-section-number">4.2.1</span> Monte Carlo básico</a></li>
 <li><a href="#integración-de-monte-carlo"><span
 class="toc-section-number">4.2.2</span> Integración de Monte
 Carlo</a></li>
+<li><a href="#muestreo-por-importancia"><span
+class="toc-section-number">4.2.3</span> Muestreo por
+importancia</a></li>
 <li><a href="#comienza-la-parte-vieja-pendiente-de-remodelación"><span
-class="toc-section-number">4.2.3</span> COMIENZA LA PARTE VIEJA;
+class="toc-section-number">4.2.4</span> COMIENZA LA PARTE VIEJA;
 PENDIENTE DE REMODELACIÓN</a>
 <ul>
 <li><a href="#importance-sampling"><span
-class="toc-section-number">4.2.3.1</span> Importance sampling</a></li>
+class="toc-section-number">4.2.4.1</span> Importance sampling</a></li>
 </ul></li>
 <li><a href="#termina-la-parte-vieja"><span
-class="toc-section-number">4.2.4</span> TERMINA LA PARTE VIEJA</a></li>
+class="toc-section-number">4.2.5</span> TERMINA LA PARTE VIEJA</a></li>
+<li><a href="#ejemplos-sencillos-de-integración-de-mc"><span
+class="toc-section-number">4.2.6</span> Ejemplos sencillos de
+integración de MC</a></li>
 </ul></li>
 <li><a href="#multiple-importance-sampling"><span
 class="toc-section-number">4.3</span> Multiple importance
@@ -2936,10 +2942,10 @@ data-cites="mcbook">(<a href="#ref-mcbook" role="doc-biblioref">Owen
 \hat\mu_N = \frac{1}{N} \sum_{i = 1}^{N}{Y_i}
 \]</span><span class="eqnos-number">(15)</span></span></p>
 <p>La intuición del estimador es, esencialmente, la misma que la del
-teorema central del límite. Lo que buscamos es una forma de calcular la
-media de un cierto suceso aleatorio, pero lo único que podemos usar son
-muestras de su variable aleatoria. Promediando esas muestras, sacamos
-información de la distribución. En este caso, la media.</p>
+teorema central del límite. Lo que buscamos es una forma de calcular el
+valor promedio de un cierto suceso aleatorio, pero lo único que podemos
+usar son muestras de su variable aleatoria. Promediando esas muestras,
+sacamos información de la distribución. En este caso, la media.</p>
 <p>En cualquier caso, la existencia de este estimador viene dada por la
 ley de los grandes números (tanto débil como fuerte [<a
 href="#eq:ley_numeros_grandes">13</a>]). Si <span
@@ -3015,7 +3021,7 @@ p_X(x) dx
 <p><strong>Nota</strong>(ción): si te preguntas por qué lo llamamos
 <span class="math inline">\(\hat{I}_N\)</span>, piensa que queremos
 calcular la intergal <span class="math inline">\(I =
-\int_{S}{f(x)dx}\)</span>. Para ello, usamos el estimador <span
+\int_{S}{f(x)p_X(x)dx}\)</span>. Para ello, usamos el estimador <span
 class="math inline">\(\hat{I}\)</span>, y marcamos explícitamente que
 usamos <span class="math inline">\(N\)</span> muestras.</p>
 </blockquote>
@@ -3086,9 +3092,42 @@ P\left[ \left\lvert \hat{I}_N - E\left[ \hat{I}_N \right] \right\rvert
 (<span class="math inline">\(N &gt;&gt; \frac{1}{\varepsilon}\)</span>),
 es prácticamente imposible que el estimador se aleje de <span
 class="math inline">\(E\left[ f(X) \right]\)</span>.</p>
-<h3 data-number="4.2.3"
+<p>La desviación estándar puede calcularse fácilmente a partir de la
+varianza:</p>
+<p><span id="eq:desviacion_estandar" class="eqnos"><span
+class="math display">\[
+\sqrt{Var[\hat{I}_N]} = \frac{\sqrt{Var\left[ f(X) \right]}}{\sqrt{N}}
+\]</span><span class="eqnos-number">(20)</span></span></p>
+<p>así que, como adelantamos al inicio del capítulo, la estimación tiene
+un error del orden <span
+class="math inline">\(\mathcal{O}(N^{-1/2})\)</span>. Esto nos dice que,
+para reducir el error a la mitad, debemos tomar 4 veces más
+muestras.</p>
+<p>Es importante destacar la <strong>ausencia del parámetro de la
+dimensión</strong>. Sabemos que <span class="math inline">\(X \in S
+\subset \mathbb{R}^d\)</span>, pero en ningún momento aparece <span
+class="math inline">\(d\)</span> en la expresión de la desviación
+estándar [<a href="#eq:desviacion_estandar">20</a>]. Este hecho es una
+de las ventajas de la integración de Monte Carlo.</p>
+<h3 data-number="4.2.3" id="muestreo-por-importancia"><span
+class="header-section-number">4.2.3</span> Muestreo por importancia</h3>
+<p>Como hemos visto, <span class="math inline">\(Var\left[ \hat{I}_N
+\right]\)</span> depende del número de muestras <span
+class="math inline">\(N\)</span> y de <span
+class="math inline">\(Var\left[ f(X) \right]\)</span>. Vamos a jugar con
+el segundo término.</p>
+<p>La integral que estamos evaluando ahora mismo es <span
+class="math inline">\(\int_S{f(x)p_X(x)}dx\)</span>. En la práctica,
+únicamente nos interesará <span
+class="math inline">\(\int_S{f(X)dx}\)</span>. Podemos conseguir
+haciendo esto haciendo lo siguiente:</p>
+<p><span class="math display">\[
+I = \int_S{f(x)dx} = \int_S{p_X(x) \frac{f(x)}{p_X(x)}dx} = E\left[
+\frac{f(X)}{p_X(x)} \right]
+\]</span></p>
+<h3 data-number="4.2.4"
 id="comienza-la-parte-vieja-pendiente-de-remodelación"><span
-class="header-section-number">4.2.3</span> COMIENZA LA PARTE VIEJA;
+class="header-section-number">4.2.4</span> COMIENZA LA PARTE VIEJA;
 PENDIENTE DE REMODELACIÓN</h3>
 <p><span class="math display">\[
 \mu = E\left[ Y \right] = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
@@ -3130,7 +3169,7 @@ href="#eq:mc_integral">16</a>]:</p>
 class="math inline">\(p_X\)</span> será clave. Si conseguimos escogerla
 debidamente, reduciremos en gran medida el error que genera el
 estimador. Esto es lo que se conoce como <a
-href="#importance-sampling"><em>importance sampling</em></a>.</p>
+href="#muestreo-por-importancia"><em>importance sampling</em></a>.</p>
 <p>Puesto que la varianza del estimador nos dará información sobre el
 error que genera, vamos a calcular <span
 class="math inline">\(Var[\hat{I}_N]\)</span>. Para ello, usamos las
@@ -3159,55 +3198,8 @@ un error del orden <span
 class="math inline">\(\mathcal{O}(N^{-1/2})\)</span>. Esto nos dice que,
 para reducir el error a la mitad, debemos tomar 4 veces más
 muestras.</p>
-<p>Pongamos un ejemplo de estimador de Monte Carlo para una caja de
-dimensiones <span class="math inline">\(\small{[x_0, x_1] \times [y_0,
-y_1] \times [z_0, z_1]}\)</span>. Si queremos estimar la integral de la
-función <span class="math inline">\(f: \mathbb{R}^3 \rightarrow
-\mathbb{R}\)</span></p>
-<p><span class="math display">\[
-\int_{x_0}^{x_1} \int_{y_0}^{y_1} \int_{z_0}^{z_1}{f(x, y, z)dx dy dz}
-\]</span></p>
-<p>mediante una variable aleatoria <span class="math inline">\(X \sim
-U(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]})\)</span> con
-función de densidad <span class="math inline">\(p(x, y, z) =
-\frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}\)</span>,
-tomamos el estimador</p>
-<p><span class="math display">\[
-\hat{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)}
-\sum_{i = 1}^{N}{f(X_i)}
-\]</span></p>
-<p>Otro ejemplo clásico de estimador de Monte Carlo es calcular el valor
-de <span class="math inline">\(\pi\)</span>. Se puede hallar integrando
-una función que valga <span class="math inline">\(1\)</span> en el
-interior de la circunferencia de radio unidad y <span
-class="math inline">\(0\)</span> en el exterior:</p>
-<p><span class="math display">\[
-\begin{aligned}
-f = \begin{cases}
-      1 &amp; \text{si } x^2 + y^2 \le 1 \\
-      0 &amp; \text{en otro caso}
-    \end{cases} \Longrightarrow \pi = \int_{-1}^{1} \int_{-1}^{1}{f(x,
-y)}\ dxdy
-\end{aligned}
-\]</span></p>
-<p>Para usar el estimador de [<a href="#eq:mc_integral">16</a>],
-necesitamos saber la probabilidad de obtener un punto dentro de la
-circunferencia.</p>
-<p>Bien, consideremos que una circunferencia de radio <span
-class="math inline">\(r\)</span> se encuentra inscrita en un cuadrado.
-El área de la circunferencia es <span class="math inline">\(\pi
-r^2\)</span>, mientras que la del cuadrado es <span
-class="math inline">\((2r)^2 = 4r^2\)</span>. Por tanto, la probabilidad
-de obtener un punto dentro de la circunferencia es <span
-class="math inline">\(\frac{\pi r^2}{4r^2} = \frac{\pi}{4}\)</span>.
-Podemos tomar <span class="math inline">\(p(x, y) =
-\frac{1}{4}\)</span>, de forma que</p>
-<p><span class="math display">\[
-\pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con }
-(x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
-\]</span></p>
-<h4 data-number="4.2.3.1" id="importance-sampling"><span
-class="header-section-number">4.2.3.1</span> Importance sampling</h4>
+<h4 data-number="4.2.4.1" id="importance-sampling"><span
+class="header-section-number">4.2.4.1</span> Importance sampling</h4>
 <p>Si recordamos la varianza del estimador de Monte Carlo [<a
 href="#eq:mc_varianza">17</a>],</p>
 <p><span class="math display">\[
@@ -3258,8 +3250,59 @@ Markov de Monte Carlo.</p>
 class="math inline">\(p_X\)</span> que se aproximen a <span
 class="math inline">\(f\)</span> lo más fielmente posible, dentro del
 contexto del transporte de luz.</p>
-<h3 data-number="4.2.4" id="termina-la-parte-vieja"><span
-class="header-section-number">4.2.4</span> TERMINA LA PARTE VIEJA</h3>
+<h3 data-number="4.2.5" id="termina-la-parte-vieja"><span
+class="header-section-number">4.2.5</span> TERMINA LA PARTE VIEJA</h3>
+<h3 data-number="4.2.6"
+id="ejemplos-sencillos-de-integración-de-mc"><span
+class="header-section-number">4.2.6</span> Ejemplos sencillos de
+integración de MC</h3>
+<p>Pongamos un ejemplo de estimador de Monte Carlo para una caja de
+dimensiones <span class="math inline">\(\small{[x_0, x_1] \times [y_0,
+y_1] \times [z_0, z_1]}\)</span>. Si queremos estimar la integral de la
+función <span class="math inline">\(f: \mathbb{R}^3 \rightarrow
+\mathbb{R}\)</span></p>
+<p><span class="math display">\[
+\int_{x_0}^{x_1} \int_{y_0}^{y_1} \int_{z_0}^{z_1}{f(x, y, z)dx dy dz}
+\]</span></p>
+<p>mediante una variable aleatoria <span class="math inline">\(X \sim
+U(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]})\)</span> con
+función de densidad <span class="math inline">\(p(x, y, z) =
+\frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}\)</span>,
+tomamos el estimador</p>
+<p><span class="math display">\[
+\hat{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)}
+\sum_{i = 1}^{N}{f(X_i)}
+\]</span></p>
+<p>Otro ejemplo clásico de estimador de Monte Carlo es calcular el valor
+de <span class="math inline">\(\pi\)</span>. Se puede hallar integrando
+una función que valga <span class="math inline">\(1\)</span> en el
+interior de la circunferencia de radio unidad y <span
+class="math inline">\(0\)</span> en el exterior:</p>
+<p><span class="math display">\[
+\begin{aligned}
+f = \begin{cases}
+      1 &amp; \text{si } x^2 + y^2 \le 1 \\
+      0 &amp; \text{en otro caso}
+    \end{cases} \Longrightarrow \pi = \int_{-1}^{1} \int_{-1}^{1}{f(x,
+y)}\ dxdy
+\end{aligned}
+\]</span></p>
+<p>Para usar el estimador de [<a href="#eq:mc_integral">16</a>],
+necesitamos saber la probabilidad de obtener un punto dentro de la
+circunferencia.</p>
+<p>Bien, consideremos que una circunferencia de radio <span
+class="math inline">\(r\)</span> se encuentra inscrita en un cuadrado.
+El área de la circunferencia es <span class="math inline">\(\pi
+r^2\)</span>, mientras que la del cuadrado es <span
+class="math inline">\((2r)^2 = 4r^2\)</span>. Por tanto, la probabilidad
+de obtener un punto dentro de la circunferencia es <span
+class="math inline">\(\frac{\pi r^2}{4r^2} = \frac{\pi}{4}\)</span>.
+Podemos tomar <span class="math inline">\(p(x, y) =
+\frac{1}{4}\)</span>, de forma que</p>
+<p><span class="math display">\[
+\pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con }
+(x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
+\]</span></p>
 <h2 data-number="4.3" id="multiple-importance-sampling"><span
 class="header-section-number">4.3</span> Multiple importance
 sampling</h2>
@@ -4077,7 +4120,7 @@ L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
 \omega_o \leftarrow \omega_j) L_i(p, \omega_j)
 \cos\theta_j}{p(\omega_j)}}
 \end{aligned}
-\]</span><span class="eqnos-number">(20)</span></span></p>
+\]</span><span class="eqnos-number">(21)</span></span></p>
 <p>Fijémonos en el denominador. Lo que estamos haciendo es tomar una
 muestra de un vector en la esfera. Si trabajamos con una BRDF en vez de
 una BSDF, usaríamos un hemisferio en vez de la esfera.</p>
@@ -4088,17 +4131,18 @@ class="math inline">\(f_r(p, \omega_o \leftarrow \omega_i) =
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
 \cos\theta_j}{p(\omega_j)}}
 \]</span></p>
-<p>¿Recuerdas la sección de <a href="#importance-sampling">importance
-sampling</a>? La idea es buscar una función proporcional a <span
-class="math inline">\(f\)</span> para reducir el error. Podemos usar
-<span class="math inline">\(p(\omega) = \frac{\cos\theta}{\pi}\)</span>,
-de forma que</p>
+<p>¿Recuerdas la sección de <a
+href="#muestreo-por-importancia">importance sampling</a>? La idea es
+buscar una función proporcional a <span class="math inline">\(f\)</span>
+para reducir el error. Podemos usar <span
+class="math inline">\(p(\omega) = \frac{\cos\theta}{\pi}\)</span>, de
+forma que</p>
 <p><span id="eq:rendering_eq_lambertian" class="eqnos"><span
 class="math display">\[
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
 \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j =
 1}^{N}{L_i(p, \omega_j) \rho}
-\]</span><span class="eqnos-number">(21)</span></span></p>
+\]</span><span class="eqnos-number">(22)</span></span></p>
 <p>Lo cual nos proporciona una expresión muy agradable para los
 materiales difusos. Solo es cuestión de calcular la radiancia del
 punto.</p>
@@ -4107,7 +4151,7 @@ class="header-section-number">5.6.2</span> Pseudocódigo de un path
 tracer</h3>
 <p>Con lo que conocemos hasta ahora, podemos empezar a programar los
 shaders. Una primera implementación basada en [<a
-href="#eq:rendering_equation_mc">20</a>] sería similar a lo
+href="#eq:rendering_equation_mc">21</a>] sería similar a lo
 siguiente:</p>
 <pre><code class="language-cpp">vec3 pathtrace(Rayo r, profundidad) {
     if (profundidad == profundidad_maxima) {
