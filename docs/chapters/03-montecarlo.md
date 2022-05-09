@@ -340,7 +340,7 @@ $$
 \end{aligned}
 $${#eq:mc_integral}
 
-> **Nota**(ción): si te preguntas por qué lo llamamos $\hat{I}_N$, piensa que queremos calcular la intergal $I = \int_{S}{f(x)dx}$. Para ello, usamos el estimador $\hat{I}$, y marcamos explícitamente que usamos $N$ muestras.
+> **Nota**(ción): si te preguntas por qué lo llamamos $\hat{I}_N$, piensa que queremos calcular la intergal $I = \int_{S}{f(x)p_X(x)dx}$. Para ello, usamos el estimador $\hat{I}$, y marcamos explícitamente que usamos $N$ muestras.
 
 La varianza del estimador se puede calcular fácilmente:
 
@@ -395,6 +395,16 @@ así que, como adelantamos al inicio del capítulo, la estimación tiene un erro
 
 Es importante destacar la **ausencia del parámetro de la dimensión**. Sabemos que $X \in S \subset \mathbb{R}^d$, pero en ningún momento aparece $d$ en la expresión de la desviación estándar [@eq:desviacion_estandar]. Este hecho es una de las ventajas de la integración de Monte Carlo.
 
+### Muestreo por importancia
+
+Como hemos visto, $\Var{\hat{I}_N}$ depende del número de muestras $N$ y de $\Var{f(X)}$. Vamos a jugar con el segundo término.
+
+La integral que estamos evaluando ahora mismo es $\int_S{f(x)p_X(x)}dx$. En la práctica, únicamente nos interesará $\int_S{f(X)dx}$. Podemos conseguir haciendo esto haciendo lo siguiente:
+
+$$
+I = \int_S{f(x)dx} = \int_S{p_X(x) \frac{f(x)}{p_X(x)}dx} = \E{\frac{f(X)}{p_X(x)}}
+$$
+
 ### COMIENZA LA PARTE VIEJA; PENDIENTE DE REMODELACIÓN
 
 $$
@@ -426,7 +436,7 @@ $$
 \hat{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
 $$
 
-Elegir correctamente la función de densidad $p_X$ será clave. Si conseguimos escogerla debidamente, reduciremos en gran medida el error que genera el estimador. Esto es lo que se conoce como [*importance sampling*](#importance-sampling).
+Elegir correctamente la función de densidad $p_X$ será clave. Si conseguimos escogerla debidamente, reduciremos en gran medida el error que genera el estimador. Esto es lo que se conoce como [*importance sampling*](#muestreo-por-importancia).
 
 Puesto que la varianza del estimador nos dará información sobre el error que genera, vamos a calcular $Var[\hat{I}_N]$. Para ello, usamos las propiedades que vimos en la [sección anterior](#esperanza-y-varianza-de-una-variable-aleatoria):
 
