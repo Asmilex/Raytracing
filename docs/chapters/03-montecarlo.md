@@ -428,6 +428,18 @@ $${#eq:mc_integral_importancia}
 
 > **Nota**(ción): ¡fíjate en el gusanito! $\hat{I}_N$ [@eq:mc_integral] y $\tilde{I}_N$ tienen la misma esperanza, pero son estimadores diferentes.
 
+Vamos a calcular ahora la varianza de este estimador. Sea $\mu = \E{f(X)}$
+
+$$
+\begin{aligned}
+\Var{\tilde{I}_N} & = \frac{1}{N} \left( \int_Q{\left(\frac{f(x)p_X(x)}{q_X(x)}\right)^2q_X(x) dx} - \mu^2  \right) = \\
+                  & = \frac{1}{N} \textcolor{verde-oscurisimo}{\left( \int_Q{\frac{\left(f(x)p_X(x)\right)^2}{q_X(x)} dx} - \mu^2  \right)} = \\
+                  & = \frac{\textcolor{verde-oscurisimo}{\sigma^2_q}}{N}
+\end{aligned}
+$$
+
+La clave de este método reside en escoger una buena distribución de importancia. Puede probarse que la función de densidad que minimiza $\sigma^2_q$ es proporcional a $\abs{f(x)}p_X(x)$ [@mcbook, p.6].
+
 Esta técnica es especialmente importante en nuestra área de estudio. En transporte de luz, intentaremos buscar funciones de densidad proporcionales a la BRDF. La literatura utiliza una versión modificada de muestreo por importancia: se suele usar $\frac{1}{N} \sum_{i=1}^N{\frac{f}{p_X}}$ para que $\E{\frac{f}{p_X}} = \int_S{\frac{f}{p_X}p_X}$ y así se evalúe directamente la integral de $f$. En cualquiera de los casos, el fundamento teórico es el mismo.
 
 ### COMIENZA LA PARTE VIEJA; PENDIENTE DE REMODELACIÓN
