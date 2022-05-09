@@ -369,20 +369,42 @@ class="toc-section-number">4.2.1</span> Monte Carlo básico</a></li>
 <li><a href="#integración-de-monte-carlo"><span
 class="toc-section-number">4.2.2</span> Integración de Monte
 Carlo</a></li>
+</ul></li>
+<li><a href="#técnicas-de-reducción-de-varianza"><span
+class="toc-section-number">4.3</span> Técnicas de reducción de
+varianza</a>
+<ul>
 <li><a href="#muestreo-por-importancia"><span
-class="toc-section-number">4.2.3</span> Muestreo por importancia</a>
+class="toc-section-number">4.3.1</span> Muestreo por importancia</a>
 <ul>
 <li><a href="#muestreo-por-importancia-en-transporte-de-luz"><span
-class="toc-section-number">4.2.3.1</span> Muestreo por importancia en
+class="toc-section-number">4.3.1.1</span> Muestreo por importancia en
 transporte de luz</a></li>
 </ul></li>
-<li><a href="#ejemplos-sencillos-de-integración-de-mc"><span
-class="toc-section-number">4.2.4</span> Ejemplos sencillos de
-integración de MC</a></li>
+<li><a href="#muestreo-por-importancia-múltiple"><span
+class="toc-section-number">4.3.2</span> Muestreo por importancia
+múltiple</a>
+<ul>
+<li><a
+href="#muestreo-por-importancia-múltiple-en-transporte-de-luz"><span
+class="toc-section-number">4.3.2.1</span> Muestreo por importancia
+múltiple en transporte de luz</a></li>
 </ul></li>
-<li><a href="#multiple-importance-sampling"><span
-class="toc-section-number">4.3</span> Multiple importance
-sampling</a></li>
+<li><a
+href="#otras-técnicas-de-reducción-de-varianza-en-transporte-de-luz"><span
+class="toc-section-number">4.3.3</span> Otras técnicas de reducción de
+varianza en transporte de luz</a>
+<ul>
+<li><a href="#ruleta-rusa"><span
+class="toc-section-number">4.3.3.1</span> Ruleta rusa</a></li>
+<li><a
+href="#next-event-estimation-o-muestreo-directo-de-fuentes-de-luz"><span
+class="toc-section-number">4.3.3.2</span> Next event estimation, o
+muestreo directo de fuentes de luz</a></li>
+<li><a href="#quasi-monte-carlo"><span
+class="toc-section-number">4.3.3.3</span> Quasi-Monte Carlo</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#escogiendo-puntos-aleatorios"><span
 class="toc-section-number">4.4</span> Escogiendo puntos aleatorios</a>
 <ul>
@@ -391,53 +413,6 @@ class="toc-section-number">4.4.1</span> Método de la transformada
 inversa</a></li>
 <li><a href="#método-del-rechazo"><span
 class="toc-section-number">4.4.2</span> Método del rechazo</a></li>
-<li><a href="#distribuciones-unidimensionales"><span
-class="toc-section-number">4.4.3</span> Distribuciones
-unidimensionales</a>
-<ul>
-<li><a href="#uniformente"><span
-class="toc-section-number">4.4.3.1</span> Uniformente</a></li>
-<li><a href="#linear"><span class="toc-section-number">4.4.3.2</span>
-Linear</a></li>
-<li><a href="#gausiana"><span class="toc-section-number">4.4.3.3</span>
-Gausiana</a></li>
-<li><a href="#basada-en-texturas"><span
-class="toc-section-number">4.4.3.4</span> Basada en texturas</a></li>
-</ul></li>
-<li><a href="#distribuciones-bidimensionales"><span
-class="toc-section-number">4.4.4</span> Distribuciones
-bidimensionales</a>
-<ul>
-<li><a href="#uniformemente"><span
-class="toc-section-number">4.4.4.1</span> Uniformemente</a></li>
-<li><a href="#basada-en-mappeo-de-superficies-a-un-hemisferio"><span
-class="toc-section-number">4.4.4.2</span> Basada en mappeo de
-superficies a un hemisferio</a></li>
-<li><a href="#brdf"><span class="toc-section-number">4.4.4.3</span>
-BRDF</a></li>
-<li><a href="#basada-en-el-coseno"><span
-class="toc-section-number">4.4.4.4</span> Basada en el coseno</a></li>
-</ul></li>
-</ul></li>
-<li><a
-href="#técnicas-de-reducción-de-varianza-basadas-en-muestras"><span
-class="toc-section-number">4.5</span> Técnicas de reducción de varianza
-basadas en muestras</a>
-<ul>
-<li><a href="#ruleta-rusa"><span class="toc-section-number">4.5.1</span>
-Ruleta rusa</a></li>
-<li><a href="#next-event-estimation"><span
-class="toc-section-number">4.5.2</span> Next Event Estimation</a></li>
-<li><a href="#blue-noise"><span class="toc-section-number">4.5.3</span>
-Blue noise</a></li>
-<li><a href="#forced-random-sampling"><span
-class="toc-section-number">4.5.4</span> Forced random sampling</a></li>
-<li><a href="#sampling-importance-resampling"><span
-class="toc-section-number">4.5.5</span> Sampling importance
-resampling</a></li>
-<li><a href="#low-discrepancy-sampling"><span
-class="toc-section-number">4.5.6</span> Low discrepancy
-sampling</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#construyamos-un-path-tracer"><span
@@ -550,8 +525,20 @@ class="toc-section-number">7.4.4</span> La última generación de
 consolas</a></li>
 </ul></li>
 <li><a href="#posibles-mejoras-del-trabajo"><span
-class="toc-section-number">7.5</span> Posibles mejoras del
-trabajo</a></li>
+class="toc-section-number">7.5</span> Posibles mejoras del trabajo</a>
+<ul>
+<li><a href="#blue-noise"><span
+class="toc-section-number">7.5.0.1</span> Blue noise</a></li>
+<li><a href="#forced-random-sampling"><span
+class="toc-section-number">7.5.0.2</span> Forced random
+sampling</a></li>
+<li><a href="#sampling-importance-resampling"><span
+class="toc-section-number">7.5.0.3</span> Sampling importance
+resampling</a></li>
+<li><a href="#low-discrepancy-sampling"><span
+class="toc-section-number">7.5.0.4</span> Low discrepancy
+sampling</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#metodología-de-trabajo"><span
 class="toc-section-number">8</span> Metodología de trabajo</a>
@@ -2428,14 +2415,22 @@ en una superficie, adquirirá parte de las propiedades del material del
 objeto. Además, de este rayo surgirán otros nuevos (un rayo dispersado y
 otro refractado), que a su vez repetirán el proceso. La información que
 se obtiene a partir de estos caminos de rayos nos permitirá darle color
-al píxel.</p>
-<p>La <em>rendering equation</em> se va a encargar de describir
-analíticamente cómo ocurre esto.</p>
+al píxel. Con dicha ecuación, describiremos analíticamente cómo ocurre
+esto.</p>
 <p>Un último concepto más: denotemos por <span
 class="math inline">\(L_e(p, \omega_o)\)</span> a <strong>la radiancia
 producida por los materiales emisivos</strong>. En esencia, estos
 materiales son fuentes de luz, pues emiten radiancia por sí mismos.</p>
-<p>Bien, partamos de la ecuación de para la radiancia reflejada:</p>
+<p>La <em>rendering equation</em> viene dada por la siguiente
+expresión:</p>
+<p><span id="eq:rendering_equation" class="eqnos"><span
+class="math display">\[
+L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p,
+\omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
+\]</span><span class="eqnos-number">(11)</span></span></p>
+<p>Para hacerla operativa en términos computacionales podemos
+transformarla un poco. Bien, partamos de la ecuación de para la
+radiancia reflejada:</p>
 <p><span class="math display">\[
 L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
 \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
@@ -2469,12 +2464,11 @@ L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
 \]</span></p>
 <p>Finalmente, la radiancia total vendrá dada por la suma de la
 radiancia emitida y la reflejada:</p>
-<p><span id="eq:rendering_equation" class="eqnos"><span
-class="math display">\[
+<p><span class="math display">\[
 L(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o
 \leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\
 d\omega_i}
-\]</span><span class="eqnos-number">(11)</span></span></p>
+\]</span></p>
 <p>Y con esto, ¡hemos obtenido la <em>rendering equation</em>!</p>
 <p>Si quieres ver gráficamente cómo funciona, te recomiendo pasarte por
 <span class="citation" data-cites="arneback-2019">(<a
@@ -2555,7 +2549,10 @@ discretas</h3>
 discreto.</p>
 <p>Para comprender mejor cómo funcionan, pongamos un ejemplo:
 Consideremos un experimento en el que lanzamos dos dados, anotando lo
-que sale en cada uno. Los posibles valores que toman serán</p>
+que sale en cada uno. Los posibles valores que toman serán <span
+class="citation" data-cites="galvin-no-date">(<a
+href="#ref-galvin-no-date" role="doc-biblioref">Galvin
+n.d.</a>)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \Omega = \{ &amp; (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),  \\
@@ -2969,6 +2966,36 @@ varianza es</p>
 <p><span class="math display">\[
 E\left[ (\hat\mu_N - \mu)^2 \right] = \frac{\sigma^2}{N}
 \]</span></p>
+<p>Un ejemplo clásico de estimador de Monte Carlo es calcular el valor
+de <span class="math inline">\(\pi\)</span>. Se puede hallar integrando
+una función que valga <span class="math inline">\(1\)</span> en el
+interior de la circunferencia de radio unidad y <span
+class="math inline">\(0\)</span> en el exterior:</p>
+<p><span class="math display">\[
+\begin{aligned}
+f = \begin{cases}
+      1 &amp; \text{si } x^2 + y^2 \le 1 \\
+      0 &amp; \text{en otro caso}
+    \end{cases} \Longrightarrow \pi = \int_{-1}^{1} \int_{-1}^{1}{f(x,
+y)}\ dxdy
+\end{aligned}
+\]</span></p>
+<p>Para usar el estimador de [<a href="#eq:mc_integral">16</a>],
+necesitamos saber la probabilidad de obtener un punto dentro de la
+circunferencia.</p>
+<p>Bien, consideremos que una circunferencia de radio <span
+class="math inline">\(r\)</span> se encuentra inscrita en un cuadrado.
+El área de la circunferencia es <span class="math inline">\(\pi
+r^2\)</span>, mientras que la del cuadrado es <span
+class="math inline">\((2r)^2 = 4r^2\)</span>. Por tanto, la probabilidad
+de obtener un punto dentro de la circunferencia es <span
+class="math inline">\(\frac{\pi r^2}{4r^2} = \frac{\pi}{4}\)</span>.
+Podemos tomar <span class="math inline">\(p(x, y) =
+\frac{1}{4}\)</span>, de forma que</p>
+<p><span class="math display">\[
+\pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con }
+(x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
+\]</span></p>
 <h3 data-number="4.2.2" id="integración-de-monte-carlo"><span
 class="header-section-number">4.2.2</span> Integración de Monte
 Carlo</h3>
@@ -3107,8 +3134,11 @@ dimensión</strong>. Sabemos que <span class="math inline">\(X \in S
 class="math inline">\(d\)</span> en la expresión de la desviación
 estándar [<a href="#eq:desviacion_estandar">20</a>]. Este hecho es una
 de las ventajas de la integración de Monte Carlo.</p>
-<h3 data-number="4.2.3" id="muestreo-por-importancia"><span
-class="header-section-number">4.2.3</span> Muestreo por importancia</h3>
+<h2 data-number="4.3" id="técnicas-de-reducción-de-varianza"><span
+class="header-section-number">4.3</span> Técnicas de reducción de
+varianza</h2>
+<h3 data-number="4.3.1" id="muestreo-por-importancia"><span
+class="header-section-number">4.3.1</span> Muestreo por importancia</h3>
 <p>Como hemos visto, <span class="math inline">\(Var\left[ \hat{I}_N
 \right]\)</span> depende del número de muestras <span
 class="math inline">\(N\)</span> y de <span
@@ -3201,9 +3231,9 @@ importancia. Puede probarse que la función de densidad que minimiza
 class="math inline">\(\left\lvert f(x) \right\rvert p_X(x)\)</span>
 <span class="citation" data-cites="mcbook">(<a href="#ref-mcbook"
 role="doc-biblioref">Owen 2013, 6</a>)</span>.</p>
-<h4 data-number="4.2.3.1"
+<h4 data-number="4.3.1.1"
 id="muestreo-por-importancia-en-transporte-de-luz"><span
-class="header-section-number">4.2.3.1</span> Muestreo por importancia en
+class="header-section-number">4.3.1.1</span> Muestreo por importancia en
 transporte de luz</h4>
 <p>Esta técnica es especialmente importante en nuestra área de estudio.
 En transporte de luz, buscamos calcular el valor de la rendering
@@ -3225,7 +3255,9 @@ class="math display">\[
 p_X\)</span>, <span class="math inline">\(E\left[ \frac{f}{p_X} \right]
 = \int_S{\frac{f}{p_X}p_X}\)</span> y así se evalúe directamente la
 integral de <span class="math inline">\(f\)</span>. En cualquiera de los
-casos, el fundamento teórico es el mismo.</p>
+casos, el fundamento teórico es el mismo <span class="citation"
+data-cites="berkeley-mc-lecture">(<a href="#ref-berkeley-mc-lecture"
+role="doc-biblioref">Eric C. Anderson 1999</a>)</span>.</p>
 <p>Esta forma de escribir el estimador nos permite amenizar algunos
 casos particulares. Por ejemplo, si usamos muestras <span
 class="math inline">\(X_i\)</span> que sigan una distribución uniforme
@@ -3278,10 +3310,6 @@ Markov de Monte Carlo.</p>
 class="math inline">\(p_X\)</span> que se aproximen a <span
 class="math inline">\(f\)</span> lo más fielmente posible, dentro del
 contexto del transporte de luz.</p>
-<h3 data-number="4.2.4"
-id="ejemplos-sencillos-de-integración-de-mc"><span
-class="header-section-number">4.2.4</span> Ejemplos sencillos de
-integración de MC</h3>
 <p>Pongamos un ejemplo de estimador de Monte Carlo para una caja de
 dimensiones <span class="math inline">\(\small{[x_0, x_1] \times [y_0,
 y_1] \times [z_0, z_1]}\)</span>. Si queremos estimar la integral de la
@@ -3299,40 +3327,205 @@ tomamos el estimador</p>
 \tilde{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)}
 \sum_{i = 1}^{N}{f(X_i)}
 \]</span></p>
-<p>Otro ejemplo clásico de estimador de Monte Carlo es calcular el valor
-de <span class="math inline">\(\pi\)</span>. Se puede hallar integrando
-una función que valga <span class="math inline">\(1\)</span> en el
-interior de la circunferencia de radio unidad y <span
-class="math inline">\(0\)</span> en el exterior:</p>
+<h3 data-number="4.3.2" id="muestreo-por-importancia-múltiple"><span
+class="header-section-number">4.3.2</span> Muestreo por importancia
+múltiple</h3>
+<p>Las técnicas de <a href="#muestreo-por-importancia">muestreo por
+importancia</a> nos proporcionan estimadores para una integral de la
+forma <span class="math inline">\(\int{f(x)dx}\)</span>. Sin embargo, es
+frecuente encontrarse un producto de dos funciones, <span
+class="math inline">\(\int{f(x)g(x)dx}\)</span>. Si tuviéramos una forma
+de coger muestras para <span class="math inline">\(f\)</span>, y otra
+para <span class="math inline">\(g\)</span>, ¿cuál deberíamos usar?</p>
+<p>Se puede utilizar un nuevo estimador de Monte Carlo, que viene dado
+por <span class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
+role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>)</span></p>
+<p><span class="math display">\[
+\frac{1}{N_f} \sum_{i = 1}^{N_f}{\frac{f(X_i)g(X_i)w_f(X_i)}{p_f(X_i)}}
++ \frac{1}{N_g} \sum_{j =
+1}^{N_g}{\frac{f(Y_j)g(Y_j)w_g(Y_j)}{p_g(Y_j)}}
+\]</span></p>
+<p>donde <span class="math inline">\(N_f\)</span> y <span
+class="math inline">\(N_g\)</span> son el número de muestras tomadas
+para <span class="math inline">\(f\)</span> y <span
+class="math inline">\(g\)</span> respectivamente, <span
+class="math inline">\(p_f, p_g\)</span> las funciones de densidad
+respectivas y <span class="math inline">\(w_f, w_g\)</span> funciones de
+peso escogidas tales que la esperanza del estimador sea <span
+class="math inline">\(\int{f(x)g(x)dx}\)</span>.</p>
+<p>Estas funciones peso suelen tener en cuenta todas las formas
+diferentes que hay de generar muestras para <span
+class="math inline">\(X_i\)</span> e <span
+class="math inline">\(Y_j\)</span>. Por ejemplo, una de las que podemos
+usar es la heurística de balanceo:</p>
+<p><span class="math display">\[
+w_s(x) = \frac{N_s p_s(x)}{\sum_{i}{N_i p_i(x)}}
+\]</span></p>
+<p>Una modificación de esta es la heurística potencial (<em>power
+heuristic</em>):</p>
+<p><span class="math display">\[
+w_s(x, \beta) = \frac{\left(N_s p_s(x)\right)^\beta}{\sum_{i}{\left(N_i
+p_i(x)\right)^\beta}}
+\]</span></p>
+<p>la cual reduce la varianza con respecto a la heurística de balanceo.
+Un valor para <span class="math inline">\(\beta\)</span> habitual es
+<span class="math inline">\(\beta = 2\)</span>.</p>
+<h4 data-number="4.3.2.1"
+id="muestreo-por-importancia-múltiple-en-transporte-de-luz"><span
+class="header-section-number">4.3.2.1</span> Muestreo por importancia
+múltiple en transporte de luz</h4>
+<p>Si queremos evaluar la contribución de luz en un punto teniendo en
+cuenta la luz directa, la expresión utilizada es</p>
+<p><span class="math display">\[
+L_o(p, \omega_o) = \int_{S^2}{f(p, \omega_o \leftarrow \omega_i)
+L_{directa}(p, \omega_i) \cos\theta_i\ d\omega_i}
+\]</span></p>
+<p>Si utilizáramos muestreo por importancia basándonos en las
+distribuciones de <span class="math inline">\(L_{directa}\)</span> o
+<span class="math inline">\(f\)</span> por separado, algunas de las dos
+no rendiría especialmente bien. Combinando ambas mediante muestreo por
+importancia múltiple se conseguiría un mejor resultado.</p>
+<figure>
+<img src="./img/03/Multiple%20importance%20sampling.png"
+style="width:67.0%"
+alt="Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: (Eric Veach December 1997, Multiple Importance Sampling)" />
+<figcaption aria-hidden="true">Muestreo por importancia múltiple en
+transporte de luz ilustrado. Fuente: <span class="citation"
+data-cites="robust-monte-carlo">(<a href="#ref-robust-monte-carlo"
+role="doc-biblioref">Eric Veach December 1997</a>, Multiple Importance
+Sampling)</span></figcaption>
+</figure>
+<h3 data-number="4.3.3"
+id="otras-técnicas-de-reducción-de-varianza-en-transporte-de-luz"><span
+class="header-section-number">4.3.3</span> Otras técnicas de reducción
+de varianza en transporte de luz</h3>
+<p>Hasta ahora, la principal técnica estudiada ha sido muestreo por
+importancia (sea o no múltiple). Esto no quiere decir que sea la única.
+Al contrario; esas dos son de las más sencillas que se pueden usar.</p>
+<p>En esta sección vamos a ver de forma breve otras formas de reducir la
+varianza de un estimador, centrádonos específicamente en el contexto de
+transporte de luz.</p>
+<h4 data-number="4.3.3.1" id="ruleta-rusa"><span
+class="header-section-number">4.3.3.1</span> Ruleta rusa</h4>
+<p>Un problema habitual en la práctica es saber cuándo terminar la
+propagación de un rayo. Una solución simple es utilizar un parámetro de
+profundidad –lo cual hemos implementado en el motor–. Otra opción más
+eficiente es utilizar el método de <strong>ruleta rusa</strong>.</p>
+<p>En esencia, la idea es que se genere un número aleatorio <span
+class="math inline">\(\xi \in [0, 1)\)</span>. Si <span
+class="math inline">\(\xi &lt; p_i\)</span>, el camino del rayo se
+continúa, pero multiplicando la radiancia acumulada por <span
+class="math inline">\(L_i(p, \omega_o \leftarrow \omega_i)/p_i\)</span>.
+En otro caso (i.e., si <span class="math inline">\(\xi \ge
+p_i\)</span>), el rayo se descarta. Esto hace que se acepten caminos más
+fuertes, rechazando aquellas rutas con excesivo ruido.</p>
+<p>Más información puede encontrarse en <span class="citation"
+data-cites="PBRT3e">(<a href="#ref-PBRT3e" role="doc-biblioref">Pharr,
+Jakob, and Humphreys 2016</a>, Russian Roulette and
+Splitting)</span>.</p>
+<h4 data-number="4.3.3.2"
+id="next-event-estimation-o-muestreo-directo-de-fuentes-de-luz"><span
+class="header-section-number">4.3.3.2</span> Next event estimation, o
+muestreo directo de fuentes de luz</h4>
+<blockquote>
+<p><strong>Idea</strong>: Tracing shadow rays to the light source on
+each bounce to see if you can terminate the current path. This involves
+shooting a shadow ray towards light sources, if it’s occluded, terminate
+the ray.</p>
+</blockquote>
+<p>Esta técnica recibe dos nombres. Tradicionalmente, se la conocía como
+muestreo directo de fuentes de luz, pero en los últimos años ha adoptado
+el nombre de next event estimation. Esencialmente, se trata de utilizar
+las luces de la escena para calcular la radiancia de un punto.</p>
+<p>Podemos dividir la rendering equation [<a
+href="#eq:rendering_equation">11</a>] en dos sumandos <span
+class="citation" data-cites="carlos-path-tracing">(<a
+href="#ref-carlos-path-tracing" role="doc-biblioref">Carlos Ureña
+2021</a>)</span>:</p>
+<p><span class="math display">\[
+L(p, \omega_o) = L_e(p, \omega_o) + \underbrace{L_{directa}(p, \omega_o
+\leftarrow \omega_i) + L_{indirecta}(p, \omega_o \leftarrow
+\omega_i)}_{\text{La parte integral de la rendering equation}}
+\]</span></p>
+<p>siendo <span class="math inline">\(L_e\)</span> la radiancia emitida
+por la superficie, <span class="math inline">\(L_{directa}\)</span> la
+radiancia proporcionada por las fuentes de luz y <span
+class="math inline">\(L_{indirecta}\)</span> la radiancia indirecta.</p>
 <p><span class="math display">\[
 \begin{aligned}
-f = \begin{cases}
-      1 &amp; \text{si } x^2 + y^2 \le 1 \\
-      0 &amp; \text{en otro caso}
-    \end{cases} \Longrightarrow \pi = \int_{-1}^{1} \int_{-1}^{1}{f(x,
-y)}\ dxdy
+  L_{directa}   &amp; = \int_{S^2}{f(p, \omega_o \leftarrow \omega_i)
+L_{e}(y, -\omega_i) \cos\theta_i\ d\omega_i} \\
+  L_{indirecta} &amp; = \int_{S^2}{f(p, \omega_o \leftarrow \omega_i)
+L_{i}(y \omega_o \leftarrow \omega_i) \cos\theta_i\ d\omega_i}
 \end{aligned}
 \]</span></p>
-<p>Para usar el estimador de [<a href="#eq:mc_integral">16</a>],
-necesitamos saber la probabilidad de obtener un punto dentro de la
-circunferencia.</p>
-<p>Bien, consideremos que una circunferencia de radio <span
-class="math inline">\(r\)</span> se encuentra inscrita en un cuadrado.
-El área de la circunferencia es <span class="math inline">\(\pi
-r^2\)</span>, mientras que la del cuadrado es <span
-class="math inline">\((2r)^2 = 4r^2\)</span>. Por tanto, la probabilidad
-de obtener un punto dentro de la circunferencia es <span
-class="math inline">\(\frac{\pi r^2}{4r^2} = \frac{\pi}{4}\)</span>.
-Podemos tomar <span class="math inline">\(p(x, y) =
-\frac{1}{4}\)</span>, de forma que</p>
-<p><span class="math display">\[
-\pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con }
-(x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
-\]</span></p>
-<h2 data-number="4.3" id="multiple-importance-sampling"><span
-class="header-section-number">4.3</span> Multiple importance
-sampling</h2>
-<p>https://graphics.stanford.edu/courses/cs348b-03/papers/veach-chapter9.pdf</p>
+<p>siendo <span class="math inline">\(y\)</span> el primer punto visible
+desde <span class="math inline">\(p\)</span> en la dirección <span
+class="math inline">\(\omega_i\)</span> situado en una fuente de
+luz.</p>
+<p>En cada punto de intersección <span class="math inline">\(p\)</span>,
+escogeremos aleatoriamente un punto <span
+class="math inline">\(y\)</span> en la fuente de luz, y calcularemos
+<span class="math inline">\(L_{directa}\)</span>. Esta integral es fácil
+de conseguir con las técnicas que ya conocemos. Sin embargo, <span
+class="math inline">\(L_{indirecta}\)</span> cuesta más trabajo. Al
+aparecer la radiancia incidente en el punto <span
+class="math inline">\(p, L_i(p, \omega_o \leftarrow \omega_i)\)</span>,
+necesitaremos evaluarla de forma recursiva trazando rayos en la
+escena.</p>
+<p>Aunque estamos haciendo más cálculos en cada punto de la cadena de
+ray trace, al evaluar por separado <span
+class="math inline">\(L_{directa}\)</span> y <span
+class="math inline">\(L_{indirecta}\)</span> conseguimos reducir
+considerablemente la varianza. Por tanto, suponiendo fija la varianza,
+el coste computacional de un camino es mayor, pero el coste total es más
+bajo.</p>
+<p>Esta técnica requiere conocer si desde el punto <span
+class="math inline">\(p\)</span> se puede ver <span
+class="math inline">\(y\)</span> en la fuente de luz. Es decir, ¿hay
+algún objeto en medio de <span class="math inline">\(p\)</span> e <span
+class="math inline">\(y\)</span>? Para ello, se suele utilizar lo que se
+conocen como <strong><em>shadow rays</em></strong>. Dispara uno de estos
+rayos para conocer si está ocluido.</p>
+<figure>
+<img src="./img/03/Next%20event%20estimation.png" style="width:67.0%"
+alt="El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: (Carlos Ureña 2021)" />
+<figcaption aria-hidden="true">El muestreo directo de fuentes de luz
+cambia la forma de calcular la radiancia en un punto, pero mejora
+considerablemente el ruido de una imagen. Fuente: <span class="citation"
+data-cites="carlos-path-tracing">(<a href="#ref-carlos-path-tracing"
+role="doc-biblioref">Carlos Ureña 2021</a>)</span></figcaption>
+</figure>
+<p>Si quieres informarte más sobre esta técnica, puedes leer <span
+class="citation" data-cites="Marrs2021">(<a href="#ref-Marrs2021"
+role="doc-biblioref">Adam Marrs and Wald 2021</a>, Importance Sampling
+of Many Lights on the GPU)</span>.</p>
+<h4 data-number="4.3.3.3" id="quasi-monte-carlo"><span
+class="header-section-number">4.3.3.3</span> Quasi-Monte Carlo</h4>
+<p>Generalmente, en los estimadores de Monte Carlo se utilizan variables
+aleatorias distribuidas uniformemente a las que se le aplican
+transformaciones, pues resulta más sencillo generar un número aleatorio
+de la primera manera que de la segunda. La idea de los quasi-Monte Carlo
+es muestrear puntos que, de la manera posible, se extiendan
+uniformemente en <span class="math inline">\([0, 1]^d\)</span>; evitando
+así clústeres y zonas vacías <span class="citation"
+data-cites="mcbook">(<a href="#ref-mcbook" role="doc-biblioref">Owen
+2013</a>, Quasi-Monte Carlo)</span>.</p>
+<p>Existen varias formas de conseguir esto. Algunas de las más famosas
+son las secuencias de Sobol, que son computacionalmente caras pero
+presentan menores discrepancias; o las series de Halton, que son más
+fáciles de conseguir.</p>
+<p>Se puede estudiar el tema en profundidad en <span class="citation"
+data-cites="quasi-monte-carlo">(<a href="#ref-quasi-monte-carlo"
+role="doc-biblioref">Martin Roberts 2018</a>)</span></p>
+<figure>
+<img src="./img/03/Quasi-Monte%20Carlo.png"
+alt="Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: (Martin Roberts 2018)" />
+<figcaption aria-hidden="true">Comparativa entre diferentes métodos de
+quasi-aleatoriedad. Fuente: <span class="citation"
+data-cites="quasi-monte-carlo">(<a href="#ref-quasi-monte-carlo"
+role="doc-biblioref">Martin Roberts 2018</a>)</span></figcaption>
+</figure>
 <h2 data-number="4.4" id="escogiendo-puntos-aleatorios"><span
 class="header-section-number">4.4</span> Escogiendo puntos
 aleatorios</h2>
@@ -3390,7 +3583,10 @@ href="https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-in
 p.52</a></p>
 </blockquote>
 <p>Como ejemplo, vamos a muestrear la función <span
-class="math inline">\(f(x) = x^2,\ x \in [0, 2]\)</span>.</p>
+class="math inline">\(f(x) = x^2,\ x \in [0, 2]\)</span> <span
+class="citation" data-cites="berkeley-cs184">(<a
+href="#ref-berkeley-cs184" role="doc-biblioref">Berkeley cs184 2022</a>,
+Monte Carlo Integration)</span>.</p>
 <p>Primero, normalizamos esta función para obtener una función de
 densidad <span class="math inline">\(p_X(x)\)</span>. Es decir, buscamos
 <span class="math inline">\(p_X(x) = c f(x)\)</span> tal que</p>
@@ -3480,118 +3676,6 @@ muestra de <span class="math inline">\(p_X\)</span></li>
 y se vuelve al paso 1.</li>
 </ol></li>
 </ol>
-<h3 data-number="4.4.3" id="distribuciones-unidimensionales"><span
-class="header-section-number">4.4.3</span> Distribuciones
-unidimensionales</h3>
-<h4 data-number="4.4.3.1" id="uniformente"><span
-class="header-section-number">4.4.3.1</span> Uniformente</h4>
-<h4 data-number="4.4.3.2" id="linear"><span
-class="header-section-number">4.4.3.2</span> Linear</h4>
-<h4 data-number="4.4.3.3" id="gausiana"><span
-class="header-section-number">4.4.3.3</span> Gausiana</h4>
-<h4 data-number="4.4.3.4" id="basada-en-texturas"><span
-class="header-section-number">4.4.3.4</span> Basada en texturas</h4>
-<h3 data-number="4.4.4" id="distribuciones-bidimensionales"><span
-class="header-section-number">4.4.4</span> Distribuciones
-bidimensionales</h3>
-<h4 data-number="4.4.4.1" id="uniformemente"><span
-class="header-section-number">4.4.4.1</span> Uniformemente</h4>
-<h4 data-number="4.4.4.2"
-id="basada-en-mappeo-de-superficies-a-un-hemisferio"><span
-class="header-section-number">4.4.4.2</span> Basada en mappeo de
-superficies a un hemisferio</h4>
-<h4 data-number="4.4.4.3" id="brdf"><span
-class="header-section-number">4.4.4.3</span> BRDF</h4>
-<h4 data-number="4.4.4.4" id="basada-en-el-coseno"><span
-class="header-section-number">4.4.4.4</span> Basada en el coseno</h4>
-<h2 data-number="4.5"
-id="técnicas-de-reducción-de-varianza-basadas-en-muestras"><span
-class="header-section-number">4.5</span> Técnicas de reducción de
-varianza basadas en muestras</h2>
-<h3 data-number="4.5.1" id="ruleta-rusa"><span
-class="header-section-number">4.5.1</span> Ruleta rusa</h3>
-<blockquote>
-<p><strong>Idea</strong>: A random chance that if the luminance of a ray
-is less than a given <span class="math inline">\(\varepsilon\)</span>
-the path will be discarded. Reduces variance by accepting stronger rays
-more often.</p>
-</blockquote>
-<h3 data-number="4.5.2" id="next-event-estimation"><span
-class="header-section-number">4.5.2</span> Next Event Estimation</h3>
-<blockquote>
-<p><strong>Idea</strong>: Tracing shadow rays to the light source on
-each bounce to see if you can terminate the current path. This involves
-shooting a shadow ray towards light sources, if it’s occluded, terminate
-the ray.</p>
-</blockquote>
-<h3 data-number="4.5.3" id="blue-noise"><span
-class="header-section-number">4.5.3</span> Blue noise</h3>
-<ul>
-<li>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</li>
-<li>https://alain.xyz/blog/ray-tracing-filtering</li>
-</ul>
-<h3 data-number="4.5.4" id="forced-random-sampling"><span
-class="header-section-number">4.5.4</span> Forced random sampling</h3>
-<p>http://drivenbynostalgia.com/ (ctrl + f -&gt; forced random
-sampling)</p>
-<h3 data-number="4.5.5" id="sampling-importance-resampling"><span
-class="header-section-number">4.5.5</span> Sampling importance
-resampling</h3>
-<ul>
-<li>https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</li>
-<li>https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf</li>
-</ul>
-<h3 data-number="4.5.6" id="low-discrepancy-sampling"><span
-class="header-section-number">4.5.6</span> Low discrepancy sampling</h3>
-<hr>
-<h2 class="unlisted unnumbered" id="referencias-1">Referencias</h2>
-<p><span class="citation" data-cites="ShirleyRRT">(<a
-href="#ref-ShirleyRRT" role="doc-biblioref">Shirley and Morley
-2003</a>)</span>, <span class="citation" data-cites="PBRT3e">(<a
-href="#ref-PBRT3e" role="doc-biblioref">Pharr, Jakob, and Humphreys
-2016</a>)</span>, <span class="citation" data-cites="mcbook">(<a
-href="#ref-mcbook" role="doc-biblioref">Owen 2013</a>)</span>, <span
-class="citation" data-cites="berkeley-cs184">(<a
-href="#ref-berkeley-cs184" role="doc-biblioref">Berkeley cs184 2022</a>,
-Monte Carlo Integration)</span>, <span class="citation"
-data-cites="wikipedia-contributors-2021B">(<a
-href="#ref-wikipedia-contributors-2021B" role="doc-biblioref">Wikipedia:
-Rendering equation n.d.</a>)</span>, <span class="citation"
-data-cites="wikipedia-contributors-2021C">(<a
-href="#ref-wikipedia-contributors-2021C" role="doc-biblioref">Wikipedia:
-Variable aleatoria n.d.</a>)</span>, <span class="citation"
-data-cites="wikipedia-contributors-2022H">(<a
-href="#ref-wikipedia-contributors-2022H" role="doc-biblioref">Wikipedia:
-Distribución de probabilidad n.d.</a>)</span>, <span class="citation"
-data-cites="wikipedia-contributors-2022I">(<a
-href="#ref-wikipedia-contributors-2022I" role="doc-biblioref">Wikipedia:
-Función de probabilidad n.d.</a>)</span>, <span class="citation"
-data-cites="wikipedia-contributors-2022J">(<a
-href="#ref-wikipedia-contributors-2022J" role="doc-biblioref">Wikipedia:
-Expected value n.d.</a>)</span>, <span class="citation"
-data-cites="galvin-no-date">(<a href="#ref-galvin-no-date"
-role="doc-biblioref">Galvin n.d.</a>)</span>, <span class="citation"
-data-cites="wikipedia-contributors-2022K">(<a
-href="#ref-wikipedia-contributors-2022K" role="doc-biblioref">Wikipedia:
-Probability density function n.d.</a>)</span>, <span class="citation"
-data-cites="wikipedia-contributors-2022L">(<a
-href="#ref-wikipedia-contributors-2022L" role="doc-biblioref">Wikipedia:
-Estimador n.d.</a>)</span>, <span class="citation"
-data-cites="wikipedia-contributors-2022M">(<a
-href="#ref-wikipedia-contributors-2022M" role="doc-biblioref">Wikipedia:
-Método de la transformada inversa n.d.</a>)</span>, <span
-class="citation" data-cites="wikipedia-contributors-2022N">(<a
-href="#ref-wikipedia-contributors-2022N" role="doc-biblioref">Wikipedia:
-Rejection sampling n.d.</a>)</span>,</p>
-<ul>
-<li><em>(berkeley-cs184)</em>
-https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf</li>
-<li>Gems I, p.284.</li>
-<li>https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf</li>
-<li>Apuntes de inferencia estadística (cómo cito este tipo de
-fuentes??)</li>
-<li>https://www.wikiwand.com/en/Metropolis%E2%80%93Hastings_algorithm</li>
-</ul>
 <h1 data-number="5" id="construyamos-un-path-tracer"><span
 class="header-section-number">5</span> ¡Construyamos un path
 tracer!</h1>
@@ -4483,7 +4567,7 @@ sería mucha parafernalia innecesaria).</p>
 href="https://github.com/mmp/pbrt-v3/blob/aaa552a4b9cbf9dccb71450f47b268e0ed6370e2/src/core/light.h">Código
 fuente</a></p>
 <hr>
-<h2 class="unlisted unnumbered" id="referencias-2">Referencias</h2>
+<h2 class="unlisted unnumbered" id="referencias-1">Referencias</h2>
 <ul>
 <li>https://github.com/dannyfritz/awesome-ray-tracing</li>
 <li>https://www.wikiwand.com/en/Radeon</li>
@@ -4513,7 +4597,7 @@ preguntarle a Kako que tire benchmark en su 2060, y a Manu con su 3060
 (¿ti?)</p>
 </blockquote>
 <hr>
-<h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
+<h2 class="unlisted unnumbered" id="referencias-2">Referencias</h2>
 <h1 data-number="7" id="el-presente-y-futuro-de-rt"><span
 class="header-section-number">7</span> El presente y futuro de RT</h1>
 <blockquote>
@@ -4567,6 +4651,7 @@ class="header-section-number">7.4.2</span> Productos comerciales</h3>
 </ul>
 <h3 data-number="7.4.3" id="unreal-engine-5"><span
 class="header-section-number">7.4.3</span> Unreal Engine 5</h3>
+<p>https://twitter.com/Yurukuyaru/status/1523643949826588674</p>
 <h3 data-number="7.4.4" id="la-última-generación-de-consolas"><span
 class="header-section-number">7.4.4</span> La última generación de
 consolas</h3>
@@ -4592,8 +4677,28 @@ trabajo</h2>
 <li>Focal lenght, depth of field, motion blur</li>
 </ul></li>
 </ul>
+<h4 data-number="7.5.0.1" id="blue-noise"><span
+class="header-section-number">7.5.0.1</span> Blue noise</h4>
+<ul>
+<li>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</li>
+<li>https://alain.xyz/blog/ray-tracing-filtering</li>
+</ul>
+<h4 data-number="7.5.0.2" id="forced-random-sampling"><span
+class="header-section-number">7.5.0.2</span> Forced random sampling</h4>
+<p>http://drivenbynostalgia.com/ (ctrl + f -&gt; forced random
+sampling)</p>
+<h4 data-number="7.5.0.3" id="sampling-importance-resampling"><span
+class="header-section-number">7.5.0.3</span> Sampling importance
+resampling</h4>
+<ul>
+<li>https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</li>
+<li>https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf</li>
+</ul>
+<h4 data-number="7.5.0.4" id="low-discrepancy-sampling"><span
+class="header-section-number">7.5.0.4</span> Low discrepancy
+sampling</h4>
 <hr>
-<h2 class="unlisted unnumbered" id="referencias-4">Referencias</h2>
+<h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
 
 <h1 data-number="8" id="metodología-de-trabajo"><span
 class="header-section-number">8</span> Metodología de trabajo</h1>
@@ -4621,7 +4726,9 @@ les llevó a dedicar una serie de vídeos y artículos a esta tecnología, y
 a las diferentes maneras en las que se ha implementado. Se puede ver un
 ejemplo en <span class="citation" data-cites="digital-foundry-2020">(<a
 href="#ref-digital-foundry-2020" role="doc-biblioref">Digital Foundry
-n.d.</a>)</span>.</p>
+2020</a>)</span>.</p>
+<iframe width="784" height="441" src="https://www.youtube.com/embed/6bqA8F6B6NQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
 <p>Dado que esta área combina tanto informática, matemáticas y una
 visión artística, ¿por qué no explorarlo a fondo</p>
 <p>Ahora que se ha decidido el tema, es hora de ver cómo atacarlo.</p>
@@ -5266,6 +5373,11 @@ Berkeley cs184. 2022. <span>“Computer Graphics and Imaging.”</span>
 2022. <a
 href="https://cs184.eecs.berkeley.edu/sp22">https://cs184.eecs.berkeley.edu/sp22</a>.
 </div>
+<div id="ref-carlos-path-tracing" class="csl-entry"
+role="doc-biblioentry">
+Carlos Ureña. 2021. <span>“Realismo e Iluminación Global.”</span> 2021.
+<a href="https://lsi2.ugr.es/curena/">https://lsi2.ugr.es/curena/</a>.
+</div>
 <div id="ref-caulfield-2020" class="csl-entry" role="doc-biblioentry">
 Caulfield, Brian. n.d. <span>“What’s the Difference Between Ray Tracing,
 Rasterization?”</span> Accessed April 22, 2022. <a
@@ -5281,16 +5393,15 @@ Crytek. n.d. <span>“Crysis Remastered Brings Ray Tracing to Current-Gen
 Consoles.”</span> Accessed April 17, 2022. <a
 href="https://www.cryengine.com/news/view/crysis-remastered-brings-ray-tracing-to-current-gen-consoles">https://www.cryengine.com/news/view/crysis-remastered-brings-ray-tracing-to-current-gen-consoles</a>.
 </div>
-<div id="ref-digital-foundry" class="csl-entry" role="doc-biblioentry">
-Digital Foundry. 2022. <span>“Canal de Youtube de Digital
-Foundry.”</span> 2022. <a
-href="https://www.youtube.com/user/DigitalFoundry">https://www.youtube.com/user/DigitalFoundry</a>.
-</div>
 <div id="ref-digital-foundry-2020" class="csl-entry"
 role="doc-biblioentry">
-———. n.d. <span>“Cyberpunk 2077 PC: What Does Ray Tracing Deliver... And
-Is It Worth It?”</span> Accessed April 10, 2022. <a
+Digital Foundry. 2020. <span>“Cyberpunk 2077 PC: What Does Ray Tracing
+Deliver... And Is It Worth It?”</span> December 19, 2020. <a
 href="https://www.youtube.com/watch?v=6bqA8F6B6NQ">https://www.youtube.com/watch?v=6bqA8F6B6NQ</a>.
+</div>
+<div id="ref-digital-foundry" class="csl-entry" role="doc-biblioentry">
+———. 2022. <span>“Canal de Youtube de Digital Foundry.”</span> 2022. <a
+href="https://www.youtube.com/user/DigitalFoundry">https://www.youtube.com/user/DigitalFoundry</a>.
 </div>
 <div id="ref-docker" class="csl-entry" role="doc-biblioentry">
 Docker. 2022. <span>“Docker - the World’s Most Popular Container
@@ -5301,6 +5412,18 @@ href="https://www.docker.com/">https://www.docker.com/</a>.
 dockershelf. 2022. <span>“Repository for Docker Images of Latex. Test
 Driven, Lightweight and Reliable. Rebuilt Daily.”</span> 2022. <a
 href="https://hub.docker.com/r/dockershelf/latex">https://hub.docker.com/r/dockershelf/latex</a>.
+</div>
+<div id="ref-berkeley-mc-lecture" class="csl-entry"
+role="doc-biblioentry">
+Eric C. Anderson. 1999. <span>“Monte Carlo Methods and Importance
+Sampling.”</span> 1999. <a
+href="https://ib.berkeley.edu/labs/slatkin/eriq/classes/guest_lect/mc_lecture_notes.pdf">https://ib.berkeley.edu/labs/slatkin/eriq/classes/guest_lect/mc_lecture_notes.pdf</a>.
+</div>
+<div id="ref-robust-monte-carlo" class="csl-entry"
+role="doc-biblioentry">
+Eric Veach. December 1997. <span>“Robust Monte Carlo Methods for Light
+Transport Simulation.”</span> December 1997. <a
+href="https://graphics.stanford.edu/papers/veach_thesis/">https://graphics.stanford.edu/papers/veach_thesis/</a>.
 </div>
 <div id="ref-napkin" class="csl-entry" role="doc-biblioentry">
 Evan Chen. 2022. <span>“The Napkin Project.”</span> 2022. <a
@@ -5368,6 +5491,12 @@ href="https://www.youtube.com/watch?v=DkcEAz09Buo">https://www.youtube.com/watch
 Linear. 2022. <span>“Linear - the Issue Tracking Tool You’ll Enjoy
 Using.”</span> 2022. <a
 href="https://linear.app/">https://linear.app/</a>.
+</div>
+<div id="ref-quasi-monte-carlo" class="csl-entry"
+role="doc-biblioentry">
+Martin Roberts. 2018. <span>“The Unreasonable Effectiveness of
+Quasirandom Sequences.”</span> 2018. <a
+href="http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/">http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/</a>.
 </div>
 <div id="ref-latex-complete" class="csl-entry" role="doc-biblioentry">
 Max Krieger. 2022. <span>“Latex Complete - Typeset Math in Your
@@ -5517,30 +5646,6 @@ Wikipedia: Differential geometry of surfaces. n.d. <span>“Differential
 Geometry of Surfaces.”</span> Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Differential_geometry_of_surfaces">https://en.wikipedia.org/wiki/Differential_geometry_of_surfaces</a>.
 </div>
-<div id="ref-wikipedia-contributors-2022H" class="csl-entry"
-role="doc-biblioentry">
-Wikipedia: Distribución de probabilidad. n.d. <span>“Distribución de
-Probabilidad.”</span> Accessed April 22, 2022. <a
-href="https://es.wikipedia.org/wiki/Distribuci%C3%B3n_de_probabilidad">https://es.wikipedia.org/wiki/Distribuci%C3%B3n_de_probabilidad</a>.
-</div>
-<div id="ref-wikipedia-contributors-2022L" class="csl-entry"
-role="doc-biblioentry">
-Wikipedia: Estimador. n.d. <span>“Estimador.”</span> Accessed April 22,
-2022. <a
-href="https://es.wikipedia.org/wiki/Estimador?oldformat=true">https://es.wikipedia.org/wiki/Estimador?oldformat=true</a>.
-</div>
-<div id="ref-wikipedia-contributors-2022J" class="csl-entry"
-role="doc-biblioentry">
-Wikipedia: Expected value. n.d. <span>“Expected Value.”</span> Accessed
-April 22, 2022. <a
-href="https://en.wikipedia.org/wiki/Expected_value">https://en.wikipedia.org/wiki/Expected_value</a>.
-</div>
-<div id="ref-wikipedia-contributors-2022I" class="csl-entry"
-role="doc-biblioentry">
-Wikipedia: Función de probabilidad. n.d. <span>“Función de
-Probabilidad.”</span> Accessed April 22, 2022. <a
-href="https://es.wikipedia.org/wiki/Funci%C3%B3n_de_probabilidad">https://es.wikipedia.org/wiki/Funci%C3%B3n_de_probabilidad</a>.
-</div>
 <div id="ref-wikipedia-contributors-2022A" class="csl-entry"
 role="doc-biblioentry">
 Wikipedia: history of photography. n.d. <span>“History of
@@ -5552,41 +5657,11 @@ role="doc-biblioentry">
 Wikipedia: Kodak. n.d. <span>“Kodak.”</span> Accessed April 22, 2022. <a
 href="https://es.wikipedia.org/wiki/Kodak">https://es.wikipedia.org/wiki/Kodak</a>.
 </div>
-<div id="ref-wikipedia-contributors-2022M" class="csl-entry"
-role="doc-biblioentry">
-Wikipedia: Método de la transformada inversa. n.d. <span>“Método de La
-Transformada Inversa.”</span> Accessed April 22, 2022. <a
-href="https://es.wikipedia.org/wiki/M%C3%A9todo_de_la_transformada_inversa">https://es.wikipedia.org/wiki/M%C3%A9todo_de_la_transformada_inversa</a>.
-</div>
-<div id="ref-wikipedia-contributors-2022K" class="csl-entry"
-role="doc-biblioentry">
-Wikipedia: Probability density function. n.d. <span>“Probability Density
-Function.”</span> Accessed April 22, 2022. <a
-href="https://en.wikipedia.org/wiki/Probability_density_function">https://en.wikipedia.org/wiki/Probability_density_function</a>.
-</div>
-<div id="ref-wikipedia-contributors-2022N" class="csl-entry"
-role="doc-biblioentry">
-Wikipedia: Rejection sampling. n.d. <span>“Rejection Sampling.”</span>
-Accessed April 22, 2022. <a
-href="https://en.wikipedia.org/wiki/Rejection_sampling">https://en.wikipedia.org/wiki/Rejection_sampling</a>.
-</div>
 <div id="ref-wikipedia-contributors-2022D" class="csl-entry"
 role="doc-biblioentry">
 Wikipedia: rendering (computer graphics). n.d. <span>“Rendering
 (Computer Graphics).”</span> Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Rendering_(computer_graphics)">https://en.wikipedia.org/wiki/Rendering_(computer_graphics)</a>.
-</div>
-<div id="ref-wikipedia-contributors-2021B" class="csl-entry"
-role="doc-biblioentry">
-Wikipedia: Rendering equation. n.d. <span>“Rendering Equation.”</span>
-Accessed April 22, 2022. <a
-href="https://en.wikipedia.org/wiki/Rendering_equation">https://en.wikipedia.org/wiki/Rendering_equation</a>.
-</div>
-<div id="ref-wikipedia-contributors-2021C" class="csl-entry"
-role="doc-biblioentry">
-Wikipedia: Variable aleatoria. n.d. <span>“Variable Aleatoria.”</span>
-Accessed April 22, 2022. <a
-href="https://es.wikipedia.org/wiki/Variable_aleatoria">https://es.wikipedia.org/wiki/Variable_aleatoria</a>.
 </div>
 </div>
 <section class="footnotes footnotes-end-of-document"
