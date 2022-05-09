@@ -474,7 +474,7 @@ $$
 \tilde{I}_N = \frac{1}{N} \sum_{i=1}^N{\frac{f(X_i)}{p_X(X_i)}}
 $${#eq:mc_integral_tl}
 
-para que, utilizando muestras $X_i \sim p_X$, $\E{\frac{f}{p_X}} = \int_S{\frac{f}{p_X}p_X}$ y así se evalúe directamente la integral de $f$. En cualquiera de los casos, el fundamento teórico es el mismo.
+para que, utilizando muestras $X_i \sim p_X$, $\E{\frac{f}{p_X}} = \int_S{\frac{f}{p_X}p_X}$ y así se evalúe directamente la integral de $f$. En cualquiera de los casos, el fundamento teórico es el mismo [@berkeley-mc-lecture].
 
 Esta forma de escribir el estimador nos permite amenizar algunos casos particulares. Por ejemplo, si usamos muestras $X_i$ que sigan una distribución uniforme en $[a, b]$, entonces, su función de densidad es $p_X(x) = \frac{1}{b - a}$. Esto da lugar a
 
@@ -521,9 +521,45 @@ $$
 \tilde{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)} \sum_{i = 1}^{N}{f(X_i)}
 $$
 
-### Multiple importance sampling
+### Muestreo por importancia múltiple
 
 https://graphics.stanford.edu/courses/cs348b-03/papers/veach-chapter9.pdf
+
+Las técnicas de [muestreo por importancia](#muestreo-por-importancia) nos proporcionan estimadores para una integral de la forma $\int{f(x)dx}$. Sin embargo, es frecuente encontrarse un producto de dos funciones, $\int{f(x)g(x)dx}$. Si tuviéramos una forma de coger muestras para $f$, y otra para $g$, ¿cuál deberíamos usar?
+
+Se puede utilizar un nuevo estimador de Monte Carlo, que viene dado por [@PBRT3e]
+
+$$
+\frac{1}{N_f} \sum_{i = 1}^{N_f}{\frac{f(X_i)g(X_i)w_f(X_i)}{p_f(X_i)}} + \frac{1}{N_g} \sum_{j = 1}^{N_g}{\frac{f(Y_j)g(Y_j)w_g(Y_j)}{p_g(Y_j)}}
+$$
+
+donde $N_f$ y $N_g$ son el número de muestras tomadas para $f$ y $g$ respectivamente, $p_f, p_g$ las funciones de densidad respectivas y $w_f, w_g$ funciones de peso escogidas tales que la esperanza del estimador sea $\int{f(x)g(x)dx$.
+
+Estas funciones peso suelen tener en cuenta todas las formas diferentes que hay de generar muestras para $X_i$ e $Y_j$. Por ejemplo, una de las que podemos usar es la heurística de balanceo:
+
+$$
+w_s(x) = \frac{N_s p_s(x)}{\sum_{i}{N_i p_i(x)}}
+$$
+
+Una modificación de esta es la heurística potencial (*power heuristic*):
+
+$$
+w_s(x, \beta) = \frac{\left(N_s p_s(x)\right)^\beta}{\sum_{i}{\left(N_i p_i(x)\right)^\beta}}
+$$
+
+la cual reduce la varianza con respecto a la heurística de balanceo. Un valor para $\beta$ habitual es $\beta = 2$.
+
+#### Muestreo por importancia múltiple en transporte de luz
+
+Si queremos evaluar la contribución de luz en un punto teniendo en cuenta la luz directa, la expresión utilizada es
+
+$$
+L_o(p, \omega_o) = \int_{S^2}{f(p, \omega_o \leftarrow \omega_i) L_{directa}(p, \omega_i) \cos\theta_i\ d\omega_i}
+$$
+
+Si utilizáramos muestreo por importancia basándonos en las distribuciones de $L_{directa}$ o $f$ por separado, algunas de las dos no rendiría especialmente bien. Combinando ambas mediante muestreo por importancia múltiple se conseguiría un mejor resultado.
+
+![Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: [@robust-monte-carlo, Multiple Importance Sampling]](./img/03/Multiple%20importance%20sampling.png)
 
 ### Ruleta rusa
 
