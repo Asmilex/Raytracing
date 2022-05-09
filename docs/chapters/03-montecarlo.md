@@ -523,8 +523,6 @@ $$
 
 ### Muestreo por importancia múltiple
 
-https://graphics.stanford.edu/courses/cs348b-03/papers/veach-chapter9.pdf
-
 Las técnicas de [muestreo por importancia](#muestreo-por-importancia) nos proporcionan estimadores para una integral de la forma $\int{f(x)dx}$. Sin embargo, es frecuente encontrarse un producto de dos funciones, $\int{f(x)g(x)dx}$. Si tuviéramos una forma de coger muestras para $f$, y otra para $g$, ¿cuál deberíamos usar?
 
 Se puede utilizar un nuevo estimador de Monte Carlo, que viene dado por [@PBRT3e]
@@ -533,7 +531,7 @@ $$
 \frac{1}{N_f} \sum_{i = 1}^{N_f}{\frac{f(X_i)g(X_i)w_f(X_i)}{p_f(X_i)}} + \frac{1}{N_g} \sum_{j = 1}^{N_g}{\frac{f(Y_j)g(Y_j)w_g(Y_j)}{p_g(Y_j)}}
 $$
 
-donde $N_f$ y $N_g$ son el número de muestras tomadas para $f$ y $g$ respectivamente, $p_f, p_g$ las funciones de densidad respectivas y $w_f, w_g$ funciones de peso escogidas tales que la esperanza del estimador sea $\int{f(x)g(x)dx$.
+donde $N_f$ y $N_g$ son el número de muestras tomadas para $f$ y $g$ respectivamente, $p_f, p_g$ las funciones de densidad respectivas y $w_f, w_g$ funciones de peso escogidas tales que la esperanza del estimador sea $\int{f(x)g(x)dx}$.
 
 Estas funciones peso suelen tener en cuenta todas las formas diferentes que hay de generar muestras para $X_i$ e $Y_j$. Por ejemplo, una de las que podemos usar es la heurística de balanceo:
 
@@ -559,32 +557,69 @@ $$
 
 Si utilizáramos muestreo por importancia basándonos en las distribuciones de $L_{directa}$ o $f$ por separado, algunas de las dos no rendiría especialmente bien. Combinando ambas mediante muestreo por importancia múltiple se conseguiría un mejor resultado.
 
-![Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: [@robust-monte-carlo, Multiple Importance Sampling]](./img/03/Multiple%20importance%20sampling.png)
+![Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: [@robust-monte-carlo, Multiple Importance Sampling]](./img/03/Multiple%20importance%20sampling.png){ width=67% }
 
-### Ruleta rusa
 
-> **Idea**: A random chance that if the luminance of a ray is less than a given $\varepsilon$ the path will be discarded. Reduces variance by accepting stronger rays more often.
+### Otras técnicas de reducción de varianza en transporte de luz
 
-### Next Event Estimation
+Hasta ahora, la principal técnica estudiada ha sido muestreo por importancia (sea o no múltiple). Esto no quiere decir que sea la única. Al contrario; esas dos son de las más sencillas que se pueden usar.
+
+En esta sección vamos a ver de forma breve otras formas de reducir la varianza de un estimador, centrádonos específicamente en el contexto de transporte de luz.
+
+#### Ruleta rusa
+
+Un problema habitual en la práctica es saber cuándo terminar la propagación de un rayo. Una solución simple es utilizar un parámetro de profundidad --lo cual hemos implementado en el motor--. Otra opción más eficiente es utilizar el método de **ruleta rusa**.
+
+En esencia, la idea es que se genere un número aleatorio $\xi \in [0, 1)$. Si $\xi < p_i$, el camino del rayo se continúa, pero multiplicando la radiancia acumulada por $L_i(p, \omega_o \leftarrow \omega_i)/p_i$. En otro caso (i.e., si $\xi \ge p_i$), el rayo se descarta. Esto hace que se acepten caminos más fuertes, rechazando aquellas rutas con excesivo ruido.
+
+Más información puede encontrarse en [@PBRT3e, Russian Roulette and Splitting].
+
+#### Next event estimation, o muestreo directo de fuentes de luz
 
 > **Idea**: Tracing shadow rays to the light source on each bounce to see if you can terminate the current path. This involves shooting a shadow ray towards light sources, if it's occluded, terminate the ray.
 
-### Blue noise
+Esta técnica recibe dos nombres. Tradicionalmente, se la conocía como muestreo directo de fuentes de luz, pero en los últimos años ha adoptado el nombre de next event estimation. Esencialmente, se trata de utilizar las luces de la escena para calcular la radiancia de un punto.
+
+Podemos dividir la rendering equation [@eq:rendering_equation] en dos sumandos [@carlos-path-tracing]:
+
+$$
+L(p, \omega_o) = L_e(p, \omega_o) + \underbrace{L_{directa}(p, \omega_o \leftarrow \omega_i) + L_{indirecta}(p, \omega_o \leftarrow \omega_i)}_{\text{La parte integral de la rendering equation}}
+$$
+
+siendo $L_e$ la radiancia emitida por la superficie, $L_{directa}$ la radiancia proporcionada por las fuentes de luz y $L_{indirecta}$ la radiancia indirecta.
+
+$$
+\begin{aligned}
+  L_{directa}   & = \int_{S^2}{f(p, \omega_o \leftarrow \omega_i) L_{e}(y, -\omega_i) \cos\theta_i\ d\omega_i} \\
+  L_{indirecta} & = \int_{S^2}{f(p, \omega_o \leftarrow \omega_i) L_{i}(y \omega_o \leftarrow \omega_i) \cos\theta_i\ d\omega_i}
+\end{aligned}
+$$
+
+siendo $y$ el primer punto visible desde $p$ en la dirección $\omega_i$ situado en una fuente de luz.
+
+En cada punto de intersección $p$, escogeremos aleatoriamente un punto $y$ en la fuente de luz, y calcularemos $L_{directa}$. Esta integral es fácil de conseguir con las técnicas que ya conocemos. Sin embargo, $L_{indirecta}$ cuesta más trabajo. Al aparecer la radiancia incidente en el punto $p, L_i(p, \omega_o \leftarrow \omega_i)$, necesitaremos evaluarla de forma recursiva trazando rayos en la escena.
+
+Aunque estamos haciendo más cálculos en cada punto de la cadena de ray trace, al evaluar por separado $L_{directa}$ y $L_{indirecta}$ conseguimos reducir considerablemente la varianza. Por tanto, suponiendo fija la varianza, el coste computacional de un camino es mayor, pero el coste total es más bajo.
+
+Esta técnica requiere conocer si desde el punto $p$ se puede ver $y$ en la fuente de luz. Es decir, ¿hay algún objeto en medio de $p$ e $y$? Para ello, se suele utilizar lo que se conocen como ***shadow rays***. Dispara uno de estos rayos para conocer si está ocluido.
+
+![El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: [@carlos-path-tracing]](./img/03/Next%20event%20estimation.png){ width=67% }
+
+#### Blue noise
 
 - https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/
 - https://alain.xyz/blog/ray-tracing-filtering
 
-### Forced random sampling
+#### Forced random sampling
 
 http://drivenbynostalgia.com/ (ctrl + f -> forced random sampling)
 
-### Sampling importance resampling
+#### Sampling importance resampling
 
 - https://blog.demofox.org/2022/03/02/sampling-importance-resampling/
 - https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf
 
-### Low discrepancy sampling
-
+#### Low discrepancy sampling
 
 
 ## Escogiendo puntos aleatorios
