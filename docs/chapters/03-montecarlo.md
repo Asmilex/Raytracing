@@ -342,7 +342,7 @@ $${#eq:mc_integral}
 
 > **Nota**(ción): si te preguntas por qué lo llamamos $\hat{I}_N$, piensa que queremos calcular la intergal $I = \int_{S}{f(x)p_X(x)dx}$. Para ello, usamos el estimador $\hat{I}$, y marcamos explícitamente que usamos $N$ muestras.
 
-La varianza del estimador se puede calcular fácilmente:
+La varianza del estimador se puede calcular fácilmente utilizando las propiedades que vimos en la [sección de la varianza](#esperanza-y-varianza-de-una-variable-aleatoria):
 
 $$
 \begin{aligned}
@@ -397,7 +397,7 @@ Es importante destacar la **ausencia del parámetro de la dimensión**. Sabemos 
 
 ### Muestreo por importancia
 
-Como hemos visto, $\Var{\hat{I}_N}$ depende del número de muestras $N$ y de $\Var{f(X)}$. Aumentar el tamaño de $N$ es una forma fácil de reducir la varianza, pero, ¿podemos hacer algo con el término $\Var{f(X)}$?
+Como hemos visto, $\Var{\hat{I}_N}$ depende del número de muestras $N$ y de $\Var{f(X)}$. Aumentar el tamaño de $N$ es una forma fácil de reducir la varianza, pero rápidamente llegaríamos a una situación de retornos reducidos [@PBRT3e, The Monte Carlo Estimator]. ¿Podemos hacer algo con el término $\Var{f(X)}$?
 
 Vamos a jugar con él.
 
@@ -440,75 +440,31 @@ $$
 
 La clave de este método reside en escoger una buena distribución de importancia. Puede probarse que la función de densidad que minimiza $\sigma^2_q$ es proporcional a $\abs{f(x)}p_X(x)$ [@mcbook, p.6].
 
-Esta técnica es especialmente importante en nuestra área de estudio. En transporte de luz, intentaremos buscar funciones de densidad proporcionales a la BRDF. La literatura utiliza una versión modificada de muestreo por importancia: se suele usar $\frac{1}{N} \sum_{i=1}^N{\frac{f}{p_X}}$ para que $\E{\frac{f}{p_X}} = \int_S{\frac{f}{p_X}p_X}$ y así se evalúe directamente la integral de $f$. En cualquiera de los casos, el fundamento teórico es el mismo.
+#### Muestreo por importancia en transporte de luz
 
-### COMIENZA LA PARTE VIEJA; PENDIENTE DE REMODELACIÓN
-
-$$
-\mu = \E{Y} = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
-$$
-
-Lo que estamos buscando es calcular $\int_{S}{f(x)dx}$. Entonces, ¿qué ocurre si intentamos compensar en [@eq:mc_simple] con la función de densidad?
+Esta técnica es especialmente importante en nuestra área de estudio. En transporte de luz, buscamos calcular el valor de la rendering equation [@eq:rendering_equation]. Específicamente, de la integral
 
 $$
-\begin{aligned}
-& \E{\frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}} = \frac{1}{N} \sum_{i = 1}^{N}{\E{\frac{f(X_i)}{p_X(X_i)}}} = \\
-& = \frac{1}{N} \sum_{i = 1}^{N}{\left(\int_{S}{\frac{f(x)}{p_X(x)}p_X(x)dx}\right)} = \\
-& = \frac{1}{N} N \int_{S}{f(x)dx} = \\
-& = \int_{S}{f(x)dx}
-\end{aligned}
+\int_{H^2(\mathbf{n})}{BSDF(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
 $$
 
-¡Genial! Esto nos da una forma de calcular la integral de una función usando muestras de variables aleatorias con cierta distribución. Llamaremos al estimador de Monte Carlo
+que se suele representar como una simple integral sobre un cierto conjunto $\int_S{f(x)dx}$. En la literatura se usa una versión modificada de muestreo por importancia:
 
 $$
-\hat{I}_N = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
-$$
+\tilde{I}_N = \frac{1}{N} \sum_{i=1}^N{\frac{f(X_i)}{p_X(X_i)}}
+$${#eq:mc_integral_tl}
 
-Es importante mencionar que $p_X(x)$ debe ser distinto de 0 cuando $f$ también lo sea.
+para que, utilizando muestras $X_i \sim p_X$, $\E{\frac{f}{p_X}} = \int_S{\frac{f}{p_X}p_X}$ y así se evalúe directamente la integral de $f$. En cualquiera de los casos, el fundamento teórico es el mismo.
 
-Podemos particularizar el caso en el que nuestras muestras $X_i$ sigan una distribución uniforme en $[a, b]$. Si eso ocurre, su función de densidad es $p_X(x) = \frac{1}{b - a}$, así que podemos simplificar un poco [@eq:mc_integral]:
-
-$$
-\hat{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
-$$
-
-Elegir correctamente la función de densidad $p_X$ será clave. Si conseguimos escogerla debidamente, reduciremos en gran medida el error que genera el estimador. Esto es lo que se conoce como [*importance sampling*](#muestreo-por-importancia).
-
-Puesto que la varianza del estimador nos dará información sobre el error que genera, vamos a calcular $Var[\hat{I}_N]$. Para ello, usamos las propiedades que vimos en la [sección anterior](#esperanza-y-varianza-de-una-variable-aleatoria):
+Esta forma de escribir el estimador nos permite amenizar algunos casos particulares. Por ejemplo, si usamos muestras $X_i$ que sigan una distribución uniforme en $[a, b]$, entonces, su función de densidad es $p_X(x) = \frac{1}{b - a}$. Esto da lugar a
 
 $$
-\begin{aligned}
-  Var[\hat{I}_N]
-    & = \Var{\frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}} = \\
-    & = \frac{1}{N^2} \Var{ \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}} } = \\
-    & = \frac{1}{N^2} N \Var{\frac{f(X)}{p_X(X)}} = \\
-    & = \frac{1}{N} \Var{\frac{f(X)}{p_X(X)}}
-\end{aligned}
+\tilde{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{g(X_i)}
 $$
 
-es decir, la varianza del estimador es inversamente proporcional al número de muestras $N$.
+**En lo que resta de capítulo, se utilizará indistintamente $\frac{1}{N} \sum_{i=1}^N{\frac{f(X_i)p_X(X_i)}{q_X(X_i)}}$ o $\frac{1}{N} \sum_{i=1}^N{\frac{f(X_i)}{p_X(X_i)}}$ según convenga**. ¡Tenlo en cuenta!
 
-La desviación estándar es
-$$
-\sqrt{Var[\hat{I}_N]} = \frac{\sqrt{\Var{\frac{f(X)}{p_X(X)}}}}{\sqrt{N}}
-$$
-
-así que, como adelantamos al inicio del capítulo, la estimación tiene un error del orden $\mathcal{O}(N^{-1/2})$. Esto nos dice que, para reducir el error a la mitad, debemos tomar 4 veces más muestras.
-
-#### Importance sampling
-
-Si recordamos la varianza del estimador de Monte Carlo [@eq:mc_varianza],
-
-$$
-Var[\hat{I}_N] = \frac{1}{N} \Var{\frac{f(X)}{p_X(X)}}
-$$
-
-podemos ver que depende de dos factores: el número de muestras $N$ y la varianza de $\Var{\frac{f(X)}{p_X(X)}}$. Aumentar el número de muestras haría que la varianza decrezca. Sin embargo, alcanzaríamos un punto de retornos reducidos. Por tanto, vamos a centrarnos ahora en el segundo término.
-
-En esencia, la varianza de $\Var{\frac{f(X)}{p_X(X)}}$ decrecerá cuanto más cercana sea la función de probabilidad $p_X$ a la función $f(X)$.
-
-Supongamos que $f$ es proporcional a $p_X$. Esto es, existe un $s$ tal que $f(x) = s p_X(x)$. Como $p_X$ debe integrar uno, podemos calcular el valor de $s$:
+Usando esta expresión, la distribución de importancia $p_X$ que hace decrecer la varianza es aquella proporcional a $f$. Es decir, supongamos que $f \propto p_X$. Esto es, existe un $s$ tal que $f(x) = s p_X(x)$. Como $p_X$ debe integrar uno, podemos calcular el valor de $s$:
 
 $$
 \begin{aligned}
@@ -533,8 +489,6 @@ Por fortuna, hay algoritmos que son capaces de proporcionar la constante $s$ sin
 
 En este trabajo nos centraremos en buscar funciones de densidad $p_X$ que se aproximen a $f$ lo más fielmente posible, dentro del contexto del transporte de luz.
 
-### TERMINA LA PARTE VIEJA
-
 ### Ejemplos sencillos de integración de MC
 
 Pongamos un ejemplo de estimador de Monte Carlo para una caja de dimensiones $\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]}$. Si queremos estimar la integral de la función $f: \mathbb{R}^3 \rightarrow \mathbb{R}$
@@ -546,7 +500,7 @@ $$
 mediante una variable aleatoria $X \sim U(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]})$ con función de densidad $p(x, y, z) = \frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}$, tomamos el estimador
 
 $$
-\hat{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)} \sum_{i = 1}^{N}{f(X_i)}
+\tilde{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)} \sum_{i = 1}^{N}{f(X_i)}
 $$
 
 Otro ejemplo clásico de estimador de Monte Carlo es calcular el valor de $\pi$. Se puede hallar integrando una función que valga $1$ en el interior de la circunferencia de radio unidad y $0$ en el exterior:
