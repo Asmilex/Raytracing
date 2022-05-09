@@ -27,7 +27,7 @@ Una variable aleatoria $X$ puede clasificarse atendiendo a cómo sea su rango $R
 Las v.a. discretas son aquellas cuyo rango es un conjunto discreto.
 
 Para comprender mejor cómo funcionan, pongamos un ejemplo:
-Consideremos un experimento en el que lanzamos dos dados, anotando lo que sale en cada uno. Los posibles valores que toman serán
+Consideremos un experimento en el que lanzamos dos dados, anotando lo que sale en cada uno. Los posibles valores que toman serán [@galvin-no-date]:
 
 $$
 \begin{aligned}
@@ -605,6 +605,8 @@ Esta técnica requiere conocer si desde el punto $p$ se puede ver $y$ en la fuen
 
 ![El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: [@carlos-path-tracing]](./img/03/Next%20event%20estimation.png){ width=67% }
 
+Si quieres informarte más sobre esta técnica, puedes leer [@Marrs2021, Importance Sampling of Many Lights on the GPU].
+
 #### Quasi-Monte Carlo
 
 Generalmente, en los estimadores de Monte Carlo se utilizan variables aleatorias distribuidas uniformemente a las que se le aplican transformaciones, pues resulta más sencillo generar un número aleatorio de la primera manera que de la segunda. La idea de los quasi-Monte Carlo es muestrear puntos que, de la manera posible, se extiendan uniformemente en $[0, 1]^d$; evitando así clústeres y zonas vacías [@mcbook, Quasi-Monte Carlo].
@@ -644,7 +646,7 @@ Este último paso se debe a que, como $\xi$ es uniforme en $(0, 1)$, $P[\xi < x]
 
 > TODO: dibujo similar a [este: p.52](https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf)
 
-Como ejemplo, vamos a muestrear la función $f(x) =  x^2,\ x \in [0, 2]$.
+Como ejemplo, vamos a muestrear la función $f(x) =  x^2,\ x \in [0, 2]$ [@berkeley-cs184, Monte Carlo Integration].
 
 Primero, normalizamos esta función para obtener una función de densidad $p_X(x)$. Es decir, buscamos $p_X(x) = c f(x)$ tal que
 
@@ -702,20 +704,5 @@ El algoritmo consiste en:
 2. Comprobar si $\xi < \frac{p_X(y)}{Mp_Y(y)}$.
    1. Si se cumple, se acepta $y$ como muestra de $p_X$
    2. En caso contrario, se rechaza $y$ y se vuelve al paso 1.
-
-
-<hr>
-
-## Referencias {.unlisted .unnumbered}
-
-[@ShirleyRRT], [@PBRT3e], [@mcbook], [@berkeley-cs184, Monte Carlo Integration],
-[@wikipedia-contributors-2021B], [@wikipedia-contributors-2021C], [@wikipedia-contributors-2022H], [@wikipedia-contributors-2022I], [@wikipedia-contributors-2022J], [@galvin-no-date], [@wikipedia-contributors-2022K], [@wikipedia-contributors-2022L], [@wikipedia-contributors-2022M], [@wikipedia-contributors-2022N],
-
-
-- *(berkeley-cs184)* https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf
-- Gems I, p.284.
-- https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf
-- Apuntes de inferencia estadística (cómo cito este tipo de fuentes??)
-- https://www.wikiwand.com/en/Metropolis%E2%80%93Hastings_algorithm
 
 [^1]: En su defecto, si tenemos una función de densidad $f_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{f_X(t)dt}$.
