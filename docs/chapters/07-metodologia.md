@@ -14,6 +14,8 @@ Dar una respuesta contundente a este tipo de cuestiones nunca es fácil. Sin emb
 
 Una de las principales influencias ha sido [@digital-foundry]. Este grupo de divulgación se dedica al estudio de las técnicas utilizadas en el mundo de los videojuegos. El inicio de la era del ray tracing en tiempo real les llevó a dedicar una serie de vídeos y artículos a esta tecnología, y a las diferentes maneras en las que se ha implementado. Se puede ver un ejemplo en [@digital-foundry-2020].
 
+<iframe width="784" height="441" src="https://www.youtube.com/embed/6bqA8F6B6NQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 Dado que esta área combina tanto informática, matemáticas y una visión artística, ¿por qué no explorarlo a fondo
 
 Ahora que se ha decidido el tema, es hora de ver cómo atacarlo.

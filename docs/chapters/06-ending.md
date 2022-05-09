@@ -41,6 +41,8 @@ https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-render
 
 ### Unreal Engine 5
 
+https://twitter.com/Yurukuyaru/status/1523643949826588674
+
 ### La última generación de consolas
 
 ## Posibles mejoras del trabajo
