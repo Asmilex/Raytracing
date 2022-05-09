@@ -59,6 +59,22 @@ https://twitter.com/Yurukuyaru/status/1523643949826588674
   - Diferentes tipos de cámaras
   - Focal lenght, depth of field, motion blur
 
+#### Blue noise
+
+- https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/
+- https://alain.xyz/blog/ray-tracing-filtering
+
+#### Forced random sampling
+
+http://drivenbynostalgia.com/ (ctrl + f -> forced random sampling)
+
+#### Sampling importance resampling
+
+- https://blog.demofox.org/2022/03/02/sampling-importance-resampling/
+- https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf
+
+#### Low discrepancy sampling
+
 <hr>
 
 ## Referencias {.unlisted .unnumbered}
