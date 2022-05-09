@@ -370,19 +370,14 @@ class="toc-section-number">4.2.1</span> Monte Carlo básico</a></li>
 class="toc-section-number">4.2.2</span> Integración de Monte
 Carlo</a></li>
 <li><a href="#muestreo-por-importancia"><span
-class="toc-section-number">4.2.3</span> Muestreo por
-importancia</a></li>
-<li><a href="#comienza-la-parte-vieja-pendiente-de-remodelación"><span
-class="toc-section-number">4.2.4</span> COMIENZA LA PARTE VIEJA;
-PENDIENTE DE REMODELACIÓN</a>
+class="toc-section-number">4.2.3</span> Muestreo por importancia</a>
 <ul>
-<li><a href="#importance-sampling"><span
-class="toc-section-number">4.2.4.1</span> Importance sampling</a></li>
+<li><a href="#muestreo-por-importancia-en-transporte-de-luz"><span
+class="toc-section-number">4.2.3.1</span> Muestreo por importancia en
+transporte de luz</a></li>
 </ul></li>
-<li><a href="#termina-la-parte-vieja"><span
-class="toc-section-number">4.2.5</span> TERMINA LA PARTE VIEJA</a></li>
 <li><a href="#ejemplos-sencillos-de-integración-de-mc"><span
-class="toc-section-number">4.2.6</span> Ejemplos sencillos de
+class="toc-section-number">4.2.4</span> Ejemplos sencillos de
 integración de MC</a></li>
 </ul></li>
 <li><a href="#multiple-importance-sampling"><span
@@ -3025,7 +3020,10 @@ calcular la intergal <span class="math inline">\(I =
 class="math inline">\(\hat{I}\)</span>, y marcamos explícitamente que
 usamos <span class="math inline">\(N\)</span> muestras.</p>
 </blockquote>
-<p>La varianza del estimador se puede calcular fácilmente:</p>
+<p>La varianza del estimador se puede calcular fácilmente utilizando las
+propiedades que vimos en la <a
+href="#esperanza-y-varianza-de-una-variable-aleatoria">sección de la
+varianza</a>:</p>
 <p><span id="eq:mc_varianza" class="eqnos"><span class="math display">\[
 \begin{aligned}
   Var[\hat{I}_N]
@@ -3114,110 +3112,140 @@ class="header-section-number">4.2.3</span> Muestreo por importancia</h3>
 <p>Como hemos visto, <span class="math inline">\(Var\left[ \hat{I}_N
 \right]\)</span> depende del número de muestras <span
 class="math inline">\(N\)</span> y de <span
-class="math inline">\(Var\left[ f(X) \right]\)</span>. Vamos a jugar con
-el segundo término.</p>
+class="math inline">\(Var\left[ f(X) \right]\)</span>. Aumentar el
+tamaño de <span class="math inline">\(N\)</span> es una forma fácil de
+reducir la varianza, pero rápidamente llegaríamos a una situación de
+retornos reducidos <span class="citation" data-cites="PBRT3e">(<a
+href="#ref-PBRT3e" role="doc-biblioref">Pharr, Jakob, and Humphreys
+2016</a>, The Monte Carlo Estimator)</span>. ¿Podemos hacer algo con el
+término <span class="math inline">\(Var\left[ f(X) \right]\)</span>?</p>
+<p>Vamos a jugar con él.</p>
 <p>La integral que estamos evaluando ahora mismo es <span
-class="math inline">\(\int_S{f(x)p_X(x)}dx\)</span>. En la práctica,
-únicamente nos interesará <span
-class="math inline">\(\int_S{f(X)dx}\)</span>. Podemos conseguir
-haciendo esto haciendo lo siguiente:</p>
+class="math inline">\(\int_S{f(x)p_X(x)}dx\)</span>, con <span
+class="math inline">\(p_X\)</span> una función de densidad sobre <span
+class="math inline">\(S \subset \mathbb{R}^d\)</span> <span
+class="math inline">\(\Rightarrow p_X = 0\ \forall x \notin S\)</span>.
+Ahora bien, si <span class="math inline">\(q_X\)</span> es otra función
+de densidad en <span class="math inline">\(\mathbb{R}^d\)</span>,
+entonces <span class="citation" data-cites="mcbook">(<a
+href="#ref-mcbook" role="doc-biblioref">Owen 2013</a>, Importance
+Sampling)</span>:</p>
 <p><span class="math display">\[
-I = \int_S{f(x)dx} = \int_S{p_X(x) \frac{f(x)}{p_X(x)}dx} = E\left[
-\frac{f(X)}{p_X(x)} \right]
+I = \int_S{f(x)p_X(x)dx} = \int_S{\frac{f(x)p_X(x)}{q_X(x)}q_X(x)dx} =
+E\left[ \frac{f(X)p_X(X)}{q_X(X)} \right]
 \]</span></p>
-<h3 data-number="4.2.4"
-id="comienza-la-parte-vieja-pendiente-de-remodelación"><span
-class="header-section-number">4.2.4</span> COMIENZA LA PARTE VIEJA;
-PENDIENTE DE REMODELACIÓN</h3>
-<p><span class="math display">\[
-\mu = E\left[ Y \right] = E[f(X)] = \int_{S}{f(x)p_X(x)dx}
-\]</span></p>
-<p>Lo que estamos buscando es calcular <span
-class="math inline">\(\int_{S}{f(x)dx}\)</span>. Entonces, ¿qué ocurre
-si intentamos compensar en [<a href="#eq:mc_simple">15</a>] con la
-función de densidad?</p>
-<p><span class="math display">\[
-\begin{aligned}
-&amp; E\left[ \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
-\right] = \frac{1}{N} \sum_{i = 1}^{N}{E\left[ \frac{f(X_i)}{p_X(X_i)}
-\right]} = \\
-&amp; = \frac{1}{N} \sum_{i =
-1}^{N}{\left(\int_{S}{\frac{f(x)}{p_X(x)}p_X(x)dx}\right)} = \\
-&amp; = \frac{1}{N} N \int_{S}{f(x)dx} = \\
-&amp; = \int_{S}{f(x)dx}
-\end{aligned}
-\]</span></p>
-<p>¡Genial! Esto nos da una forma de calcular la integral de una función
-usando muestras de variables aleatorias con cierta distribución.
-Llamaremos al estimador de Monte Carlo</p>
-<p><span class="math display">\[
-\hat{I}_N = \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}}
-\]</span></p>
-<p>Es importante mencionar que <span
-class="math inline">\(p_X(x)\)</span> debe ser distinto de 0 cuando
-<span class="math inline">\(f\)</span> también lo sea.</p>
-<p>Podemos particularizar el caso en el que nuestras muestras <span
-class="math inline">\(X_i\)</span> sigan una distribución uniforme en
-<span class="math inline">\([a, b]\)</span>. Si eso ocurre, su función
-de densidad es <span class="math inline">\(p_X(x) = \frac{1}{b -
-a}\)</span>, así que podemos simplificar un poco [<a
-href="#eq:mc_integral">16</a>]:</p>
-<p><span class="math display">\[
-\hat{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
-\]</span></p>
-<p>Elegir correctamente la función de densidad <span
-class="math inline">\(p_X\)</span> será clave. Si conseguimos escogerla
-debidamente, reduciremos en gran medida el error que genera el
-estimador. Esto es lo que se conoce como <a
-href="#muestreo-por-importancia"><em>importance sampling</em></a>.</p>
-<p>Puesto que la varianza del estimador nos dará información sobre el
-error que genera, vamos a calcular <span
-class="math inline">\(Var[\hat{I}_N]\)</span>. Para ello, usamos las
-propiedades que vimos en la <a
-href="#esperanza-y-varianza-de-una-variable-aleatoria">sección
-anterior</a>:</p>
+<p>Esta última esperanza depende de <span
+class="math inline">\(q_X\)</span>. Nuestro objetivo era encontrar <span
+class="math inline">\(E\left[ f(X) \right]\)</span>, pero podemos
+hacerlo tomando un término nuevo para muestrear desde <span
+class="math inline">\(q_X\)</span> en vez de <span
+class="math inline">\(p_X\)</span>. Al factor <span
+class="math inline">\(\frac{p_X}{q_X}\)</span> lo llamamos
+<strong>cociente de probabilidad</strong>, con <span
+class="math inline">\(q_X\)</span> la <strong>distribución de
+importancia</strong> y <span class="math inline">\(p_X\)</span> la
+<strong>distribución nominal</strong>.</p>
+<p>No es necesario que <span class="math inline">\(q_X\)</span> sea
+positiva en todo punto. Con que se cumpla que <span
+class="math inline">\(q_X(x) &gt; 0\)</span> cuando <span
+class="math inline">\(f(x)p_X(x) \not = 0\)</span> es suficiente. Es
+decir, para <span class="math inline">\(Q = \left\{x \,\middle|\, q_X(x)
+&gt; 0  \right\}\)</span>, tenemos que <span class="math inline">\(x \in
+Q\)</span> cuando <span class="math inline">\(f(x)p_X(x) \not =
+0\)</span>. Así, si <span class="math inline">\(x \in S \cap Q^c
+\Rightarrow f(X) = 0\)</span>, mientras que si <span
+class="math inline">\(x \in S^c \cap Q \Rightarrow p_X(X) \neq
+0\)</span>. Entonces,</p>
 <p><span class="math display">\[
 \begin{aligned}
-  Var[\hat{I}_N]
-    &amp; = Var\left[ \frac{1}{N} \sum_{i =
-1}^{N}{\frac{f(X_i)}{p_X(X_i)}} \right] = \\
-    &amp; = \frac{1}{N^2} Var\left[  \sum_{i =
-1}^{N}{\frac{f(X_i)}{p_X(X_i)}}  \right] = \\
-    &amp; = \frac{1}{N^2} N Var\left[ \frac{f(X)}{p_X(X)} \right] = \\
-    &amp; = \frac{1}{N} Var\left[ \frac{f(X)}{p_X(X)} \right]
+E\left[ \frac{f(X)p_X(X)}{q_X(X)} \right] &amp; =
+\int_Q{\frac{f(x)p_X(x)}{q_X(x)}q_X(x)dx} = \int_Q{f(x)p_X(x)dx} = \\
+                              &amp; = \int_Q{f(x)p_X(x)dx} + \int_{S^c
+\cap Q}{f(x)p_X(x)dx} - \int_{S \cap Q^c}{f(x)p_X(x)dx} =  \\
+                              &amp; = \int_S{f(x)p_X(x)dx} = \\
+                              &amp; = E\left[ f(X) \right]
 \end{aligned}
 \]</span></p>
-<p>es decir, la varianza del estimador es inversamente proporcional al
-número de muestras <span class="math inline">\(N\)</span>.</p>
-<p>La desviación estándar es <span class="math display">\[
-\sqrt{Var[\hat{I}_N]} = \frac{\sqrt{Var\left[ \frac{f(X)}{p_X(X)}
-\right]}}{\sqrt{N}}
-\]</span></p>
-<p>así que, como adelantamos al inicio del capítulo, la estimación tiene
-un error del orden <span
-class="math inline">\(\mathcal{O}(N^{-1/2})\)</span>. Esto nos dice que,
-para reducir el error a la mitad, debemos tomar 4 veces más
-muestras.</p>
-<h4 data-number="4.2.4.1" id="importance-sampling"><span
-class="header-section-number">4.2.4.1</span> Importance sampling</h4>
-<p>Si recordamos la varianza del estimador de Monte Carlo [<a
-href="#eq:mc_varianza">17</a>],</p>
+<p>De esta forma, hemos llegado al <strong>estimador de Monte Carlo por
+importancia</strong>:</p>
+<p><span id="eq:mc_integral_importancia" class="eqnos"><span
+class="math display">\[
+\tilde{I}_N = \frac{1}{N} \sum_{i=1}^N{\frac{f(X_i)p_X(X_i)}{q_X(X_i)}},
+\quad X_i \sim q_X
+\]</span><span class="eqnos-number">(21)</span></span></p>
+<blockquote>
+<p><strong>Nota</strong>(ción): ¡fíjate en el gusanito! <span
+class="math inline">\(\hat{I}_N\)</span> [<a
+href="#eq:mc_integral">16</a>] y <span
+class="math inline">\(\tilde{I}_N\)</span> tienen la misma esperanza,
+pero son estimadores diferentes.</p>
+</blockquote>
+<p>Vamos a calcular ahora la varianza de este estimador. Sea <span
+class="math inline">\(\mu = E\left[ f(X) \right]\)</span></p>
 <p><span class="math display">\[
-Var[\hat{I}_N] = \frac{1}{N} Var\left[ \frac{f(X)}{p_X(X)} \right]
+\begin{aligned}
+Var\left[ \tilde{I}_N \right] &amp; = \frac{1}{N} \left(
+\int_Q{\left(\frac{f(x)p_X(x)}{q_X(x)}\right)^2q_X(x) dx} -
+\mu^2  \right) = \\
+                  &amp; = \frac{1}{N}
+\textcolor{verde-oscurisimo}{\left(
+\int_Q{\frac{\left(f(x)p_X(x)\right)^2}{q_X(x)} dx} - \mu^2  \right)} =
+\\
+                  &amp; =
+\frac{\textcolor{verde-oscurisimo}{\sigma^2_q}}{N}
+\end{aligned}
 \]</span></p>
-<p>podemos ver que depende de dos factores: el número de muestras <span
-class="math inline">\(N\)</span> y la varianza de <span
-class="math inline">\(Var\left[ \frac{f(X)}{p_X(X)} \right]\)</span>.
-Aumentar el número de muestras haría que la varianza decrezca. Sin
-embargo, alcanzaríamos un punto de retornos reducidos. Por tanto, vamos
-a centrarnos ahora en el segundo término.</p>
-<p>En esencia, la varianza de <span class="math inline">\(Var\left[
-\frac{f(X)}{p_X(X)} \right]\)</span> decrecerá cuanto más cercana sea la
-función de probabilidad <span class="math inline">\(p_X\)</span> a la
-función <span class="math inline">\(f(X)\)</span>.</p>
-<p>Supongamos que <span class="math inline">\(f\)</span> es proporcional
-a <span class="math inline">\(p_X\)</span>. Esto es, existe un <span
-class="math inline">\(s\)</span> tal que <span
+<p>La clave de este método reside en escoger una buena distribución de
+importancia. Puede probarse que la función de densidad que minimiza
+<span class="math inline">\(\sigma^2_q\)</span> es proporcional a <span
+class="math inline">\(\left\lvert f(x) \right\rvert p_X(x)\)</span>
+<span class="citation" data-cites="mcbook">(<a href="#ref-mcbook"
+role="doc-biblioref">Owen 2013, 6</a>)</span>.</p>
+<h4 data-number="4.2.3.1"
+id="muestreo-por-importancia-en-transporte-de-luz"><span
+class="header-section-number">4.2.3.1</span> Muestreo por importancia en
+transporte de luz</h4>
+<p>Esta técnica es especialmente importante en nuestra área de estudio.
+En transporte de luz, buscamos calcular el valor de la rendering
+equation [<a href="#eq:rendering_equation">11</a>]. Específicamente, de
+la integral</p>
+<p><span class="math display">\[
+\int_{H^2(\mathbf{n})}{BSDF(p, \omega_o \leftarrow \omega_i) L_i(p,
+\omega_i) \cos\theta_i\ d\omega_i}
+\]</span></p>
+<p>que se suele representar como una simple integral sobre un cierto
+conjunto <span class="math inline">\(\int_S{f(x)dx}\)</span>. En la
+literatura se usa una versión modificada de muestreo por
+importancia:</p>
+<p><span id="eq:mc_integral_tl" class="eqnos"><span
+class="math display">\[
+\tilde{I}_N = \frac{1}{N} \sum_{i=1}^N{\frac{f(X_i)}{p_X(X_i)}}
+\]</span><span class="eqnos-number">(22)</span></span></p>
+<p>para que, utilizando muestras <span class="math inline">\(X_i \sim
+p_X\)</span>, <span class="math inline">\(E\left[ \frac{f}{p_X} \right]
+= \int_S{\frac{f}{p_X}p_X}\)</span> y así se evalúe directamente la
+integral de <span class="math inline">\(f\)</span>. En cualquiera de los
+casos, el fundamento teórico es el mismo.</p>
+<p>Esta forma de escribir el estimador nos permite amenizar algunos
+casos particulares. Por ejemplo, si usamos muestras <span
+class="math inline">\(X_i\)</span> que sigan una distribución uniforme
+en <span class="math inline">\([a, b]\)</span>, entonces, su función de
+densidad es <span class="math inline">\(p_X(x) = \frac{1}{b -
+a}\)</span>. Esto da lugar a</p>
+<p><span class="math display">\[
+\tilde{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{g(X_i)}
+\]</span></p>
+<p><strong>En lo que resta de capítulo, se utilizará indistintamente
+<span class="math inline">\(\frac{1}{N}
+\sum_{i=1}^N{\frac{f(X_i)p_X(X_i)}{q_X(X_i)}}\)</span> o <span
+class="math inline">\(\frac{1}{N}
+\sum_{i=1}^N{\frac{f(X_i)}{p_X(X_i)}}\)</span> según convenga</strong>.
+¡Tenlo en cuenta!</p>
+<p>Usando esta expresión, la distribución de importancia <span
+class="math inline">\(p_X\)</span> que hace decrecer la varianza es
+aquella proporcional a <span class="math inline">\(f\)</span>. Es decir,
+supongamos que <span class="math inline">\(f \propto p_X\)</span>. Esto
+es, existe un <span class="math inline">\(s\)</span> tal que <span
 class="math inline">\(f(x) = s p_X(x)\)</span>. Como <span
 class="math inline">\(p_X\)</span> debe integrar uno, podemos calcular
 el valor de <span class="math inline">\(s\)</span>:</p>
@@ -3250,11 +3278,9 @@ Markov de Monte Carlo.</p>
 class="math inline">\(p_X\)</span> que se aproximen a <span
 class="math inline">\(f\)</span> lo más fielmente posible, dentro del
 contexto del transporte de luz.</p>
-<h3 data-number="4.2.5" id="termina-la-parte-vieja"><span
-class="header-section-number">4.2.5</span> TERMINA LA PARTE VIEJA</h3>
-<h3 data-number="4.2.6"
+<h3 data-number="4.2.4"
 id="ejemplos-sencillos-de-integración-de-mc"><span
-class="header-section-number">4.2.6</span> Ejemplos sencillos de
+class="header-section-number">4.2.4</span> Ejemplos sencillos de
 integración de MC</h3>
 <p>Pongamos un ejemplo de estimador de Monte Carlo para una caja de
 dimensiones <span class="math inline">\(\small{[x_0, x_1] \times [y_0,
@@ -3270,7 +3296,7 @@ función de densidad <span class="math inline">\(p(x, y, z) =
 \frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}\)</span>,
 tomamos el estimador</p>
 <p><span class="math display">\[
-\hat{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)}
+\tilde{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)}
 \sum_{i = 1}^{N}{f(X_i)}
 \]</span></p>
 <p>Otro ejemplo clásico de estimador de Monte Carlo es calcular el valor
@@ -4120,7 +4146,7 @@ L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
 \omega_o \leftarrow \omega_j) L_i(p, \omega_j)
 \cos\theta_j}{p(\omega_j)}}
 \end{aligned}
-\]</span><span class="eqnos-number">(21)</span></span></p>
+\]</span><span class="eqnos-number">(23)</span></span></p>
 <p>Fijémonos en el denominador. Lo que estamos haciendo es tomar una
 muestra de un vector en la esfera. Si trabajamos con una BRDF en vez de
 una BSDF, usaríamos un hemisferio en vez de la esfera.</p>
@@ -4142,7 +4168,7 @@ class="math display">\[
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
 \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j =
 1}^{N}{L_i(p, \omega_j) \rho}
-\]</span><span class="eqnos-number">(22)</span></span></p>
+\]</span><span class="eqnos-number">(24)</span></span></p>
 <p>Lo cual nos proporciona una expresión muy agradable para los
 materiales difusos. Solo es cuestión de calcular la radiancia del
 punto.</p>
@@ -4151,7 +4177,7 @@ class="header-section-number">5.6.2</span> Pseudocódigo de un path
 tracer</h3>
 <p>Con lo que conocemos hasta ahora, podemos empezar a programar los
 shaders. Una primera implementación basada en [<a
-href="#eq:rendering_equation_mc">21</a>] sería similar a lo
+href="#eq:rendering_equation_mc">23</a>] sería similar a lo
 siguiente:</p>
 <pre><code class="language-cpp">vec3 pathtrace(Rayo r, profundidad) {
     if (profundidad == profundidad_maxima) {
