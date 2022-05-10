@@ -3740,33 +3740,33 @@ necesita alguna de las siguientes tarjetas gráficas:</p>
 <tr class="header">
 <th style="text-align: left;"><strong>Arquitectura</strong></th>
 <th style="text-align: left;"><strong>Fabricante</strong></th>
-<th><strong>Modelos de gráficas</strong></th>
+<th style="text-align: left;"><strong>Modelos de gráficas</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>Turing</strong></td>
 <td style="text-align: left;">Nvidia</td>
-<td>RTX 2060, RTX 2060 Super, RTX 2070, RTX 2070 Super, RTX 2080, RTX
-2080 Super, RTX 2080 Ti, RTX Titan</td>
+<td style="text-align: left;">RTX 2060, RTX 2060 Super, RTX 2070, RTX
+2070 Super, RTX 2080, RTX 2080 Super, RTX 2080 Ti, RTX Titan</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Ampere</strong></td>
 <td style="text-align: left;">Nvidia</td>
-<td>RTX 3050, RTX 3060, RTX 3060 Ti, RTX 3070, RTX 3070 Ti, RTX 3080,
-RTX 3080 Ti, RTX 3090, RTX 3090 Ti</td>
+<td style="text-align: left;">RTX 3050, RTX 3060, RTX 3060 Ti, RTX 3070,
+RTX 3070 Ti, RTX 3080, RTX 3080 Ti, RTX 3090, RTX 3090 Ti</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>RDNA2</strong> (Navi 2X, Big
 Navi)</td>
 <td style="text-align: left;">AMD</td>
-<td>RX 6400, RX 6500 XT, RX 6600, RX 6600 XT, RX 6700 XT, RX 6800, RX
-6800 XT, RX 6900 XT</td>
+<td style="text-align: left;">RX 6400, RX 6500 XT, RX 6600, RX 6600 XT,
+RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Arc Alchemist</strong></td>
 <td style="text-align: left;">Intel</td>
-<td><em>No reveleado aún</em></td>
+<td style="text-align: left;"><em>No reveleado aún</em></td>
 </tr>
 </tbody>
 </table>
@@ -4478,27 +4478,136 @@ vec3 sample_pixel() {
 }</code></pre>
 <h3 data-number="5.6.5" id="materiales-y-objetos"><span
 class="header-section-number">5.6.5</span> Materiales y objetos</h3>
-<blockquote>
-<p>NOTE: esto son notas para el Andrés del futuro. Sí, lo sé, está
-bastante claro solo con leerlo (⊙_⊙;)</p>
-</blockquote>
-<p>Si quiero meter las BxDFs en los materiales tal y como tenía pensado
-(es decir, unas cuantas flags que me indiquen la BxDF que tengo que
-usar), tengo que…</p>
-<ol type="1">
-<li>Modificar <code>common/obj_loader.h/MaterialObj</code> para meterle
-las flags necesarias.</li>
-<li>Modificar acordemente
-<code>shaders/host_device.h/WaveFronMaterial</code>.</li>
-<li>Secuestrar <code>ObjLoader::loadModel()</code> para indicarle los
-parámetros nuevos.</li>
-<li>(<em>Creo que no hace falta tocar <code>HelloVk::loadModel()</code>
-de esta manera</em>)</li>
-<li>Toquetear los shaders para que me saque las flags.</li>
-</ol>
-<p>CREO que de esta manera no me va a hacer falta tocar framebuffers.
-Simplemente, todo dependerá de mi material y ya.</p>
-<p><em>Creo</em>.</p>
+<p>El sistema de materiales y objetos usados es el
+<strong>Wavefront</strong> (<code>.obj</code>). Aunque es un sistema
+relativamente antiguo y sencillo, se han usado definiciones específicas
+en los materiales para adaptarlo a Physically Based Rendering. Entre los
+parámetros del archivo de materiales <code>.mtl</code>, destacan:</p>
+<ul>
+<li><span class="math inline">\(K_a \in [0, 1]^3\)</span>: representa el
+color ambiental. Dado que esto es un path tracer físicamente realista,
+no se usará.</li>
+<li><span class="math inline">\(K_d \in [0, 1]^3\)</span>: componente
+difusa.</li>
+<li><span class="math inline">\(K_s \in [0, 1]^3\)</span>: componente
+especular. Viene acompañada del exponente especular <span
+class="math inline">\(N_s \in [0, 1000]\)</span>. Usualmente, <span
+class="math inline">\(N_s = 10\)</span>. Controla los brillos en los
+modelos de Blinn-Phong.</li>
+<li><span class="math inline">\(d \in [0, 1]\)</span>
+(<em>dissolve</em>): representa la transparencia. Alternativamente, se
+usa <span class="math inline">\(T_r = 1 - d\)</span>.</li>
+<li><span class="math inline">\(T_f \in [0, 1]^3\)</span>: filtro de
+transmisión.</li>
+<li><span class="math inline">\(N_i \in [0.001, 10]\)</span>: índice de
+refracción. Usualmente <span class="math inline">\(N_i =
+1\)</span>.</li>
+<li><span class="math inline">\(K_e \in [0, 1]^3\)</span>: componente
+emisiva (PBR).</li>
+<li>Todos los valores con tres componentes pueden presentar un
+<em>texture map</em>.</li>
+</ul>
+<p>Existe un parámetro adicional llamado <code>illum</code>. Controla el
+modelo de iluminación usado. Nosotros lo usaremos para distinguir tipos
+diferentes de materiales. Los códigos representan lo siguiente:</p>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 35%" />
+<col style="width: 26%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Modelo</strong></th>
+<th><strong>Color</strong></th>
+<th><strong>Reflejos</strong></th>
+<th><strong>Transparencias</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>0</code></td>
+<td>Difusa</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>1</code></td>
+<td>Difusa, ambiental</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>2</code></td>
+<td>Difusa, especular, ambiental</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>3</code></td>
+<td>Difusa, especular, ambiental</td>
+<td>Ray traced</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>4</code></td>
+<td>Difusa, especular, ambiental</td>
+<td>Ray traced</td>
+<td>Cristal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>5</code></td>
+<td>Difusa, especular, ambiental</td>
+<td>Ray traced (Fresnel)</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>6</code></td>
+<td>Difusa, especular, ambiental</td>
+<td>Ray traced</td>
+<td>Refracción</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>7</code></td>
+<td>Difusa, especular, ambiental</td>
+<td>Ray traced (Fresnel)</td>
+<td>Refracción</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>8</code></td>
+<td>Difusa, especular, ambiental</td>
+<td>Sí</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>9</code></td>
+<td>Difusa, especular, ambiental</td>
+<td>Sí</td>
+<td>Cristal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>10</code></td>
+<td>Sombras arrojadizas</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-cpp">// host_device.h
+struct WaveFrontMaterial
+{
+  vec3  ambient;
+  vec3  diffuse;
+  vec3  specular;
+  vec3  transmittance;
+  vec3  emission;
+  float shininess;
+  float ior;       // index of refraction
+  float dissolve;  // 1 == opaque; 0 == fully transparent
+  int   illum;     // illumination model (see http://www.fileformat.info/format/material/)
+  int   textureId;
+};</code></pre>
 <h2 data-number="5.7" id="fuentes-de-luz"><span
 class="header-section-number">5.7</span> Fuentes de luz</h2>
 <blockquote>
