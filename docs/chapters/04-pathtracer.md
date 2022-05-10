@@ -25,7 +25,7 @@ El requisito más importante de todos es la gráfica. Para ser capaces de realiz
 A día 17 de abril de 2022, para correr ray tracing en tiempo real, se necesita alguna de las siguientes tarjetas gráficas:
 
 | **Arquitectura**              | **Fabricante** | **Modelos de gráficas**                                                                              |
-|:------------------------------|:---------------|------------------------------------------------------------------------------------------------------|
+|:------------------------------|:---------------|:-----------------------------------------------------------------------------------------------------|
 | **Turing**                    | Nvidia         | RTX 2060, RTX 2060 Super, RTX 2070, RTX 2070 Super, RTX 2080, RTX 2080 Super, RTX 2080 Ti, RTX Titan |
 | **Ampere**                    | Nvidia         | RTX 3050, RTX 3060, RTX 3060 Ti, RTX 3070, RTX 3070 Ti, RTX 3080, RTX 3080 Ti, RTX 3090, RTX 3090 Ti |
 | **RDNA2** (Navi 2X, Big Navi) | AMD            | RX 6400, RX 6500 XT, RX 6600, RX 6600 XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT                |
@@ -539,19 +539,49 @@ vec3 sample_pixel() {
 
 ### Materiales y objetos
 
-> NOTE: esto son notas para el Andrés del futuro. Sí, lo sé, está bastante claro solo con leerlo (⊙_⊙;)
+El sistema de materiales y objetos usados es el **Wavefront** (`.obj`). Aunque es un sistema relativamente antiguo y sencillo, se han usado definiciones específicas en los materiales para adaptarlo a Physically Based Rendering. Entre los parámetros del archivo de materiales `.mtl`, destacan:
 
-Si quiero meter las BxDFs en los materiales tal y como tenía pensado (es decir, unas cuantas flags que me indiquen la BxDF que tengo que usar), tengo que...
+- $K_a \in [0, 1]^3$: representa el color ambiental. Dado que esto es un path tracer físicamente realista, no se usará.
+- $K_d \in [0, 1]^3$: componente difusa.
+- $K_s \in [0, 1]^3$: componente especular. Viene acompañada del exponente especular $N_s \in [0, 1000]$. Usualmente, $N_s = 10$. Controla los brillos en los modelos de Blinn-Phong.
+- $d \in [0, 1]$ (*dissolve*): representa la transparencia. Alternativamente, se usa $T_r = 1 - d$.
+- $T_f \in [0, 1]^3$: filtro de transmisión.
+- $N_i \in [0.001, 10]$: índice de refracción. Usualmente $N_i = 1$.
+- $K_e \in [0, 1]^3$: componente emisiva (PBR).
+- Todos los valores con tres componentes pueden presentar un *texture map*.
 
-1. Modificar `common/obj_loader.h/MaterialObj` para meterle las flags necesarias.
-2. Modificar acordemente `shaders/host_device.h/WaveFronMaterial`.
-3. Secuestrar `ObjLoader::loadModel()` para indicarle los parámetros nuevos.
-4. (*Creo que no hace falta tocar `HelloVk::loadModel()` de esta manera*)
-5. Toquetear los shaders para que me saque las flags.
+Existe un parámetro adicional llamado `illum`. Controla el modelo de iluminación usado. Nosotros lo usaremos para distinguir tipos diferentes de materiales. Los códigos representan lo siguiente:
 
-CREO que de esta manera no me va a hacer falta tocar framebuffers. Simplemente, todo dependerá de mi material y ya.
+| **Modelo** | **Color**                    | **Reflejos**         | **Transparencias** |
+|:-----------|------------------------------|----------------------|--------------------|
+| `0`        | Difusa                       | No                   | No                 |
+| `1`        | Difusa, ambiental            | No                   | No                 |
+| `2`        | Difusa, especular, ambiental | No                   | No                 |
+| `3`        | Difusa, especular, ambiental | Ray traced           | No                 |
+| `4`        | Difusa, especular, ambiental | Ray traced           | Cristal            |
+| `5`        | Difusa, especular, ambiental | Ray traced (Fresnel) | No                 |
+| `6`        | Difusa, especular, ambiental | Ray traced           | Refracción         |
+| `7`        | Difusa, especular, ambiental | Ray traced (Fresnel) | Refracción         |
+| `8`        | Difusa, especular, ambiental | Sí                   | No                 |
+| `9`        | Difusa, especular, ambiental | Sí                   | Cristal            |
+| `10`       |  Sombras arrojadizas                                                     |
 
-*Creo*.
+```c++
+// host_device.h
+struct WaveFrontMaterial
+{
+  vec3  ambient;
+  vec3  diffuse;
+  vec3  specular;
+  vec3  transmittance;
+  vec3  emission;
+  float shininess;
+  float ior;       // index of refraction
+  float dissolve;  // 1 == opaque; 0 == fully transparent
+  int   illum;     // illumination model (see http://www.fileformat.info/format/material/)
+  int   textureId;
+};
+```
 
 ## Fuentes de luz
 
