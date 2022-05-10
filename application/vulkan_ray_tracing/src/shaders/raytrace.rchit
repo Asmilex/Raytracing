@@ -27,8 +27,8 @@ VisibilityContribution luz_directa() {
     contribucion.visible  = false;
 
 
-    // Vector toward the light
     /*
+    // Vector toward the light
     vec3 L;
     float light_intensity = pcRay.light_intensity;
     float lightDistance = 100000.0;
@@ -131,10 +131,6 @@ void main()
     WaveFrontMaterial mat       = materials.m[matIdx];
 
 
-// ──────────────────────────────────────────────────── CONTRIBUCION DE LUCES ─────
-
-    VisibilityContribution contribucion_luces = luz_directa();
-
 // ────────────────────────────────────────────────────── SIGUIENTE DIRECCION ─────
 
     prd.ray_origin = world_position;
@@ -227,5 +223,60 @@ void main()
             : refract(gl_WorldRayDirectionEXT, forward_normal, eta);
 
         prd.weight = vec3(0.98);
+    }
+
+    // ──────────────────────────────────────────────────── CONTRIBUCION DE LUCES ─────
+
+    //VisibilityContribution contribucion_luces = luz_directa();
+
+    vec3 L;
+    float light_intensity = pcRay.light_intensity;
+    float light_distance = 100000.0;
+
+    if (pcRay.light_type == 0) {         // Point light
+        vec3 L_dir = pcRay.light_position - world_position;
+
+        light_distance   = length(L_dir);
+        light_intensity = pcRay.light_intensity / (light_distance * light_distance);
+        L               = normalize(L_dir);
+    }
+    else {                            // Directional light
+        L = normalize(pcRay.light_position);
+    }
+
+    if (dot(normal, L) > 0) {
+        float tMin = 0.001;
+        float tMax = light_distance;
+
+        vec3 origin = gl_WorldRayOriginEXT + gl_WorldRayDirectionEXT * gl_HitTEXT;
+        vec3 ray_dir = L;
+
+        uint flags = gl_RayFlagsSkipClosestHitShaderEXT;
+        prdShadow.is_hit = true;
+        prdShadow.seed = prd.seed;
+
+        traceRayEXT(topLevelAS,
+            flags,       // rayFlags
+            0xFF,        // cullMask
+            1,           // sbtRecordOffset
+            0,           // sbtRecordStride
+            1,           // missIndex
+            origin,      // ray origin
+            tMin,        // ray min range
+            ray_dir,      // ray direction
+            tMax,        // ray max range
+            1            // payload (location = 1)
+        );
+
+        prd.seed = prdShadow.seed;
+        float attenuation = 1;
+
+        if (prdShadow.is_hit) {
+            attenuation = 1.0 / (1.0 + light_distance);
+        }
+        else {
+            vec3 specular = compute_specular(mat, gl_WorldRayDirectionEXT, L, normal);
+        }
+        prd.weight = prd.weight * attenuation;
     }
 }
