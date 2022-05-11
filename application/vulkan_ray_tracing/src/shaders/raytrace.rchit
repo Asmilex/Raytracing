@@ -134,7 +134,7 @@ void main()
 // ────────────────────────────────────────────────────── SIGUIENTE DIRECCION ─────
 
     prd.ray_origin = world_position;
-    prd.hit_value  = mat.emission;   // Componente Le
+    vec3 hit_value  = mat.emission;   // Componente Le
 
     vec3 weight = vec3(1);
     vec3 ray_dir;
@@ -220,16 +220,19 @@ void main()
             : cannot_refract || reflectance(cos_theta, eta) > rnd(prd.seed);
 
         weight  = vec3(0.98);
-        ray_dir = reflect_condition
-            ? reflect(gl_WorldRayDirectionEXT, forward_normal)
-            : refract(gl_WorldRayDirectionEXT, forward_normal, eta);
+
+        if (reflect_condition) {
+            ray_dir = reflect(gl_WorldRayDirectionEXT, forward_normal);
+        }
+        else {
+            weight = mat.transmittance;
+            ray_dir = refract(gl_WorldRayDirectionEXT, forward_normal, eta);
+        }
     }
 
     // ──────────────────────────────────────────────────── CONTRIBUCION DE LUCES ─────
 
-    //VisibilityContribution contribucion_luces = luz_directa();
-
-/*     vec3 L;
+    vec3 L;
     float light_intensity = pcRay.light_intensity;
     float light_distance = 100000.0;
 
@@ -271,16 +274,20 @@ void main()
         prd.seed = prdShadow.seed;
         float attenuation = 1;
 
-        if (prdShadow.is_hit) {
+/*         if (prdShadow.is_hit) {
             attenuation = 1.0 / (1.0 + light_distance);
         }
         else {
             vec3 specular = compute_specular(mat, gl_WorldRayDirectionEXT, L, normal);
         }
-        weight = prd.weight * attenuation;
-    }
- */
+        weight = prd.weight * attenuation; */
 
-    prd.ray_dir = ray_dir;
-    prd.weight = weight;
+        if (!prdShadow.is_hit) {
+            hit_value = hit_value + light_intensity*weight;
+        }
+    }
+
+    prd.ray_dir   = ray_dir;
+    prd.hit_value = hit_value;
+    prd.weight    = weight;
 }
