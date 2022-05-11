@@ -136,10 +136,13 @@ void main()
     prd.ray_origin = world_position;
     prd.hit_value  = mat.emission;   // Componente Le
 
+    vec3 weight = vec3(1);
+    vec3 ray_dir;
+
     if(mat.illum == 3) {            // Materiales reflectantes (sin Fresnel)
         // Se comportan como espejos => refleja y fuera
-        prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
-        prd.weight  = mat.specular;
+        ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
+        weight  = mat.specular;
     }
     else if (mat.illum == 2) {      // Materiales difusos y glossy.
         // Si es glossy, entonces Ns == shininess > 10
@@ -158,7 +161,6 @@ void main()
             vec3 tangent, bitangent;
             create_coordinate_system(world_normal, tangent, bitangent);
 
-            vec3 ray_dir;
             float cos_theta;
             float pdf;
 
@@ -186,23 +188,22 @@ void main()
 
             const vec3 BRDF = diffuse / M_PI;
 
-            prd.ray_dir = ray_dir;
-            prd.weight = (prob_diffuse * BRDF * cos_theta) / pdf;
+            weight = (prob_diffuse * BRDF * cos_theta) / pdf;
         }
         else {
             // Realmente, esto es un modelo de material metálico usando el coeficiente de especularidad.
             // Debería remodelarlo en el futuro para seguir blin-phong propiamente.
-            prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
-            prd.ray_dir = prd.ray_dir + (1024 - mat.shininess) / 990 * random_in_unit_sphere(prd.seed);
-            prd.weight  = mat.specular * (1.0 - prob_diffuse);
+            ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
+            ray_dir = ray_dir + (1024 - mat.shininess) / 990 * random_in_unit_sphere(prd.seed);
+            weight  = mat.specular * (1.0 - prob_diffuse);
         }
     }
     else if (mat.illum == 4) {      // Transparencia: Glass on, ray traced reflections
 
     }
     else if (mat.illum == 5) {      // Materiales reflectantes (con Fresnel)
-        prd.ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
-        prd.weight  = mat.specular;
+        ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
+        weight  = mat.specular;
     }
     else if (mat.illum == 6 || mat.illum == 7) {      // Materiales refractantes (sin Fresnel)
         bool front_facing = dot(-gl_WorldRayDirectionEXT, normal) > 0.0;
@@ -218,18 +219,17 @@ void main()
             ? cannot_refract
             : cannot_refract || reflectance(cos_theta, eta) > rnd(prd.seed);
 
-        prd.ray_dir = reflect_condition
+        weight  = vec3(0.98);
+        ray_dir = reflect_condition
             ? reflect(gl_WorldRayDirectionEXT, forward_normal)
             : refract(gl_WorldRayDirectionEXT, forward_normal, eta);
-
-        prd.weight = vec3(0.98);
     }
 
     // ──────────────────────────────────────────────────── CONTRIBUCION DE LUCES ─────
 
     //VisibilityContribution contribucion_luces = luz_directa();
 
-    vec3 L;
+/*     vec3 L;
     float light_intensity = pcRay.light_intensity;
     float light_distance = 100000.0;
 
@@ -277,6 +277,10 @@ void main()
         else {
             vec3 specular = compute_specular(mat, gl_WorldRayDirectionEXT, L, normal);
         }
-        prd.weight = prd.weight * attenuation;
+        weight = prd.weight * attenuation;
     }
+ */
+
+    prd.ray_dir = ray_dir;
+    prd.weight = weight;
 }
