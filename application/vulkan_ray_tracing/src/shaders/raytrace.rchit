@@ -134,15 +134,26 @@ void main()
 // ────────────────────────────────────────────────────── SIGUIENTE DIRECCION ─────
 
     prd.ray_origin = world_position;
+
+    // Rendering equation:
+    //    L_o = Le + (BSDF(omega_o <- omega_i) * L_i(omega_o) * cos_theta) / pdf(omega)
+    // donde
+    //    weight = (BSDF(omega_o <- omega_i) * cos_theta) / pdf(omega)
+    //    L_i(omega_o) se acumula automáticamente en el raygen.
+
     vec3 hit_value  = mat.emission;   // Componente Le
 
-    vec3 weight = vec3(1);
+    vec3  weight    = vec3(1);
+    vec3  BSDF      = vec3(1);
+    float cos_theta = 1;
+    float pdf       = 1;
+
     vec3 ray_dir;
 
     if(mat.illum == 3) {            // Materiales reflectantes (sin Fresnel)
         // Se comportan como espejos => refleja y fuera
         ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
-        weight  = mat.specular;
+        BSDF    = mat.specular;
     }
     else if (mat.illum == 2) {      // Materiales difusos y glossy.
         // Si es glossy, entonces Ns == shininess > 10
@@ -156,24 +167,20 @@ void main()
 
         float prob_diffuse = length(mat.diffuse) / (length(mat.diffuse) + length(mat.specular));
 
-        if (prob_diffuse > 0.98 || prob_diffuse > rnd(prd.seed)) {
+        if (prob_diffuse > 0.98 || prob_diffuse > rnd(prd.seed)) { // Componente difusa
             // Pick a random direction from here and keep going
             vec3 tangent, bitangent;
             create_coordinate_system(world_normal, tangent, bitangent);
 
-            float cos_theta;
-            float pdf;
-
-            if (COSINE_HEMISPHERE_SAMPLING) {
-                float prob;
-                ray_dir = cosine_sample_hemisphere(prd.seed, tangent, bitangent, world_normal, prob);
+            if (COSINE_HEMISPHERE_SAMPLING) {   // Muestreo por importancia de la esfera
+                ray_dir   = cosine_sample_hemisphere(prd.seed, tangent, bitangent, world_normal);
                 cos_theta = dot(ray_dir, world_normal);
-                pdf = prob / M_PI;
+                pdf       = cos_theta/M_PI;
             }
-            else {
-                ray_dir = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
+            else {                              // Hemisphere sampling
+                ray_dir   = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
                 cos_theta = dot(ray_dir, world_normal);
-                pdf = cos_theta / M_PI;
+                pdf       = 1 / M_PI;
             }
 
             // Aplicar BRDF de materiales puramente difusos lambertianos.
@@ -186,32 +193,31 @@ void main()
                 diffuse *= texture(textureSamplers[nonuniformEXT(txtId)], texCoord).xyz;
             }
 
-            const vec3 BRDF = diffuse / M_PI;
-
-            weight = (prob_diffuse * BRDF * cos_theta) / pdf;
+            BSDF = prob_diffuse * diffuse / M_PI;
         }
         else {
             // Realmente, esto es un modelo de material metálico usando el coeficiente de especularidad.
             // Debería remodelarlo en el futuro para seguir blin-phong propiamente.
             ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
             ray_dir = ray_dir + (1024 - mat.shininess) / 990 * random_in_unit_sphere(prd.seed);
-            weight  = mat.specular * (1.0 - prob_diffuse);
+            BSDF    = mat.specular * (1.0 - prob_diffuse);
         }
     }
     else if (mat.illum == 4) {      // Transparencia: Glass on, ray traced reflections
-
+        // Anyhit, gestionados en otro shader.
     }
     else if (mat.illum == 5) {      // Materiales reflectantes (con Fresnel)
         ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
-        weight  = mat.specular;
+        BSDF    = mat.specular;
     }
     else if (mat.illum == 6 || mat.illum == 7) {      // Materiales refractantes (sin Fresnel)
-        bool front_facing = dot(-gl_WorldRayDirectionEXT, normal) > 0.0;
-        vec3 forward_normal = front_facing ? normal : -normal;
-        float eta = front_facing? (ETA_AIR / mat.ior) : mat.ior;
+        // Estilo In One Weekend
+        bool  front_facing   = dot(-gl_WorldRayDirectionEXT, normal) > 0.0;
+        vec3  forward_normal = front_facing ? normal : -normal;
+        float eta            = front_facing? (ETA_AIR / mat.ior) : mat.ior;
 
-        vec3 unit_dir = normalize(gl_WorldRayDirectionEXT);
-        float cos_theta = min(dot(-unit_dir, forward_normal), 1.0);
+        vec3  unit_dir  = normalize(gl_WorldRayDirectionEXT);
+              cos_theta = min(dot(-unit_dir, forward_normal), 1.0);
         float sin_theta = sqrt(1.0 - cos_theta * cos_theta);
 
         bool cannot_refract = eta * sin_theta > 1.0;
@@ -219,13 +225,13 @@ void main()
             ? cannot_refract
             : cannot_refract || reflectance(cos_theta, eta) > rnd(prd.seed);
 
-        weight  = vec3(0.98);
+        BSDF = vec3(0.98);
 
         if (reflect_condition) {
             ray_dir = reflect(gl_WorldRayDirectionEXT, forward_normal);
         }
         else {
-            weight = mat.transmittance;
+            BSDF    = mat.transmittance;
             ray_dir = refract(gl_WorldRayDirectionEXT, forward_normal, eta);
         }
     }
@@ -236,15 +242,22 @@ void main()
     float light_intensity = pcRay.light_intensity;
     float light_distance = 100000.0;
 
+    // BSDF vale lo mismo que para el material
+    float pdf_light       = 1;
+    float cos_theta_light = 1;
+
     if (pcRay.light_type == 0) {         // Point light
         vec3 L_dir = pcRay.light_position - world_position;
 
         light_distance   = length(L_dir);
         light_intensity = pcRay.light_intensity / (light_distance * light_distance);
         L               = normalize(L_dir);
+        // Solo tenemos un punto => pdf light = 1, cos_theta light = 1.
+        cos_theta_light = dot(L, world_normal);
     }
     else {                            // Directional light
         L = normalize(pcRay.light_position);
+        cos_theta_light = dot(L, world_normal);
     }
 
     if (dot(normal, L) > 0) {
@@ -283,9 +296,11 @@ void main()
         weight = prd.weight * attenuation; */
 
         if (!prdShadow.is_hit) {
-            hit_value = hit_value + light_intensity*weight;
+            hit_value = hit_value + light_intensity*BSDF*cos_theta_light / pdf_light;
         }
     }
+
+    weight = BSDF * cos_theta / pdf;
 
     prd.ray_dir   = ray_dir;
     prd.hit_value = hit_value;

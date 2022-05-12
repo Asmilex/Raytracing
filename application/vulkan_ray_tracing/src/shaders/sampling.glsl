@@ -13,24 +13,16 @@ vec3 sampling_hemisphere(inout uint seed, in vec3 x, in vec3 y, in vec3 z) {
     return direction;
 }
 
-vec3 cosine_sample_hemisphere(inout uint seed, in vec3 x, in vec3 y, in vec3 z, out float pdf) {
-    vec3  direction;
-
+vec3 cosine_sample_hemisphere(inout uint seed, in vec3 x, in vec3 y, in vec3 z) {
     float r1 = rnd(seed);
     float r2 = rnd(seed);
 
-    float r   = sqrt(r1);
-    float phi = TWO_PI * r2;
+    const float r   = sqrt(r1);
+    const float theta = 2 * M_PI * r2;
 
-    direction.x = r * cos(phi);
-    direction.y = r * sin(phi);
-    direction.z = sqrt(max(0.0, 1.0 - direction.x * direction.x - direction.y * direction.y));
+    vec3 direction = vec3(r * cos(theta), r * sin(theta), sqrt(max(0.0, 1.0 - r1)));
 
-    pdf = direction.z;
-
-    direction = direction.x * x + direction.y * y + direction.z * z;
-
-    return direction;
+    return direction.x * x + direction.y * y + direction.z * z;
 }
 
 vec3 random_in_unit_sphere(inout uint seed) {
