@@ -1039,6 +1039,7 @@ void Engine::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clear
     m_pcRay.light_position  = m_pcRaster.light_position;
     m_pcRay.light_intensity = m_pcRaster.light_intensity;
     m_pcRay.light_type      = m_pcRaster.light_type;
+    //m_pcRay.light_normal    = vec3(0.0, -1.0, 0.0);
 
     std::vector<VkDescriptorSet> descSets {m_rtDescSet, m_descSet};
     vkCmdBindPipeline(cmdBuf, VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR, m_rtPipeline);

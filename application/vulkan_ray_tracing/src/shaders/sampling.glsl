@@ -44,6 +44,24 @@ vec3 random_in_unit_sphere(inout uint seed) {
     );
 }
 
+vec3 random_point_in_plane(inout uint seed, vec3 position, vec3 normal) {
+    float radius = 0.5;
+
+    vec3 random_point;
+
+    while (random_point == vec3(0, 0, 0)) {
+        random_point = cross(random_in_unit_sphere(seed), normal);
+    }
+
+    random_point = normalize(random_point);
+    random_point *= radius;
+    random_point += position;
+
+    return random_point;
+
+
+}
+
 float reflectance (in float cosine, in float eta) {
     // Aproximación de Schlick para la reflectancia.
     float r0 = (1.0 - eta) / (1.0 + eta);

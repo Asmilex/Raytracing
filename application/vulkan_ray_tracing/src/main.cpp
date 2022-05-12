@@ -57,27 +57,39 @@ static void onErrorCallback(int error, const char* description) {
 void renderUI(Engine& engine) {
     bool changed = false;
 
-    changed |= ImGuiH::CameraWidget();
 
+    static nvmath::vec3f area_light_normal = nvmath::vec3f(
+        engine.m_pcRay.light_normal_x,
+        engine.m_pcRay.light_normal_y,
+        engine.m_pcRay.light_normal_z
+    );
+    changed |= ImGuiH::CameraWidget();
 
     if (ImGui::CollapsingHeader("Light")) {
         auto& pc = engine.m_pcRaster;
 
         changed |= ImGui::RadioButton("Point", &pc.light_type, 0);
         ImGui::SameLine();
+        changed |= ImGui::RadioButton("Area", &pc.light_type, 2);
+        ImGui::SameLine();
         changed |= ImGui::RadioButton("Infinite", &pc.light_type, 1);
 
         changed |= ImGui::SliderFloat3("Position", &pc.light_position.x, -20.f, 20.f);
+        changed |= ImGui::SliderFloat3("(Area) normal", &area_light_normal.x, -1.f, 1.f);
         changed |= ImGui::SliderFloat("Intensity", &pc.light_intensity, 0.f, 150.f);
     }
 
     if (ImGui::CollapsingHeader("Ray tracing options")) {
         changed |= ImGui::SliderInt("Max depth of ray", &engine.m_pcRay.max_depth, 1, 50);
-        changed |= ImGui::SliderInt("Max accum frames", &engine.m_maxAcumFrames, 1, 200);
+        changed |= ImGui::SliderInt("Temporal accum frames", &engine.m_maxAcumFrames, 1, 200);
         changed |= ImGui::SliderInt("Number of samples", &engine.m_pcRay.nb_samples, 1, 20);
     }
 
     if (changed) {
+        engine.m_pcRay.light_normal_x = area_light_normal.x;
+        engine.m_pcRay.light_normal_y = area_light_normal.y;
+        engine.m_pcRay.light_normal_z = area_light_normal.z;
+
         engine.resetFrame();
     }
 }

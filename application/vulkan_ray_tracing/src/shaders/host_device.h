@@ -86,14 +86,14 @@ struct PushConstantRay
 {
   vec4  clear_color;
   vec3  light_position;
+  float light_normal_x;     //
+  float light_normal_y;     //  Problemas de alineamiento.
+  float light_normal_z;     //
   float light_intensity;
   int   light_type;
   int   max_depth;
   int   nb_samples;     // For the antialiasing
   int   frame;
-  int   firefly_clamp_threshold;
-  bool  russian_roulette;
-  bool  next_event_estimation;
 };
 
 struct Vertex  // See ObjLoader, copy of VertexObj, could be compressed for device

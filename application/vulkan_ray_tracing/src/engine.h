@@ -147,14 +147,12 @@ public:
     PushConstantRay m_pcRay{
         {},     // clear color
         {},     // light position
+        0, -1, 0, // light normal
         0,      // light intensity
         0,      // light type
         10,     // max depth
         5,      // number of samples
         0,      // actual frame
-        30,     // firefly clamp threshold. ¡Valor temporal!
-        false,  // russian roulette
-        false,  // next event estimation
     };
     int m_maxAcumFrames {100};
 

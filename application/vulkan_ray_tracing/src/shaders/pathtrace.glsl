@@ -66,10 +66,10 @@ vec3 sample_pixel(ivec2 image_coords, ivec2 image_res) {
     vec3 radiance = pathtrace(origin, direction, t_min, t_max, ray_flags);
 
     // Quitar las luciérnagas
-    float lum = dot(radiance, vec3(0.212671f, 0.715160f, 0.072169f));
+/*     float lum = dot(radiance, vec3(0.212671f, 0.715160f, 0.072169f));
     if (lum > pcRay.firefly_clamp_threshold) {
         radiance *= pcRay.firefly_clamp_threshold / lum;
     }
-
+ */
     return radiance;
 }
