@@ -86,7 +86,7 @@ La estructura final del proyecto (es decir, la carpeta `application`) es la sigu
     - El resto de shaders son archivos comunes a ambos o utilidades varias, como pueden ser `sampling.glsl` (donde se implementan distribuciones aleatorias) o `random.glsl` (que contiene generadores de números aleatorios).
   - Finalmente, la carpeta `application/vulkan_ray_tracing/src/spv` contiene los shaders compilados a SPIR-V.
 
-## Compilación
+## Compilación y ejecución
 
 Las dependencias necesarias son:
 
@@ -115,9 +115,9 @@ $ ..\..\bin_x64\Debug\asmiray.exe
 
 El principal coste de ray tracing es el cálculo de las intersecciones con objetos; hasta un 95% del tiempo de ejecución total [@scratchapixel-2019]. Reducir el número de test de intersección es clave.
 
-Las **estructuras de aceleración** son una forma de representar la geometría de la escena. Aunque hay varios tipos diferentes, en esencia, engloban a un objeto o varios en una estructura con la que resulta más eficiente hacer test de intersección. Son similares a los grafos de escena de un rasterizador.
+Las **estructuras de aceleración** son una forma de representar la geometría de la escena. Aunque existen diferentes tipos, en esencia, todos engloban a uno o varios objetos en una estructura con la que resulta más eficiente hacer test de intersección. Son similares a los grafos de escena de un rasterizador.
 
-Uno de los tipos más comunes es la **Bounding Volume Hierarchy (BVH)**. Fue una técnica desarrollada por Kay y Kajilla en 1986. En esencia, este método encierra un objeto en una caja (lo que se denomina una **bounding box**), de forma que el test de intersección principal se hace con la caja y no con la geometría. Si un rayo impacta en la *bounding box*, entonces se pasa a testear la geometría.
+Uno de los tipos más comunes (y el que se usa en [@Shirley2020RTW2]) es la **Bounding Volume Hierarchy (BVH)**. Fue una técnica desarrollada por Kay y Kajilla en 1986. Este método encierra un objeto en una caja (denomina una **bounding box**), de forma que el test de intersección principal se hace con la caja y no con la geometría. Si un rayo impacta en la *bounding box*, entonces se pasa a testear la geometría.
 
 Se puede repetir esta idea repetidamente, de forma que agrupemos varias *bounding boxes*. Así, creamos una jerarquía de objetos --como si nodos de un árbol se trataran--. A esta jerarquía es a la que llamamos BVH.
 
@@ -127,20 +127,19 @@ Una forma habitual de crear la BVH es mediante la división del espacio en una r
 
 Vulkan gestiona las estructuras de aceleración diviéndolas en dos partes: **Top-Level Acceleration Structure** (TLAS) y **Bottom-Level Acceleration Structure** (BLAS).
 
-![La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: Nvidia](./img/04/Acceleration%20structure.png)
+![La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: [@nvpro-samples-tutorial]](./img/04/Acceleration%20structure.png)
 
 > TODO: Deberíamos cambiar esa foto por otra propia.
 
 ### Botom-Level Acceleration Structure (BLAS)
 
-Las Bottom-Level Acceleration Structure almacenan la geometría de un objeto individual; esto es, los vértices y los índices de los triángulos, además de una AABB que la encapsula.
+Las **estructuras de aceleración de bajo nivel** (*Bottom-Level Acceleration Structure*, BLAS) almacenan la geometría de un objeto individual; esto es, los vértices y los índices de los triángulos, además de una AABB que la encapsula.
 
-Pueden almacenar varios modelos, puesto que alojan uno o más buffers de vértices junto a sus matrices de transformación. Si un modelo se instancia varias veces *dentro de la misma BLAS*, la geometría se duplica. Esto se hace para mejorar el rendimiento.
+Pueden almacenar varios modelos, puesto que alojan uno o más buffers de vértices junto a sus matrices de transformación. Si un modelo es instanciado varias veces *dentro de la misma BLAS*, la geometría se duplica. Esto se hace para mejorar el rendimiento.
 
-Como regla general, cuantas menos BLAS, mejor.
+Como regla general, cuantas menos BLAS, mejor [@nvidia-best-practices].
 
 El código correspondiente a la creación de la BLAS en el programa es el siguiente:
-
 
 ```cpp
 void Engine::createBottomLevelAS() {
@@ -208,13 +207,13 @@ void Engine::createTopLevelAS() {
 
 Primero, debemos introducir unas nociones básicas de Vulkan sobre cómo gestiona la información que se pasa a los shaders.
 
-Un ***resource descriptor*** (usualmente lo abreviaremos como descriptor) es una forma de cargar recursos como buffers o imágenes para que la tarjeta gráfica los pueda utilizar; concretamente, los shaders. El ***descriptor layout*** especifica el tipo de recurso que va a ser accedido. Finalmente, el ***descriptor set*** determina el buffer o imagen que se va a asociar al descriptor. Este set es el que se utiliza en los **drawing commands**. Un **pipeline** es una secuencia de operaciones que reciben una geometría y sus texturas, y la transforma en unos pixels.
+Un ***resource descriptor*** (usualmente lo abreviaremos como descriptor) es una forma de cargar recursos como buffers o imágenes para que la tarjeta gráfica los pueda utilizar; concretamente, los shaders. El ***descriptor layout*** especifica el tipo de recurso que va a ser accedido, mientras que el ***descriptor set*** determina el buffer o imagen que se va a asociar al descriptor. Este set es el que se utiliza en los **drawing commands**. Un **pipeline** es una secuencia de operaciones que reciben una geometría y sus texturas, y la transforma en unos pixels.
 
-Si necesitas más información, todos estos conceptos aparecen desarrollados extensamente en [@overvoorde-2022]
+Si necesitas más información, todos estos conceptos aparecen desarrollados extensamente en [@overvoorde-2022].
 
-Tradicionalmente, en rasterización se utiliza un descriptor set por tipo de material, y consecuentemente, un pipeline por cada tipo. En ray tracing esto no es posible, puesto que no se sabe qué material se va a usar: un rayo puede impactar *cualquier* material presente en la escena, lo cual invocaría un shader específico. Debido a esto, empaquetaremos todos los recursos en un único set de descriptores.
+Tradicionalmente, en rasterización se utiliza un descriptor set por tipo de material, y consecuentemente, un pipeline por cada tipo. En ray tracing esto no es posible, puesto que **no se sabe qué material** se va a usar: un rayo puede impactar en *cualquier* material presente en la escena, lo cual invocaría un shader específico. Debido a esto, empaquetaremos todos los recursos en un único set de descriptores.
 
-### La Shader binding table
+### La Shader Binding Table
 
 Para solucionar esto, vamos a crear la **Shader Binding Table** (SBT). Esta estructura permitirá cargar el shader correspondiente dependiendo de dónde impacte un rayo.
 
@@ -227,7 +226,7 @@ Para cargar esta estructura, se debe hacer lo siguiente:
 5. Conseguir los *handlers* de los shaders usando `vkGetRayTracingShaderGroupHandlesKHR`.
 6. Alojar un buffer con el bit `VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR` y copiar los *handlers*.
 
-![La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader `raygen`, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un `closest hit`, `any hit`, o `miss` shaders. Fuente: Nvidia](./img/04/Pipeline.png)
+![La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader `raygen`, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un `closest hit`, `any hit`, o `miss` shaders. Fuente: [@Marrs2021, p. 194]](./img/04/Pipeline.png)
 
 Cada entrada de la SBT contiene un handler y una serie de parámetros embebidos. A esto se le conoce como **Shader Record**. Estos records se clasifican en:
 
@@ -236,18 +235,11 @@ Cada entrada de la SBT contiene un handler y una serie de parámetros embebidos.
 - **Miss group record**: se encarga del miss shader.
 - **Callable group record**.
 
-Una de las partes más difíciles de la SBT es saber cómo se relacionan record y geometría. Es decir, cuando un rayo impacta en una geometría, ¿a qué record de la SBT llamamos? Esto se determina mediante los parámetros de la instancia, la llamada a *trace rays*, y el orden de la geometría en la BLAS.
+Una de las partes más difíciles de la SBT es saber cómo se relacionan record y geometría. Es decir, cuando un rayo impacta en una geometría, ¿a qué record de la SBT llamamos? Esto se determina mediante los parámetros de la instancia, la llamada a *trace rays*, y el orden de la geometría en la BLAS. En particular, resulta problemático de los índices en los *hit groups*.
 
-![Fuente: https://www.willusher.io/](./img/04/SBT.png)
+Para conocer a fondo cómo funciona la Shader Binding Table, puedes visitar [@Marrs2021, p. 193] o [@shader-binding-table]
 
-#### Cálculo de la entrada de la SBT
-
-El principal problema es el cálculo del índice en los hit groups.
-
-Llamemos al índice de cada instancia de una geometría en la BLAS $\mathbb{G}_{\text{ID}}$. A cada instancia se le puede asignar un desplazamiento con respecto a la SBT ($\mathbb{I}_{\text{offset}}$) desde donde empieza la subtabla de hit groups.
-
-> TODO: esto se deja temporal de momento. No sé hasta qué punto me convence poner todo esto. Lo veo importante, pero no sé si *tan* importante. El recurso que estoy usando es https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways, por si al final decidimos escribirlo.
-
+![Fuente: [@shader-binding-table]](./img/04/SBT.png)
 
 ### Tipos de shaders
 
@@ -259,7 +251,12 @@ El pipeline soporta varios tipos de shaders diferentes que cubren la funcionalid
 - **Miss shader**: si el rayo no choca con ninguna geometría --pega con el infinito--, se ejecuta este shader. Normalmente, añade una pequeña contribución ambiental al rayo.
 - **Intersection shader**: este shader es algo diferente al resto. Su función es calcular el punto de impacto de un rayo con una geometría. Por defecto se utiliza un test triángulo - rayo. En nuestro path tracer lo dejaremos por defecto, pero podríamos definir algún método como los que vimos en la sección [intersecciones rayo - objeto](#intersecciones-rayo---objeto).
 
-Este es el código de los shaders del path tracer: [Raygen](https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rgen), [Closest hit](https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rchit), [Miss](https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rmiss), [Any-hit](https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl).
+Este es el código de los shaders del path tracer se encuentra en los siguientes archivos:
+
+- **Raygen**: `application/vulkan_ray_tracing/src/shaders/raytrace.rgen`.
+- **Closest hit**: `application/vulkan_ray_tracing/src/shaders/raytrace.rchit`.
+- **Miss**: `application/vulkan_ray_tracing/src/shaders/raytrace.rmiss`.
+- **Any-hit**: `application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl`.
 
 Existe otro tipo de shader adicional denominado **callable shader**. Este es un shader que se invoca desde otro shader. Por ejemplo, un shader de intersección puede invocar a un shader de oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque if-else por un shader para hacer cálculos de iluminación. Este tipo de shaders no se han implementado en el path tracer, pero se podrían añadir con un poco de trabajo.
 
