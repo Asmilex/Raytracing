@@ -245,26 +245,19 @@ Para conocer a fondo cómo funciona la Shader Binding Table, puedes visitar [@Ma
 
 El pipeline soporta varios tipos de shaders diferentes que cubren la funcionalidad esencial de un ray tracer:
 
-- **Ray generation shader**: es el punto de inicio del viaje de un rayo. Calcula punto de inicio y procesa el resultado final. Idealmente, solo se invocan rayos desde aquí. Se suele invocar
-- **Closest hit shader**: este shader se ejecuta cuando un rayo impacta en una geometría por primera vez. Se pueden trazar rayos recursivamente desde aquí (por ejemplo, para calcular oclusión ambiental).
-- **Any-hit shader**: similar al closest hit, pero invocado en cada intersección del camino del rayo que cumpla $t \in [t_{min}, t_{max})$. Es comúnmente utilizado en los cálculos de transparencias (*alpha-testing*).
-- **Miss shader**: si el rayo no choca con ninguna geometría --pega con el infinito--, se ejecuta este shader. Normalmente, añade una pequeña contribución ambiental al rayo.
+- **Ray generation shader**: es el punto de inicio del viaje de un rayo. Calcula punto de inicio y procesa el resultado final. Idealmente, solo se invocan rayos desde aquí. La implementación se encuentra en `application/vulkan_ray_tracing/src/shaders/raytrace.rgen`.
+- **Closest hit shader**: este shader se ejecuta cuando un rayo impacta en una geometría por primera vez. Se pueden trazar rayos recursivamente desde aquí (por ejemplo, para calcular oclusión ambiental). El archivo correspondiente es `application/vulkan_ray_tracing/src/shaders/raytrace.rchit`.
+- **Any-hit shader**: similar al closest hit, pero invocado en cada intersección del camino del rayo que cumpla $t \in [t_{min}, t_{max})$. Es comúnmente utilizado en los cálculos de transparencias (*alpha-testing*). Puedes comprobarlo en `application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl`.
+- **Miss shader**: si el rayo no choca con ninguna geometría --pega con el infinito--, se ejecuta este shader. Normalmente, añade una pequeña contribución ambiental al rayo. Se halla `application/vulkan_ray_tracing/src/shaders/raytrace.rmiss`.
 - **Intersection shader**: este shader es algo diferente al resto. Su función es calcular el punto de impacto de un rayo con una geometría. Por defecto se utiliza un test triángulo - rayo. En nuestro path tracer lo dejaremos por defecto, pero podríamos definir algún método como los que vimos en la sección [intersecciones rayo - objeto](#intersecciones-rayo---objeto).
-
-Este es el código de los shaders del path tracer se encuentra en los siguientes archivos:
-
-- **Raygen**: `application/vulkan_ray_tracing/src/shaders/raytrace.rgen`.
-- **Closest hit**: `application/vulkan_ray_tracing/src/shaders/raytrace.rchit`.
-- **Miss**: `application/vulkan_ray_tracing/src/shaders/raytrace.rmiss`.
-- **Any-hit**: `application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl`.
 
 Existe otro tipo de shader adicional denominado **callable shader**. Este es un shader que se invoca desde otro shader. Por ejemplo, un shader de intersección puede invocar a un shader de oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque if-else por un shader para hacer cálculos de iluminación. Este tipo de shaders no se han implementado en el path tracer, pero se podrían añadir con un poco de trabajo.
 
 ### Traspaso de información entre shaders
 
-En ray tracing, los shaders por sí solos no pueden realizar todos los cálculos necesarios. Por ello, necesitaremos enviar información de uno a otro. Tenemos diferentes mecanismos para conseguirlo:
+En ray tracing, los shaders por sí solos no pueden realizar todos los cálculos necesarios para conseguir la imagen final. Necesitaremos enviar información de uno a otro. Para conseguirlo tenemos diferentes mecanismos:
 
-El primero de ellos son las **push constansts**. Estas son variables que se pueden enviar a los shaders (es decir, de CPU a GPU), pero que no se pueden modificar. Únicamente podemos mandar un pequeño número de variables, el cual se puede consultar mediante `VkPhysicalDeviceLimits.maxPushConstantSize`.
+El primero de ellos son las **push constants**. Estas son variables que se pueden traspasar a los shaders (es decir, de CPU a GPU), pero que no se pueden modificar entre fases. Únicamente podemos mandar un pequeño número de variables, el cual se puede consultar mediante `VkPhysicalDeviceLimits.maxPushConstantSize`. Además, es importante tener en cuenta el alineamiento de las estructuras almacenadas.
 
 Nuestro path tracer tiene implementado actualmente (19 de abril de 2022) las siguientes constantes:
 
@@ -280,14 +273,139 @@ struct PushConstantRay {
 };
 ```
 
+¿Y si queremos pasar información mutable entre shaders?
 
-Las push constants son, como dice su nombre, constantes. ¿Y si queremos pasar información mutable entre shaders?.
-
-Para eso están los **payloads**. Específicamente, cada rayo puede llevar información adicional. Como una pequeña mochila. Esto resulta *muy* útil, por ejemplo, a la hora de calcular la radiancia de un camino. Se crean mediante la estructura `rayPayloadEXT`, y se reciben en otro shader mediante `rayPayloadInEXT`. Es importante controlar que el tamaño de la carga no sea excesivamente grande.
+Para eso están los **payloads**. Cada rayo puede llevar información adicional, que se conoce como carga. En esencia, es como una pequeña mochila: el rayo puede recoger información de un shader y pasarlo a otro. Esto resulta *muy* útil, por ejemplo, a la hora de calcular la radiancia de un camino, o saber desde qué punto venía el rayo. Se crean mediante la estructura `rayPayloadEXT`, y se reciben en otro shader mediante `rayPayloadInEXT`. Es importante controlar que el tamaño de la carga no sea excesivamente grande.
 
 ### Creación de la ray tracing pipeline
 
-El código de la creación de la pipeline lo encapsula la función `createRtPipeline()`, que se puede consultar [aquí](https://github.com/Asmilex/Raytracing/blob/6409feb628cc048186f6279b921ebe24e9337b6a/application/vulkan_ray_tracing/src/hello_vulkan.cpp#L763)
+El código de la creación de la pipeline está encapsulado en la función `Engine::createRtPipeline()`, que se puede consultar en el archivo `application/vulkan_ray_tracing/src/engine.cpp`.
+
+En esencia, este método realiza las siguientes tareas:
+
+1. Define las fases o *stages* que tendrán los shaders.
+2. Prepara las estructuras `VkPipelineShaderStageCreateInfo` para almacenar la información de cada fase.
+3. Carga cada archivo de shader compilado `.spv` en la estructura junto con sus parámetros correctos.
+4. Configura correctamente cada *shader group*.
+5. Prepara las *push constants*.
+6. Hace el setup del *pipeline layout* junto a sus descriptor sets.
+7. Limpia la información innecesaria creada por la función.
+
+## Materiales y objetos
+
+El formato de materiales y objetos usados es el **Wavefront** (`.obj`). Aunque es un sistema relativamente antiguo y sencillo, se han usado definiciones específicas en los materiales para adaptarlo a Physically Based Rendering. Entre los parámetros del archivo de materiales `.mtl`, destacan:
+
+- $K_a \in [0, 1]^3$: representa el color ambiental. Dado que esto es un path tracer físicamente realista, no se usará.
+- $K_d \in [0, 1]^3$: componente difusa.
+- $K_s \in [0, 1]^3$: componente especular. Viene acompañada del exponente especular $N_s \in [0, 1000]$. Usualmente, $N_s = 10$. Controla los brillos en los modelos de Blinn-Phong.
+- $d \in [0, 1]$ (*dissolve*): representa la transparencia. Alternativamente, se usa $T_r = 1 - d$.
+- $T_f \in [0, 1]^3$: filtro de transmisión.
+- $N_i \in [0.001, 10]$: índice de refracción. Usualmente $N_i = 1$.
+- $K_e \in [0, 1]^3$: componente emisiva (PBR).
+- Todos los valores con tres componentes pueden presentar un *texture map*.
+
+Existe un parámetro adicional llamado `illum`. Controla el modelo de iluminación usado. Nosotros lo usaremos para distinguir tipos diferentes de materiales. Los códigos representan lo siguiente:
+
+| **Modelo** | **Color**                    | **Reflejos**         | **Transparencias** |
+|:-----------|------------------------------|----------------------|--------------------|
+| `0`        | Difusa                       | No                   | No                 |
+| `1`        | Difusa, ambiental            | No                   | No                 |
+| `2`        | Difusa, especular, ambiental | No                   | No                 |
+| `3`        | Difusa, especular, ambiental | Ray traced           | No                 |
+| `4`        | Difusa, especular, ambiental | Ray traced           | Cristal            |
+| `5`        | Difusa, especular, ambiental | Ray traced (Fresnel) | No                 |
+| `6`        | Difusa, especular, ambiental | Ray traced           | Refracción         |
+| `7`        | Difusa, especular, ambiental | Ray traced (Fresnel) | Refracción         |
+| `8`        | Difusa, especular, ambiental | Sí                   | No                 |
+| `9`        | Difusa, especular, ambiental | Sí                   | Cristal            |
+| `10`       |  Sombras arrojadizas                                                     |
+
+```c++
+// host_device.h
+struct WaveFrontMaterial
+{
+  vec3  ambient;
+  vec3  diffuse;
+  vec3  specular;
+  vec3  transmittance;
+  vec3  emission;
+  float shininess;
+  float ior;       // index of refraction
+  float dissolve;  // 1 == opaque; 0 == fully transparent
+  int   illum;     // illumination model (see http://www.fileformat.info/format/material/)
+  int   textureId;
+};
+```
+
+## Antialiasing mediante jittering y acumulación temporal
+
+Normalmente, mandamos los rayos desde el centro de un pixel. Podemos conseguir una mejora sustancial de la calidad con un pequeño truco: en vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña perturbación (*jittering*). Así, tendremos diferentes colores para un mismo pixel, por lo que podemos hacer una ponderación del color que se obtiene (a lo que llamamos *acumulación temporal*).
+
+Es importante destacar que el efecto de esta técnica solo es válido cuando la **cámara se queda estática**.
+
+La implementación es muy sencilla. Debemos modificar tanto el motor como los shaders para llevar una cuenta de ciertos frames, definiendo un máximo de frames que se pueden acumular:
+
+```cpp
+// engine.h
+class Engine {
+    //...
+    int m_maxAcumFrames {20};
+}
+```
+
+Las push constant deberán llevar un registro del frame en el que se encuentran, así como un número máximo de muestras a acumular para un pixel:
+
+
+```cpp
+// host_device.h
+struct PushConstantRay {
+    //...
+    int   frame;
+    int   nb_samples
+}
+```
+
+El número de frame se reseteará cuando la cámara se mueva, la ventana se reescale, o se produzca algún efecto similar en la aplicación.
+
+Finalmente, en los shaders podemos implementar lo siguiente:
+
+```glsl
+// raytrace.rgen
+vec3 pixel_color = vec3(0);
+
+for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {
+    pixel_color += sample_pixel(image_coords, image_res);
+}
+
+pixel_color = pixel_color / pcRay.nb_samples;
+
+if (!primer_frame) {
+    guardar una mezcla de las anteriores imágenes junto con la actual
+}
+else {
+    guardar la imagen directamente
+}
+
+```
+
+```glsl
+// pathtrace.glsl
+vec3 sample_pixel() {
+    float r1 = rnd(prd.seed);
+    float r2 = rnd(prd.seed);
+
+    // Subpixel jitter: mandar el rayo desde una pequeña perturbación del pixel para aplicar antialiasing
+    vec2 subpixel_jitter = pcRay.frame == 0
+        ? vec2(0.5f, 0.5f)
+        : vec2(r1, r2);
+
+    const vec2 pixelCenter = vec2(image_coords.xy) + subpixel_jitter;
+
+    // ...
+
+    vec3 radiance = pathtrace(rayo);
+}
+```
 
 ## Transporte de luz en la práctica
 
@@ -465,123 +583,6 @@ h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) 
 $$
 
 Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento que el recursivo.
-
-### Antialiasing mediante jittering y acumulación temporal
-
-Normalmente, mandamos los rayos desde el centro de un pixel. Podemos conseguir una mejora sustancial de la calidad con un pequeño truco: en vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña perturbación (*jittering*). Así, tendremos diferentes colores para un mismo pixel, por lo que podemos hacer una ponderación del color que se obtiene (a lo que llamamos *acumulación temporal*).
-
-Es importante destacar que el efecto de esta técnica solo es válido cuando la **cámara se queda estática**.
-
-La implementación es muy sencilla. Debemos modificar tanto el motor como los shaders para llevar una cuenta de ciertos frames, definiendo un máximo de frames que se pueden acumular:
-
-```cpp
-// engine.h
-class Engine {
-    //...
-    int m_maxAcumFrames {20};
-}
-```
-
-Las push constant deberán llevar un registro del frame en el que se encuentran, así como un número máximo de muestras a acumular para un pixel:
-
-
-```cpp
-// host_device.h
-struct PushConstantRay {
-    //...
-    int   frame;
-    int   nb_samples
-}
-```
-
-El número de frame se reseteará cuando la cámara se mueva, la ventana se reescale, o se produzca algún efecto similar en la aplicación.
-
-Finalmente, en los shaders podemos implementar lo siguiente:
-
-```glsl
-// raytrace.rgen
-vec3 pixel_color = vec3(0);
-
-for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {
-    pixel_color += sample_pixel(image_coords, image_res);
-}
-
-pixel_color = pixel_color / pcRay.nb_samples;
-
-if (!primer_frame) {
-    guardar una mezcla de las anteriores imágenes junto con la actual
-}
-else {
-    guardar la imagen directamente
-}
-
-```
-
-```glsl
-// pathtrace.glsl
-vec3 sample_pixel() {
-    float r1 = rnd(prd.seed);
-    float r2 = rnd(prd.seed);
-
-    // Subpixel jitter: mandar el rayo desde una pequeña perturbación del pixel para aplicar antialiasing
-    vec2 subpixel_jitter = pcRay.frame == 0
-        ? vec2(0.5f, 0.5f)
-        : vec2(r1, r2);
-
-    const vec2 pixelCenter = vec2(image_coords.xy) + subpixel_jitter;
-
-    // ...
-
-    vec3 radiance = pathtrace(rayo);
-}
-```
-
-
-### Materiales y objetos
-
-El sistema de materiales y objetos usados es el **Wavefront** (`.obj`). Aunque es un sistema relativamente antiguo y sencillo, se han usado definiciones específicas en los materiales para adaptarlo a Physically Based Rendering. Entre los parámetros del archivo de materiales `.mtl`, destacan:
-
-- $K_a \in [0, 1]^3$: representa el color ambiental. Dado que esto es un path tracer físicamente realista, no se usará.
-- $K_d \in [0, 1]^3$: componente difusa.
-- $K_s \in [0, 1]^3$: componente especular. Viene acompañada del exponente especular $N_s \in [0, 1000]$. Usualmente, $N_s = 10$. Controla los brillos en los modelos de Blinn-Phong.
-- $d \in [0, 1]$ (*dissolve*): representa la transparencia. Alternativamente, se usa $T_r = 1 - d$.
-- $T_f \in [0, 1]^3$: filtro de transmisión.
-- $N_i \in [0.001, 10]$: índice de refracción. Usualmente $N_i = 1$.
-- $K_e \in [0, 1]^3$: componente emisiva (PBR).
-- Todos los valores con tres componentes pueden presentar un *texture map*.
-
-Existe un parámetro adicional llamado `illum`. Controla el modelo de iluminación usado. Nosotros lo usaremos para distinguir tipos diferentes de materiales. Los códigos representan lo siguiente:
-
-| **Modelo** | **Color**                    | **Reflejos**         | **Transparencias** |
-|:-----------|------------------------------|----------------------|--------------------|
-| `0`        | Difusa                       | No                   | No                 |
-| `1`        | Difusa, ambiental            | No                   | No                 |
-| `2`        | Difusa, especular, ambiental | No                   | No                 |
-| `3`        | Difusa, especular, ambiental | Ray traced           | No                 |
-| `4`        | Difusa, especular, ambiental | Ray traced           | Cristal            |
-| `5`        | Difusa, especular, ambiental | Ray traced (Fresnel) | No                 |
-| `6`        | Difusa, especular, ambiental | Ray traced           | Refracción         |
-| `7`        | Difusa, especular, ambiental | Ray traced (Fresnel) | Refracción         |
-| `8`        | Difusa, especular, ambiental | Sí                   | No                 |
-| `9`        | Difusa, especular, ambiental | Sí                   | Cristal            |
-| `10`       |  Sombras arrojadizas                                                     |
-
-```c++
-// host_device.h
-struct WaveFrontMaterial
-{
-  vec3  ambient;
-  vec3  diffuse;
-  vec3  specular;
-  vec3  transmittance;
-  vec3  emission;
-  float shininess;
-  float ior;       // index of refraction
-  float dissolve;  // 1 == opaque; 0 == fully transparent
-  int   illum;     // illumination model (see http://www.fileformat.info/format/material/)
-  int   textureId;
-};
-```
 
 ## Fuentes de luz
 
