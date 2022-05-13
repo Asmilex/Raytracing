@@ -38,6 +38,7 @@ PANDOC_FLAGS =\
 	--top-level-division="chapter" \
 	--filter pandoc-eqnos \
 	--citeproc \
+	--csl ./headers/chicago-alt.csl \
 	--bibliography ./chapters/bibliography.bib
 
 PANDOC_FLAGS_PDF = --template ./headers/eisvogel.tex
