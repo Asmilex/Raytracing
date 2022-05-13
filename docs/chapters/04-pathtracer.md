@@ -339,22 +339,23 @@ struct WaveFrontMaterial
 
 ## Antialiasing mediante jittering y acumulación temporal
 
-Normalmente, mandamos los rayos desde el centro de un pixel. Podemos conseguir una mejora sustancial de la calidad con un pequeño truco: en vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña perturbación (*jittering*). Así, tendremos diferentes colores para un mismo pixel, por lo que podemos hacer una ponderación del color que se obtiene (a lo que llamamos *acumulación temporal*).
+Normalmente, mandamos los rayos desde el centro de un pixel. Podemos conseguir una mejora sustancial de la calidad con un pequeño truco: en vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña perturbación (*jittering*). Así, tendremos una variación de colores para un mismo pixel, por lo que podemos hacer una ponderación de todos ellos. A este proceso lo que llamamos **acumulación temporal**.
 
-Es importante destacar que el efecto de esta técnica solo es válido cuando la **cámara se queda estática**.
+Es importante destacar que el efecto de esta técnica solo es válido cuando la **cámara se queda estática**. Al cambiar de posición, la información del píxel se ve alterada significativamente, por lo que debemos reconstruir las muestras desde el principio.
 
-La implementación es muy sencilla. Debemos modificar tanto el motor como los shaders para llevar una cuenta de ciertos frames, definiendo un máximo de frames que se pueden acumular:
+La implementación es muy sencilla. Está basada en el tutorial de [@nvpro-samples-tutorial, jitter camera]. Debemos modificar tanto el motor como los shaders para llevar el recuento del número de frames en las push constants.
+
+Definimos el número máximo de frames que se pueden acumular:
 
 ```cpp
 // engine.h
 class Engine {
     //...
-    int m_maxAcumFrames {20};
+    int m_maxAcumFrames {100};
 }
 ```
 
 Las push constant deberán llevar un registro del frame en el que se encuentran, así como un número máximo de muestras a acumular para un pixel:
-
 
 ```cpp
 // host_device.h
@@ -379,13 +380,19 @@ for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {
 
 pixel_color = pixel_color / pcRay.nb_samples;
 
-if (!primer_frame) {
-    guardar una mezcla de las anteriores imágenes junto con la actual
+if (pcRay.frame > 0) {
+    vec3 old_color = imageLoad(image, image_coords).xyz;
+    vec3 new_result = mix(
+        old_color,
+        pixel_color,
+        1.f / float(pcRay.frame + 1)
+    );
+
+    imageStore(image, image_coords, vec4(new_result, 1.f));
 }
 else {
-    guardar la imagen directamente
+    imageStore(image, image_coords, vec4(pixel_color, 1.0));
 }
-
 ```
 
 ```glsl
@@ -406,6 +413,104 @@ vec3 sample_pixel() {
     vec3 radiance = pathtrace(rayo);
 }
 ```
+
+> TODO: mostrar vídeo de ejemplo
+
+## Fuentes de luz
+
+La última estructura de datos importante que debemos estudiar es la utilizada para las fuentes de luces. Desafortunadamente, en este trabajo no se ha implementado una abstracción sólida.
+
+Se ha reaprovechado la definición del [rasterizador por defecto](#setup-del-proyecto) para que tanto el path tracer como el anterior utilicen fácilmente iluminación estática.
+
+La idea básica es que, en vez de depender de los elementos de la escena para proporcionar luz, se conozca una fuente de iluminación en todo momento. Dicha fuente puede ser puntual o direccional, y puede ser controlada mediante la interfaz. El estado de la fuente se traspasa a los shaders mediante una push constant:
+
+```
+struct PushConstantRay
+{
+    ...
+    vec3  light_position;
+    float light_intensity;
+    int   light_type;
+};
+```
+
+El parámetro `light_intensity` corresponde a la potencia $\Phi$, y el tipo `light_type` puede ser `0` para puntual o `1` para direccional.
+
+Claramente esta decisión técnica favocere facilidad de implementación en detrimento de flexibilidad, solidez y correctitud. Esta interfaz es una de las áreas de futura mejora, y haría falta una revisión considerable. Sin embargo, por el momento, funciona.
+
+La implementación en los shaders es muy sencilla. Podemos usar lo aprendido en [muestreo directo de fuentes de luz](#next-event-estimation-o-muestreo-directo-de-fuentes-de-luz). En el closest hit, primero calculamos la información relativa a la posición y la intensidad de la luz:
+
+```glsl
+vec3 L;
+float light_intensity = pcRay.light_intensity;
+float light_distance = 100000.0;
+
+float pdf_light       = 1;  // prob. de escoger ese punto de la fuente de luz
+float cos_theta_light = 1;  // Ángulo entre la la dir. del rayo y luz.
+
+if (pcRay.light_type == 0) {         // Point light
+    vec3 L_dir = pcRay.light_position - world_position;  // vector hacia la luz
+
+    light_distance   = length(L_dir);
+    light_intensity = pcRay.light_intensity / (light_distance * light_distance);
+    L               = normalize(L_dir);
+    // Solo tenemos un punto => pdf light = 1, cos_theta light = 1.
+    cos_theta_light = dot(L, world_normal);
+}
+else if (pcRay.light_type == 1) {    // Directional light
+    L = normalize(pcRay.light_position);
+    cos_theta_light = dot(L, world_normal);
+}
+```
+
+Sin embargo, esto no es suficiente. Se nos olvida comprobar un detalle sumamente importante:
+
+¿Se ve la fuente de luz desde el punto de intersección?
+
+Si no es así, ¡no tiene sentido que calculemos la influencia luminaria de la fuente! La carne de burro no se transparenta, después de todo. A no ser que sea un toro hecho de algún material que presente transmitancia, en cuyo caso se debería refractar acordemente el rayo de luz.
+
+Volviendo al tema: este tipo de problemas de oclusión se suelen resolver mediante algún tipo de test de visibilidad. El más habitual es usar **shadow rays**. Al preparar la [pipeline](#la-ray-tracing-pipeline) fijamos el stage de los shadow rays precisamente por este motivo.
+
+La continuación del código quería de la siguiente forma:
+
+```glsl
+if (dot(normal, L) > 0) {
+    // Preparar la invocación del shadow ray
+    float tMin = 0.001;
+    float tMax = light_distance;
+
+    vec3 origin = gl_WorldRayOriginEXT + gl_WorldRayDirectionEXT * gl_HitTEXT;
+    vec3 ray_dir = L;
+
+    uint flags = gl_RayFlagsSkipClosestHitShaderEXT;
+    prdShadow.is_hit = true;
+    prdShadow.seed = prd.seed;
+
+    traceRayEXT(topLevelAS,
+        flags,       // rayFlags
+        0xFF,        // cullMask
+        1,           // sbtRecordOffset => invocar el shader de sombras
+        0,           // sbtRecordStride
+        1,           // missIndex
+        origin,      // ray origin
+        tMin,        // ray min range
+        ray_dir,     // ray direction
+        tMax,        // ray max range
+        1            // payload (location = 1)
+    );
+
+    float attenuation = 1;
+
+    if (!prdShadow.is_hit) {
+        hit_value = hit_value + light_intensity*BSDF*cos_theta_light / pdf_light;
+    }
+    else {
+        attenuation = 1.0 / (1.0 + light_distance);
+    }
+}
+```
+
+Y con esto, hemos conseguido añadir dos tipos de fuentes de iluminación. En la sección de resultados comprobaremos el resultado.
 
 ## Transporte de luz en la práctica
 
@@ -583,62 +688,6 @@ h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) 
 $$
 
 Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento que el recursivo.
-
-## Fuentes de luz
-
-> TODO: point lights, area lights, ambient lights...
->
-> TODO: estas son notas muy puntuales (*como las luces, jeje*). Ya las revisaré más adelante.
->
-> TODO: 01_lights.pdf tiene información útil sobre muestreo directo de fuents de luces.
-
-La interfaz se encuentra en `host_device.h`. Describe cómo comunicarse con la GPU.
-
-Ahora mismo, tenemos 3 constantes: tipo de luz:
-
-```glsl
-vec3  lightPosition;    // (x, y, z)
-float lightIntensity;   // (Intensidad)
-int   lightType;        // (0 => point light, 1 => area light)
-```
-
-Sería interesante añadir algunas constantes para controlar el tamaño (radio, posición, normal para las de área...)
-
-### Point lights + spotlights
-
-> pbr-book, point lights: *"Strictly speaking, it is incorrect to describe the light arriving at a point due to a point light source using units of radiance. Radiant intensity is instead the proper unit for describing emission from a point light source, as explained in Section 5.4. In the light source interfaces here, however, we will abuse terminology and use Sample_Li() methods to report the illumination arriving at a point for all types of light sources, dividing radiant intensity by the squared distance to the point p to convert units. Section 14.2 revisits the details of this issue in its discussion of how delta distributions affect evaluation of the integral in the scattering equation. In the end, the correctness of the computation does not suffer from this fudge, and it makes the implementation of light transport algorithms more straightforward by not requiring them to use different interfaces for different types of lights."*
-
-```cpp
-// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.h
-// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.cpp
-
-Spectrum sample_light(interaccion, vec2 u, vec3 wi, float pdf, visibility_tester) {
-    wi = normalize(posicion_luz - interraccion.p);
-    pdf = 1.f;
-    // testeo de visibilidad. Opcional, I guess.
-
-    return intensidad / distancia_al_cuadrado(posicion_luz, interraccion.p);
-}
-```
-
-La potencia total emitida por la luz puede calcularse integrando la intensidad desprendida en toda su superficie. Asumiendo la intensidad constante:
-
-$$
-\Phi = \int_{\mathbb{S}^2}{I d\omega} = I \int_{\mathbb{S}^2}{d\omega} = 4 \pi I
-$$
-
-Las spotlights son variaciones de las point lights iluminando en un cono.
-
-### Fuentes de área
-
-Para simplificar la implementación, podemos asumir que son rectangulares.
-
-Nos van a hacer falta técnicas de Monte Carlo para solucionar el problema de calcular integrales a lo largo de su superficie.
-
-Primero, lo mejor es asumir un cuadrado, y después, extender la interfaz para meter otras formas (es decir, rectángulos. Porque lo otro sería mucha parafernalia innecesaria).
-
-[Código fuente](https://github.com/mmp/pbrt-v3/blob/aaa552a4b9cbf9dccb71450f47b268e0ed6370e2/src/core/light.h)
-
 
 <hr>
 
