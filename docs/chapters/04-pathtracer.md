@@ -8,16 +8,14 @@ Le pondremos especial atención a los conceptos claves. Vulkan tiende a crear c�
 
 ## Requisitos de ray tracing en tiempo real
 
-Como es natural, el tiempo es una limitación enorme para cualquier programa en tiempo real. Mientras que en un *offline renderer* disponemos de un tiempo muy considerable por frame (hablamos de varios segundos), en un programa en tiempo real necesitamos que un frame salga en 16 milisegundos o menos. Este concepto se suele denominar *frame budget*: la cantidad de tiempo que disponemos para un frame.
+Como es natural, el tiempo es una limitación enorme para cualquier programa en tiempo real. Mientras que en un *offline renderer* disponemos de un tiempo muy considerable por frame (desde varios segundos hasta horas), en un programa en tiempo real necesitamos que un frame salga en 16 milisegundos o menos. Este concepto se suele denominar *frame budget*: la cantidad de tiempo que disponemos para un frame.
 
-> **Nota**: cuando hablamos del tiempo disponible para un frame, solemos hablar en milisegundos (ms) o frames por segundo (FPS). Para que un motor vaya suficientemente fluido, necesitaremos que el motor corra a un mínimo de 30 FPS (que equivalen a 33 ms por frame). Hoy en día, debido al avance del área en campos como los videosjuegos, el estándar se está convirtiendo en 60 FPS (16 ms/frame).
+> **Nota**: cuando hablamos del tiempo disponible para un frame, solemos utilizarmilisegundos (ms) o frames por segundo (FPS). Para que un programa en tiempo real vaya suficientemente fluido, necesitaremos que el motor corra a un mínimo de 30 FPS (que equivalen a 33 ms por frame). Hoy en día, debido al avance del área en campos como los videosjuegos, el estándar se está convirtiendo en 60 FPS (16 ms/frame).
 
-Las nociones anteriores no distinguen entre un motor en tiempo real y *offline*. Como es natural, necesitaremos introducir unos pocos conceptos más para llevarlo a tiempo real. Además, existe una serie de requisitos hardware que debemos cumplir para que un motor en tiempo real con ray tracing funcione.
+Las nociones de los capítulos anteriores no distinguen entre un motor en tiempo real y *offline*. Como es natural, necesitaremos introducir unos pocos conceptos más para llevarlo a tiempo real. Además, existen una serie de requisitos hardware que debemos cumplir para que un motor en tiempo real con ray tracing funcione.
 
 ### Arquitecturas de gráficas
 
-> NOTE: sería interesante enlazarlo con la sección de rendimiento.
->
 > TODO: Esta [página](https://alain.xyz/blog/comparison-of-modern-graphics-apis) es maravillosa *chef kiss*
 
 El requisito más importante de todos es la gráfica. Para ser capaces de realizar cálculos de ray tracing en tiempo real, necesitaremos una arquitectura moderna con núcleos dedicados a este tipo de cáclulos [^4].
@@ -25,13 +23,13 @@ El requisito más importante de todos es la gráfica. Para ser capaces de realiz
 A día 17 de abril de 2022, para correr ray tracing en tiempo real, se necesita alguna de las siguientes tarjetas gráficas:
 
 | **Arquitectura**              | **Fabricante** | **Modelos de gráficas**                                                                              |
-|:------------------------------|:---------------|:-----------------------------------------------------------------------------------------------------|
+|:------------------------------|:---------------|:----------------------------------------------------------------------------------------------------:|
 | **Turing**                    | Nvidia         | RTX 2060, RTX 2060 Super, RTX 2070, RTX 2070 Super, RTX 2080, RTX 2080 Super, RTX 2080 Ti, RTX Titan |
 | **Ampere**                    | Nvidia         | RTX 3050, RTX 3060, RTX 3060 Ti, RTX 3070, RTX 3070 Ti, RTX 3080, RTX 3080 Ti, RTX 3090, RTX 3090 Ti |
 | **RDNA2** (Navi 2X, Big Navi) | AMD            | RX 6400, RX 6500 XT, RX 6600, RX 6600 XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT                |
 | **Arc Alchemist**             | Intel          | *No reveleado aún*                                                                                   |
 
-Solo se han incluido las gráficas de escritorio de consumidor.
+Se puede encontrar más información en las respectivas páginas de las compañías o los artículos de Wikipedia [@wikipedia-radeon], [@wikipedia-nvidia], [@intel-arc]. Solo se han incluido las gráficas de escritorio de consumidor.
 
 Para este trabajo se ha utilizado una **RTX 2070 Super**. En el capítulo de análisis del rendimiento se hablará con mayor profundidad de este apartado.
 
@@ -54,59 +52,64 @@ OptiX es la API más vieja de todas. Su primera versión salió en 2009, mientra
 Tanto DXR como Vulkan son los candidatos más sólidos. DXR salió en 2018, con la llegada de Turing. Es un par de años más reciente que Vulkan KHR. Cualquiera de las dos cumpliría su cometido de forma exitosa. Sin embargo, para este trabajo, **hemos escogido Vulkan** por los siguientes motivos:
 
 - DirectX 12 está destinado principalmente a plataformas de Microsoft. Es decir, está pensado para sistemas operativos Windows 10 o mayor [^5].
-- Vulkan está apoyado principalmente por AMD. Esto sigue las línas de la su política de empresa de apoyar el código abierto. Además, resulta más sencillo exportarlo a otros sistemas operativos.
+- Vulkan, al estar apoyado principalmente por AMD y desarrollado por Khonos, es un proyecto de código. Su principal aliciente es la capacidad de correr en múltiples sistemas operativos, como Windows, distribuciones de Linux o Android.
 
 Ambas API se comportan de manera muy similar, y no existe una gran diferencia entre ellas; tanto en rendimiento como en complejidad de desarrollo. Actualmente el proyecto solo compila en Windows 10 o mayor, por lo que estos dos puntos no resultan especialmente relevantes para el trabajo.
 
+Si se desea, se puede encontrar una comparación más a fondo de las API en el blog de [@alain-API]
+
 ## Setup del proyecto
 
-Un proyecto de Vulkan necesita una cantidad de código inicial considerable. Para acelerar este trámite y partir de una base más sólida, se ha decidido usar un pequeño framework de trabajo de Nvidia llamado [nvpro-samples](https://github.com/nvpro-samples).
+Un proyecto de Vulkan necesita una cantidad de código inicial considerable. Para acelerar este trámite y partir de una base más sólida, se ha decidido usar un pequeño framework de trabajo de Nvidia llamado [nvpro-samples] [@nvpro-samples].
 
-Esta serie de repositorios contienen proyectos de ray tracing de Nvidia con fines didácticos. Nosotros usaremos [vk_raytracing_tutorial_KHR](https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR), pues ejemplifica cómo añadir ray tracing en tiempo real a un proyecto de Vulkan.
+Esta serie de repositorios de Nvidia DesignWorks contienen proyectos de ray tracing de Nvidia con fines didácticos. Nosotros usaremos **vk_raytracing_tutorial_KHR** [@nvpro-samples-tutorial], pues ejemplifica cómo añadir ray tracing en tiempo real a un proyecto de Vulkan. Estos frameworks contienen asimismo otras utilidades menores. Destacan **GLFW** (gestión de ventanas en C++), **imgui** (interfaz de usuario) y **tinyobjloader** (carga de `.obj` y `.mtl`).
 
-Estos frameworks contienen asimismo otras utilidades menores. Destacan GLFW (gestión de ventanas en C++), imgui (interfaz de usuario) y tinyobjloader (carga de `.obj` y `.mtl`).
+Nuestro repositorio utiliza las herramientas citadas anteriormente para compilar su proyecto. El Makefile es una modificación del que se usa para ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una aplicación muy simple que muestra un cubo mediante rasterización, la cual modificaremos hasta añadir ray tracing en tiempo real. Por tanto, la parte inicial del desarrollo consiste en adaptar Vulkan para usar la extensión de ray tracing, extrayendo la información de la gráfica y cargando correspondientemente el dispositivo.
 
-Nuestro repositorio utiliza las herramientas citadas anteriormente para compilar su proyecto. El Makefile es una modificación del que se usa para ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una aplicación muy simple que muestra un cubo mediante rasterización, la cual modificaremos hasta añadir ray tracing en tiempo real.
+![Por defecto, el programa muestra un cubo rasterizado muy simple. Es, prácticamente, un *hello world* gráfico](./img/04/Raster.jpg)
 
 ### Vistazo general a la estructura
 
 La estructura final del proyecto (es decir, la carpeta `application`) es la siguiente:
 
-- La carpeta **./build** contiene todo lo relacionado con CMake y el ejecutable final.
-- En **./media** se encuentran todos los archivos `.obj`, `.mtl` y las texturas.
-- La subcarpeta **./src** contiene el código fuente de la propia aplicación.
+- La carpeta `application/build` contiene todo lo relacionado con CMake y el ejecutable final.
+- Las dependencias del proyecto se encuentran en el repositorio `application/nvpro_core`. Se descargan automáticamente seguir las instrucciones de compilación.
+- En `application/vulkan_ray_tracing/media/` se encuentran todos los archivos `.obj`, `.mtl` y las texturas.
+- La subcarpeta `application/vulkan_ray_tracing/src` contiene el código fuente de la propia aplicación.
   - Toda la implementación relacionada con el motor (y por tanto, Vulkan), se halla en `engine.h/cpp`. Una de las desventajas de seguir un framework "de juguete" es que el acoplamiento es considerablemente alto. Más adelante comentaremos los motivos.
   - Los parámetros de la aplicación (como tamaño de pantalla y otras estructuras comunes) se encuetran en `globals.hpp`.
   - La carga de escenas y los objetos se gestionan en `scene.hpp`.
   - En `main.cpp` se gestiona tanto el punto de entrada de la aplicación como la actualización de la interfaz gráfica.
-  - La carpeta `./src/shaders` contiene todos los shaders; tanto de rasterización, como de ray tracing.
+  - La carpeta `application/vulkan_ray_tracing/src/shaders` contiene todos los shaders; tanto de rasterización, como de ray tracing.
     - Para ray tracing, se utilizan los `raytrace.*`, `pathtrace.glsl` (que contiene el grueso del path tracer).
     - En rasterización se usan principalmente `frag_shader.frag`, `passthrough.vert`, `post.frag`, `vert_shader.vert`.
-    - El resto de shaders son archivos comunes a ambos o utilidades varias.
-  - Finalmente, la carpeta `./src/spv` contiene los shaders compilados a SPIR-V.
+    - El resto de shaders son archivos comunes a ambos o utilidades varias, como pueden ser `sampling.glsl` (donde se implementan distribuciones aleatorias) o `random.glsl` (que contiene generadores de números aleatorios).
+  - Finalmente, la carpeta `application/vulkan_ray_tracing/src/spv` contiene los shaders compilados a SPIR-V.
 
 ## Compilación
 
-Las dependencias necesarias para compilarlo son:
+Las dependencias necesarias son:
 
-1. CMake.
-2. Un driver de Nvidia compatible con la extensión `VK_KHR_ray_tracing_pipeline`.
-3. El SDK de Vulkan, versión 1.2.161 o mayor.
+1. **CMake**.
+2. Un **driver de Nvidia** compatible con la extensión `VK_KHR_ray_tracing_pipeline`.
+3. El SDK de **Vulkan**, versión 1.2.161 o mayor.
 
-La parte inicial del desarrollo consiste en adaptar Vulkan para usar la extensión de ray tracing, extrayendo la información de la gráfica y cargando correspondientemente el dispositivo.
-
-Para compilarlo, ejecuta los siguientes comandos:
+Ejecuta los siguientes comandos desde la terminal para compilar el proyecto:
 
 ```sh
-git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git
-cd .\Raytracing\application\vulkan_ray_tracing\
-mkdir build
-cd build
-cmake ..
-cmake --build .
+$ git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git
+$ cd .\Raytracing\application\vulkan_ray_tracing\
+$ mkdir build
+$ cd build
+$ cmake ..
+$ cmake --build .
 ```
 
-Si todo funciona correctamente, debería generarse un binario en `./application/bin_x64/Debug` llamado `asmiray.exe`. Desde la carpeta en la que estás, puedes ejecutarlo con `..\..\bin_x64\Debug\asmiray.exe`.
+Si todo funciona correctamente, debería generarse un binario en `./application/bin_x64/Debug` llamado `asmiray.exe`. Desde la carpeta en la que deberías encontrarte tras seguir las instrucciones, puedes conseguir ejecutarlo con
+
+```sh
+$ ..\..\bin_x64\Debug\asmiray.exe
+```
 
 ## Estructuras de aceleración
 
