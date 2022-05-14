@@ -1,8 +1,39 @@
 # Análisis de rendimiento
 
-> TODO: para completar esta parte, necesitamos ambas implementaciones (en CPU y GPU) listas. Hasta entonces, esto se queda vacío.
-> NOTE: Podría preguntarle a Kako que tire benchmark en su 2060, y a Manu con su 3060 (¿ti?)
+## Usando el motor
 
-<hr>
+Cosas de las que tengo que hablar:
 
-## Referencias {.unlisted .unnumbered}
+- Cámara
+- Keybindings
+- GUI
+- Cambio de escenas
+
+## Path tracing ON
+
+Cosas de las que tengo que hablar:
+
+- Materiales
+  - Difusos
+  - Especulares
+  - Espejos
+  - Transparentes (gestionado por anyhit)
+- Luces
+  - Puntual
+  - Direccional
+- Cornell Boxes
+  - Cornell Box
+  - Cornell Bath
+  - Mirar la iluminación global
+  - Efectos de las pelotas en el ambiente
+
+
+## Rendimiento
+
+## Midiendo el coste de un frame
+### Acumulación temporal
+### Número de muestras
+### Diferentes escenas
+### Importance sampling
+
+## Comparativa con In One Weekend
