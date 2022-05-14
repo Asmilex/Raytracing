@@ -418,90 +418,100 @@ class="toc-section-number">4.4.2</span> Método del rechazo</a></li>
 <li><a href="#construyamos-un-path-tracer"><span
 class="toc-section-number">5</span> ¡Construyamos un path tracer!</a>
 <ul>
+<li><a href="#el-algoritmo-de-path-tracing"><span
+class="toc-section-number">5.1</span> El algoritmo de path tracing</a>
+<ul>
+<li><a href="#estimando-la-rendering-equation-con-monte-carlo"><span
+class="toc-section-number">5.1.1</span> Estimando la rendering equation
+con Monte Carlo</a></li>
+<li><a href="#pseudocódigo-de-un-path-tracer"><span
+class="toc-section-number">5.1.2</span> Pseudocódigo de un path
+tracer</a></li>
+<li><a href="#evitando-la-recursividad"><span
+class="toc-section-number">5.1.3</span> Evitando la
+recursividad</a></li>
+</ul></li>
 <li><a href="#requisitos-de-ray-tracing-en-tiempo-real"><span
-class="toc-section-number">5.1</span> Requisitos de ray tracing en
+class="toc-section-number">5.2</span> Requisitos de ray tracing en
 tiempo real</a>
 <ul>
 <li><a href="#arquitecturas-de-gráficas"><span
-class="toc-section-number">5.1.1</span> Arquitecturas de
+class="toc-section-number">5.2.1</span> Arquitecturas de
 gráficas</a></li>
 <li><a href="#frameworks-y-api-de-ray-tracing-en-tiempo-real"><span
-class="toc-section-number">5.1.2</span> Frameworks y API de ray tracing
+class="toc-section-number">5.2.2</span> Frameworks y API de ray tracing
 en tiempo real</a></li>
 </ul></li>
 <li><a href="#setup-del-proyecto"><span
-class="toc-section-number">5.2</span> Setup del proyecto</a>
+class="toc-section-number">5.3</span> Setup del proyecto</a>
 <ul>
 <li><a href="#vistazo-general-a-la-estructura"><span
-class="toc-section-number">5.2.1</span> Vistazo general a la
+class="toc-section-number">5.3.1</span> Vistazo general a la
 estructura</a></li>
 </ul></li>
-<li><a href="#compilación"><span class="toc-section-number">5.3</span>
-Compilación</a></li>
+<li><a href="#compilación-y-ejecución"><span
+class="toc-section-number">5.4</span> Compilación y ejecución</a></li>
 <li><a href="#estructuras-de-aceleración"><span
-class="toc-section-number">5.4</span> Estructuras de aceleración</a>
+class="toc-section-number">5.5</span> Estructuras de aceleración</a>
 <ul>
 <li><a href="#botom-level-acceleration-structure-blas"><span
-class="toc-section-number">5.4.1</span> Botom-Level Acceleration
+class="toc-section-number">5.5.1</span> Botom-Level Acceleration
 Structure (BLAS)</a></li>
 <li><a href="#top-level-acceleration-structure-tlas"><span
-class="toc-section-number">5.4.2</span> Top-Level Acceleration Structure
+class="toc-section-number">5.5.2</span> Top-Level Acceleration Structure
 (TLAS)</a></li>
 </ul></li>
 <li><a href="#la-ray-tracing-pipeline"><span
-class="toc-section-number">5.5</span> La ray tracing pipeline</a>
+class="toc-section-number">5.6</span> La ray tracing pipeline</a>
 <ul>
 <li><a href="#descriptores-y-conceptos-básicos"><span
-class="toc-section-number">5.5.1</span> Descriptores y conceptos
+class="toc-section-number">5.6.1</span> Descriptores y conceptos
 básicos</a></li>
 <li><a href="#la-shader-binding-table"><span
-class="toc-section-number">5.5.2</span> La Shader binding table</a>
-<ul>
-<li><a href="#cálculo-de-la-entrada-de-la-sbt"><span
-class="toc-section-number">5.5.2.1</span> Cálculo de la entrada de la
-SBT</a></li>
-</ul></li>
+class="toc-section-number">5.6.2</span> La Shader Binding Table</a></li>
 <li><a href="#tipos-de-shaders"><span
-class="toc-section-number">5.5.3</span> Tipos de shaders</a></li>
+class="toc-section-number">5.6.3</span> Tipos de shaders</a></li>
 <li><a href="#traspaso-de-información-entre-shaders"><span
-class="toc-section-number">5.5.4</span> Traspaso de información entre
+class="toc-section-number">5.6.4</span> Traspaso de información entre
 shaders</a></li>
 <li><a href="#creación-de-la-ray-tracing-pipeline"><span
-class="toc-section-number">5.5.5</span> Creación de la ray tracing
+class="toc-section-number">5.6.5</span> Creación de la ray tracing
 pipeline</a></li>
 </ul></li>
-<li><a href="#transporte-de-luz-en-la-práctica"><span
-class="toc-section-number">5.6</span> Transporte de luz en la
-práctica</a>
-<ul>
-<li><a href="#estimando-la-rendering-equation-con-monte-carlo"><span
-class="toc-section-number">5.6.1</span> Estimando la rendering equation
-con Monte Carlo</a></li>
-<li><a href="#pseudocódigo-de-un-path-tracer"><span
-class="toc-section-number">5.6.2</span> Pseudocódigo de un path
-tracer</a></li>
-<li><a href="#evitando-la-recursividad"><span
-class="toc-section-number">5.6.3</span> Evitando la
-recursividad</a></li>
+<li><a href="#materiales-y-objetos"><span
+class="toc-section-number">5.7</span> Materiales y objetos</a></li>
 <li><a
 href="#antialiasing-mediante-jittering-y-acumulación-temporal"><span
-class="toc-section-number">5.6.4</span> Antialiasing mediante jittering
-y acumulación temporal</a></li>
-<li><a href="#materiales-y-objetos"><span
-class="toc-section-number">5.6.5</span> Materiales y objetos</a></li>
-</ul></li>
+class="toc-section-number">5.8</span> Antialiasing mediante jittering y
+acumulación temporal</a></li>
 <li><a href="#fuentes-de-luz"><span
-class="toc-section-number">5.7</span> Fuentes de luz</a>
-<ul>
-<li><a href="#point-lights-spotlights"><span
-class="toc-section-number">5.7.1</span> Point lights +
-spotlights</a></li>
-<li><a href="#fuentes-de-área"><span
-class="toc-section-number">5.7.2</span> Fuentes de área</a></li>
-</ul></li>
+class="toc-section-number">5.9</span> Fuentes de luz</a></li>
 </ul></li>
 <li><a href="#análisis-de-rendimiento"><span
-class="toc-section-number">6</span> Análisis de rendimiento</a></li>
+class="toc-section-number">6</span> Análisis de rendimiento</a>
+<ul>
+<li><a href="#usando-el-motor"><span
+class="toc-section-number">6.1</span> Usando el motor</a></li>
+<li><a href="#path-tracing-on"><span
+class="toc-section-number">6.2</span> Path tracing ON</a></li>
+<li><a href="#rendimiento"><span class="toc-section-number">6.3</span>
+Rendimiento</a></li>
+<li><a href="#midiendo-el-coste-de-un-frame"><span
+class="toc-section-number">6.4</span> Midiendo el coste de un frame</a>
+<ul>
+<li><a href="#acumulación-temporal"><span
+class="toc-section-number">6.4.1</span> Acumulación temporal</a></li>
+<li><a href="#número-de-muestras"><span
+class="toc-section-number">6.4.2</span> Número de muestras</a></li>
+<li><a href="#diferentes-escenas"><span
+class="toc-section-number">6.4.3</span> Diferentes escenas</a></li>
+<li><a href="#importance-sampling"><span
+class="toc-section-number">6.4.4</span> Importance sampling</a></li>
+</ul></li>
+<li><a href="#comparativa-con-in-one-weekend"><span
+class="toc-section-number">6.5</span> Comparativa con In One
+Weekend</a></li>
+</ul></li>
 <li><a href="#el-presente-y-futuro-de-rt"><span
 class="toc-section-number">7</span> El presente y futuro de RT</a>
 <ul>
@@ -847,21 +857,21 @@ trabajo.</li>
 <h2 class="unlisted unnumbered" id="referencias">Referencias</h2>
 <p><span class="citation" data-cites="wikipedia-contributors-2022A">(<a
 href="#ref-wikipedia-contributors-2022A" role="doc-biblioref">Wikipedia:
-history of photography n.d.</a>)</span>, <span class="citation"
+history of photography 2022</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022B">(<a
 href="#ref-wikipedia-contributors-2022B" role="doc-biblioref">Wikipedia:
-Kodak n.d.</a>)</span>, <span class="citation"
+Kodak 2022</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022C">(<a
 href="#ref-wikipedia-contributors-2022C" role="doc-biblioref">Wikipedia:
-Computer n.d.</a>)</span>, <span class="citation"
+Computer 2022</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022D">(<a
 href="#ref-wikipedia-contributors-2022D" role="doc-biblioref">Wikipedia:
-rendering (computer graphics) n.d.</a>)</span>, <span class="citation"
+rendering (computer graphics) 2022</a>)</span>, <span class="citation"
 data-cites="caulfield-2020">(<a href="#ref-caulfield-2020"
-role="doc-biblioref">Caulfield n.d.</a>)</span>, <span class="citation"
+role="doc-biblioref">Caulfield 2020</a>)</span>, <span class="citation"
 data-cites="wikipedia-contributors-2022E">(<a
 href="#ref-wikipedia-contributors-2022E" role="doc-biblioref">tracing
-n.d.</a>)</span>, <span class="citation"
+2022</a>)</span>, <span class="citation"
 data-cites="unknown-author-no-date">(<a
 href="#ref-unknown-author-no-date"
 role="doc-biblioref"><span>“Rendering”</span> n.d.</a>)</span>, <span
@@ -988,7 +998,7 @@ class="header-section-number">2.2.1</span> Superficies implícitas</h3>
 superficies diferenciables <span class="citation"
 data-cites="wikipedia-contributors-2022O">(<a
 href="#ref-wikipedia-contributors-2022O" role="doc-biblioref">Wikipedia:
-Differential geometry of surfaces n.d.</a>)</span>, pues nos interesará
+Differential geometry of surfaces 2022</a>)</span>, pues nos interesará
 conocer el vector normal en cada punto.</p>
 <p>Una superficie implícita es una superficie en un espacio euclidiano
 definida como</p>
@@ -1208,7 +1218,7 @@ sistema de coordenadas expresa cada punto del plano como una combinación
 convexa de los vértices <span class="citation"
 data-cites="wikipedia-contributors-2022G">(<a
 href="#ref-wikipedia-contributors-2022G" role="doc-biblioref">Wikipedia:
-Barycentric coordinate system n.d.</a>)</span>. Es decir, que para cada
+Barycentric coordinate system 2022</a>)</span>. Es decir, que para cada
 punto <span class="math inline">\(P\)</span> del triángulo existen <span
 class="math inline">\(\alpha, \beta\)</span> y <span
 class="math inline">\(\gamma\)</span> tales que <span
@@ -1309,7 +1319,7 @@ gracias a las herramientras aportadas por KHR <span class="citation"
 data-cites="the-khronos-vulkan-working-group-2022">(<a
 href="#ref-the-khronos-vulkan-working-group-2022"
 role="doc-biblioref">The Khronos® Vulkan Working Group
-n.d.</a>)</span>.</p>
+2022</a>)</span>.</p>
 <p>Para obtener el vector normal, podemos hacer el producto vectorial de
 dos vectores que se encuentren en el plano del triángulo. Como, por
 convención, los vértices se guardan en sentido antihorario visto desde
@@ -2473,7 +2483,7 @@ d\omega_i}
 <p>Si quieres ver gráficamente cómo funciona, te recomiendo pasarte por
 <span class="citation" data-cites="arneback-2019">(<a
 href="#ref-arneback-2019" role="doc-biblioref">Arnebäck
-n.d.</a>)</span>. Es un vídeo muy intuitivo.</p>
+2019</a>)</span>. Es un vídeo muy intuitivo.</p>
 <iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/eo_MTI-d28s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <p>Si nos paramos a pensar, la ecuación de reflexión es muy similar a la
@@ -3691,34 +3701,294 @@ href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 <p>Le pondremos especial atención a los conceptos claves. Vulkan tiende
 a crear código muy verboso, por lo que se documentarán únicamente las
 partes más importantes.</p>
-<h2 data-number="5.1"
+<h2 data-number="5.1" id="el-algoritmo-de-path-tracing"><span
+class="header-section-number">5.1</span> El algoritmo de path
+tracing</h2>
+<p>Hemos llegado a una de las partes más importantes de este trabajo. Es
+el momento de poner en concordancia todo lo que hemos visto a lo largo
+de los capítulos anteriores. Vamos a aplicar las <a
+href="#métodos-de-monte-carlo">técnicas de Monte Carlo</a> a las
+ecuaciones vistas en <a href="#transporte-de-luz">radiometría</a>,
+teniendo en cuenta las propiedades de los diferentes materiales.</p>
+<p>El código ilustrado en las siguientes secciones está basado en el de
+<span class="citation" data-cites="nvpro-samples-tutorial">(<a
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+2022a</a>)</span>, aunque se pueden encontrar numerosísimas
+modificaciones en la literatura del sector.</p>
+<h3 data-number="5.1.1"
+id="estimando-la-rendering-equation-con-monte-carlo"><span
+class="header-section-number">5.1.1</span> Estimando la rendering
+equation con Monte Carlo</h3>
+<p>Lo que buscamos en esta sección es aproximar el valor de la radiancia
+en un cierto punto, que dependerá de cada píxel dela pantalla.
+¿Recuerdas la ecuación de dispersión [<a
+href="#eq:scattering_equation">6</a>]?</p>
+<p><span class="math display">\[
+L_o(p, \omega_o \leftarrow \omega_i) = \int_{\mathbb{S}^2}{f(p, \omega_o
+\leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i
+\]</span></p>
+<p>Recordemos que <span class="math inline">\(L_o(p, \omega_o \leftarrow
+\omega_i)\)</span> es la radiancia emitida en un punto <span
+class="math inline">\(p\)</span> hacia la dirección <span
+class="math inline">\(\omega_o\)</span> desde <span
+class="math inline">\(\omega_i\)</span>, <span
+class="math inline">\(f(p, \omega_o \leftarrow \omega_i)\)</span> es la
+función de distribución de dispersión bidireccional (i.e., cómo refleja
+la luz el punto) y <span class="math inline">\(\cos\theta_i\)</span> el
+ángulo que forman el ángulo sólido de entrada <span
+class="math inline">\(\omega_i\)</span> y la normal en el punto <span
+class="math inline">\(p\)</span>, <span
+class="math inline">\(\mathbf{n}\)</span>: <span
+class="math inline">\(\cos\theta_i = \omega_i \cdot
+\mathbf{n}\)</span>.</p>
+<p>Añadamos el término de radiancia emitida <span
+class="math inline">\(L_e(p, \omega_o)\)</span>, la cantidad de
+randiancia emitida por el material del punto <span
+class="math inline">\(p\)</span>:</p>
+<p><span class="math display">\[
+L_o(p, \omega_o \leftarrow \omega_i) = L_e(p, \omega_o) +
+\int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p,
+\omega_i)\cos\theta_i} d\omega_i
+\]</span></p>
+<p>Podemos aproximar el valor de la integral utilizando el estimador de
+Monte Carlo comúnmente considerado en la <a
+href="#muestreo-por-importancia-múltiple-en-transporte-de-luz">industria</a>,
+[<a href="#eq:mc_integral_importancia">21</a>]:</p>
+<p><span id="eq:rendering_equation_mc" class="eqnos"><span
+class="math display">\[
+\begin{aligned}
+L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
+\omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
+                 &amp; \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p,
+\omega_o \leftarrow \omega_j) L_i(p, \omega_j)
+\cos\theta_j}{p(\omega_j)}}
+\end{aligned}
+\]</span><span class="eqnos-number">(23)</span></span></p>
+<p>Con <span class="math inline">\(N \in \mathbb{Z}^+\)</span>. Con
+<span class="math inline">\(N\)</span> suficientemente grande, se
+conseguiría un valor de radiancia relativamente acertado. Sin embargo,
+en algunos casos, podemos simplificar más el sumando.</p>
+<p>Fijémonos en el denominador. Lo que estamos haciendo es tomar una
+muestra de un vector en la esfera. Si trabajamos con una BRDF en vez de
+una BSDF, usaríamos un hemisferio en vez de la esfera.</p>
+<p>En el caso de la componente difusa, sabemos que la BRDF es <span
+class="math inline">\(f_r(p, \omega_o \leftarrow \omega_i) =
+\frac{\rho}{\pi}\)</span> aplicando reflectancia lambertiana, así
+que</p>
+<p><span class="math display">\[
+\frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
+\cos\theta_j}{p(\omega_j)}}
+\]</span></p>
+<p>¿Recuerdas la sección de <a
+href="#muestreo-por-importancia">importance sampling</a>? La idea es
+buscar una función proporcional a <span class="math inline">\(f\)</span>
+para reducir el error. Podemos usar <span
+class="math inline">\(p(\omega) = \frac{\cos\theta}{\pi}\)</span>, de
+forma que</p>
+<p><span id="eq:rendering_eq_lambertian" class="eqnos"><span
+class="math display">\[
+\frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
+\cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j =
+1}^{N}{L_i(p, \omega_j) \rho}
+\]</span><span class="eqnos-number">(24)</span></span></p>
+<p>Lo cual nos proporciona una expresión muy agradable para los
+materiales difusos.</p>
+<p>Por lo general, no será necesario simplificar hasta tal punto la
+expresión.</p>
+<h3 data-number="5.1.2" id="pseudocódigo-de-un-path-tracer"><span
+class="header-section-number">5.1.2</span> Pseudocódigo de un path
+tracer</h3>
+<p>Con lo que conocemos hasta ahora, podemos empezar a programar los
+shaders. Una primera implementación inspirada en la rendering equation
+[<a href="#eq:rendering_equation_mc">23</a>] sería similar a lo
+siguiente:</p>
+<pre><code class="language-cpp">pathtrace(Rayo r, profundidad) {
+    if (profundidad == profundidad_maxima) {
+        return contribucion_ambiental;
+    }
+
+    r.closest_hit()     // -&gt; Guardar información del impacto
+
+    if (!r.ha_impactado()) {
+        // Si no se golpea nada, añadir una pequeña contribución del entorno.
+        return contribucion_ambiental
+    }
+
+    // Sacar información del punto de impacto
+    hit_info = r.hit_info
+    material = hit_info.material
+    emision  = material.emision
+
+    // Calcular los parámetros de la ecuación
+    cos_theta = dot(r.direccion, hit_info.normal)
+    BRDF, pdf = extraer_info(material)
+
+    nuevo_rayo = Rayo(
+        origen    = hit_info.punto_impacto,
+        direccion = siguiente_direccion(hit_info.normal)
+    )
+
+    // Devolver la radiancia del punto de impacto.
+    // L_i se calcula a partir del pathtrace del nuevo rayo.
+    return emision
+        + (BRDF * pathtrace(nuevo_rayo, profundidad + 1) * cos_theta) / pdf;
+}</code></pre>
+<p>El término <code>emision</code> corresponde a <span
+class="math inline">\(L_e(p, \omega_o)\)</span>. Siempre lo añadimos,
+pues en caso de que el objeto no emita luz, la contribución de este
+término sería 0.</p>
+<p>La principal desventaja de esta implementación es que utiliza
+recursividad. Como bien es conocido, abusar de recursividad provoca que
+el tiempo de ejecución aumente significativamente. Además, con la
+implementación anterior, se generan rayos desde el closest hit shader,
+lo cual no es ideal.</p>
+<h3 data-number="5.1.3" id="evitando-la-recursividad"><span
+class="header-section-number">5.1.3</span> Evitando la recursividad</h3>
+<p>Podemos evitar los problemas de la implementación anterior con una
+pequeña modificación. En vez de calcular la radiancia desde el closest
+hit, nos traemos la información necesaria al raygen shader, y calculamos
+la radiancia total desde allí.</p>
+<p>Para conseguirlo, debemos hacer que el <code>HitPayload</code>
+almacene dos nuevos parámetros: <code>weight</code> y
+<code>hit_value</code>, así como el nuevo origen y la dirección del
+rayo.</p>
+<p>El pseudocódigo sería el siguiente: por una parte, una función se
+encarga de generar los rayos:</p>
+<pre><code class="language-cpp">pathtrace() {
+    // Inicializar parámetros del primer rayo
+    HitPayload prd {
+        hit_value,
+        weight,
+        ray_origin,
+        ray_direction
+    }
+
+    current_weight = vec3(1);
+    hit_value      = vec3(0);
+
+    for (profundidad in [0, profunidad_maxima]) {
+        closest_hit(prd.ray_origin, prd.ray_dir);
+        // prd actualiza sus parámetros
+
+        hit_value = hit_value + prd.hit_value * current_weight;
+        current_weight = current_weight * prd.weight;
+    }
+
+    return hit_value;
+}</code></pre>
+<p>Y por otro lado, otra función debe almacenar correctamente la
+información del punto de impacto, así como la radiancia de ese punto.
+Corresponde al closest hit:</p>
+<pre><code class="language-cpp">closest_hit() {
+    // Sacar información sobre el punto de impacto: material, normal...
+
+    // Preparar información para el raygen
+    prd.ray_origin = punto_impacto
+    prd.ray_dir = siguiente_direccion(material)
+
+    // Calcular la radiancia
+    float cos_theta = dot(prd.ray_dir, normal);
+    BRDF, pdf = extraer_info(material)
+
+    prd.hit_value = material.emision
+
+    prd.weight = (BRDF * cos_theta) / pdf
+
+    return prd
+}</code></pre>
+<p>Esta versión no es tan intuitiva. ¿Por qué este último genera el
+mismo resultado que el de <a href="#pseudocódigo-de-un-path-tracer">la
+versión recursiva</a>?</p>
+<p>Analicemos lo está ocurriendo.</p>
+<p>Sea <span class="math inline">\(h\)</span> el <em>hit value</em> (que
+simboliza la radiancia), <span class="math inline">\(w\)</span> el peso,
+<span class="math inline">\(f_i\)</span> la BRDF (o en su defecto,
+BTDF/BSDF), <span class="math inline">\(i\)</span>, <span
+class="math inline">\(e_i\)</span> la emisión, <span
+class="math inline">\(\cos\theta_i\)</span> el coseno del ángulo que
+forman la nueva dirección del rayo y la normal, y <span
+class="math inline">\(p_i\)</span> la función de densidad que, dada una
+dirección, proporciona la probabilidad de que se escoja. El subíndice
+denota el <span class="math inline">\(i\)</span>-ésimo punto de
+impacto.</p>
+<p>En esencia, este algoritmo está descomponiendo lo que recogemos en
+<code>weight</code>, que es <span class="math inline">\(f_i \cos\theta_i
+/ p_i\)</span>. Inicialmente, para el primer envío del rayo, <span
+class="math inline">\(h = (0, 0, 0)\)</span>, <span
+class="math inline">\(w = (1, 1, 1)\)</span>. Tras trazar el primer
+rayo, se tiene que</p>
+<p><span class="math display">\[
+\begin{aligned}
+    h &amp; = 0 + e_1 w = e_1 \\
+    w &amp; = \frac{f_1 \cos\theta_1}{p_1}
+\end{aligned}
+\]</span></p>
+<p>Tras el segundo rayo, obtenemos</p>
+<p><span class="math display">\[
+\begin{aligned}
+    h &amp; = e_1 + e_2 w = \\
+      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} \\
+    w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
+\end{aligned}
+\]</span></p>
+<p>Y para el tercero</p>
+<p><span class="math display">\[
+\begin{aligned}
+    h &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 w = \\
+      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 \frac{f_1
+\cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} = \\
+      &amp; = e_1 + \frac{f_1
+\cos\theta_1}{p_1}\textcolor{verde-oscurisimo}{\left(e_2 + e_3 \frac{f_2
+\cos\theta_2}{p_2}\right)} \\
+    w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
+\frac{f_3 \cos\theta_3}{p_3}
+\end{aligned}
+\]</span></p>
+<p>El <span
+class="math inline">\(\textcolor{verde-oscurisimo}{\text{término que
+acompaña}}\)</span> a <span class="math inline">\(\frac{f_1
+\cos\theta_1}{p_1}\)</span> es la radiancia del tercer punto de impacto.
+Por tanto, a la larga, se tendrá que <span
+class="math inline">\(h\)</span> estima correctamente la radiancia de un
+punto. Con esto, podemos afirmar que</p>
+<p><span class="math display">\[
+h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow
+\omega_j) L_i(p, \omega_j) \cos\theta_j}{p(\omega_j)}}
+\]</span></p>
+<p>Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento
+que el recursivo (<span class="citation"
+data-cites="nvpro-samples-tutorial">(<a
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+2022a</a>, glTF Scene)</span>).</p>
+<h2 data-number="5.2"
 id="requisitos-de-ray-tracing-en-tiempo-real"><span
-class="header-section-number">5.1</span> Requisitos de ray tracing en
+class="header-section-number">5.2</span> Requisitos de ray tracing en
 tiempo real</h2>
 <p>Como es natural, el tiempo es una limitación enorme para cualquier
 programa en tiempo real. Mientras que en un <em>offline renderer</em>
-disponemos de un tiempo muy considerable por frame (hablamos de varios
-segundos), en un programa en tiempo real necesitamos que un frame salga
-en 16 milisegundos o menos. Este concepto se suele denominar <em>frame
-budget</em>: la cantidad de tiempo que disponemos para un frame.</p>
+disponemos de un tiempo muy considerable por frame (desde varios
+segundos hasta horas), en un programa en tiempo real necesitamos que un
+frame salga en 16 milisegundos o menos. Este concepto se suele denominar
+<em>frame budget</em>: la cantidad de tiempo que disponemos para un
+frame.</p>
 <blockquote>
 <p><strong>Nota</strong>: cuando hablamos del tiempo disponible para un
-frame, solemos hablar en milisegundos (ms) o frames por segundo (FPS).
-Para que un motor vaya suficientemente fluido, necesitaremos que el
-motor corra a un mínimo de 30 FPS (que equivalen a 33 ms por frame). Hoy
-en día, debido al avance del área en campos como los videosjuegos, el
-estándar se está convirtiendo en 60 FPS (16 ms/frame).</p>
+frame, solemos utilizarmilisegundos (ms) o frames por segundo (FPS).
+Para que un programa en tiempo real vaya suficientemente fluido,
+necesitaremos que el motor corra a un mínimo de 30 FPS (que equivalen a
+33 ms por frame). Hoy en día, debido al avance del área en campos como
+los videosjuegos, el estándar se está convirtiendo en 60 FPS (16
+ms/frame).</p>
 </blockquote>
-<p>Las nociones anteriores no distinguen entre un motor en tiempo real y
-<em>offline</em>. Como es natural, necesitaremos introducir unos pocos
-conceptos más para llevarlo a tiempo real. Además, existe una serie de
-requisitos hardware que debemos cumplir para que un motor en tiempo real
-con ray tracing funcione.</p>
-<h3 data-number="5.1.1" id="arquitecturas-de-gráficas"><span
-class="header-section-number">5.1.1</span> Arquitecturas de
+<p>Las nociones de los capítulos anteriores no distinguen entre un motor
+en tiempo real y <em>offline</em>. Como es natural, necesitaremos
+introducir unos pocos conceptos más para llevarlo a tiempo real. Además,
+existen una serie de requisitos hardware que debemos cumplir para que un
+motor en tiempo real con ray tracing funcione.</p>
+<h3 data-number="5.2.1" id="arquitecturas-de-gráficas"><span
+class="header-section-number">5.2.1</span> Arquitecturas de
 gráficas</h3>
 <blockquote>
-<p>NOTE: sería interesante enlazarlo con la sección de rendimiento.</p>
 <p>TODO: Esta <a
 href="https://alain.xyz/blog/comparison-of-modern-graphics-apis">página</a>
 es maravillosa <em>chef kiss</em></p>
@@ -3740,43 +4010,52 @@ necesita alguna de las siguientes tarjetas gráficas:</p>
 <tr class="header">
 <th style="text-align: left;"><strong>Arquitectura</strong></th>
 <th style="text-align: left;"><strong>Fabricante</strong></th>
-<th style="text-align: left;"><strong>Modelos de gráficas</strong></th>
+<th style="text-align: center;"><strong>Modelos de
+gráficas</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>Turing</strong></td>
 <td style="text-align: left;">Nvidia</td>
-<td style="text-align: left;">RTX 2060, RTX 2060 Super, RTX 2070, RTX
+<td style="text-align: center;">RTX 2060, RTX 2060 Super, RTX 2070, RTX
 2070 Super, RTX 2080, RTX 2080 Super, RTX 2080 Ti, RTX Titan</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Ampere</strong></td>
 <td style="text-align: left;">Nvidia</td>
-<td style="text-align: left;">RTX 3050, RTX 3060, RTX 3060 Ti, RTX 3070,
-RTX 3070 Ti, RTX 3080, RTX 3080 Ti, RTX 3090, RTX 3090 Ti</td>
+<td style="text-align: center;">RTX 3050, RTX 3060, RTX 3060 Ti, RTX
+3070, RTX 3070 Ti, RTX 3080, RTX 3080 Ti, RTX 3090, RTX 3090 Ti</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>RDNA2</strong> (Navi 2X, Big
 Navi)</td>
 <td style="text-align: left;">AMD</td>
-<td style="text-align: left;">RX 6400, RX 6500 XT, RX 6600, RX 6600 XT,
-RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT</td>
+<td style="text-align: center;">RX 6400, RX 6500 XT, RX 6600, RX 6600
+XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Arc Alchemist</strong></td>
 <td style="text-align: left;">Intel</td>
-<td style="text-align: left;"><em>No reveleado aún</em></td>
+<td style="text-align: center;"><em>No reveleado aún</em></td>
 </tr>
 </tbody>
 </table>
-<p>Solo se han incluido las gráficas de escritorio de consumidor.</p>
+<p>Se puede encontrar más información en las respectivas páginas de las
+compañías o los artículos de Wikipedia <span class="citation"
+data-cites="wikipedia-radeon">(<a href="#ref-wikipedia-radeon"
+role="doc-biblioref">Wikipedia 2022b</a>)</span>, <span class="citation"
+data-cites="wikipedia-nvidia">(<a href="#ref-wikipedia-nvidia"
+role="doc-biblioref">Wikipedia 2022a</a>)</span>, <span class="citation"
+data-cites="intel-arc">(<a href="#ref-intel-arc"
+role="doc-biblioref">Intel 2022</a>)</span>. Solo se han incluido las
+gráficas de escritorio de consumidor.</p>
 <p>Para este trabajo se ha utilizado una <strong>RTX 2070
 Super</strong>. En el capítulo de análisis del rendimiento se hablará
 con mayor profundidad de este apartado.</p>
-<h3 data-number="5.1.2"
+<h3 data-number="5.2.2"
 id="frameworks-y-api-de-ray-tracing-en-tiempo-real"><span
-class="header-section-number">5.1.2</span> Frameworks y API de ray
+class="header-section-number">5.2.2</span> Frameworks y API de ray
 tracing en tiempo real</h3>
 <p>Una vez hemos cumplido los requisitos de hardware, es hora de escoger
 los frameworks de trabajo.</p>
@@ -3808,47 +4087,70 @@ Vulkan</strong> por los siguientes motivos:</p>
 Es decir, está pensado para sistemas operativos Windows 10 o mayor <a
 href="#fn5" class="footnote-ref" id="fnref5"
 role="doc-noteref"><sup>5</sup></a>.</li>
-<li>Vulkan está apoyado principalmente por AMD. Esto sigue las línas de
-la su política de empresa de apoyar el código abierto. Además, resulta
-más sencillo exportarlo a otros sistemas operativos.</li>
+<li>Vulkan, al estar apoyado principalmente por AMD y desarrollado por
+Khonos, es un proyecto de código. Su principal aliciente es la capacidad
+de correr en múltiples sistemas operativos, como Windows, distribuciones
+de Linux o Android.</li>
 </ul>
 <p>Ambas API se comportan de manera muy similar, y no existe una gran
 diferencia entre ellas; tanto en rendimiento como en complejidad de
 desarrollo. Actualmente el proyecto solo compila en Windows 10 o mayor,
 por lo que estos dos puntos no resultan especialmente relevantes para el
 trabajo.</p>
-<h2 data-number="5.2" id="setup-del-proyecto"><span
-class="header-section-number">5.2</span> Setup del proyecto</h2>
+<p>Si se desea, se puede encontrar una comparación más a fondo de las
+API en el blog de <span class="citation" data-cites="alain-API">(<a
+href="#ref-alain-API" role="doc-biblioref">Alain Galvan
+2022</a>)</span></p>
+<h2 data-number="5.3" id="setup-del-proyecto"><span
+class="header-section-number">5.3</span> Setup del proyecto</h2>
 <p>Un proyecto de Vulkan necesita una cantidad de código inicial
 considerable. Para acelerar este trámite y partir de una base más
 sólida, se ha decidido usar un pequeño framework de trabajo de Nvidia
-llamado <a
-href="https://github.com/nvpro-samples">nvpro-samples</a>.</p>
-<p>Esta serie de repositorios contienen proyectos de ray tracing de
-Nvidia con fines didácticos. Nosotros usaremos <a
-href="https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR">vk_raytracing_tutorial_KHR</a>,
-pues ejemplifica cómo añadir ray tracing en tiempo real a un proyecto de
-Vulkan.</p>
-<p>Estos frameworks contienen asimismo otras utilidades menores.
-Destacan GLFW (gestión de ventanas en C++), imgui (interfaz de usuario)
-y tinyobjloader (carga de <code>.obj</code> y <code>.mtl</code>).</p>
+llamado [nvpro-samples] <span class="citation"
+data-cites="nvpro-samples">(<a href="#ref-nvpro-samples"
+role="doc-biblioref">Nvidia 2022b</a>)</span>.</p>
+<p>Esta serie de repositorios de Nvidia DesignWorks contienen proyectos
+de ray tracing de Nvidia con fines didácticos. Nosotros usaremos
+<strong>vk_raytracing_tutorial_KHR</strong> <span class="citation"
+data-cites="nvpro-samples-tutorial">(<a
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+2022a</a>)</span>, pues ejemplifica cómo añadir ray tracing en tiempo
+real a un proyecto de Vulkan. Estos frameworks contienen asimismo otras
+utilidades menores. Destacan <strong>GLFW</strong> (gestión de ventanas
+en C++), <strong>imgui</strong> (interfaz de usuario) y
+<strong>tinyobjloader</strong> (carga de <code>.obj</code> y
+<code>.mtl</code>).</p>
 <p>Nuestro repositorio utiliza las herramientas citadas anteriormente
 para compilar su proyecto. El Makefile es una modificación del que se
 usa para ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una
 aplicación muy simple que muestra un cubo mediante rasterización, la
-cual modificaremos hasta añadir ray tracing en tiempo real.</p>
-<h3 data-number="5.2.1" id="vistazo-general-a-la-estructura"><span
-class="header-section-number">5.2.1</span> Vistazo general a la
+cual modificaremos hasta añadir ray tracing en tiempo real. Por tanto,
+la parte inicial del desarrollo consiste en adaptar Vulkan para usar la
+extensión de ray tracing, extrayendo la información de la gráfica y
+cargando correspondientemente el dispositivo.</p>
+<figure>
+<img src="./img/04/Raster.jpg"
+alt="Por defecto, el programa muestra un cubo rasterizado muy simple. Es, prácticamente, un hello world gráfico" />
+<figcaption aria-hidden="true">Por defecto, el programa muestra un cubo
+rasterizado muy simple. Es, prácticamente, un <em>hello world</em>
+gráfico</figcaption>
+</figure>
+<h3 data-number="5.3.1" id="vistazo-general-a-la-estructura"><span
+class="header-section-number">5.3.1</span> Vistazo general a la
 estructura</h3>
 <p>La estructura final del proyecto (es decir, la carpeta
 <code>application</code>) es la siguiente:</p>
 <ul>
-<li>La carpeta <strong>./build</strong> contiene todo lo relacionado con
-CMake y el ejecutable final.</li>
-<li>En <strong>./media</strong> se encuentran todos los archivos
-<code>.obj</code>, <code>.mtl</code> y las texturas.</li>
-<li>La subcarpeta <strong>./src</strong> contiene el código fuente de la
-propia aplicación.
+<li>La carpeta <code>application/build</code> contiene todo lo
+relacionado con CMake y el ejecutable final.</li>
+<li>Las dependencias del proyecto se encuentran en el repositorio
+<code>application/nvpro_core</code>. Se descargan automáticamente seguir
+las instrucciones de compilación.</li>
+<li>En <code>application/vulkan_ray_tracing/media/</code> se encuentran
+todos los archivos <code>.obj</code>, <code>.mtl</code> y las
+texturas.</li>
+<li>La subcarpeta <code>application/vulkan_ray_tracing/src</code>
+contiene el código fuente de la propia aplicación.
 <ul>
 <li>Toda la implementación relacionada con el motor (y por tanto,
 Vulkan), se halla en <code>engine.h/cpp</code>. Una de las desventajas
@@ -3860,8 +4162,8 @@ estructuras comunes) se encuetran en <code>globals.hpp</code>.</li>
 <code>scene.hpp</code>.</li>
 <li>En <code>main.cpp</code> se gestiona tanto el punto de entrada de la
 aplicación como la actualización de la interfaz gráfica.</li>
-<li>La carpeta <code>./src/shaders</code> contiene todos los shaders;
-tanto de rasterización, como de ray tracing.
+<li>La carpeta <code>application/vulkan_ray_tracing/src/shaders</code>
+contiene todos los shaders; tanto de rasterización, como de ray tracing.
 <ul>
 <li>Para ray tracing, se utilizan los <code>raytrace.*</code>,
 <code>pathtrace.glsl</code> (que contiene el grueso del path
@@ -3870,54 +4172,60 @@ tracer).</li>
 <code>frag_shader.frag</code>, <code>passthrough.vert</code>,
 <code>post.frag</code>, <code>vert_shader.vert</code>.</li>
 <li>El resto de shaders son archivos comunes a ambos o utilidades
-varias.</li>
+varias, como pueden ser <code>sampling.glsl</code> (donde se implementan
+distribuciones aleatorias) o <code>random.glsl</code> (que contiene
+generadores de números aleatorios).</li>
 </ul></li>
-<li>Finalmente, la carpeta <code>./src/spv</code> contiene los shaders
+<li>Finalmente, la carpeta
+<code>application/vulkan_ray_tracing/src/spv</code> contiene los shaders
 compilados a SPIR-V.</li>
 </ul></li>
 </ul>
-<h2 data-number="5.3" id="compilación"><span
-class="header-section-number">5.3</span> Compilación</h2>
-<p>Las dependencias necesarias para compilarlo son:</p>
+<h2 data-number="5.4" id="compilación-y-ejecución"><span
+class="header-section-number">5.4</span> Compilación y ejecución</h2>
+<p>Las dependencias necesarias son:</p>
 <ol type="1">
-<li>CMake.</li>
-<li>Un driver de Nvidia compatible con la extensión
+<li><strong>CMake</strong>.</li>
+<li>Un <strong>driver de Nvidia</strong> compatible con la extensión
 <code>VK_KHR_ray_tracing_pipeline</code>.</li>
-<li>El SDK de Vulkan, versión 1.2.161 o mayor.</li>
+<li>El SDK de <strong>Vulkan</strong>, versión 1.2.161 o mayor.</li>
 </ol>
-<p>La parte inicial del desarrollo consiste en adaptar Vulkan para usar
-la extensión de ray tracing, extrayendo la información de la gráfica y
-cargando correspondientemente el dispositivo.</p>
-<p>Para compilarlo, ejecuta los siguientes comandos:</p>
-<pre class="sh"><code>git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git
-cd .\Raytracing\application\vulkan_ray_tracing\
-mkdir build
-cd build
-cmake ..
-cmake --build .</code></pre>
+<p>Ejecuta los siguientes comandos desde la terminal para compilar el
+proyecto:</p>
+<pre class="sh"><code>$ git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git
+$ cd .\Raytracing\application\vulkan_ray_tracing\
+$ mkdir build
+$ cd build
+$ cmake ..
+$ cmake --build .</code></pre>
 <p>Si todo funciona correctamente, debería generarse un binario en
 <code>./application/bin_x64/Debug</code> llamado
-<code>asmiray.exe</code>. Desde la carpeta en la que estás, puedes
-ejecutarlo con <code>..\..\bin_x64\Debug\asmiray.exe</code>.</p>
-<h2 data-number="5.4" id="estructuras-de-aceleración"><span
-class="header-section-number">5.4</span> Estructuras de aceleración</h2>
+<code>asmiray.exe</code>. Desde la carpeta en la que deberías
+encontrarte tras seguir las instrucciones, puedes conseguir ejecutarlo
+con</p>
+<pre class="sh"><code>$ ..\..\bin_x64\Debug\asmiray.exe</code></pre>
+<h2 data-number="5.5" id="estructuras-de-aceleración"><span
+class="header-section-number">5.5</span> Estructuras de aceleración</h2>
 <p>El principal coste de ray tracing es el cálculo de las intersecciones
 con objetos; hasta un 95% del tiempo de ejecución total <span
 class="citation" data-cites="scratchapixel-2019">(<a
 href="#ref-scratchapixel-2019" role="doc-biblioref">Scratchapixel
-n.d.</a>)</span>. Reducir el número de test de intersección es
+2019</a>)</span>. Reducir el número de test de intersección es
 clave.</p>
 <p>Las <strong>estructuras de aceleración</strong> son una forma de
-representar la geometría de la escena. Aunque hay varios tipos
-diferentes, en esencia, engloban a un objeto o varios en una estructura
-con la que resulta más eficiente hacer test de intersección. Son
-similares a los grafos de escena de un rasterizador.</p>
-<p>Uno de los tipos más comunes es la <strong>Bounding Volume Hierarchy
+representar la geometría de la escena. Aunque existen diferentes tipos,
+en esencia, todos engloban a uno o varios objetos en una estructura con
+la que resulta más eficiente hacer test de intersección. Son similares a
+los grafos de escena de un rasterizador.</p>
+<p>Uno de los tipos más comunes (y el que se usa en <span
+class="citation" data-cites="Shirley2020RTW2">(<a
+href="#ref-Shirley2020RTW2" role="doc-biblioref">Shirley
+2020b</a>)</span>) es la <strong>Bounding Volume Hierarchy
 (BVH)</strong>. Fue una técnica desarrollada por Kay y Kajilla en 1986.
-En esencia, este método encierra un objeto en una caja (lo que se
-denomina una <strong>bounding box</strong>), de forma que el test de
-intersección principal se hace con la caja y no con la geometría. Si un
-rayo impacta en la <em>bounding box</em>, entonces se pasa a testear la
+Este método encierra un objeto en una caja (denomina una
+<strong>bounding box</strong>), de forma que el test de intersección
+principal se hace con la caja y no con la geometría. Si un rayo impacta
+en la <em>bounding box</em>, entonces se pasa a testear la
 geometría.</p>
 <p>Se puede repetir esta idea repetidamente, de forma que agrupemos
 varias <em>bounding boxes</em>. Así, creamos una jerarquía de objetos
@@ -3942,26 +4250,32 @@ partes: <strong>Top-Level Acceleration Structure</strong> (TLAS) y
 <strong>Bottom-Level Acceleration Structure</strong> (BLAS).</p>
 <figure>
 <img src="./img/04/Acceleration%20structure.png"
-alt="La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: Nvidia" />
+alt="La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: (Nvidia 2022a)" />
 <figcaption aria-hidden="true">La TLAS guarda información de las
 instancias de un objeto, así como una referencia a BLAS que contiene la
-geometría correspondiente. Fuente: Nvidia</figcaption>
+geometría correspondiente. Fuente: <span class="citation"
+data-cites="nvpro-samples-tutorial">(<a
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+2022a</a>)</span></figcaption>
 </figure>
 <blockquote>
 <p>TODO: Deberíamos cambiar esa foto por otra propia.</p>
 </blockquote>
-<h3 data-number="5.4.1"
+<h3 data-number="5.5.1"
 id="botom-level-acceleration-structure-blas"><span
-class="header-section-number">5.4.1</span> Botom-Level Acceleration
+class="header-section-number">5.5.1</span> Botom-Level Acceleration
 Structure (BLAS)</h3>
-<p>Las Bottom-Level Acceleration Structure almacenan la geometría de un
-objeto individual; esto es, los vértices y los índices de los
-triángulos, además de una AABB que la encapsula.</p>
+<p>Las <strong>estructuras de aceleración de bajo nivel</strong>
+(<em>Bottom-Level Acceleration Structure</em>, BLAS) almacenan la
+geometría de un objeto individual; esto es, los vértices y los índices
+de los triángulos, además de una AABB que la encapsula.</p>
 <p>Pueden almacenar varios modelos, puesto que alojan uno o más buffers
-de vértices junto a sus matrices de transformación. Si un modelo se
-instancia varias veces <em>dentro de la misma BLAS</em>, la geometría se
-duplica. Esto se hace para mejorar el rendimiento.</p>
-<p>Como regla general, cuantas menos BLAS, mejor.</p>
+de vértices junto a sus matrices de transformación. Si un modelo es
+instanciado varias veces <em>dentro de la misma BLAS</em>, la geometría
+se duplica. Esto se hace para mejorar el rendimiento.</p>
+<p>Como regla general, cuantas menos BLAS, mejor <span class="citation"
+data-cites="nvidia-best-practices">(<a href="#ref-nvidia-best-practices"
+role="doc-biblioref">Nvidia 2020</a>)</span>.</p>
 <p>El código correspondiente a la creación de la BLAS en el programa es
 el siguiente:</p>
 <pre><code class="language-cpp">void Engine::createBottomLevelAS() {
@@ -3983,8 +4297,8 @@ el siguiente:</p>
         VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR
     );
 }</code></pre>
-<h3 data-number="5.4.2" id="top-level-acceleration-structure-tlas"><span
-class="header-section-number">5.4.2</span> Top-Level Acceleration
+<h3 data-number="5.5.2" id="top-level-acceleration-structure-tlas"><span
+class="header-section-number">5.5.2</span> Top-Level Acceleration
 Structure (TLAS)</h3>
 <p>Las Top-Level Acceleration Structures almacenan las instancias de los
 objetos, cada una con su matriz de transformación y referencia a la BLAS
@@ -4021,10 +4335,10 @@ href="#shader-binding-table">Shader Binding Table</a>.</p>
         VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR
     );
 }</code></pre>
-<h2 data-number="5.5" id="la-ray-tracing-pipeline"><span
-class="header-section-number">5.5</span> La ray tracing pipeline</h2>
-<h3 data-number="5.5.1" id="descriptores-y-conceptos-básicos"><span
-class="header-section-number">5.5.1</span> Descriptores y conceptos
+<h2 data-number="5.6" id="la-ray-tracing-pipeline"><span
+class="header-section-number">5.6</span> La ray tracing pipeline</h2>
+<h3 data-number="5.6.1" id="descriptores-y-conceptos-básicos"><span
+class="header-section-number">5.6.1</span> Descriptores y conceptos
 básicos</h3>
 <p>Primero, debemos introducir unas nociones básicas de Vulkan sobre
 cómo gestiona la información que se pasa a los shaders.</p>
@@ -4033,7 +4347,7 @@ abreviaremos como descriptor) es una forma de cargar recursos como
 buffers o imágenes para que la tarjeta gráfica los pueda utilizar;
 concretamente, los shaders. El <strong><em>descriptor
 layout</em></strong> especifica el tipo de recurso que va a ser
-accedido. Finalmente, el <strong><em>descriptor set</em></strong>
+accedido, mientras que el <strong><em>descriptor set</em></strong>
 determina el buffer o imagen que se va a asociar al descriptor. Este set
 es el que se utiliza en los <strong>drawing commands</strong>. Un
 <strong>pipeline</strong> es una secuencia de operaciones que reciben
@@ -4041,15 +4355,16 @@ una geometría y sus texturas, y la transforma en unos pixels.</p>
 <p>Si necesitas más información, todos estos conceptos aparecen
 desarrollados extensamente en <span class="citation"
 data-cites="overvoorde-2022">(<a href="#ref-overvoorde-2022"
-role="doc-biblioref">Overvoorde n.d.</a>)</span></p>
+role="doc-biblioref">Overvoorde 2022</a>)</span>.</p>
 <p>Tradicionalmente, en rasterización se utiliza un descriptor set por
 tipo de material, y consecuentemente, un pipeline por cada tipo. En ray
-tracing esto no es posible, puesto que no se sabe qué material se va a
-usar: un rayo puede impactar <em>cualquier</em> material presente en la
-escena, lo cual invocaría un shader específico. Debido a esto,
-empaquetaremos todos los recursos en un único set de descriptores.</p>
-<h3 data-number="5.5.2" id="la-shader-binding-table"><span
-class="header-section-number">5.5.2</span> La Shader binding table</h3>
+tracing esto no es posible, puesto que <strong>no se sabe qué
+material</strong> se va a usar: un rayo puede impactar en
+<em>cualquier</em> material presente en la escena, lo cual invocaría un
+shader específico. Debido a esto, empaquetaremos todos los recursos en
+un único set de descriptores.</p>
+<h3 data-number="5.6.2" id="la-shader-binding-table"><span
+class="header-section-number">5.6.2</span> La Shader Binding Table</h3>
 <p>Para solucionar esto, vamos a crear la <strong>Shader Binding
 Table</strong> (SBT). Esta estructura permitirá cargar el shader
 correspondiente dependiendo de dónde impacte un rayo.</p>
@@ -4072,14 +4387,16 @@ generar un <code>vkCreateRayTracingPipelineKHR</code>.</li>
 </ol>
 <figure>
 <img src="./img/04/Pipeline.png"
-alt="La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader raygen, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un closest hit, any hit, o miss shaders. Fuente: Nvidia" />
+alt="La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader raygen, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un closest hit, any hit, o miss shaders. Fuente: (Adam Marrs and Wald 2021, 194)" />
 <figcaption aria-hidden="true">La Shader Binding Table permite
 selccionar un tipo de shader dependiendo del objeto en el que se
 impacte. Para ello, se genera un rayo desde el shader
 <code>raygen</code>, el cual viaja a través de la Acceleration
 Structure. Dependiendo de dónde impacte, se utiliza un
 <code>closest hit</code>, <code>any hit</code>, o <code>miss</code>
-shaders. Fuente: Nvidia</figcaption>
+shaders. Fuente: <span class="citation" data-cites="Marrs2021">(<a
+href="#ref-Marrs2021" role="doc-biblioref">Adam Marrs and Wald 2021,
+194</a>)</span></figcaption>
 </figure>
 <p>Cada entrada de la SBT contiene un handler y una serie de parámetros
 embebidos. A esto se le conoce como <strong>Shader Record</strong>.
@@ -4096,48 +4413,45 @@ closest hit, anyhit (opcional), e intersection (opcional).</li>
 record y geometría. Es decir, cuando un rayo impacta en una geometría,
 ¿a qué record de la SBT llamamos? Esto se determina mediante los
 parámetros de la instancia, la llamada a <em>trace rays</em>, y el orden
-de la geometría en la BLAS.</p>
+de la geometría en la BLAS. En particular, resulta problemático de los
+índices en los <em>hit groups</em>.</p>
+<p>Para conocer a fondo cómo funciona la Shader Binding Table, puedes
+visitar <span class="citation" data-cites="Marrs2021">(<a
+href="#ref-Marrs2021" role="doc-biblioref">Adam Marrs and Wald 2021,
+193</a>)</span> o <span class="citation"
+data-cites="shader-binding-table">(<a href="#ref-shader-binding-table"
+role="doc-biblioref">Will Usher 2019</a>)</span></p>
 <figure>
-<img src="./img/04/SBT.png" alt="Fuente: https://www.willusher.io/" />
-<figcaption aria-hidden="true">Fuente:
-https://www.willusher.io/</figcaption>
+<img src="./img/04/SBT.png" alt="Fuente: (Will Usher 2019)" />
+<figcaption aria-hidden="true">Fuente: <span class="citation"
+data-cites="shader-binding-table">(<a href="#ref-shader-binding-table"
+role="doc-biblioref">Will Usher 2019</a>)</span></figcaption>
 </figure>
-<h4 data-number="5.5.2.1" id="cálculo-de-la-entrada-de-la-sbt"><span
-class="header-section-number">5.5.2.1</span> Cálculo de la entrada de la
-SBT</h4>
-<p>El principal problema es el cálculo del índice en los hit groups.</p>
-<p>Llamemos al índice de cada instancia de una geometría en la BLAS
-<span class="math inline">\(\mathbb{G}_{\text{ID}}\)</span>. A cada
-instancia se le puede asignar un desplazamiento con respecto a la SBT
-(<span class="math inline">\(\mathbb{I}_{\text{offset}}\)</span>) desde
-donde empieza la subtabla de hit groups.</p>
-<blockquote>
-<p>TODO: esto se deja temporal de momento. No sé hasta qué punto me
-convence poner todo esto. Lo veo importante, pero no sé si <em>tan</em>
-importante. El recurso que estoy usando es
-https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways, por si
-al final decidimos escribirlo.</p>
-</blockquote>
-<h3 data-number="5.5.3" id="tipos-de-shaders"><span
-class="header-section-number">5.5.3</span> Tipos de shaders</h3>
+<h3 data-number="5.6.3" id="tipos-de-shaders"><span
+class="header-section-number">5.6.3</span> Tipos de shaders</h3>
 <p>El pipeline soporta varios tipos de shaders diferentes que cubren la
 funcionalidad esencial de un ray tracer:</p>
 <ul>
 <li><strong>Ray generation shader</strong>: es el punto de inicio del
 viaje de un rayo. Calcula punto de inicio y procesa el resultado final.
-Idealmente, solo se invocan rayos desde aquí. Se suele invocar</li>
+Idealmente, solo se invocan rayos desde aquí. La implementación se
+encuentra en
+<code>application/vulkan_ray_tracing/src/shaders/raytrace.rgen</code>.</li>
 <li><strong>Closest hit shader</strong>: este shader se ejecuta cuando
 un rayo impacta en una geometría por primera vez. Se pueden trazar rayos
 recursivamente desde aquí (por ejemplo, para calcular oclusión
-ambiental).</li>
+ambiental). El archivo correspondiente es
+<code>application/vulkan_ray_tracing/src/shaders/raytrace.rchit</code>.</li>
 <li><strong>Any-hit shader</strong>: similar al closest hit, pero
 invocado en cada intersección del camino del rayo que cumpla <span
 class="math inline">\(t \in [t_{min}, t_{max})\)</span>. Es comúnmente
-utilizado en los cálculos de transparencias
-(<em>alpha-testing</em>).</li>
+utilizado en los cálculos de transparencias (<em>alpha-testing</em>).
+Puedes comprobarlo en
+<code>application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl</code>.</li>
 <li><strong>Miss shader</strong>: si el rayo no choca con ninguna
 geometría –pega con el infinito–, se ejecuta este shader. Normalmente,
-añade una pequeña contribución ambiental al rayo.</li>
+añade una pequeña contribución ambiental al rayo. Se halla
+<code>application/vulkan_ray_tracing/src/shaders/raytrace.rmiss</code>.</li>
 <li><strong>Intersection shader</strong>: este shader es algo diferente
 al resto. Su función es calcular el punto de impacto de un rayo con una
 geometría. Por defecto se utiliza un test triángulo - rayo. En nuestro
@@ -4146,14 +4460,6 @@ método como los que vimos en la sección <a
 href="#intersecciones-rayo---objeto">intersecciones rayo -
 objeto</a>.</li>
 </ul>
-<p>Este es el código de los shaders del path tracer: <a
-href="https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rgen">Raygen</a>,
-<a
-href="https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rchit">Closest
-hit</a>, <a
-href="https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace.rmiss">Miss</a>,
-<a
-href="https://github.com/Asmilex/Raytracing/blob/main/application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl">Any-hit</a>.</p>
 <p>Existe otro tipo de shader adicional denominado <strong>callable
 shader</strong>. Este es un shader que se invoca desde otro shader. Por
 ejemplo, un shader de intersección puede invocar a un shader de
@@ -4161,17 +4467,20 @@ oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque
 if-else por un shader para hacer cálculos de iluminación. Este tipo de
 shaders no se han implementado en el path tracer, pero se podrían añadir
 con un poco de trabajo.</p>
-<h3 data-number="5.5.4" id="traspaso-de-información-entre-shaders"><span
-class="header-section-number">5.5.4</span> Traspaso de información entre
+<h3 data-number="5.6.4" id="traspaso-de-información-entre-shaders"><span
+class="header-section-number">5.6.4</span> Traspaso de información entre
 shaders</h3>
 <p>En ray tracing, los shaders por sí solos no pueden realizar todos los
-cálculos necesarios. Por ello, necesitaremos enviar información de uno a
-otro. Tenemos diferentes mecanismos para conseguirlo:</p>
-<p>El primero de ellos son las <strong>push constansts</strong>. Estas
-son variables que se pueden enviar a los shaders (es decir, de CPU a
-GPU), pero que no se pueden modificar. Únicamente podemos mandar un
-pequeño número de variables, el cual se puede consultar mediante
-<code>VkPhysicalDeviceLimits.maxPushConstantSize</code>.</p>
+cálculos necesarios para conseguir la imagen final. Necesitaremos enviar
+información de uno a otro. Para conseguirlo tenemos diferentes
+mecanismos:</p>
+<p>El primero de ellos son las <strong>push constants</strong>. Estas
+son variables que se pueden traspasar a los shaders (es decir, de CPU a
+GPU), pero que no se pueden modificar entre fases. Únicamente podemos
+mandar un pequeño número de variables, el cual se puede consultar
+mediante <code>VkPhysicalDeviceLimits.maxPushConstantSize</code>.
+Además, es importante tener en cuenta el alineamiento de las estructuras
+almacenadas.</p>
 <p>Nuestro path tracer tiene implementado actualmente (19 de abril de
 2022) las siguientes constantes:</p>
 <pre><code class="language-cpp">struct PushConstantRay {
@@ -4183,302 +4492,39 @@ pequeño número de variables, el cual se puede consultar mediante
     int   nb_samples;     // Para antialiasing
     int   frame;          // Para acumulación temporal
 };</code></pre>
-<p>Las push constants son, como dice su nombre, constantes. ¿Y si
-queremos pasar información mutable entre shaders?.</p>
-<p>Para eso están los <strong>payloads</strong>. Específicamente, cada
-rayo puede llevar información adicional. Como una pequeña mochila. Esto
-resulta <em>muy</em> útil, por ejemplo, a la hora de calcular la
-radiancia de un camino. Se crean mediante la estructura
-<code>rayPayloadEXT</code>, y se reciben en otro shader mediante
-<code>rayPayloadInEXT</code>. Es importante controlar que el tamaño de
-la carga no sea excesivamente grande.</p>
-<h3 data-number="5.5.5" id="creación-de-la-ray-tracing-pipeline"><span
-class="header-section-number">5.5.5</span> Creación de la ray tracing
+<p>¿Y si queremos pasar información mutable entre shaders?</p>
+<p>Para eso están los <strong>payloads</strong>. Cada rayo puede llevar
+información adicional, que se conoce como carga. En esencia, es como una
+pequeña mochila: el rayo puede recoger información de un shader y
+pasarlo a otro. Esto resulta <em>muy</em> útil, por ejemplo, a la hora
+de calcular la radiancia de un camino, o saber desde qué punto venía el
+rayo. Se crean mediante la estructura <code>rayPayloadEXT</code>, y se
+reciben en otro shader mediante <code>rayPayloadInEXT</code>. Es
+importante controlar que el tamaño de la carga no sea excesivamente
+grande.</p>
+<h3 data-number="5.6.5" id="creación-de-la-ray-tracing-pipeline"><span
+class="header-section-number">5.6.5</span> Creación de la ray tracing
 pipeline</h3>
-<p>El código de la creación de la pipeline lo encapsula la función
-<code>createRtPipeline()</code>, que se puede consultar <a
-href="https://github.com/Asmilex/Raytracing/blob/6409feb628cc048186f6279b921ebe24e9337b6a/application/vulkan_ray_tracing/src/hello_vulkan.cpp#L763">aquí</a></p>
-<h2 data-number="5.6" id="transporte-de-luz-en-la-práctica"><span
-class="header-section-number">5.6</span> Transporte de luz en la
-práctica</h2>
-<h3 data-number="5.6.1"
-id="estimando-la-rendering-equation-con-monte-carlo"><span
-class="header-section-number">5.6.1</span> Estimando la rendering
-equation con Monte Carlo</h3>
-<p>Hemos llegado a una de las partes más importantes de este trabajo. Es
-el momento de poner en concordancia todo lo que hemos visto a lo largo
-de los capítulos anteriores.</p>
-<p>Empecemos por la dispersión. ¿Recuerdas la ecuación de dispersión [<a
-href="#eq:scattering_equation">6</a>]?</p>
-<p><span class="math display">\[
-L_o(p, \omega_o \leftarrow \omega_i) = \int_{\mathbb{S}^2}{f(p, \omega_o
-\leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i
-\]</span></p>
-<p>Añadamos el término de radiancia emitida:</p>
-<p><span class="math display">\[
-L_o(p, \omega_o \leftarrow \omega_i) = L_e(p, \omega_o) +
-\int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p,
-\omega_i)\cos\theta_i} d\omega_i
-\]</span></p>
-<p>Podemos aproximar el valor de la integral utilizando Monte Carlo:</p>
-<p><span id="eq:rendering_equation_mc" class="eqnos"><span
-class="math display">\[
-\begin{aligned}
-L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
-\omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
-                 &amp; \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p,
-\omega_o \leftarrow \omega_j) L_i(p, \omega_j)
-\cos\theta_j}{p(\omega_j)}}
-\end{aligned}
-\]</span><span class="eqnos-number">(23)</span></span></p>
-<p>Fijémonos en el denominador. Lo que estamos haciendo es tomar una
-muestra de un vector en la esfera. Si trabajamos con una BRDF en vez de
-una BSDF, usaríamos un hemisferio en vez de la esfera.</p>
-<p>En el caso de la componente difusa, sabemos que la BRDF es <span
-class="math inline">\(f_r(p, \omega_o \leftarrow \omega_i) =
-\frac{\rho}{\pi}\)</span>, así que</p>
-<p><span class="math display">\[
-\frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
-\cos\theta_j}{p(\omega_j)}}
-\]</span></p>
-<p>¿Recuerdas la sección de <a
-href="#muestreo-por-importancia">importance sampling</a>? La idea es
-buscar una función proporcional a <span class="math inline">\(f\)</span>
-para reducir el error. Podemos usar <span
-class="math inline">\(p(\omega) = \frac{\cos\theta}{\pi}\)</span>, de
-forma que</p>
-<p><span id="eq:rendering_eq_lambertian" class="eqnos"><span
-class="math display">\[
-\frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
-\cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j =
-1}^{N}{L_i(p, \omega_j) \rho}
-\]</span><span class="eqnos-number">(24)</span></span></p>
-<p>Lo cual nos proporciona una expresión muy agradable para los
-materiales difusos. Solo es cuestión de calcular la radiancia del
-punto.</p>
-<h3 data-number="5.6.2" id="pseudocódigo-de-un-path-tracer"><span
-class="header-section-number">5.6.2</span> Pseudocódigo de un path
-tracer</h3>
-<p>Con lo que conocemos hasta ahora, podemos empezar a programar los
-shaders. Una primera implementación basada en [<a
-href="#eq:rendering_equation_mc">23</a>] sería similar a lo
-siguiente:</p>
-<pre><code class="language-cpp">vec3 pathtrace(Rayo r, profundidad) {
-    if (profundidad == profundidad_maxima) {
-        return contribucion_ambiental;
-    }
-
-    r.trazar_rayo()
-
-    if (!r.ha_impactado()) {
-        return contribucion_ambiental;
-    }
-
-    hit_info = r.hit_info
-    material = hit_info.material
-    emision = material.emision
-
-    nuevo_rayo = Rayo(
-        origen = hit_info.punto_impacto,
-        direccion = random_direction(hit_info.normal)
-    )
-
-    cos_theta = dot(nuevo_rayo.direccion, hit_info.normal)
-    BRDF = ... // BRDF específica del material
-    pdf = ... // función de densidad que nos informa de la probabilidad de la nueva dirección.
-
-    return emission + (BRDF * pathtrace(nuevo_rayo, profundidad + 1) * cos_theta) / pdf;
-}</code></pre>
-<p>El término <code>emission</code> corresponde a <span
-class="math inline">\(L_e(p, \omega_o)\)</span>. Siempre lo añadimos,
-pues en caso de que el objeto no emita luz, la contribución de este
-término sería 0.</p>
-<p>La principal desventaja de esta implementación es que utiliza
-recursividad. Como bien es conocido, abusar de recursividad provoca que
-el tiempo de ejecución aumente significativamente. Además, con la
-implementación anterior, necesariamente se generan rayos desde el
-closest hit shader, lo cual no es ideal.</p>
-<h3 data-number="5.6.3" id="evitando-la-recursividad"><span
-class="header-section-number">5.6.3</span> Evitando la recursividad</h3>
-<p>Podemos evitar los problemas de la implementación anterior con una
-pequeña modificación. En vez de calcular la radiancia desde el closest
-hit, nos traemos la información necesaria al raygen shader, y calculamos
-la radiancia total desde allí.</p>
-<p>Para conseguirlo, debemos hacer que el <code>HitPayload</code>
-almacene dos nuevos parámetros: <code>weight</code> y
-<code>hit_value</code>, así como el nuevo origen y la dirección del
-rayo.</p>
-<p>El pseudocódigo sería el siguiente:</p>
-<pre><code class="language-cpp">// Raygen shader
-vec3 pathtrace() {
-    HitPayload prd;
-
-    // Inicializar parámetros del primer rayo
-    prd.hit_value  = vec3(0);
-    prd.weight     = vec3(0);
-    prd.ray_origin = r.origin;
-    prd.ray_dir    = r.dir;
-
-    vec3 current_weight = vec3(1);
-    vec3 hit_value      = vec3(0);
-
-    for (profundidad in [0, profunidad_maxima]) {
-        closest_hit(prd.ray_origin, prd.ray_dir);
-        // La llamada del rayo almacena nueva información en el HitPayload prd, que podremos usar ahora
-
-        hit_value = hit_value + prd.hit_value * current_weight;
-        current_weight = current_weight * prd.weight;
-    }
-
-    return hit_value;
-}
-
-// Closest hit shader
-vec3 closest_hit() {
-    // Sacar información sobre el punto de impacto: material, normal...
-    vec3 normal = ... // normal en punto
-    Material m = ... // Material de la superficie impactada.
-
-    // Preparar información para el raygen
-    prd.ray_origin = ... // Punto de impacto.
-    prd.ray_dir = direccion_aleatoria() // ¡Dependiente del material!
-
-    float cos_theta = dot(prd.ray_dir, normal);
-    vec3 BRDF = ... // BRDF del material
-    vec3 pdf  = ... // Probabilidad de que se escoja la dirección prd.ray_dir
-
-    prd.hit_value = m.emision // Radiancia generada por el propio material; e.g. luces. Es el término L_e
-    prd.weight = (BRDF * cos_theta) / pdf
-
-    // La devolución de prd es implícita.
-}</code></pre>
-<p>Esta versión no es tan intuitiva, así que ejemplifiquemos lo está
-ocurriendo.</p>
-<p>Sea <span class="math inline">\(h\)</span> el hit_value, <span
-class="math inline">\(w\)</span> el peso, <span
-class="math inline">\(f_i\)</span> la BRDF <span
-class="math inline">\(i\)</span>, <span
-class="math inline">\(e_i\)</span> la emisión, <span
-class="math inline">\(\cos\theta_i\)</span> el coseno del ángulo que
-forman la nueva dirección del rayo y la normal, y <span
-class="math inline">\(p_i\)</span> la función de densidad que, dada una
-dirección, proporciona la probabilidad de que se escoja. El subíndice
-denota el <span class="math inline">\(i\)</span>-ésimo punto de
-impacto.</p>
-<p>En esencia, estamos descomponiendo lo que recogemos en
-<code>weight</code>, que es <span class="math inline">\(f_i \cos\theta_i
-/ p_i\)</span></p>
-<p>Inicialmente, para el primer envío del rayo, <span
-class="math inline">\(h = (0, 0, 0)\)</span>, <span
-class="math inline">\(w = (1, 1, 1)\)</span>. Tras trazar el primer
-rayo, se tiene que</p>
-<p><span class="math display">\[
-\begin{aligned}
-    h &amp; = 0 + e_1 w = e_1 \\
-    w &amp; = 1 \frac{f_1 \cos\theta_1}{p_1}
-\end{aligned}
-\]</span></p>
-<p>Tras el segundo rayo, obtenemos</p>
-<p><span class="math display">\[
-\begin{aligned}
-    h &amp; = e_1 + e_2 w = \\
-      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} \\
-    w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
-\end{aligned}
-\]</span></p>
-<p>Y para el tercero</p>
-<p><span class="math display">\[
-\begin{aligned}
-    h &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 w = \\
-      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 \frac{f_1
-\cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} = \\
-      &amp; = e_1 + \frac{f_1
-\cos\theta_1}{p_1}\textcolor{verde-oscurisimo}{\left(e_2 + e_3 \frac{f_2
-\cos\theta_2}{p_2}\right)} \\
-    w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
-\frac{f_3 \cos\theta_3}{p_3}
-\end{aligned}
-\]</span></p>
-<p>El <span
-class="math inline">\(\textcolor{verde-oscurisimo}{\text{término que
-acompaña}}\)</span> a <span class="math inline">\(\frac{f_1
-\cos\theta_1}{p_1}\)</span> es la radiancia del tercer punto de impacto.
-Por tanto, a la larga, se tendrá que <span
-class="math inline">\(h\)</span> estima correctamente la radiancia de un
-punto. Con esto, podemos afirmar que</p>
-<p><span class="math display">\[
-h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow
-\omega_j) L_i(p, \omega_j) \cos\theta_j}{p(\omega_j)}}
-\]</span></p>
-<p>Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento
-que el recursivo.</p>
-<h3 data-number="5.6.4"
-id="antialiasing-mediante-jittering-y-acumulación-temporal"><span
-class="header-section-number">5.6.4</span> Antialiasing mediante
-jittering y acumulación temporal</h3>
-<p>Normalmente, mandamos los rayos desde el centro de un pixel. Podemos
-conseguir una mejora sustancial de la calidad con un pequeño truco: en
-vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña
-perturbación (<em>jittering</em>). Así, tendremos diferentes colores
-para un mismo pixel, por lo que podemos hacer una ponderación del color
-que se obtiene (a lo que llamamos <em>acumulación temporal</em>).</p>
-<p>Es importante destacar que el efecto de esta técnica solo es válido
-cuando la <strong>cámara se queda estática</strong>.</p>
-<p>La implementación es muy sencilla. Debemos modificar tanto el motor
-como los shaders para llevar una cuenta de ciertos frames, definiendo un
-máximo de frames que se pueden acumular:</p>
-<pre><code class="language-cpp">// engine.h
-class Engine {
-    //...
-    int m_maxAcumFrames {20};
-}</code></pre>
-<p>Las push constant deberán llevar un registro del frame en el que se
-encuentran, así como un número máximo de muestras a acumular para un
-pixel:</p>
-<pre><code class="language-cpp">// host_device.h
-struct PushConstantRay {
-    //...
-    int   frame;
-    int   nb_samples
-}</code></pre>
-<p>El número de frame se reseteará cuando la cámara se mueva, la ventana
-se reescale, o se produzca algún efecto similar en la aplicación.</p>
-<p>Finalmente, en los shaders podemos implementar lo siguiente:</p>
-<pre><code class="language-glsl">// raytrace.rgen
-vec3 pixel_color = vec3(0);
-
-for (int smpl = 0; smpl &lt; pcRay.nb_samples; smpl++) {
-    pixel_color += sample_pixel(image_coords, image_res);
-}
-
-pixel_color = pixel_color / pcRay.nb_samples;
-
-if (!primer_frame) {
-    guardar una mezcla de las anteriores imágenes junto con la actual
-}
-else {
-    guardar la imagen directamente
-}
-</code></pre>
-<pre><code class="language-glsl">// pathtrace.glsl
-vec3 sample_pixel() {
-    float r1 = rnd(prd.seed);
-    float r2 = rnd(prd.seed);
-
-    // Subpixel jitter: mandar el rayo desde una pequeña perturbación del pixel para aplicar antialiasing
-    vec2 subpixel_jitter = pcRay.frame == 0
-        ? vec2(0.5f, 0.5f)
-        : vec2(r1, r2);
-
-    const vec2 pixelCenter = vec2(image_coords.xy) + subpixel_jitter;
-
-    // ...
-
-    vec3 radiance = pathtrace(rayo);
-}</code></pre>
-<h3 data-number="5.6.5" id="materiales-y-objetos"><span
-class="header-section-number">5.6.5</span> Materiales y objetos</h3>
-<p>El sistema de materiales y objetos usados es el
+<p>El código de la creación de la pipeline está encapsulado en la
+función <code>Engine::createRtPipeline()</code>, que se puede consultar
+en el archivo
+<code>application/vulkan_ray_tracing/src/engine.cpp</code>.</p>
+<p>En esencia, este método realiza las siguientes tareas:</p>
+<ol type="1">
+<li>Define las fases o <em>stages</em> que tendrán los shaders.</li>
+<li>Prepara las estructuras <code>VkPipelineShaderStageCreateInfo</code>
+para almacenar la información de cada fase.</li>
+<li>Carga cada archivo de shader compilado <code>.spv</code> en la
+estructura junto con sus parámetros correctos.</li>
+<li>Configura correctamente cada <em>shader group</em>.</li>
+<li>Prepara las <em>push constants</em>.</li>
+<li>Hace el setup del <em>pipeline layout</em> junto a sus descriptor
+sets.</li>
+<li>Limpia la información innecesaria creada por la función.</li>
+</ol>
+<h2 data-number="5.7" id="materiales-y-objetos"><span
+class="header-section-number">5.7</span> Materiales y objetos</h2>
+<p>El formato de materiales y objetos usados es el
 <strong>Wavefront</strong> (<code>.obj</code>). Aunque es un sistema
 relativamente antiguo y sencillo, se han usado definiciones específicas
 en los materiales para adaptarlo a Physically Based Rendering. Entre los
@@ -4608,73 +4654,190 @@ struct WaveFrontMaterial
   int   illum;     // illumination model (see http://www.fileformat.info/format/material/)
   int   textureId;
 };</code></pre>
-<h2 data-number="5.7" id="fuentes-de-luz"><span
-class="header-section-number">5.7</span> Fuentes de luz</h2>
-<blockquote>
-<p>TODO: point lights, area lights, ambient lights…</p>
-<p>TODO: estas son notas muy puntuales (<em>como las luces, jeje</em>).
-Ya las revisaré más adelante.</p>
-<p>TODO: 01_lights.pdf tiene información útil sobre muestreo directo de
-fuents de luces.</p>
-</blockquote>
-<p>La interfaz se encuentra en <code>host_device.h</code>. Describe cómo
-comunicarse con la GPU.</p>
-<p>Ahora mismo, tenemos 3 constantes: tipo de luz:</p>
-<pre><code class="language-glsl">vec3  lightPosition;    // (x, y, z)
-float lightIntensity;   // (Intensidad)
-int   lightType;        // (0 =&gt; point light, 1 =&gt; area light)</code></pre>
-<p>Sería interesante añadir algunas constantes para controlar el tamaño
-(radio, posición, normal para las de área…)</p>
-<h3 data-number="5.7.1" id="point-lights-spotlights"><span
-class="header-section-number">5.7.1</span> Point lights +
-spotlights</h3>
-<blockquote>
-<p>pbr-book, point lights: <em>“Strictly speaking, it is incorrect to
-describe the light arriving at a point due to a point light source using
-units of radiance. Radiant intensity is instead the proper unit for
-describing emission from a point light source, as explained in Section
-5.4. In the light source interfaces here, however, we will abuse
-terminology and use Sample_Li() methods to report the illumination
-arriving at a point for all types of light sources, dividing radiant
-intensity by the squared distance to the point p to convert units.
-Section 14.2 revisits the details of this issue in its discussion of how
-delta distributions affect evaluation of the integral in the scattering
-equation. In the end, the correctness of the computation does not suffer
-from this fudge, and it makes the implementation of light transport
-algorithms more straightforward by not requiring them to use different
-interfaces for different types of lights.”</em></p>
-</blockquote>
-<pre><code class="language-cpp">// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.h
-// https://github.com/mmp/pbrt-v3/blob/master/src/lights/point.cpp
-
-Spectrum sample_light(interaccion, vec2 u, vec3 wi, float pdf, visibility_tester) {
-    wi = normalize(posicion_luz - interraccion.p);
-    pdf = 1.f;
-    // testeo de visibilidad. Opcional, I guess.
-
-    return intensidad / distancia_al_cuadrado(posicion_luz, interraccion.p);
+<h2 data-number="5.8"
+id="antialiasing-mediante-jittering-y-acumulación-temporal"><span
+class="header-section-number">5.8</span> Antialiasing mediante jittering
+y acumulación temporal</h2>
+<p>Normalmente, mandamos los rayos desde el centro de un pixel. Podemos
+conseguir una mejora sustancial de la calidad con un pequeño truco: en
+vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña
+perturbación (<em>jittering</em>). Así, tendremos una variación de
+colores para un mismo pixel, por lo que podemos hacer una ponderación de
+todos ellos. A este proceso lo que llamamos <strong>acumulación
+temporal</strong>.</p>
+<p>Es importante destacar que el efecto de esta técnica solo es válido
+cuando la <strong>cámara se queda estática</strong>. Al cambiar de
+posición, la información del píxel se ve alterada significativamente,
+por lo que debemos reconstruir las muestras desde el principio.</p>
+<p>La implementación es muy sencilla. Está basada en el tutorial de
+<span class="citation" data-cites="nvpro-samples-tutorial">(<a
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+2022a</a>, jitter camera)</span>. Debemos modificar tanto el motor como
+los shaders para llevar el recuento del número de frames en las push
+constants.</p>
+<p>Definimos el número máximo de frames que se pueden acumular:</p>
+<pre><code class="language-cpp">// engine.h
+class Engine {
+    //...
+    int m_maxAcumFrames {100};
 }</code></pre>
-<p>La potencia total emitida por la luz puede calcularse integrando la
-intensidad desprendida en toda su superficie. Asumiendo la intensidad
-constante:</p>
-<p><span class="math display">\[
-\Phi = \int_{\mathbb{S}^2}{I d\omega} = I \int_{\mathbb{S}^2}{d\omega} =
-4 \pi I
-\]</span></p>
-<p>Las spotlights son variaciones de las point lights iluminando en un
-cono.</p>
-<h3 data-number="5.7.2" id="fuentes-de-área"><span
-class="header-section-number">5.7.2</span> Fuentes de área</h3>
-<p>Para simplificar la implementación, podemos asumir que son
-rectangulares.</p>
-<p>Nos van a hacer falta técnicas de Monte Carlo para solucionar el
-problema de calcular integrales a lo largo de su superficie.</p>
-<p>Primero, lo mejor es asumir un cuadrado, y después, extender la
-interfaz para meter otras formas (es decir, rectángulos. Porque lo otro
-sería mucha parafernalia innecesaria).</p>
-<p><a
-href="https://github.com/mmp/pbrt-v3/blob/aaa552a4b9cbf9dccb71450f47b268e0ed6370e2/src/core/light.h">Código
-fuente</a></p>
+<p>Las push constant deberán llevar un registro del frame en el que se
+encuentran, así como un número máximo de muestras a acumular para un
+pixel:</p>
+<pre><code class="language-cpp">// host_device.h
+struct PushConstantRay {
+    //...
+    int   frame;
+    int   nb_samples
+}</code></pre>
+<p>El número de frame se reseteará cuando la cámara se mueva, la ventana
+se reescale, o se produzca algún efecto similar en la aplicación.</p>
+<p>Finalmente, en los shaders podemos implementar lo siguiente:</p>
+<pre><code class="language-glsl">// raytrace.rgen
+vec3 pixel_color = vec3(0);
+
+for (int smpl = 0; smpl &lt; pcRay.nb_samples; smpl++) {
+    pixel_color += sample_pixel(image_coords, image_res);
+}
+
+pixel_color = pixel_color / pcRay.nb_samples;
+
+if (pcRay.frame &gt; 0) {
+    vec3 old_color = imageLoad(image, image_coords).xyz;
+    vec3 new_result = mix(
+        old_color,
+        pixel_color,
+        1.f / float(pcRay.frame + 1)
+    );
+
+    imageStore(image, image_coords, vec4(new_result, 1.f));
+}
+else {
+    imageStore(image, image_coords, vec4(pixel_color, 1.0));
+}</code></pre>
+<pre><code class="language-glsl">// pathtrace.glsl
+vec3 sample_pixel() {
+    float r1 = rnd(prd.seed);
+    float r2 = rnd(prd.seed);
+
+    // Subpixel jitter: mandar el rayo desde una pequeña perturbación del pixel para aplicar antialiasing
+    vec2 subpixel_jitter = pcRay.frame == 0
+        ? vec2(0.5f, 0.5f)
+        : vec2(r1, r2);
+
+    const vec2 pixelCenter = vec2(image_coords.xy) + subpixel_jitter;
+
+    // ...
+
+    vec3 radiance = pathtrace(rayo);
+}</code></pre>
+<blockquote>
+<p>TODO: mostrar vídeo de ejemplo</p>
+</blockquote>
+<h2 data-number="5.9" id="fuentes-de-luz"><span
+class="header-section-number">5.9</span> Fuentes de luz</h2>
+<p>La última estructura de datos importante que debemos estudiar es la
+utilizada para las fuentes de luces. Desafortunadamente, en este trabajo
+no se ha implementado una abstracción sólida.</p>
+<p>Se ha reaprovechado la definición del <a
+href="#setup-del-proyecto">rasterizador por defecto</a> para que tanto
+el path tracer como el anterior utilicen fácilmente iluminación
+estática.</p>
+<p>La idea básica es que, en vez de depender de los elementos de la
+escena para proporcionar luz, se conozca una fuente de iluminación en
+todo momento. Dicha fuente puede ser puntual o direccional, y puede ser
+controlada mediante la interfaz. El estado de la fuente se traspasa a
+los shaders mediante una push constant:</p>
+<pre><code>struct PushConstantRay
+{
+    ...
+    vec3  light_position;
+    float light_intensity;
+    int   light_type;
+};</code></pre>
+<p>El parámetro <code>light_intensity</code> corresponde a la potencia
+<span class="math inline">\(\Phi\)</span>, y el tipo
+<code>light_type</code> puede ser <code>0</code> para puntual o
+<code>1</code> para direccional.</p>
+<p>Claramente esta decisión técnica favocere facilidad de implementación
+en detrimento de flexibilidad, solidez y correctitud. Esta interfaz es
+una de las áreas de futura mejora, y haría falta una revisión
+considerable. Sin embargo, por el momento, funciona.</p>
+<p>La implementación en los shaders es muy sencilla. Podemos usar lo
+aprendido en <a
+href="#next-event-estimation-o-muestreo-directo-de-fuentes-de-luz">muestreo
+directo de fuentes de luz</a>. En el closest hit, primero calculamos la
+información relativa a la posición y la intensidad de la luz:</p>
+<pre><code class="language-glsl">vec3 L;
+float light_intensity = pcRay.light_intensity;
+float light_distance = 100000.0;
+
+float pdf_light       = 1;  // prob. de escoger ese punto de la fuente de luz
+float cos_theta_light = 1;  // Ángulo entre la la dir. del rayo y luz.
+
+if (pcRay.light_type == 0) {         // Point light
+    vec3 L_dir = pcRay.light_position - world_position;  // vector hacia la luz
+
+    light_distance   = length(L_dir);
+    light_intensity = pcRay.light_intensity / (light_distance * light_distance);
+    L               = normalize(L_dir);
+    // Solo tenemos un punto =&gt; pdf light = 1, cos_theta light = 1.
+    cos_theta_light = dot(L, world_normal);
+}
+else if (pcRay.light_type == 1) {    // Directional light
+    L = normalize(pcRay.light_position);
+    cos_theta_light = dot(L, world_normal);
+}</code></pre>
+<p>Sin embargo, esto no es suficiente. Se nos olvida comprobar un
+detalle sumamente importante:</p>
+<p>¿Se ve la fuente de luz desde el punto de intersección?</p>
+<p>Si no es así, ¡no tiene sentido que calculemos la influencia
+luminaria de la fuente! La carne de burro no se transparenta, después de
+todo. A no ser que sea un toro hecho de algún material que presente
+transmitancia, en cuyo caso se debería refractar acordemente el rayo de
+luz.</p>
+<p>Volviendo al tema: este tipo de problemas de oclusión se suelen
+resolver mediante algún tipo de test de visibilidad. El más habitual es
+usar <strong>shadow rays</strong>. Al preparar la <a
+href="#la-ray-tracing-pipeline">pipeline</a> fijamos el stage de los
+shadow rays precisamente por este motivo.</p>
+<p>La continuación del código quería de la siguiente forma:</p>
+<pre><code class="language-glsl">if (dot(normal, L) &gt; 0) {
+    // Preparar la invocación del shadow ray
+    float tMin = 0.001;
+    float tMax = light_distance;
+
+    vec3 origin = gl_WorldRayOriginEXT + gl_WorldRayDirectionEXT * gl_HitTEXT;
+    vec3 ray_dir = L;
+
+    uint flags = gl_RayFlagsSkipClosestHitShaderEXT;
+    prdShadow.is_hit = true;
+    prdShadow.seed = prd.seed;
+
+    traceRayEXT(topLevelAS,
+        flags,       // rayFlags
+        0xFF,        // cullMask
+        1,           // sbtRecordOffset =&gt; invocar el shader de sombras
+        0,           // sbtRecordStride
+        1,           // missIndex
+        origin,      // ray origin
+        tMin,        // ray min range
+        ray_dir,     // ray direction
+        tMax,        // ray max range
+        1            // payload (location = 1)
+    );
+
+    float attenuation = 1;
+
+    if (!prdShadow.is_hit) {
+        hit_value = hit_value + light_intensity*BSDF*cos_theta_light / pdf_light;
+    }
+    else {
+        attenuation = 1.0 / (1.0 + light_distance);
+    }
+}</code></pre>
+<p>Y con esto, hemos conseguido añadir dos tipos de fuentes de
+iluminación. En la sección de resultados comprobaremos el resultado.</p>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-1">Referencias</h2>
 <ul>
@@ -4699,14 +4862,55 @@ fuente</a></p>
 </ul>
 <h1 data-number="6" id="análisis-de-rendimiento"><span
 class="header-section-number">6</span> Análisis de rendimiento</h1>
-<blockquote>
-<p>TODO: para completar esta parte, necesitamos ambas implementaciones
-(en CPU y GPU) listas. Hasta entonces, esto se queda vacío. NOTE: Podría
-preguntarle a Kako que tire benchmark en su 2060, y a Manu con su 3060
-(¿ti?)</p>
-</blockquote>
-<hr>
-<h2 class="unlisted unnumbered" id="referencias-2">Referencias</h2>
+<h2 data-number="6.1" id="usando-el-motor"><span
+class="header-section-number">6.1</span> Usando el motor</h2>
+<p>Cosas de las que tengo que hablar:</p>
+<ul>
+<li>Cámara</li>
+<li>Keybindings</li>
+<li>GUI</li>
+<li>Cambio de escenas</li>
+</ul>
+<h2 data-number="6.2" id="path-tracing-on"><span
+class="header-section-number">6.2</span> Path tracing ON</h2>
+<p>Cosas de las que tengo que hablar:</p>
+<ul>
+<li>Materiales
+<ul>
+<li>Difusos</li>
+<li>Especulares</li>
+<li>Espejos</li>
+<li>Transparentes (gestionado por anyhit)</li>
+</ul></li>
+<li>Luces
+<ul>
+<li>Puntual</li>
+<li>Direccional</li>
+</ul></li>
+<li>Cornell Boxes
+<ul>
+<li>Cornell Box</li>
+<li>Cornell Bath</li>
+<li>Mirar la iluminación global</li>
+<li>Efectos de las pelotas en el ambiente</li>
+</ul></li>
+</ul>
+<h2 data-number="6.3" id="rendimiento"><span
+class="header-section-number">6.3</span> Rendimiento</h2>
+<h2 data-number="6.4" id="midiendo-el-coste-de-un-frame"><span
+class="header-section-number">6.4</span> Midiendo el coste de un
+frame</h2>
+<h3 data-number="6.4.1" id="acumulación-temporal"><span
+class="header-section-number">6.4.1</span> Acumulación temporal</h3>
+<h3 data-number="6.4.2" id="número-de-muestras"><span
+class="header-section-number">6.4.2</span> Número de muestras</h3>
+<h3 data-number="6.4.3" id="diferentes-escenas"><span
+class="header-section-number">6.4.3</span> Diferentes escenas</h3>
+<h3 data-number="6.4.4" id="importance-sampling"><span
+class="header-section-number">6.4.4</span> Importance sampling</h3>
+<h2 data-number="6.5" id="comparativa-con-in-one-weekend"><span
+class="header-section-number">6.5</span> Comparativa con In One
+Weekend</h2>
 <h1 data-number="7" id="el-presente-y-futuro-de-rt"><span
 class="header-section-number">7</span> El presente y futuro de RT</h1>
 <blockquote>
@@ -4807,7 +5011,7 @@ resampling</h4>
 class="header-section-number">7.5.0.4</span> Low discrepancy
 sampling</h4>
 <hr>
-<h2 class="unlisted unnumbered" id="referencias-3">Referencias</h2>
+<h2 class="unlisted unnumbered" id="referencias-2">Referencias</h2>
 
 <h1 data-number="8" id="metodología-de-trabajo"><span
 class="header-section-number">8</span> Metodología de trabajo</h1>
@@ -5448,221 +5652,261 @@ href="#juntando-la-brdf-y-la-btdf">BSDF</a></strong></td>
 <div id="refs" class="references csl-bib-body hanging-indent"
 role="doc-bibliography">
 <div id="ref-Marrs2021" class="csl-entry" role="doc-biblioentry">
-Adam Marrs, Peter Shirley, and Ingo Wald, eds. 2021. <span>“Ray Tracing
-Gems II.”</span> Apress. 2021. <a
+Adam Marrs, Peter Shirley, and I. Wald, eds. 2021. <span>“Ray tracing
+gems II.”</span> Apress. 2021. <a
 href="http://raytracinggems.com/rtg2">http://raytracinggems.com/rtg2</a>.
+</div>
+<div id="ref-alain-API" class="csl-entry" role="doc-biblioentry">
+Alain Galvan. 2022. <span>“A comparison of modern graphics APIs.”</span>
+2022. Accessed May 13, 2022. <a
+href="https://alain.xyz/blog/comparison-of-modern-graphics-apis">https://alain.xyz/blog/comparison-of-modern-graphics-apis</a>.
 </div>
 <div id="ref-asmilex-raytracing-docker" class="csl-entry"
 role="doc-biblioentry">
-Andrés Millán. 2022a. <span>“Docker Del TFG.”</span> 2022. <a
+Andrés Millán. 2022a. <span>“Docker del TFG.”</span> 2022. Accessed May
+7, 2022. <a
 href="https://hub.docker.com/r/asmilex/raytracing">https://hub.docker.com/r/asmilex/raytracing</a>.
 </div>
 <div id="ref-asmilex-raytracing-repo" class="csl-entry"
 role="doc-biblioentry">
-———. 2022b. <span>“Repositorio Del TFG.”</span> 2022. <a
+———. 2022b. <span>“Repositorio del TFG.”</span> 2022. Accessed May 7,
+2022. <a
 href="https://github.com/Asmilex/Raytracing">https://github.com/Asmilex/Raytracing</a>.
 </div>
 <div id="ref-arneback-2019" class="csl-entry" role="doc-biblioentry">
-Arnebäck. n.d. <span>“An Explanation of the Rendering Equation.”</span>
-Accessed April 9, 2022. <a
+Arnebäck. 2019. <span>“An explanation of the rendering equation.”</span>
+January 10, 2019. Accessed April 9, 2022. <a
 href="https://www.youtube.com/watch?v=eo_MTI-d28s">https://www.youtube.com/watch?v=eo_MTI-d28s</a>.
 </div>
 <div id="ref-ciechanowski" class="csl-entry" role="doc-biblioentry">
-Bartosz Ciechanowski. 2022. <span>“Lights and Shadows.”</span> 2022. <a
+Bartosz Ciechanowski. 2022. <span>“Lights and shadows.”</span> 2022.
+Accessed May 7, 2022. <a
 href="https://ciechanow.ski/lights-and-shadows/">https://ciechanow.ski/lights-and-shadows/</a>.
 </div>
 <div id="ref-beck2001agile" class="csl-entry" role="doc-biblioentry">
-Beck, Kent, Mike Beedle, Arie van Bennekum, Alistair Cockburn, Ward
-Cunningham, Martin Fowler, James Grenning, et al. 2001. <span>“Manifesto
-for Agile Software Development.”</span> <a
+Beck, K., M. Beedle, A. van Bennekum, A. Cockburn, W. Cunningham, M.
+Fowler, J. Grenning, et al. 2001. <span>“Manifesto for Agile Software
+Development.”</span> Accessed April 20, 2022. <a
 href="http://www.agilemanifesto.org/">http://www.agilemanifesto.org/</a>.
 </div>
 <div id="ref-berkeley-cs184" class="csl-entry" role="doc-biblioentry">
-Berkeley cs184. 2022. <span>“Computer Graphics and Imaging.”</span>
-2022. <a
+Berkeley cs184. 2022. <span>“Computer graphics and imaging.”</span>
+2022. Accessed March 20, 2022. <a
 href="https://cs184.eecs.berkeley.edu/sp22">https://cs184.eecs.berkeley.edu/sp22</a>.
 </div>
 <div id="ref-carlos-path-tracing" class="csl-entry"
 role="doc-biblioentry">
-Carlos Ureña. 2021. <span>“Realismo e Iluminación Global.”</span> 2021.
+Carlos Ureña. 2021. <span>“Realismo e iluminación global.”</span> 2021.
 <a href="https://lsi2.ugr.es/curena/">https://lsi2.ugr.es/curena/</a>.
 </div>
 <div id="ref-caulfield-2020" class="csl-entry" role="doc-biblioentry">
-Caulfield, Brian. n.d. <span>“What’s the Difference Between Ray Tracing,
-Rasterization?”</span> Accessed April 22, 2022. <a
+Caulfield, B. 2020. <span>“What’s the difference between ray tracing,
+rasterization?”</span> May 22, 2020. Accessed April 22, 2022. <a
 href="https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/">https://blogs.nvidia.com/blog/2018/03/19/whats-difference-between-ray-tracing-rasterization/</a>.
 </div>
 <div id="ref-julia-mono" class="csl-entry" role="doc-biblioentry">
-Cormullion. 2022. <span>“JuliaMono - a Monospaced Font for Scientific
-and Technical Computing.”</span> 2022. <a
+Cormullion. 2022. <span>“JuliaMono - a monospaced font for scientific
+and technical computing.”</span> 2022. Accessed May 7, 2022. <a
 href="https://juliamono.netlify.app">https://juliamono.netlify.app</a>.
 </div>
 <div id="ref-crytek-2020" class="csl-entry" role="doc-biblioentry">
-Crytek. n.d. <span>“Crysis Remastered Brings Ray Tracing to Current-Gen
-Consoles.”</span> Accessed April 17, 2022. <a
+Crytek. 2020. <span>“Crysis remastered brings ray tracing to current-gen
+consoles.”</span> September 11, 2020. Accessed April 17, 2022. <a
 href="https://www.cryengine.com/news/view/crysis-remastered-brings-ray-tracing-to-current-gen-consoles">https://www.cryengine.com/news/view/crysis-remastered-brings-ray-tracing-to-current-gen-consoles</a>.
 </div>
 <div id="ref-digital-foundry-2020" class="csl-entry"
 role="doc-biblioentry">
-Digital Foundry. 2020. <span>“Cyberpunk 2077 PC: What Does Ray Tracing
-Deliver... And Is It Worth It?”</span> December 19, 2020. <a
+Digital Foundry. 2020. <span>“Cyberpunk 2077 PC: What does ray tracing
+deliver... And is it worth it?”</span> December 19, 2020. Accessed April
+10, 2022. <a
 href="https://www.youtube.com/watch?v=6bqA8F6B6NQ">https://www.youtube.com/watch?v=6bqA8F6B6NQ</a>.
 </div>
 <div id="ref-digital-foundry" class="csl-entry" role="doc-biblioentry">
-———. 2022. <span>“Canal de Youtube de Digital Foundry.”</span> 2022. <a
+———. 2022. <span>“Canal de youtube de digital foundry.”</span> 2022.
+Accessed May 7, 2022. <a
 href="https://www.youtube.com/user/DigitalFoundry">https://www.youtube.com/user/DigitalFoundry</a>.
 </div>
 <div id="ref-docker" class="csl-entry" role="doc-biblioentry">
-Docker. 2022. <span>“Docker - the World’s Most Popular Container
-Platform.”</span> 2022. <a
+Docker. 2022. <span>“Docker - the world’s most popular container
+platform.”</span> 2022. Accessed May 7, 2022. <a
 href="https://www.docker.com/">https://www.docker.com/</a>.
 </div>
 <div id="ref-dockershelf" class="csl-entry" role="doc-biblioentry">
-dockershelf. 2022. <span>“Repository for Docker Images of Latex. Test
-Driven, Lightweight and Reliable. Rebuilt Daily.”</span> 2022. <a
+dockershelf. 2022. <span>“Repository for docker images of latex. Test
+driven, lightweight and reliable. Rebuilt daily.”</span> 2022. Accessed
+May 7, 2022. <a
 href="https://hub.docker.com/r/dockershelf/latex">https://hub.docker.com/r/dockershelf/latex</a>.
 </div>
 <div id="ref-berkeley-mc-lecture" class="csl-entry"
 role="doc-biblioentry">
-Eric C. Anderson. 1999. <span>“Monte Carlo Methods and Importance
-Sampling.”</span> 1999. <a
+Eric C. Anderson. 1999. <span>“Monte carlo methods and importance
+sampling.”</span> 1999. Accessed May 9, 2022. <a
 href="https://ib.berkeley.edu/labs/slatkin/eriq/classes/guest_lect/mc_lecture_notes.pdf">https://ib.berkeley.edu/labs/slatkin/eriq/classes/guest_lect/mc_lecture_notes.pdf</a>.
 </div>
 <div id="ref-robust-monte-carlo" class="csl-entry"
 role="doc-biblioentry">
-Eric Veach. December 1997. <span>“Robust Monte Carlo Methods for Light
-Transport Simulation.”</span> December 1997. <a
+Eric Veach. December 1997. <span>“Robust monte carlo methods for light
+transport simulation.”</span> December 1997. Accessed May 9, 2022. <a
 href="https://graphics.stanford.edu/papers/veach_thesis/">https://graphics.stanford.edu/papers/veach_thesis/</a>.
 </div>
 <div id="ref-napkin" class="csl-entry" role="doc-biblioentry">
-Evan Chen. 2022. <span>“The Napkin Project.”</span> 2022. <a
+Evan Chen. 2022. <span>“The napkin project.”</span> 2022. Accessed May
+7, 2022. <a
 href="https://web.evanchen.cc/napkin.html">https://web.evanchen.cc/napkin.html</a>.
 </div>
 <div id="ref-pellacini-marschner-2017" class="csl-entry"
 role="doc-biblioentry">
-Fabio Pellacini, Steve Marschner. 2022. <span>“Fundamentals of Computer
-Graphics.”</span> 2022. <a
+Fabio Pellacini, S. M. 2022. <span>“Fundamentals of computer
+graphics.”</span> 2022. Accessed April 9, 2022. <a
 href="https://pellacini.di.uniroma1.it/teaching/graphics17b/">https://pellacini.di.uniroma1.it/teaching/graphics17b/</a>.
 </div>
 <div id="ref-figma" class="csl-entry" role="doc-biblioentry">
-Figma. 2022. <span>“Figma - a Design Tool for Digital Art.”</span> 2022.
-<a href="https://www.figma.com/">https://www.figma.com/</a>.
+Figma. 2022. <span>“Figma - a design tool for digital art.”</span> 2022.
+Accessed May 7, 2022. <a
+href="https://www.figma.com/">https://www.figma.com/</a>.
 </div>
 <div id="ref-galvin-no-date" class="csl-entry" role="doc-biblioentry">
-Galvin. n.d. <span>“Random Variables.”</span> Accessed March 20, 2022.
+Galvin. n.d. <span>“Random variables.”</span> Accessed March 20, 2022.
 <a
 href="https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf">https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf</a>.
 </div>
 <div id="ref-github" class="csl-entry" role="doc-biblioentry">
-Github. 2022. <span>“Github - Where the World Builds Software.”</span>
-2022. <a href="https://github.com">https://github.com</a>.
+Github. 2022. <span>“Github - where the world builds software.”</span>
+2022. Accessed May 7, 2022. <a
+href="https://github.com">https://github.com</a>.
 </div>
 <div id="ref-3blue1brown" class="csl-entry" role="doc-biblioentry">
-Grant Sanderson. 2022. <span>“3Blue1Brown.”</span> 2022. <a
+Grant Sanderson. 2022. <span>“3Blue1Brown.”</span> 2022. Accessed May 7,
+2022. <a
 href="https://www.3blue1brown.com/">https://www.3blue1brown.com/</a>.
 </div>
 <div id="ref-trigger-task" class="csl-entry" role="doc-biblioentry">
-Gruntfuggly. 2022. <span>“Trigger Task on Save.”</span> 2022. <a
+Gruntfuggly. 2022. <span>“Trigger task on save.”</span> 2022. Accessed
+May 7, 2022. <a
 href="https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.triggertaskonsave">https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.triggertaskonsave</a>.
 </div>
 <div id="ref-Haines2019" class="csl-entry" role="doc-biblioentry">
-Haines, Eric, and Tomas Akenine-Möller, eds. 2019. <span>“Ray Tracing
-Gems.”</span> Apress. 2019. <a
+Haines, E., and T. Akenine-Möller, eds. 2019. <span>“Ray tracing
+gems.”</span> Apress. 2019. <a
 href="http://raytracinggems.com">http://raytracinggems.com</a>.
 </div>
 <div id="ref-rubik" class="csl-entry" role="doc-biblioentry">
-Hubert and Fischer, Cyreal, Meir Sadan. 2022. <span>“Rubik
-Typography.”</span> 2022. <a
+Hubert and Fischer, C., Meir Sadan. 2022. <span>“Rubik
+typography.”</span> 2022. Accessed May 7, 2022. <a
 href="https://fonts.google.com/specimen/Rubik">https://fonts.google.com/specimen/Rubik</a>.
 </div>
 <div id="ref-metodos-monte-carlo" class="csl-entry"
 role="doc-biblioentry">
-Illana, José Ignacio. 2013. <span>“Métodos de Monte Carlo.”</span> 2013.
-<a
+Illana, J. I. 2013. <span>“Métodos de monte carlo.”</span> 2013.
+Accessed May 8, 2022. <a
 href="https://www.ugr.es/~jillana/Docencia/FM/mc.pdf">https://www.ugr.es/~jillana/Docencia/FM/mc.pdf</a>.
 </div>
+<div id="ref-intel-arc" class="csl-entry" role="doc-biblioentry">
+Intel. 2022. <span>“A new player has entered the game.”</span> 2022.
+Accessed May 13, 2022. <a
+href="https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/overview.html">https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/overview.html</a>.
+</div>
 <div id="ref-crimson-pro" class="csl-entry" role="doc-biblioentry">
-Jacques Le Bailly. 2022. <span>“Crimson Pro Typography.”</span> 2022. <a
+Jacques Le Bailly. 2022. <span>“Crimson pro typography.”</span> 2022.
+Accessed May 7, 2022. <a
 href="https://fonts.google.com/specimen/Crimson+Pro">https://fonts.google.com/specimen/Crimson+Pro</a>.
 </div>
 <div id="ref-pandoc" class="csl-entry" role="doc-biblioentry">
-John MacFarlane. 2021. <span>“Pandoc, a Universal Document
-Converter.”</span> 2021. <a
+John MacFarlane. 2021. <span>“Pandoc, a universal document
+converter.”</span> 2021. Accessed May 7, 2022. <a
 href="https://pandoc.org">https://pandoc.org</a>.
 </div>
 <div id="ref-quantumfracture-2021" class="csl-entry"
 role="doc-biblioentry">
-José Luis Crespo. n.d. <span>“Ya, En Serio, ¿Qué Es La Luz?”</span>
-Accessed April 22, 2022. <a
+José Luis Crespo. 2021. <span>“Ya, en serio, ¿qué es la luz?”</span>
+December 10, 2021. Accessed April 22, 2022. <a
 href="https://www.youtube.com/watch?v=DkcEAz09Buo">https://www.youtube.com/watch?v=DkcEAz09Buo</a>.
 </div>
 <div id="ref-linear" class="csl-entry" role="doc-biblioentry">
-Linear. 2022. <span>“Linear - the Issue Tracking Tool You’ll Enjoy
-Using.”</span> 2022. <a
+Linear. 2022. <span>“Linear - the issue tracking tool you’ll enjoy
+using.”</span> 2022. Accessed May 7, 2022. <a
 href="https://linear.app/">https://linear.app/</a>.
 </div>
 <div id="ref-quasi-monte-carlo" class="csl-entry"
 role="doc-biblioentry">
-Martin Roberts. 2018. <span>“The Unreasonable Effectiveness of
-Quasirandom Sequences.”</span> 2018. <a
+Martin Roberts. 2018. <span>“The unreasonable effectiveness of
+quasirandom sequences.”</span> 2018. Accessed May 9, 2022. <a
 href="http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/">http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/</a>.
 </div>
 <div id="ref-latex-complete" class="csl-entry" role="doc-biblioentry">
-Max Krieger. 2022. <span>“Latex Complete - Typeset Math in Your
-Designs.”</span> 2022. <a
+Max Krieger. 2022. <span>“Latex complete - typeset math in your
+designs.”</span> 2022. Accessed May 7, 2022. <a
 href="https://www.figma.com/community/plugin/793023817364007801/LaTeX-Complete">https://www.figma.com/community/plugin/793023817364007801/LaTeX-Complete</a>.
 </div>
 <div id="ref-McGuire2018GraphicsCodex" class="csl-entry"
 role="doc-biblioentry">
-McGuire, Morgan. 2021. <em>The Graphics Codex</em>. 2.17 ed. Casual
-Effects. <a
-href="https://graphicscodex.com">https://graphicscodex.com</a>.
+McGuire, M. 2021. <em>The Graphics Codex</em>. 2.17 ed. Casual Effects.
+<a href="https://graphicscodex.com">https://graphicscodex.com</a>.
 </div>
 <div id="ref-jj" class="csl-entry" role="doc-biblioentry">
-Merelo. 2021. <span>“Infraestructura Virtual.”</span> 2021. <a
+Merelo. 2021. <span>“Infraestructura virtual.”</span> 2021. Accessed
+April 16, 2022. <a
 href="http://jj.github.io/IV/documentos/temas/Integracion_continua">http://jj.github.io/IV/documentos/temas/Integracion_continua</a>.
 </div>
 <div id="ref-vscode" class="csl-entry" role="doc-biblioentry">
-Microsoft. 2022. <span>“VSCode - Code Editing. Redefined.”</span> 2022.
-<a
+Microsoft. 2022. <span>“VSCode - code editing. redefined.”</span> 2022.
+Accessed May 7, 2022. <a
 href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>.
 </div>
 <div id="ref-nature-2016" class="csl-entry" role="doc-biblioentry">
-Nature. 2016. <span>“Scientific Language Is Becoming More
-Informal.”</span> 2016. <a
+Nature. 2016. <span>“Scientific language is becoming more
+informal.”</span> 2016. Accessed April 10, 2022. <a
 href="https://doi.org/10.1038/539140a">https://doi.org/10.1038/539140a</a>.
 </div>
 <div id="ref-explorable-explanations" class="csl-entry"
 role="doc-biblioentry">
-Ncase. 2022. <span>“Explorable Explanations.”</span> 2022. <a
-href="https://explorabl.es/">https://explorabl.es/</a>.
+Ncase. 2022. <span>“Explorable explanations.”</span> 2022. Accessed May
+7, 2022. <a href="https://explorabl.es/">https://explorabl.es/</a>.
+</div>
+<div id="ref-nvidia-best-practices" class="csl-entry"
+role="doc-biblioentry">
+Nvidia. 2020. <span>“Best practices: Using nvidia RTX ray
+tracing.”</span> October 10, 2020. Accessed May 13, 2022. <a
+href="https://developer.nvidia.com/blog/best-practices-using-nvidia-rtx-ray-tracing/">https://developer.nvidia.com/blog/best-practices-using-nvidia-rtx-ray-tracing/</a>.
+</div>
+<div id="ref-nvpro-samples-tutorial" class="csl-entry"
+role="doc-biblioentry">
+———. 2022a. <span>“Nvidia DesignWorks KHR tutorial.”</span> 2022.
+Accessed May 13, 2022. <a
+href="https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR">https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR</a>.
+</div>
+<div id="ref-nvpro-samples" class="csl-entry" role="doc-biblioentry">
+———. 2022b. <span>“Nvidia DesignWorks samples.”</span> 2022. Accessed
+May 13, 2022. <a
+href="https://github.com/nvpro-samples">https://github.com/nvpro-samples</a>.
 </div>
 <div id="ref-overvoorde-2022" class="csl-entry" role="doc-biblioentry">
-Overvoorde, Alexander. n.d. <span>“Introduction - Vulkan
-Tutorial.”</span> Accessed April 18, 2022. <a
+Overvoorde, A. 2022. <span>“Introduction - vulkan tutorial.”</span>
+2022. Accessed April 18, 2022. <a
 href="https://vulkan-tutorial.com/">https://vulkan-tutorial.com/</a>.
 </div>
 <div id="ref-mcbook" class="csl-entry" role="doc-biblioentry">
-Owen, Art B. 2013. <em>Monte Carlo Theory, Methods and Examples</em>. <a
+Owen, A. B. 2013. <em>Monte Carlo Theory, Methods and Examples</em>. <a
 href="https://artowen.su.domains/mc/">https://artowen.su.domains/mc/</a>.
 </div>
 <div id="ref-eisvogel" class="csl-entry" role="doc-biblioentry">
-Pascal Wagler. 2022. <span>“Eisvogel Pandoc Template.”</span> 2022. <a
+Pascal Wagler. 2022. <span>“Eisvogel pandoc template.”</span> 2022.
+Accessed May 7, 2022. <a
 href="https://github.com/Wandmalfarbe/pandoc-latex-template">https://github.com/Wandmalfarbe/pandoc-latex-template</a>.
 </div>
 <div id="ref-PBRT3e" class="csl-entry" role="doc-biblioentry">
-Pharr, Matt, Wenzel Jakob, and Greg Humphreys. 2016. <span>“Physically
-Based Rendering: From Theory to Implementation (3rd Ed.).”</span> San
+Pharr, M., W. Jakob, and G. Humphreys. 2016. <span>“Physically based
+rendering: From theory to implementation (3rd ed.).”</span> San
 Francisco, CA, USA: Morgan Kaufmann Publishers Inc. November 2016. <a
 href="https://www.pbr-book.org/3ed-2018/contents">https://www.pbr-book.org/3ed-2018/contents</a>.
 </div>
 <div id="ref-jetbrains-mono" class="csl-entry" role="doc-biblioentry">
-Philipp Nurullin. 2022. <span>“JetBrains Mono, a Typeface for
-Developers.”</span> 2022. <a
+Philipp Nurullin. 2022. <span>“JetBrains mono, a typeface for
+developers.”</span> 2022. Accessed May 7, 2022. <a
 href="https://www.jetbrains.com/es-es/lp/mono/">https://www.jetbrains.com/es-es/lp/mono/</a>.
 </div>
 <div id="ref-xkcd-size" class="csl-entry" role="doc-biblioentry">
-Randall Munroe. n.d. <span>“XKCD - Angular Size.”</span> Accessed May 7,
+Randall Munroe. n.d. <span>“XKCD - angular size.”</span> Accessed May 7,
 2022. <a href="https://xkcd.com/1276/">https://xkcd.com/1276/</a>.
 </div>
 <div id="ref-unknown-author-no-date" class="csl-entry"
@@ -5672,105 +5916,124 @@ href="https://sciencebehindpixar.org/pipeline/rendering#:%7E:text=They%20said%20
 </div>
 <div id="ref-https://doi.org/10.1111/1467-8659.1330233"
 class="csl-entry" role="doc-biblioentry">
-Schlick, Christophe. 1994. <span>“An Inexpensive BRDF Model for
-Physically-Based Rendering.”</span> <em>Computer Graphics Forum</em> 13
-(3): 233–46. https://doi.org/<a
+Schlick, C. 1994. <span>“An Inexpensive BRDF Model for Physically-Based
+Rendering.”</span> <em>Computer Graphics Forum</em> 13 (3): 233–46.
+https://doi.org/<a
 href="https://doi.org/10.1111/1467-8659.1330233">https://doi.org/10.1111/1467-8659.1330233</a>.
 </div>
 <div id="ref-scratchapixel-2019" class="csl-entry"
 role="doc-biblioentry">
-Scratchapixel. n.d. <span>“Learn Computer Graphics from Scratch!”</span>
-Accessed April 17, 2022. <a
+Scratchapixel. 2019. <span>“Learn computer graphics from
+scratch!”</span> 2019. Accessed April 17, 2022. <a
 href="https://www.scratchapixel.com/index.php?redirect">https://www.scratchapixel.com/index.php?redirect</a>.
 </div>
 <div id="ref-Shirley2020RTW1" class="csl-entry" role="doc-biblioentry">
-Shirley, Peter. 2020a. <span>“Ray Tracing in One Weekend.”</span> 2020.
-<a
+Shirley, P. 2020a. <span>“Ray tracing in one weekend.”</span> 2020. <a
 href="https://raytracing.github.io/books/RayTracingInOneWeekend.html">https://raytracing.github.io/books/RayTracingInOneWeekend.html</a>.
 </div>
 <div id="ref-Shirley2020RTW2" class="csl-entry" role="doc-biblioentry">
-———. 2020b. <span>“Ray Tracing: The Next Week.”</span> 2020. <a
+———. 2020b. <span>“Ray tracing: The next week.”</span> 2020. <a
 href="https://raytracing.github.io/books/RayTracingTheNextWeek.html">https://raytracing.github.io/books/RayTracingTheNextWeek.html</a>.
 </div>
 <div id="ref-Shirley2020RTW3" class="csl-entry" role="doc-biblioentry">
-———. 2020c. <span>“Ray Tracing: The Rest of Your Life.”</span> 2020. <a
+———. 2020c. <span>“Ray tracing: The rest of your life.”</span> 2020. <a
 href="https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html">https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html</a>.
 </div>
 <div id="ref-ShirleyRRT" class="csl-entry" role="doc-biblioentry">
-Shirley, Peter, and R. Keith Morley. 2003. <em>Realistic Ray
-Tracing</em>. 2nd ed. USA: A. K. Peters, Ltd. <a
+Shirley, P., and R. K. Morley. 2003. <em>Realistic Ray Tracing</em>. 2nd
+ed. USA: A. K. Peters, Ltd. <a
 href="https://www.taylorfrancis.com/books/mono/10.1201/9780429294891/realistic-ray-tracing-peter-shirley-keith-morley">https://www.taylorfrancis.com/books/mono/10.1201/9780429294891/realistic-ray-tracing-peter-shirley-keith-morley</a>.
 </div>
 <div id="ref-Szirmay-Kalos00monte-carlomethods" class="csl-entry"
 role="doc-biblioentry">
-Szirmay-Kalos, László. 2000. <span>“Monte-Carlo Methods in Global
+Szirmay-Kalos, L. 2000. <span>“Monte-Carlo Methods in Global
 Illumination.”</span> <a
 href="https://doi.org/10.1.1.36.361">https://doi.org/10.1.1.36.361</a>.
 </div>
 <div id="ref-the-khronos-vulkan-working-group-2022" class="csl-entry"
 role="doc-biblioentry">
-The Khronos® Vulkan Working Group. n.d. <span>“Vulkan® 1.2.210 - KHR
-Extensions: 33. Ray Intersection.”</span> Accessed April 1, 2022. <a
+The Khronos® Vulkan Working Group. 2022. <span>“Vulkan® 1.2.210 - KHR
+extensions: 33. Ray intersection.”</span> March 29, 2022. Accessed April
+1, 2022. <a
 href="https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap33.html#ray-intersection-candidate-determination">https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap33.html#ray-intersection-candidate-determination</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022E" class="csl-entry"
 role="doc-biblioentry">
-tracing, Wikipedia: Ray. n.d. <span>“Ray Tracing (Graphics).”</span>
-Accessed April 22, 2022. <a
+tracing, W. R. 2022. <span>“Ray tracing (graphics).”</span> March 7,
+2022. Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Ray_tracing_(graphics)">https://en.wikipedia.org/wiki/Ray_tracing_(graphics)</a>.
 </div>
 <div id="ref-bamboo" class="csl-entry" role="doc-biblioentry">
-Tran Ngoc Tuan Anh. 2022. <span>“Bamboo CSS.”</span> 2022. <a
+Tran Ngoc Tuan Anh. 2022. <span>“Bamboo CSS.”</span> 2022. Accessed May
+7, 2022. <a
 href="https://github.com/rilwis/bamboo">https://github.com/rilwis/bamboo</a>.
 </div>
 <div id="ref-fraunces" class="csl-entry" role="doc-biblioentry">
-Undercase Type, Flavia Zimbardi, Phaedra Charles. 2022. <span>“Fraunces
-Typography.”</span> 2022. <a
+Undercase Type, F. Z., Phaedra Charles. 2022. <span>“Fraunces
+typography.”</span> 2022. Accessed May 7, 2022. <a
 href="https://fonts.google.com/specimen/Fraunces">https://fonts.google.com/specimen/Fraunces</a>.
 </div>
 <div id="ref-vectary" class="csl-entry" role="doc-biblioentry">
-Vectary. 2022. <span>“Vectary - Bringing Unlimited Creativity to 3d
-Design.”</span> 2022. <a
+Vectary. 2022. <span>“Vectary - bringing unlimited creativity to 3D
+design.”</span> 2022. Accessed May 7, 2022. <a
 href="https://www.vectary.com/">https://www.vectary.com/</a>.
 </div>
 <div id="ref-disney-brdfs" class="csl-entry" role="doc-biblioentry">
-Walt Disney Animation Studios. 2019. <span>“BRDF Explorer.”</span> 2019.
-<a href="https://github.com/wdas/brdf">https://github.com/wdas/brdf</a>.
+Walt Disney Animation Studios. 2019. <span>“BRDF explorer.”</span> 2019.
+Accessed May 7, 2022. <a
+href="https://github.com/wdas/brdf">https://github.com/wdas/brdf</a>.
+</div>
+<div id="ref-wikipedia-nvidia" class="csl-entry" role="doc-biblioentry">
+Wikipedia. 2022a. <span>“List of nvidia graphics processing
+units.”</span> 2022. Accessed May 13, 2022. <a
+href="https://en.wikipedia.org/wiki/List_of_Nvidia_graphics_processing_units">https://en.wikipedia.org/wiki/List_of_Nvidia_graphics_processing_units</a>.
+</div>
+<div id="ref-wikipedia-radeon" class="csl-entry" role="doc-biblioentry">
+———. 2022b. <span>“Radeon.”</span> 2022. Accessed May 13, 2022. <a
+href="https://en.wikipedia.org/wiki/Radeon">https://en.wikipedia.org/wiki/Radeon</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022G" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Barycentric coordinate system. n.d. <span>“Barycentric
-Coordinate System.”</span> Accessed April 22, 2022. <a
+Wikipedia: Barycentric coordinate system. 2022. <span>“Barycentric
+coordinate system.”</span> March 14, 2022. Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Barycentric_coordinate_system">https://en.wikipedia.org/wiki/Barycentric_coordinate_system</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022C" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Computer. n.d. <span>“Computer.”</span> Accessed April 22,
-2022. <a
+Wikipedia: Computer. 2022. <span>“Computer.”</span> March 13, 2022.
+Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Computer">https://en.wikipedia.org/wiki/Computer</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022O" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Differential geometry of surfaces. n.d. <span>“Differential
-Geometry of Surfaces.”</span> Accessed April 22, 2022. <a
+Wikipedia: Differential geometry of surfaces. 2022. <span>“Differential
+geometry of surfaces.”</span> January 14, 2022. Accessed April 22, 2022.
+<a
 href="https://en.wikipedia.org/wiki/Differential_geometry_of_surfaces">https://en.wikipedia.org/wiki/Differential_geometry_of_surfaces</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022A" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: history of photography. n.d. <span>“History of
-Photography.”</span> Accessed April 22, 2022. <a
+Wikipedia: history of photography. 2022. <span>“History of
+photography.”</span> March 18, 2022. Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/History_of_photography">https://en.wikipedia.org/wiki/History_of_photography</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022B" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: Kodak. n.d. <span>“Kodak.”</span> Accessed April 22, 2022. <a
+Wikipedia: Kodak. 2022. <span>“Kodak.”</span> March 14, 2022. Accessed
+April 22, 2022. <a
 href="https://es.wikipedia.org/wiki/Kodak">https://es.wikipedia.org/wiki/Kodak</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022D" class="csl-entry"
 role="doc-biblioentry">
-Wikipedia: rendering (computer graphics). n.d. <span>“Rendering
-(Computer Graphics).”</span> Accessed April 22, 2022. <a
+Wikipedia: rendering (computer graphics). 2022. <span>“Rendering
+(computer graphics).”</span> March 8, 2022. Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Rendering_(computer_graphics)">https://en.wikipedia.org/wiki/Rendering_(computer_graphics)</a>.
+</div>
+<div id="ref-shader-binding-table" class="csl-entry"
+role="doc-biblioentry">
+Will Usher. 2019. <span>“The RTX shader binding table three
+ways.”</span> November 20, 2019. Accessed May 13, 2022. <a
+href="https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways">https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways</a>.
 </div>
 </div>
 <section class="footnotes footnotes-end-of-document"
@@ -5781,7 +6044,7 @@ role="doc-endnotes">
 naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos
 divulgadores como <span class="citation"
 data-cites="quantumfracture-2021">(<a href="#ref-quantumfracture-2021"
-role="doc-biblioref">José Luis Crespo n.d.</a>)</span> que han tratado
+role="doc-biblioref">José Luis Crespo 2021</a>)</span> que han tratado
 el tema con suficiente profundidad.<a href="#fnref1"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>Recuerda que estamos omitiendo la
@@ -5798,7 +6061,7 @@ en tiempo real, existen algunas implementaciones que son capaces de
 correrlo por software. Notablemente, el motor de Crytek, CryEngine, es
 capaz de mover ray tracing basado en hardware y en software <span
 class="citation" data-cites="crytek-2020">(<a href="#ref-crytek-2020"
-role="doc-biblioref">Crytek n.d.</a>)</span><a href="#fnref4"
+role="doc-biblioref">Crytek 2020</a>)</span><a href="#fnref4"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5" role="doc-endnote"><p>Afortunadamente, esto tampoco es
 completamente cierto. La compañía desarrolladora y distribuidora de
