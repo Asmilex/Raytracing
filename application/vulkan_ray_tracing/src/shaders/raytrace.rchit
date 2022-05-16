@@ -172,12 +172,12 @@ void main()
             vec3 tangent, bitangent;
             create_coordinate_system(world_normal, tangent, bitangent);
 
-            if (COSINE_HEMISPHERE_SAMPLING) {   // Muestreo por importancia de la esfera
+            if (COSINE_HEMISPHERE_SAMPLING == 1) {   // Muestreo por importancia de la esfera
                 ray_dir   = cosine_sample_hemisphere(prd.seed, tangent, bitangent, world_normal);
                 cos_theta = dot(ray_dir, world_normal);
                 pdf       = cos_theta/M_PI;
             }
-            else {                              // Hemisphere sampling
+            else {                                   // Hemisphere sampling
                 ray_dir   = sampling_hemisphere(prd.seed, tangent, bitangent, world_normal);
                 cos_theta = dot(ray_dir, world_normal);
                 pdf       = 1 / M_PI;
