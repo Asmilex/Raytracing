@@ -32,7 +32,14 @@ void main() {
     vec3 pixel_color = vec3(0);  // El color final de la imagen
 
     for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {     // sample is a keyword, so we use smpl
-        pixel_color += sample_pixel(image_coords, image_res);
+        vec3 this_pixel = sample_pixel(image_coords, image_res);
+
+        if (USE_GAMMA_CORRECTION == 1) {
+            this_pixel = pow(this_pixel, vec3(1.0 / 2.2));  // Gamma correction for 2.2
+            this_pixel = clamp(this_pixel, 0.0, 1.0);
+        }
+
+        pixel_color += this_pixel;
     }
 
     pixel_color = pixel_color / pcRay.nb_samples;

@@ -6,6 +6,7 @@
 //
 
 const bool COSINE_HEMISPHERE_SAMPLING = true;
+#define USE_GAMMA_CORRECTION 1
 
 const float ETA_AIR = 1.0003f;
 
