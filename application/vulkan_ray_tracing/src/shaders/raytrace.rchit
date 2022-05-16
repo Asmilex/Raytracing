@@ -155,7 +155,7 @@ void main()
         ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
         BSDF    = mat.specular;
     }
-    else if (mat.illum == 2) {      // Materiales difusos y glossy.
+    else if (mat.illum == 2 || mat.illum == 4) {      // Materiales difusos y glossy.
         // Si es glossy, entonces Ns == shininess > 10
         // Ten en cuenta la especularidad y la difusión.
         // Una buena medida sería sacar un aleatorio con probabilidad
@@ -202,9 +202,6 @@ void main()
             ray_dir = ray_dir + (1024 - mat.shininess) / 990 * random_in_unit_sphere(prd.seed);
             BSDF    = mat.specular * (1.0 - prob_diffuse);
         }
-    }
-    else if (mat.illum == 4) {      // Transparencia: Glass on, ray traced reflections
-        // Anyhit, gestionados en otro shader.
     }
     else if (mat.illum == 5) {      // Materiales reflectantes (con Fresnel)
         ray_dir = reflect(gl_WorldRayDirectionEXT, normal);
