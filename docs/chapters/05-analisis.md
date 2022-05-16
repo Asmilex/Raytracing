@@ -18,8 +18,13 @@ Una vez se ha [compilado](#compilación-y-ejecución) el programa, puedes encont
 Si alguna vez has usado un motor de renderización en 3D (como Blender, Unity, Unreal Engine o AutoCAD), el comportamiento debería resultarte familiar. El uso de nuestro progama es análogo al de los anteriores:
 
 - El **botón izquierdo del ratón rota** la cámara alderedor del punto de mira.
-- Para acercar o alejar la cámara, utiliza la **rueda de scroll**.
-- El **click derecho del ratón** desplaza lateralmente la cámara.
+- Para acercar o alejar la cámara, utiliza la **rueda de scroll** o el **botón derecho del ratón + hacia arriba o abajo**.
+- Si quieres moverte lateralmente, mantén pulsado la tecla **control** y utiliza el **botón izquierdo + arrastrar**. Alternativamente, **aprieta el click de la rueda del ratón** y múevete.
+- Para girar la cámara alderedor como si de un *first person shooter* se tratara, pulsa **alt + click izquierdo**.
+
+Puedes cambiar el modo de cámara en la pestaña "Extra" de la interfaz gráfica. Los diferentes modos alternan entre las acciones listadas anteriormente.
+
+Para ocultar la interfaz gráfica, pulsa **F10**.
 
 ### Cambio de escena
 
@@ -31,23 +36,45 @@ El programa viene acompañado de varias escenas. Desafortunadamente, para cambia
 
 Las escenas son las siguientes:
 
-| **Nombre de escena**             | **Descripción**                                                                         | **Imagen** |
-|:---------------------------------|:----------------------------------------------------------------------------------------|:----------:|
-| `cube_default`                   | La escena por defecto del programa. Muestra un simple cubo.                             |            |
-| `any_hit`                        | Desmostración de las capacidades del shader *anyhit*.                                   |            |
-| `cube_reflective`                | Ejemplifica *ray traced reflections*.                                                   |            |
-| `medieval_building`              | Una sencilla escena que contiene una casa medieval con texturas.                        |            |
-| `cornell_box_original`           | Una reconstrucción de la caja de Cornell original [@cornell-box-original].              |            |
-| `cornell_box_mirror`             | Similar a la caja original, esta escena es una recreación de [@cornell-box-compare].    |            |
-| `cornell_box_vacia`              | La caja original sin las cajitas pequeñas dentro.                                       |            |
-| `cornell_box_vacia_azul_naranja` | Similar a la anterior, pero con las paredes naranjas y azules.                          |            |
-| `cornell_box_esferas`            | Una caja de Cornell con esferas. Se puede comparar con [@Jensen2001, p. 107 fig. 9.10]. |            |
-| `cornell_box_saturada`           | Otra caja de Cornell similar a la original, pero con las paredes saturadas.             |            |
-| `cornell_box_glossy`             |                                                                                         |            |
-| `cornell_box_blanca`             |                                                                                         |            |
-| `cubes`                          |                                                                                         |            |
 
-
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| **Nombre de escena** | **Descripción**                                                                                                          | **Imagen**                     |
++======================+==========================================================================================================================+================================+
+| `cube_default`       | La escena por defecto del programa. Muestra un simple cubo.                                                              | ![](./img/05/cube_default.png) |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `any_hit`            | Desmostración de las capacidades del shader *anyhit*.                                                                    |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `cube_reflective`    | Ejemplifica *ray traced reflections*.                                                                                    |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `medieval`           | Una sencilla escena que contiene una casa medieval con texturas.                                                         |                                |
+| `_building`          |                                                                                                                          |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `cornell_box`        | Una reconstrucción de la caja de Cornell original [@cornell-box-original].                                               |                                |
+| `_original`          |                                                                                                                          |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `cornell_box`        | Similar a la caja original, esta escena es una recreación de [@cornell-box-compare].                                     |                                |
+| `_mirror`            |                                                                                                                          |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `cornell_box`        | La caja original sin las cajitas pequeñas dentro.                                                                        |                                |
+| `_vacia`             |                                                                                                                          |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `cornell_box`        | Similar a la anterior, pero con las paredes naranjas y azules.                                                           |                                |
+| `_vacia_an`          |                                                                                                                          |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `cornell_box`        | Una caja de Cornell con esferas. Se puede comparar con [@Jensen2001, p. 107 fig. 9.10].                                  |                                |
+| `_esferas`           |                                                                                                                          |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `cornell_box`        | Otra caja de Cornell similar a la original, pero con las paredes saturadas.                                              |                                |
+| `_saturada`          |                                                                                                                          |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `cornell_box`        | En esta caja se encuentran dos esferas de diferente material. Se puede comparar con [@cornell-box-glossy, p. 17, fig. 6] |                                |
+| `_glossy`            |                                                                                                                          |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `cornell_box`        | Una caja vacía. Es un benchmark infernal para el ruido generado por la iluminación global.                               |                                |
+| `_blanca`            |                                                                                                                          |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
+| `cubes`              | Dos cubos de diferente material sobre un plano reflectante.                                                              |                                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------+
 
 ## Path tracing ON
 
