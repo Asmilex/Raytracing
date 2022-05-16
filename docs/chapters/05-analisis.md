@@ -75,6 +75,8 @@ Las escenas son las siguientes:
 | `cubes`              | Dos cubos de diferente material sobre un plano reflectante.                                                              | ![](./img/05/cubes.png)                |
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 
+Ten en cuenta que las imágenes de las escenas no son definitivas. Están sujetas a cambios, pues se podría cambiar el comportamiento de los shaders.
+
 ## Path tracing ON
 
 Cosas de las que tengo que hablar:
@@ -96,12 +98,12 @@ Cosas de las que tengo que hablar:
 
 ## Rendimiento
 
-## Midiendo el coste de un frame
+### Diferentes escenas
 ### Resolución
 ### Profundidad de un rayo
 ### Acumulación temporal
 ### Número de muestras
-### Diferentes escenas
 ### Importance sampling
+
 
 ## Comparativa con In One Weekend

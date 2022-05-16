@@ -233,9 +233,9 @@ Las API de gráficos están empezando a adaptarse a los requisitos del tiempo re
 
 Esta es una lista de las API disponibles con capacidades de Ray Tracing disponibles para, al menos, la arquitectura Turing:
 
-- Vulkan (los bindings de ray tracing se denominan KHR).
-- Microsoft DirectX Ray Tracing (DXR), una extensión de DirectX 12.
-- Nvidia OptiX.
+- Vulkan, junto a los *bindings* de ray tracing, denominados KHR.
+- Microsoft DirectX Ray Tracing (DXR), una extensión de DirectX 12 [@directx-12].
+- Nvidia OptiX [@optix].
 
 De momento, no hay mucho donde elegir.
 
@@ -248,7 +248,7 @@ Tanto DXR como Vulkan son los candidatos más sólidos. DXR salió en 2018, con 
 
 Ambas API se comportan de manera muy similar, y no existe una gran diferencia entre ellas; tanto en rendimiento como en complejidad de desarrollo. Actualmente el proyecto solo compila en Windows 10 o mayor, por lo que estos dos puntos no resultan especialmente relevantes para el trabajo.
 
-Si se desea, se puede encontrar una comparación más a fondo de las API en el blog de [@alain-API]
+Si se desea, se puede encontrar una comparación más a fondo de las API en el blog de [@alain-API]. Además, el manual de Vulkan con las extensiones de KHR se puede encontrar en [@vulkan].
 
 ## Setup del proyecto
 
@@ -401,7 +401,7 @@ Primero, debemos introducir unas nociones básicas de Vulkan sobre cómo gestion
 
 Un ***resource descriptor*** (usualmente lo abreviaremos como descriptor) es una forma de cargar recursos como buffers o imágenes para que la tarjeta gráfica los pueda utilizar; concretamente, los shaders. El ***descriptor layout*** especifica el tipo de recurso que va a ser accedido, mientras que el ***descriptor set*** determina el buffer o imagen que se va a asociar al descriptor. Este set es el que se utiliza en los **drawing commands**. Un **pipeline** es una secuencia de operaciones que reciben una geometría y sus texturas, y la transforma en unos pixels.
 
-Si necesitas más información, todos estos conceptos aparecen desarrollados extensamente en [@overvoorde-2022].
+Si necesitas más información, todos estos conceptos aparecen desarrollados extensamente en [@overvoorde-2022, Descriptor layout and buffer].
 
 Tradicionalmente, en rasterización se utiliza un descriptor set por tipo de material, y consecuentemente, un pipeline por cada tipo. En ray tracing esto no es posible, puesto que **no se sabe qué material** se va a usar: un rayo puede impactar en *cualquier* material presente en la escena, lo cual invocaría un shader específico. Debido a esto, empaquetaremos todos los recursos en un único set de descriptores.
 
@@ -739,29 +739,9 @@ Nosotros no nos preocuparemos especialmente por esto. Este no es un trabajo sobr
 
 Es importante mencionar que sin acumulación temporal, el código anterior produciría variaciones significativas para pequeños movimientos. Hay otras formas de compensarlo, como dividir por el valor promedio de las muestras más brillantes. Nosotros hemos optado por mezclar los píxeles generados a lo largo del tiempo.
 
-<hr>
 
-## Referencias {.unlisted .unnumbered}
 
-- https://github.com/dannyfritz/awesome-ray-tracing
-- https://www.wikiwand.com/en/Radeon
-- https://www.wikiwand.com/en/List_of_Nvidia_graphics_processing_units#/GeForce_30_series
-- https://www.eurogamer.net/digitalfoundry-2021-the-big-intel-interview-how-intel-alchemist-gpus-and-xess-upscaling-will-change-the-market
-- https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/overview.html
-- https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html
-- https://www.wikiwand.com/en/OptiX
-- https://www.wikiwand.com/en/DirectX_Raytracing
-- https://www.wikiwand.com/es/Valve_Corporation
-- https://www.phoronix.com/scan.php?page=news_item&px=VKD3D-Proton-2.5
-- https://github.com/ValveSoftware/Proton
-- https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/
-- https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-acceleration-structure
-- https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering
-- https://raytracing.github.io/books/RayTracingTheNextWeek.html#boundingvolumehierarchies
-- https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_layout_and_buffer
-- Ray tracing gems II, p.241.
-- https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways
 
 
 [^4]: Esto no es del todo cierto. Aunque generalmente suelen ser excepciones debido al coste computacional de RT en tiempo real, existen algunas implementaciones que son capaces de correrlo por software. Notablemente, el motor de Crytek, CryEngine, es capaz de mover ray tracing basado en hardware y en software [@crytek-2020]
-[^5]: Afortunadamente, esto tampoco es completamente cierto. La compañía desarrolladora y distribuidora de videojuegos Valve Corporation ha creado una pieza de software fascinante: [Proton](https://github.com/ValveSoftware/Proton). Proton utiliza Wine para emular software en Linux que solo puede correr en plataformas Windows. La versión 2.5 añadió soporte para traducción de bindings de DXR a KHR, lo que permite utilizar DirectX12 ray tracing en sistemas basados en Linux. El motivo de este software es expandir el mercado de videojuegos disponibles en su consola, la Steam Deck.
+[^5]: Afortunadamente, esto tampoco es completamente cierto. La compañía desarrolladora y distribuidora de videojuegos Valve Corporation [@valve] ha creado una pieza de software fascinante: Proton [@proton]. Proton utiliza Wine para emular software en Linux que solo puede correr en plataformas Windows. La versión 2.5 añadió soporte para traducción de bindings de DXR a KHR, lo que permite utilizar DirectX12 ray tracing en sistemas basados en Linux. El motivo de este software es expandir el mercado de videojuegos disponibles en su consola, la Steam Deck.

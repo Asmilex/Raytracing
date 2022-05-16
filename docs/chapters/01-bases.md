@@ -315,7 +315,7 @@ $$
 \end{pmatrix}
 $$
 
-Calcular rápidamente la solución a un sistema de ecuaciones lineales es un problema habitual. En [@ShirleyRRT] se utiliza la regla de Cramer para hacerlo, esperando que el compilador optimice las variables intermedias creadas. Nosotros no nos tendremos que preocupar de esto en particular, ya que el punto de impacto lo calculará la GPU gracias a las herramientras aportadas por KHR [@the-khronos-vulkan-working-group-2022].
+Calcular rápidamente la solución a un sistema de ecuaciones lineales es un problema habitual. En [@ShirleyRRT] se utiliza la regla de Cramer para hacerlo, esperando que el compilador optimice las variables intermedias creadas. Nosotros no nos tendremos que preocupar de esto en particular, ya que el punto de impacto lo calculará la GPU gracias a las herramientras aportadas por KHR [@vulkan, Ray Traversal].
 
 Para obtener el vector normal, podemos hacer el producto vectorial de dos vectores que se encuentren en el plano del triángulo. Como, por convención, los vértices se guardan en sentido antihorario visto desde fuera del objeto, entonces
 
