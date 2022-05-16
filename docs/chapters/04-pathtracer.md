@@ -529,85 +529,6 @@ struct WaveFrontMaterial
 };
 ```
 
-## Antialiasing mediante jittering y acumulación temporal
-
-Normalmente, mandamos los rayos desde el centro de un pixel. Podemos conseguir una mejora sustancial de la calidad con un pequeño truco: en vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña perturbación (*jittering*). Así, tendremos una variación de colores para un mismo pixel, por lo que podemos hacer una ponderación de todos ellos. A este proceso lo que llamamos **acumulación temporal**.
-
-Es importante destacar que el efecto de esta técnica solo es válido cuando la **cámara se queda estática**. Al cambiar de posición, la información del píxel se ve alterada significativamente, por lo que debemos reconstruir las muestras desde el principio.
-
-La implementación es muy sencilla. Está basada en el tutorial de [@nvpro-samples-tutorial, jitter camera]. Debemos modificar tanto el motor como los shaders para llevar el recuento del número de frames en las push constants.
-
-Definimos el número máximo de frames que se pueden acumular:
-
-```cpp
-// engine.h
-class Engine {
-    //...
-    int m_maxAcumFrames {100};
-}
-```
-
-Las push constant deberán llevar un registro del frame en el que se encuentran, así como un número máximo de muestras a acumular para un pixel:
-
-```cpp
-// host_device.h
-struct PushConstantRay {
-    //...
-    int   frame;
-    int   nb_samples
-}
-```
-
-El número de frame se reseteará cuando la cámara se mueva, la ventana se reescale, o se produzca algún efecto similar en la aplicación.
-
-Finalmente, en los shaders podemos implementar lo siguiente:
-
-```glsl
-// raytrace.rgen
-vec3 pixel_color = vec3(0);
-
-for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {
-    pixel_color += sample_pixel(image_coords, image_res);
-}
-
-pixel_color = pixel_color / pcRay.nb_samples;
-
-if (pcRay.frame > 0) {
-    vec3 old_color = imageLoad(image, image_coords).xyz;
-    vec3 new_result = mix(
-        old_color,
-        pixel_color,
-        1.f / float(pcRay.frame + 1)
-    );
-
-    imageStore(image, image_coords, vec4(new_result, 1.f));
-}
-else {
-    imageStore(image, image_coords, vec4(pixel_color, 1.0));
-}
-```
-
-```glsl
-// pathtrace.glsl
-vec3 sample_pixel() {
-    float r1 = rnd(prd.seed);
-    float r2 = rnd(prd.seed);
-
-    // Subpixel jitter: mandar el rayo desde una pequeña perturbación del pixel para aplicar antialiasing
-    vec2 subpixel_jitter = pcRay.frame == 0
-        ? vec2(0.5f, 0.5f)
-        : vec2(r1, r2);
-
-    const vec2 pixelCenter = vec2(image_coords.xy) + subpixel_jitter;
-
-    // ...
-
-    vec3 radiance = pathtrace(rayo);
-}
-```
-
-> TODO: mostrar vídeo de ejemplo
-
 ## Fuentes de luz
 
 La última estructura de datos importante que debemos estudiar es la utilizada para las fuentes de luces. Desafortunadamente, en este trabajo no se ha implementado una abstracción sólida.
@@ -702,7 +623,121 @@ if (dot(normal, L) > 0) {
 }
 ```
 
-Y con esto, hemos conseguido añadir dos tipos de fuentes de iluminación. En la sección de resultados comprobaremos el resultado.
+Y con esto, hemos conseguido añadir dos tipos de fuentes de iluminación.
+
+## Antialiasing mediante jittering y acumulación temporal
+
+Normalmente, mandamos los rayos desde el centro de un pixel. Podemos conseguir una mejora sustancial de la calidad con un pequeño truco: en vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña perturbación (*jittering*). Así, tendremos una variación de colores para un mismo pixel, por lo que podemos hacer una ponderación de todos ellos. A este proceso lo que llamamos **acumulación temporal**.
+
+Es importante destacar que el efecto de esta técnica solo es válido cuando la **cámara se queda estática**. Al cambiar de posición, la información del píxel se ve alterada significativamente, por lo que debemos reconstruir las muestras desde el principio.
+
+La implementación es muy sencilla. Está basada en el tutorial de [@nvpro-samples-tutorial, jitter camera]. Debemos modificar tanto el motor como los shaders para llevar el recuento del número de frames en las push constants.
+
+Definimos el número máximo de frames que se pueden acumular:
+
+```cpp
+// engine.h
+class Engine {
+    //...
+    int m_maxAcumFrames {100};
+}
+```
+
+Las push constant deberán llevar un registro del frame en el que se encuentran, así como un número máximo de muestras a acumular para un pixel:
+
+```cpp
+// host_device.h
+struct PushConstantRay {
+    //...
+    int   frame;
+    int   nb_samples
+}
+```
+
+El número de frame se reseteará cuando la cámara se mueva, la ventana se reescale, o se produzca algún efecto similar en la aplicación.
+
+Finalmente, en los shaders podemos implementar lo siguiente:
+
+```glsl
+// raytrace.rgen
+vec3 pixel_color = vec3(0);
+
+for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {
+    pixel_color += sample_pixel(image_coords, image_res);
+}
+
+pixel_color = pixel_color / pcRay.nb_samples;
+
+if (pcRay.frame > 0) {
+    vec3 old_color = imageLoad(image, image_coords).xyz;
+    vec3 new_result = mix(
+        old_color,
+        pixel_color,
+        1.f / float(pcRay.frame + 1)
+    );
+
+    imageStore(image, image_coords, vec4(new_result, 1.f));
+}
+else {
+    imageStore(image, image_coords, vec4(pixel_color, 1.0));
+}
+```
+
+```glsl
+// pathtrace.glsl
+vec3 sample_pixel() {
+    float r1 = rnd(prd.seed);
+    float r2 = rnd(prd.seed);
+
+    // Subpixel jitter: mandar el rayo desde una pequeña perturbación del pixel para aplicar antialiasing
+    vec2 subpixel_jitter = pcRay.frame == 0
+        ? vec2(0.5f, 0.5f)
+        : vec2(r1, r2);
+
+    const vec2 pixelCenter = vec2(image_coords.xy) + subpixel_jitter;
+
+    // ...
+
+    vec3 radiance = pathtrace(rayo);
+}
+```
+
+> TODO: mostrar vídeo de ejemplo
+
+## Corrección de gamma
+
+Con el código de la sección [anterior](#antialiasing-mediante-jittering-y-acumulación-temporal), existe un problema con los colores finales. El algoritmo de pathtracing no limita el máximo valor que puede tomar un camino. Sin embargo, Vulkan espera que la terna RGB provista esté en $[0, 1]^3$. Esto implica que los colores acabarán quemados.
+
+![Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz.](./img/04/Quemado.png)
+
+Podemos corregir este problema mediante **corrección de gamma**. Esta es una operación no lineal utilizada en fotografía para corregir la luminacia de una fotografía, con el fin de compensar la percepción no lineal del brillo por parte de los humanos. En este caso, lo haremos al estilo [@Shirley2020RTW1]: tras tomar las muestras, aplicaremos una corrección para $\gamma = 2.2$, lo cual implica elevar cada componente del píxel a la potencia $\frac{1}{2.2}$; es decir, $(r_f, g_f, b_f) = (r^{\frac{1}{2.2}}, g^{\frac{1}{2.2}}, b^{\frac{1}{2.2}})$.
+
+Tras esto, limitaremos el valor máximo de cada componente a 1 con la operación $clamp()$.
+
+```glsl
+vec3 pixel_color = vec3(0);
+
+for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {
+    pixel_color += sample_pixel(image_coords, image_res);
+}
+
+pixel_color = pixel_color / pcRay.nb_samples;
+
+if (USE_GAMMA_CORRECTION == 1) {
+    pixel_color = pow(pixel_color, vec3(1.0 / 2.2));  // Gamma correction for 2.2
+    pixel_color = clamp(pixel_color, 0.0, 1.0);
+}
+```
+
+![Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos.](./img/04/Corrección%20de%20gamma.png)
+
+> Espera. Esa no parece la misma escena. ¿No han cambiado los colores demasiado?
+
+¡Bien visto! Es cierto que los colores se ven significativamente alterados. Esto es debido a la conversión de un espacio lineal de respuesta de radiancia a uno logarítmico. Algunos autores como Íñigo Quílez (coautor de la página Shader Toy) prefieren asumir esta deficiencia, y modificar los materiales acordemente a esto [@gamma-correction, The Color Space].
+
+Nosotros no nos preocuparemos especialmente por esto. Este no es un trabajo sobre teoría del color, aunque nos metamos en varias partes en ella. El área de tone mapping es extensa y merecería su propio estudio.
+
+Es importante mencionar que sin acumulación temporal, el código anterior produciría variaciones significativas para pequeños movimientos. Hay otras formas de compensarlo, como dividir por el valor promedio de las muestras más brillantes. Nosotros hemos optado por mezclar los píxeles generados a lo largo del tiempo.
 
 <hr>
 
