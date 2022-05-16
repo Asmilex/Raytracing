@@ -7,7 +7,7 @@ enum Scene {
     cornell_box_saturada,
     cornell_box_mirror,
     cornell_box_vacia,
-    cornell_box_vacia_azul_naranja,
+    cornell_box_vacia_an,
     cornell_box_esferas,
     cornell_box_glossy,
     cornell_box_blanca,
@@ -176,7 +176,7 @@ public:
 
         // ─────────────────────────────────────────────────────────────────
 
-        case Scene::cornell_box_vacia_azul_naranja:
+        case Scene::cornell_box_vacia_an:
             models.push_back(ModelInfo{
                 "media/scenes/cornell_box_empty_co.obj",
             });
