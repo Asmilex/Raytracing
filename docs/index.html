@@ -480,12 +480,14 @@ pipeline</a></li>
 </ul></li>
 <li><a href="#materiales-y-objetos"><span
 class="toc-section-number">5.7</span> Materiales y objetos</a></li>
+<li><a href="#fuentes-de-luz"><span
+class="toc-section-number">5.8</span> Fuentes de luz</a></li>
 <li><a
 href="#antialiasing-mediante-jittering-y-acumulación-temporal"><span
-class="toc-section-number">5.8</span> Antialiasing mediante jittering y
+class="toc-section-number">5.9</span> Antialiasing mediante jittering y
 acumulación temporal</a></li>
-<li><a href="#fuentes-de-luz"><span
-class="toc-section-number">5.9</span> Fuentes de luz</a></li>
+<li><a href="#corrección-de-gamma"><span
+class="toc-section-number">5.10</span> Corrección de gamma</a></li>
 </ul></li>
 <li><a href="#análisis-de-rendimiento"><span
 class="toc-section-number">6</span> Análisis de rendimiento</a>
@@ -499,25 +501,23 @@ class="toc-section-number">6.1.1</span> Cambio de escena</a></li>
 <li><a href="#path-tracing-on"><span
 class="toc-section-number">6.2</span> Path tracing ON</a></li>
 <li><a href="#rendimiento"><span class="toc-section-number">6.3</span>
-Rendimiento</a></li>
-<li><a href="#midiendo-el-coste-de-un-frame"><span
-class="toc-section-number">6.4</span> Midiendo el coste de un frame</a>
+Rendimiento</a>
 <ul>
-<li><a href="#resolución"><span class="toc-section-number">6.4.1</span>
+<li><a href="#diferentes-escenas"><span
+class="toc-section-number">6.3.1</span> Diferentes escenas</a></li>
+<li><a href="#resolución"><span class="toc-section-number">6.3.2</span>
 Resolución</a></li>
 <li><a href="#profundidad-de-un-rayo"><span
-class="toc-section-number">6.4.2</span> Profundidad de un rayo</a></li>
+class="toc-section-number">6.3.3</span> Profundidad de un rayo</a></li>
 <li><a href="#acumulación-temporal"><span
-class="toc-section-number">6.4.3</span> Acumulación temporal</a></li>
+class="toc-section-number">6.3.4</span> Acumulación temporal</a></li>
 <li><a href="#número-de-muestras"><span
-class="toc-section-number">6.4.4</span> Número de muestras</a></li>
-<li><a href="#diferentes-escenas"><span
-class="toc-section-number">6.4.5</span> Diferentes escenas</a></li>
+class="toc-section-number">6.3.5</span> Número de muestras</a></li>
 <li><a href="#importance-sampling"><span
-class="toc-section-number">6.4.6</span> Importance sampling</a></li>
+class="toc-section-number">6.3.6</span> Importance sampling</a></li>
 </ul></li>
 <li><a href="#comparativa-con-in-one-weekend"><span
-class="toc-section-number">6.5</span> Comparativa con In One
+class="toc-section-number">6.4</span> Comparativa con In One
 Weekend</a></li>
 </ul></li>
 <li><a href="#el-presente-y-futuro-de-rt"><span
@@ -1324,10 +1324,8 @@ regla de Cramer para hacerlo, esperando que el compilador optimice las
 variables intermedias creadas. Nosotros no nos tendremos que preocupar
 de esto en particular, ya que el punto de impacto lo calculará la GPU
 gracias a las herramientras aportadas por KHR <span class="citation"
-data-cites="the-khronos-vulkan-working-group-2022">(<a
-href="#ref-the-khronos-vulkan-working-group-2022"
-role="doc-biblioref">The Khronos® Vulkan Working Group
-2022</a>)</span>.</p>
+data-cites="vulkan">(<a href="#ref-vulkan" role="doc-biblioref">The
+Khronos Vulkan Working Group 2022</a>, Ray Traversal)</span>.</p>
 <p>Para obtener el vector normal, podemos hacer el producto vectorial de
 dos vectores que se encuentren en el plano del triángulo. Como, por
 convención, los vértices se guardan en sentido antihorario visto desde
@@ -3964,10 +3962,10 @@ h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow
 \omega_j) L_i(p, \omega_j) \cos\theta_j}{p(\omega_j)}}
 \]</span></p>
 <p>Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento
-que el recursivo (<span class="citation"
+que el recursivo <span class="citation"
 data-cites="nvpro-samples-tutorial">(<a
 href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
-2022a</a>, glTF Scene)</span>).</p>
+2022a</a>, glTF Scene)</span>.</p>
 <h2 data-number="5.2"
 id="requisitos-de-ray-tracing-en-tiempo-real"><span
 class="header-section-number">5.2</span> Requisitos de ray tracing en
@@ -3996,11 +3994,6 @@ motor en tiempo real con ray tracing funcione.</p>
 <h3 data-number="5.2.1" id="arquitecturas-de-gráficas"><span
 class="header-section-number">5.2.1</span> Arquitecturas de
 gráficas</h3>
-<blockquote>
-<p>TODO: Esta <a
-href="https://alain.xyz/blog/comparison-of-modern-graphics-apis">página</a>
-es maravillosa <em>chef kiss</em></p>
-</blockquote>
 <p>El requisito más importante de todos es la gráfica. Para ser capaces
 de realizar cálculos de ray tracing en tiempo real, necesitaremos una
 arquitectura moderna con núcleos dedicados a este tipo de cáclulos <a
@@ -4049,15 +4042,15 @@ XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT</td>
 </tr>
 </tbody>
 </table>
-<p>Se puede encontrar más información en las respectivas páginas de las
-compañías o los artículos de Wikipedia <span class="citation"
+<p>Se puede encontrar más información sobre las diferentes arquitecturas
+y gráficas en el siguiente artículo de AMD Radeon <span class="citation"
 data-cites="wikipedia-radeon">(<a href="#ref-wikipedia-radeon"
-role="doc-biblioref">Wikipedia 2022b</a>)</span>, <span class="citation"
-data-cites="wikipedia-nvidia">(<a href="#ref-wikipedia-nvidia"
-role="doc-biblioref">Wikipedia 2022a</a>)</span>, <span class="citation"
-data-cites="intel-arc">(<a href="#ref-intel-arc"
-role="doc-biblioref">Intel 2022</a>)</span>. Solo se han incluido las
-gráficas de escritorio de consumidor.</p>
+role="doc-biblioref">Wikipedia 2022d</a>)</span>, Nvidia <span
+class="citation" data-cites="wikipedia-nvidia">(<a
+href="#ref-wikipedia-nvidia" role="doc-biblioref">Wikipedia
+2022b</a>)</span>, e <span class="citation" data-cites="intel-arc">(<a
+href="#ref-intel-arc" role="doc-biblioref">Intel 2022</a>)</span>. Solo
+se han incluido las gráficas de escritorio de consumidor.</p>
 <p>Para este trabajo se ha utilizado una <strong>RTX 2070
 Super</strong>. En el capítulo de análisis del rendimiento se hablará
 con mayor profundidad de este apartado.</p>
@@ -4075,10 +4068,14 @@ empresariales de gran embergadura.</p>
 <p>Esta es una lista de las API disponibles con capacidades de Ray
 Tracing disponibles para, al menos, la arquitectura Turing:</p>
 <ul>
-<li>Vulkan (los bindings de ray tracing se denominan KHR).</li>
-<li>Microsoft DirectX Ray Tracing (DXR), una extensión de DirectX
-12.</li>
-<li>Nvidia OptiX.</li>
+<li>Vulkan, junto a los <em>bindings</em> de ray tracing, denominados
+KHR.</li>
+<li>Microsoft DirectX Ray Tracing (DXR), una extensión de DirectX 12
+<span class="citation" data-cites="directx-12">(<a
+href="#ref-directx-12" role="doc-biblioref">Wikipedia
+2022a</a>)</span>.</li>
+<li>Nvidia OptiX <span class="citation" data-cites="optix">(<a
+href="#ref-optix" role="doc-biblioref">Wikipedia 2022c</a>)</span>.</li>
 </ul>
 <p>De momento, no hay mucho donde elegir.</p>
 <p>OptiX es la API más vieja de todas. Su primera versión salió en 2009,
@@ -4108,7 +4105,10 @@ trabajo.</p>
 <p>Si se desea, se puede encontrar una comparación más a fondo de las
 API en el blog de <span class="citation" data-cites="alain-API">(<a
 href="#ref-alain-API" role="doc-biblioref">Alain Galvan
-2022</a>)</span></p>
+2022</a>)</span>. Además, el manual de Vulkan con las extensiones de KHR
+se puede encontrar en <span class="citation" data-cites="vulkan">(<a
+href="#ref-vulkan" role="doc-biblioref">The Khronos Vulkan Working Group
+2022</a>)</span>.</p>
 <h2 data-number="5.3" id="setup-del-proyecto"><span
 class="header-section-number">5.3</span> Setup del proyecto</h2>
 <p>Un proyecto de Vulkan necesita una cantidad de código inicial
@@ -4363,7 +4363,8 @@ una geometría y sus texturas, y la transforma en unos pixels.</p>
 <p>Si necesitas más información, todos estos conceptos aparecen
 desarrollados extensamente en <span class="citation"
 data-cites="overvoorde-2022">(<a href="#ref-overvoorde-2022"
-role="doc-biblioref">Overvoorde 2022</a>)</span>.</p>
+role="doc-biblioref">Overvoorde 2022</a>, Descriptor layout and
+buffer)</span>.</p>
 <p>Tradicionalmente, en rasterización se utiliza un descriptor set por
 tipo de material, y consecuentemente, un pipeline por cada tipo. En ray
 tracing esto no es posible, puesto que <strong>no se sabe qué
@@ -4662,88 +4663,8 @@ struct WaveFrontMaterial
   int   illum;     // illumination model (see http://www.fileformat.info/format/material/)
   int   textureId;
 };</code></pre>
-<h2 data-number="5.8"
-id="antialiasing-mediante-jittering-y-acumulación-temporal"><span
-class="header-section-number">5.8</span> Antialiasing mediante jittering
-y acumulación temporal</h2>
-<p>Normalmente, mandamos los rayos desde el centro de un pixel. Podemos
-conseguir una mejora sustancial de la calidad con un pequeño truco: en
-vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña
-perturbación (<em>jittering</em>). Así, tendremos una variación de
-colores para un mismo pixel, por lo que podemos hacer una ponderación de
-todos ellos. A este proceso lo que llamamos <strong>acumulación
-temporal</strong>.</p>
-<p>Es importante destacar que el efecto de esta técnica solo es válido
-cuando la <strong>cámara se queda estática</strong>. Al cambiar de
-posición, la información del píxel se ve alterada significativamente,
-por lo que debemos reconstruir las muestras desde el principio.</p>
-<p>La implementación es muy sencilla. Está basada en el tutorial de
-<span class="citation" data-cites="nvpro-samples-tutorial">(<a
-href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
-2022a</a>, jitter camera)</span>. Debemos modificar tanto el motor como
-los shaders para llevar el recuento del número de frames en las push
-constants.</p>
-<p>Definimos el número máximo de frames que se pueden acumular:</p>
-<pre><code class="language-cpp">// engine.h
-class Engine {
-    //...
-    int m_maxAcumFrames {100};
-}</code></pre>
-<p>Las push constant deberán llevar un registro del frame en el que se
-encuentran, así como un número máximo de muestras a acumular para un
-pixel:</p>
-<pre><code class="language-cpp">// host_device.h
-struct PushConstantRay {
-    //...
-    int   frame;
-    int   nb_samples
-}</code></pre>
-<p>El número de frame se reseteará cuando la cámara se mueva, la ventana
-se reescale, o se produzca algún efecto similar en la aplicación.</p>
-<p>Finalmente, en los shaders podemos implementar lo siguiente:</p>
-<pre><code class="language-glsl">// raytrace.rgen
-vec3 pixel_color = vec3(0);
-
-for (int smpl = 0; smpl &lt; pcRay.nb_samples; smpl++) {
-    pixel_color += sample_pixel(image_coords, image_res);
-}
-
-pixel_color = pixel_color / pcRay.nb_samples;
-
-if (pcRay.frame &gt; 0) {
-    vec3 old_color = imageLoad(image, image_coords).xyz;
-    vec3 new_result = mix(
-        old_color,
-        pixel_color,
-        1.f / float(pcRay.frame + 1)
-    );
-
-    imageStore(image, image_coords, vec4(new_result, 1.f));
-}
-else {
-    imageStore(image, image_coords, vec4(pixel_color, 1.0));
-}</code></pre>
-<pre><code class="language-glsl">// pathtrace.glsl
-vec3 sample_pixel() {
-    float r1 = rnd(prd.seed);
-    float r2 = rnd(prd.seed);
-
-    // Subpixel jitter: mandar el rayo desde una pequeña perturbación del pixel para aplicar antialiasing
-    vec2 subpixel_jitter = pcRay.frame == 0
-        ? vec2(0.5f, 0.5f)
-        : vec2(r1, r2);
-
-    const vec2 pixelCenter = vec2(image_coords.xy) + subpixel_jitter;
-
-    // ...
-
-    vec3 radiance = pathtrace(rayo);
-}</code></pre>
-<blockquote>
-<p>TODO: mostrar vídeo de ejemplo</p>
-</blockquote>
-<h2 data-number="5.9" id="fuentes-de-luz"><span
-class="header-section-number">5.9</span> Fuentes de luz</h2>
+<h2 data-number="5.8" id="fuentes-de-luz"><span
+class="header-section-number">5.8</span> Fuentes de luz</h2>
 <p>La última estructura de datos importante que debemos estudiar es la
 utilizada para las fuentes de luces. Desafortunadamente, en este trabajo
 no se ha implementado una abstracción sólida.</p>
@@ -4845,29 +4766,155 @@ shadow rays precisamente por este motivo.</p>
     }
 }</code></pre>
 <p>Y con esto, hemos conseguido añadir dos tipos de fuentes de
-iluminación. En la sección de resultados comprobaremos el resultado.</p>
-<hr>
-<h2 class="unlisted unnumbered" id="referencias-1">Referencias</h2>
-<ul>
-<li>https://github.com/dannyfritz/awesome-ray-tracing</li>
-<li>https://www.wikiwand.com/en/Radeon</li>
-<li>https://www.wikiwand.com/en/List_of_Nvidia_graphics_processing_units#/GeForce_30_series</li>
-<li>https://www.eurogamer.net/digitalfoundry-2021-the-big-intel-interview-how-intel-alchemist-gpus-and-xess-upscaling-will-change-the-market</li>
-<li>https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/overview.html</li>
-<li>https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html</li>
-<li>https://www.wikiwand.com/en/OptiX</li>
-<li>https://www.wikiwand.com/en/DirectX_Raytracing</li>
-<li>https://www.wikiwand.com/es/Valve_Corporation</li>
-<li>https://www.phoronix.com/scan.php?page=news_item&amp;px=VKD3D-Proton-2.5</li>
-<li>https://github.com/ValveSoftware/Proton</li>
-<li>https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/</li>
-<li>https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-acceleration-structure</li>
-<li>https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</li>
-<li>https://raytracing.github.io/books/RayTracingTheNextWeek.html#boundingvolumehierarchies</li>
-<li>https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_layout_and_buffer</li>
-<li>Ray tracing gems II, p.241.</li>
-<li>https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways</li>
-</ul>
+iluminación.</p>
+<h2 data-number="5.9"
+id="antialiasing-mediante-jittering-y-acumulación-temporal"><span
+class="header-section-number">5.9</span> Antialiasing mediante jittering
+y acumulación temporal</h2>
+<p>Normalmente, mandamos los rayos desde el centro de un pixel. Podemos
+conseguir una mejora sustancial de la calidad con un pequeño truco: en
+vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña
+perturbación (<em>jittering</em>). Así, tendremos una variación de
+colores para un mismo pixel, por lo que podemos hacer una ponderación de
+todos ellos. A este proceso lo que llamamos <strong>acumulación
+temporal</strong>.</p>
+<p>Es importante destacar que el efecto de esta técnica solo es válido
+cuando la <strong>cámara se queda estática</strong>. Al cambiar de
+posición, la información del píxel se ve alterada significativamente,
+por lo que debemos reconstruir las muestras desde el principio.</p>
+<p>La implementación es muy sencilla. Está basada en el tutorial de
+<span class="citation" data-cites="nvpro-samples-tutorial">(<a
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+2022a</a>, jitter camera)</span>. Debemos modificar tanto el motor como
+los shaders para llevar el recuento del número de frames en las push
+constants.</p>
+<p>Definimos el número máximo de frames que se pueden acumular:</p>
+<pre><code class="language-cpp">// engine.h
+class Engine {
+    //...
+    int m_maxAcumFrames {100};
+}</code></pre>
+<p>Las push constant deberán llevar un registro del frame en el que se
+encuentran, así como un número máximo de muestras a acumular para un
+pixel:</p>
+<pre><code class="language-cpp">// host_device.h
+struct PushConstantRay {
+    //...
+    int   frame;
+    int   nb_samples
+}</code></pre>
+<p>El número de frame se reseteará cuando la cámara se mueva, la ventana
+se reescale, o se produzca algún efecto similar en la aplicación.</p>
+<p>Finalmente, en los shaders podemos implementar lo siguiente:</p>
+<pre><code class="language-glsl">// raytrace.rgen
+vec3 pixel_color = vec3(0);
+
+for (int smpl = 0; smpl &lt; pcRay.nb_samples; smpl++) {
+    pixel_color += sample_pixel(image_coords, image_res);
+}
+
+pixel_color = pixel_color / pcRay.nb_samples;
+
+if (pcRay.frame &gt; 0) {
+    vec3 old_color = imageLoad(image, image_coords).xyz;
+    vec3 new_result = mix(
+        old_color,
+        pixel_color,
+        1.f / float(pcRay.frame + 1)
+    );
+
+    imageStore(image, image_coords, vec4(new_result, 1.f));
+}
+else {
+    imageStore(image, image_coords, vec4(pixel_color, 1.0));
+}</code></pre>
+<pre><code class="language-glsl">// pathtrace.glsl
+vec3 sample_pixel() {
+    float r1 = rnd(prd.seed);
+    float r2 = rnd(prd.seed);
+
+    // Subpixel jitter: mandar el rayo desde una pequeña perturbación del pixel para aplicar antialiasing
+    vec2 subpixel_jitter = pcRay.frame == 0
+        ? vec2(0.5f, 0.5f)
+        : vec2(r1, r2);
+
+    const vec2 pixelCenter = vec2(image_coords.xy) + subpixel_jitter;
+
+    // ...
+
+    vec3 radiance = pathtrace(rayo);
+}</code></pre>
+<blockquote>
+<p>TODO: mostrar vídeo de ejemplo</p>
+</blockquote>
+<h2 data-number="5.10" id="corrección-de-gamma"><span
+class="header-section-number">5.10</span> Corrección de gamma</h2>
+<p>Con el código de la sección <a
+href="#antialiasing-mediante-jittering-y-acumulación-temporal">anterior</a>,
+existe un problema con los colores finales. El algoritmo de pathtracing
+no limita el máximo valor que puede tomar un camino. Sin embargo, Vulkan
+espera que la terna RGB provista esté en <span class="math inline">\([0,
+1]^3\)</span>. Esto implica que los colores acabarán quemados.</p>
+<figure>
+<img src="./img/04/Quemado.png"
+alt="Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz." />
+<figcaption aria-hidden="true">Fíjate en la parte de la izquierda. La
+pared roja aparece demasiado brillante; especialmente, aquella impactada
+por la fuente de luz.</figcaption>
+</figure>
+<p>Podemos corregir este problema mediante <strong>corrección de
+gamma</strong>. Esta es una operación no lineal utilizada en fotografía
+para corregir la luminacia de una fotografía, con el fin de compensar la
+percepción no lineal del brillo por parte de los humanos. En este caso,
+lo haremos al estilo <span class="citation"
+data-cites="Shirley2020RTW1">(<a href="#ref-Shirley2020RTW1"
+role="doc-biblioref">Shirley 2020a</a>)</span>: tras tomar las muestras,
+aplicaremos una corrección para <span class="math inline">\(\gamma =
+2.2\)</span>, lo cual implica elevar cada componente del píxel a la
+potencia <span class="math inline">\(\frac{1}{2.2}\)</span>; es decir,
+<span class="math inline">\((r_f, g_f, b_f) = (r^{\frac{1}{2.2}},
+g^{\frac{1}{2.2}}, b^{\frac{1}{2.2}})\)</span>.</p>
+<p>Tras esto, limitaremos el valor máximo de cada componente a 1 con la
+operación <span class="math inline">\(clamp()\)</span>.</p>
+<pre><code class="language-glsl">vec3 pixel_color = vec3(0);
+
+for (int smpl = 0; smpl &lt; pcRay.nb_samples; smpl++) {
+    pixel_color += sample_pixel(image_coords, image_res);
+}
+
+pixel_color = pixel_color / pcRay.nb_samples;
+
+if (USE_GAMMA_CORRECTION == 1) {
+    pixel_color = pow(pixel_color, vec3(1.0 / 2.2));  // Gamma correction for 2.2
+    pixel_color = clamp(pixel_color, 0.0, 1.0);
+}</code></pre>
+<figure>
+<img src="./img/04/Corrección%20de%20gamma.png"
+alt="Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos." />
+<figcaption aria-hidden="true">Con la corección de gamma aplicada, vemos
+que los colores de la foto no son tan intensos.</figcaption>
+</figure>
+<blockquote>
+<p>Espera. Esa no parece la misma escena. ¿No han cambiado los colores
+demasiado?</p>
+</blockquote>
+<p>¡Bien visto! Es cierto que los colores se ven significativamente
+alterados. Esto es debido a la conversión de un espacio lineal de
+respuesta de radiancia a uno logarítmico. Algunos autores como Íñigo
+Quílez (coautor de la página Shader Toy) prefieren asumir esta
+deficiencia, y modificar los materiales acordemente a esto <span
+class="citation" data-cites="gamma-correction">(<a
+href="#ref-gamma-correction" role="doc-biblioref">Íñigo Quílez 2013</a>,
+The Color Space)</span>.</p>
+<p>Nosotros no nos preocuparemos especialmente por esto. Este no es un
+trabajo sobre teoría del color, aunque nos metamos en varias partes en
+ella. El área de tone mapping es extensa y merecería su propio
+estudio.</p>
+<p>Es importante mencionar que sin acumulación temporal, el código
+anterior produciría variaciones significativas para pequeños
+movimientos. Hay otras formas de compensarlo, como dividir por el valor
+promedio de las muestras más brillantes. Nosotros hemos optado por
+mezclar los píxeles generados a lo largo del tiempo.</p>
 <h1 data-number="6" id="análisis-de-rendimiento"><span
 class="header-section-number">6</span> Análisis de rendimiento</h1>
 <p>En este capítulo vamos a analizar el resultado final del proyecto.
@@ -4903,10 +4950,20 @@ anteriores:</p>
 <li>El <strong>botón izquierdo del ratón rota</strong> la cámara
 alderedor del punto de mira.</li>
 <li>Para acercar o alejar la cámara, utiliza la <strong>rueda de
-scroll</strong>.</li>
-<li>El <strong>click derecho del ratón</strong> desplaza lateralmente la
-cámara.</li>
+scroll</strong> o el <strong>botón derecho del ratón + hacia arriba o
+abajo</strong>.</li>
+<li>Si quieres moverte lateralmente, mantén pulsado la tecla
+<strong>control</strong> y utiliza el <strong>botón izquierdo +
+arrastrar</strong>. Alternativamente, <strong>aprieta el click de la
+rueda del ratón</strong> y múevete.</li>
+<li>Para girar la cámara alderedor como si de un <em>first person
+shooter</em> se tratara, pulsa <strong>alt + click
+izquierdo</strong>.</li>
 </ul>
+<p>Puedes cambiar el modo de cámara en la pestaña “Extra” de la interfaz
+gráfica. Los diferentes modos alternan entre las acciones listadas
+anteriormente.</p>
+<p>Para ocultar la interfaz gráfica, pulsa <strong>F10</strong>.</p>
 <h3 data-number="6.1.1" id="cambio-de-escena"><span
 class="header-section-number">6.1.1</span> Cambio de escena</h3>
 <p>El programa viene acompañado de varias escenas. Desafortunadamente,
@@ -4922,104 +4979,104 @@ que se encuentra en el archivo <code>main.cpp</code>.</li>
 <li>Recompila el programa.</li>
 </ul>
 <p>Las escenas son las siguientes:</p>
-<table style="width:100%;">
+<table>
 <colgroup>
-<col style="width: 25%" />
+<col style="width: 12%" />
 <col style="width: 65%" />
-<col style="width: 8%" />
+<col style="width: 21%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;"><strong>Nombre de escena</strong></th>
-<th style="text-align: left;"><strong>Descripción</strong></th>
-<th style="text-align: center;"><strong>Imagen</strong></th>
+<th><strong>Nombre de escena</strong></th>
+<th><strong>Descripción</strong></th>
+<th><strong>Imagen</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>cube_default</code></td>
-<td style="text-align: left;">La escena por defecto del programa.
-Muestra un simple cubo.</td>
-<td style="text-align: center;"></td>
+<td><code>cube_default</code></td>
+<td>La escena por defecto del programa. Muestra un simple cubo.</td>
+<td><img src="./img/05/cube_default.png" title="fig:" /></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>any_hit</code></td>
-<td style="text-align: left;">Desmostración de las capacidades del
-shader <em>anyhit</em>.</td>
-<td style="text-align: center;"></td>
+<td><code>any_hit</code></td>
+<td>Desmostración de las capacidades del shader <em>anyhit</em>.</td>
+<td><img src="./img/05/any_hit.png" title="fig:" /></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>cube_reflective</code></td>
-<td style="text-align: left;">Ejemplifica <em>ray traced
-reflections</em>.</td>
-<td style="text-align: center;"></td>
+<td><code>cube_reflective</code></td>
+<td>Ejemplifica <em>ray traced reflections</em>.</td>
+<td><img src="./img/05/cube_reflective.png" title="fig:" /></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>medieval_building</code></td>
-<td style="text-align: left;">Una sencilla escena que contiene una casa
-medieval con texturas.</td>
-<td style="text-align: center;"></td>
+<td><code>medieval</code> <code>_building</code></td>
+<td>Una sencilla escena que contiene una casa medieval con
+texturas.</td>
+<td><img src="./img/05/medieval_building.png" title="fig:" /></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>cornell_box_original</code></td>
-<td style="text-align: left;">Una reconstrucción de la caja de Cornell
-original <span class="citation" data-cites="cornell-box-original">(<a
+<td><code>cornell_box</code> <code>_original</code></td>
+<td>Una reconstrucción de la caja de Cornell original <span
+class="citation" data-cites="cornell-box-original">(<a
 href="#ref-cornell-box-original" role="doc-biblioref">Cornell University
 2005</a>)</span>.</td>
-<td style="text-align: center;"></td>
+<td><img src="./img/05/cornell_box_original.png" title="fig:" /></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>cornell_box_mirror</code></td>
-<td style="text-align: left;">Similar a la caja original, esta escena es
-una recreación de <span class="citation"
-data-cites="cornell-box-compare">(<a href="#ref-cornell-box-compare"
-role="doc-biblioref">Cornell University 1998</a>)</span>.</td>
-<td style="text-align: center;"></td>
+<td><code>cornell_box</code> <code>_mirror</code></td>
+<td>Similar a la caja original, esta escena es una recreación de <span
+class="citation" data-cites="cornell-box-compare">(<a
+href="#ref-cornell-box-compare" role="doc-biblioref">Cornell University
+1998</a>)</span>.</td>
+<td><img src="./img/05/cornell_box_mirror.png" title="fig:" /></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>cornell_box_vacia</code></td>
-<td style="text-align: left;">La caja original sin las cajitas pequeñas
-dentro.</td>
-<td style="text-align: center;"></td>
+<td><code>cornell_box</code> <code>_vacia</code></td>
+<td>La caja original sin las cajitas pequeñas dentro.</td>
+<td><img src="./img/05/cornell_box_vacia.png" title="fig:" /></td>
 </tr>
 <tr class="even">
-<td
-style="text-align: left;"><code>cornell_box_vacia_azul_naranja</code></td>
-<td style="text-align: left;">Similar a la anterior, pero con las
-paredes naranjas y azules.</td>
-<td style="text-align: center;"></td>
+<td><code>cornell_box</code> <code>_vacia_an</code></td>
+<td>Similar a la anterior, pero con las paredes naranjas y azules.</td>
+<td><img src="./img/05/cornell_box_vacia_an.png" title="fig:" /></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>cornell_box_esferas</code></td>
-<td style="text-align: left;">Una caja de Cornell con esferas. Se puede
-comparar con <span class="citation" data-cites="Jensen2001">(<a
-href="#ref-Jensen2001" role="doc-biblioref">Jensen 2001, 107</a>
-fig. 9.10)</span>.</td>
-<td style="text-align: center;"></td>
+<td><code>cornell_box</code> <code>_esferas</code></td>
+<td>Una caja de Cornell con esferas. Se puede comparar con <span
+class="citation" data-cites="Jensen2001">(<a href="#ref-Jensen2001"
+role="doc-biblioref">Jensen 2001, 107</a> fig. 9.10)</span>.</td>
+<td><img src="./img/05/cornell_box_esferas.png" title="fig:" /></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>cornell_box_saturada</code></td>
-<td style="text-align: left;">Otra caja de Cornell similar a la
-original, pero con las paredes saturadas.</td>
-<td style="text-align: center;"></td>
+<td><code>cornell_box</code> <code>_saturada</code></td>
+<td>Otra caja de Cornell similar a la original, pero con las paredes
+saturadas.</td>
+<td><img src="./img/05/cornell_box_saturada.png" title="fig:" /></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>cornell_box_glossy</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: center;"></td>
+<td><code>cornell_box</code> <code>_glossy</code></td>
+<td>En esta caja se encuentran dos esferas de diferente material. Se
+puede comparar con <span class="citation"
+data-cites="cornell-box-glossy">(<a href="#ref-cornell-box-glossy"
+role="doc-biblioref">Jensen 1996, 17</a>, fig. 6)</span></td>
+<td><img src="./img/05/cornell_box_glossy.png" title="fig:" /></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>cornell_box_blanca</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: center;"></td>
+<td><code>cornell_box</code> <code>_blanca</code></td>
+<td>Una caja vacía. Es un benchmark infernal para el ruido generado por
+la iluminación global.</td>
+<td><img src="./img/05/cornell_box_blanca.png" title="fig:" /></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>cubes</code></td>
-<td style="text-align: left;"></td>
-<td style="text-align: center;"></td>
+<td><code>cubes</code></td>
+<td>Dos cubos de diferente material sobre un plano reflectante.</td>
+<td><img src="./img/05/cubes.png" title="fig:" /></td>
 </tr>
 </tbody>
 </table>
+<p>Ten en cuenta que las imágenes de las escenas no son definitivas.
+Están sujetas a cambios, pues se podría cambiar el comportamiento de los
+shaders.</p>
 <h2 data-number="6.2" id="path-tracing-on"><span
 class="header-section-number">6.2</span> Path tracing ON</h2>
 <p>Cosas de las que tengo que hablar:</p>
@@ -5046,23 +5103,20 @@ class="header-section-number">6.2</span> Path tracing ON</h2>
 </ul>
 <h2 data-number="6.3" id="rendimiento"><span
 class="header-section-number">6.3</span> Rendimiento</h2>
-<h2 data-number="6.4" id="midiendo-el-coste-de-un-frame"><span
-class="header-section-number">6.4</span> Midiendo el coste de un
-frame</h2>
-<h3 data-number="6.4.1" id="resolución"><span
-class="header-section-number">6.4.1</span> Resolución</h3>
-<h3 data-number="6.4.2" id="profundidad-de-un-rayo"><span
-class="header-section-number">6.4.2</span> Profundidad de un rayo</h3>
-<h3 data-number="6.4.3" id="acumulación-temporal"><span
-class="header-section-number">6.4.3</span> Acumulación temporal</h3>
-<h3 data-number="6.4.4" id="número-de-muestras"><span
-class="header-section-number">6.4.4</span> Número de muestras</h3>
-<h3 data-number="6.4.5" id="diferentes-escenas"><span
-class="header-section-number">6.4.5</span> Diferentes escenas</h3>
-<h3 data-number="6.4.6" id="importance-sampling"><span
-class="header-section-number">6.4.6</span> Importance sampling</h3>
-<h2 data-number="6.5" id="comparativa-con-in-one-weekend"><span
-class="header-section-number">6.5</span> Comparativa con In One
+<h3 data-number="6.3.1" id="diferentes-escenas"><span
+class="header-section-number">6.3.1</span> Diferentes escenas</h3>
+<h3 data-number="6.3.2" id="resolución"><span
+class="header-section-number">6.3.2</span> Resolución</h3>
+<h3 data-number="6.3.3" id="profundidad-de-un-rayo"><span
+class="header-section-number">6.3.3</span> Profundidad de un rayo</h3>
+<h3 data-number="6.3.4" id="acumulación-temporal"><span
+class="header-section-number">6.3.4</span> Acumulación temporal</h3>
+<h3 data-number="6.3.5" id="número-de-muestras"><span
+class="header-section-number">6.3.5</span> Número de muestras</h3>
+<h3 data-number="6.3.6" id="importance-sampling"><span
+class="header-section-number">6.3.6</span> Importance sampling</h3>
+<h2 data-number="6.4" id="comparativa-con-in-one-weekend"><span
+class="header-section-number">6.4</span> Comparativa con In One
 Weekend</h2>
 <h1 data-number="7" id="el-presente-y-futuro-de-rt"><span
 class="header-section-number">7</span> El presente y futuro de RT</h1>
@@ -5164,7 +5218,7 @@ resampling</h4>
 class="header-section-number">7.5.0.4</span> Low discrepancy
 sampling</h4>
 <hr>
-<h2 class="unlisted unnumbered" id="referencias-2">Referencias</h2>
+<h2 class="unlisted unnumbered" id="referencias-1">Referencias</h2>
 
 <h1 data-number="8" id="metodología-de-trabajo"><span
 class="header-section-number">8</span> Metodología de trabajo</h1>
@@ -5966,6 +6020,11 @@ Illana, J. I. 2013. <span>“Métodos de monte carlo.”</span> 2013.
 Accessed May 8, 2022. <a
 href="https://www.ugr.es/~jillana/Docencia/FM/mc.pdf">https://www.ugr.es/~jillana/Docencia/FM/mc.pdf</a>.
 </div>
+<div id="ref-gamma-correction" class="csl-entry" role="doc-biblioentry">
+Íñigo Quílez. 2013. <span>“Outdoors lightning.”</span> 2013. Accessed
+May 16, 2022. <a
+href="https://iquilezles.org/articles/outdoorslighting/">https://iquilezles.org/articles/outdoorslighting/</a>.
+</div>
 <div id="ref-intel-arc" class="csl-entry" role="doc-biblioentry">
 Intel. 2022. <span>“A new player has entered the game.”</span> 2022.
 Accessed May 13, 2022. <a
@@ -5976,9 +6035,15 @@ Jacques Le Bailly. 2022. <span>“Crimson pro typography.”</span> 2022.
 Accessed May 7, 2022. <a
 href="https://fonts.google.com/specimen/Crimson+Pro">https://fonts.google.com/specimen/Crimson+Pro</a>.
 </div>
+<div id="ref-cornell-box-glossy" class="csl-entry"
+role="doc-biblioentry">
+Jensen, H. W. 1996. <span>“Global Illumination Using Photon
+Maps.”</span> In <em>Rendering Techniques ’96</em>, edited by Xavier
+Pueyo and Peter Schröder, 21–30. Vienna: Springer Vienna.
+</div>
 <div id="ref-Jensen2001" class="csl-entry" role="doc-biblioentry">
-Jensen, H. W. 2001. <em>Realistic Image Synthesis Using Photon
-Mapping</em>. A K Peters/<span>CRC</span> Press. <a
+———. 2001. <em>Realistic Image Synthesis Using Photon Mapping</em>. A K
+Peters/<span>CRC</span> Press. <a
 href="https://doi.org/10.1201/9780429294907">https://doi.org/10.1201/9780429294907</a>.
 </div>
 <div id="ref-pandoc" class="csl-entry" role="doc-biblioentry">
@@ -6120,12 +6185,12 @@ Szirmay-Kalos, L. 2000. <span>“Monte-Carlo Methods in Global
 Illumination.”</span> <a
 href="https://doi.org/10.1.1.36.361">https://doi.org/10.1.1.36.361</a>.
 </div>
-<div id="ref-the-khronos-vulkan-working-group-2022" class="csl-entry"
-role="doc-biblioentry">
-The Khronos® Vulkan Working Group. 2022. <span>“Vulkan® 1.2.210 - KHR
-extensions: 33. Ray intersection.”</span> March 29, 2022. Accessed April
-1, 2022. <a
-href="https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap33.html#ray-intersection-candidate-determination">https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap33.html#ray-intersection-candidate-determination</a>.
+<div id="ref-vulkan" class="csl-entry" role="doc-biblioentry">
+The Khronos Vulkan Working Group. 2022. <span>“Vulkan® 1.2.210 - a
+specification (with KHR extensions).”</span> March 29, 2022. Accessed
+April 1, 2022. <a
+href="- https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html">-
+https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022E" class="csl-entry"
 role="doc-biblioentry">
@@ -6143,6 +6208,16 @@ Undercase Type, F. Z., Phaedra Charles. 2022. <span>“Fraunces
 typography.”</span> 2022. Accessed May 7, 2022. <a
 href="https://fonts.google.com/specimen/Fraunces">https://fonts.google.com/specimen/Fraunces</a>.
 </div>
+<div id="ref-proton" class="csl-entry" role="doc-biblioentry">
+Valve Software. 2022a. <span>“Proton.”</span> 2022. Accessed May 16,
+2022. <a
+href="https://github.com/ValveSoftware/Proton">https://github.com/ValveSoftware/Proton</a>.
+</div>
+<div id="ref-valve" class="csl-entry" role="doc-biblioentry">
+———. 2022b. <span>“Valve software.”</span> 2022. Accessed May 16, 2022.
+<a
+href="https://www.valvesoftware.com/es/">https://www.valvesoftware.com/es/</a>.
+</div>
 <div id="ref-vectary" class="csl-entry" role="doc-biblioentry">
 Vectary. 2022. <span>“Vectary - bringing unlimited creativity to 3D
 design.”</span> 2022. Accessed May 7, 2022. <a
@@ -6153,13 +6228,22 @@ Walt Disney Animation Studios. 2019. <span>“BRDF explorer.”</span> 2019.
 Accessed May 7, 2022. <a
 href="https://github.com/wdas/brdf">https://github.com/wdas/brdf</a>.
 </div>
+<div id="ref-directx-12" class="csl-entry" role="doc-biblioentry">
+Wikipedia. 2022a. <span>“DirectX raytracing.”</span> 2022. Accessed May
+16, 2022. <a
+href="https://en.wikipedia.org/wiki/DirectX_Raytracing">https://en.wikipedia.org/wiki/DirectX_Raytracing</a>.
+</div>
 <div id="ref-wikipedia-nvidia" class="csl-entry" role="doc-biblioentry">
-Wikipedia. 2022a. <span>“List of nvidia graphics processing
+Wikipedia. 2022b. <span>“List of nvidia graphics processing
 units.”</span> 2022. Accessed May 13, 2022. <a
 href="https://en.wikipedia.org/wiki/List_of_Nvidia_graphics_processing_units">https://en.wikipedia.org/wiki/List_of_Nvidia_graphics_processing_units</a>.
 </div>
+<div id="ref-optix" class="csl-entry" role="doc-biblioentry">
+Wikipedia. 2022c. <span>“OptiX.”</span> 2022. Accessed May 16, 2022. <a
+href="https://en.wikipedia.org/wiki/OptiX">https://en.wikipedia.org/wiki/OptiX</a>.
+</div>
 <div id="ref-wikipedia-radeon" class="csl-entry" role="doc-biblioentry">
-———. 2022b. <span>“Radeon.”</span> 2022. Accessed May 13, 2022. <a
+Wikipedia. 2022d. <span>“Radeon.”</span> 2022. Accessed May 13, 2022. <a
 href="https://en.wikipedia.org/wiki/Radeon">https://en.wikipedia.org/wiki/Radeon</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022G" class="csl-entry"
@@ -6235,15 +6319,17 @@ role="doc-biblioref">Crytek 2020</a>)</span><a href="#fnref4"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5" role="doc-endnote"><p>Afortunadamente, esto tampoco es
 completamente cierto. La compañía desarrolladora y distribuidora de
-videojuegos Valve Corporation ha creado una pieza de software
-fascinante: <a
-href="https://github.com/ValveSoftware/Proton">Proton</a>. Proton
-utiliza Wine para emular software en Linux que solo puede correr en
-plataformas Windows. La versión 2.5 añadió soporte para traducción de
-bindings de DXR a KHR, lo que permite utilizar DirectX12 ray tracing en
-sistemas basados en Linux. El motivo de este software es expandir el
-mercado de videojuegos disponibles en su consola, la Steam Deck.<a
-href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+videojuegos Valve Corporation <span class="citation"
+data-cites="valve">(<a href="#ref-valve" role="doc-biblioref">Valve
+Software 2022b</a>)</span> ha creado una pieza de software fascinante:
+Proton <span class="citation" data-cites="proton">(<a href="#ref-proton"
+role="doc-biblioref">Valve Software 2022a</a>)</span>. Proton utiliza
+Wine para emular software en Linux que solo puede correr en plataformas
+Windows. La versión 2.5 añadió soporte para traducción de bindings de
+DXR a KHR, lo que permite utilizar DirectX12 ray tracing en sistemas
+basados en Linux. El motivo de este software es expandir el mercado de
+videojuegos disponibles en su consola, la Steam Deck.<a href="#fnref5"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </body>
