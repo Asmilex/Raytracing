@@ -491,7 +491,11 @@ class="toc-section-number">5.9</span> Fuentes de luz</a></li>
 class="toc-section-number">6</span> Análisis de rendimiento</a>
 <ul>
 <li><a href="#usando-el-motor"><span
-class="toc-section-number">6.1</span> Usando el motor</a></li>
+class="toc-section-number">6.1</span> Usando el motor</a>
+<ul>
+<li><a href="#cambio-de-escena"><span
+class="toc-section-number">6.1.1</span> Cambio de escena</a></li>
+</ul></li>
 <li><a href="#path-tracing-on"><span
 class="toc-section-number">6.2</span> Path tracing ON</a></li>
 <li><a href="#rendimiento"><span class="toc-section-number">6.3</span>
@@ -499,14 +503,18 @@ Rendimiento</a></li>
 <li><a href="#midiendo-el-coste-de-un-frame"><span
 class="toc-section-number">6.4</span> Midiendo el coste de un frame</a>
 <ul>
+<li><a href="#resolución"><span class="toc-section-number">6.4.1</span>
+Resolución</a></li>
+<li><a href="#profundidad-de-un-rayo"><span
+class="toc-section-number">6.4.2</span> Profundidad de un rayo</a></li>
 <li><a href="#acumulación-temporal"><span
-class="toc-section-number">6.4.1</span> Acumulación temporal</a></li>
+class="toc-section-number">6.4.3</span> Acumulación temporal</a></li>
 <li><a href="#número-de-muestras"><span
-class="toc-section-number">6.4.2</span> Número de muestras</a></li>
+class="toc-section-number">6.4.4</span> Número de muestras</a></li>
 <li><a href="#diferentes-escenas"><span
-class="toc-section-number">6.4.3</span> Diferentes escenas</a></li>
+class="toc-section-number">6.4.5</span> Diferentes escenas</a></li>
 <li><a href="#importance-sampling"><span
-class="toc-section-number">6.4.4</span> Importance sampling</a></li>
+class="toc-section-number">6.4.6</span> Importance sampling</a></li>
 </ul></li>
 <li><a href="#comparativa-con-in-one-weekend"><span
 class="toc-section-number">6.5</span> Comparativa con In One
@@ -4862,6 +4870,11 @@ iluminación. En la sección de resultados comprobaremos el resultado.</p>
 </ul>
 <h1 data-number="6" id="análisis-de-rendimiento"><span
 class="header-section-number">6</span> Análisis de rendimiento</h1>
+<p>En este capítulo vamos a analizar el resultado final del proyecto.
+Estudiaremos cómo se ve el motor, cómo rinde en términos de <em>frame
+time</em>, y compararemos las imágenes producidas con otras similares;
+tanto producidas por otros motores, como situaciones en la vida
+real.</p>
 <h2 data-number="6.1" id="usando-el-motor"><span
 class="header-section-number">6.1</span> Usando el motor</h2>
 <p>Cosas de las que tengo que hablar:</p>
@@ -4871,6 +4884,142 @@ class="header-section-number">6.1</span> Usando el motor</h2>
 <li>GUI</li>
 <li>Cambio de escenas</li>
 </ul>
+<p>Una vez se ha <a href="#compilación-y-ejecución">compilado</a> el
+programa, puedes encontrar el ejecutable en
+<code>./application/bin_x64/Debug</code>. Abre el binario para entrar en
+el programa.</p>
+<figure>
+<img src="./img/05/Asmiray.png"
+alt="Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada con un panel lateral con opciones." />
+<figcaption aria-hidden="true">Al abrir el motor, te encontrarás con una
+pantalla similar a esta: una escena cargada con un panel lateral con
+opciones.</figcaption>
+</figure>
+<p>Si alguna vez has usado un motor de renderización en 3D (como
+Blender, Unity, Unreal Engine o AutoCAD), el comportamiento debería
+resultarte familiar. El uso de nuestro progama es análogo al de los
+anteriores:</p>
+<ul>
+<li>El <strong>botón izquierdo del ratón rota</strong> la cámara
+alderedor del punto de mira.</li>
+<li>Para acercar o alejar la cámara, utiliza la <strong>rueda de
+scroll</strong>.</li>
+<li>El <strong>click derecho del ratón</strong> desplaza lateralmente la
+cámara.</li>
+</ul>
+<h3 data-number="6.1.1" id="cambio-de-escena"><span
+class="header-section-number">6.1.1</span> Cambio de escena</h3>
+<p>El programa viene acompañado de varias escenas. Desafortunadamente,
+para cambiar de escena es necesario recompilar el programa. Las
+instrucciones necesarias para conseguirlo son las siguientes:</p>
+<ul>
+<li>Ubica la sentencia <code>load_scene(Scene::escena, engine);</code>
+que se encuentra en el archivo <code>main.cpp</code>.</li>
+<li>Cambia el valor del primer parámetro: reemplaza
+<code>Scene::escena</code> por alguna entrada del enumerado
+<code>Scene</code>. Puedes encontrar sus posiblidades en el archivo
+<code>Scenes.hpp</code>.</li>
+<li>Recompila el programa.</li>
+</ul>
+<p>Las escenas son las siguientes:</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 65%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Nombre de escena</strong></th>
+<th style="text-align: left;"><strong>Descripción</strong></th>
+<th style="text-align: center;"><strong>Imagen</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>cube_default</code></td>
+<td style="text-align: left;">La escena por defecto del programa.
+Muestra un simple cubo.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>any_hit</code></td>
+<td style="text-align: left;">Desmostración de las capacidades del
+shader <em>anyhit</em>.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cube_reflective</code></td>
+<td style="text-align: left;">Ejemplifica <em>ray traced
+reflections</em>.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>medieval_building</code></td>
+<td style="text-align: left;">Una sencilla escena que contiene una casa
+medieval con texturas.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cornell_box_original</code></td>
+<td style="text-align: left;">Una reconstrucción de la caja de Cornell
+original <span class="citation" data-cites="cornell-box-original">(<a
+href="#ref-cornell-box-original" role="doc-biblioref">Cornell University
+2005</a>)</span>.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cornell_box_mirror</code></td>
+<td style="text-align: left;">Similar a la caja original, esta escena es
+una recreación de <span class="citation"
+data-cites="cornell-box-compare">(<a href="#ref-cornell-box-compare"
+role="doc-biblioref">Cornell University 1998</a>)</span>.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cornell_box_vacia</code></td>
+<td style="text-align: left;">La caja original sin las cajitas pequeñas
+dentro.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td
+style="text-align: left;"><code>cornell_box_vacia_azul_naranja</code></td>
+<td style="text-align: left;">Similar a la anterior, pero con las
+paredes naranjas y azules.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cornell_box_esferas</code></td>
+<td style="text-align: left;">Una caja de Cornell con esferas. Se puede
+comparar con <span class="citation" data-cites="Jensen2001">(<a
+href="#ref-Jensen2001" role="doc-biblioref">Jensen 2001, 107</a>
+fig. 9.10)</span>.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cornell_box_saturada</code></td>
+<td style="text-align: left;">Otra caja de Cornell similar a la
+original, pero con las paredes saturadas.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cornell_box_glossy</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cornell_box_blanca</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cubes</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
 <h2 data-number="6.2" id="path-tracing-on"><span
 class="header-section-number">6.2</span> Path tracing ON</h2>
 <p>Cosas de las que tengo que hablar:</p>
@@ -4900,14 +5049,18 @@ class="header-section-number">6.3</span> Rendimiento</h2>
 <h2 data-number="6.4" id="midiendo-el-coste-de-un-frame"><span
 class="header-section-number">6.4</span> Midiendo el coste de un
 frame</h2>
-<h3 data-number="6.4.1" id="acumulación-temporal"><span
-class="header-section-number">6.4.1</span> Acumulación temporal</h3>
-<h3 data-number="6.4.2" id="número-de-muestras"><span
-class="header-section-number">6.4.2</span> Número de muestras</h3>
-<h3 data-number="6.4.3" id="diferentes-escenas"><span
-class="header-section-number">6.4.3</span> Diferentes escenas</h3>
-<h3 data-number="6.4.4" id="importance-sampling"><span
-class="header-section-number">6.4.4</span> Importance sampling</h3>
+<h3 data-number="6.4.1" id="resolución"><span
+class="header-section-number">6.4.1</span> Resolución</h3>
+<h3 data-number="6.4.2" id="profundidad-de-un-rayo"><span
+class="header-section-number">6.4.2</span> Profundidad de un rayo</h3>
+<h3 data-number="6.4.3" id="acumulación-temporal"><span
+class="header-section-number">6.4.3</span> Acumulación temporal</h3>
+<h3 data-number="6.4.4" id="número-de-muestras"><span
+class="header-section-number">6.4.4</span> Número de muestras</h3>
+<h3 data-number="6.4.5" id="diferentes-escenas"><span
+class="header-section-number">6.4.5</span> Diferentes escenas</h3>
+<h3 data-number="6.4.6" id="importance-sampling"><span
+class="header-section-number">6.4.6</span> Importance sampling</h3>
 <h2 data-number="6.5" id="comparativa-con-in-one-weekend"><span
 class="header-section-number">6.5</span> Comparativa con In One
 Weekend</h2>
@@ -5709,6 +5862,18 @@ Cormullion. 2022. <span>“JuliaMono - a monospaced font for scientific
 and technical computing.”</span> 2022. Accessed May 7, 2022. <a
 href="https://juliamono.netlify.app">https://juliamono.netlify.app</a>.
 </div>
+<div id="ref-cornell-box-compare" class="csl-entry"
+role="doc-biblioentry">
+Cornell University. 1998. <span>“Cornell box comparison.”</span> April
+30, 1998. Accessed May 16, 2022. <a
+href="http://www.graphics.cornell.edu/online/box/compare.html">http://www.graphics.cornell.edu/online/box/compare.html</a>.
+</div>
+<div id="ref-cornell-box-original" class="csl-entry"
+role="doc-biblioentry">
+———. 2005. <span>“Photograhic images of the cornell box.”</span>
+February 2, 2005. Accessed May 16, 2022. <a
+href="http://www.graphics.cornell.edu/online/box/data.html">http://www.graphics.cornell.edu/online/box/data.html</a>.
+</div>
 <div id="ref-crytek-2020" class="csl-entry" role="doc-biblioentry">
 Crytek. 2020. <span>“Crysis remastered brings ray tracing to current-gen
 consoles.”</span> September 11, 2020. Accessed April 17, 2022. <a
@@ -5810,6 +5975,11 @@ href="https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphic
 Jacques Le Bailly. 2022. <span>“Crimson pro typography.”</span> 2022.
 Accessed May 7, 2022. <a
 href="https://fonts.google.com/specimen/Crimson+Pro">https://fonts.google.com/specimen/Crimson+Pro</a>.
+</div>
+<div id="ref-Jensen2001" class="csl-entry" role="doc-biblioentry">
+Jensen, H. W. 2001. <em>Realistic Image Synthesis Using Photon
+Mapping</em>. A K Peters/<span>CRC</span> Press. <a
+href="https://doi.org/10.1201/9780429294907">https://doi.org/10.1201/9780429294907</a>.
 </div>
 <div id="ref-pandoc" class="csl-entry" role="doc-biblioentry">
 John MacFarlane. 2021. <span>“Pandoc, a universal document
