@@ -502,8 +502,12 @@ class="toc-section-number">6.1</span> Usando el motor</a>
 <li><a href="#cambio-de-escena"><span
 class="toc-section-number">6.1.1</span> Cambio de escena</a></li>
 </ul></li>
-<li><a href="#path-tracing-on"><span
-class="toc-section-number">6.2</span> Path tracing ON</a></li>
+<li><a href="#path-tracing-showcase"><span
+class="toc-section-number">6.2</span> Path tracing showcase</a>
+<ul>
+<li><a href="#materiales"><span class="toc-section-number">6.2.1</span>
+Materiales</a></li>
+</ul></li>
 <li><a href="#rendimiento"><span class="toc-section-number">6.3</span>
 Rendimiento</a>
 <ul>
@@ -4987,27 +4991,20 @@ tanto producidas por otros motores, como situaciones en la vida
 real.</p>
 <h2 data-number="6.1" id="usando-el-motor"><span
 class="header-section-number">6.1</span> Usando el motor</h2>
-<p>Cosas de las que tengo que hablar:</p>
-<ul>
-<li>Cámara</li>
-<li>Keybindings</li>
-<li>GUI</li>
-<li>Cambio de escenas</li>
-</ul>
 <p>Una vez se ha <a href="#compilación-y-ejecución">compilado</a> el
-programa, puedes encontrar el ejecutable en
+proyecto, puedes encontrar el ejecutable en
 <code>./application/bin_x64/Debug</code>. Abre el binario para entrar en
 el programa.</p>
 <figure>
 <img src="./img/05/Asmiray.png"
-alt="Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada con un panel lateral con opciones." />
+alt="Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones." />
 <figcaption aria-hidden="true">Al abrir el motor, te encontrarás con una
-pantalla similar a esta: una escena cargada con un panel lateral con
-opciones.</figcaption>
+pantalla similar a esta: una escena cargada junto a un panel lateral con
+numerosas opciones.</figcaption>
 </figure>
 <p>Si alguna vez has usado un motor de renderización en 3D (como
 Blender, Unity, Unreal Engine o AutoCAD), el comportamiento debería
-resultarte familiar. El uso de nuestro progama es análogo al de los
+resultarte familiar. El uso de nuestro progama es muy similar al de los
 anteriores:</p>
 <ul>
 <li>El <strong>botón izquierdo del ratón rota</strong> la cámara
@@ -5029,7 +5026,7 @@ anteriormente.</p>
 <p>Para ocultar la interfaz gráfica, pulsa <strong>F10</strong>.</p>
 <h3 data-number="6.1.1" id="cambio-de-escena"><span
 class="header-section-number">6.1.1</span> Cambio de escena</h3>
-<p>El programa viene acompañado de varias escenas. Desafortunadamente,
+<p>El programa viene acompañado de varios mapas. Desafortunadamente,
 para cambiar de escena es necesario recompilar el programa. Las
 instrucciones necesarias para conseguirlo son las siguientes:</p>
 <ul>
@@ -5140,9 +5137,10 @@ la iluminación global.</td>
 <p>Ten en cuenta que las imágenes de las escenas no son definitivas.
 Están sujetas a cambios, pues se podría cambiar el comportamiento de los
 shaders.</p>
-<h2 data-number="6.2" id="path-tracing-on"><span
-class="header-section-number">6.2</span> Path tracing ON</h2>
-<p>Cosas de las que tengo que hablar:</p>
+<h2 data-number="6.2" id="path-tracing-showcase"><span
+class="header-section-number">6.2</span> Path tracing showcase</h2>
+<blockquote>
+<p>TODO: Cosas de las que tengo que hablar:</p>
 <ul>
 <li>Materiales
 <ul>
@@ -5164,6 +5162,57 @@ class="header-section-number">6.2</span> Path tracing ON</h2>
 <li>Efectos de las pelotas en el ambiente</li>
 </ul></li>
 </ul>
+</blockquote>
+<p>A lo largo de este trabajo hemos visto una gran variedad de conceptos
+desde el punto de vista teórico. Ahora es el momento de ponerlo en
+práctica.</p>
+<h3 data-number="6.2.1" id="materiales"><span
+class="header-section-number">6.2.1</span> Materiales</h3>
+<p>Empecemos por materiales. Se han implementado unos cuantos tipos
+diferentes, los cuales veremos ilustrados a continuación.</p>
+<p>Los más simples son los <a
+href="#reflexión-difusa-o-lamberiana">difusos</a>. La caja de Cornell
+original contiene dos objetos de este tipo:</p>
+<figure>
+<img src="./img/05/.png"
+alt="Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
+<figcaption aria-hidden="true">Materiales difusos de la escena Cornell
+Box original. Vemos que la luz se esparce uniformemente al rebotar en el
+objeto.</figcaption>
+</figure>
+<p>Los materiales <a href="#reflexión-especular-no-perfecta">especulares
+<em>glossy</em></a> han sido modificados ligeramente para simular el
+parámetro de <em>roughness</em> de los metales, para compararlos con los
+de <span class="citation" data-cites="Shirley2020RTW1">(<a
+href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
+2020a</a>)</span>:</p>
+<figure>
+<img src="./img/05/.png"
+alt="Materiales especulares metálicos de la escena Cornell Box glossy" />
+<figcaption aria-hidden="true">Materiales especulares metálicos de la
+escena Cornell Box glossy</figcaption>
+</figure>
+<p>Si hay algo en lo que destaca ray tracing, es en la simulación de <a
+href="#reflexión-especular-perfecta">espejos</a>. En rasterización
+debemos recurrir a técnicas específicas como reflejos planares o
+<em>cubemaps</em>. Ray tracing solventa el problema con elegancia:</p>
+<figure>
+<img src="./img/05/.png"
+alt="Una caja que actúa como un espejo prácticamente perfecto. Escena: cornell_box_mirror" />
+<figcaption aria-hidden="true">Una caja que actúa como un espejo
+prácticamente perfecto. Escena:
+<code>cornell_box_mirror</code></figcaption>
+</figure>
+<p>En la siguiente escena observamos dos esferas: una que presenta
+refracción y otra que no. Ambas utilizan las ecuaciones de Fresnel para
+modelar el comportamiento de la luz.</p>
+<figure>
+<img src="./img/05/.png"
+alt="La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro" />
+<figcaption aria-hidden="true">La esfera de la derecha refracta la luz
+al pasar por ella, adquiriendo en el proceso un color más
+oscuro</figcaption>
+</figure>
 <h2 data-number="6.3" id="rendimiento"><span
 class="header-section-number">6.3</span> Rendimiento</h2>
 <h3 data-number="6.3.1" id="diferentes-escenas"><span
@@ -5196,6 +5245,7 @@ class="header-section-number">7.2</span> Filtering</h2>
 <p>https://alain.xyz/blog/ray-tracing-filtering</p>
 <h2 data-number="7.3" id="offline-renderers"><span
 class="header-section-number">7.3</span> Offline renderers</h2>
+<p>https://www.disneyanimation.com/technology/hyperion/</p>
 <h2 data-number="7.4" id="la-industria-del-videojuego"><span
 class="header-section-number">7.4</span> La industria del
 videojuego</h2>
@@ -5265,6 +5315,8 @@ class="header-section-number">7.5.0.1</span> Blue noise</h4>
 <ul>
 <li>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</li>
 <li>https://alain.xyz/blog/ray-tracing-filtering</li>
+<li>Minecraft RTX usa blue noise para el sampling:
+https://alain.xyz/blog/frame-analysis-minecraftrtx/assets/diffuse-1spp.jpg</li>
 </ul>
 <h4 data-number="7.5.0.2" id="forced-random-sampling"><span
 class="header-section-number">7.5.0.2</span> Forced random sampling</h4>
