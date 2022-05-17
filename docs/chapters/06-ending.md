@@ -12,7 +12,7 @@ https://alain.xyz/blog/ray-tracing-filtering
 
 ## Offline renderers
 
-
+https://www.disneyanimation.com/technology/hyperion/
 
 ## La industria del videojuego
 
@@ -63,6 +63,7 @@ https://twitter.com/Yurukuyaru/status/1523643949826588674
 
 - https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/
 - https://alain.xyz/blog/ray-tracing-filtering
+- Minecraft RTX usa blue noise para el sampling: https://alain.xyz/blog/frame-analysis-minecraftrtx/assets/diffuse-1spp.jpg
 
 #### Forced random sampling
 

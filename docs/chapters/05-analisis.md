@@ -4,18 +4,11 @@ En este capítulo vamos a analizar el resultado final del proyecto. Estudiaremos
 
 ## Usando el motor
 
-Cosas de las que tengo que hablar:
+Una vez se ha [compilado](#compilación-y-ejecución) el proyecto, puedes encontrar el ejecutable en `./application/bin_x64/Debug`. Abre el binario para entrar en el programa.
 
-- Cámara
-- Keybindings
-- GUI
-- Cambio de escenas
+![Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones.](./img/05/Asmiray.png)
 
-Una vez se ha [compilado](#compilación-y-ejecución) el programa, puedes encontrar el ejecutable en `./application/bin_x64/Debug`. Abre el binario para entrar en el programa.
-
-![Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada con un panel lateral con opciones.](./img/05/Asmiray.png)
-
-Si alguna vez has usado un motor de renderización en 3D (como Blender, Unity, Unreal Engine o AutoCAD), el comportamiento debería resultarte familiar. El uso de nuestro progama es análogo al de los anteriores:
+Si alguna vez has usado un motor de renderización en 3D (como Blender, Unity, Unreal Engine o AutoCAD), el comportamiento debería resultarte familiar. El uso de nuestro progama es muy similar al de los anteriores:
 
 - El **botón izquierdo del ratón rota** la cámara alderedor del punto de mira.
 - Para acercar o alejar la cámara, utiliza la **rueda de scroll** o el **botón derecho del ratón + hacia arriba o abajo**.
@@ -28,7 +21,7 @@ Para ocultar la interfaz gráfica, pulsa **F10**.
 
 ### Cambio de escena
 
-El programa viene acompañado de varias escenas. Desafortunadamente, para cambiar de escena es necesario recompilar el programa. Las instrucciones necesarias para conseguirlo son las siguientes:
+El programa viene acompañado de varios mapas. Desafortunadamente, para cambiar de escena es necesario recompilar el programa. Las instrucciones necesarias para conseguirlo son las siguientes:
 
 - Ubica la sentencia `load_scene(Scene::escena, engine);` que se encuentra en el archivo `main.cpp`.
 - Cambia el valor del primer parámetro: reemplaza `Scene::escena` por alguna entrada del enumerado `Scene`. Puedes encontrar sus posiblidades en el archivo `Scenes.hpp`.
@@ -77,24 +70,45 @@ Las escenas son las siguientes:
 
 Ten en cuenta que las imágenes de las escenas no son definitivas. Están sujetas a cambios, pues se podría cambiar el comportamiento de los shaders.
 
-## Path tracing ON
+## Path tracing showcase
 
-Cosas de las que tengo que hablar:
+> TODO: Cosas de las que tengo que hablar:
+>
+> - Materiales
+>   - Difusos
+>   - Especulares
+>   - Espejos
+>   - Transparentes (gestionado por anyhit)
+> - Luces
+>   - Puntual
+>   - Direccional
+> - Cornell Boxes
+>   - Cornell Box
+>   - Cornell Bath
+>   - Mirar la iluminación global
+>   - Efectos de las pelotas en el ambiente
 
-- Materiales
-  - Difusos
-  - Especulares
-  - Espejos
-  - Transparentes (gestionado por anyhit)
-- Luces
-  - Puntual
-  - Direccional
-- Cornell Boxes
-  - Cornell Box
-  - Cornell Bath
-  - Mirar la iluminación global
-  - Efectos de las pelotas en el ambiente
+A lo largo de este trabajo hemos visto una gran variedad de conceptos desde el punto de vista teórico. Ahora es el momento de ponerlo en práctica.
 
+### Materiales
+
+Empecemos por materiales. Se han implementado unos cuantos tipos diferentes, los cuales veremos ilustrados a continuación.
+
+Los más simples son los [difusos](#reflexión-difusa-o-lamberiana). La caja de Cornell original contiene dos objetos de este tipo:
+
+![Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto.](./img/05/.png)
+
+Los materiales [especulares *glossy*](#reflexión-especular-no-perfecta) han sido modificados ligeramente para simular el parámetro de *roughness* de los metales, para compararlos con los de [@Shirley2020RTW1]:
+
+![Materiales especulares metálicos de la escena Cornell Box glossy](./img/05/.png)
+
+Si hay algo en lo que destaca ray tracing, es en la simulación de [espejos](#reflexión-especular-perfecta). En rasterización debemos recurrir a técnicas específicas como reflejos planares o *cubemaps*. Ray tracing solventa el problema con elegancia:
+
+![Una caja que actúa como un espejo prácticamente perfecto. Escena: `cornell_box_mirror`](./img/05/.png)
+
+En la siguiente escena observamos dos esferas: una que presenta refracción y otra que no. Ambas utilizan las ecuaciones de Fresnel para modelar el comportamiento de la luz.
+
+![La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro](./img/05/.png)
 
 ## Rendimiento
 
