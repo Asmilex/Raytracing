@@ -74,11 +74,6 @@ Ten en cuenta que las imágenes de las escenas no son definitivas. Están sujeta
 
 > TODO: Cosas de las que tengo que hablar:
 >
-> - Materiales
->   - Difusos
->   - Especulares
->   - Espejos
->   - Transparentes (gestionado por anyhit)
 > - Luces
 >   - Puntual
 >   - Direccional
@@ -96,19 +91,23 @@ Empecemos por materiales. Se han implementado unos cuantos tipos diferentes, los
 
 Los más simples son los [difusos](#reflexión-difusa-o-lamberiana). La caja de Cornell original contiene dos objetos de este tipo:
 
-![Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto.](./img/05/.png)
+![Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto.](./img/05/Materiales%20difusos.png)
 
 Los materiales [especulares *glossy*](#reflexión-especular-no-perfecta) han sido modificados ligeramente para simular el parámetro de *roughness* de los metales, para compararlos con los de [@Shirley2020RTW1]:
 
-![Materiales especulares metálicos de la escena Cornell Box glossy](./img/05/.png)
+![Materiales especulares metálicos de la escena Cornell Box glossy](./img/05/Materiales%20glossy.png)
 
 Si hay algo en lo que destaca ray tracing, es en la simulación de [espejos](#reflexión-especular-perfecta). En rasterización debemos recurrir a técnicas específicas como reflejos planares o *cubemaps*. Ray tracing solventa el problema con elegancia:
 
-![Una caja que actúa como un espejo prácticamente perfecto. Escena: `cornell_box_mirror`](./img/05/.png)
+![Una caja que actúa como un espejo prácticamente perfecto en la escena `cornell_box_mirror`](./img/05/Materiales%20espejos.png)
 
 En la siguiente escena observamos dos esferas: una que presenta refracción y otra que no. Ambas utilizan las ecuaciones de Fresnel para modelar el comportamiento de la luz.
 
-![La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro](./img/05/.png)
+![La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera.](./img/05/Materiales%20reflectantes.png)
+
+Los materiales transparentes los gestiona el shader [anyhit](#tipos-de-shaders). Permite descartar las intersecciones con aquellos objetos transparentes para permitir pasar algunos rayos:
+
+![El modelo del Wuson, pero transparente.](./img/05/Materiales%20transparentes.png)
 
 ## Rendimiento
 
