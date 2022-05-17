@@ -413,6 +413,63 @@ así que, como adelantamos al inicio del capítulo, la estimación tiene un erro
 
 Es importante destacar la **ausencia del parámetro de la dimensión**. Sabemos que $X \in S \subset \mathbb{R}^d$, pero en ningún momento aparece $d$ en la expresión de la desviación estándar [@eq:desviacion_estandar]. Este hecho es una de las ventajas de la integración de Monte Carlo.
 
+
+#### Un ejemplo práctico en R
+
+Hagamos un ejemplo práctico para visualizar lo que hemos aprendido en el software estadístico **R**.
+
+Supongamos que queremos integrar la función $f: [0, 1] \rightarrow \mathbb{R}$, $f(x) = 2x^4$. Es decir, queremos calcular
+
+$$
+\int_0^1{2x^4\ dx}
+$$
+
+El valor de esta integral es $2 \left[\frac{x^5}{5}\right]_0^1 = 2/5 = 0.4$.
+
+Primero, definimos la función $f$:
+
+```r
+f <- function(x) {
+  2 * x^4 * (x > 0 & x < 1)
+}
+```
+
+Tomamos N muestras en el intervalo $[0, 1]$ de forma uniforme:
+
+```r
+N <- 1000
+x <- runif(N)       # x1, ...., xn
+f_x <- sapply(x, f) # f(x1), ..., f(xn)
+mean(f_x)           # -> 0.3891845
+```
+
+Observamos que el valor se queda muy cerca de $0.4$. El error en este caso es $0.4 - 0.3891845 = 0.01081546$.
+
+Es interesante estudiar cómo de rápido converge el estimador al valor de la integral. Con el siguiente código, podemos caclular el error en función del número de muestras $N$:
+
+```r
+# Calcular la media y su error
+estimacion <- cumsum(f_x) / (1:N)
+error <- sqrt(cumsum((f_x - estimacion)^2)) / (1:N)
+
+# Gráfico
+plot(1:N, estimacion,
+    type = "l",
+    ylab = "Aproximación y límites del error (1 - alpha = 0.975)",
+    xlab = "Número de simulaciones",
+)
+z <- qnorm(0.025, lower.tail = FALSE)
+lines(estimacion - z * error, col = "blue", lwd = 2, lty = 3)
+lines(estimacion + z * error, col = "blue", lwd = 2, lty = 3)
+abline(h = 0.4, col = 2)
+```
+
+Este código produce la siguiente gráfica:
+
+![Error de la simulación para el estimador de la integral $\int_0^1{2x^4\ dx}$](./img/03/Error%20simulación.png)
+
+Se puede ver cómo debemos usar un número considerable de muestras, alrededor de 200, para que el error se mantenga bajo control. Aún así, aumentar el tamaño de $N$ no disminuye necesariamente el error; nos encontramos en una situación de retornos reducidos.
+
 ## Técnicas de reducción de varianza
 
 ### Muestreo por importancia
@@ -558,7 +615,6 @@ $$
 Si utilizáramos muestreo por importancia basándonos en las distribuciones de $L_{directa}$ o $f$ por separado, algunas de las dos no rendiría especialmente bien. Combinando ambas mediante muestreo por importancia múltiple se conseguiría un mejor resultado.
 
 ![Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: [@robust-monte-carlo, Multiple Importance Sampling]](./img/03/Multiple%20importance%20sampling.png){ width=67% }
-
 
 ### Otras técnicas de reducción de varianza en transporte de luz
 
