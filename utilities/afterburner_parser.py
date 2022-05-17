@@ -6,9 +6,6 @@ parser.add_argument('-i', metavar='<inputfile>', help='Log filename', required=T
 parser.add_argument('--consecutive', '-c', help='Read consecutive log files as one', action="store_true")
 parser.add_argument('--frametime', help='Parse frametime', action="store_true")
 
-data = []
-index = []
-
 args = parser.parse_args()
 
 framerates = []
