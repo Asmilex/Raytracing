@@ -367,8 +367,12 @@ class="toc-section-number">4.2</span> El estimador de Monte Carlo</a>
 <li><a href="#monte-carlo-básico"><span
 class="toc-section-number">4.2.1</span> Monte Carlo básico</a></li>
 <li><a href="#integración-de-monte-carlo"><span
-class="toc-section-number">4.2.2</span> Integración de Monte
-Carlo</a></li>
+class="toc-section-number">4.2.2</span> Integración de Monte Carlo</a>
+<ul>
+<li><a href="#un-ejemplo-práctico-en-r"><span
+class="toc-section-number">4.2.2.1</span> Un ejemplo práctico en
+R</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#técnicas-de-reducción-de-varianza"><span
 class="toc-section-number">4.3</span> Técnicas de reducción de
@@ -3150,6 +3154,65 @@ dimensión</strong>. Sabemos que <span class="math inline">\(X \in S
 class="math inline">\(d\)</span> en la expresión de la desviación
 estándar [<a href="#eq:desviacion_estandar">20</a>]. Este hecho es una
 de las ventajas de la integración de Monte Carlo.</p>
+<h4 data-number="4.2.2.1" id="un-ejemplo-práctico-en-r"><span
+class="header-section-number">4.2.2.1</span> Un ejemplo práctico en
+R</h4>
+<p>Hagamos un ejemplo práctico para visualizar lo que hemos aprendido en
+el software estadístico <strong>R</strong>.</p>
+<p>Supongamos que queremos integrar la función <span
+class="math inline">\(f: [0, 1] \rightarrow \mathbb{R}\)</span>, <span
+class="math inline">\(f(x) = 2x^4\)</span>. Es decir, queremos
+calcular</p>
+<p><span class="math display">\[
+\int_0^1{2x^4\ dx}
+\]</span></p>
+<p>El valor de esta integral es <span class="math inline">\(2
+\left[\frac{x^5}{5}\right]_0^1 = 2/5 = 0.4\)</span>.</p>
+<p>Primero, definimos la función <span
+class="math inline">\(f\)</span>:</p>
+<pre><code class="language-r">f &lt;- function(x) {
+  2 * x^4 * (x &gt; 0 &amp; x &lt; 1)
+}</code></pre>
+<p>Tomamos N muestras en el intervalo <span class="math inline">\([0,
+1]\)</span> de forma uniforme:</p>
+<pre><code class="language-r">N &lt;- 1000
+x &lt;- runif(N)       # x1, ...., xn
+f_x &lt;- sapply(x, f) # f(x1), ..., f(xn)
+mean(f_x)           # -&gt; 0.3891845</code></pre>
+<p>Observamos que el valor se queda muy cerca de <span
+class="math inline">\(0.4\)</span>. El error en este caso es <span
+class="math inline">\(0.4 - 0.3891845 = 0.01081546\)</span>.</p>
+<p>Es interesante estudiar cómo de rápido converge el estimador al valor
+de la integral. Con el siguiente código, podemos caclular el error en
+función del número de muestras <span
+class="math inline">\(N\)</span>:</p>
+<pre><code class="language-r"># Calcular la media y su error
+estimacion &lt;- cumsum(f_x) / (1:N)
+error &lt;- sqrt(cumsum((f_x - estimacion)^2)) / (1:N)
+
+# Gráfico
+plot(1:N, estimacion,
+    type = &quot;l&quot;,
+    ylab = &quot;Aproximación y límites del error (1 - alpha = 0.975)&quot;,
+    xlab = &quot;Número de simulaciones&quot;,
+)
+z &lt;- qnorm(0.025, lower.tail = FALSE)
+lines(estimacion - z * error, col = &quot;blue&quot;, lwd = 2, lty = 3)
+lines(estimacion + z * error, col = &quot;blue&quot;, lwd = 2, lty = 3)
+abline(h = 0.4, col = 2)</code></pre>
+<p>Este código produce la siguiente gráfica:</p>
+<figure>
+<img src="./img/03/Error%20simulación.png"
+alt="Error de la simulación para el estimador de la integral \int_0^1{2x^4\ dx}" />
+<figcaption aria-hidden="true">Error de la simulación para el estimador
+de la integral <span class="math inline">\(\int_0^1{2x^4\
+dx}\)</span></figcaption>
+</figure>
+<p>Se puede ver cómo debemos usar un número considerable de muestras,
+alrededor de 200, para que el error se mantenga bajo control. Aún así,
+aumentar el tamaño de <span class="math inline">\(N\)</span> no
+disminuye necesariamente el error; nos encontramos en una situación de
+retornos reducidos.</p>
 <h2 data-number="4.3" id="técnicas-de-reducción-de-varianza"><span
 class="header-section-number">4.3</span> Técnicas de reducción de
 varianza</h2>
@@ -4864,15 +4927,15 @@ por la fuente de luz.</figcaption>
 </figure>
 <p>Podemos corregir este problema mediante <strong>corrección de
 gamma</strong>. Esta es una operación no lineal utilizada en fotografía
-para corregir la luminacia de una fotografía, con el fin de compensar la
-percepción no lineal del brillo por parte de los humanos. En este caso,
-lo haremos al estilo <span class="citation"
-data-cites="Shirley2020RTW1">(<a href="#ref-Shirley2020RTW1"
-role="doc-biblioref">Shirley 2020a</a>)</span>: tras tomar las muestras,
-aplicaremos una corrección para <span class="math inline">\(\gamma =
-2.2\)</span>, lo cual implica elevar cada componente del píxel a la
-potencia <span class="math inline">\(\frac{1}{2.2}\)</span>; es decir,
-<span class="math inline">\((r_f, g_f, b_f) = (r^{\frac{1}{2.2}},
+para corregir la luminacia, con el fin de compensar la percepción no
+lineal del brillo por parte de los humanos. En este caso, lo haremos al
+estilo <span class="citation" data-cites="Shirley2020RTW1">(<a
+href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
+2020a</a>)</span>: tras tomar las muestras, aplicaremos una corrección
+para <span class="math inline">\(\gamma = 2.2\)</span>, lo cual implica
+elevar cada componente del píxel a la potencia <span
+class="math inline">\(\frac{1}{2.2}\)</span>; es decir, <span
+class="math inline">\((r_f, g_f, b_f) = (r^{\frac{1}{2.2}},
 g^{\frac{1}{2.2}}, b^{\frac{1}{2.2}})\)</span>.</p>
 <p>Tras esto, limitaremos el valor máximo de cada componente a 1 con la
 operación <span class="math inline">\(clamp()\)</span>.</p>
