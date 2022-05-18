@@ -223,7 +223,7 @@ $${#eq:LOTUS}
 **Ley (fuerte) de los grandes números**: dada una muestra de $N$ valores $X_1, \dots, X_N$ de una variable aleatoria $X$ con esperanza $\E{X} = \mu$,
 
 $$
-\Prob{\lim_{N \to \infty}{\frac{1}{n} \sum_{i = 1}^{N}{X_i}} = \mu } = 1
+\Prob{\lim_{N \to \infty}{\frac{1}{N} \sum_{i = 1}^{N}{X_i}} = \mu } = 1
 $$
 
 Usando que $\bar{X}_N = \frac{1}{N} \sum_{i = 1}^{N}{X_i}$, esta ley se suele escribir como
@@ -264,7 +264,7 @@ $$
 \E{T(X_1, \dots, X_n)} = \theta\quad \forall \theta \in \Theta
 $$
 
-Naturalmente, decimos que un estimador $T(X_1, \dots, X_N)$ está **sesgado** si $\E{T(X_1, \dots, X_N} \not = \theta$.
+Naturalmente, decimos que un estimador $T(X_1, \dots, X_N)$ está **sesgado** si $\E{T(X_1, \dots, X_N)} \not = \theta$.
 
 ## El estimador de Monte Carlo
 
