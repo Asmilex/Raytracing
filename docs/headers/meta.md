@@ -3,6 +3,9 @@ title: Los fundamentos de Ray Tracing
 author: Andrés Millán Muñoz
 keywords: [raytracing, ray tracing, Monte Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan]
 link-citations: true
+header-includes: |
+    \usepackage{caption}
+    \usepackage{subcaption}
 ---
 
 # Abstract{.unnumbered}

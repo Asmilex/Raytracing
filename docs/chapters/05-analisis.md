@@ -109,6 +109,44 @@ Los materiales transparentes los gestiona el shader [anyhit](#tipos-de-shaders).
 
 ![El modelo del Wuson, pero transparente.](./img/05/Materiales%20transparentes.png)
 
+### Fuentes de luz
+
+En la primera versión del motor, se han implementado dos tipos de fuentes de luces:
+
+- **Fuentes de luz puntuales** (*spotlights* en inglés): emiten luz alrededor suya.
+- **Luz direccional**: imitan la luz proporcionada por algún objeto infinitamente lejano. En esencia, como si fuera un sol.
+
+![Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared.](./img/05/Spotlight.png)
+
+![Dada la naturaleza de la caja, tanto las **luces direccionales** como las puntuales se comportan de manera muy similar en la caja](./img/05/Directional.png)
+
+![Sin embargo, en una escena como la del edificio medieval, hay una diferencia sustancial entre ambos tipos](./img/05/Spotlight%202.png)
+
+### PRUEBAS
+
+![CC](https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png){width=45%} \ ![DD](https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png){width=45%}
+
+
+![](./img/05/Directional.png){width=49%}
+![](./img/05/Directional%202.png){width=49%}
+\begin{figure}[!h]
+\begin{subfigure}[t]{0.4\textwidth}
+\caption{AAAAAAAA}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.4\textwidth}
+\caption{BBBBBBBBBB}
+\end{subfigure}
+\caption{A single caption for the two subfigures}
+\end{figure}
+
+
+### FIN DE PRUEBAS
+
+### Algunas escenas interesantes
+
+
+
 ## Rendimiento
 
 ### Diferentes escenas
