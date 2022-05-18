@@ -1,10 +1,9 @@
 import pandas as pd
 import sys, argparse
+import os
 
 parser = argparse.ArgumentParser(description='Parse an MSI Afterburner monitoring log file.')
 parser.add_argument('-i', metavar='<inputfile>', help='Log filename', required=True)
-parser.add_argument('--consecutive', '-c', help='Read consecutive log files as one', action="store_true")
-parser.add_argument('--frametime', help='Parse frametime', action="store_true")
 
 args = parser.parse_args()
 
@@ -38,12 +37,19 @@ for line_raw in log:
         # El resto de líneas que tengan el mismo tamaño contienen los datos propiamente dichos.
         # Quitar la primera entrada, pues tienen información de la línea
         line.pop(0)
-        # Añadir la línea al dataframe
-        df = df.append(pd.Series(line, index=df.columns), ignore_index=True)
+        df.loc[len(df)] = line
 
 # Guardar el último
 lista_df.append(df)
 log.close()
 
 ultimo_df = lista_df[-1]
-print(df)
+
+# Save the df to a csv file within the same directory
+filename = os.path.splitext(os.path.basename(args.i))[0]
+csv_path = './csv/' + filename + ".csv"
+
+if not os.path.exists('./csv'):
+    os.mkdir('./csv')
+
+ultimo_df.to_csv(csv_path, index=False)
