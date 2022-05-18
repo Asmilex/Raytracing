@@ -1030,7 +1030,7 @@ void Engine::raytrace (const VkCommandBuffer& cmdBuf, const nvmath::vec4f& clear
 
     updateFrame();
 
-    if (m_pcRay.frame >= m_maxAcumFrames) {
+    if (m_pcRay.frame >= m_maxAcumFrames && !BENCHMARK_MODE) {
         return ;
     }
 

@@ -176,7 +176,7 @@ int main(int argc, char** argv) {
     // Setup Imgui
     engine.initGUI(0);  // Using sub-pass 0
 
-    load_scene(Scene::medieval_building, engine);
+    load_scene(Scene::cornell_box_original, engine);
 
     engine.createOffscreenRender();
     engine.createDescriptorSetLayout();

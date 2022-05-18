@@ -8,6 +8,8 @@
 static int const SAMPLE_WIDTH  = 1280;
 static int const SAMPLE_HEIGHT = 720;
 
+static const bool BENCHMARK_MODE = true;
+
 // ────────────────────────────────────────────────────────────────────────────────
 
 
