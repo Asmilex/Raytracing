@@ -507,6 +507,15 @@ class="toc-section-number">6.2</span> Path tracing showcase</a>
 <ul>
 <li><a href="#materiales"><span class="toc-section-number">6.2.1</span>
 Materiales</a></li>
+<li><a href="#fuentes-de-luz-1"><span
+class="toc-section-number">6.2.2</span> Fuentes de luz</a></li>
+<li><a href="#pruebas"><span class="toc-section-number">6.2.3</span>
+PRUEBAS</a></li>
+<li><a href="#fin-de-pruebas"><span
+class="toc-section-number">6.2.4</span> FIN DE PRUEBAS</a></li>
+<li><a href="#algunas-escenas-interesantes"><span
+class="toc-section-number">6.2.5</span> Algunas escenas
+interesantes</a></li>
 </ul></li>
 <li><a href="#rendimiento"><span class="toc-section-number">6.3</span>
 Rendimiento</a>
@@ -5142,13 +5151,6 @@ class="header-section-number">6.2</span> Path tracing showcase</h2>
 <blockquote>
 <p>TODO: Cosas de las que tengo que hablar:</p>
 <ul>
-<li>Materiales
-<ul>
-<li>Difusos</li>
-<li>Especulares</li>
-<li>Espejos</li>
-<li>Transparentes (gestionado por anyhit)</li>
-</ul></li>
 <li>Luces
 <ul>
 <li>Puntual</li>
@@ -5174,7 +5176,7 @@ diferentes, los cuales veremos ilustrados a continuación.</p>
 href="#reflexión-difusa-o-lamberiana">difusos</a>. La caja de Cornell
 original contiene dos objetos de este tipo:</p>
 <figure>
-<img src="./img/05/.png"
+<img src="./img/05/Materiales%20difusos.png"
 alt="Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
 <figcaption aria-hidden="true">Materiales difusos de la escena Cornell
 Box original. Vemos que la luz se esparce uniformemente al rebotar en el
@@ -5187,7 +5189,7 @@ de <span class="citation" data-cites="Shirley2020RTW1">(<a
 href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 2020a</a>)</span>:</p>
 <figure>
-<img src="./img/05/.png"
+<img src="./img/05/Materiales%20glossy.png"
 alt="Materiales especulares metálicos de la escena Cornell Box glossy" />
 <figcaption aria-hidden="true">Materiales especulares metálicos de la
 escena Cornell Box glossy</figcaption>
@@ -5197,22 +5199,79 @@ href="#reflexión-especular-perfecta">espejos</a>. En rasterización
 debemos recurrir a técnicas específicas como reflejos planares o
 <em>cubemaps</em>. Ray tracing solventa el problema con elegancia:</p>
 <figure>
-<img src="./img/05/.png"
-alt="Una caja que actúa como un espejo prácticamente perfecto. Escena: cornell_box_mirror" />
+<img src="./img/05/Materiales%20espejos.png"
+alt="Una caja que actúa como un espejo prácticamente perfecto en la escena cornell_box_mirror" />
 <figcaption aria-hidden="true">Una caja que actúa como un espejo
-prácticamente perfecto. Escena:
+prácticamente perfecto en la escena
 <code>cornell_box_mirror</code></figcaption>
 </figure>
 <p>En la siguiente escena observamos dos esferas: una que presenta
 refracción y otra que no. Ambas utilizan las ecuaciones de Fresnel para
 modelar el comportamiento de la luz.</p>
 <figure>
-<img src="./img/05/.png"
-alt="La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro" />
+<img src="./img/05/Materiales%20reflectantes.png"
+alt="La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera." />
 <figcaption aria-hidden="true">La esfera de la derecha refracta la luz
-al pasar por ella, adquiriendo en el proceso un color más
-oscuro</figcaption>
+al pasar por ella, adquiriendo en el proceso un color más oscuro.
+También podemos ver la esfera de la izquierda recursivamente, dentro del
+propio reflejo de la esfera.</figcaption>
 </figure>
+<p>Los materiales transparentes los gestiona el shader <a
+href="#tipos-de-shaders">anyhit</a>. Permite descartar las
+intersecciones con aquellos objetos transparentes para permitir pasar
+algunos rayos:</p>
+<figure>
+<img src="./img/05/Materiales%20transparentes.png"
+alt="El modelo del Wuson, pero transparente." />
+<figcaption aria-hidden="true">El modelo del Wuson, pero
+transparente.</figcaption>
+</figure>
+<h3 data-number="6.2.2" id="fuentes-de-luz-1"><span
+class="header-section-number">6.2.2</span> Fuentes de luz</h3>
+<p>En la primera versión del motor, se han implementado dos tipos de
+fuentes de luces:</p>
+<ul>
+<li><strong>Fuentes de luz puntuales</strong> (<em>spotlights</em> en
+inglés): emiten luz alrededor suya.</li>
+<li><strong>Luz direccional</strong>: imitan la luz proporcionada por
+algún objeto infinitamente lejano. En esencia, como si fuera un
+sol.</li>
+</ul>
+<figure>
+<img src="./img/05/Spotlight.png"
+alt="Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared." />
+<figcaption aria-hidden="true">Una fuente de luz puntual iluminando la
+caja de Cornell original. Vemos cómo se proyectan sombras hacian la
+pared.</figcaption>
+</figure>
+<figure>
+<img src="./img/05/Directional.png"
+alt="Dada la naturaleza de la caja, tanto las luces direccionales como las puntuales se comportan de manera muy similar en la caja" />
+<figcaption aria-hidden="true">Dada la naturaleza de la caja, tanto las
+<strong>luces direccionales</strong> como las puntuales se comportan de
+manera muy similar en la caja</figcaption>
+</figure>
+<figure>
+<img src="./img/05/Spotlight%202.png"
+alt="Sin embargo, en una escena como la del edificio medieval, hay una diferencia sustancial entre ambos tipos" />
+<figcaption aria-hidden="true">Sin embargo, en una escena como la del
+edificio medieval, hay una diferencia sustancial entre ambos
+tipos</figcaption>
+</figure>
+<h3 data-number="6.2.3" id="pruebas"><span
+class="header-section-number">6.2.3</span> PRUEBAS</h3>
+<p><img
+src="https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png"
+style="width:45.0%" alt="CC" />  <img
+src="https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png"
+style="width:45.0%" alt="DD" /></p>
+<img src="./img/05/Directional.png" style="width:49.0%" /> <img
+src="./img/05/Directional%202.png" style="width:49.0%" />
+<h3 data-number="6.2.4" id="fin-de-pruebas"><span
+class="header-section-number">6.2.4</span> FIN DE PRUEBAS</h3>
+<h3 data-number="6.2.5" id="algunas-escenas-interesantes"><span
+class="header-section-number">6.2.5</span> Algunas escenas
+interesantes</h3>
 <h2 data-number="6.3" id="rendimiento"><span
 class="header-section-number">6.3</span> Rendimiento</h2>
 <h3 data-number="6.3.1" id="diferentes-escenas"><span
