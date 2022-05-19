@@ -48,13 +48,4 @@ struct ShadowPayload
     uint seed;
 };
 
-
-struct VisibilityContribution
-{
-    vec3  radiance;    // Radiance at the point if light is visible
-    vec3  light_dir;   // Direction to the light, to shoot shadow ray
-    float light_dist;  // Distance to the light (1e32 for infinite or sky)
-    bool visible;      // true if the light is visible from the point
-};
-
 #endif
