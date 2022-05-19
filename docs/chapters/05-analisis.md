@@ -111,16 +111,21 @@ Los materiales transparentes los gestiona el shader [anyhit](#tipos-de-shaders).
 
 ### Fuentes de luz
 
-En la primera versión del motor, se han implementado dos tipos de fuentes de luces:
+En la primera versión del motor, se han implementado dos tipos de fuentes de luces: puntuales y direccionales.
 
-- **Fuentes de luz puntuales** (*spotlights* en inglés): emiten luz alrededor suya.
-- **Luz direccional**: imitan la luz proporcionada por algún objeto infinitamente lejano. En esencia, como si fuera un sol.
+Las **fuentes de luz puntuales** (*spotlights* en inglés) emiten luz alrededor suya, como si de pequeños soles se trataran. La figura [@fig:spotlights] muestra cómo se comportan en la caja de Cornell original.
 
-![Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared.](./img/05/Spotlight.png){#fig:spotlights}
+![Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared.](./img/05/Spotlight.png){#fig:spotlights width=60%}
 
-![Dada la naturaleza de la caja, tanto las **luces direccionales** como las puntuales se comportan de manera muy similar en la caja](./img/05/Directional.png){#fig:directional_lights}
+Por otro lado, las **luces direccionales**: imitan la luz proporcionada por algún objeto infinitamente lejano. Puedes ver un ejemplo en la figura [@fig:directional_lights].
 
-![Sin embargo, en una escena como la del edificio medieval, hay una diferencia sustancial entre ambos tipos](./img/05/Spotlight%202.png){#fig:spotlights_medieval}
+![La caja de Cornell original iluminada por una **luz direccional** ](./img/05/Directional.png){#fig:directional_lights width=60%}
+
+Como las puntuales se comportan de manera muy similar en la caja de Cornell, podemos referirnos a la escena del edificio medieval para ver una diferencia más sustancial [@fig:spotlights_medieval, @fig:directional_medieval]. En este caso, se aprecia el radio de influencia de la luz puntual.
+
+![Luz puntual en la escena `medieval_building`.](./img/05/Spotlight%202.png){#fig:spotlights_medieval width=60%}
+
+![Luz direccional en la escena `medieval_building`.](./img/05/Directional%202.png){#fig:directional_medieval width=60%}
 
 ### Algunas escenas interesantes
 
@@ -131,7 +136,7 @@ Path tracing es un algoritmo costoso. Teniendo en cuenta que tratamos de desarro
 
 Utilizaremos principalmente dos escenas: `cornell_box_original` y `cornell_box_esferas`. Esto es debido a que ofrecen cierta complejidad y los materiales de los objetos permiten estudiar los parámetros del motor.
 
-Para los análisis del rendimiento, se ha utilizado un procesador **Intel i5 12600K**, una tarjeta gráfica Nvidia **2070 Super** con un ligero overclock a 1900MHz y **2x8GB** DDR4 3200MHz. A no ser que se diga lo contrario, todas las imágenes tienen una resolución de 1280 x 720. Con el fin de realizar una comparación justa, se ha implementado un modo de benchmarking que se puede activar en el archivo `globals.hpp`.
+Para los análisis del rendimiento, se ha utilizado un procesador **Intel i5 12600K**, una tarjeta gráfica Nvidia **2070 Super** con un ligero overclock a 1900MHz y **2x8GB DDR4 3200MHz** de RAM. A no ser que se diga lo contrario, todas las imágenes tienen una resolución de 1280 x 720. Con el fin de realizar una comparación justa, se ha implementado un modo de benchmarking que se puede activar en el archivo `globals.hpp`.
 
 ### Número de muestras
 
@@ -222,7 +227,7 @@ A 720p, la escena `cornell_box_original` corre a 105 FPS (9.6 ms/frame), mientra
 
 En la práctica, ray tracing no suele utilizar resoluciones internas tan grandes. Se aplican otro tipo de técnicas para reducir el ruido, como veremos en el capítulo de estado del arte.
 
-### Importance sampling
+### Muestreo por importancia
 
 
 ## Comparativa con In One Weekend
