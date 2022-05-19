@@ -466,7 +466,7 @@ abline(h = 0.4, col = 2)
 
 Este código produce la siguiente gráfica:
 
-![Error de la simulación para el estimador de la integral $\int_0^1{2x^4\ dx}$](./img/03/Error%20simulación.png)
+![Error de la simulación para el estimador de la integral $\int_0^1{2x^4\ dx}$](./img/03/Error%20simulación.png){#fig:error_simulacion}
 
 Se puede ver cómo debemos usar un número considerable de muestras, alrededor de 200, para que el error se mantenga bajo control. Aún así, aumentar el tamaño de $N$ no disminuye necesariamente el error; nos encontramos en una situación de retornos reducidos.
 
@@ -614,7 +614,7 @@ $$
 
 Si utilizáramos muestreo por importancia basándonos en las distribuciones de $L_{directa}$ o $f$ por separado, algunas de las dos no rendiría especialmente bien. Combinando ambas mediante muestreo por importancia múltiple se conseguiría un mejor resultado.
 
-![Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: [@robust-monte-carlo, Multiple Importance Sampling]](./img/03/Multiple%20importance%20sampling.png){ width=67% }
+![Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: [@robust-monte-carlo, Multiple Importance Sampling]](./img/03/Multiple%20importance%20sampling.png){ #fig:multiple_importance_sampling width=67% }
 
 ### Otras técnicas de reducción de varianza en transporte de luz
 
@@ -659,7 +659,7 @@ Aunque estamos haciendo más cálculos en cada punto de la cadena de ray trace, 
 
 Esta técnica requiere conocer si desde el punto $p$ se puede ver $y$ en la fuente de luz. Es decir, ¿hay algún objeto en medio de $p$ e $y$? Para ello, se suele utilizar lo que se conocen como ***shadow rays***. Dispara uno de estos rayos para conocer si está ocluido.
 
-![El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: [@carlos-path-tracing]](./img/03/Next%20event%20estimation.png){ width=67% }
+![El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: [@carlos-path-tracing]](./img/03/Next%20event%20estimation.png){ #fig:next_event_estimation width=67% }
 
 Si quieres informarte más sobre esta técnica, puedes leer [@Marrs2021, Importance Sampling of Many Lights on the GPU].
 
@@ -671,7 +671,7 @@ Existen varias formas de conseguir esto. Algunas de las más famosas son las sec
 
 Se puede estudiar el tema en profundidad en [@quasi-monte-carlo]
 
-![Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: [@quasi-monte-carlo]](./img/03/Quasi-Monte%20Carlo.png)
+![Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: [@quasi-monte-carlo]](./img/03/Quasi-Monte%20Carlo.png){#fig:quasimontecarlo}
 
 ## Escogiendo puntos aleatorios
 

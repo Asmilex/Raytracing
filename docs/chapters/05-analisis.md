@@ -6,7 +6,7 @@ En este capítulo vamos a analizar el resultado final del proyecto. Estudiaremos
 
 Una vez se ha [compilado](#compilación-y-ejecución) el proyecto, puedes encontrar el ejecutable en `./application/bin_x64/Debug`. Abre el binario para entrar en el programa.
 
-![Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones.](./img/05/Asmiray.png)
+![Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones.](./img/05/Asmiray.png){#fig:asmiray width=70%}
 
 Si alguna vez has usado un motor de renderización en 3D (como Blender, Unity, Unreal Engine o AutoCAD), el comportamiento debería resultarte familiar. El uso de nuestro progama es muy similar al de los anteriores:
 
@@ -91,23 +91,23 @@ Empecemos por materiales. Se han implementado unos cuantos tipos diferentes, los
 
 Los más simples son los [difusos](#reflexión-difusa-o-lamberiana). La caja de Cornell original contiene dos objetos de este tipo:
 
-![Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto.](./img/05/Materiales%20difusos.png)
+![Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto.](./img/05/Materiales%20difusos.png){#fig:materiales_difusos width=70%}
 
 Los materiales [especulares *glossy*](#reflexión-especular-no-perfecta) han sido modificados ligeramente para simular el parámetro de *roughness* de los metales, para compararlos con los de [@Shirley2020RTW1]:
 
-![Materiales especulares metálicos de la escena Cornell Box glossy](./img/05/Materiales%20glossy.png)
+![Materiales especulares metálicos de la escena Cornell Box glossy](./img/05/Materiales%20glossy.png){#fig:materiales_glossy width=70%}
 
 Si hay algo en lo que destaca ray tracing, es en la simulación de [espejos](#reflexión-especular-perfecta). En rasterización debemos recurrir a técnicas específicas como reflejos planares o *cubemaps*. Ray tracing solventa el problema con elegancia:
 
-![Una caja que actúa como un espejo prácticamente perfecto en la escena `cornell_box_mirror`](./img/05/Materiales%20espejos.png)
+![Una caja que actúa como un espejo prácticamente perfecto en la escena `cornell_box_mirror`](./img/05/Materiales%20espejos.png){#fig:materiales_espejos width=70%}
 
 En la siguiente escena observamos dos esferas: una que presenta refracción y otra que no. Ambas utilizan las ecuaciones de Fresnel para modelar el comportamiento de la luz.
 
-![La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera.](./img/05/Materiales%20reflectantes.png)
+![La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera.](./img/05/Materiales%20reflectantes.png){#fig:reflectantes width=70%}
 
 Los materiales transparentes los gestiona el shader [anyhit](#tipos-de-shaders). Permite descartar las intersecciones con aquellos objetos transparentes para permitir pasar algunos rayos:
 
-![El modelo del Wuson, pero transparente.](./img/05/Materiales%20transparentes.png)
+![El modelo del Wuson, pero transparente.](./img/05/Materiales%20transparentes.png){#fig:materiales_transparentes width=70%}
 
 ### Fuentes de luz
 
@@ -116,11 +116,11 @@ En la primera versión del motor, se han implementado dos tipos de fuentes de lu
 - **Fuentes de luz puntuales** (*spotlights* en inglés): emiten luz alrededor suya.
 - **Luz direccional**: imitan la luz proporcionada por algún objeto infinitamente lejano. En esencia, como si fuera un sol.
 
-![Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared.](./img/05/Spotlight.png)
+![Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared.](./img/05/Spotlight.png){#fig:spotlights}
 
-![Dada la naturaleza de la caja, tanto las **luces direccionales** como las puntuales se comportan de manera muy similar en la caja](./img/05/Directional.png)
+![Dada la naturaleza de la caja, tanto las **luces direccionales** como las puntuales se comportan de manera muy similar en la caja](./img/05/Directional.png){#fig:directional_lights}
 
-![Sin embargo, en una escena como la del edificio medieval, hay una diferencia sustancial entre ambos tipos](./img/05/Spotlight%202.png)
+![Sin embargo, en una escena como la del edificio medieval, hay una diferencia sustancial entre ambos tipos](./img/05/Spotlight%202.png){#fig:spotlights_medieval}
 
 ### Algunas escenas interesantes
 

@@ -256,7 +256,7 @@ Esta serie de repositorios de Nvidia DesignWorks contienen proyectos de ray trac
 
 Nuestro repositorio utiliza las herramientas citadas anteriormente para compilar su proyecto. El Makefile es una modificación del que se usa para ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una aplicación muy simple que muestra un cubo mediante rasterización, la cual modificaremos hasta añadir ray tracing en tiempo real. Por tanto, la parte inicial del desarrollo consiste en adaptar Vulkan para usar la extensión de ray tracing, extrayendo la información de la gráfica y cargando correspondientemente el dispositivo.
 
-![Por defecto, el programa muestra un cubo rasterizado muy simple. Es, prácticamente, un *hello world* gráfico](./img/04/Raster.jpg)
+![Por defecto, el programa muestra un cubo rasterizado muy simple. Es, prácticamente, un *hello world* gráfico](./img/04/Raster.jpg){#fig:raster width=70%}
 
 ### Vistazo general a la estructura
 
@@ -317,7 +317,7 @@ Una forma habitual de crear la BVH es mediante la división del espacio en una r
 
 Vulkan gestiona las estructuras de aceleración diviéndolas en dos partes: **Top-Level Acceleration Structure** (TLAS) y **Bottom-Level Acceleration Structure** (BLAS).
 
-![La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: [@nvpro-samples-tutorial]](./img/04/Acceleration%20structure.png)
+![La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: [@nvpro-samples-tutorial]](./img/04/Acceleration%20structure.png){#fig:TLAS width=70%}
 
 > TODO: Deberíamos cambiar esa foto por otra propia.
 
@@ -416,7 +416,7 @@ Para cargar esta estructura, se debe hacer lo siguiente:
 5. Conseguir los *handlers* de los shaders usando `vkGetRayTracingShaderGroupHandlesKHR`.
 6. Alojar un buffer con el bit `VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR` y copiar los *handlers*.
 
-![La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader `raygen`, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un `closest hit`, `any hit`, o `miss` shaders. Fuente: [@Marrs2021, p. 194]](./img/04/Pipeline.png)
+![La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader `raygen`, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un `closest hit`, `any hit`, o `miss` shaders. Fuente: [@Marrs2021, p. 194]](./img/04/Pipeline.png){#fig:pipeline}
 
 Cada entrada de la SBT contiene un handler y una serie de parámetros embebidos. A esto se le conoce como **Shader Record**. Estos records se clasifican en:
 
@@ -429,7 +429,7 @@ Una de las partes más difíciles de la SBT es saber cómo se relacionan record 
 
 Para conocer a fondo cómo funciona la Shader Binding Table, puedes visitar [@Marrs2021, p. 193] o [@shader-binding-table]
 
-![Fuente: [@shader-binding-table]](./img/04/SBT.png)
+![Fuente: [@shader-binding-table]](./img/04/SBT.png){#fig:SBT}
 
 ### Tipos de shaders
 
@@ -706,7 +706,7 @@ vec3 sample_pixel() {
 
 Con el código de la sección [anterior](#antialiasing-mediante-jittering-y-acumulación-temporal), existe un problema con los colores finales. El algoritmo de pathtracing no limita el máximo valor que puede tomar un camino. Sin embargo, Vulkan espera que la terna RGB provista esté en $[0, 1]^3$. Esto implica que los colores acabarán quemados.
 
-![Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz.](./img/04/Quemado.png)
+![Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz.](./img/04/Quemado.png){#fig:quemado}
 
 Podemos corregir este problema mediante **corrección de gamma**. Esta es una operación no lineal utilizada en fotografía para corregir la luminacia, con el fin de compensar la percepción no lineal del brillo por parte de los humanos. En este caso, lo haremos al estilo [@Shirley2020RTW1]: tras tomar las muestras, aplicaremos una corrección para $\gamma = 2.2$, lo cual implica elevar cada componente del píxel a la potencia $\frac{1}{2.2}$; es decir, $(r_f, g_f, b_f) = (r^{\frac{1}{2.2}}, g^{\frac{1}{2.2}}, b^{\frac{1}{2.2}})$.
 
@@ -727,7 +727,7 @@ if (USE_GAMMA_CORRECTION == 1) {
 }
 ```
 
-![Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos.](./img/04/Corrección%20de%20gamma.png)
+![Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos.](./img/04/Corrección%20de%20gamma.png){#fig:correccion_gamma}
 
 > Espera. Esa no parece la misma escena. ¿No han cambiado los colores demasiado?
 
