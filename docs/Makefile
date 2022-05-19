@@ -37,6 +37,7 @@ PANDOC_FLAGS =\
 	--listings \
 	--top-level-division="chapter" \
 	--filter pandoc-eqnos \
+	--filter pandoc-fignos \
 	--citeproc \
 	--csl ./headers/chicago-alt.csl \
 	--bibliography ./chapters/bibliography.bib
