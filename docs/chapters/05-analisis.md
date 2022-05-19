@@ -122,38 +122,51 @@ En la primera versión del motor, se han implementado dos tipos de fuentes de lu
 
 ![Sin embargo, en una escena como la del edificio medieval, hay una diferencia sustancial entre ambos tipos](./img/05/Spotlight%202.png)
 
-### PRUEBAS
-
-![CC](https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png){width=45%} \ ![DD](https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png){width=45%}
-
-
-![](./img/05/Directional.png){width=49%}
-![](./img/05/Directional%202.png){width=49%}
-\begin{figure}[!h]
-\begin{subfigure}[t]{0.4\textwidth}
-\caption{AAAAAAAA}
-\end{subfigure}
-\hfill
-\begin{subfigure}[t]{0.4\textwidth}
-\caption{BBBBBBBBBB}
-\end{subfigure}
-\caption{A single caption for the two subfigures}
-\end{figure}
-
-
-### FIN DE PRUEBAS
-
 ### Algunas escenas interesantes
-
 
 
 ## Rendimiento
 
+Path tracing es un algoritmo costoso. Teniendo en cuenta que tratamos de desarrollar una aplicación en tiempo real, debemos prestar especial atención al coste de renderizar un *frame*. En esta sección vamos a hacer una comparativa de las diferentes opciones que se han implementado en el motor, estudiando la relación calidad de imagen y rendimiento.
+
+Utilizaremos principalmente dos escenas: `cornell_box_original` y `cornell_box_esferas`. Esto es debido a que ofrecen cierta complejidad y los materiales de los objetos permiten estudiar los parámetros del motor.
+
+### Número de muestras
+
+El principal parámetro que podemos variar es el número de muestras por píxel. En un estimador de Monte Carlo [@eq:mc_integral], $\hat{I}_N = \frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}$, corresponde a $N \in \mathbb{N}$.
+
+![Para conseguir esta gráfica, iniciamos la escena `cornell_box_original`, y sin mover la cámara, vamos cambiando el número de muestras.](./img/graficas/CB_original_comparativa_samples.png){#fig:grafica_samples}
+
+La figura [@fig:grafica_samples] muestra cómo afecta al rendimiento el valor de $N$. Vemos cómo un número bajo de muestras (alrededor de 5) produce un frametime de aproximadamente 12 milisegundos, lo cual corresponde a 83 frames por segundo. Duplicando $N$ hasta las 10 muestras, produce un aumento del frametime hasta los 20 ms de media (50 FPS). Algo similar pasa con el resto de valores: 15 muestras suponen una media de 28 ms (35 FPS) y 20 muestras unos 35 ms (28 FPS). Sacamos en claro que, en esta escena, **no debemos aumentar las muestras a un valor superior a 20**, pues entraríamos en terreno de renderizado en diferido. No debemos superar la barrera de los 33 milisegundos, pues supondría una tasa de refresco de imagen inferior a los 30 FPS.
+
+Podemos concluir que, en esta escena, el **coste de una muestra por píxel** es de aproximadamente **2 milisegundos**. Este valor puede ser hallado promediando el coste medio de cada frame en cada valor del parámetro.
+
+### Profundidad de un rayo
+
+Una de las decisiones que tenemos que tomar en el diseño del algoritmo es saber cuándo cortar un camino. Hay varias formas de hacerlo, aunque destacan principalmente dos: fijar un valor máximo de profundidad o la [ruleta rusa](#ruleta-rusa).
+
+Analicemos la primera opción, que es la que hemos implementado nosotros. Para ello, usaremos a la escena `cornell_box_esferas`, pues los materiales reflectivos y refractantes de las esferas nos servirán de ayuda para estudiar el coste de un camino.
+
+![Coste de un frame en función de la profundidad de ](./img/graficas/CB_original_comparativa_depth.png){#fig:grafica_depth}
+
+En esta figura [@fig:grafica_depth] ocurre algo similar a [@fig:grafica_samples]: como es evidente, aumentar la profundidad de un rayo aumenta el coste de renderizar un frame. Sin embargo, hay algunos matices que debemos estudiar con más detalle.
+
+El primero es que cambiar la profundidad no es tan costoso como aumentar el número de muestras. Aún quintuplicando el valor por defecto de 10 rebotes a 50, vemos que el motor se mantiene por debajo de los 33 milisegundos. Para una profundidad de 10, el coste de un frame es de 19 milisegundos (52 FPS), mientras que para 50 es de 28 milisegundos (35 FPS). Tomando un valor intermedio de 20, el coste se vuelve de 24 milisegundos (41 FPS).
+
+Llaman la atención las variaciones en el frametime conforme aumenta la profundidad. Para un valor de `depth = 10`, observamos que oscila entre los 18 y los 20 milisegundos. Sin embargo, para los otros dos valores de 20 y 50 son habituales picos de varios frames, llegando hasta los 5 milisegundos. Además, se aprecia cierta inconsistencia. Sin embargo, esto no es de demasiada importancia, pues la oscilación media es de unos 3 milisegundos aproximadamente, lo cual supone un decremento de unos 5 frames por segundo como máximo.
+
+La naturaleza de la escena afecta en gran medida al resultado. Por mera probabilidad, cuando un rayo rebota *dentro* de la caja, puede salir disparado hacia muchas direcciones. Destacarían en este caso dos situaciones:
+
+- El rayo continúa rebotando en la caja, impactando múltiples veces en las esferas. Esto hace que aumente el coste del camino.
+- Se escapa de la caja, llegando hasta el infinito y cortando el camino. En este caso, no se alcanza la profundidad máxima, y el camino se vuelve más barato.
+
+La diferencia de rendimiento es sustancial. Pero, ¿merece la pena el coste adicional? Comprobemos gráficamente las diferencias en la calidad de imagen:
+
+
+
 ### Diferentes escenas
 ### Resolución
-### Profundidad de un rayo
 ### Acumulación temporal
-### Número de muestras
 ### Importance sampling
 
 
