@@ -255,6 +255,35 @@ Con el fin de preparar este trabajo, se ha implementado la serie de libros *In O
 
 En esta sección vamos a hacer justo eso: enseñaremos escenas similares, mostraremos cuánto tarda en renderizar un frame en comparación a nuestro motor, y estudiaremos las diferencias en la calidad visual.
 
+### Sobre la implementación de In One Weekend
+
+La implementación de los tres libros se encuentra en la carpeta `./RT_in_one_weekend` del repositorio. Aunque el proyecto presenta una gran complejidada por sí mismo, no comentaremos nada en este trabajo. Sin embargo, comentaremos algunos detalles necesarios para esta comparativa.
+
+El primero de ellos está relacionado con la figuración:
+
+- La configuración se encuentra principalmente en el archivo `./RT_in_one_weekend/src/main.cpp`. Los parámetros que se pueden cambiar son el número de muestras (`samples_per_pixel`), resolución de la imagen (`image_width`) y profundidad del rayo (`max_depth`).
+- Las escenas se cargan en el archivo `./RT_in_one_weekend/src/scenes.hpp`.
+
+Para mantener la comparación lo más justa posible, se ha fijado la profundidad del rayo a 10, y la resolución a 720 x 720.
+
+Es importante tener en mente que **In One Weekend no está optimizado**. No está pensado para ser rápido; sino para ser didáctico. Es por ello que el procesamiento está **limitado a un único hilo**, y el renderizado se realiza **únicamente por CPU**. Las imágenes están exportadas al formato `.ppm` y reconvertidas a `.png` para este trabajo.
+
+
+### Tiempos de renderizado
+
+La escena que vamos a comparar es muy similar a `cornell_box_mirror`, a excepción de que se usa una esfera reflectante en lugar de una caja difusa.
+
+La siguiente tabla muestra una comparativa entre el coste de renderizar un frame en In One Weekend y en nuestro motor, usando una escena análoga en cada versión:
+
+| **Número de muestras** | **In One Weekend** | **Nuestra implementación** |
+|:-----------------------|:-------------------|----------------------------|
+| 1                      | 1032 ms            | x ms                           |
+| 5                      | 3934 ms            | x ms                           |
+| 10                     | 7459 ms            | x ms                           |
+| 20                     | 14516 ms           | x ms                           |
+| 100                    | 69573 ms           | x ms                           |
+| 1000                   | 688388 ms          | x ms                           |
+
 ![1032 ms](./img/05/IOWCB_1s_10d.png)
 
 ![3934 ms](./img/05/IOWCB_5s_10d.png)
