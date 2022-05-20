@@ -527,8 +527,14 @@ Resolución</a></li>
 class="toc-section-number">6.3.5</span> Importance sampling</a></li>
 </ul></li>
 <li><a href="#comparativa-con-in-one-weekend"><span
-class="toc-section-number">6.4</span> Comparativa con In One
-Weekend</a></li>
+class="toc-section-number">6.4</span> Comparativa con In One Weekend</a>
+<ul>
+<li><a href="#sobre-la-implementación-de-in-one-weekend"><span
+class="toc-section-number">6.4.1</span> Sobre la implementación de In
+One Weekend</a></li>
+<li><a href="#tiempos-de-renderizado"><span
+class="toc-section-number">6.4.2</span> Tiempos de renderizado</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#el-presente-y-futuro-de-rt"><span
 class="toc-section-number">7</span> El presente y futuro de RT</a>
@@ -5705,6 +5711,112 @@ interesante compararlo con nuestro motor.</p>
 similares, mostraremos cuánto tarda en renderizar un frame en
 comparación a nuestro motor, y estudiaremos las diferencias en la
 calidad visual.</p>
+<h3 data-number="6.4.1"
+id="sobre-la-implementación-de-in-one-weekend"><span
+class="header-section-number">6.4.1</span> Sobre la implementación de In
+One Weekend</h3>
+<p>La implementación de los tres libros se encuentra en la carpeta
+<code>./RT_in_one_weekend</code> del repositorio. Aunque el proyecto
+presenta una gran complejidada por sí mismo, no comentaremos nada en
+este trabajo. Sin embargo, comentaremos algunos detalles necesarios para
+esta comparativa.</p>
+<p>El primero de ellos está relacionado con la figuración:</p>
+<ul>
+<li>La configuración se encuentra principalmente en el archivo
+<code>./RT_in_one_weekend/src/main.cpp</code>. Los parámetros que se
+pueden cambiar son el número de muestras
+(<code>samples_per_pixel</code>), resolución de la imagen
+(<code>image_width</code>) y profundidad del rayo
+(<code>max_depth</code>).</li>
+<li>Las escenas se cargan en el archivo
+<code>./RT_in_one_weekend/src/scenes.hpp</code>.</li>
+</ul>
+<p>Para mantener la comparación lo más justa posible, se ha fijado la
+profundidad del rayo a 10, y la resolución a 720 x 720.</p>
+<p>Es importante tener en mente que <strong>In One Weekend no está
+optimizado</strong>. No está pensado para ser rápido; sino para ser
+didáctico. Es por ello que el procesamiento está <strong>limitado a un
+único hilo</strong>, y el renderizado se realiza <strong>únicamente por
+CPU</strong>. Las imágenes están exportadas al formato <code>.ppm</code>
+y reconvertidas a <code>.png</code> para este trabajo.</p>
+<h3 data-number="6.4.2" id="tiempos-de-renderizado"><span
+class="header-section-number">6.4.2</span> Tiempos de renderizado</h3>
+<p>La escena que vamos a comparar es muy similar a
+<code>cornell_box_mirror</code>, a excepción de que se usa una esfera
+reflectante en lugar de una caja difusa.</p>
+<p>La siguiente tabla muestra una comparativa entre el coste de
+renderizar un frame en In One Weekend y en nuestro motor, usando una
+escena análoga en cada versión:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 27%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Número de muestras</strong></th>
+<th style="text-align: left;"><strong>In One Weekend</strong></th>
+<th><strong>Nuestra implementación</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1032 ms</td>
+<td>x ms</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">3934 ms</td>
+<td>x ms</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">7459 ms</td>
+<td>x ms</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">14516 ms</td>
+<td>x ms</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">69573 ms</td>
+<td>x ms</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1000</td>
+<td style="text-align: left;">688388 ms</td>
+<td>x ms</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="./img/05/IOWCB_1s_10d.png" alt="1032 ms" />
+<figcaption aria-hidden="true">1032 ms</figcaption>
+</figure>
+<figure>
+<img src="./img/05/IOWCB_5s_10d.png" alt="3934 ms" />
+<figcaption aria-hidden="true">3934 ms</figcaption>
+</figure>
+<figure>
+<img src="./img/05/IOWCB_10s_10d.png" alt="7459 ms" />
+<figcaption aria-hidden="true">7459 ms</figcaption>
+</figure>
+<figure>
+<img src="./img/05/IOWCB_20s_10d.png" alt="14516 ms" />
+<figcaption aria-hidden="true">14516 ms</figcaption>
+</figure>
+<figure>
+<img src="./img/05/IOWCB_100s_10d.png" alt="69573 ms" />
+<figcaption aria-hidden="true">69573 ms</figcaption>
+</figure>
+<figure>
+<img src="./img/05/IOWCB_1000s_10d.png" alt="688388 ms" />
+<figcaption aria-hidden="true">688388 ms</figcaption>
+</figure>
 <h1 data-number="7" id="el-presente-y-futuro-de-rt"><span
 class="header-section-number">7</span> El presente y futuro de RT</h1>
 <blockquote>
