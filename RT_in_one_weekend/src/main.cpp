@@ -36,7 +36,7 @@ color ray_color(const Ray& r, const color& background, const hittable& world, sh
     scatter_record srec;
 
     // Comprobar qué parte se dispersa y qué parte se emite.
-    color emitted = rec.mat_ptr->emmitted(r, rec, rec.u, rec.v, rec.p);
+    color emitted = rec.mat_ptr->emitted(r, rec, rec.u, rec.v, rec.p);
 
     if (!rec.mat_ptr->scatter(r, rec, srec))
         return emitted;
@@ -441,9 +441,9 @@ hittable_list bvh_debug() {
 
 int main() {
     auto aspect_ratio = 16.0/9.0;
-    int samples_per_pixel = 100;
+    int samples_per_pixel = 1;
 
-    int image_width = 800;
+    int image_width = 100;
 
     hittable_list world;
     point3 lookfrom;
