@@ -72,17 +72,6 @@ Ten en cuenta que las imágenes de las escenas no son definitivas. Están sujeta
 
 ## Path tracing showcase
 
-> TODO: Cosas de las que tengo que hablar:
->
-> - Luces
->   - Puntual
->   - Direccional
-> - Cornell Boxes
->   - Cornell Box
->   - Cornell Bath
->   - Mirar la iluminación global
->   - Efectos de las pelotas en el ambiente
-
 A lo largo de este trabajo hemos visto una gran variedad de conceptos desde el punto de vista teórico. Ahora es el momento de ponerlo en práctica.
 
 ### Materiales
@@ -127,8 +116,11 @@ Como las puntuales se comportan de manera muy similar en la caja de Cornell, pod
 
 ![Luz direccional en la escena `medieval_building`.](./img/05/Directional%202.png){#fig:directional_medieval width=60%}
 
-### Algunas escenas interesantes
+### Oclusión ambiental
 
+![](./img/05/Ambient%20occlusion%201.png){#fig:ambient_occlusion_1 width=60%}
+
+![](./img/05/Ambient%20occlusion%202.png){#fig:ambient_occlusion_2 width=60%}
 
 ## Rendimiento
 
@@ -209,7 +201,7 @@ La acumulación temporal proporcionará una mejora enorme de la calidad visual s
 
 Utilizando una única muestra, pero un valor de acumulación temporal de 100 frames máximos, proporciona una imagen sin apenas ruido [@fig:acumulacion_temp]
 
-![1 muestra, acumulación temporal de 100 frames. A diferencia de @fig:1_sample, el resultado es impecable.](./img/05/Acumulación%20temporal%201.png){#fig:acumulacion_temp width=40%}
+![1 muestra, acumulación temporal de 100 frames. A diferencia de @fig:samples_1, el resultado es impecable.](./img/05/Acumulación%20temporal%201.png){#fig:acumulacion_temp width=40%}
 
 Subiendo los parámetros a 200 frames de acumulación temporal y 10 muestras, se obtiene una imagen muy buena[@fig:acumulacion_temp_2].
 
