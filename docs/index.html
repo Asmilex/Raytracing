@@ -509,8 +509,8 @@ class="toc-section-number">6.2</span> Path tracing showcase</a>
 Materiales</a></li>
 <li><a href="#fuentes-de-luz-1"><span
 class="toc-section-number">6.2.2</span> Fuentes de luz</a></li>
-<li><a href="#oclusión-ambiental"><span
-class="toc-section-number">6.2.3</span> Oclusión ambiental</a></li>
+<li><a href="#iluminación-global"><span
+class="toc-section-number">6.2.3</span> Iluminación global</a></li>
 </ul></li>
 <li><a href="#rendimiento"><span class="toc-section-number">6.3</span>
 Rendimiento</a>
@@ -5315,22 +5315,98 @@ alt="Figura 30: Luz direccional en la escena medieval_building." />
 en la escena <code>medieval_building</code>.</figcaption>
 </figure>
 </div>
-<h3 data-number="6.2.3" id="oclusión-ambiental"><span
-class="header-section-number">6.2.3</span> Oclusión ambiental</h3>
-<div id="fig:ambient_occlusion_1" class="fignos">
+<h3 data-number="6.2.3" id="iluminación-global"><span
+class="header-section-number">6.2.3</span> Iluminación global</h3>
+<p>La <strong>iluminación global</strong> es un fenómeno físico que se
+refiere a luz que proviene de <em>todas</em> direcciones. Es el efecto
+que propicia el rebote constante de los fotones emitidos por fuentes de
+luz hacia una escena, adquiriendo las propiedades de los materiales en
+los que rebotan.</p>
+<p>Dicho de esta forma, es difícil imaginarse cómo se comporta en la
+vida real. Para ilustrarlo, tomemos dos fotografías de una escena
+similar a la caja de Cornell:</p>
+<div id="fig:cornell_bath_1" class="fignos">
+<figure>
+<img src="./img/05/Cornell%20bath%201.jpg" style="width:60.0%"
+alt="Figura 31: Escena similar a la caja de Cornell, en la vida real. También es mi baño." />
+<figcaption aria-hidden="true"><span>Figura 31:</span> Escena similar a
+la caja de Cornell, en la vida real. También es mi baño.</figcaption>
+</figure>
+</div>
+<p>En la escena [<a href="#fig:cornell_bath_1">31</a>] observamos cómo
+la luz del sol entra desde la parte de la derecha, rebotando en todo el
+espacio. Notamos cómo la escena tiene una tonalidad natural y cálida.
+Sin embargo, esta impresión es fácilmente modificable si alteramos la
+forma de arrojar la luz. Cerrando la puerta (la cual no puede ser vista
+en la fotografía, pero se encuentra a la derecha y es idéntica al
+cristal), la iluminación cambia completamente [<a
+href="#fig:cornell_bath_2">32</a>].</p>
+<div id="fig:cornell_bath_2" class="fignos">
+<figure>
+<img src="./img/05/Cornell%20bath%202.jpg" style="width:60.0%"
+alt="Figura 32: Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados" />
+<figcaption aria-hidden="true"><span>Figura 32:</span> Cuando cambiamos
+la forma de iluminar la escena, los colores se ven drásticamente
+modificados</figcaption>
+</figure>
+</div>
+<p>Podemos observar cómo todos los materiales adquieren un tinte rojizo,
+debido a la influencia tanto difusa como especular de la pared de la
+izquierda. Objetos que antes eran blancos inmaculados se vuelven rojos,
+como el inodoro. Incluso aquellas zonas en sombra consiguen un color
+rojizo. Esto es debido a que los fotones rebotan en el cristal rojo
+cuando más energía tienen. De esta forma, en la siguiente dirección
+tomada, los rayos transportan esta propiedad al resto de materiales, los
+cuales se visualizan como una tonalidad roja.</p>
+<p><strong>Path tracing consigue este efecto de manera natural</strong>
+por diseño. Este es uno de sus mayores puntos fuertes, pero a la vez lo
+hace computacionalmente caro. Dado que la escena de [<a
+href="#fig:cornell_bath_1">31</a>] y [<a
+href="#fig:cornell_bath_2">32</a>] es, esencialmente, una caja de
+Cornell, deberíamos apreciar un efecto similar en nuestra escena,
+¿verdad?</p>
+<p>¡Así es! La figura [<a href="#fig:global_illumination_1">33</a>] es
+muy similar a la [<a href="#fig:cornell_bath_2">32</a>]. Se pueden
+apreciar los mismos efectos en la caja izquierda, los cuales no ocurrían
+con tanta intensidad en la escena original [fig. <a
+href="#fig:materiales_difusos">22</a>]</p>
+<div id="fig:global_illumination_1" class="fignos">
 <figure>
 <img src="./img/05/Ambient%20occlusion%201.png" style="width:60.0%"
-alt="Figura 31: " />
-<figcaption aria-hidden="true"><span>Figura 31:</span> </figcaption>
+alt="Figura 33: La caja de Cornell original con luz direccional apuntando a la pared de la izquierda" />
+<figcaption aria-hidden="true"><span>Figura 33:</span> La caja de
+Cornell original con luz direccional apuntando a la pared de la
+izquierda</figcaption>
 </figure>
 </div>
-<div id="fig:ambient_occlusion_2" class="fignos">
+<p>Lo mismo ocurre cuando cambiamos el foco a la pared de la derecha. Al
+ser verde, tintará el resto de los materiales de dicho color [<a
+href="#fig:global_illumination_2">34</a>].</p>
+<div id="fig:global_illumination_2" class="fignos">
 <figure>
 <img src="./img/05/Ambient%20occlusion%202.png" style="width:60.0%"
-alt="Figura 32: " />
-<figcaption aria-hidden="true"><span>Figura 32:</span> </figcaption>
+alt="Figura 34: Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena" />
+<figcaption aria-hidden="true"><span>Figura 34:</span> Enfocando a la
+pared de la derecha, conseguimos un tinte verde para la
+escena</figcaption>
 </figure>
 </div>
+<p>Este efecto es esencial para proporcionar realismo a una imagen
+digital. Sin iluminación global, los motores presentan un aspecto que
+podríamos considerar <em>videojueguil</em>: imágenes planas, con sombras
+abruptas y un aire de falsedad al que nos hemos llegado a acostumbrar.
+Por ello se han implementado varias técnicas en rasterización para
+suplir este efecto. Destacan los <em>lightmaps</em>, la <a
+href="#materiales-y-objetos">componente ambiental</a> de los materiales,
+<em>cubemaps</em>, oclusión ambiental e iluminación indirecta basada en
+<em>probes</em>.</p>
+<p>Para un vistazo más a fondo de la iluminación global, puedes
+referirte al vídeo de Alex Battaglia en <span class="citation"
+data-cites="df-global-illumination">(<a
+href="#ref-df-global-illumination" role="doc-biblioref">Digital Foundry
+2021</a>)</span>, en el cual cubre diferentes formas de resolver este
+problema, tanto en el caso de ray tracing como en el de
+rasterización.</p>
 <h2 data-number="6.3" id="rendimiento"><span
 class="header-section-number">6.3</span> Rendimiento</h2>
 <p>Path tracing es un algoritmo costoso. Teniendo en cuenta que tratamos
@@ -5361,13 +5437,13 @@ class="math inline">\(N \in \mathbb{N}\)</span>.</p>
 <div id="fig:grafica_samples" class="fignos">
 <figure>
 <img src="./img/graficas/CB_original_comparativa_samples.png"
-alt="Figura 33: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
-<figcaption aria-hidden="true"><span>Figura 33:</span> Para conseguir
+alt="Figura 35: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
+<figcaption aria-hidden="true"><span>Figura 35:</span> Para conseguir
 esta gráfica, iniciamos la escena <code>cornell_box_original</code>, y
 sin mover la cámara, vamos cambiando el número de muestras.</figcaption>
 </figure>
 </div>
-<p>La figura [<a href="#fig:grafica_samples">33</a>] muestra cómo afecta
+<p>La figura [<a href="#fig:grafica_samples">35</a>] muestra cómo afecta
 al rendimiento el valor de <span class="math inline">\(N\)</span>. Vemos
 cómo un número bajo de muestras (alrededor de 5) produce un frametime de
 aproximadamente 12 milisegundos, lo cual corresponde a 83 frames por
@@ -5391,12 +5467,12 @@ href="#acumulación-temporal">acumulación temporal</a>, pues en esencia,
 proporcionaría un mayor número de muestras en el tiempo.</p>
 <p>Con una única muestra por píxel, la imagen final aparece muy ruidosa.
 Aumentarlo a 5 mejora bastante la situación, pero sigue habiendo
-demasiado ruido [<a href="#fig:samples_1">34</a>]</p>
+demasiado ruido [<a href="#fig:samples_1">36</a>]</p>
 <div id="fig:samples_1" class="fignos">
 <figure>
 <img src="./img/05/1,%205%20samples.png"
-alt="Figura 34: Izquierda: 1 muestra. Derecha: 5 muestras" />
-<figcaption aria-hidden="true"><span>Figura 34:</span>
+alt="Figura 36: Izquierda: 1 muestra. Derecha: 5 muestras" />
+<figcaption aria-hidden="true"><span>Figura 36:</span>
 <strong>Izquierda</strong>: 1 muestra. <strong>Derecha</strong>: 5
 muestras</figcaption>
 </figure>
@@ -5406,8 +5482,8 @@ calidad visual significativa.</p>
 <div id="fig:samples_2" class="fignos">
 <figure>
 <img src="./img/05/10,%2020%20samples.png"
-alt="Figura 35: Izquierda: 10 muestras. Derecha: 20 muestras" />
-<figcaption aria-hidden="true"><span>Figura 35:</span>
+alt="Figura 37: Izquierda: 10 muestras. Derecha: 20 muestras" />
+<figcaption aria-hidden="true"><span>Figura 37:</span>
 <strong>Izquierda</strong>: 10 muestras. <strong>Derecha</strong>: 20
 muestras</figcaption>
 </figure>
@@ -5429,13 +5505,13 @@ de un camino.</p>
 <div id="fig:grafica_depth" class="fignos">
 <figure>
 <img src="./img/graficas/CB_original_comparativa_depth.png"
-alt="Figura 36: Coste de un frame en función de la profundidad de" />
-<figcaption aria-hidden="true"><span>Figura 36:</span> Coste de un frame
+alt="Figura 38: Coste de un frame en función de la profundidad de" />
+<figcaption aria-hidden="true"><span>Figura 38:</span> Coste de un frame
 en función de la profundidad de</figcaption>
 </figure>
 </div>
-<p>En esta figura [<a href="#fig:grafica_depth">36</a>] ocurre algo
-similar a [<a href="#fig:grafica_samples">33</a>]: como es evidente,
+<p>En esta figura [<a href="#fig:grafica_depth">38</a>] ocurre algo
+similar a [<a href="#fig:grafica_samples">35</a>]: como es evidente,
 aumentar la profundidad de un rayo aumenta el coste de renderizar un
 frame. Sin embargo, hay algunos matices que debemos estudiar con más
 detalle.</p>
@@ -5470,65 +5546,65 @@ pena el coste adicional?</strong>.</p>
 <p>Para responder a esta pregunta, primero debemos conocer cómo actúa
 este parámetro. Empezando con un número extremadamente bajo para los
 rebotes, vemos que parte de la escena ni siquiera se renderiza [<a
-href="#fig:depth_1">37</a>].</p>
+href="#fig:depth_1">39</a>].</p>
 <div id="fig:depth_1" class="fignos">
 <figure>
 <img src="./img/05/1%20bounce.png" style="width:70.0%"
-alt="Figura 37: depth = 1" />
-<figcaption aria-hidden="true"><span>Figura 37:</span>
+alt="Figura 39: depth = 1" />
+<figcaption aria-hidden="true"><span>Figura 39:</span>
 <code>depth = 1</code></figcaption>
 </figure>
 </div>
 <p>Aumentar el número de rebotes progresivamente permite que el camino
 adquiera mayor información. Con dos rebotes, permitimos que un camino
 adquiera información sobre la caja por dentro, así como un reflejo
-primitivo en las esferas [<a href="#fig:depth_2">38</a>].</p>
+primitivo en las esferas [<a href="#fig:depth_2">40</a>].</p>
 <div id="fig:depth_2" class="fignos">
 <figure>
 <img src="./img/05/2%20bounces.png" style="width:70.0%"
-alt="Figura 38: depth = 2" />
-<figcaption aria-hidden="true"><span>Figura 38:</span>
+alt="Figura 40: depth = 2" />
+<figcaption aria-hidden="true"><span>Figura 40:</span>
 <code>depth = 2</code></figcaption>
 </figure>
 </div>
 <p>Con 3 rebotes, la esfera izquierda refleja casi en su totalidad la
 esfera, pero vemos que el reflejo de la esfera derecha <em>dentro</em>
-de la izquierda está oscurecido [<a href="#fig:depth_3">39</a>].</p>
+de la izquierda está oscurecido [<a href="#fig:depth_3">41</a>].</p>
 <div id="fig:depth_3" class="fignos">
 <figure>
 <img src="./img/05/3%20bounces.png" style="width:70.0%"
-alt="Figura 39: depth = 3" />
-<figcaption aria-hidden="true"><span>Figura 39:</span>
+alt="Figura 41: depth = 3" />
+<figcaption aria-hidden="true"><span>Figura 41:</span>
 <code>depth = 3</code></figcaption>
 </figure>
 </div>
-<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">40</a>] se arregla
+<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">42</a>] se arregla
 mayoritariamente esto.</p>
 <div id="fig:depth_4" class="fignos">
 <figure>
 <img src="./img/05/4%20bounces.png" style="width:70.0%"
-alt="Figura 40: depth = 4" />
-<figcaption aria-hidden="true"><span>Figura 40:</span>
+alt="Figura 42: depth = 4" />
+<figcaption aria-hidden="true"><span>Figura 42:</span>
 <code>depth = 4</code></figcaption>
 </figure>
 </div>
 <p>En esta escena, aumentar más allá de 5 o 6 rebotes produce una
 situación de retornos reducidos. La calidad de imagen no aumenta
 prácticamente nada, pero el coste se vuelve muy elevado [<a
-href="#fig:depth_20">41</a>, <a href="#fig:depth_50">42</a>].</p>
+href="#fig:depth_20">43</a>, <a href="#fig:depth_50">44</a>].</p>
 <div id="fig:depth_20" class="fignos">
 <figure>
 <img src="./img/05/20%20bounces.png" style="width:70.0%"
-alt="Figura 41: depth = 20" />
-<figcaption aria-hidden="true"><span>Figura 41:</span>
+alt="Figura 43: depth = 20" />
+<figcaption aria-hidden="true"><span>Figura 43:</span>
 <code>depth = 20</code></figcaption>
 </figure>
 </div>
 <div id="fig:depth_50" class="fignos">
 <figure>
 <img src="./img/05/50%20bounces.png" style="width:70.0%"
-alt="Figura 42: depth = 50" />
-<figcaption aria-hidden="true"><span>Figura 42:</span>
+alt="Figura 44: depth = 50" />
+<figcaption aria-hidden="true"><span>Figura 44:</span>
 <code>depth = 50</code></figcaption>
 </figure>
 </div>
@@ -5541,24 +5617,24 @@ podría ser un motivo factor no negociable, pero en nuestro caso, nos
 servirá.</p>
 <p>Utilizando una única muestra, pero un valor de acumulación temporal
 de 100 frames máximos, proporciona una imagen sin apenas ruido [<a
-href="#fig:acumulacion_temp">43</a>].</p>
+href="#fig:acumulacion_temp">45</a>].</p>
 <div id="fig:acumulacion_temp" class="fignos">
 <figure>
 <img src="./img/05/Acumulación%20temporal%201.png" style="width:40.0%"
-alt="Figura 43: 1 muestra, acumulación temporal de 100 frames. A diferencia de 34, el resultado es impecable." />
-<figcaption aria-hidden="true"><span>Figura 43:</span> 1 muestra,
+alt="Figura 45: 1 muestra, acumulación temporal de 100 frames. A diferencia de 36, el resultado es impecable." />
+<figcaption aria-hidden="true"><span>Figura 45:</span> 1 muestra,
 acumulación temporal de 100 frames. A diferencia de <a
-href="#fig:samples_1">34</a>, el resultado es impecable.</figcaption>
+href="#fig:samples_1">36</a>, el resultado es impecable.</figcaption>
 </figure>
 </div>
 <p>Subiendo los parámetros a 200 frames de acumulación temporal y 10
 muestras, se obtiene una imagen muy buena[<a
-href="#fig:acumulacion_temp_2">44</a>].</p>
+href="#fig:acumulacion_temp_2">46</a>].</p>
 <div id="fig:acumulacion_temp_2" class="fignos">
 <figure>
 <img src="./img/05/Acumulación%20temporal%202.png" style="width:40.0%"
-alt="Figura 44: 10 muestras, acumulación temporal de 200 frames." />
-<figcaption aria-hidden="true"><span>Figura 44:</span> 10 muestras,
+alt="Figura 46: 10 muestras, acumulación temporal de 200 frames." />
+<figcaption aria-hidden="true"><span>Figura 46:</span> 10 muestras,
 acumulación temporal de 200 frames.</figcaption>
 </figure>
 </div>
@@ -5575,8 +5651,8 @@ escala al variarla.</p>
 <div id="fig:resolucion" class="fignos">
 <figure>
 <img src="./img/graficas/CB_original_comparativa_resolucion.png"
-alt="Figura 45: Tiempo de renderización de un frame dependiendo de la resolución" />
-<figcaption aria-hidden="true"><span>Figura 45:</span> Tiempo de
+alt="Figura 47: Tiempo de renderización de un frame dependiendo de la resolución" />
+<figcaption aria-hidden="true"><span>Figura 47:</span> Tiempo de
 renderización de un frame dependiendo de la resolución</figcaption>
 </figure>
 </div>
@@ -5598,12 +5674,12 @@ integrar para reducir la varianza. Se ha implementado muestreo por
 importancia para los materiales difusos. En particular, se ha utilizado
 dos estrategias diferentes para escoger direcciones aleatorias, que
 pueden observarse en la figura [<a
-href="#fig:importance_sample">46</a>]</p>
+href="#fig:importance_sample">48</a>].</p>
 <div id="fig:importance_sample" class="fignos">
 <figure>
 <img src="./img/05/Importance%20sample.png"
-alt="Figura 46: Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling.   Escena: cornell_box_original, 10 rebotes, acumulación temporal off, 10 muestras" />
-<figcaption aria-hidden="true"><span>Figura 46:</span>
+alt="Figura 48: Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling.   Escena: cornell_box_original, 10 rebotes, acumulación temporal off, 10 muestras" />
+<figcaption aria-hidden="true"><span>Figura 48:</span>
 <strong>Izquierda</strong>: <em>hemisphere sampling</em>.
 <strong>Derecha</strong>: <em>Cosine-Weighted Hemisphere Sampling</em>.
 <br> Escena: <code>cornell_box_original</code>, 10 rebotes, acumulación
@@ -6442,6 +6518,13 @@ Digital Foundry. 2020. <span>“Cyberpunk 2077 PC: What does ray tracing
 deliver... And is it worth it?”</span> December 19, 2020. Accessed April
 10, 2022. <a
 href="https://www.youtube.com/watch?v=6bqA8F6B6NQ">https://www.youtube.com/watch?v=6bqA8F6B6NQ</a>.
+</div>
+<div id="ref-df-global-illumination" class="csl-entry"
+role="doc-biblioentry">
+———. 2021. <span>“Tech focus: Global illumination - what it is, how does
+it work and why do we need it?”</span> July 24, 2021. Accessed May 20,
+2022. <a
+href="https://www.youtube.com/watch?v=yEkryaaAsBU">https://www.youtube.com/watch?v=yEkryaaAsBU</a>.
 </div>
 <div id="ref-digital-foundry" class="csl-entry" role="doc-biblioentry">
 ———. 2022. <span>“Canal de youtube de digital foundry.”</span> 2022.
