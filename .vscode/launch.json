@@ -19,12 +19,12 @@
             "name": "(Debug) RT in one weekend",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/RT_in_one_weekend/build/bin/Debug/RT_in_one_weekend.exe.",
+            "program": "${workspaceFolder}/RT_in_one_weekend/build/bin/Debug/RT_in_one_weekend.exe",
             "args": [">", "${workspaceFolder}/RT_in_one_weekend/image.ppm"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],
-            "console": "externalTerminal",
+            "console": "newExternalWindow",
             "preLaunchTask": "Compile debug RT in one weekend"
         },
         {
@@ -36,7 +36,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],
-            "console": "externalTerminal",
+            "console": "newExternalWindow",
             "preLaunchTask": "Compile release RT in one weekend"
 
         }
