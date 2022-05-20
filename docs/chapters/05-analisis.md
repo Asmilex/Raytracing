@@ -250,3 +250,8 @@ El [muestreo por importancia](#muestreo-por-importancia) consiste en tomar una f
 Para facilitar la comparativa, desde una posición estática se ha tomado una foto, y hemos ampliado la caja de la derecha digitalmente. De esta forma, podemos ver cómo la caja de la derecha contiene una menor cantidad de ruido, aún manteniendo los mismos parámetros de renderizado.
 
 ## Comparativa con In One Weekend
+
+Con el fin de preparar este trabajo, se ha implementado la serie de libros *In One Weekend*: *In One Weekend*, *The Next Week* y *The Rest of your Life* [@Shirley2020RTW1, @Shirley2020RTW2, @Shirley2020RTW3]. Teniendo en cuenta que el producto final de esos libros es un *offline renderer*, sería interesante compararlo con nuestro motor.
+
+En esta sección vamos a hacer justo eso: enseñaremos escenas similares, mostraremos cuánto tarda en renderizar un frame en comparación a nuestro motor, y estudiaremos las diferencias en la calidad visual.
+
