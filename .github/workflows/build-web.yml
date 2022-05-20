@@ -56,7 +56,10 @@ jobs:
 
       - name: Commit and push index.html
         run: |
-          pwd
+          git status
+          ls -la
+          which git
+          echo $PATH
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
