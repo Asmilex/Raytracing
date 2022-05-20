@@ -255,3 +255,14 @@ Con el fin de preparar este trabajo, se ha implementado la serie de libros *In O
 
 En esta sección vamos a hacer justo eso: enseñaremos escenas similares, mostraremos cuánto tarda en renderizar un frame en comparación a nuestro motor, y estudiaremos las diferencias en la calidad visual.
 
+![1032 ms](./img/05/IOWCB_1s_10d.png)
+
+![3934 ms](./img/05/IOWCB_5s_10d.png)
+
+![7459 ms](./img/05/IOWCB_10s_10d.png)
+
+![14516 ms](./img/05/IOWCB_20s_10d.png)
+
+![69573 ms](./img/05/IOWCB_100s_10d.png)
+
+![688388 ms](./img/05/IOWCB_1000s_10d.png)
