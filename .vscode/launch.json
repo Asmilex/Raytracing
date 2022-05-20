@@ -36,9 +36,9 @@
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],
-            "console": "newExternalWindow",
-            "preLaunchTask": "Compile release RT in one weekend"
-
+            "console": "internalConsole",
+            "preLaunchTask": "Compile release RT in one weekend",
+            "internalConsoleOptions": "openOnSessionStart"
         }
     ]
 }
