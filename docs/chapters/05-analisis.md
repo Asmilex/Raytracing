@@ -203,7 +203,7 @@ Utilizando una única muestra, pero un valor de acumulación temporal de 100 fra
 
 ![1 muestra, acumulación temporal de 100 frames. A diferencia de @fig:samples_1, el resultado es impecable.](./img/05/Acumulación%20temporal%201.png){#fig:acumulacion_temp width=40%}
 
-Subiendo los parámetros a 200 frames de acumulación temporal y 10 muestras, se obtiene una imagen muy buena[@fig:acumulacion_temp_2].
+Subiendo los parámetros a 200 frames de acumulación temporal y 10 muestras, se obtiene una imagen muy buena[@fig:acumulacion_temp_2]
 
 ![10 muestras, acumulación temporal de 200 frames.](./img/05/Acumulación%20temporal%202.png){#fig:acumulacion_temp_2 width=40%}
 
