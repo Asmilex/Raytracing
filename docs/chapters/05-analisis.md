@@ -221,7 +221,7 @@ En la práctica, ray tracing no suele utilizar resoluciones internas tan grandes
 
 ### Importance sampling
 
-El [muestreo por importancia](#muestreo-por-importancia) consiste en tomar una función de densidad proporcional a la función a integrar para reducir la varianza. Se ha implementado muestreo por importancia para los materiales difusos. En particular, se ha utilizado dos estrategias diferentes para escoger direcciones aleatorias, que pueden observarse en la figura [@fig:importance_sample].
+El [muestreo por importancia](#muestreo-por-importancia) consiste en tomar una función de densidad proporcional a la función a integrar para reducir la varianza. Se ha implementado muestreo por importancia para los materiales difusos. En particular, se ha utilizado dos estrategias diferentes para escoger direcciones aleatorias, que pueden observarse en la figura [@fig:importance_sample]
 
 ![**Izquierda**: *hemisphere sampling*. **Derecha**: *Cosine-Weighted Hemisphere Sampling*. <br> Escena: `cornell_box_original`, 10 rebotes, acumulación temporal off, 10 muestras](./img/05/Importance%20sample.png){#fig:importance_sample}
 
