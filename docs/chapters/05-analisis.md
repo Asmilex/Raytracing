@@ -116,11 +116,33 @@ Como las puntuales se comportan de manera muy similar en la caja de Cornell, pod
 
 ![Luz direccional en la escena `medieval_building`.](./img/05/Directional%202.png){#fig:directional_medieval width=60%}
 
-### Oclusión ambiental
+### Iluminación global
 
-![](./img/05/Ambient%20occlusion%201.png){#fig:ambient_occlusion_1 width=60%}
+La **iluminación global** es un fenómeno físico que se refiere a luz que proviene de *todas* direcciones. Es el efecto que propicia el rebote constante de los fotones emitidos por fuentes de luz hacia una escena, adquiriendo las propiedades de los materiales en los que rebotan.
 
-![](./img/05/Ambient%20occlusion%202.png){#fig:ambient_occlusion_2 width=60%}
+Dicho de esta forma, es difícil imaginarse cómo se comporta en la vida real. Para ilustrarlo, tomemos dos fotografías de una escena similar a la caja de Cornell:
+
+![Escena similar a la caja de Cornell, en la vida real. También es mi baño. ](./img/05/Cornell%20bath%201.jpg){#fig:cornell_bath_1 width=60%}
+
+En la escena [@fig:cornell_bath_1] observamos cómo la luz del sol entra desde la parte de la derecha, rebotando en todo el espacio. Notamos cómo la escena tiene una tonalidad natural y cálida. Sin embargo, esta impresión es fácilmente modificable si alteramos la forma de arrojar la luz. Cerrando la puerta (la cual no puede ser vista en la fotografía, pero se encuentra a la derecha y es idéntica al cristal), la iluminación cambia completamente [@fig:cornell_bath_2].
+
+![Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados](./img/05/Cornell%20bath%202.jpg){#fig:cornell_bath_2 width=60%}
+
+Podemos observar cómo todos los materiales adquieren un tinte rojizo, debido a la influencia tanto difusa como especular de la pared de la izquierda. Objetos que antes eran blancos inmaculados se vuelven rojos, como el inodoro. Incluso aquellas zonas en sombra consiguen un color rojizo. Esto es debido a que los fotones rebotan en el cristal rojo cuando más energía tienen. De esta forma, en la siguiente dirección tomada, los rayos transportan esta propiedad al resto de materiales, los cuales se visualizan como una tonalidad roja.
+
+**Path tracing consigue este efecto de manera natural** por diseño. Este es uno de sus mayores puntos fuertes, pero a la vez lo hace computacionalmente caro. Dado que la escena de [@fig:cornell_bath_1] y [@fig:cornell_bath_2] es, esencialmente, una caja de Cornell, deberíamos apreciar un efecto similar en nuestra escena, ¿verdad?
+
+¡Así es! La figura [@fig:global_illumination_1] es muy similar a la [@fig:cornell_bath_2]. Se pueden apreciar los mismos efectos en la caja izquierda, los cuales no ocurrían con tanta intensidad en la escena original [fig. @fig:materiales_difusos]
+
+![La caja de Cornell original con luz direccional apuntando a la pared de la izquierda](./img/05/Ambient%20occlusion%201.png){#fig:global_illumination_1 width=60%}
+
+Lo mismo ocurre cuando cambiamos el foco a la pared de la derecha. Al ser verde, tintará el resto de los materiales de dicho color [@fig:global_illumination_2].
+
+![Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena](./img/05/Ambient%20occlusion%202.png){#fig:global_illumination_2 width=60%}
+
+Este efecto es esencial para proporcionar realismo a una imagen digital. Sin iluminación global, los motores presentan un aspecto que podríamos considerar *videojueguil*: imágenes planas, con sombras abruptas y un aire de falsedad al que nos hemos llegado a acostumbrar. Por ello se han implementado varias técnicas en rasterización para suplir este efecto. Destacan los *lightmaps*, la [componente ambiental](#materiales-y-objetos) de los materiales, *cubemaps*, oclusión ambiental e iluminación indirecta basada en *probes*.
+
+Para un vistazo más a fondo de la iluminación global, puedes referirte al vídeo de Alex Battaglia en [@df-global-illumination], en el cual cubre diferentes formas de resolver este problema, tanto en el caso de ray tracing como en el de rasterización.
 
 ## Rendimiento
 
@@ -221,7 +243,7 @@ En la práctica, ray tracing no suele utilizar resoluciones internas tan grandes
 
 ### Importance sampling
 
-El [muestreo por importancia](#muestreo-por-importancia) consiste en tomar una función de densidad proporcional a la función a integrar para reducir la varianza. Se ha implementado muestreo por importancia para los materiales difusos. En particular, se ha utilizado dos estrategias diferentes para escoger direcciones aleatorias, que pueden observarse en la figura [@fig:importance_sample]
+El [muestreo por importancia](#muestreo-por-importancia) consiste en tomar una función de densidad proporcional a la función a integrar para reducir la varianza. Se ha implementado muestreo por importancia para los materiales difusos. En particular, se ha utilizado dos estrategias diferentes para escoger direcciones aleatorias, que pueden observarse en la figura [@fig:importance_sample].
 
 ![**Izquierda**: *hemisphere sampling*. **Derecha**: *Cosine-Weighted Hemisphere Sampling*. <br> Escena: `cornell_box_original`, 10 rebotes, acumulación temporal off, 10 muestras](./img/05/Importance%20sample.png){#fig:importance_sample}
 
