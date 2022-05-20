@@ -199,7 +199,7 @@ En esta escena, aumentar más allá de 5 o 6 rebotes produce una situación de r
 
 La acumulación temporal proporcionará una mejora enorme de la calidad visual sin perder rendimiento. Sin embargo, tiene como contrapartida que necesita dejar la cámara estática. Dependiendo de la situación esto podría ser un motivo factor no negociable, pero en nuestro caso, nos servirá.
 
-Utilizando una única muestra, pero un valor de acumulación temporal de 100 frames máximos, proporciona una imagen sin apenas ruido [@fig:acumulacion_temp]
+Utilizando una única muestra, pero un valor de acumulación temporal de 100 frames máximos, proporciona una imagen sin apenas ruido [@fig:acumulacion_temp].
 
 ![1 muestra, acumulación temporal de 100 frames. A diferencia de @fig:samples_1, el resultado es impecable.](./img/05/Acumulación%20temporal%201.png){#fig:acumulacion_temp width=40%}
 
