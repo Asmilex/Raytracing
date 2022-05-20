@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\Users\Andre\Repositorios\TFG_RT_VkRay\RT_in_one_weekend\build\CMakeFiles\d14262c48efb940713010f71b74c78eb\generate.stamp.rule">
+    <CustomBuild Include="C:\Users\Andre\Repositorios\Raytracing\RT_in_one_weekend\build\CMakeFiles\0ec35b404b2461bccf416c98b9111bde\generate.stamp.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{A22E0128-0DF6-3C16-9AA9-CA236E324A35}</UniqueIdentifier>
+      <UniqueIdentifier>{629DD2E4-93B4-3CAB-BD27-57E02F02FE21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
