@@ -509,29 +509,22 @@ class="toc-section-number">6.2</span> Path tracing showcase</a>
 Materiales</a></li>
 <li><a href="#fuentes-de-luz-1"><span
 class="toc-section-number">6.2.2</span> Fuentes de luz</a></li>
-<li><a href="#pruebas"><span class="toc-section-number">6.2.3</span>
-PRUEBAS</a></li>
-<li><a href="#fin-de-pruebas"><span
-class="toc-section-number">6.2.4</span> FIN DE PRUEBAS</a></li>
-<li><a href="#algunas-escenas-interesantes"><span
-class="toc-section-number">6.2.5</span> Algunas escenas
-interesantes</a></li>
+<li><a href="#oclusión-ambiental"><span
+class="toc-section-number">6.2.3</span> Oclusión ambiental</a></li>
 </ul></li>
 <li><a href="#rendimiento"><span class="toc-section-number">6.3</span>
 Rendimiento</a>
 <ul>
-<li><a href="#diferentes-escenas"><span
-class="toc-section-number">6.3.1</span> Diferentes escenas</a></li>
-<li><a href="#resolución"><span class="toc-section-number">6.3.2</span>
-Resolución</a></li>
-<li><a href="#profundidad-de-un-rayo"><span
-class="toc-section-number">6.3.3</span> Profundidad de un rayo</a></li>
-<li><a href="#acumulación-temporal"><span
-class="toc-section-number">6.3.4</span> Acumulación temporal</a></li>
 <li><a href="#número-de-muestras"><span
-class="toc-section-number">6.3.5</span> Número de muestras</a></li>
+class="toc-section-number">6.3.1</span> Número de muestras</a></li>
+<li><a href="#profundidad-de-un-rayo"><span
+class="toc-section-number">6.3.2</span> Profundidad de un rayo</a></li>
+<li><a href="#acumulación-temporal"><span
+class="toc-section-number">6.3.3</span> Acumulación temporal</a></li>
+<li><a href="#resolución"><span class="toc-section-number">6.3.4</span>
+Resolución</a></li>
 <li><a href="#importance-sampling"><span
-class="toc-section-number">6.3.6</span> Importance sampling</a></li>
+class="toc-section-number">6.3.5</span> Importance sampling</a></li>
 </ul></li>
 <li><a href="#comparativa-con-in-one-weekend"><span
 class="toc-section-number">6.4</span> Comparativa con In One
@@ -921,13 +914,15 @@ encontramos.</p>
 obtendremos el origen. Si <span class="math inline">\(t = 1\)</span>,
 obtendremos el punto correspondiente a la dirección. Usando valores
 negativos vamos <em>hacia atrás</em>.</p>
+<div id="fig:rayo_basico" class="fignos">
 <figure>
-<img src="./img/01/Rayo%20básico.png" data-margin="auto"
-alt="El parámetro t nos permite controlar los puntos del rayo" />
-<figcaption aria-hidden="true">El parámetro <span
+<img src="./img/01/Rayo%20básico.png" style="width:70.0%"
+alt="Figura 1: El parámetro t nos permite controlar los puntos del rayo" />
+<figcaption aria-hidden="true"><span>Figura 1:</span> El parámetro <span
 class="math inline">\(t\)</span> nos permite controlar los puntos del
 rayo</figcaption>
 </figure>
+</div>
 <p>Dado que estos puntos estarán generalmente en <span
 class="math inline">\(\mathbb{R}^3\)</span>, podemos escribirlo como</p>
 <p><span class="math display">\[
@@ -937,10 +932,14 @@ P(t) = (O_x, O_y, O_z) + t (D_x, D_y, D_z)
 que estará enfocando a la escena. De esta forma, los haremos rebotar con
 los objetos que se encuentren en el camino del rayo. A este proceso lo
 llamaremos <strong>ray casting</strong>.</p>
+<div id="fig:ray_casting" class="fignos">
 <figure>
-<img src="./img/01/Ray%20casting.png" alt="Diagrama de ray casting" />
-<figcaption aria-hidden="true">Diagrama de ray casting</figcaption>
+<img src="./img/01/Ray%20casting.png" style="width:80.0%"
+alt="Figura 2: Diagrama de ray casting" />
+<figcaption aria-hidden="true"><span>Figura 2:</span> Diagrama de ray
+casting</figcaption>
 </figure>
+</div>
 <p>Generalmente, nos quedaremos con el primer objeto que nos encontremos
 en su camino. Aunque, a veces, nos interesará saber todos con los que se
 encuentre.</p>
@@ -1008,12 +1007,14 @@ puntos del dominio de forma que <span class="math inline">\(t \in
 superficies un pequeño pero no despreciable <span
 class="math inline">\(\varepsilon\)</span> para evitar errores de
 redondeo.</p>
+<div id="fig:limites_rayo" class="fignos">
 <figure>
 <img src="./img/01/Límites%20de%20un%20rayo.png"
-alt="Separarnos un poquito del origen evitará errores de coma flotante" />
-<figcaption aria-hidden="true">Separarnos un poquito del origen evitará
-errores de coma flotante</figcaption>
+alt="Figura 3: Separarnos un poquito del origen evitará errores de coma flotante" />
+<figcaption aria-hidden="true"><span>Figura 3:</span> Separarnos un
+poquito del origen evitará errores de coma flotante</figcaption>
 </figure>
+</div>
 <p>Una de las principales cuestiones que debemos hacernos es saber
 cuándo un rayo impacta con una superficie. Lo definiremos
 analíticamente.</p>
@@ -1206,12 +1207,15 @@ en el borde.</li>
 <li>Si <span class="math inline">\(\Delta &gt; 0\)</span>, existen dos
 soluciones. En ese caso, el rayo atraviesa la esfera.</li>
 </ol>
+<div id="fig:interseccion_esfera" class="fignos">
 <figure>
 <img src="./img/01/Intersección%20rayo%20-%20esfera.png"
-alt="Puntos de intersección con una esfera." />
-<figcaption aria-hidden="true">Puntos de intersección con una
-esfera.</figcaption>
+style="width:60.0%"
+alt="Figura 4: Puntos de intersección con una esfera." />
+<figcaption aria-hidden="true"><span>Figura 4:</span> Puntos de
+intersección con una esfera.</figcaption>
 </figure>
+</div>
 <p>Para estos dos últimos, si consideramos <span
 class="math inline">\(t_0\)</span> cualquier solución válida, el vector
 normal resultante viene dado por</p>
@@ -1432,14 +1436,16 @@ class="math inline">\(A\)</span>, se define como</p>
 <p><span class="math display">\[
 E = \frac{\Phi}{A} (\text{W/m}^2)
 \]</span></p>
+<div id="fig:irradiancia" class="fignos">
 <figure>
 <img src="./img/02/Irradiancia.png"
-alt="La irradiancia es la potencia por metro cuadrado incidente en una superficie. Es proporcional al coseno del ángulo entre la dirección de la luz y la normal a la superficie." />
-<figcaption aria-hidden="true">La irradiancia es la potencia por metro
-cuadrado incidente en una superficie. Es proporcional al coseno del
-ángulo entre la dirección de la luz y la normal a la
-superficie.</figcaption>
+alt="Figura 5: La irradiancia es la potencia por metro cuadrado incidente en una superficie. Es proporcional al coseno del ángulo entre la dirección de la luz y la normal a la superficie." />
+<figcaption aria-hidden="true"><span>Figura 5:</span> La irradiancia es
+la potencia por metro cuadrado incidente en una superficie. Es
+proporcional al coseno del ángulo entre la dirección de la luz y la
+normal a la superficie.</figcaption>
 </figure>
+</div>
 <p>Ahora que tenemos la potencia emitida en una cierta área, nos surge
 una pregunta: <em>¿y en un cierto punto <span
 class="math inline">\(p\)</span>?</em>. Tomando límites en la expresión
@@ -1477,12 +1483,14 @@ objeto, y las cortamos con nuestra circunferencia, obtendremos un par de
 puntos inscritos en ella. Pues bien, al arco que encapsulan dichos
 puntos le vamos a hacer corresponder un cierto ángulo: el ángulo
 planar.</p>
+<div id="fig:angulo_planar" class="fignos">
 <figure>
 <img src="./img/02/Ángulo%20planar.png"
-alt="La idea intuitiva de un ángulo planar" />
-<figcaption aria-hidden="true">La idea intuitiva de un ángulo
-planar</figcaption>
+alt="Figura 6: La idea intuitiva de un ángulo planar" />
+<figcaption aria-hidden="true"><span>Figura 6:</span> La idea intuitiva
+de un ángulo planar</figcaption>
 </figure>
+</div>
 <p>Llevando esta idea a las tres dimensiones es como conseguimos el
 concepto de <strong>ángulo sólido</strong>. Si en dos dimensiones
 teníamos una circunferencia, aquí tendremos una esfera. Cuando generemos
@@ -1493,12 +1501,15 @@ class="math inline">\(r\)</span> nos dará un ángulo sólido:</p>
 <p><span class="math display">\[
 \omega = \frac{A}{r^2} \text{(sr)}
 \]</span></p>
+<div id="fig:angulo_solido" class="fignos">
 <figure>
 <img src="./img/02/Ángulo%20sólido.png"
-alt="Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio" />
-<figcaption aria-hidden="true">Un ángulo sólido es la razón entre el
-área proyectada y el cuadrado del radio</figcaption>
+alt="Figura 7: Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio" />
+<figcaption aria-hidden="true"><span>Figura 7:</span> Un ángulo sólido
+es la razón entre el área proyectada y el cuadrado del
+radio</figcaption>
 </figure>
+</div>
 <p>Los denotaremos por <span class="math inline">\(\omega\)</span>. En
 física se suele usar <span class="math inline">\(\Omega\)</span>, pero
 aquí optaremos por la minúscula. Su unidad de medida es el
@@ -1515,13 +1526,16 @@ class="math inline">\(r^2\)</span>: <span class="math inline">\(1
 <p>De vez en cuando, usaremos <span
 class="math inline">\(\omega\)</span> <strong>un vector dirección
 unitario en la esfera</strong>.</p>
+<div id="fig:xkcd_1276" class="fignos">
 <figure>
-<img src="./img/02/xkcd_1276.png"
-alt="Como de costumbre, hay un XKCD relevante (Randall Munroe n.d.)" />
-<figcaption aria-hidden="true">Como de costumbre, hay un XKCD relevante
-<span class="citation" data-cites="xkcd-size">(<a href="#ref-xkcd-size"
-role="doc-biblioref">Randall Munroe n.d.</a>)</span></figcaption>
+<img src="./img/02/xkcd_1276.png" style="width:60.0%"
+alt="Figura 8: Como de costumbre, hay un XKCD relevante (Randall Munroe n.d.)" />
+<figcaption aria-hidden="true"><span>Figura 8:</span> Como de costumbre,
+hay un XKCD relevante <span class="citation" data-cites="xkcd-size">(<a
+href="#ref-xkcd-size" role="doc-biblioref">Randall Munroe
+n.d.</a>)</span></figcaption>
 </figure>
+</div>
 <p>Usualmente emplearemos coordenadas esféricas cuando trabajemos con
 ellos, dado que resulta más cómodo.</p>
 <p><span class="math display">\[
@@ -2083,14 +2097,16 @@ class="header-section-number">3.3.1</span> Tipos de dispersión</h3>
 <p>Prácticamente toda superficie, en mayor o menor medida, refleja parte
 de la luz incidente. Otros tipos de materiales reflejan y refractan a la
 vez, como puede ser un espejo o el agua.</p>
+<div id="fig:refraccion" class="fignos">
 <figure>
-<img src="./img/02/Reflexión%20y%20refracción.png"
-alt="Reflexión y refracción de luz (Adam Marrs and Wald 2021, 106)." />
-<figcaption aria-hidden="true">Reflexión y refracción de luz <span
-class="citation" data-cites="Marrs2021">(<a href="#ref-Marrs2021"
-role="doc-biblioref">Adam Marrs and Wald 2021,
+<img src="./img/02/Reflexión%20y%20refracción.png" style="width:50.0%"
+alt="Figura 9: Reflexión y refracción de luz (Adam Marrs and Wald 2021, 106)." />
+<figcaption aria-hidden="true"><span>Figura 9:</span> Reflexión y
+refracción de luz <span class="citation" data-cites="Marrs2021">(<a
+href="#ref-Marrs2021" role="doc-biblioref">Adam Marrs and Wald 2021,
 106</a>)</span>.</figcaption>
 </figure>
+</div>
 <blockquote>
 <p>TODO: cambiar por foto propia</p>
 <p>En esencia, los reflejos se pueden clasificar en cuatro grandes tipos
@@ -2314,15 +2330,18 @@ class="math inline">\(= 61.04\textdegree\)</span>.</p>
 <p>Lo que ocurre en estos casos es que, en vez de pasar al segundo
 medio, los fotones vuelven al primero; creando un reflejo como si de un
 espejo se tratara.</p>
+<div id="fig:reflexion_interna_total" class="fignos">
 <figure>
-<img src="./img/02/Reflexión%20interna%20total.jpg"
-alt="Como el ángulo de incidencia es considerablemente alto, por la parte de arriba la luz no puede atravesar el agua. Esto hace que podamos ver el edificio de enfrente. En el centro vemos refractado el suelo. Y, sin embargo, en la parte inferior, ¡observamos luz solar y el edificio de nuevo!" />
-<figcaption aria-hidden="true">Como el ángulo de incidencia es
-considerablemente alto, por la parte de arriba la luz no puede atravesar
-el agua. Esto hace que podamos ver el edificio de enfrente. En el centro
-vemos refractado el suelo. Y, sin embargo, en la parte inferior,
-¡observamos luz solar y el edificio de nuevo!</figcaption>
+<img src="./img/02/Reflexión%20interna%20total.jpg" style="width:80.0%"
+alt="Figura 10: Como el ángulo de incidencia es considerablemente alto, por la parte de arriba la luz no puede atravesar el agua. Esto hace que podamos ver el edificio de enfrente. En el centro vemos refractado el suelo. Y, sin embargo, en la parte inferior, ¡observamos luz solar y el edificio de nuevo!" />
+<figcaption aria-hidden="true"><span>Figura 10:</span> Como el ángulo de
+incidencia es considerablemente alto, por la parte de arriba la luz no
+puede atravesar el agua. Esto hace que podamos ver el edificio de
+enfrente. En el centro vemos refractado el suelo. Y, sin embargo, en la
+parte inferior, ¡observamos luz solar y el edificio de
+nuevo!</figcaption>
 </figure>
+</div>
 <h4 data-number="3.3.3.2" id="ecuaciones-de-fresnel"><span
 class="header-section-number">3.3.3.2</span> Ecuaciones de Fresnel</h4>
 <p>Aquellos materiales que refractan y reflejan luz (como el agua de la
@@ -3214,13 +3233,15 @@ lines(estimacion - z * error, col = &quot;blue&quot;, lwd = 2, lty = 3)
 lines(estimacion + z * error, col = &quot;blue&quot;, lwd = 2, lty = 3)
 abline(h = 0.4, col = 2)</code></pre>
 <p>Este código produce la siguiente gráfica:</p>
+<div id="fig:error_simulacion" class="fignos">
 <figure>
 <img src="./img/03/Error%20simulación.png"
-alt="Error de la simulación para el estimador de la integral \int_0^1{2x^4\ dx}" />
-<figcaption aria-hidden="true">Error de la simulación para el estimador
-de la integral <span class="math inline">\(\int_0^1{2x^4\
-dx}\)</span></figcaption>
+alt="Figura 11: Error de la simulación para el estimador de la integral \int_0^1{2x^4\ dx}" />
+<figcaption aria-hidden="true"><span>Figura 11:</span> Error de la
+simulación para el estimador de la integral <span
+class="math inline">\(\int_0^1{2x^4\ dx}\)</span></figcaption>
 </figure>
+</div>
 <p>Se puede ver cómo debemos usar un número considerable de muestras,
 alrededor de 200, para que el error se mantenga bajo control. Aún así,
 aumentar el tamaño de <span class="math inline">\(N\)</span> no
@@ -3477,16 +3498,18 @@ distribuciones de <span class="math inline">\(L_{directa}\)</span> o
 <span class="math inline">\(f\)</span> por separado, algunas de las dos
 no rendiría especialmente bien. Combinando ambas mediante muestreo por
 importancia múltiple se conseguiría un mejor resultado.</p>
+<div id="fig:multiple_importance_sampling" class="fignos">
 <figure>
 <img src="./img/03/Multiple%20importance%20sampling.png"
 style="width:67.0%"
-alt="Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: (Eric Veach December 1997, Multiple Importance Sampling)" />
-<figcaption aria-hidden="true">Muestreo por importancia múltiple en
-transporte de luz ilustrado. Fuente: <span class="citation"
-data-cites="robust-monte-carlo">(<a href="#ref-robust-monte-carlo"
-role="doc-biblioref">Eric Veach December 1997</a>, Multiple Importance
-Sampling)</span></figcaption>
+alt="Figura 12: Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: (Eric Veach December 1997, Multiple Importance Sampling)" />
+<figcaption aria-hidden="true"><span>Figura 12:</span> Muestreo por
+importancia múltiple en transporte de luz ilustrado. Fuente: <span
+class="citation" data-cites="robust-monte-carlo">(<a
+href="#ref-robust-monte-carlo" role="doc-biblioref">Eric Veach December
+1997</a>, Multiple Importance Sampling)</span></figcaption>
 </figure>
+</div>
 <h3 data-number="4.3.3"
 id="otras-técnicas-de-reducción-de-varianza-en-transporte-de-luz"><span
 class="header-section-number">4.3.3</span> Otras técnicas de reducción
@@ -3579,15 +3602,18 @@ algún objeto en medio de <span class="math inline">\(p\)</span> e <span
 class="math inline">\(y\)</span>? Para ello, se suele utilizar lo que se
 conocen como <strong><em>shadow rays</em></strong>. Dispara uno de estos
 rayos para conocer si está ocluido.</p>
+<div id="fig:next_event_estimation" class="fignos">
 <figure>
 <img src="./img/03/Next%20event%20estimation.png" style="width:67.0%"
-alt="El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: (Carlos Ureña 2021)" />
-<figcaption aria-hidden="true">El muestreo directo de fuentes de luz
-cambia la forma de calcular la radiancia en un punto, pero mejora
-considerablemente el ruido de una imagen. Fuente: <span class="citation"
-data-cites="carlos-path-tracing">(<a href="#ref-carlos-path-tracing"
-role="doc-biblioref">Carlos Ureña 2021</a>)</span></figcaption>
+alt="Figura 13: El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: (Carlos Ureña 2021)" />
+<figcaption aria-hidden="true"><span>Figura 13:</span> El muestreo
+directo de fuentes de luz cambia la forma de calcular la radiancia en un
+punto, pero mejora considerablemente el ruido de una imagen. Fuente:
+<span class="citation" data-cites="carlos-path-tracing">(<a
+href="#ref-carlos-path-tracing" role="doc-biblioref">Carlos Ureña
+2021</a>)</span></figcaption>
 </figure>
+</div>
 <p>Si quieres informarte más sobre esta técnica, puedes leer <span
 class="citation" data-cites="Marrs2021">(<a href="#ref-Marrs2021"
 role="doc-biblioref">Adam Marrs and Wald 2021</a>, Importance Sampling
@@ -3610,14 +3636,16 @@ fáciles de conseguir.</p>
 <p>Se puede estudiar el tema en profundidad en <span class="citation"
 data-cites="quasi-monte-carlo">(<a href="#ref-quasi-monte-carlo"
 role="doc-biblioref">Martin Roberts 2018</a>)</span></p>
+<div id="fig:quasimontecarlo" class="fignos">
 <figure>
 <img src="./img/03/Quasi-Monte%20Carlo.png"
-alt="Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: (Martin Roberts 2018)" />
-<figcaption aria-hidden="true">Comparativa entre diferentes métodos de
-quasi-aleatoriedad. Fuente: <span class="citation"
+alt="Figura 14: Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: (Martin Roberts 2018)" />
+<figcaption aria-hidden="true"><span>Figura 14:</span> Comparativa entre
+diferentes métodos de quasi-aleatoriedad. Fuente: <span class="citation"
 data-cites="quasi-monte-carlo">(<a href="#ref-quasi-monte-carlo"
 role="doc-biblioref">Martin Roberts 2018</a>)</span></figcaption>
 </figure>
+</div>
 <h2 data-number="4.4" id="escogiendo-puntos-aleatorios"><span
 class="header-section-number">4.4</span> Escogiendo puntos
 aleatorios</h2>
@@ -4212,13 +4240,15 @@ cual modificaremos hasta añadir ray tracing en tiempo real. Por tanto,
 la parte inicial del desarrollo consiste en adaptar Vulkan para usar la
 extensión de ray tracing, extrayendo la información de la gráfica y
 cargando correspondientemente el dispositivo.</p>
+<div id="fig:raster" class="fignos">
 <figure>
-<img src="./img/04/Raster.jpg"
-alt="Por defecto, el programa muestra un cubo rasterizado muy simple. Es, prácticamente, un hello world gráfico" />
-<figcaption aria-hidden="true">Por defecto, el programa muestra un cubo
-rasterizado muy simple. Es, prácticamente, un <em>hello world</em>
-gráfico</figcaption>
+<img src="./img/04/Raster.jpg" style="width:70.0%"
+alt="Figura 15: Por defecto, el programa muestra un cubo rasterizado muy simple. Es, prácticamente, un hello world gráfico" />
+<figcaption aria-hidden="true"><span>Figura 15:</span> Por defecto, el
+programa muestra un cubo rasterizado muy simple. Es, prácticamente, un
+<em>hello world</em> gráfico</figcaption>
 </figure>
+</div>
 <h3 data-number="5.3.1" id="vistazo-general-a-la-estructura"><span
 class="header-section-number">5.3.1</span> Vistazo general a la
 estructura</h3>
@@ -4332,16 +4362,18 @@ ha usado en Ray Tracing in One Weekend.</p>
 <p>Vulkan gestiona las estructuras de aceleración diviéndolas en dos
 partes: <strong>Top-Level Acceleration Structure</strong> (TLAS) y
 <strong>Bottom-Level Acceleration Structure</strong> (BLAS).</p>
+<div id="fig:TLAS" class="fignos">
 <figure>
-<img src="./img/04/Acceleration%20structure.png"
-alt="La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: (Nvidia 2022a)" />
-<figcaption aria-hidden="true">La TLAS guarda información de las
-instancias de un objeto, así como una referencia a BLAS que contiene la
-geometría correspondiente. Fuente: <span class="citation"
-data-cites="nvpro-samples-tutorial">(<a
+<img src="./img/04/Acceleration%20structure.png" style="width:70.0%"
+alt="Figura 16: La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: (Nvidia 2022a)" />
+<figcaption aria-hidden="true"><span>Figura 16:</span> La TLAS guarda
+información de las instancias de un objeto, así como una referencia a
+BLAS que contiene la geometría correspondiente. Fuente: <span
+class="citation" data-cites="nvpro-samples-tutorial">(<a
 href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
 2022a</a>)</span></figcaption>
 </figure>
+</div>
 <blockquote>
 <p>TODO: Deberíamos cambiar esa foto por otra propia.</p>
 </blockquote>
@@ -4470,12 +4502,13 @@ generar un <code>vkCreateRayTracingPipelineKHR</code>.</li>
 <code>VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR</code> y copiar los
 <em>handlers</em>.</li>
 </ol>
+<div id="fig:pipeline" class="fignos">
 <figure>
 <img src="./img/04/Pipeline.png"
-alt="La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader raygen, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un closest hit, any hit, o miss shaders. Fuente: (Adam Marrs and Wald 2021, 194)" />
-<figcaption aria-hidden="true">La Shader Binding Table permite
-selccionar un tipo de shader dependiendo del objeto en el que se
-impacte. Para ello, se genera un rayo desde el shader
+alt="Figura 17: La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader raygen, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un closest hit, any hit, o miss shaders. Fuente: (Adam Marrs and Wald 2021, 194)" />
+<figcaption aria-hidden="true"><span>Figura 17:</span> La Shader Binding
+Table permite selccionar un tipo de shader dependiendo del objeto en el
+que se impacte. Para ello, se genera un rayo desde el shader
 <code>raygen</code>, el cual viaja a través de la Acceleration
 Structure. Dependiendo de dónde impacte, se utiliza un
 <code>closest hit</code>, <code>any hit</code>, o <code>miss</code>
@@ -4483,6 +4516,7 @@ shaders. Fuente: <span class="citation" data-cites="Marrs2021">(<a
 href="#ref-Marrs2021" role="doc-biblioref">Adam Marrs and Wald 2021,
 194</a>)</span></figcaption>
 </figure>
+</div>
 <p>Cada entrada de la SBT contiene un handler y una serie de parámetros
 embebidos. A esto se le conoce como <strong>Shader Record</strong>.
 Estos records se clasifican en:</p>
@@ -4506,12 +4540,16 @@ href="#ref-Marrs2021" role="doc-biblioref">Adam Marrs and Wald 2021,
 193</a>)</span> o <span class="citation"
 data-cites="shader-binding-table">(<a href="#ref-shader-binding-table"
 role="doc-biblioref">Will Usher 2019</a>)</span></p>
+<div id="fig:SBT" class="fignos">
 <figure>
-<img src="./img/04/SBT.png" alt="Fuente: (Will Usher 2019)" />
-<figcaption aria-hidden="true">Fuente: <span class="citation"
-data-cites="shader-binding-table">(<a href="#ref-shader-binding-table"
-role="doc-biblioref">Will Usher 2019</a>)</span></figcaption>
+<img src="./img/04/SBT.png"
+alt="Figura 18: Fuente: (Will Usher 2019)" />
+<figcaption aria-hidden="true"><span>Figura 18:</span> Fuente: <span
+class="citation" data-cites="shader-binding-table">(<a
+href="#ref-shader-binding-table" role="doc-biblioref">Will Usher
+2019</a>)</span></figcaption>
 </figure>
+</div>
 <h3 data-number="5.6.3" id="tipos-de-shaders"><span
 class="header-section-number">5.6.3</span> Tipos de shaders</h3>
 <p>El pipeline soporta varios tipos de shaders diferentes que cubren la
@@ -4931,13 +4969,15 @@ existe un problema con los colores finales. El algoritmo de pathtracing
 no limita el máximo valor que puede tomar un camino. Sin embargo, Vulkan
 espera que la terna RGB provista esté en <span class="math inline">\([0,
 1]^3\)</span>. Esto implica que los colores acabarán quemados.</p>
+<div id="fig:quemado" class="fignos">
 <figure>
 <img src="./img/04/Quemado.png"
-alt="Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz." />
-<figcaption aria-hidden="true">Fíjate en la parte de la izquierda. La
-pared roja aparece demasiado brillante; especialmente, aquella impactada
-por la fuente de luz.</figcaption>
+alt="Figura 19: Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz." />
+<figcaption aria-hidden="true"><span>Figura 19:</span> Fíjate en la
+parte de la izquierda. La pared roja aparece demasiado brillante;
+especialmente, aquella impactada por la fuente de luz.</figcaption>
 </figure>
+</div>
 <p>Podemos corregir este problema mediante <strong>corrección de
 gamma</strong>. Esta es una operación no lineal utilizada en fotografía
 para corregir la luminacia, con el fin de compensar la percepción no
@@ -4964,12 +5004,15 @@ if (USE_GAMMA_CORRECTION == 1) {
     pixel_color = pow(pixel_color, vec3(1.0 / 2.2));  // Gamma correction for 2.2
     pixel_color = clamp(pixel_color, 0.0, 1.0);
 }</code></pre>
+<div id="fig:correccion_gamma" class="fignos">
 <figure>
 <img src="./img/04/Corrección%20de%20gamma.png"
-alt="Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos." />
-<figcaption aria-hidden="true">Con la corección de gamma aplicada, vemos
-que los colores de la foto no son tan intensos.</figcaption>
+alt="Figura 20: Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos." />
+<figcaption aria-hidden="true"><span>Figura 20:</span> Con la corección
+de gamma aplicada, vemos que los colores de la foto no son tan
+intensos.</figcaption>
 </figure>
+</div>
 <blockquote>
 <p>Espera. Esa no parece la misma escena. ¿No han cambiado los colores
 demasiado?</p>
@@ -5004,13 +5047,15 @@ class="header-section-number">6.1</span> Usando el motor</h2>
 proyecto, puedes encontrar el ejecutable en
 <code>./application/bin_x64/Debug</code>. Abre el binario para entrar en
 el programa.</p>
+<div id="fig:asmiray" class="fignos">
 <figure>
-<img src="./img/05/Asmiray.png"
-alt="Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones." />
-<figcaption aria-hidden="true">Al abrir el motor, te encontrarás con una
-pantalla similar a esta: una escena cargada junto a un panel lateral con
-numerosas opciones.</figcaption>
+<img src="./img/05/Asmiray.png" style="width:70.0%"
+alt="Figura 21: Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones." />
+<figcaption aria-hidden="true"><span>Figura 21:</span> Al abrir el
+motor, te encontrarás con una pantalla similar a esta: una escena
+cargada junto a un panel lateral con numerosas opciones.</figcaption>
 </figure>
+</div>
 <p>Si alguna vez has usado un motor de renderización en 3D (como
 Blender, Unity, Unreal Engine o AutoCAD), el comportamiento debería
 resultarte familiar. El uso de nuestro progama es muy similar al de los
@@ -5148,23 +5193,6 @@ Están sujetas a cambios, pues se podría cambiar el comportamiento de los
 shaders.</p>
 <h2 data-number="6.2" id="path-tracing-showcase"><span
 class="header-section-number">6.2</span> Path tracing showcase</h2>
-<blockquote>
-<p>TODO: Cosas de las que tengo que hablar:</p>
-<ul>
-<li>Luces
-<ul>
-<li>Puntual</li>
-<li>Direccional</li>
-</ul></li>
-<li>Cornell Boxes
-<ul>
-<li>Cornell Box</li>
-<li>Cornell Bath</li>
-<li>Mirar la iluminación global</li>
-<li>Efectos de las pelotas en el ambiente</li>
-</ul></li>
-</ul>
-</blockquote>
 <p>A lo largo de este trabajo hemos visto una gran variedad de conceptos
 desde el punto de vista teórico. Ahora es el momento de ponerlo en
 práctica.</p>
@@ -5175,117 +5203,418 @@ diferentes, los cuales veremos ilustrados a continuación.</p>
 <p>Los más simples son los <a
 href="#reflexión-difusa-o-lamberiana">difusos</a>. La caja de Cornell
 original contiene dos objetos de este tipo:</p>
+<div id="fig:materiales_difusos" class="fignos">
 <figure>
-<img src="./img/05/Materiales%20difusos.png"
-alt="Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
-<figcaption aria-hidden="true">Materiales difusos de la escena Cornell
-Box original. Vemos que la luz se esparce uniformemente al rebotar en el
-objeto.</figcaption>
+<img src="./img/05/Materiales%20difusos.png" style="width:70.0%"
+alt="Figura 22: Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
+<figcaption aria-hidden="true"><span>Figura 22:</span> Materiales
+difusos de la escena Cornell Box original. Vemos que la luz se esparce
+uniformemente al rebotar en el objeto.</figcaption>
 </figure>
+</div>
 <p>Los materiales <a href="#reflexión-especular-no-perfecta">especulares
 <em>glossy</em></a> han sido modificados ligeramente para simular el
 parámetro de <em>roughness</em> de los metales, para compararlos con los
 de <span class="citation" data-cites="Shirley2020RTW1">(<a
 href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 2020a</a>)</span>:</p>
+<div id="fig:materiales_glossy" class="fignos">
 <figure>
-<img src="./img/05/Materiales%20glossy.png"
-alt="Materiales especulares metálicos de la escena Cornell Box glossy" />
-<figcaption aria-hidden="true">Materiales especulares metálicos de la
-escena Cornell Box glossy</figcaption>
+<img src="./img/05/Materiales%20glossy.png" style="width:70.0%"
+alt="Figura 23: Materiales especulares metálicos de la escena Cornell Box glossy" />
+<figcaption aria-hidden="true"><span>Figura 23:</span> Materiales
+especulares metálicos de la escena Cornell Box glossy</figcaption>
 </figure>
+</div>
 <p>Si hay algo en lo que destaca ray tracing, es en la simulación de <a
 href="#reflexión-especular-perfecta">espejos</a>. En rasterización
 debemos recurrir a técnicas específicas como reflejos planares o
 <em>cubemaps</em>. Ray tracing solventa el problema con elegancia:</p>
+<div id="fig:materiales_espejos" class="fignos">
 <figure>
-<img src="./img/05/Materiales%20espejos.png"
-alt="Una caja que actúa como un espejo prácticamente perfecto en la escena cornell_box_mirror" />
-<figcaption aria-hidden="true">Una caja que actúa como un espejo
-prácticamente perfecto en la escena
+<img src="./img/05/Materiales%20espejos.png" style="width:70.0%"
+alt="Figura 24: Una caja que actúa como un espejo prácticamente perfecto en la escena cornell_box_mirror" />
+<figcaption aria-hidden="true"><span>Figura 24:</span> Una caja que
+actúa como un espejo prácticamente perfecto en la escena
 <code>cornell_box_mirror</code></figcaption>
 </figure>
+</div>
 <p>En la siguiente escena observamos dos esferas: una que presenta
 refracción y otra que no. Ambas utilizan las ecuaciones de Fresnel para
 modelar el comportamiento de la luz.</p>
+<div id="fig:reflectantes" class="fignos">
 <figure>
-<img src="./img/05/Materiales%20reflectantes.png"
-alt="La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera." />
-<figcaption aria-hidden="true">La esfera de la derecha refracta la luz
-al pasar por ella, adquiriendo en el proceso un color más oscuro.
-También podemos ver la esfera de la izquierda recursivamente, dentro del
-propio reflejo de la esfera.</figcaption>
+<img src="./img/05/Materiales%20reflectantes.png" style="width:70.0%"
+alt="Figura 25: La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera." />
+<figcaption aria-hidden="true"><span>Figura 25:</span> La esfera de la
+derecha refracta la luz al pasar por ella, adquiriendo en el proceso un
+color más oscuro. También podemos ver la esfera de la izquierda
+recursivamente, dentro del propio reflejo de la esfera.</figcaption>
 </figure>
+</div>
 <p>Los materiales transparentes los gestiona el shader <a
 href="#tipos-de-shaders">anyhit</a>. Permite descartar las
 intersecciones con aquellos objetos transparentes para permitir pasar
 algunos rayos:</p>
+<div id="fig:materiales_transparentes" class="fignos">
 <figure>
-<img src="./img/05/Materiales%20transparentes.png"
-alt="El modelo del Wuson, pero transparente." />
-<figcaption aria-hidden="true">El modelo del Wuson, pero
-transparente.</figcaption>
+<img src="./img/05/Materiales%20transparentes.png" style="width:70.0%"
+alt="Figura 26: El modelo del Wuson, pero transparente." />
+<figcaption aria-hidden="true"><span>Figura 26:</span> El modelo del
+Wuson, pero transparente.</figcaption>
 </figure>
+</div>
 <h3 data-number="6.2.2" id="fuentes-de-luz-1"><span
 class="header-section-number">6.2.2</span> Fuentes de luz</h3>
 <p>En la primera versión del motor, se han implementado dos tipos de
-fuentes de luces:</p>
-<ul>
-<li><strong>Fuentes de luz puntuales</strong> (<em>spotlights</em> en
-inglés): emiten luz alrededor suya.</li>
-<li><strong>Luz direccional</strong>: imitan la luz proporcionada por
-algún objeto infinitamente lejano. En esencia, como si fuera un
-sol.</li>
-</ul>
+fuentes de luces: puntuales y direccionales.</p>
+<p>Las <strong>fuentes de luz puntuales</strong> (<em>spotlights</em> en
+inglés) emiten luz alrededor suya, como si de pequeños soles se
+trataran. La figura [<a href="#fig:spotlights">27</a>] muestra cómo se
+comportan en la caja de Cornell original.</p>
+<div id="fig:spotlights" class="fignos">
 <figure>
-<img src="./img/05/Spotlight.png"
-alt="Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared." />
-<figcaption aria-hidden="true">Una fuente de luz puntual iluminando la
-caja de Cornell original. Vemos cómo se proyectan sombras hacian la
-pared.</figcaption>
+<img src="./img/05/Spotlight.png" style="width:60.0%"
+alt="Figura 27: Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared." />
+<figcaption aria-hidden="true"><span>Figura 27:</span> Una fuente de luz
+puntual iluminando la caja de Cornell original. Vemos cómo se proyectan
+sombras hacian la pared.</figcaption>
 </figure>
+</div>
+<p>Por otro lado, las <strong>luces direccionales</strong>: imitan la
+luz proporcionada por algún objeto infinitamente lejano. Puedes ver un
+ejemplo en la figura [<a href="#fig:directional_lights">28</a>].</p>
+<div id="fig:directional_lights" class="fignos">
 <figure>
-<img src="./img/05/Directional.png"
-alt="Dada la naturaleza de la caja, tanto las luces direccionales como las puntuales se comportan de manera muy similar en la caja" />
-<figcaption aria-hidden="true">Dada la naturaleza de la caja, tanto las
-<strong>luces direccionales</strong> como las puntuales se comportan de
-manera muy similar en la caja</figcaption>
+<img src="./img/05/Directional.png" style="width:60.0%"
+alt="Figura 28: La caja de Cornell original iluminada por una luz direccional" />
+<figcaption aria-hidden="true"><span>Figura 28:</span> La caja de
+Cornell original iluminada por una <strong>luz
+direccional</strong></figcaption>
 </figure>
+</div>
+<p>Como las puntuales se comportan de manera muy similar en la caja de
+Cornell, podemos referirnos a la escena del edificio medieval para ver
+una diferencia más sustancial [<a
+href="#fig:spotlights_medieval">29</a>, <a
+href="#fig:directional_medieval">30</a>]. En este caso, se aprecia el
+radio de influencia de la luz puntual.</p>
+<div id="fig:spotlights_medieval" class="fignos">
 <figure>
-<img src="./img/05/Spotlight%202.png"
-alt="Sin embargo, en una escena como la del edificio medieval, hay una diferencia sustancial entre ambos tipos" />
-<figcaption aria-hidden="true">Sin embargo, en una escena como la del
-edificio medieval, hay una diferencia sustancial entre ambos
-tipos</figcaption>
+<img src="./img/05/Spotlight%202.png" style="width:60.0%"
+alt="Figura 29: Luz puntual en la escena medieval_building." />
+<figcaption aria-hidden="true"><span>Figura 29:</span> Luz puntual en la
+escena <code>medieval_building</code>.</figcaption>
 </figure>
-<h3 data-number="6.2.3" id="pruebas"><span
-class="header-section-number">6.2.3</span> PRUEBAS</h3>
-<p><img
-src="https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png"
-style="width:45.0%" alt="CC" />  <img
-src="https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png"
-style="width:45.0%" alt="DD" /></p>
-<img src="./img/05/Directional.png" style="width:49.0%" /> <img
-src="./img/05/Directional%202.png" style="width:49.0%" />
-<h3 data-number="6.2.4" id="fin-de-pruebas"><span
-class="header-section-number">6.2.4</span> FIN DE PRUEBAS</h3>
-<h3 data-number="6.2.5" id="algunas-escenas-interesantes"><span
-class="header-section-number">6.2.5</span> Algunas escenas
-interesantes</h3>
+</div>
+<div id="fig:directional_medieval" class="fignos">
+<figure>
+<img src="./img/05/Directional%202.png" style="width:60.0%"
+alt="Figura 30: Luz direccional en la escena medieval_building." />
+<figcaption aria-hidden="true"><span>Figura 30:</span> Luz direccional
+en la escena <code>medieval_building</code>.</figcaption>
+</figure>
+</div>
+<h3 data-number="6.2.3" id="oclusión-ambiental"><span
+class="header-section-number">6.2.3</span> Oclusión ambiental</h3>
+<div id="fig:ambient_occlusion_1" class="fignos">
+<figure>
+<img src="./img/05/Ambient%20occlusion%201.png" style="width:60.0%"
+alt="Figura 31: " />
+<figcaption aria-hidden="true"><span>Figura 31:</span> </figcaption>
+</figure>
+</div>
+<div id="fig:ambient_occlusion_2" class="fignos">
+<figure>
+<img src="./img/05/Ambient%20occlusion%202.png" style="width:60.0%"
+alt="Figura 32: " />
+<figcaption aria-hidden="true"><span>Figura 32:</span> </figcaption>
+</figure>
+</div>
 <h2 data-number="6.3" id="rendimiento"><span
 class="header-section-number">6.3</span> Rendimiento</h2>
-<h3 data-number="6.3.1" id="diferentes-escenas"><span
-class="header-section-number">6.3.1</span> Diferentes escenas</h3>
-<h3 data-number="6.3.2" id="resolución"><span
-class="header-section-number">6.3.2</span> Resolución</h3>
-<h3 data-number="6.3.3" id="profundidad-de-un-rayo"><span
-class="header-section-number">6.3.3</span> Profundidad de un rayo</h3>
-<h3 data-number="6.3.4" id="acumulación-temporal"><span
-class="header-section-number">6.3.4</span> Acumulación temporal</h3>
-<h3 data-number="6.3.5" id="número-de-muestras"><span
-class="header-section-number">6.3.5</span> Número de muestras</h3>
-<h3 data-number="6.3.6" id="importance-sampling"><span
-class="header-section-number">6.3.6</span> Importance sampling</h3>
+<p>Path tracing es un algoritmo costoso. Teniendo en cuenta que tratamos
+de desarrollar una aplicación en tiempo real, debemos prestar especial
+atención al coste de renderizar un <em>frame</em>. En esta sección vamos
+a hacer una comparativa de las diferentes opciones que se han
+implementado en el motor, estudiando la relación calidad de imagen y
+rendimiento.</p>
+<p>Utilizaremos principalmente dos escenas:
+<code>cornell_box_original</code> y <code>cornell_box_esferas</code>.
+Esto es debido a que ofrecen cierta complejidad y los materiales de los
+objetos permiten estudiar los parámetros del motor.</p>
+<p>Para los análisis del rendimiento, se ha utilizado un procesador
+<strong>Intel i5 12600K</strong>, una tarjeta gráfica Nvidia
+<strong>2070 Super</strong> con un ligero overclock a 1900MHz y
+<strong>2x8GB DDR4 3200MHz</strong> de RAM. A no ser que se diga lo
+contrario, todas las imágenes tienen una resolución de 1280 x 720. Con
+el fin de realizar una comparación justa, se ha implementado un modo de
+benchmarking que se puede activar en el archivo
+<code>globals.hpp</code>.</p>
+<h3 data-number="6.3.1" id="número-de-muestras"><span
+class="header-section-number">6.3.1</span> Número de muestras</h3>
+<p>El principal parámetro que podemos variar es el número de muestras
+por píxel. En un estimador de Monte Carlo [<a
+href="#eq:mc_integral">16</a>], <span class="math inline">\(\hat{I}_N =
+\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}\)</span>, corresponde a <span
+class="math inline">\(N \in \mathbb{N}\)</span>.</p>
+<div id="fig:grafica_samples" class="fignos">
+<figure>
+<img src="./img/graficas/CB_original_comparativa_samples.png"
+alt="Figura 33: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
+<figcaption aria-hidden="true"><span>Figura 33:</span> Para conseguir
+esta gráfica, iniciamos la escena <code>cornell_box_original</code>, y
+sin mover la cámara, vamos cambiando el número de muestras.</figcaption>
+</figure>
+</div>
+<p>La figura [<a href="#fig:grafica_samples">33</a>] muestra cómo afecta
+al rendimiento el valor de <span class="math inline">\(N\)</span>. Vemos
+cómo un número bajo de muestras (alrededor de 5) produce un frametime de
+aproximadamente 12 milisegundos, lo cual corresponde a 83 frames por
+segundo. Duplicando <span class="math inline">\(N\)</span> hasta las 10
+muestras, produce un aumento del frametime hasta los 20 ms de media (50
+FPS). Algo similar pasa con el resto de valores: 15 muestras suponen una
+media de 28 ms (35 FPS) y 20 muestras unos 35 ms (28 FPS). Sacamos en
+claro que, en esta escena, <strong>no debemos aumentar las muestras a un
+valor superior a 20</strong>, pues entraríamos en terreno de renderizado
+en diferido. No debemos superar la barrera de los 33 milisegundos, pues
+supondría una tasa de refresco de imagen inferior a los 30 FPS.</p>
+<p>Podemos concluir que, en esta escena, el <strong>coste de una muestra
+por píxel</strong> es de aproximadamente <strong>2
+milisegundos</strong>. Este valor puede ser hallado promediando el coste
+medio de cada frame en cada valor del parámetro.</p>
+<p>El número de muestras tiene un grandísimo efecto en la calidad de
+imagen. Volviendo a la escena anterior, podemos ver cómo cambia el ruido
+al variar el parámetro <code>samples</code>. Para las siguientes
+imágenes, se ha deshabilitado la <a
+href="#acumulación-temporal">acumulación temporal</a>, pues en esencia,
+proporcionaría un mayor número de muestras en el tiempo.</p>
+<p>Con una única muestra por píxel, la imagen final aparece muy ruidosa.
+Aumentarlo a 5 mejora bastante la situación, pero sigue habiendo
+demasiado ruido [<a href="#fig:samples_1">34</a>]</p>
+<div id="fig:samples_1" class="fignos">
+<figure>
+<img src="./img/05/1,%205%20samples.png"
+alt="Figura 34: Izquierda: 1 muestra. Derecha: 5 muestras" />
+<figcaption aria-hidden="true"><span>Figura 34:</span>
+<strong>Izquierda</strong>: 1 muestra. <strong>Derecha</strong>: 5
+muestras</figcaption>
+</figure>
+</div>
+<p>De forma similar, aumentarlo a 10 y a 20 implica un aumento de la
+calidad visual significativa.</p>
+<div id="fig:samples_2" class="fignos">
+<figure>
+<img src="./img/05/10,%2020%20samples.png"
+alt="Figura 35: Izquierda: 10 muestras. Derecha: 20 muestras" />
+<figcaption aria-hidden="true"><span>Figura 35:</span>
+<strong>Izquierda</strong>: 10 muestras. <strong>Derecha</strong>: 20
+muestras</figcaption>
+</figure>
+</div>
+<p>No obstante, el cambio de 10 a 20 no es tan significativo como de 1 a
+5. Esto sugiere que debemos usar otras técnicas para reducir la varianza
+del estimador. ¡La fuerza bruta no suele ser la solución!</p>
+<h3 data-number="6.3.2" id="profundidad-de-un-rayo"><span
+class="header-section-number">6.3.2</span> Profundidad de un rayo</h3>
+<p>Una de las decisiones que tenemos que tomar en el diseño del
+algoritmo es saber cuándo cortar un camino. Hay varias formas de
+hacerlo, aunque destacan principalmente dos: fijar un valor máximo de
+profundidad o la <a href="#ruleta-rusa">ruleta rusa</a>.</p>
+<p>Analicemos la primera opción, que es la que hemos implementado
+nosotros. Para ello, usaremos a la escena
+<code>cornell_box_esferas</code>, pues los materiales reflectivos y
+refractantes de las esferas nos servirán de ayuda para estudiar el coste
+de un camino.</p>
+<div id="fig:grafica_depth" class="fignos">
+<figure>
+<img src="./img/graficas/CB_original_comparativa_depth.png"
+alt="Figura 36: Coste de un frame en función de la profundidad de" />
+<figcaption aria-hidden="true"><span>Figura 36:</span> Coste de un frame
+en función de la profundidad de</figcaption>
+</figure>
+</div>
+<p>En esta figura [<a href="#fig:grafica_depth">36</a>] ocurre algo
+similar a [<a href="#fig:grafica_samples">33</a>]: como es evidente,
+aumentar la profundidad de un rayo aumenta el coste de renderizar un
+frame. Sin embargo, hay algunos matices que debemos estudiar con más
+detalle.</p>
+<p>El primero es que cambiar la profundidad no es tan costoso como
+aumentar el número de muestras. Aún quintuplicando el valor por defecto
+de 10 rebotes a 50, vemos que el motor se mantiene por debajo de los 33
+milisegundos. Para una profundidad de 10, el coste de un frame es de 19
+milisegundos (52 FPS), mientras que para 50 es de 28 milisegundos (35
+FPS). Tomando un valor intermedio de 20, el coste se vuelve de 24
+milisegundos (41 FPS).</p>
+<p>Llaman la atención las variaciones en el frametime conforme aumenta
+la profundidad. Para un valor de <code>depth = 10</code>, observamos que
+oscila entre los 18 y los 20 milisegundos. Sin embargo, para los otros
+dos valores de 20 y 50 son habituales picos de varios frames, llegando
+hasta los 5 milisegundos. Además, se aprecia cierta inconsistencia. Sin
+embargo, esto no resulta un problema, pues la oscilación media es de
+unos 3 milisegundos aproximadamente, lo cual supone un decremento de
+unos 5 frames por segundo como máximo.</p>
+<p>La naturaleza de la escena afecta en gran medida al resultado. Por
+mera probabilidad, cuando un rayo rebota <em>dentro</em> de la caja,
+puede salir disparado hacia muchas direcciones. Destacarían en este caso
+dos situaciones:</p>
+<ul>
+<li>El rayo continúa rebotando en la caja, impactando múltiples veces en
+las esferas. Esto hace que aumente el coste del camino.</li>
+<li>Se escapa de la caja, llegando hasta el infinito y cortando el
+camino. En este caso, no se alcanza la profundidad máxima, y el camino
+se vuelve más barato.</li>
+</ul>
+<p>La diferencia de rendimiento es sustancial. Pero, <strong>¿merece la
+pena el coste adicional?</strong>.</p>
+<p>Para responder a esta pregunta, primero debemos conocer cómo actúa
+este parámetro. Empezando con un número extremadamente bajo para los
+rebotes, vemos que parte de la escena ni siquiera se renderiza [<a
+href="#fig:depth_1">37</a>].</p>
+<div id="fig:depth_1" class="fignos">
+<figure>
+<img src="./img/05/1%20bounce.png" style="width:70.0%"
+alt="Figura 37: depth = 1" />
+<figcaption aria-hidden="true"><span>Figura 37:</span>
+<code>depth = 1</code></figcaption>
+</figure>
+</div>
+<p>Aumentar el número de rebotes progresivamente permite que el camino
+adquiera mayor información. Con dos rebotes, permitimos que un camino
+adquiera información sobre la caja por dentro, así como un reflejo
+primitivo en las esferas [<a href="#fig:depth_2">38</a>].</p>
+<div id="fig:depth_2" class="fignos">
+<figure>
+<img src="./img/05/2%20bounces.png" style="width:70.0%"
+alt="Figura 38: depth = 2" />
+<figcaption aria-hidden="true"><span>Figura 38:</span>
+<code>depth = 2</code></figcaption>
+</figure>
+</div>
+<p>Con 3 rebotes, la esfera izquierda refleja casi en su totalidad la
+esfera, pero vemos que el reflejo de la esfera derecha <em>dentro</em>
+de la izquierda está oscurecido [<a href="#fig:depth_3">39</a>].</p>
+<div id="fig:depth_3" class="fignos">
+<figure>
+<img src="./img/05/3%20bounces.png" style="width:70.0%"
+alt="Figura 39: depth = 3" />
+<figcaption aria-hidden="true"><span>Figura 39:</span>
+<code>depth = 3</code></figcaption>
+</figure>
+</div>
+<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">40</a>] se arregla
+mayoritariamente esto.</p>
+<div id="fig:depth_4" class="fignos">
+<figure>
+<img src="./img/05/4%20bounces.png" style="width:70.0%"
+alt="Figura 40: depth = 4" />
+<figcaption aria-hidden="true"><span>Figura 40:</span>
+<code>depth = 4</code></figcaption>
+</figure>
+</div>
+<p>En esta escena, aumentar más allá de 5 o 6 rebotes produce una
+situación de retornos reducidos. La calidad de imagen no aumenta
+prácticamente nada, pero el coste se vuelve muy elevado [<a
+href="#fig:depth_20">41</a>, <a href="#fig:depth_50">42</a>].</p>
+<div id="fig:depth_20" class="fignos">
+<figure>
+<img src="./img/05/20%20bounces.png" style="width:70.0%"
+alt="Figura 41: depth = 20" />
+<figcaption aria-hidden="true"><span>Figura 41:</span>
+<code>depth = 20</code></figcaption>
+</figure>
+</div>
+<div id="fig:depth_50" class="fignos">
+<figure>
+<img src="./img/05/50%20bounces.png" style="width:70.0%"
+alt="Figura 42: depth = 50" />
+<figcaption aria-hidden="true"><span>Figura 42:</span>
+<code>depth = 50</code></figcaption>
+</figure>
+</div>
+<h3 data-number="6.3.3" id="acumulación-temporal"><span
+class="header-section-number">6.3.3</span> Acumulación temporal</h3>
+<p>La acumulación temporal proporcionará una mejora enorme de la calidad
+visual sin perder rendimiento. Sin embargo, tiene como contrapartida que
+necesita dejar la cámara estática. Dependiendo de la situación esto
+podría ser un motivo factor no negociable, pero en nuestro caso, nos
+servirá.</p>
+<p>Utilizando una única muestra, pero un valor de acumulación temporal
+de 100 frames máximos, proporciona una imagen sin apenas ruido [<a
+href="#fig:acumulacion_temp">43</a>].</p>
+<div id="fig:acumulacion_temp" class="fignos">
+<figure>
+<img src="./img/05/Acumulación%20temporal%201.png" style="width:40.0%"
+alt="Figura 43: 1 muestra, acumulación temporal de 100 frames. A diferencia de 34, el resultado es impecable." />
+<figcaption aria-hidden="true"><span>Figura 43:</span> 1 muestra,
+acumulación temporal de 100 frames. A diferencia de <a
+href="#fig:samples_1">34</a>, el resultado es impecable.</figcaption>
+</figure>
+</div>
+<p>Subiendo los parámetros a 200 frames de acumulación temporal y 10
+muestras, se obtiene una imagen muy buena[<a
+href="#fig:acumulacion_temp_2">44</a>].</p>
+<div id="fig:acumulacion_temp_2" class="fignos">
+<figure>
+<img src="./img/05/Acumulación%20temporal%202.png" style="width:40.0%"
+alt="Figura 44: 10 muestras, acumulación temporal de 200 frames." />
+<figcaption aria-hidden="true"><span>Figura 44:</span> 10 muestras,
+acumulación temporal de 200 frames.</figcaption>
+</figure>
+</div>
+<p>El tremendo efecto de esta técnica es debido a que actúa como
+normalización entre imágenes. Interpolando linealmente los resultados de
+diferentes frames, con el tiempo se conseguirá una foto de lo que se
+debe ver realmente, eliminando así el ruido y las luciérnagas.</p>
+<h3 data-number="6.3.4" id="resolución"><span
+class="header-section-number">6.3.4</span> Resolución</h3>
+<p>Como se ha mencionado en la introducción, todas las escenas
+anteriores se han renderizado a 720p. Podemos controlar la resolución
+interna del motor desde el archivo <code>globals.hpp</code>. Veamos cómo
+escala al variarla.</p>
+<div id="fig:resolucion" class="fignos">
+<figure>
+<img src="./img/graficas/CB_original_comparativa_resolucion.png"
+alt="Figura 45: Tiempo de renderización de un frame dependiendo de la resolución" />
+<figcaption aria-hidden="true"><span>Figura 45:</span> Tiempo de
+renderización de un frame dependiendo de la resolución</figcaption>
+</figure>
+</div>
+<p>A 720p, la escena <code>cornell_box_original</code> corre a 105 FPS
+(9.6 ms/frame), mientras que a 1080p, el motor corre a 47FPS (21
+ms/frame) y a 1440p, a 28 FPS (36 ms/frame). Como vemos, la resolución
+tiene un gran impacto en el rendimiento. El cambio de 720p a 1080p
+implica un aumento del 125% en el número de píxeles a dibujar, por lo
+que es natural que el coste sea proporcional a esta cantidad. 1440p
+tiene 1.7 veces más píxeles que 1080p.</p>
+<p>En la práctica, ray tracing no suele utilizar resoluciones internas
+tan grandes. Se aplican otro tipo de técnicas para reducir el ruido,
+como veremos en el capítulo de estado del arte.</p>
+<h3 data-number="6.3.5" id="importance-sampling"><span
+class="header-section-number">6.3.5</span> Importance sampling</h3>
+<p>El <a href="#muestreo-por-importancia">muestreo por importancia</a>
+consiste en tomar una función de densidad proporcional a la función a
+integrar para reducir la varianza. Se ha implementado muestreo por
+importancia para los materiales difusos. En particular, se ha utilizado
+dos estrategias diferentes para escoger direcciones aleatorias, que
+pueden observarse en la figura [<a
+href="#fig:importance_sample">46</a>]</p>
+<div id="fig:importance_sample" class="fignos">
+<figure>
+<img src="./img/05/Importance%20sample.png"
+alt="Figura 46: Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling.   Escena: cornell_box_original, 10 rebotes, acumulación temporal off, 10 muestras" />
+<figcaption aria-hidden="true"><span>Figura 46:</span>
+<strong>Izquierda</strong>: <em>hemisphere sampling</em>.
+<strong>Derecha</strong>: <em>Cosine-Weighted Hemisphere Sampling</em>.
+<br> Escena: <code>cornell_box_original</code>, 10 rebotes, acumulación
+temporal off, 10 muestras</figcaption>
+</figure>
+</div>
+<p>Para facilitar la comparativa, desde una posición estática se ha
+tomado una foto, y hemos ampliado la caja de la derecha digitalmente. De
+esta forma, podemos ver cómo la caja de la derecha contiene una menor
+cantidad de ruido, aún manteniendo los mismos parámetros de
+renderizado.</p>
 <h2 data-number="6.4" id="comparativa-con-in-one-weekend"><span
 class="header-section-number">6.4</span> Comparativa con In One
 Weekend</h2>
