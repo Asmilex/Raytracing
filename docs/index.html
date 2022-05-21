@@ -5135,6 +5135,11 @@ texturas.</td>
 <td><img src="./img/05/medieval_building.png" title="fig:" /></td>
 </tr>
 <tr class="odd">
+<td><code>cubes</code></td>
+<td>Dos cubos de diferente material sobre un plano reflectante.</td>
+<td><img src="./img/05/cubes.png" title="fig:" /></td>
+</tr>
+<tr class="even">
 <td><code>cornell_box</code> <code>_original</code></td>
 <td>Una reconstrucción de la caja de Cornell original <span
 class="citation" data-cites="cornell-box-original">(<a
@@ -5142,7 +5147,7 @@ href="#ref-cornell-box-original" role="doc-biblioref">Cornell University
 2005</a>)</span>.</td>
 <td><img src="./img/05/cornell_box_original.png" title="fig:" /></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>cornell_box</code> <code>_mirror</code></td>
 <td>Similar a la caja original, esta escena es una recreación de <span
 class="citation" data-cites="cornell-box-compare">(<a
@@ -5150,30 +5155,20 @@ href="#ref-cornell-box-compare" role="doc-biblioref">Cornell University
 1998</a>)</span>.</td>
 <td><img src="./img/05/cornell_box_mirror.png" title="fig:" /></td>
 </tr>
-<tr class="odd">
-<td><code>cornell_box</code> <code>_vacia</code></td>
-<td>La caja original sin las cajitas pequeñas dentro.</td>
-<td><img src="./img/05/cornell_box_vacia.png" title="fig:" /></td>
-</tr>
 <tr class="even">
-<td><code>cornell_box</code> <code>_vacia_an</code></td>
-<td>Similar a la anterior, pero con las paredes naranjas y azules.</td>
-<td><img src="./img/05/cornell_box_vacia_an.png" title="fig:" /></td>
-</tr>
-<tr class="odd">
 <td><code>cornell_box</code> <code>_esferas</code></td>
 <td>Una caja de Cornell con esferas. Se puede comparar con <span
 class="citation" data-cites="Jensen2001">(<a href="#ref-Jensen2001"
 role="doc-biblioref">Jensen 2001, 107</a> fig. 9.10)</span>.</td>
 <td><img src="./img/05/cornell_box_esferas.png" title="fig:" /></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>cornell_box</code> <code>_saturada</code></td>
 <td>Otra caja de Cornell similar a la original, pero con las paredes
 saturadas.</td>
 <td><img src="./img/05/cornell_box_saturada.png" title="fig:" /></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>cornell_box</code> <code>_glossy</code></td>
 <td>En esta caja se encuentran dos esferas de diferente material. Se
 puede comparar con <span class="citation"
@@ -5181,16 +5176,28 @@ data-cites="cornell-box-glossy">(<a href="#ref-cornell-box-glossy"
 role="doc-biblioref">Jensen 1996, 17</a>, fig. 6)</span></td>
 <td><img src="./img/05/cornell_box_glossy.png" title="fig:" /></td>
 </tr>
+<tr class="odd">
+<td><code>cornell_box</code> <code>_iow</code></td>
+<td>La última caja de Cornell implementada en <span class="citation"
+data-cites="Shirley2020RTW3">(<a href="#ref-Shirley2020RTW3"
+role="doc-biblioref">Shirley 2020c</a>)</span>.</td>
+<td><img src="./img/05/cornell_box_iow.png" title="fig:" /></td>
+</tr>
+<tr class="even">
+<td><code>cornell_box</code> <code>_vacia</code></td>
+<td>La caja original sin las cajitas pequeñas dentro.</td>
+<td><img src="./img/05/cornell_box_vacia.png" title="fig:" /></td>
+</tr>
+<tr class="odd">
+<td><code>cornell_box</code> <code>_vacia_an</code></td>
+<td>Similar a la anterior, pero con las paredes naranjas y azules.</td>
+<td><img src="./img/05/cornell_box_vacia_an.png" title="fig:" /></td>
+</tr>
 <tr class="even">
 <td><code>cornell_box</code> <code>_blanca</code></td>
 <td>Una caja vacía. Es un benchmark infernal para el ruido generado por
 la iluminación global.</td>
 <td><img src="./img/05/cornell_box_blanca.png" title="fig:" /></td>
-</tr>
-<tr class="odd">
-<td><code>cubes</code></td>
-<td>Dos cubos de diferente material sobre un plano reflectante.</td>
-<td><img src="./img/05/cubes.png" title="fig:" /></td>
 </tr>
 </tbody>
 </table>
@@ -5741,82 +5748,132 @@ CPU</strong>. Las imágenes están exportadas al formato <code>.ppm</code>
 y reconvertidas a <code>.png</code> para este trabajo.</p>
 <h3 data-number="6.4.2" id="tiempos-de-renderizado"><span
 class="header-section-number">6.4.2</span> Tiempos de renderizado</h3>
-<p>La escena que vamos a comparar es muy similar a
-<code>cornell_box_mirror</code>, a excepción de que se usa una esfera
-reflectante en lugar de una caja difusa.</p>
+<p>Se ha implementado una escena específica para esta comparativa,
+llamada <code>cornell_box_iow</code>. Es una situación análoga a la
+última caja de Cornell del tercer libro, para la cual se han usado todas
+las técnicas de los tres libros. En nuestra versión disponemos de
+prácticamente todos los métodos vistos en este trabajo, a excepción de
+la acumulación temporal, pues supondría una ventaja injusta en este
+escenario.</p>
 <p>La siguiente tabla muestra una comparativa entre el coste de
 renderizar un frame en In One Weekend y en nuestro motor, usando una
-escena análoga en cada versión:</p>
+profundidad de 10 rebotes y una resolución de 720p:</p>
 <table>
 <colgroup>
-<col style="width: 33%" />
-<col style="width: 27%" />
-<col style="width: 38%" />
+<col style="width: 19%" />
+<col style="width: 25%" />
+<col style="width: 32%" />
+<col style="width: 22%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;"><strong>Número de muestras</strong></th>
-<th style="text-align: left;"><strong>In One Weekend</strong></th>
-<th><strong>Nuestra implementación</strong></th>
+<th style="text-align: left;"><strong>In One Weekend</strong>
+(ms/frame)</th>
+<th><strong>Nuestra implementación</strong> (ms/frame)</th>
+<th><strong>Diferencia</strong> (ms/frame)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">1</td>
-<td style="text-align: left;">1032 ms</td>
-<td>x ms</td>
+<td style="text-align: left;">1032</td>
+<td>2.6</td>
+<td>- 1006</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">5</td>
-<td style="text-align: left;">3934 ms</td>
-<td>x ms</td>
+<td style="text-align: left;">3934</td>
+<td>11</td>
+<td>- 3923</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10</td>
-<td style="text-align: left;">7459 ms</td>
-<td>x ms</td>
+<td style="text-align: left;">7459</td>
+<td>20.4</td>
+<td>- 7255</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">20</td>
-<td style="text-align: left;">14516 ms</td>
-<td>x ms</td>
+<td style="text-align: left;">14516</td>
+<td>39</td>
+<td>- 14477</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">100</td>
-<td style="text-align: left;">69573 ms</td>
-<td>x ms</td>
+<td style="text-align: left;">69573</td>
+<td><span class="math inline">\(\sim\)</span> 200</td>
+<td>- 69373</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1000</td>
-<td style="text-align: left;">688388 ms</td>
-<td>x ms</td>
+<td style="text-align: left;">688388</td>
+<td><span class="math inline">\(\sim\)</span> 2000</td>
+<td>- 686388</td>
 </tr>
 </tbody>
 </table>
+<p>Como podemos observar, la diferencia es abismal. En el tiempo que
+tarda In One Weekend en producir una imagen con una única muestra,
+nuestro motor es capaz de generar una imagen de 500 muestras. Sin
+embargo, este resultado es esperable, pues a fin de cuentas, In One
+Weekend corre en la CPU con un único hilo, mientras que en nuestro motor
+se utilizan todos los recursos posibles.</p>
+<p>Ahora bien, debemos hacernos una pregunta: ¿cómo es la calidad
+gráfica de cada uno?</p>
+<p>Enfocaremos la respuesta desde dos puntos de vista diferentes: en el
+primero, nos fijaremos puramente en el número de muestras; y en el
+segundo, fijaremos un cierto margen de milisegundos por frame y
+comprobaremos el resultado en cada motor.</p>
+<p>Empecemos con la primera comparativa. Desde el punto de vista del
+número de muestras, podemos observar los siguientes resultados:</p>
+<div id="fig:comparativa_1s" class="fignos">
 <figure>
-<img src="./img/05/IOWCB_1s_10d.png" alt="1032 ms" />
-<figcaption aria-hidden="true">1032 ms</figcaption>
+<img src="./img/05/Comparativa_1s.png"
+alt="Figura 49: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 49:</span> 1 muestra.
+<strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
+nuestro motor</figcaption>
 </figure>
+</div>
+<div id="fig:comparativa_5s" class="fignos">
 <figure>
-<img src="./img/05/IOWCB_5s_10d.png" alt="3934 ms" />
-<figcaption aria-hidden="true">3934 ms</figcaption>
+<img src="./img/05/Comparativa_5s.png"
+alt="Figura 50: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 50:</span> 5 muestras.
+<strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
+nuestro motor</figcaption>
 </figure>
+</div>
+<div id="fig:comparativa_20s" class="fignos">
 <figure>
-<img src="./img/05/IOWCB_10s_10d.png" alt="7459 ms" />
-<figcaption aria-hidden="true">7459 ms</figcaption>
+<img src="./img/05/Comparativa_20s.png"
+alt="Figura 51: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 51:</span> 20 muestras.
+<strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
+nuestro motor</figcaption>
 </figure>
+</div>
+<div id="fig:comparativa_100s" class="fignos">
 <figure>
-<img src="./img/05/IOWCB_20s_10d.png" alt="14516 ms" />
-<figcaption aria-hidden="true">14516 ms</figcaption>
+<img src="./img/05/Comparativa_100s.png"
+alt="Figura 52: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de temp. acum.)" />
+<figcaption aria-hidden="true"><span>Figura 52:</span> 100 muestras.
+<strong>Izquierda</strong>: In One Weekend (100 muestras).
+<strong>Derecha</strong>: nuestro motor (7 muestras, 15 frames de temp.
+acum.)</figcaption>
 </figure>
+</div>
+<div id="fig:comparativa_1000s" class="fignos">
 <figure>
-<img src="./img/05/IOWCB_100s_10d.png" alt="69573 ms" />
-<figcaption aria-hidden="true">69573 ms</figcaption>
+<img src="./img/05/Comparativa_1000s.png"
+alt="Figura 53: 1000 muestras. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de temp. acum.)" />
+<figcaption aria-hidden="true"><span>Figura 53:</span> 1000 muestras.
+<strong>Izquierda</strong>: In One Weekend (1000 muestras).
+<strong>Derecha</strong>: nuestro motor (10 muestras, 100 frames de
+temp. acum.)</figcaption>
 </figure>
-<figure>
-<img src="./img/05/IOWCB_1000s_10d.png" alt="688388 ms" />
-<figcaption aria-hidden="true">688388 ms</figcaption>
-</figure>
+</div>
 <h1 data-number="7" id="el-presente-y-futuro-de-rt"><span
 class="header-section-number">7</span> El presente y futuro de RT</h1>
 <blockquote>
