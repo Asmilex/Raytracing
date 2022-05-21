@@ -533,7 +533,18 @@ class="toc-section-number">6.4</span> Comparativa con In One Weekend</a>
 class="toc-section-number">6.4.1</span> Sobre la implementación de In
 One Weekend</a></li>
 <li><a href="#tiempos-de-renderizado"><span
-class="toc-section-number">6.4.2</span> Tiempos de renderizado</a></li>
+class="toc-section-number">6.4.2</span> Tiempos de renderizado</a>
+<ul>
+<li><a href="#por-número-de-muestras"><span
+class="toc-section-number">6.4.2.1</span> Por número de
+muestras</a></li>
+<li><a href="#por-presupuesto-de-tiempo"><span
+class="toc-section-number">6.4.2.2</span> Por presupuesto de
+tiempo</a></li>
+<li><a href="#conclusiones-de-la-comparativa"><span
+class="toc-section-number">6.4.2.3</span> Conclusiones de la
+comparativa</a></li>
+</ul></li>
 </ul></li>
 </ul></li>
 <li><a href="#el-presente-y-futuro-de-rt"><span
@@ -5708,16 +5719,20 @@ renderizado.</p>
 class="header-section-number">6.4</span> Comparativa con In One
 Weekend</h2>
 <p>Con el fin de preparar este trabajo, se ha implementado la serie de
-libros <em>In One Weekend</em>: <em>In One Weekend</em>, <em>The Next
-Week</em> y <em>The Rest of your Life</em> <span class="citation"
-data-cites="Shirley2020RTW1">Shirley (<a href="#ref-Shirley2020RTW3"
-role="doc-biblioref">2020c</a>)</span>. Teniendo en cuenta que el
-producto final de esos libros es un <em>offline renderer</em>, sería
-interesante compararlo con nuestro motor.</p>
-<p>En esta sección vamos a hacer justo eso: enseñaremos escenas
-similares, mostraremos cuánto tarda en renderizar un frame en
-comparación a nuestro motor, y estudiaremos las diferencias en la
-calidad visual.</p>
+libros de P. Shirley: <em>In One Weekend</em> <span class="citation"
+data-cites="Shirley2020RTW1">(<a href="#ref-Shirley2020RTW1"
+role="doc-biblioref">Shirley 2020a</a>)</span>, <em>The Next Week</em>
+<span class="citation" data-cites="Shirley2020RTW2">(<a
+href="#ref-Shirley2020RTW2" role="doc-biblioref">Shirley
+2020b</a>)</span> y <em>The Rest of your Life</em> <span
+class="citation" data-cites="Shirley2020RTW3">(<a
+href="#ref-Shirley2020RTW3" role="doc-biblioref">Shirley
+2020c</a>)</span>. Teniendo en cuenta que el producto final de esos
+libros es un <em>offline renderer</em>, sería interesante compararlo con
+nuestro motor que corre en tiempo real.</p>
+<p>En esta sección enseñaremos escenas similares, mostraremos cuánto
+tarda en renderizar un frame en comparación a nuestro motor, y
+estudiaremos las diferencias en la calidad visual.</p>
 <h3 data-number="6.4.1"
 id="sobre-la-implementación-de-in-one-weekend"><span
 class="header-section-number">6.4.1</span> Sobre la implementación de In
@@ -5726,35 +5741,36 @@ One Weekend</h3>
 <code>./RT_in_one_weekend</code> del repositorio. Aunque el proyecto
 presenta una gran complejidada por sí mismo, no comentaremos nada en
 este trabajo. Sin embargo, comentaremos algunos detalles necesarios para
-esta comparativa.</p>
-<p>El primero de ellos está relacionado con la figuración:</p>
+esta comparativa:</p>
 <ul>
 <li>La configuración se encuentra principalmente en el archivo
 <code>./RT_in_one_weekend/src/main.cpp</code>. Los parámetros que se
-pueden cambiar son el número de muestras
+pueden ajustar son el número de muestras
 (<code>samples_per_pixel</code>), resolución de la imagen
 (<code>image_width</code>) y profundidad del rayo
 (<code>max_depth</code>).</li>
-<li>Las escenas se cargan en el archivo
+<li>Las escenas se han implementado en el archivo
 <code>./RT_in_one_weekend/src/scenes.hpp</code>.</li>
+<li>Para mantener la comparación lo más justa posible, se ha fijado la
+profundidad del rayo a 10, y la resolución a 720 x 720.</li>
 </ul>
-<p>Para mantener la comparación lo más justa posible, se ha fijado la
-profundidad del rayo a 10, y la resolución a 720 x 720.</p>
 <p>Es importante tener en mente que <strong>In One Weekend no está
 optimizado</strong>. No está pensado para ser rápido; sino para ser
 didáctico. Es por ello que el procesamiento está <strong>limitado a un
 único hilo</strong>, y el renderizado se realiza <strong>únicamente por
-CPU</strong>. Las imágenes están exportadas al formato <code>.ppm</code>
-y reconvertidas a <code>.png</code> para este trabajo.</p>
+CPU</strong>. Las imágenes que genera este motor utilizan el formato
+<code>.ppm</code> y han sido reconvertidas a <code>.png</code> para este
+trabajo.</p>
 <h3 data-number="6.4.2" id="tiempos-de-renderizado"><span
 class="header-section-number">6.4.2</span> Tiempos de renderizado</h3>
 <p>Se ha implementado una escena específica para esta comparativa,
 llamada <code>cornell_box_iow</code>. Es una situación análoga a la
-última caja de Cornell del tercer libro, para la cual se han usado todas
-las técnicas de los tres libros. En nuestra versión disponemos de
-prácticamente todos los métodos vistos en este trabajo, a excepción de
-la acumulación temporal, pues supondría una ventaja injusta en este
-escenario.</p>
+última caja de Cornell del tercer libro. Para sacar las imágenes de In
+One Weekend se han utilizado todas las técnicas vistas en los tres
+libros, por lo que se espera que la calidad gráfica sea óptima. En
+nuestra versión disponemos de prácticamente todos los métodos vistos en
+este trabajo, variando diferentes parámetros con el fin de ver
+resultados diferentes.</p>
 <p>La siguiente tabla muestra una comparativa entre el coste de
 renderizar un frame en In One Weekend y en nuestro motor, usando una
 profundidad de 10 rebotes y una resolución de 720p:</p>
@@ -5770,46 +5786,48 @@ profundidad de 10 rebotes y una resolución de 720p:</p>
 <th style="text-align: left;"><strong>Número de muestras</strong></th>
 <th style="text-align: left;"><strong>In One Weekend</strong>
 (ms/frame)</th>
-<th><strong>Nuestra implementación</strong> (ms/frame)</th>
-<th><strong>Diferencia</strong> (ms/frame)</th>
+<th style="text-align: left;"><strong>Nuestra implementación</strong>
+(ms/frame)</th>
+<th style="text-align: left;"><strong>Diferencia</strong>
+(ms/frame)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">1</td>
-<td style="text-align: left;">1032</td>
-<td>2.6</td>
-<td>- 1006</td>
+<td style="text-align: left;"><code>1032</code></td>
+<td style="text-align: left;"><code>2.6</code></td>
+<td style="text-align: left;"><code>-1006</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">5</td>
-<td style="text-align: left;">3934</td>
-<td>11</td>
-<td>- 3923</td>
+<td style="text-align: left;"><code>3934</code></td>
+<td style="text-align: left;"><code>11</code></td>
+<td style="text-align: left;"><code>-3923</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10</td>
-<td style="text-align: left;">7459</td>
-<td>20.4</td>
-<td>- 7255</td>
+<td style="text-align: left;"><code>7459</code></td>
+<td style="text-align: left;"><code>20.4</code></td>
+<td style="text-align: left;"><code>-7255</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">20</td>
-<td style="text-align: left;">14516</td>
-<td>39</td>
-<td>- 14477</td>
+<td style="text-align: left;"><code>14516</code></td>
+<td style="text-align: left;"><code>39</code></td>
+<td style="text-align: left;"><code>-14477</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">100</td>
-<td style="text-align: left;">69573</td>
-<td><span class="math inline">\(\sim\)</span> 200</td>
-<td>- 69373</td>
+<td style="text-align: left;"><code>69573</code></td>
+<td style="text-align: left;"><code>~200</code></td>
+<td style="text-align: left;"><code>-69373</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1000</td>
-<td style="text-align: left;">688388</td>
-<td><span class="math inline">\(\sim\)</span> 2000</td>
-<td>- 686388</td>
+<td style="text-align: left;"><code>688388</code></td>
+<td style="text-align: left;"><code>~2000</code></td>
+<td style="text-align: left;"><code>-686388</code></td>
 </tr>
 </tbody>
 </table>
@@ -5825,55 +5843,159 @@ gráfica de cada uno?</p>
 primero, nos fijaremos puramente en el número de muestras; y en el
 segundo, fijaremos un cierto margen de milisegundos por frame y
 comprobaremos el resultado en cada motor.</p>
-<p>Empecemos con la primera comparativa. Desde el punto de vista del
-número de muestras, podemos observar los siguientes resultados:</p>
+<h4 data-number="6.4.2.1" id="por-número-de-muestras"><span
+class="header-section-number">6.4.2.1</span> Por número de muestras</h4>
+<p>Comencemos la comparativa utilizando el número de muestras. Para las
+primeras imágenes fijaremos la acumulación temporal a un único frame.
+Explicaremos el motivo después.</p>
+<p>Con una única muestra, se observa una diferencia enorme entre ambas
+versiones [<a href="#fig:comparativa_1s">49</a>]. En nuestra
+implementación no se observa prácticamente nada. Solo somos capaces de
+distinguir la luz, un poco del reflejo de la caja izquierda y los
+<em>caustics</em> causados por la luz del techo. Mientras tanto, en In
+One Weekend, la imagen es ruidosa pero definida.</p>
 <div id="fig:comparativa_1s" class="fignos">
 <figure>
-<img src="./img/05/Comparativa_1s.png"
+<img src="./img/05/Comparativa_1s.png" style="width:85.0%"
 alt="Figura 49: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
 <figcaption aria-hidden="true"><span>Figura 49:</span> 1 muestra.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
 </div>
+<p>El <strong>motivo de esta diferencia</strong> es la <strong>forma de
+muestrear la escena</strong>. In One Weekend implementa muestreo directo
+de las fuentes de luz. Para conseguirlo, almacena la posición de la
+lámpara del techo, y en cada intersección muestrea un punto aleatorio de
+la fuente. En cambio, en nuestro motor, este tipo de fuentes no se
+muestrean directamente, sino que debemos contar con el azar para que
+aporten radiancia.</p>
+<p>Una vez pasamos a 5 muestras [Figura <a
+href="#fig:comparativa_5s">50</a>], nuestro motor consigue una imagen
+más nítida, similar a la que In One Weekend genera con una muestra. En
+cambio, In One Weekend consigue un resultado muy bueno, aunque con
+muchas luciérnagas. Este fenómeno no ocurre en nuestra implementación
+por el tipo de muestreo.</p>
 <div id="fig:comparativa_5s" class="fignos">
 <figure>
-<img src="./img/05/Comparativa_5s.png"
+<img src="./img/05/Comparativa_5s.png" style="width:85.0%"
 alt="Figura 50: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
 <figcaption aria-hidden="true"><span>Figura 50:</span> 5 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
 </div>
+<p>Con 20 muestras nuestra implementación aún muestra un resultado algo
+ruidoso. ¿Se podría hacer algo para mejorarlo?</p>
 <div id="fig:comparativa_20s" class="fignos">
 <figure>
-<img src="./img/05/Comparativa_20s.png"
+<img src="./img/05/Comparativa_20s.png" style="width:85.0%"
 alt="Figura 51: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
 <figcaption aria-hidden="true"><span>Figura 51:</span> 20 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
 </div>
+<p>La respuesta es la acumulación temporal. Aunque, en esencia, la
+acumulación temporal es una forma de aumentar el número de muestras con
+respecto al tiempo, nuestra implementación utiliza interpolación para
+mezclar los colores de los frames. De esta forma, se consigue el efecto
+de normalización, lo cual elimina el ruido de la imagen con el tiempo.
+De esta forma conseguimos equiparar la imagen de ambas versiones [Figura
+<a href="#fig:comparativa_100s">52</a>].</p>
+<p>Se puede observar cómo el tipo de ruido es diferente. En In One
+Weekend, el ruido se presenta en forma de píxeles blancos, debido a las
+luciérnagas generadas por el muestreo directo de la fuente de luz. En
+contrapartida, en nuestra implementación el ruido es negro debido a los
+rayos que no impactan en ninguna superficie tras rebotar.</p>
 <div id="fig:comparativa_100s" class="fignos">
 <figure>
-<img src="./img/05/Comparativa_100s.png"
-alt="Figura 52: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de temp. acum.)" />
+<img src="./img/05/Comparativa_100s.png" style="width:85.0%"
+alt="Figura 52: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
 <figcaption aria-hidden="true"><span>Figura 52:</span> 100 muestras.
 <strong>Izquierda</strong>: In One Weekend (100 muestras).
-<strong>Derecha</strong>: nuestro motor (7 muestras, 15 frames de temp.
-acum.)</figcaption>
+<strong>Derecha</strong>: nuestro motor (7 muestras, 15 frames de
+acumulación temporal)</figcaption>
 </figure>
 </div>
+<p>Por último, subiendo el número de muestras a 1000 conseguimos una
+imagen muy nítida en ambas implementaciones [Figura <a
+href="#fig:comparativa_1000s">53</a>]. Conseguimos apreciar una
+diferencia en los bordes de la esfera de la derecha, la cual seguramente
+se deba a un fallo en la implementación de la BRDF.</p>
 <div id="fig:comparativa_1000s" class="fignos">
 <figure>
-<img src="./img/05/Comparativa_1000s.png"
-alt="Figura 53: 1000 muestras. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de temp. acum.)" />
-<figcaption aria-hidden="true"><span>Figura 53:</span> 1000 muestras.
-<strong>Izquierda</strong>: In One Weekend (1000 muestras).
-<strong>Derecha</strong>: nuestro motor (10 muestras, 100 frames de
-temp. acum.)</figcaption>
+<img src="./img/05/Comparativa_1000s.png" style="width:100.0%"
+alt="Figura 53: La imagen final, con 1000 muestras para cada versión. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de acumulación temporal)" />
+<figcaption aria-hidden="true"><span>Figura 53:</span> La imagen final,
+con 1000 muestras para cada versión. <strong>Izquierda</strong>: In One
+Weekend (1000 muestras). <strong>Derecha</strong>: nuestro motor (10
+muestras, 100 frames de acumulación temporal)</figcaption>
 </figure>
 </div>
+<h4 data-number="6.4.2.2" id="por-presupuesto-de-tiempo"><span
+class="header-section-number">6.4.2.2</span> Por presupuesto de
+tiempo</h4>
+<p>El presupuesto de tiempo (o <em>frame budget</em> en inglés) es la
+cantidad de milisegundos que disponemos para renderizar un frame. Este
+valor es importante cuando tratamos con aplicaciones en tiempo real. Por
+ejemplo, si queremos que nuestro motor corra a 60 imágenes por segundo,
+cada frame debe tardar un máximo de 16 milisegundos en ser generado. Una
+comparativa interesante sería fijar un valor para el tiempo, y ver qué
+calidad de imagen podemos conseguir con ambas implementaciones</p>
+<p>Utilizando un presupuesto de 4000 milisegundos, In One Weekend es
+capaz de utilizar 5 muestras para la imagen, mientras que nuestro motor
+podría utilizar 10 muestras y 19 frames de acumulación temporal [Figura
+<a href="#fig:comparativa_4000ms">54</a>].</p>
+<p><span class="math display">\[
+20.4 \frac{\text{ms}}{\text{10 muestras}} \cdot 19 \text{ frames de
+temp. acum.} = 3876 \text{ ms}
+\]</span></p>
+<div id="fig:comparativa_4000ms" class="fignos">
+<figure>
+<img src="./img/05/Comparativa_4000ms.png" style="width:85.0%"
+alt="Figura 54: 4000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 54:</span> 4000 milisegundos
+de <em>frame budget</em>. <strong>Izquierda</strong>: In One Weekend.
+<strong>Derecha</strong>: nuestro motor</figcaption>
+</figure>
+</div>
+<p>Como podemos observar, nuestra implementación consigue un resultado
+abismalmente mejor en el mismo periodo de tiempo.</p>
+<p>Usando un valor mucho más alto de 70000 milisegundos, nuestra
+implementación se puede permitir utilizar 20 muestras y 1750 frames de
+acumulación temporal: <span class="math display">\[
+40 \frac{\text{ms}}{\text{20 muestras}} \cdot 1750 \text{ frames de
+temp. acum.} = 70000 \text{ ms}
+\]</span></p>
+<p>Esencialmente, la imagen que genera nuestra implementación es
+perfecta. No muestra ni un ápice de ruido; mientras que la de In One
+Weeekend presenta un resultado poco nítido [Figura <a
+href="#fig:comparativa_70000ms">55</a>].</p>
+<div id="fig:comparativa_70000ms" class="fignos">
+<figure>
+<img src="./img/05/Comparativa_70000ms.png" style="width:85.0%"
+alt="Figura 55: 70000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 55:</span> 70000
+milisegundos de <em>frame budget</em>. <strong>Izquierda</strong>: In
+One Weekend. <strong>Derecha</strong>: nuestro motor</figcaption>
+</figure>
+</div>
+<h4 data-number="6.4.2.3" id="conclusiones-de-la-comparativa"><span
+class="header-section-number">6.4.2.3</span> Conclusiones de la
+comparativa</h4>
+<p>Analizando las imágenes proporcionadas por ambos motores, podemos
+concluir que In One Weekend consigue un mejor resultado si nos basamos
+en el ruido de la imagen por número de muestras. Sin embargo, la rapidez
+de nuestro motor permite compensar los problemas de muestreo con un
+mayor número de muestras por milisegundo, lo cual le permite superar el
+resultado visual que In One Weekend consigue en un cierto periodo de
+tiempo.</p>
+<p>No obstante, es importante recordar que ambas implementaciones tienen
+sus inconvenientes debido a la naturaleza de los respectivos trabajos,
+por lo que en ambos casos se podría mejorar el rendimiento. En el caso
+de In One Weekend, paralelizando el programa; y en el de nuestro motor,
+haciendo más robusto el muestreo directo de fuentes de luz.</p>
 <h1 data-number="7" id="el-presente-y-futuro-de-rt"><span
 class="header-section-number">7</span> El presente y futuro de RT</h1>
 <blockquote>
