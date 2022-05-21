@@ -320,4 +320,30 @@ Por último, subiendo el número de muestras a 1000 conseguimos una imagen muy n
 
 #### Por presupuesto de tiempo
 
-El presupuesto de tiempo (o *frame budget* en inglés) es la cantidad de milisegundos que disponemos para renderizar un frame. Si queremos ajustar un motor en tiempo real para que corra a velocidad de 60 imágenes por segundo, cada frame debe tardar un máximo de 16 milisegundos en ser generado.
+El presupuesto de tiempo (o *frame budget* en inglés) es la cantidad de milisegundos que disponemos para renderizar un frame. Este valor es importante cuando tratamos con aplicaciones en tiempo real. Por ejemplo, si queremos que nuestro motor corra a 60 imágenes por segundo, cada frame debe tardar un máximo de 16 milisegundos en ser generado. Una comparativa interesante sería fijar un valor para el tiempo, y ver qué calidad de imagen podemos conseguir con ambas implementaciones
+
+Utilizando un presupuesto de 4000 milisegundos, In One Weekend es capaz de utilizar 5 muestras para la imagen, mientras que nuestro motor podría utilizar 10 muestras y 19 frames de acumulación temporal [Figura @fig:comparativa_4000ms].
+
+$$
+20.4 \frac{\text{ms}}{\text{10 muestras}} \cdot 19 \text{ frames de temp. acum.} = 3876 \text{ ms}
+$$
+
+![4000 milisegundos de *frame budget*. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_4000ms.png){#fig:comparativa_4000ms width=85%}
+
+Como podemos observar, nuestra implementación consigue un resultado abismalmente mejor en el mismo periodo de tiempo.
+
+Usando un valor mucho más alto de 70000 milisegundos, nuestra implementación se puede permitir utilizar 20 muestras y 1750 frames de acumulación temporal:
+$$
+40 \frac{\text{ms}}{\text{20 muestras}} \cdot 1750 \text{ frames de temp. acum.} = 70000 \text{ ms}
+$$
+
+Esencialmente, la imagen que genera nuestra implementación es perfecta. No muestra ni un ápice de ruido; mientras que la de In One Weeekend presenta un resultado poco nítido [Figura @fig:comparativa_70000ms].
+
+![70000 milisegundos de *frame budget*. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_70000ms.png){#fig:comparativa_70000ms width=85%}
+
+
+#### Conclusiones de la comparativa
+
+Analizando las imágenes proporcionadas por ambos motores, podemos concluir que In One Weekend consigue un mejor resultado si nos basamos en el ruido de la imagen por número de muestras. Sin embargo, la rapidez de nuestro motor permite compensar los problemas de muestreo con un mayor número de muestras por milisegundo, lo cual le permite superar el resultado visual que In One Weekend consigue en un cierto periodo de tiempo.
+
+No obstante, es importante recordar que ambas implementaciones tienen sus inconvenientes debido a la naturaleza de los respectivos trabajos, por lo que en ambos casos se podría mejorar el rendimiento. En el caso de In One Weekend, paralelizando el programa; y en el de nuestro motor, haciendo más robusto el muestreo directo de fuentes de luz.
