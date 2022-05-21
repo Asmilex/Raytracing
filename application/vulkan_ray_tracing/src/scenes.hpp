@@ -11,6 +11,7 @@ enum Scene {
     cornell_box_esferas,
     cornell_box_glossy,
     cornell_box_blanca,
+    cornell_box_iow,
     cubes,
 };
 
@@ -221,6 +222,19 @@ public:
             center = center_cornell;
 
             break;
+
+        // ─────────────────────────────────────────────────────────────────
+
+        case Scene::cornell_box_iow:
+            models.push_back(ModelInfo{
+                "media/scenes/cornell_box_iow.obj",
+            });
+
+            eye    = eye_cornell;
+            center = center_cornell;
+
+            break;
+
         }
     }
 };
