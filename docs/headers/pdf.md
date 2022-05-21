@@ -35,4 +35,10 @@ header-right: "\\textcolor{gray}{\\textit{\\leftmark}}"
 footer-left: "\\hspace{1cm}"
 footer-center: "\\thepage"
 footer-right: "\\hspace{1cm}"
+
+geometry:
+- top=30mm
+- left=20mm
+- right=20mm
+
 ---
