@@ -274,27 +274,34 @@ Es importante tener en mente que **In One Weekend no está optimizado**. No est�
 
 ### Tiempos de renderizado
 
-La escena que vamos a comparar es muy similar a `cornell_box_mirror`, a excepción de que se usa una esfera reflectante en lugar de una caja difusa.
+Se ha implementado una escena específica para esta comparativa, llamada `cornell_box_iow`. Es una situación análoga a la última caja de Cornell del tercer libro, para la cual se han usado todas las técnicas de los tres libros. En nuestra versión disponemos de prácticamente todos los métodos vistos en este trabajo, a excepción de la acumulación temporal, pues supondría una ventaja injusta en este escenario.
 
-La siguiente tabla muestra una comparativa entre el coste de renderizar un frame en In One Weekend y en nuestro motor, usando una escena análoga en cada versión:
+La siguiente tabla muestra una comparativa entre el coste de renderizar un frame en In One Weekend y en nuestro motor, usando una profundidad de 10 rebotes y una resolución de 720p:
 
-| **Número de muestras** | **In One Weekend** | **Nuestra implementación** |
-|:-----------------------|:-------------------|----------------------------|
-| 1                      | 1032 ms            | x ms                           |
-| 5                      | 3934 ms            | x ms                           |
-| 10                     | 7459 ms            | x ms                           |
-| 20                     | 14516 ms           | x ms                           |
-| 100                    | 69573 ms           | x ms                           |
-| 1000                   | 688388 ms          | x ms                           |
+| **Número de muestras** | **In One Weekend** (ms/frame) | **Nuestra implementación** (ms/frame) | **Diferencia** (ms/frame) |
+|:-----------------------|:------------------------------|---------------------------------------|---------------------------|
+| 1                      | 1032                          | 2.6                                   | - 1006                      |
+| 5                      | 3934                          | 11                                    | - 3923                      |
+| 10                     | 7459                          | 20.4                                  | - 7255                      |
+| 20                     | 14516                         | 39                                    | - 14477                     |
+| 100                    | 69573                         | $\sim$ 200                            | - 69373                     |
+| 1000                   | 688388                        | $\sim$ 2000                           | - 686388                    |
 
-![1032 ms](./img/05/IOWCB_1s_10d.png)
+Como podemos observar, la diferencia es abismal. En el tiempo que tarda In One Weekend en producir una imagen con una única muestra, nuestro motor es capaz de generar una imagen de 500 muestras. Sin embargo, este resultado es esperable, pues a fin de cuentas, In One Weekend corre en la CPU con un único hilo, mientras que en nuestro motor se utilizan todos los recursos posibles.
 
-![3934 ms](./img/05/IOWCB_5s_10d.png)
+Ahora bien, debemos hacernos una pregunta: ¿cómo es la calidad gráfica de cada uno?
 
-![7459 ms](./img/05/IOWCB_10s_10d.png)
+Enfocaremos la respuesta desde dos puntos de vista diferentes: en el primero, nos fijaremos puramente en el número de muestras; y en el segundo, fijaremos un cierto margen de milisegundos por frame y comprobaremos el resultado en cada motor.
 
-![14516 ms](./img/05/IOWCB_20s_10d.png)
+Empecemos con la primera comparativa. Desde el punto de vista del número de muestras, podemos observar los siguientes resultados:
 
-![69573 ms](./img/05/IOWCB_100s_10d.png)
+![1 muestra. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_1s.png){#fig:comparativa_1s}
 
-![688388 ms](./img/05/IOWCB_1000s_10d.png)
+![5 muestras. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_5s.png){#fig:comparativa_5s}
+
+![20 muestras. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_20s.png){#fig:comparativa_20s}
+
+![100 muestras. **Izquierda**: In One Weekend (100 muestras). **Derecha**: nuestro motor (7 muestras, 15 frames de temp. acum.)](./img/05/Comparativa_100s.png){#fig:comparativa_100s}
+
+
+![1000 muestras. **Izquierda**: In One Weekend (1000 muestras). **Derecha**: nuestro motor (10 muestras, 100 frames de temp. acum.)](./img/05/Comparativa_1000s.png){#fig:comparativa_1000s}
