@@ -254,38 +254,34 @@ Para facilitar la comparativa, desde una posición estática se ha tomado una fo
 
 ## Comparativa con In One Weekend
 
-Con el fin de preparar este trabajo, se ha implementado la serie de libros *In One Weekend*: *In One Weekend*, *The Next Week* y *The Rest of your Life* [@Shirley2020RTW1, @Shirley2020RTW2, @Shirley2020RTW3]. Teniendo en cuenta que el producto final de esos libros es un *offline renderer*, sería interesante compararlo con nuestro motor.
+Con el fin de preparar este trabajo, se ha implementado la serie de libros de P. Shirley: *In One Weekend* [@Shirley2020RTW1], *The Next Week* [@Shirley2020RTW2] y *The Rest of your Life* [@Shirley2020RTW3]. Teniendo en cuenta que el producto final de esos libros es un *offline renderer*, sería interesante compararlo con nuestro motor que corre en tiempo real.
 
-En esta sección vamos a hacer justo eso: enseñaremos escenas similares, mostraremos cuánto tarda en renderizar un frame en comparación a nuestro motor, y estudiaremos las diferencias en la calidad visual.
+En esta sección enseñaremos escenas similares, mostraremos cuánto tarda en renderizar un frame en comparación a nuestro motor, y estudiaremos las diferencias en la calidad visual.
 
 ### Sobre la implementación de In One Weekend
 
-La implementación de los tres libros se encuentra en la carpeta `./RT_in_one_weekend` del repositorio. Aunque el proyecto presenta una gran complejidada por sí mismo, no comentaremos nada en este trabajo. Sin embargo, comentaremos algunos detalles necesarios para esta comparativa.
+La implementación de los tres libros se encuentra en la carpeta `./RT_in_one_weekend` del repositorio. Aunque el proyecto presenta una gran complejidada por sí mismo, no comentaremos nada en este trabajo. Sin embargo, comentaremos algunos detalles necesarios para esta comparativa:
 
-El primero de ellos está relacionado con la figuración:
+- La configuración se encuentra principalmente en el archivo `./RT_in_one_weekend/src/main.cpp`. Los parámetros que se pueden ajustar son el número de muestras (`samples_per_pixel`), resolución de la imagen (`image_width`) y profundidad del rayo (`max_depth`).
+- Las escenas se han implementado en el archivo `./RT_in_one_weekend/src/scenes.hpp`.
+- Para mantener la comparación lo más justa posible, se ha fijado la profundidad del rayo a 10, y la resolución a 720 x 720.
 
-- La configuración se encuentra principalmente en el archivo `./RT_in_one_weekend/src/main.cpp`. Los parámetros que se pueden cambiar son el número de muestras (`samples_per_pixel`), resolución de la imagen (`image_width`) y profundidad del rayo (`max_depth`).
-- Las escenas se cargan en el archivo `./RT_in_one_weekend/src/scenes.hpp`.
-
-Para mantener la comparación lo más justa posible, se ha fijado la profundidad del rayo a 10, y la resolución a 720 x 720.
-
-Es importante tener en mente que **In One Weekend no está optimizado**. No está pensado para ser rápido; sino para ser didáctico. Es por ello que el procesamiento está **limitado a un único hilo**, y el renderizado se realiza **únicamente por CPU**. Las imágenes están exportadas al formato `.ppm` y reconvertidas a `.png` para este trabajo.
-
+Es importante tener en mente que **In One Weekend no está optimizado**. No está pensado para ser rápido; sino para ser didáctico. Es por ello que el procesamiento está **limitado a un único hilo**, y el renderizado se realiza **únicamente por CPU**. Las imágenes que genera este motor utilizan el formato `.ppm` y han sido reconvertidas a `.png` para este trabajo.
 
 ### Tiempos de renderizado
 
-Se ha implementado una escena específica para esta comparativa, llamada `cornell_box_iow`. Es una situación análoga a la última caja de Cornell del tercer libro, para la cual se han usado todas las técnicas de los tres libros. En nuestra versión disponemos de prácticamente todos los métodos vistos en este trabajo, a excepción de la acumulación temporal, pues supondría una ventaja injusta en este escenario.
+Se ha implementado una escena específica para esta comparativa, llamada `cornell_box_iow`. Es una situación análoga a la última caja de Cornell del tercer libro. Para sacar las imágenes de In One Weekend se han utilizado todas las técnicas vistas en los tres libros, por lo que se espera que la calidad gráfica sea óptima. En nuestra versión disponemos de prácticamente todos los métodos vistos en este trabajo, variando diferentes parámetros con el fin de ver resultados diferentes.
 
 La siguiente tabla muestra una comparativa entre el coste de renderizar un frame en In One Weekend y en nuestro motor, usando una profundidad de 10 rebotes y una resolución de 720p:
 
 | **Número de muestras** | **In One Weekend** (ms/frame) | **Nuestra implementación** (ms/frame) | **Diferencia** (ms/frame) |
-|:-----------------------|:------------------------------|---------------------------------------|---------------------------|
-| 1                      | 1032                          | 2.6                                   | - 1006                      |
-| 5                      | 3934                          | 11                                    | - 3923                      |
-| 10                     | 7459                          | 20.4                                  | - 7255                      |
-| 20                     | 14516                         | 39                                    | - 14477                     |
-| 100                    | 69573                         | $\sim$ 200                            | - 69373                     |
-| 1000                   | 688388                        | $\sim$ 2000                           | - 686388                    |
+|:-----------------------|:------------------------------|:--------------------------------------|:--------------------------|
+| 1                      | `1032`                        | `2.6`                                 | `-1006`                   |
+| 5                      | `3934`                        | `11`                                  | `-3923`                   |
+| 10                     | `7459`                        | `20.4`                                | `-7255`                   |
+| 20                     | `14516`                       | `39`                                  | `-14477`                  |
+| 100                    | `69573`                       | `~200`                                | `-69373`                  |
+| 1000                   | `688388`                      | `~2000`                               | `-686388`                 |
 
 Como podemos observar, la diferencia es abismal. En el tiempo que tarda In One Weekend en producir una imagen con una única muestra, nuestro motor es capaz de generar una imagen de 500 muestras. Sin embargo, este resultado es esperable, pues a fin de cuentas, In One Weekend corre en la CPU con un único hilo, mientras que en nuestro motor se utilizan todos los recursos posibles.
 
@@ -293,15 +289,35 @@ Ahora bien, debemos hacernos una pregunta: ¿cómo es la calidad gráfica de cad
 
 Enfocaremos la respuesta desde dos puntos de vista diferentes: en el primero, nos fijaremos puramente en el número de muestras; y en el segundo, fijaremos un cierto margen de milisegundos por frame y comprobaremos el resultado en cada motor.
 
-Empecemos con la primera comparativa. Desde el punto de vista del número de muestras, podemos observar los siguientes resultados:
 
-![1 muestra. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_1s.png){#fig:comparativa_1s}
+#### Por número de muestras
 
-![5 muestras. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_5s.png){#fig:comparativa_5s}
+Comencemos la comparativa utilizando el número de muestras. Para las primeras imágenes fijaremos la acumulación temporal a un único frame. Explicaremos el motivo después.
 
-![20 muestras. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_20s.png){#fig:comparativa_20s}
+Con una única muestra, se observa una diferencia enorme entre ambas versiones [@fig:comparativa_1s]. En nuestra implementación no se observa prácticamente nada. Solo somos capaces de distinguir la luz, un poco del reflejo de la caja izquierda y los *caustics* causados por la luz del techo. Mientras tanto, en In One Weekend, la imagen es ruidosa pero definida.
 
-![100 muestras. **Izquierda**: In One Weekend (100 muestras). **Derecha**: nuestro motor (7 muestras, 15 frames de temp. acum.)](./img/05/Comparativa_100s.png){#fig:comparativa_100s}
+![1 muestra. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_1s.png){#fig:comparativa_1s width=85%}
 
+El **motivo de esta diferencia** es la **forma de muestrear la escena**. In One Weekend implementa muestreo directo de las fuentes de luz. Para conseguirlo, almacena la posición de la lámpara del techo, y en cada intersección muestrea un punto aleatorio de la fuente. En cambio, en nuestro motor, este tipo de fuentes no se muestrean directamente, sino que debemos contar con el azar para que aporten radiancia.
 
-![1000 muestras. **Izquierda**: In One Weekend (1000 muestras). **Derecha**: nuestro motor (10 muestras, 100 frames de temp. acum.)](./img/05/Comparativa_1000s.png){#fig:comparativa_1000s}
+Una vez pasamos a 5 muestras [Figura @fig:comparativa_5s], nuestro motor consigue una imagen más nítida, similar a la que In One Weekend genera con una muestra. En cambio, In One Weekend consigue un resultado muy bueno, aunque con muchas luciérnagas. Este fenómeno no ocurre en nuestra implementación por el tipo de muestreo.
+
+![5 muestras. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_5s.png){#fig:comparativa_5s width=85%}
+
+Con 20 muestras nuestra implementación aún muestra un resultado algo ruidoso. ¿Se podría hacer algo para mejorarlo?
+
+![20 muestras. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_20s.png){#fig:comparativa_20s width=85%}
+
+La respuesta es la acumulación temporal. Aunque, en esencia, la acumulación temporal es una forma de aumentar el número de muestras con respecto al tiempo, nuestra implementación utiliza interpolación para mezclar los colores de los frames. De esta forma, se consigue el efecto de normalización, lo cual elimina el ruido de la imagen con el tiempo. De esta forma conseguimos equiparar la imagen de ambas versiones [Figura @fig:comparativa_100s].
+
+Se puede observar cómo el tipo de ruido es diferente. En In One Weekend, el ruido se presenta en forma de píxeles blancos, debido a las luciérnagas generadas por el muestreo directo de la fuente de luz. En contrapartida, en nuestra implementación el ruido es negro debido a los rayos que no impactan en ninguna superficie tras rebotar.
+
+![100 muestras. **Izquierda**: In One Weekend (100 muestras). **Derecha**: nuestro motor (7 muestras, 15 frames de acumulación temporal)](./img/05/Comparativa_100s.png){#fig:comparativa_100s width=85%}
+
+Por último, subiendo el número de muestras a 1000 conseguimos una imagen muy nítida en ambas implementaciones [Figura @fig:comparativa_1000s]. Conseguimos apreciar una diferencia en los bordes de la esfera de la derecha, la cual seguramente se deba a un fallo en la implementación de la BRDF.
+
+![La imagen final, con 1000 muestras para cada versión. **Izquierda**: In One Weekend (1000 muestras). **Derecha**: nuestro motor (10 muestras, 100 frames de acumulación temporal)](./img/05/Comparativa_1000s.png){#fig:comparativa_1000s width=100%}
+
+#### Por presupuesto de tiempo
+
+El presupuesto de tiempo (o *frame budget* en inglés) es la cantidad de milisegundos que disponemos para renderizar un frame. Si queremos ajustar un motor en tiempo real para que corra a velocidad de 60 imágenes por segundo, cada frame debe tardar un máximo de 16 milisegundos en ser generado.
