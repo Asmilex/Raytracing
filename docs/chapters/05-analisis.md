@@ -41,17 +41,13 @@ Las escenas son las siguientes:
 | `medieval`           | Una sencilla escena que contiene una casa medieval con texturas.                                                         | ![](./img/05/medieval_building.png)    |
 | `_building`          |                                                                                                                          |                                        |
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
+| `cubes`              | Dos cubos de diferente material sobre un plano reflectante.                                                              | ![](./img/05/cubes.png)                |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 | `cornell_box`        | Una reconstrucción de la caja de Cornell original [@cornell-box-original].                                               | ![](./img/05/cornell_box_original.png) |
 | `_original`          |                                                                                                                          |                                        |
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 | `cornell_box`        | Similar a la caja original, esta escena es una recreación de [@cornell-box-compare].                                     | ![](./img/05/cornell_box_mirror.png)   |
 | `_mirror`            |                                                                                                                          |                                        |
-+----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
-| `cornell_box`        | La caja original sin las cajitas pequeñas dentro.                                                                        | ![](./img/05/cornell_box_vacia.png)    |
-| `_vacia`             |                                                                                                                          |                                        |
-+----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
-| `cornell_box`        | Similar a la anterior, pero con las paredes naranjas y azules.                                                           | ![](./img/05/cornell_box_vacia_an.png) |
-| `_vacia_an`          |                                                                                                                          |                                        |
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 | `cornell_box`        | Una caja de Cornell con esferas. Se puede comparar con [@Jensen2001, p. 107 fig. 9.10].                                  | ![](./img/05/cornell_box_esferas.png)  |
 | `_esferas`           |                                                                                                                          |                                        |
@@ -62,10 +58,17 @@ Las escenas son las siguientes:
 | `cornell_box`        | En esta caja se encuentran dos esferas de diferente material. Se puede comparar con [@cornell-box-glossy, p. 17, fig. 6] | ![](./img/05/cornell_box_glossy.png)   |
 | `_glossy`            |                                                                                                                          |                                        |
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
+| `cornell_box`        | La última caja de Cornell implementada en [@Shirley2020RTW3].                                                            | ![](./img/05/cornell_box_iow.png)      |
+| `_iow`               |                                                                                                                          |                                        |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
+| `cornell_box`        | La caja original sin las cajitas pequeñas dentro.                                                                        | ![](./img/05/cornell_box_vacia.png)    |
+| `_vacia`             |                                                                                                                          |                                        |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
+| `cornell_box`        | Similar a la anterior, pero con las paredes naranjas y azules.                                                           | ![](./img/05/cornell_box_vacia_an.png) |
+| `_vacia_an`          |                                                                                                                          |                                        |
++----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 | `cornell_box`        | Una caja vacía. Es un benchmark infernal para el ruido generado por la iluminación global.                               | ![](./img/05/cornell_box_blanca.png)   |
 | `_blanca`            |                                                                                                                          |                                        |
-+----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
-| `cubes`              | Dos cubos de diferente material sobre un plano reflectante.                                                              | ![](./img/05/cubes.png)                |
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 
 Ten en cuenta que las imágenes de las escenas no son definitivas. Están sujetas a cambios, pues se podría cambiar el comportamiento de los shaders.
