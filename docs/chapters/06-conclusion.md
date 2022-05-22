@@ -34,6 +34,6 @@ Estas nuevas interfaces deberían ir acompañadas de una **refactorización de l
 
 ### Nuevas técnicas de reducción de ruido
 
-- Motion blur
+- Motion blur.
 - Uso de ruido (blue noise, perlin noise)
 - Multiple importance sampling
