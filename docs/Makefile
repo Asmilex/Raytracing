@@ -44,11 +44,11 @@ PANDOC_FLAGS =\
 
 PANDOC_FLAGS_PDF = --template ./headers/eisvogel.tex
 PANDOC_FLAGS_WEB =\
-	-s \
+	--standalone \
 	--toc \
 	--toc-depth 4 \
 	--number-sections \
-	--mathjax \
+	--mathjax="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js" \
 	--lua-filter ./headers/standard-code.lua \
 
 LATEX_FLAGS = \
