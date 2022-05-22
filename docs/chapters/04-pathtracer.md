@@ -1,10 +1,12 @@
 # ¡Construyamos un path tracer!
 
-Ahora que hemos introducido toda la teoría necesaria, es hora de ponernos manos a la obra. En este capítulo, vamos a escoger una serie de herramientas y haremos una pequeña implementación de un motor de path tracing en tiempo real.
+Ahora que hemos introducido toda la teoría necesaria, es hora de ponernos manos a la obra. En este capítulo escogeremos una serie de herramientas y con ellas implementaremos un pequeño motor de path tracing en tiempo real.
 
 La implementación estará basada en Vulkan, junto al pequeño framework de nvpro-samples. El motor mantendrá el mismo espíritu que la serie de [@Shirley2020RTW1], Ray Tracing In One Weekend.
 
-Le pondremos especial atención a los conceptos claves. Vulkan tiende a crear código muy verboso, por lo que se documentarán únicamente las partes más importantes.
+El resultado final puede verse en el siguiente vídeo [@video]
+
+<iframe width="784" height="441" src="https://www.youtube.com/embed/pXrD3K69MqE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## El algoritmo de path tracing
 
@@ -47,7 +49,7 @@ $$
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j) \cos\theta_j}{p(\omega_j)}}
 $$
 
-¿Recuerdas la sección de [importance sampling](#muestreo-por-importancia)? La idea es buscar una función proporcional a $f$ para reducir el error. Podemos usar $p(\omega) = \frac{\cos\theta}{\pi}$, de forma que
+En la sección [muestreo por importancia](#muestreo-por-importancia), introducimos la idea de buscar una función proporcional a $f$ para con el fin de reducir el error. Podemos usar $p(\omega) = \frac{\cos\theta}{\pi}$, de forma que
 
 $$
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j) \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j = 1}^{N}{L_i(p, \omega_j) \rho}
