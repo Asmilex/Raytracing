@@ -48,7 +48,7 @@ PANDOC_FLAGS_WEB =\
 	--toc \
 	--toc-depth 4 \
 	--number-sections \
-	--mathjax="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js" \
+	--mathjax="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" \
 	--lua-filter ./headers/standard-code.lua \
 
 LATEX_FLAGS = \
