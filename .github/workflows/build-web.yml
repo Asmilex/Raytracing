@@ -53,6 +53,7 @@ jobs:
         run: |
           cd docs
           make PANDOC_EXEC=pandoc web
+          sed -i 's/<img/<img loading="lazy"/' index.html
 
       - name: Commit and push index.html
         run: |
