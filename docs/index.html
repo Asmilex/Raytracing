@@ -188,7 +188,7 @@ Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan" />
     .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
   </style>
   <script
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js"
   type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
@@ -547,131 +547,147 @@ comparativa</a></li>
 </ul></li>
 </ul></li>
 </ul></li>
-<li><a href="#el-presente-y-futuro-de-rt"><span
-class="toc-section-number">7</span> El presente y futuro de RT</a>
+<li><a href="#conclusiones"><span class="toc-section-number">7</span>
+Conclusiones</a>
 <ul>
-<li><a href="#denoising"><span class="toc-section-number">7.1</span>
+<li><a href="#posibles-mejoras"><span
+class="toc-section-number">7.1</span> Posibles mejoras</a>
+<ul>
+<li><a href="#interfaces"><span class="toc-section-number">7.1.1</span>
+Interfaces</a></li>
+<li><a href="#nuevas-técnicas-de-reducción-de-ruido"><span
+class="toc-section-number">7.1.2</span> Nuevas técnicas de reducción de
+ruido</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#el-presente-y-futuro-de-rt"><span
+class="toc-section-number">8</span> El presente y futuro de RT</a>
+<ul>
+<li><a href="#denoising"><span class="toc-section-number">8.1</span>
 Denoising</a></li>
-<li><a href="#filtering"><span class="toc-section-number">7.2</span>
+<li><a href="#filtering"><span class="toc-section-number">8.2</span>
 Filtering</a></li>
 <li><a href="#offline-renderers"><span
-class="toc-section-number">7.3</span> Offline renderers</a></li>
+class="toc-section-number">8.3</span> Offline renderers</a></li>
 <li><a href="#la-industria-del-videojuego"><span
-class="toc-section-number">7.4</span> La industria del videojuego</a>
+class="toc-section-number">8.4</span> La industria del videojuego</a>
 <ul>
 <li><a href="#ray-tracing-híbrido"><span
-class="toc-section-number">7.4.1</span> Ray tracing híbrido</a></li>
+class="toc-section-number">8.4.1</span> Ray tracing híbrido</a></li>
 <li><a href="#productos-comerciales"><span
-class="toc-section-number">7.4.2</span> Productos comerciales</a></li>
+class="toc-section-number">8.4.2</span> Productos comerciales</a></li>
 <li><a href="#unreal-engine-5"><span
-class="toc-section-number">7.4.3</span> Unreal Engine 5</a></li>
+class="toc-section-number">8.4.3</span> Unreal Engine 5</a></li>
 <li><a href="#la-última-generación-de-consolas"><span
-class="toc-section-number">7.4.4</span> La última generación de
+class="toc-section-number">8.4.4</span> La última generación de
 consolas</a></li>
 </ul></li>
 <li><a href="#posibles-mejoras-del-trabajo"><span
-class="toc-section-number">7.5</span> Posibles mejoras del trabajo</a>
+class="toc-section-number">8.5</span> Posibles mejoras del trabajo</a>
 <ul>
 <li><a href="#blue-noise"><span
-class="toc-section-number">7.5.0.1</span> Blue noise</a></li>
+class="toc-section-number">8.5.0.1</span> Blue noise</a></li>
 <li><a href="#forced-random-sampling"><span
-class="toc-section-number">7.5.0.2</span> Forced random
+class="toc-section-number">8.5.0.2</span> Forced random
 sampling</a></li>
 <li><a href="#sampling-importance-resampling"><span
-class="toc-section-number">7.5.0.3</span> Sampling importance
+class="toc-section-number">8.5.0.3</span> Sampling importance
 resampling</a></li>
 <li><a href="#low-discrepancy-sampling"><span
-class="toc-section-number">7.5.0.4</span> Low discrepancy
+class="toc-section-number">8.5.0.4</span> Low discrepancy
 sampling</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#metodología-de-trabajo"><span
-class="toc-section-number">8</span> Metodología de trabajo</a>
+class="toc-section-number">9</span> Metodología de trabajo</a>
 <ul>
-<li><a href="#influencias"><span class="toc-section-number">8.1</span>
+<li><a href="#influencias"><span class="toc-section-number">9.1</span>
 Influencias</a></li>
 <li><a href="#ciclos-de-desarrollo"><span
-class="toc-section-number">8.2</span> Ciclos de desarrollo</a></li>
-<li><a href="#presupuesto"><span class="toc-section-number">8.3</span>
+class="toc-section-number">9.2</span> Ciclos de desarrollo</a></li>
+<li><a href="#presupuesto"><span class="toc-section-number">9.3</span>
 Presupuesto</a></li>
 <li><a href="#arquitectura-del-software"><span
-class="toc-section-number">8.4</span> Arquitectura del software</a></li>
-<li><a href="#diseño"><span class="toc-section-number">8.5</span>
+class="toc-section-number">9.4</span> Arquitectura del software</a></li>
+<li><a href="#diseño"><span class="toc-section-number">9.5</span>
 Diseño</a>
 <ul>
 <li><a href="#bases-del-diseño"><span
-class="toc-section-number">8.5.1</span> Bases del diseño</a></li>
-<li><a href="#tipografías"><span class="toc-section-number">8.5.2</span>
+class="toc-section-number">9.5.1</span> Bases del diseño</a></li>
+<li><a href="#tipografías"><span class="toc-section-number">9.5.2</span>
 Tipografías</a></li>
 <li><a href="#paleta-de-colores"><span
-class="toc-section-number">8.5.3</span> Paleta de colores</a></li>
+class="toc-section-number">9.5.3</span> Paleta de colores</a></li>
 </ul></li>
 <li><a href="#flujo-de-trabajo-y-herramientas"><span
-class="toc-section-number">8.6</span> Flujo de trabajo y
+class="toc-section-number">9.6</span> Flujo de trabajo y
 herramientas</a>
 <ul>
-<li><a href="#pandoc"><span class="toc-section-number">8.6.1</span>
+<li><a href="#pandoc"><span class="toc-section-number">9.6.1</span>
 Pandoc</a></li>
-<li><a href="#figma"><span class="toc-section-number">8.6.2</span>
+<li><a href="#figma"><span class="toc-section-number">9.6.2</span>
 Figma</a></li>
 <li><a href="#otros-programas"><span
-class="toc-section-number">8.6.3</span> Otros programas</a></li>
+class="toc-section-number">9.6.3</span> Otros programas</a></li>
 </ul></li>
-<li><a href="#github"><span class="toc-section-number">8.7</span>
+<li><a href="#github"><span class="toc-section-number">9.7</span>
 Github</a>
 <ul>
 <li><a
 href="#integración-continua-con-github-actions-y-github-pages"><span
-class="toc-section-number">8.7.1</span> Integración continua con Github
+class="toc-section-number">9.7.1</span> Integración continua con Github
 Actions y Github Pages</a></li>
 <li><a href="#issues-y-github-projects"><span
-class="toc-section-number">8.7.2</span> Issues y Github
+class="toc-section-number">9.7.2</span> Issues y Github
 Projects</a></li>
 <li><a href="#estilo-de-commits"><span
-class="toc-section-number">8.7.3</span> Estilo de commits</a></li>
+class="toc-section-number">9.7.3</span> Estilo de commits</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#glosario-de-términos"><span
-class="toc-section-number">9</span> Glosario de términos</a>
+class="toc-section-number">10</span> Glosario de términos</a>
 <ul>
-<li><a href="#notación"><span class="toc-section-number">9.1</span>
+<li><a href="#notación"><span class="toc-section-number">10.1</span>
 Notación</a></li>
-<li><a href="#radiometría"><span class="toc-section-number">9.2</span>
+<li><a href="#radiometría"><span class="toc-section-number">10.2</span>
 <span>Radiometría</span></a></li>
 </ul></li>
 <li><a href="#bibliografía">Bibliografía</a></li>
 </ul>
 </nav>
 <h1 class="unnumbered" id="abstract">Abstract</h1>
-<p>Este trabajo explorará las técnicas modernas de informática gráfica
-físicamente fieles basadas en <em>ray tracing</em> en tiempo real. Para
-ello, se usarán métodos de integración de Monte Carlo dado que
-disminuyen el tiempo necesario de cómputo.</p>
-<p>Para conseguirlo, se ha diseñado un software basado en la interfaz de
-programación de aplicaciones gráficas Vulkan, usando como base un
-entorno de desarrollo de Nvidia conocido como nvpro-samples. El software
-implementa un motor gráfico basado en <em>path tracing</em>. Este motor
-será capaz de muestrear fuentes de iluminación de forma directa, lo que
-se conoce como <em>next-event estimation</em>. Para disminuir el tiempo
-de cómputo y hacerlo viable en tiempo real, se usarán técnicas de Monte
-Carlo para integrar radiancia. Se explorarán cómo afectan los diferentes
-métodos al ruido final de la imagen.</p>
-<p>Este motor se comparará con una implementación puramente en CPU
-basada en el software desarrollado en los libros de <span
-class="citation" data-cites="Shirley2020RTW1">(<a
-href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
-2020a</a>)</span> “Ray Tracing in One Weekend series”. Se han estudiado
-las diferencias de tiempo entre una implementación y otra, sus ventajas
-y desventajas y el ruido de las imágenes producidas.</p>
-<p><em>Palabras clave: raytracing, ray tracing, Monte Carlo, Monte Carlo
-integration, radiometry, path tracing, Vulkan.</em></p>
+<p>En este trabajo se explorarán las técnicas modernas de informática
+gráfica físicamente realistas basadas en <em>ray tracing</em> en tiempo
+real. Para ello, se utilizarán métodos de integración de Monte Carlo con
+el fin de disminuir el tiempo de cómputo.</p>
+<p>Se diseñará un software basado en la interfaz de programación de
+aplicaciones gráficas Vulkan, utilizando como soporte un entorno de
+desarrollo de Nvidia conocido como nvpro-samples. El software
+implementará un motor gráfico basado en <em>path tracing</em>. Este
+motor será capaz de renderizar numerosas escenas, cambiar los parámetros
+del algoritmo path tracing y modificar las fuentes de iluminación en
+tiempo de ejecución.</p>
+<p>Con el fin de explorar cómo afectan diferentes métodos al ruido final
+de la imagen, se estudiarán algunas técnicas de reducción de varianza
+como muestreo directo de fuentes de iluminación, muestreo por
+importancia o acumulación temporal. Además, el motor desarrollado se
+comparará con una implementación puramente en CPU basada en el software
+creado en los libros de <span class="citation"
+data-cites="Shirley2020RTW1">(<a href="#ref-Shirley2020RTW1"
+role="doc-biblioref">Shirley 2020a</a>)</span> “Ray Tracing in One
+Weekend series”. Se comporbarán las diferencias entre ambas versiones,
+estudiando los puntos fuertes de cada una.</p>
+<p><em>Palabras clave: raytracing, ray tracing, path tracing, métodos de
+Monte Carlo, integración de Monte Carlo, transporte de luz, iluminación
+global, Vulkan.</em></p>
 <hr>
 <h1 class="unnumbered" id="a-brief-overview">A brief overview</h1>
 <blockquote>
 <p>TODO</p>
 </blockquote>
-<p><em>Keywords: raytracing, ray tracing, Monte Carlo, Monte Carlo
-integration, radiometry, path tracing, Vulkan.</em></p>
+<p><em>Keywords: raytracing, ray tracing, path tracing, Monte Carlo
+methods, Monte Carlo integration, light transport, global illumination,
+Vulkan.</em></p>
 <h1 class="unnumbered" id="dedicatoria">Dedicatoria</h1>
 <p>¡Parece que has llegado un poco pronto! Si lo has hecho
 voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado
@@ -3817,17 +3833,19 @@ y se vuelve al paso 1.</li>
 class="header-section-number">5</span> ¡Construyamos un path
 tracer!</h1>
 <p>Ahora que hemos introducido toda la teoría necesaria, es hora de
-ponernos manos a la obra. En este capítulo, vamos a escoger una serie de
-herramientas y haremos una pequeña implementación de un motor de path
+ponernos manos a la obra. En este capítulo escogeremos una serie de
+herramientas y con ellas implementaremos un pequeño motor de path
 tracing en tiempo real.</p>
 <p>La implementación estará basada en Vulkan, junto al pequeño framework
 de nvpro-samples. El motor mantendrá el mismo espíritu que la serie de
 <span class="citation" data-cites="Shirley2020RTW1">(<a
 href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 2020a</a>)</span>, Ray Tracing In One Weekend.</p>
-<p>Le pondremos especial atención a los conceptos claves. Vulkan tiende
-a crear código muy verboso, por lo que se documentarán únicamente las
-partes más importantes.</p>
+<p>El resultado final puede verse en el siguiente vídeo <span
+class="citation" data-cites="video">(<a href="#ref-video"
+role="doc-biblioref">Andrés Millán 2022c</a>)</span></p>
+<iframe width="784" height="441" src="https://www.youtube.com/embed/pXrD3K69MqE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
 <h2 data-number="5.1" id="el-algoritmo-de-path-tracing"><span
 class="header-section-number">5.1</span> El algoritmo de path
 tracing</h2>
@@ -3906,12 +3924,11 @@ que</p>
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
 \cos\theta_j}{p(\omega_j)}}
 \]</span></p>
-<p>¿Recuerdas la sección de <a
-href="#muestreo-por-importancia">importance sampling</a>? La idea es
-buscar una función proporcional a <span class="math inline">\(f\)</span>
-para reducir el error. Podemos usar <span
-class="math inline">\(p(\omega) = \frac{\cos\theta}{\pi}\)</span>, de
-forma que</p>
+<p>En la sección <a href="#muestreo-por-importancia">muestreo por
+importancia</a>, introducimos la idea de buscar una función proporcional
+a <span class="math inline">\(f\)</span> para con el fin de reducir el
+error. Podemos usar <span class="math inline">\(p(\omega) =
+\frac{\cos\theta}{\pi}\)</span>, de forma que</p>
 <p><span id="eq:rendering_eq_lambertian" class="eqnos"><span
 class="math display">\[
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
@@ -5996,30 +6013,146 @@ sus inconvenientes debido a la naturaleza de los respectivos trabajos,
 por lo que en ambos casos se podría mejorar el rendimiento. En el caso
 de In One Weekend, paralelizando el programa; y en el de nuestro motor,
 haciendo más robusto el muestreo directo de fuentes de luz.</p>
-<h1 data-number="7" id="el-presente-y-futuro-de-rt"><span
-class="header-section-number">7</span> El presente y futuro de RT</h1>
+<h1 data-number="7" id="conclusiones"><span
+class="header-section-number">7</span> Conclusiones</h1>
+<p>Al inicio de este trabajo nos propusimos crear un motor de path
+tracing en tiempo real. Esta no era una tarea fácil, así que tuvimos que
+empezar desde las bases de la informática gráfica.</p>
+<p>Primero estudiamos qué es exactamente el <strong>algoritmo path
+tracing</strong>, el cual es una forma de crear imágenes virtuales de
+entornos tridimensionales. Dado que es un método físicamente realista,
+necesitábamos comprender <strong>cómo se comporta la luz</strong>, con
+el fin de conocer de qué color pintar un píxel de nuestra imagen.
+Esencialmente, entendimos que los fotones emitidos por las fuentes de
+iluminación rebotan por los diferentes objetos de un entorno,
+adquiriendo partes de sus propiedades en el impacto.</p>
+<p>No obstante, imitar a la realidad es una tarea titánica. Las
+ecuaciones radiométricas resultan computacionalmente complejas, por lo
+que no es posible crear una simulación perfecta de la luz. Por ese
+motivo recurrimos a las <strong>técnicas de Monte Carlo</strong>, las
+cuales utilizan sucesos aleatorios para estimar la cantidad de luz de un
+punto. Estos métodos hicieron viables ciertos cálculos necesarios para
+el algoritmo. Sin embargo, su naturaleza inexacta implica que existe un
+error de estimación. Esto nos hizo explorar algunas formas de reducir el
+ruido generado por las técnicas de integración de Monte Carlo.</p>
+<p>Una vez adquirimos el fundamento teórico, <strong>diseñamos un
+software</strong> que nos permitiera poner en práctica nuestros
+conocimientos. Escogimos la API gráfica Vulkan y un framework de Nvidia
+como base para el desarrollo. Debido a la complejidad del algoritmo
+tuvimos que construir numerosas abstracciones que aceleraran el proceso
+de renderizado, basándonos en tarjetas gráficas modernas. Aprender a
+programar en tarjetas gráficas no es sencillo, así que tuvimos que
+diseñar unos programas específicos de éstas llamados <em>shaders</em>;
+específicamente, los shaders de ray tracing.</p>
+<p>Al final, obtuvimos el resultado deseado: un motor de path tracing
+capaz de producir imágenes de escenas virtuales.</p>
+<div id="fig:pathtracing_showcase" class="fignos">
+<figure>
+<img src="./img/06/Showcase.png"
+alt="Figura 56: El motor es capaz de producir preciosas imágenes de objetos físicamente realistas que se mueven en tiempo real" />
+<figcaption aria-hidden="true"><span>Figura 56:</span> El motor es capaz
+de producir preciosas imágenes de objetos físicamente realistas que se
+mueven en tiempo real</figcaption>
+</figure>
+</div>
+<p>Como en cualquier otro trabajo, durante el proceso de desarrollo
+tuvimos que algunas tomar decisiones técnicas que alteran la calidad del
+producto. Por ello, realizamos un <strong>análisis del
+rendimiento</strong> basándonos en el <em>frame time</em> –tiempo que
+tarda en un frame en renderizarse–, variando los parámetros de path
+tracing en el proceso. De esta forma, pudimos comprobar cuánto nos
+cuesta sacar imágenes de gran nitidez.</p>
+<p>Finalmente, para poner en contexto el motor, comparamos nuestra
+implementación con el de otros autores. En este caso, con el path tracer
+de Peter Shirley creado en Ray Tracing In One Weekend <span
+class="citation" data-cites="Shirley2020RTW1">(<a
+href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
+2020a</a>)</span>. Nos dimos cuenta de que, aunque nuestra versión
+genera las muestras de forma más naïve, la rapidez con la que rinde
+consigue compensar el ruido de la imagen, produciendo así resultados más
+nítidos.</p>
+<h2 data-number="7.1" id="posibles-mejoras"><span
+class="header-section-number">7.1</span> Posibles mejoras</h2>
+<p>Crear un software de este calibre es una tarea de una complejidad
+enorme. Los motores de renderización requieren un equipo de desarrollo
+de un tamaño considerable, una gran inversión y un esfuerzo constante.
+Teniendo en cuenta el contexto del proyecto, en el camino ha sido
+necesario tomar decisiones imperfectas. En esta sección exploraremos
+algunas posibles mejoras para este trabajo.</p>
+<h3 data-number="7.1.1" id="interfaces"><span
+class="header-section-number">7.1.1</span> Interfaces</h3>
+<p>La parte que más margen de mejora presenta es <strong>la interfaz de
+las fuentes de luz</strong>. En su estado actual, únicamente es posible
+utilizar dos tipos de fuentes externas a la escena: luces puntuales y
+direccionales. Aunque se muestrean de forma directa. Además, solo puede
+existir una única fuente de este tipo.</p>
+<p>Este diseño propicia un error relacionado con la nitidez de la
+imagen. Una de las ideas clave de path tracing es generar muestras de
+<em>forma inteligente</em>: dado que calcular caminos es caro, tira
+rayos hacia zonas que aporten mucha información. En dichas zonas deben
+encontrarse, esencialmente, fuentes de luz. ¡Pero la interfaz <strong>no
+conoce dónde se encuentran los materiales emisivos de la
+escena</strong>! Eso implica que algunos rayos toman direcciones que no
+aportan nada. Esto lo pudimos comprobar empíricamente en la <a
+href="#comparativa-con-in-one-weekend">comparativa</a>.</p>
+<p>Otro tipo de interfaz que necesita una mejora sustancial es la de
+materiales y objetos. En el estado actual del programa, los elementos de
+la escena son cargados desde un fichero <code>.obj</code>. Las
+propiedades del material son determinadas en el momento del impacto de
+un rayo basándonos en los parámetros del archivo de materiales asociado
+<code>.mtl</code>. Esta estrategia funciona suficientemente bien en este
+caso, pues el ámbito de desarrollo es bastante reducido.</p>
+<p>Sin embargo, a la larga sería beneficioso <strong>reestructurar la
+carga y almacenamiento de los objetos</strong>. De esta forma, atacamos
+el problema anterior relacionado con los materiales emisivos,
+conseguiríamos mayor granularidad en los tipos de objetos y podríamos
+diseñar estrategias específicas para algunos tipos de materiales (como
+separar en diferentes capas de impacto los objetos transparentes). Esto
+también nos permitiría añadir nuevos tipos de materiales más fácilmente,
+como pueden ser objetos dieléctricos, plásticos, mezclas entre varios
+tipos, <em>subsurface scattering</em>…</p>
+<p>Estas nuevas interfaces deberían ir acompañadas de una
+<strong>refactorización de la clase <code>Engine</code></strong>. El
+framework que escogimos, Nvidia nvpro-samples <span class="citation"
+data-cites="nvpro-samples">(<a href="#ref-nvpro-samples"
+role="doc-biblioref">Nvidia 2022b</a>)</span>, está destinado a ser
+didáctico y no eficiente. Por tanto, el software presenta un alto
+acoplamiento. Separar en varias clases más reducidas, como una clase
+para rasterización y otra para ray tracing, sería esencial. Sin embargo,
+Vulkan es una API muy compleja, por lo que requeriría de una gran
+cantidad de trabajo.</p>
+<h3 data-number="7.1.2" id="nuevas-técnicas-de-reducción-de-ruido"><span
+class="header-section-number">7.1.2</span> Nuevas técnicas de reducción
+de ruido</h3>
+<ul>
+<li>Motion blur</li>
+<li>Uso de ruido (blue noise, perlin noise)</li>
+<li>Multiple importance sampling</li>
+</ul>
+<h1 data-number="8" id="el-presente-y-futuro-de-rt"><span
+class="header-section-number">8</span> El presente y futuro de RT</h1>
 <blockquote>
 <p>TODO: de momento, se queda como está. Es un capítulo bastante fácil
 de escribir, así que en unos tres días como muchísimo podría estar todo
 listo.</p>
 </blockquote>
-<h2 data-number="7.1" id="denoising"><span
-class="header-section-number">7.1</span> Denoising</h2>
+<h2 data-number="8.1" id="denoising"><span
+class="header-section-number">8.1</span> Denoising</h2>
 <p>https://alain.xyz/blog/ray-tracing-denoising</p>
-<h2 data-number="7.2" id="filtering"><span
-class="header-section-number">7.2</span> Filtering</h2>
+<h2 data-number="8.2" id="filtering"><span
+class="header-section-number">8.2</span> Filtering</h2>
 <p>https://alain.xyz/blog/ray-tracing-filtering</p>
-<h2 data-number="7.3" id="offline-renderers"><span
-class="header-section-number">7.3</span> Offline renderers</h2>
+<h2 data-number="8.3" id="offline-renderers"><span
+class="header-section-number">8.3</span> Offline renderers</h2>
 <p>https://www.disneyanimation.com/technology/hyperion/</p>
-<h2 data-number="7.4" id="la-industria-del-videojuego"><span
-class="header-section-number">7.4</span> La industria del
+<h2 data-number="8.4" id="la-industria-del-videojuego"><span
+class="header-section-number">8.4</span> La industria del
 videojuego</h2>
-<h3 data-number="7.4.1" id="ray-tracing-híbrido"><span
-class="header-section-number">7.4.1</span> Ray tracing híbrido</h3>
+<h3 data-number="8.4.1" id="ray-tracing-híbrido"><span
+class="header-section-number">8.4.1</span> Ray tracing híbrido</h3>
 <p>https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</p>
-<h3 data-number="7.4.2" id="productos-comerciales"><span
-class="header-section-number">7.4.2</span> Productos comerciales</h3>
+<h3 data-number="8.4.2" id="productos-comerciales"><span
+class="header-section-number">8.4.2</span> Productos comerciales</h3>
 <ul>
 <li>Control
 <ul>
@@ -6048,14 +6181,14 @@ class="header-section-number">7.4.2</span> Productos comerciales</h3>
 </ul></li>
 <li>Metro Exodus</li>
 </ul>
-<h3 data-number="7.4.3" id="unreal-engine-5"><span
-class="header-section-number">7.4.3</span> Unreal Engine 5</h3>
+<h3 data-number="8.4.3" id="unreal-engine-5"><span
+class="header-section-number">8.4.3</span> Unreal Engine 5</h3>
 <p>https://twitter.com/Yurukuyaru/status/1523643949826588674</p>
-<h3 data-number="7.4.4" id="la-última-generación-de-consolas"><span
-class="header-section-number">7.4.4</span> La última generación de
+<h3 data-number="8.4.4" id="la-última-generación-de-consolas"><span
+class="header-section-number">8.4.4</span> La última generación de
 consolas</h3>
-<h2 data-number="7.5" id="posibles-mejoras-del-trabajo"><span
-class="header-section-number">7.5</span> Posibles mejoras del
+<h2 data-number="8.5" id="posibles-mejoras-del-trabajo"><span
+class="header-section-number">8.5</span> Posibles mejoras del
 trabajo</h2>
 <ul>
 <li>Test Driven Development
@@ -6076,40 +6209,40 @@ trabajo</h2>
 <li>Focal lenght, depth of field, motion blur</li>
 </ul></li>
 </ul>
-<h4 data-number="7.5.0.1" id="blue-noise"><span
-class="header-section-number">7.5.0.1</span> Blue noise</h4>
+<h4 data-number="8.5.0.1" id="blue-noise"><span
+class="header-section-number">8.5.0.1</span> Blue noise</h4>
 <ul>
 <li>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</li>
 <li>https://alain.xyz/blog/ray-tracing-filtering</li>
 <li>Minecraft RTX usa blue noise para el sampling:
 https://alain.xyz/blog/frame-analysis-minecraftrtx/assets/diffuse-1spp.jpg</li>
 </ul>
-<h4 data-number="7.5.0.2" id="forced-random-sampling"><span
-class="header-section-number">7.5.0.2</span> Forced random sampling</h4>
+<h4 data-number="8.5.0.2" id="forced-random-sampling"><span
+class="header-section-number">8.5.0.2</span> Forced random sampling</h4>
 <p>http://drivenbynostalgia.com/ (ctrl + f -&gt; forced random
 sampling)</p>
-<h4 data-number="7.5.0.3" id="sampling-importance-resampling"><span
-class="header-section-number">7.5.0.3</span> Sampling importance
+<h4 data-number="8.5.0.3" id="sampling-importance-resampling"><span
+class="header-section-number">8.5.0.3</span> Sampling importance
 resampling</h4>
 <ul>
 <li>https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</li>
 <li>https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf</li>
 </ul>
-<h4 data-number="7.5.0.4" id="low-discrepancy-sampling"><span
-class="header-section-number">7.5.0.4</span> Low discrepancy
+<h4 data-number="8.5.0.4" id="low-discrepancy-sampling"><span
+class="header-section-number">8.5.0.4</span> Low discrepancy
 sampling</h4>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-1">Referencias</h2>
 
-<h1 data-number="8" id="metodología-de-trabajo"><span
-class="header-section-number">8</span> Metodología de trabajo</h1>
+<h1 data-number="9" id="metodología-de-trabajo"><span
+class="header-section-number">9</span> Metodología de trabajo</h1>
 <p>Cualquier proyecto de una envergadura considerable necesita ser
 planificado con antelación. En este capítulo vamos a hablar de cómo se
 ha realizado este trabajo: mostraremos las herramientas usadas, los
 ciclos de desarrollo, integración entre documentación y path tracer, y
 otras influencias que han afectado al producto final.</p>
-<h2 data-number="8.1" id="influencias"><span
-class="header-section-number">8.1</span> Influencias</h2>
+<h2 data-number="9.1" id="influencias"><span
+class="header-section-number">9.1</span> Influencias</h2>
 <p>Antes de comenzar con la labor, primero uno se debe hacer una simple
 pregunta:</p>
 <blockquote>
@@ -6159,8 +6292,8 @@ matemático de “teorema, lema, demostración, corolario” no me agrada
 especialmente. He intentado preservar su estructura, pero sin ser tan
 explícito. Estos dos puntos, en conjunto, suponen un balance entre
 formalidad y distensión difícil de mantener.</p>
-<h2 data-number="8.2" id="ciclos-de-desarrollo"><span
-class="header-section-number">8.2</span> Ciclos de desarrollo</h2>
+<h2 data-number="9.2" id="ciclos-de-desarrollo"><span
+class="header-section-number">9.2</span> Ciclos de desarrollo</h2>
 <p>Este proyecto está compuesto por 2 grandes pilares: documentación –lo
 que estás leyendo, ya sea en PDF o en la web– y software.</p>
 <p>La metodología que se ha seguido es, en esencia, una versión de Agile
@@ -6184,13 +6317,13 @@ no tiene sentido implementar algo que no se conoce.</p>
 <p>Para apoyar el desarrollo, se ha utilizado <a
 href="#github">Github</a>. Más adelante hablaremos de cómo esta
 plataforma ha facilitado el trabajo.</p>
-<h2 data-number="8.3" id="presupuesto"><span
-class="header-section-number">8.3</span> Presupuesto</h2>
+<h2 data-number="9.3" id="presupuesto"><span
+class="header-section-number">9.3</span> Presupuesto</h2>
 <blockquote>
 <p>TODO: ahora mismo, no tengo ni idea de cómo empezar esto.</p>
 </blockquote>
-<h2 data-number="8.4" id="arquitectura-del-software"><span
-class="header-section-number">8.4</span> Arquitectura del software</h2>
+<h2 data-number="9.4" id="arquitectura-del-software"><span
+class="header-section-number">9.4</span> Arquitectura del software</h2>
 <blockquote>
 <p>TODO: especificaciones de los requerimientos y metodología de
 desarrollo, así como los planos del proyecto que contendrán las
@@ -6201,15 +6334,15 @@ algoritmos no triviales</p>
 <p>(Odio los diagramas de clases. Me gustaría evitar como sea
 incluirlos.)</p>
 </blockquote>
-<h2 data-number="8.5" id="diseño"><span
-class="header-section-number">8.5</span> Diseño</h2>
+<h2 data-number="9.5" id="diseño"><span
+class="header-section-number">9.5</span> Diseño</h2>
 <p>El diseño juega un papel fundamental en este proyecto. Todos los
 elementos visuales han sido escogidos con cuidado, de forma que se
 preserve la estética.</p>
 <p>Se ha creado <strong>un diseño que preserve el equilibrio entre la
 profesionalidad y la distensión</strong>.</p>
-<h3 data-number="8.5.1" id="bases-del-diseño"><span
-class="header-section-number">8.5.1</span> Bases del diseño</h3>
+<h3 data-number="9.5.1" id="bases-del-diseño"><span
+class="header-section-number">9.5.1</span> Bases del diseño</h3>
 <p>Para la documentación en versión PDF, usamos como base la
 <em>template</em> <span class="citation" data-cites="eisvogel">(<a
 href="#ref-eisvogel" role="doc-biblioref">Pascal Wagler
@@ -6220,8 +6353,8 @@ aprovecharemos para darle un toque diferente.</p>
 microframework de CSS <span class="citation" data-cites="bamboo">(<a
 href="#ref-bamboo" role="doc-biblioref">Tran Ngoc Tuan Anh
 2022</a>)</span> y unas modificaciones personales.</p>
-<h3 data-number="8.5.2" id="tipografías"><span
-class="header-section-number">8.5.2</span> Tipografías</h3>
+<h3 data-number="9.5.2" id="tipografías"><span
+class="header-section-number">9.5.2</span> Tipografías</h3>
 <p>Un apartado al que se le debe prestar especial énfasis es a la
 combinación de tipografías. A fin de cuentas, esto es un libro; así que
 escoger un tipo de letra correcto facilitará al lector comprender los
@@ -6267,12 +6400,12 @@ Jetbrains. Se utiliza en la web para los bloques de código.</li>
 <blockquote>
 <p>TODO: Añadir imagen comparativa con las fuentes</p>
 </blockquote>
-<h3 data-number="8.5.3" id="paleta-de-colores"><span
-class="header-section-number">8.5.3</span> Paleta de colores</h3>
+<h3 data-number="9.5.3" id="paleta-de-colores"><span
+class="header-section-number">9.5.3</span> Paleta de colores</h3>
 <p>A fin de mantener consistencia, se ha creado una paleta de colores
 específica.</p>
 <figure>
-<img src="./img/07/Paleta%20de%20colores.png" width="400"
+<img src="./img/08/Paleta%20de%20colores.png" width="400"
 alt="La paleta de colores del proyecto" />
 <figcaption aria-hidden="true">La paleta de colores del
 proyecto</figcaption>
@@ -6292,8 +6425,8 @@ necesitamos. Puedes encontrar las definiciones en el fichero de estilos,
 ubicado en <code>./docs/headers/style.css</code>.</p>
 <p>Todos los colores que puedes ver en este documento se han extraído de
 la paleta. ¡La consistencia es clave!</p>
-<h2 data-number="8.6" id="flujo-de-trabajo-y-herramientas"><span
-class="header-section-number">8.6</span> Flujo de trabajo y
+<h2 data-number="9.6" id="flujo-de-trabajo-y-herramientas"><span
+class="header-section-number">9.6</span> Flujo de trabajo y
 herramientas</h2>
 <p>Encontrar una herramienta que se adapte a un <em>workflow</em> es
 complicado. Aunque hay muchos programas maravilosos, debemos hacerlos
@@ -6306,8 +6439,8 @@ otras.</p>
 <blockquote>
 <p>TODO: foto del workflow.</p>
 </blockquote>
-<h3 data-number="8.6.1" id="pandoc"><span
-class="header-section-number">8.6.1</span> Pandoc</h3>
+<h3 data-number="9.6.1" id="pandoc"><span
+class="header-section-number">9.6.1</span> Pandoc</h3>
 <p><strong>Pandoc</strong> <span class="citation"
 data-cites="pandoc">(<a href="#ref-pandoc" role="doc-biblioref">John
 MacFarlane 2021</a>)</span> es una estupendísima de conversión de
@@ -6339,8 +6472,8 @@ correctamente los bloques de código para la web.</li>
 órdenes para generar ambos formatos. Tienen varios parámetros
 adicionales de por sí, como puede ser la bibliografía
 (<code>docs/chapters/bibliography.bib</code>).</p>
-<h3 data-number="8.6.2" id="figma"><span
-class="header-section-number">8.6.2</span> Figma</h3>
+<h3 data-number="9.6.2" id="figma"><span
+class="header-section-number">9.6.2</span> Figma</h3>
 <p><strong>Figma</strong> <span class="citation" data-cites="figma">(<a
 href="#ref-figma" role="doc-biblioref">Figma 2022</a>)</span> es otro de
 esos programas que te hace preguntarte por qué es gratis. Es una
@@ -6348,7 +6481,7 @@ aplicación en la web usada para diseño gráfico. Es muy potente,
 intuitiva, y genera unos resultados muy buenos en poco tiempo. Todos los
 diseños de este trabajo se han hecho con esta herramienta.</p>
 <figure>
-<img src="./img/07/Figma.png"
+<img src="./img/08/Figma.png"
 alt="Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
 <figcaption aria-hidden="true">Tablón principal del proyecto de Figma, a
 día 15 de abril de 2022</figcaption>
@@ -6360,8 +6493,8 @@ ha resultado especialmente útil: Latex Complete <span class="citation"
 data-cites="latex-complete">(<a href="#ref-latex-complete"
 role="doc-biblioref">Max Krieger 2022</a>)</span>. Esto nos permite
 incrustar código LaTeX en el documento en forma de SVG.</p>
-<h3 data-number="8.6.3" id="otros-programas"><span
-class="header-section-number">8.6.3</span> Otros programas</h3>
+<h3 data-number="9.6.3" id="otros-programas"><span
+class="header-section-number">9.6.3</span> Otros programas</h3>
 <p>Como es normal, hay muchos otros programas que han intervenido en el
 desarrollo. Estos son algunos de ellos:</p>
 <ul>
@@ -6386,8 +6519,8 @@ role="doc-biblioref">Docker 2022</a>)</span></li>
 <li>Cualquier proyecto informático debería usar <code>git</code>. Este
 no es una excepción.</li>
 </ul>
-<h2 data-number="8.7" id="github"><span
-class="header-section-number">8.7</span> Github</h2>
+<h2 data-number="9.7" id="github"><span
+class="header-section-number">9.7</span> Github</h2>
 <p>La página <strong>Github</strong> <span class="citation"
 data-cites="github">(<a href="#ref-github" role="doc-biblioref">Github
 2022</a>)</span> ha alojado prácticamente todo el contenido del trabajo;
@@ -6408,9 +6541,9 @@ resulta más fácil sincronizarlos.</li>
 usar.</li>
 </ol>
 <p>Entremos en detalle en algunos de los puntos anteriores:</p>
-<h3 data-number="8.7.1"
+<h3 data-number="9.7.1"
 id="integración-continua-con-github-actions-y-github-pages"><span
-class="header-section-number">8.7.1</span> Integración continua con
+class="header-section-number">9.7.1</span> Integración continua con
 Github Actions y Github Pages</h3>
 <p>Cuando hablamos de <strong>integración continua</strong>, nos
 referimos a ciertos programas que corren en un repositorio y se encargan
@@ -6442,7 +6575,7 @@ Github Pages.</li>
 <li>Commitea los archivos y termina.</li>
 </ol>
 <figure>
-<img src="./img/07/Github%20Actions.png"
+<img src="./img/08/Github%20Actions.png"
 alt="La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
 <figcaption aria-hidden="true">La pestaña de Github Actions permite
 controlar con facilidad el resultado de un workflow y cuánto tarda en
@@ -6475,8 +6608,8 @@ instalación de LaTeX ocupa una cantidad de espacio considerable; y para
 compilar el PDF necesitamos una muy completa, por lo que debemos lidiar
 con este <em>overhead</em>. Puedes encontrar el Dockerfile en
 <code>./Dockerfile</code>.</p>
-<h3 data-number="8.7.2" id="issues-y-github-projects"><span
-class="header-section-number">8.7.2</span> Issues y Github Projects</h3>
+<h3 data-number="9.7.2" id="issues-y-github-projects"><span
+class="header-section-number">9.7.2</span> Issues y Github Projects</h3>
 <p>Las tareas pendientes se gestionan mediante issues. Cada vez que se
 tenga un objetivo particular para el desarrollo, se anota un issue.
 Cuando se genere un commit que avance dicha tarea, se etiqueta con el
@@ -6485,7 +6618,7 @@ relacionadas con la tarea quedan recogidas en la página web.</p>
 <p>Esto permite una gestión muy eficiente de los principales problemas y
 objetivos pendientes de la aplicación.</p>
 <figure>
-<img src="./img/07/Issues.png"
+<img src="./img/08/Issues.png"
 alt="Pestaña de issues, día 16 de abril de 2022" />
 <figcaption aria-hidden="true">Pestaña de issues, día 16 de abril de
 2022</figcaption>
@@ -6494,7 +6627,7 @@ alt="Pestaña de issues, día 16 de abril de 2022" />
 viables. Estos issues suelen estar relacionados con algún apartado
 importante del desarrollo.</p>
 <figure>
-<img src="./img/07/Milestones.png"
+<img src="./img/08/Milestones.png"
 alt="Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
 <figcaption aria-hidden="true">Los <em>milestones</em> agrupan una serie
 de issues relacionados con un punto clave del desarrollo</figcaption>
@@ -6505,7 +6638,7 @@ de entrega.</p>
 una vista informativa, se utiliza Github Projects. En esencia, esta
 aplicación es un acompañante del repositorio estilo Asana.</p>
 <figure>
-<img src="./img/07/Projects.png"
+<img src="./img/08/Projects.png"
 alt="Projects agrupa los issues y les asigna prioridades" />
 <figcaption aria-hidden="true">Projects agrupa los issues y les asigna
 prioridades</figcaption>
@@ -6529,8 +6662,8 @@ considerablemente más compleja…) se genera una nueva rama. Cuando se ha
 cumplido el objetivo, se <em>mergea</em> la rama con la principal
 <code>main</code> mediante un <em>pull request</em>. Esto proporciona un
 mecanismo de robustez ante cambios complejos.</p>
-<h3 data-number="8.7.3" id="estilo-de-commits"><span
-class="header-section-number">8.7.3</span> Estilo de commits</h3>
+<h3 data-number="9.7.3" id="estilo-de-commits"><span
+class="header-section-number">9.7.3</span> Estilo de commits</h3>
 <p>Una de los detalles que has podido apreciar si has entrado al
 repositorio es un estilo de commit un tanto inusual. Aunque parece un
 detalle de lo más insustancial, añadir emojis a los mensajes de commits
@@ -6539,14 +6672,14 @@ rápidamente el tipo de cambio.</p>
 <p>Cada uno tiene un significado particular. En esta tabla se recogen
 sus significados:</p>
 <figure>
-<img src="./img/07/Commits.png"
+<img src="./img/08/Commits.png"
 alt="Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
 <figcaption aria-hidden="true">Los emojis permiten reconocer el objetivo
 de cada commit. Esta tabla recoge el significado de cada
 uno</figcaption>
 </figure>
-<h1 data-number="9" id="glosario-de-términos"><span
-class="header-section-number">9</span> Glosario de términos</h1>
+<h1 data-number="10" id="glosario-de-términos"><span
+class="header-section-number">10</span> Glosario de términos</h1>
 <blockquote>
 <p><em>It’s dangerous to go alone, take this.</em></p>
 </blockquote>
@@ -6555,8 +6688,8 @@ aparecen en un libro como este es prácticamente imposible. Tampoco hay
 necesidad de ello, realmente. ¡Vaya desperdicio de cabeza! Por eso, aquí
 tienes recopilada una lista con todos los elementos importantes y un
 enlace a sus secciones correspondientes.</p>
-<h2 data-number="9.1" id="notación"><span
-class="header-section-number">9.1</span> Notación</h2>
+<h2 data-number="10.1" id="notación"><span
+class="header-section-number">10.1</span> Notación</h2>
 <table>
 <colgroup>
 <col style="width: 28%" />
@@ -6614,8 +6747,8 @@ aleatoria con distribución uniforme en <span class="math inline">\([0,
 </tr>
 </tbody>
 </table>
-<h2 data-number="9.2" id="radiometría"><span
-class="header-section-number">9.2</span> <a
+<h2 data-number="10.2" id="radiometría"><span
+class="header-section-number">10.2</span> <a
 href="#radiometría">Radiometría</a></h2>
 <table>
 <colgroup>
@@ -6760,6 +6893,11 @@ role="doc-biblioentry">
 ———. 2022b. <span>“Repositorio del TFG.”</span> 2022. Accessed May 7,
 2022. <a
 href="https://github.com/Asmilex/Raytracing">https://github.com/Asmilex/Raytracing</a>.
+</div>
+<div id="ref-video" class="csl-entry" role="doc-biblioentry">
+———. 2022c. <span>“Path tracing showcase.”</span> May 18, 2022. Accessed
+May 22, 2022. <a
+href="https://www.youtube.com/watch?v=pXrD3K69MqE">https://www.youtube.com/watch?v=pXrD3K69MqE</a>.
 </div>
 <div id="ref-arneback-2019" class="csl-entry" role="doc-biblioentry">
 Arnebäck. 2019. <span>“An explanation of the rendering equation.”</span>
