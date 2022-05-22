@@ -18,14 +18,22 @@ Finalmente, para poner en contexto el motor, comparamos nuestra implementación 
 
 ## Posibles mejoras
 
-- Precómputo de fuentes de luz / materiales emisivos de la escena
-- Reestructuración de las interfaces
-  - Materiales y escenas
-    - Mejorar interfaz
-    - Más tipos
-  - Fuentes de luz
-  - class Engine
-- Más materiales
+Crear un software de este calibre es una tarea de una complejidad enorme. Los motores de renderización requieren un equipo de desarrollo de un tamaño considerable, una gran inversión y un esfuerzo constante. Teniendo en cuenta el contexto del proyecto, en el camino ha sido necesario tomar decisiones imperfectas. En esta sección exploraremos algunas posibles mejoras para este trabajo.
+
+### Interfaces
+
+La parte que más margen de mejora presenta es **la interfaz de las fuentes de luz**. En su estado actual, únicamente es posible utilizar dos tipos de fuentes externas a la escena: luces puntuales y direccionales. Aunque se muestrean de forma directa. Además, solo puede existir una única fuente de este tipo.
+
+Este diseño propicia un error relacionado con la nitidez de la imagen. Una de las ideas clave de path tracing es generar muestras de *forma inteligente*: dado que calcular caminos es caro, tira rayos hacia zonas que aporten mucha información. En dichas zonas deben encontrarse, esencialmente, fuentes de luz. ¡Pero la interfaz **no conoce dónde se encuentran los materiales emisivos de la escena**! Eso implica que algunos rayos toman direcciones que no aportan nada. Esto lo pudimos comprobar empíricamente en la [comparativa](#comparativa-con-in-one-weekend).
+
+Otro tipo de interfaz que necesita una mejora sustancial es la de materiales y objetos. En el estado actual del programa, los elementos de la escena son cargados desde un fichero `.obj`. Las propiedades del material son determinadas en el momento del impacto de un rayo basándonos en los parámetros del archivo de materiales asociado `.mtl`. Esta estrategia funciona suficientemente bien en este caso, pues el ámbito de desarrollo es bastante reducido.
+
+Sin embargo, a la larga sería beneficioso **reestructurar la carga y almacenamiento de los objetos**. De esta forma, atacamos el problema anterior relacionado con los materiales emisivos, conseguiríamos mayor granularidad en los tipos de objetos y podríamos diseñar estrategias específicas para algunos tipos de materiales (como separar en diferentes capas de impacto los objetos transparentes). Esto también nos permitiría añadir nuevos tipos de materiales más fácilmente, como pueden ser objetos dieléctricos, plásticos, mezclas entre varios tipos, *subsurface scattering*...
+
+Estas nuevas interfaces deberían ir acompañadas de una **refactorización de la clase `Engine`**. El framework que escogimos, Nvidia nvpro-samples [@nvpro-samples], está destinado a ser didáctico y no eficiente. Por tanto, el software presenta un alto acoplamiento. Separar en varias clases más reducidas, como una clase para rasterización y otra para ray tracing, sería esencial. Sin embargo, Vulkan es una API muy compleja, por lo que requeriría de una gran cantidad de trabajo.
+
+### Nuevas técnicas de reducción de ruido
+
 - Motion blur
 - Uso de ruido (blue noise, perlin noise)
 - Multiple importance sampling
