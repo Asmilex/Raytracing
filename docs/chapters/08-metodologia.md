@@ -78,7 +78,7 @@ Todas estas fuentes permiten un uso no comercial gratuito.
 
 A fin de mantener consistencia, se ha creado una paleta de colores específica.
 
-![La paleta de colores del proyecto](./img/07/Paleta%20de%20colores.png){ width=400px }
+![La paleta de colores del proyecto](./img/08/Paleta%20de%20colores.png){ width=400px }
 
 El principal objetivo es **transmitir tranquilidad**, pero a la misma vez, **profesionalidad**. De nuevo, buscamos la idea de profesionalidad distendida que ya hemos repetido un par de veces.
 
@@ -111,7 +111,7 @@ Un fichero Makefile (`docs/Makefile`) contiene varias órdenes para generar ambo
 
 **Figma** [@figma] es otro de esos programas que te hace preguntarte por qué es gratis. Es una aplicación en la web usada para diseño gráfico. Es muy potente, intuitiva, y genera unos resultados muy buenos en poco tiempo. Todos los diseños de este trabajo se han hecho con esta herramienta.
 
-![Tablón principal del proyecto de Figma, a día 15 de abril de 2022](./img/07/Figma.png)
+![Tablón principal del proyecto de Figma, a día 15 de abril de 2022](./img/08/Figma.png)
 
 Una de las características más útiles es poder exportar rápidamente la imagen. Esto permite hacer cambios rápidos y registrarlos en el repositorio fácilmente. Además, permite instalar plugins. Uno de ellos ha resultado especialmente útil: Latex Complete [@latex-complete]. Esto nos permite incrustar código LaTeX en el documento en forma de SVG.
 
@@ -151,7 +151,7 @@ Tendremos dos tipos de `Actions`: uno que se encarga de compilar la web, y otro 
    2. El PDF se crea en `docs/TFG.pdf`
 3. Commitea los archivos y termina.
 
-![La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse](./img/07/Github%20Actions.png)
+![La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse](./img/08/Github%20Actions.png)
 
 El workflow de la web corre automáticamente, mientras que para generar el PDF hace falta activación manual. Aunque no es *del todo* correcto almacenar ficheros binarios en un repositorio de git, no me resulta molesto personalmente. Así que, cuando considero que es el momento oportuno, lo hago manualmente. Además, también se activa por cada *release* que se crea.
 
@@ -165,17 +165,17 @@ Las tareas pendientes se gestionan mediante issues. Cada vez que se tenga un obj
 
 Esto permite una gestión muy eficiente de los principales problemas y objetivos pendientes de la aplicación.
 
-![Pestaña de issues, día 16 de abril de 2022](./img/07/Issues.png)
+![Pestaña de issues, día 16 de abril de 2022](./img/08/Issues.png)
 
 Los issues se agrupan en *milestones*, o productos mínimamente viables. Estos issues suelen estar relacionados con algún apartado importante del desarrollo.
 
-![Los *milestones* agrupan una serie de issues relacionados con un punto clave del desarrollo](./img/07/Milestones.png)
+![Los *milestones* agrupan una serie de issues relacionados con un punto clave del desarrollo](./img/08/Milestones.png)
 
 De esta forma, podemos ver todo lo que queda pendiente para la fecha de entrega.
 
 Para añadir mayor granularidad a la gestión de tareas y proporcionar una vista informativa, se utiliza Github Projects. En esencia, esta aplicación es un acompañante del repositorio estilo Asana.
 
-![Projects agrupa los issues y les asigna prioridades](./img/07/Projects.png)
+![Projects agrupa los issues y les asigna prioridades](./img/08/Projects.png)
 
 Una de las alternativas que se planteó al inicio fue **Linear** [@linear], una aplicación de gestión de issues similar a Projects. Sin embargo, la conveniencia de tener Projects integrado en Github supuso un punto a favor para este gestor. De todas formas, el equipo de desarrollo se compone de una persona, así que no hace falta complicar excesivamente el workflow.
 
@@ -189,4 +189,4 @@ Una de los detalles que has podido apreciar si has entrado al repositorio es un 
 
 Cada uno tiene un significado particular. En esta tabla se recogen sus significados:
 
-![Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno](./img/07/Commits.png)
+![Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno](./img/08/Commits.png)
