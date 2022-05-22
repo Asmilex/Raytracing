@@ -1,6 +1,5 @@
 ---
 toc-title: Tabla de contenidos
-
 header-includes:
 - |
   ```{=html}
