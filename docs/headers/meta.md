@@ -11,13 +11,13 @@ fignos-caption-name: "Figura"
 
 # Abstract{.unnumbered}
 
-Este trabajo explorará las técnicas modernas de informática gráfica físicamente fieles basadas en *ray tracing* en tiempo real. Para ello, se usarán métodos de integración de Monte Carlo dado que disminuyen el tiempo necesario de cómputo.
+En este trabajo se explorarán las técnicas modernas de informática gráfica físicamente realistas basadas en *ray tracing* en tiempo real. Para ello, se utilizarán métodos de integración de Monte Carlo con el fin de disminuir el tiempo de cómputo.
 
-Para conseguirlo, se ha diseñado un software basado en la interfaz de programación de aplicaciones gráficas Vulkan, usando como base un entorno de desarrollo de Nvidia conocido como nvpro-samples. El software implementa un motor gráfico basado en *path tracing*. Este motor será capaz de muestrear fuentes de iluminación de forma directa, lo que se conoce como *next-event estimation*. Para disminuir el tiempo de cómputo y hacerlo viable en tiempo real, se usarán técnicas de Monte Carlo para integrar radiancia. Se explorarán cómo afectan los diferentes métodos al ruido final de la imagen.
+Se diseñará un software basado en la interfaz de programación de aplicaciones gráficas Vulkan, utilizando como soporte un entorno de desarrollo de Nvidia conocido como nvpro-samples. El software implementará un motor gráfico basado en *path tracing*. Este motor será capaz de renderizar numerosas escenas, cambiar los parámetros del algoritmo path tracing y modificar las fuentes de iluminación en tiempo de ejecución.
 
-Este motor se comparará con una implementación puramente en CPU basada en el software desarrollado en los libros de [@Shirley2020RTW1] "Ray Tracing in One Weekend series". Se han estudiado las diferencias de tiempo entre una implementación y otra, sus ventajas y desventajas y el ruido de las imágenes producidas.
+Con el fin de explorar cómo afectan diferentes métodos al ruido final de la imagen, se estudiarán algunas técnicas de reducción de varianza como muestreo directo de fuentes de iluminación, muestreo por importancia o acumulación temporal. Además, el motor desarrollado se comparará con una implementación puramente en CPU basada en el software creado en los libros de [@Shirley2020RTW1] "Ray Tracing in One Weekend series". Se comporbarán las diferencias entre ambas versiones, estudiando los puntos fuertes de cada una.
 
-*Palabras clave: raytracing, ray tracing, Monte Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan.*
+*Palabras clave: raytracing, ray tracing, path tracing, métodos de Monte Carlo, integración de Monte Carlo, transporte de luz, iluminación global, Vulkan.*
 
 <hr>
 
@@ -25,7 +25,7 @@ Este motor se comparará con una implementación puramente en CPU basada en el s
 
 > TODO
 
-*Keywords: raytracing, ray tracing, Monte Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan.*
+*Keywords: raytracing, ray tracing, path tracing, Monte Carlo methods, Monte Carlo integration, light transport, global illumination, Vulkan.*
 
 \newpage
 
