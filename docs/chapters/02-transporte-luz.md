@@ -6,19 +6,21 @@ En este capítulo estudiaremos las bases de la radiometría. Esta área de la ó
 
 > **Nota**: cuando usemos un paréntesis tras una ecuación, dentro denotaremos sus unidades de medida.
 
-Antes de comenzar a trabajar, necesitamos conocer *qué entendemos* por luz. Aunque hay muchas formas de trabajar con ella (a fin de cuentas, todavía seguimos discutiendo sobre *qué es* exactamente la luz [^2]), nosotros nos quedaremos con algunas pinceladas de la cuántica. Nos será suficiente quedarnos con la concepción de fotón. Una fuente de iluminación emite una serie de fotones. Estos fotones tienen una posición, una dirección de propagación y una longitud de onda $\lambda$ [@ShirleyRRT]. Un fotón también tiene asociado una velocidad $c$ que depende del índice de refracción del medio, $n$.
+Antes de comenzar a trabajar, necesitamos conocer *qué entendemos* por luz. Aunque hay muchas formas de trabajar con ella (a fin de cuentas, todavía seguimos discutiendo sobre qué es exactamente la luz [^2]), nosotros nos quedaremos con la definición clásica y algunas pinceladas de la cuántica. Nos será suficiente utilizar el concepto de fotón.
 
-La unidad de medida de $\lambda$ es el nanómetro ($\text{nm}$). También nos vendrá bien definir una frecuencia, $f$. Su utilidad viene del hecho de que, cuando la luz cambia de medio al propagarse, la frecuencia se mantiene constante.
+**Un fotón** es aquella particula emitida por una fuente de iluminación. Estos fotones tienen una posición, una dirección de propagación y una longitud de onda $\lambda$ [@ShirleyRRT]; así como una velocidad $c$ que depende del índice de refracción del medio, $n$. La unidad de medida de $\lambda$ es el nanómetro ($\text{nm}$).
+
+Necesitaremos también definir qué es **la frecuencia**, $f$. Su utilidad viene del hecho de que, cuando la luz cambia de medio al propagarse, la frecuencia se mantiene constante.
 
 $$
-f = \frac{c}{\lambda}
-$$
+f = \frac{c}{\lambda} (\text{Hz})
+$${#eq:frecuencia}
 
-Un fotón tiene asociada una carga de energía, denotada por $Q$:
+Un fotón tiene asociada una **carga de energía**, denotada por $Q$:
 
 $$
 Q = hf = \frac{hc}{\lambda} (\text{J})
-$$
+$${#eq:carga_de_energia}
 
 donde $h = 6.62607004 \times 10^{-34} \text{J} \cdot \text{s}$ es la constante de Plank y $c = 299 792 458 \text{m/s}$ la velocidad de la luz.
 
@@ -30,10 +32,9 @@ A partir de la energía anterior, podemos estimar *la tasa de producción de ene
 
 $$
 \Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt} (J/s)
-$$
+$${#eq:potencia}
 
-Su unidad es julios por segundo, comúnmente denotado vatio (*watts*, $\text{W}$). También se utiliza el lumen.
-Podemos encontrar la energía total en un periodo de tiempo $[t_0, t_1]$ integrando el flujo radiante:
+Su unidad es julios por segundo, comúnmente denotado vatio (*watts*, $\text{W}$). También se utiliza el lumen. Podemos encontrar la energía total en un periodo de tiempo $[t_0, t_1]$ integrando el flujo radiante:
 
 $$
 Q = \int_{t_0}^{t_1}{\Phi(t)dt}
@@ -45,16 +46,18 @@ La **irradiancia** o **radiancia emitida** es el flujo radiante que recibe una s
 
 $$
 E = \frac{\Phi}{A} (\text{W/m}^2)
-$$
+$${#eq:irradiancia}
 
 
 ![La irradiancia es la potencia por metro cuadrado incidente en una superficie. Es proporcional al coseno del ángulo entre la dirección de la luz y la normal a la superficie.](./img/02/Irradiancia.png){#fig:irradiancia}
 
-Ahora que tenemos la potencia emitida en una cierta área, nos surge una pregunta: *¿y en un cierto punto $p$?*. Tomando límites en la expresión anterior, encontramos la respuesta:
+Ahora que tenemos la potencia emitida en una cierta área, nos surge una pregunta: ¿y en un cierto punto $p$?.
+
+Tomando límites en la expresión anterior, encontramos la respuesta:
 
 $$
 E(p) = \lim_{\Delta A \to 0}{\frac{\Delta \Phi}{\Delta A}} = \frac{d\Phi}{dA} (\text{W/m}^2)
-$$
+$${#eq:irradiancia_punto}
 
 De la misma manera que con la potencia, integrando $E(p)$ podemos obtener el flujo radiante:
 
@@ -74,19 +77,20 @@ Ilustremos el sentido de estos ángulos: imaginemos que tenemos un cierto objeto
 
 Parece difícil responder a estas preguntas. Sin embargo, sí que podemos determinar *cómo de grandes nos parecen* desde nuestro punto de vista. Para ello, describimos una circunferencia de radio $r$ alrededor nuestra. Si trazamos un par de líneas desde nuestra posición a las partes más alejadas de este objeto, y las cortamos con nuestra circunferencia, obtendremos un par de puntos inscritos en ella. Pues bien, al arco que encapsulan dichos puntos le vamos a hacer corresponder un cierto ángulo: el ángulo planar.
 
-![La idea intuitiva de un ángulo planar](./img/02/Ángulo%20planar.png){#fig:angulo_planar}
+![La idea intuitiva de un ángulo planar](./img/02/Ángulo%20planar.png){#fig:angulo_planar width=85%}
 
 Llevando esta idea a las tres dimensiones es como conseguimos el concepto de **ángulo sólido**. Si en dos dimensiones teníamos una circunferencia, aquí tendremos una esfera. Cuando generemos las rectas proyectantes hacia el volumen, a diferencia de los ángulos planares, se inscribirá un área en la esfera. La razón entre dicha área $A$ y el cuadrado del radio $r$ nos dará un ángulo sólido:
 
 $$
 \omega = \frac{A}{r^2} \text{(sr)}
-$$
+$${#eq:angulo_solido_omega}
 
-![Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio](./img/02/Ángulo%20sólido.png){#fig:angulo_solido}
 
 Los denotaremos por $\omega$. En física se suele usar $\Omega$, pero aquí optaremos por la minúscula. Su unidad de medida es el estereorradián ($\text{sr}$).  Se tiene que $\omega \in [0, 4\pi]$. Si $2 \pi$ radianes corresponden a la circunferencia completa, para la esfera se tiene que $4 \pi$ esteorradianes cubren toda la superficie de esta. Se tiene también que $2\pi \text{sr}$ cubren un hemisferio. Además, un esteorradián corresponde a una superficie con área $r^2$: $1 \text{sr} = \frac{r^2}{r^2}$.
 
-De vez en cuando, usaremos $\omega$ **un vector dirección unitario en la esfera**.
+![Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio](./img/02/Ángulo%20sólido.png){#fig:angulo_solido width=80%}
+
+Debido a la forma en la que se trabaja con ellos, es costumbre usar $\omega$ **como un vector dirección unitario en la esfera**.
 
 ![Como de costumbre, hay un XKCD relevante [@xkcd-size]](./img/02/xkcd_1276.png){#fig:xkcd_1276 width=60%}
 
@@ -95,12 +99,12 @@ Usualmente emplearemos coordenadas esféricas cuando trabajemos con ellos, dado 
 $$
 \begin{aligned}
     \begin{cases}
-        x = \sin\theta\cos\theta \\
-        y = \sin\theta\sin\theta \\
+        x = \sin\theta\cos\phi \\
+        y = \sin\theta\sin\phi \\
         z = \cos\theta
     \end{cases}
 \end{aligned}
-$$
+$${#eq:coordenadas_esféricas}
 
 A $\theta$ se le denomina ángulo polar, mientras que a $\phi$ se le llama acimut. Imaginémonos un punto en la esfera de radio $r$ ubicado en una posición $(r, \theta, \phi)$. Queremos calcular un área chiquitita $dA_h$, de forma que el ángulo sólido asociado a dicha área debe ser $d\omega$. Así, $d\omega = \frac{dA_h}{r^2}$. Si proyectamos el área, obtenemos $d\theta$ y $d\phi$: pequeños cambios en los ángulos que nos generan nuestra pequeña área [@berkeley-cs184, Radiometry & Photometry].
 
@@ -124,17 +128,17 @@ $${#eq:d_omega}
 
 Los ángulos sólidos nos proporcionan una variedad de herramientas nuevas considerable. Gracias a ellos, podemos desarrollar algunos conceptos nuevos. Uno de ellos es la **intensidad radiante**.
 
-Imaginémonos un pequeñito punto de luz encerrado en una esfera, el cual emite fotones en todas direcciones. Nos gustaría medir cuánta energía pasa por la esfera. Podríamos entonces definir
+Imaginémonos un pequeñito punto de luz encerrado en una esfera, el cual emite fotones en todas direcciones (es decir, $\omega = 4\pi$). Nos gustaría medir cuánta energía pasa por la esfera. Podríamos entonces definir
 
 $$
 I = \frac{\Phi}{4\pi} \text{(W/sr)}
 $$
 
-Otra unidad de medida es el lumen por esterorradián, $\text{(lm/sr)}$. La anterior definición mide cuántos fotones pasan por toda la esfera. ¿Qué ocurre si *cerramos* el ángulo, restringiéndonos así a un área muy pequeña de la esfera?
+Si en vez de utilizar toda la esfera, *cerramos* el ángulo lo máximo posible, nos estaríamos restringiendo a un área extremadamente pequeña, lo cual nos proporcionaría la densidad angular de flujo radiante:
 
 $$
 I = \lim_{\Delta\omega \to 0}{\frac{\Delta\Phi}{\Delta\omega}} = \frac{d\Phi}{d\omega}
-$$
+$${#eq:intensidad_radiante}
 
 De la misma manera que con los conceptos anteriores, podemos volver a la potencia integrando sobre un conjunto de direcciones:
 
@@ -168,12 +172,12 @@ Cuando un rayo impacta en una superficie, $L$ puede tomar valores muy diferentes
 
 $$
 \begin{aligned}
-L^+(p, \omega) = \lim_{t \to 0^+}{L(p + t\mathbf{n_p}, \omega)} \\
-L^-(p, \omega) = \lim_{t \to 0^-}{L(p + t\mathbf{n_p}, \omega)}
+L^+(p, \omega) = \lim_{t \to 0^+}{L(p + t\mathbf{n}_p, \omega)} \\
+L^-(p, \omega) = \lim_{t \to 0^-}{L(p + t\mathbf{n}_p, \omega)}
 \end{aligned}
 $${#eq:L_limit}
 
-donde $\mathbf{n_p}$ es la normal en el punto $p$.
+donde $\mathbf{n}_p$ es la normal en el punto $p$.
 
 Otra forma de solucionarlo (y preferible, puesto que simplifica entender lo que ocurre) es distinguir entre la radiancia que llega a un punto --la incidente--, y la saliente.
 
@@ -187,13 +191,13 @@ $$
 \begin{aligned}
     L_i(p, \omega) & =
         \begin{cases}
-            L^+(p, -\omega) & \text{si } \omega \cdot \mathbf{n_p} > 0 \\
-            L^-(p, -\omega) & \text{si } \omega \cdot \mathbf{n_p} < 0
+            L^+(p, -\omega) & \text{si } \omega \cdot \mathbf{n}_p > 0 \\
+            L^-(p, -\omega) & \text{si } \omega \cdot \mathbf{n}_p < 0
         \end{cases} \\
     L_o(p, \omega) & =
         \begin{cases}
-            L^+(p, \omega) & \text{si } \omega \cdot \mathbf{n_p} > 0 \\
-            L^-(p, \omega) & \text{si } \omega \cdot \mathbf{n_p} < 0
+            L^+(p, \omega) & \text{si } \omega \cdot \mathbf{n}_p > 0 \\
+            L^-(p, \omega) & \text{si } \omega \cdot \mathbf{n}_p < 0
         \end{cases}
 \end{aligned}
 $$
@@ -291,7 +295,7 @@ Entonces, la relación entre la diferencial de un ángulo sólido y la de un ár
 
 $$
 d\omega = \frac{dA\cos\theta}{r^2}
-$$
+$${#eq:diferencial_angulo_solido}
 
 > TODO: figura como la de pbr book 5.16.
 
@@ -416,7 +420,7 @@ $$
 
 Puede ser útil tomar el comportamiento agregado de las BRDFs y las BTDFs y reducirlo un cierto valor que describa su comportamiento general de dispersión. Sería Algo así como un resumen de su distribución. Para conseguirlo, vamos a introducir dos nuevas funciones:
 
-El albedo [@Szirmay-Kalos00monte-carlomethods], o también conocido como la **reflectancia hemisférica-direccional** (*hemispherical-directional reflectance*) [@PBRT3e, Reflection Models, Basic Interface] describe la reflexión total sobre un hemisferio debida a una fuente de luz que proviene desde la dirección $\omega_o$ :
+El **albedo** [@Szirmay-Kalos00monte-carlomethods], también conocido como la **reflectancia hemisférica-direccional** (*hemispherical-directional reflectance*) [@PBRT3e, Reflection Models, Basic Interface] describe la reflexión total sobre un hemisferio debida a una fuente de luz que proviene desde la dirección $\omega_o$ :
 
 $$
 \rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_i}\ d\omega_i}
@@ -438,11 +442,10 @@ Los tipos de materiales que vamos a tratar son las básicos. Entre ellos, se enc
 
 Prácticamente toda superficie, en mayor o menor medida, refleja parte de la luz incidente. Otros tipos de materiales reflejan y refractan a la vez, como puede ser un espejo o el agua.
 
-
 ![Reflexión y refracción de luz [@Marrs2021, p. 106].](./img/02/Reflexión%20y%20refracción.png){#fig:refraccion width=50%}
 
 > TODO: cambiar por foto propia
->
+
 En esencia, los reflejos se pueden clasificar en cuatro grandes tipos [@McGuire2018GraphicsCodex, Materials]:
 
 - **Difusos** (*Diffuse*): esparcen la luz en todas direcciones casi equiprobablemente. Por ejemplo, la tela y el papel son materiales difusos.
@@ -504,7 +507,7 @@ En la práctica no se utiliza mucho, pues está muy limitado.
 
 ##### Phong
 
-El modelo de Phong se basa en la observación de que, cuando el punto de vista se alinea con la dirección del vector de luz reflejado $r = 1 - 2(\mathbf{n} \cdot \mathbf{l})\mathbf{n}$, aparecen puntos muy iluminados, lo que se conoce como resaltado especular.
+El modelo de Phong se basa en la observación de que, cuando el punto de vista se alinea con la dirección del vector de luz reflejado $r = i - 2(\mathbf{n} \cdot \mathbf{l})\mathbf{n}$, aparecen puntos muy iluminados, lo que se conoce como resaltado especular.
 
 Esta idea se *refleja* considerando la componente especular como
 
