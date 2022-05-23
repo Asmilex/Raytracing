@@ -1,4 +1,4 @@
-# El presente y futuro de RT
+# El presente y futuro de Ray Tracing
 
 > TODO: de momento, se queda como está. Es un capítulo bastante fácil de escribir, así que en unos tres días como muchísimo podría estar todo listo.
 

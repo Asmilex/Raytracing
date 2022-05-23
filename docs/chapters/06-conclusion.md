@@ -34,6 +34,6 @@ Estas nuevas interfaces deberían ir acompañadas de una **refactorización de l
 
 ### Nuevas técnicas de reducción de ruido
 
-- Motion blur.
-- Uso de ruido (blue noise, perlin noise)
-- Multiple importance sampling
+En este trabajo hemos implementado algunas técnicas de reducción de varianza del estimador de Monte Carlo para la ecuación del transporte de luz [@eq:rendering_equation], lo cual permite reducir el ruido de la imagen final. Entre estas, se encuentran muestreo por importancia, *next-event estimation* o acumulación temporal de las muestras.
+
+Sin embargo, existen numerosas técnicas que no se han desarrollado. Entre estas, se encuentran el uso de ruido como *blue noise*, muestreo por importancia múltiple, ruleta rusa o secuencias de baja discrepancia (métodos de quasi-Monte Carlo).  Resultaría interesante ver cómo estas técnicas se comportan en comparación con las que sí hemos usado.
