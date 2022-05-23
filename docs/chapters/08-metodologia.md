@@ -1,5 +1,3 @@
-\appendix
-
 # Metodología de trabajo
 
 Cualquier proyecto de una envergadura considerable necesita ser planificado con antelación. En este capítulo vamos a hablar de cómo se ha realizado este trabajo: mostraremos las herramientas usadas, los ciclos de desarrollo, integración entre documentación y path tracer, y otras influencias que han afectado al producto final.
@@ -16,7 +14,7 @@ Una de las principales influencias ha sido [@digital-foundry]. Este grupo de div
 
 <iframe width="784" height="441" src="https://www.youtube.com/embed/6bqA8F6B6NQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Dado que esta área combina tanto informática, matemáticas y una visión artística, ¿por qué no explorarlo a fondo
+Dado que esta área combina tanto informática, matemáticas y una visión artística, ¿por qué no explorarlo a fondo?
 
 Ahora que se ha decidido el tema, es hora de ver cómo atacarlo.
 
@@ -26,15 +24,25 @@ Otro punto importante es la *manera* de escribir. No me gusta especialmente la e
 
 ## Ciclos de desarrollo
 
-Este proyecto está compuesto por 2 grandes pilares: documentación --lo que estás leyendo, ya sea en PDF o en la web-- y software.
+Este proyecto está compuesto por 2 grandes pilares: documentación --lo que estás leyendo, ya sea en PDF o en la web-- y software. Podemos distinguir varias fases en la planificación del proyecto, que quedan resumidas en el diagrama de Grant [Figuras @fig:grantt_1, @fig:grantt_2]
 
-La metodología que se ha seguido es, en esencia, una versión de Agile muy laxa [@beck2001agile].
+Para comenzar, durante el verano de 2021 se implementarían los tres libros de Shirley de la "serie In One Weekend": In One Weekend [@Shirley2020RTW1], The Next Week [@Shirley2020RTW2], y The Rest of your Life [@Shirley2020RTW3]. De esta forma, asentaríamos las bases del proyecto, acelerando así el aprendizaje.
 
-Para empezar, se implementaron los tres libros de Shirley de la "serie In One Weekend": In One Weekend [@Shirley2020RTW1], The Next Week [@Shirley2020RTW2], y The Rest of your Life [@Shirley2020RTW3].
+![Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo](./img/08/Diagrama%20de%20Grantt%201.png){#fig:grantt_1}
 
-Tras esto, comenzó a [desarrollarse](#setup-del-proyecto) el motor por GPU. Cuando se consiguió una base sólida (que se puede ver en el issue del repositorio número 25), se empezó a alternar entre escritura de documentación y desarrollo del software. A fin de cuentas, no tiene sentido implementar algo que no se conoce.
+Tras esto, comenzaría a desarrollarse el motor por GPU. Cuando se consiguiera una base sólida, se empezaría a alternar entre escritura de la memoria y el software. Es importante documentar lo que se realiza, pues no se puede implementar algo que no se entiende.
 
-Para apoyar el desarrollo, se ha utilizado [Github](#github). Más adelante hablaremos de cómo esta plataforma ha facilitado el trabajo.
+![Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software](./img/08/Diagrama%20de%20Grantt%202.png){#fig:grantt_2}
+
+Sin embargo, esto era únicamente una planificación. Como todos sabemos, en la práctica los planes no suelen salir a la perfección. ¿Ha sido este un caso de una preparación desastrosa?
+
+Por fortuna, la idea inicial **se ha asemejado mucho a la realidad**. Algunas fases han sido más rápidas que otras, mientras que otras partes han costado más trabajo. Los tipos de commits hechos al repositorio ayudan a clasificar el tipo de trabajo, pero, en resumidas cuentas:
+
+- In One Weekend terminó de desarrollarse considerablemente antes, el 21 de agosto. A excepción de la última parte del desarrollo de la memoria, no requiso más tiempo.
+- El diseño y la integración continua tuvieron dos fases: un sprint inicial donde se deja asentado el 70% del trabajo, y pequeñas mejoras incrementales en los siguientes meses. Debemos destacar que, conforme se mejoraba el diseño de la memoria, se añadían nuevas herramientras necesarias para su construcción. Es por ello que la integración continua requiso de varios arreglos, tanto al dockerfile como a los Actions.
+- La implementación inicial del motor necesitó un tiempo considerablemente menor del previsto. No obstante, el tiempo de perfeccionamiento aumentó, y el desarrollo final concluyó cerca del 20 de mayo de 2022. Prácticamente todas las características básicas fueron implementadas, a excepción de algunos detalles. No dio mucho tiempo a extenderlo más allá de esto.
+
+Con respecto a la metodología de trabajo que se ha seguido es podemos decir que es, esencialmente, **una versión de Agile muy laxa** [@beck2001agile]. Apoyándonos en las herramientas ofrecidas por [Github](#github), diseñamos un sistema de requisitos mediante issues, tanto para la memoria como para el software. Más adelante veremos más a fondo cómo esta herramienta ha facilitado enormemente el desarrollo.
 
 ## Presupuesto
 
