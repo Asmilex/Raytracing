@@ -274,14 +274,14 @@ Se ha implementado una escena específica para esta comparativa, llamada `cornel
 
 La siguiente tabla muestra una comparativa entre el coste de renderizar un frame en In One Weekend y en nuestro motor, usando una profundidad de 10 rebotes y una resolución de 720p:
 
-| **Número de muestras** | **In One Weekend** (ms/frame) | **Nuestra implementación** (ms/frame) | **Diferencia** (ms/frame) |
-|:-----------------------|:------------------------------|:--------------------------------------|:--------------------------|
-| 1                      | `1032`                        | `2.6`                                 | `-1006`                   |
-| 5                      | `3934`                        | `11`                                  | `-3923`                   |
-| 10                     | `7459`                        | `20.4`                                | `-7255`                   |
-| 20                     | `14516`                       | `39`                                  | `-14477`                  |
-| 100                    | `69573`                       | `~200`                                | `-69373`                  |
-| 1000                   | `688388`                      | `~2000`                               | `-686388`                 |
+| **Número de muestras** | **In One Weekend** (ms/frame) | **Nuestra implementación** (ms/frame) | **Veces más rápido** |
+|:-----------------------|:------------------------------|:--------------------------------------|:---------------------|
+| 1                      | `1032`                        | `2.6`                                 | $\times$ `396.92`    |
+| 5                      | `3934`                        | `11`                                  | $\times$ `357.636`   |
+| 10                     | `7459`                        | `20.4`                                | $\times$ `365.63`    |
+| 20                     | `14516`                       | `39`                                  | $\times$ `372.20`    |
+| 100                    | `69573`                       | `~200`                                | $\times$ `347.87`    |
+| 1000                   | `688388`                      | `~2000`                               | $\times$ `344.194`   |
 
 Como podemos observar, la diferencia es abismal. En el tiempo que tarda In One Weekend en producir una imagen con una única muestra, nuestro motor es capaz de generar una imagen de 500 muestras. Sin embargo, este resultado es esperable, pues a fin de cuentas, In One Weekend corre en la CPU con un único hilo, mientras que en nuestro motor se utilizan todos los recursos posibles.
 
