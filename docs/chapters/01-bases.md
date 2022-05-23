@@ -12,7 +12,7 @@ Dado que estos puntos estarán generalmente en $\mathbb{R}^3$, podemos escribirl
 
 $$
 P(t) = (O_x, O_y, O_z) + t (D_x, D_y, D_z)
-$$
+$${#eq:rayo}
 
 Estos rayos los *dispararemos* a través de una cámara virtual, que estará enfocando a la escena. De esta forma, los haremos rebotar con los objetos que se encuentren en el camino del rayo. A este proceso lo llamaremos **ray casting**.
 
@@ -82,7 +82,7 @@ Consideremos una superficie $S$ y un punto regular de ella $P$; es decir, un pun
 
 $$
 \mathbf{n} = \nabla F(P) = \left( \frac{\partial F(P)}{\partial x}, \frac{\partial F(P)}{\partial y}, \frac{\partial F(P)}{\partial z}\right )
-$$
+$${#eq:normal_superficie}
 
 > TODO: dibujo de la normal a una superficie.
 

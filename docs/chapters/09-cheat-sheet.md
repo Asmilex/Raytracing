@@ -17,7 +17,18 @@ Tener en mente *todos* los conceptos y sus expresiones que aparecen en un libro 
 | **Producto vectorial**                              | $\mathbf{v} \times \mathbf{w}$                                                                                                        |
 | [**Variables aleatorias**](#repaso-de-probabilidad) | $X, Y$. $\xi$ representa una variable aleatoria con distribución uniforme en $[0, 1)$.                                                |
 
-## [Radiometría](#radiometría)
+
+## [Bases de Ray Tracing](#las-bases)
+
+| **Concepto**                                    | **Expresiones y comentarios**                                                                                                                                                                             |
+|:------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [**Rayo**](#eq:rayo)                            | $P(t) = O + tD$                                                                                                                                                                                           |
+| [**Ray casting**](#eq:rayo)                     | Disparar un rayo hacia la escena virtual, de forma que impacta con alguna superficie.                                                                                                                     |
+| [**Normal en un punto**](#eq:normal_superficie) | Vector perpendicular a cualquier punto de la superficie: $\mathbf{n} = \nabla F(P) = \left( \frac{\partial F(P)}{\partial x}, \frac{\partial F(P)}{\partial y}, \frac{\partial F(P)}{\partial z}\right )$ |
+
+
+
+## [Transporte de luz](#transporte-de-luz)
 
 | **Concepto**                                                                | **Expresiones**                                                                                                                                                                                                                                                                                                                                                |
 |:----------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -29,11 +40,24 @@ Tener en mente *todos* los conceptos y sus expresiones que aparecen en un libro 
 | **[Intensidad radiante](#intensidad_radiante)**                             | $\begin{aligned}I = \frac{d\Phi}{d\omega}\end{aligned}$                                                                                                                                                                                                                                                                                                        |
 | **[Radiancia](#radiancia)**                                                 | $\begin{aligned} & L(p, \omega) = \frac{dE_\omega(p)}{d\omega} \\ & L(p, \omega) = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} = \frac{d^2\Phi(p, \omega)}{d\omega\ dA\ \cos\theta} \\ & L^+(p, \omega) = \lim_{t \to 0^+}{L(p + t\mathbf{n_p}, \omega)} \\ & L^-(p, \omega)  = \lim_{t \to 0^-}{L(p + t\mathbf{n_p}, \omega)} \end{aligned}$                  |
 | **[Radiancia incidente](#radiancia)**                                       | $\begin{aligned} L_i(p, \omega) = \begin{cases} L^+(p, -\omega) & \text{si }  \omega \cdot \mathbf{n_p} > 0  \\ L^-(p, -\omega) & \text{si }  \omega \cdot \mathbf{n_p} < 0 \end{cases}\end{aligned}$                                                                                                                                                          |
-| **[Radiancia reflejada, radiancia de salida](#radiancia)**                                       | $\begin{aligned} & L_o(p, \omega) = \begin{cases} L^+(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} > 0 \\ L^-(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} < 0 \end{cases} \end{aligned}$                                                                                                                                                        |
+| **[Radiancia reflejada, radiancia de salida](#radiancia)**                  | $\begin{aligned} & L_o(p, \omega) = \begin{cases} L^+(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} > 0 \\ L^-(p, \omega)  & \text{si }  \omega \cdot \mathbf{n_p} < 0 \end{cases} \end{aligned}$                                                                                                                                                        |
 | **[Ecuación de dispersión]()**                                              | $\begin{aligned}L_o(p, \omega_o) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\abs{\cos\theta_i} d\omega_i}\end{aligned}$                                                                                                                                                                                                           |
 | **[BRDF](#la-función-de-distribución-de-reflectancia-bidireccional-brdf)**  | $\begin{aligned}& f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i}\end{aligned}$                                                                                                                                                                          |
 | **[BTDF](#la-función-de-distribución-de-transmitancia-bidireccional-btdf)** | $f_t(p, \omega_o \leftarrow \omega_i)$                                                                                                                                                                                                                                                                                                                         |
 | **[BSDF](#juntando-la-brdf-y-la-btdf)**                                     | $f(p, \omega_o \leftarrow \omega_i)$                                                                                                                                                                                                                                                                                                                           |
 
+## [Métodos de Monte Carlo](#métodos-de-monte-carlo)
+
+| **Concepto** | **Expresiones** |
+|:-------------|:----------------|
+|              |                 |
+
+## [Construyamos un path tracer](#construyamos-un-path-tracer)
+
+| **Concepto** | **Expresiones** |
+|:-------------|:----------------|
+|              |                 |
+
+## [Análisis de rendimiento](#análisis-de-rendimiento)
 
 # Bibliografía {.unnumbered}
