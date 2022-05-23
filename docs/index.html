@@ -560,8 +560,9 @@ class="toc-section-number">7.1.2</span> Nuevas técnicas de reducción de
 ruido</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#el-presente-y-futuro-de-rt"><span
-class="toc-section-number">8</span> El presente y futuro de RT</a>
+<li><a href="#el-presente-y-futuro-de-ray-tracing"><span
+class="toc-section-number">8</span> El presente y futuro de Ray
+Tracing</a>
 <ul>
 <li><a href="#denoising"><span class="toc-section-number">8.1</span>
 Denoising</a></li>
@@ -5793,10 +5794,10 @@ renderizar un frame en In One Weekend y en nuestro motor, usando una
 profundidad de 10 rebotes y una resolución de 720p:</p>
 <table>
 <colgroup>
-<col style="width: 19%" />
-<col style="width: 25%" />
-<col style="width: 32%" />
-<col style="width: 22%" />
+<col style="width: 20%" />
+<col style="width: 26%" />
+<col style="width: 33%" />
+<col style="width: 18%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -5805,8 +5806,7 @@ profundidad de 10 rebotes y una resolución de 720p:</p>
 (ms/frame)</th>
 <th style="text-align: left;"><strong>Nuestra implementación</strong>
 (ms/frame)</th>
-<th style="text-align: left;"><strong>Diferencia</strong>
-(ms/frame)</th>
+<th style="text-align: left;"><strong>Veces más rápido</strong></th>
 </tr>
 </thead>
 <tbody>
@@ -5814,37 +5814,43 @@ profundidad de 10 rebotes y una resolución de 720p:</p>
 <td style="text-align: left;">1</td>
 <td style="text-align: left;"><code>1032</code></td>
 <td style="text-align: left;"><code>2.6</code></td>
-<td style="text-align: left;"><code>-1006</code></td>
+<td style="text-align: left;"><span
+class="math inline">\(\times\)</span> <code>396.92</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">5</td>
 <td style="text-align: left;"><code>3934</code></td>
 <td style="text-align: left;"><code>11</code></td>
-<td style="text-align: left;"><code>-3923</code></td>
+<td style="text-align: left;"><span
+class="math inline">\(\times\)</span> <code>357.636</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">10</td>
 <td style="text-align: left;"><code>7459</code></td>
 <td style="text-align: left;"><code>20.4</code></td>
-<td style="text-align: left;"><code>-7255</code></td>
+<td style="text-align: left;"><span
+class="math inline">\(\times\)</span> <code>365.63</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">20</td>
 <td style="text-align: left;"><code>14516</code></td>
 <td style="text-align: left;"><code>39</code></td>
-<td style="text-align: left;"><code>-14477</code></td>
+<td style="text-align: left;"><span
+class="math inline">\(\times\)</span> <code>372.20</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">100</td>
 <td style="text-align: left;"><code>69573</code></td>
 <td style="text-align: left;"><code>~200</code></td>
-<td style="text-align: left;"><code>-69373</code></td>
+<td style="text-align: left;"><span
+class="math inline">\(\times\)</span> <code>347.87</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1000</td>
 <td style="text-align: left;"><code>688388</code></td>
 <td style="text-align: left;"><code>~2000</code></td>
-<td style="text-align: left;"><code>-686388</code></td>
+<td style="text-align: left;"><span
+class="math inline">\(\times\)</span> <code>344.194</code></td>
 </tr>
 </tbody>
 </table>
@@ -6124,13 +6130,21 @@ cantidad de trabajo.</p>
 <h3 data-number="7.1.2" id="nuevas-técnicas-de-reducción-de-ruido"><span
 class="header-section-number">7.1.2</span> Nuevas técnicas de reducción
 de ruido</h3>
-<ul>
-<li>Motion blur.</li>
-<li>Uso de ruido (blue noise, perlin noise)</li>
-<li>Multiple importance sampling</li>
-</ul>
-<h1 data-number="8" id="el-presente-y-futuro-de-rt"><span
-class="header-section-number">8</span> El presente y futuro de RT</h1>
+<p>En este trabajo hemos implementado algunas técnicas de reducción de
+varianza del estimador de Monte Carlo para la ecuación del transporte de
+luz [<a href="#eq:rendering_equation">11</a>], lo cual permite reducir
+el ruido de la imagen final. Entre estas, se encuentran muestreo por
+importancia, <em>next-event estimation</em> o acumulación temporal de
+las muestras.</p>
+<p>Sin embargo, existen numerosas técnicas que no se han desarrollado.
+Entre estas, se encuentran el uso de ruido como <em>blue noise</em>,
+muestreo por importancia múltiple, ruleta rusa o secuencias de baja
+discrepancia (métodos de quasi-Monte Carlo). Resultaría interesante ver
+cómo estas técnicas se comportan en comparación con las que sí hemos
+usado.</p>
+<h1 data-number="8" id="el-presente-y-futuro-de-ray-tracing"><span
+class="header-section-number">8</span> El presente y futuro de Ray
+Tracing</h1>
 <blockquote>
 <p>TODO: de momento, se queda como está. Es un capítulo bastante fácil
 de escribir, así que en unos tres días como muchísimo podría estar todo
