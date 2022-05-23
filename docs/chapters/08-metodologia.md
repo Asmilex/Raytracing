@@ -80,7 +80,7 @@ Para este trabajo, se han escogido las siguientes tipografías:
 
 Todas estas fuentes permiten un uso no comercial gratuito.
 
-> TODO: Añadir imagen comparativa con las fuentes
+![Showcase de las fuentes utilizadas](./img/08/Tipografías.png){#fig:tipografías}
 
 ### Paleta de colores
 
