@@ -46,7 +46,36 @@ Con respecto a la metodología de trabajo que se ha seguido es podemos decir que
 
 ## Presupuesto
 
-> TODO: ahora mismo, no tengo ni idea de cómo empezar esto.
+A la hora de desarrollar un proyecto de software, es importante realizar una estimación del coste del trabajo. En otro caso, se corre el riesgo de que no se pueda llegar a cumplir el objetivo.
+
+- El **coste del software** en total ha sido de **0€**. Las herramientas utilizadas para el desarrollo son todas de código abierto, por lo que su uso es gratuito. Aunque se comentarán individualmente en una sección posterior, las más importantes han sido:
+  - Pandoc.
+  - LaTeX.
+  - Vulkan.
+  - NVIDIA DesignWorks Samples framework.
+  - Visual Studio Code.
+  - Git y Github (repositorios, Actions, Issues, Projects).
+  - Figma.
+  - Docker.
+- Con respecto al **hardware**, el precio total asciende a **2214 €**. Se han utilizado dos máquinas principalmente: una *custom build* de última generación para soportar el software y un portátil para trabajar en remoto:
+  - PC *custom build* (1414 €):
+    - **CPU**: Intel core i5 12600K (310 €).
+    - **Disipador de CPU**: Arctic Freezer 34 eSports DUO (50 €).
+    - **Placa base**: B660M DS3H AX DDR4 (130 €).
+    - **GPU**: KFA2 GeForce RTX 2070 Super (500 €).
+    - **RAM**: Crucial Ballistix 2x8GB DDR4 3200 MHz (82 €).
+    - **Caja**: NZXT S340 (70 €).
+    - **NVME SSD**: Kioxia Exceria Plus G2 (72 €).
+    - **SATA3 SSD**: Kingston A400 SSD 480 GB (50 €).
+    - **HDD**: WDC 500 GB (40 €).
+    - **Fuente de alimentación**: Corsair RM650x 80 PLUS Gold (110 €).
+  - **Portátil**: Xiaomi Mi Notebook Pro (8250U) (800 €).
+- Atendiendo al apartado de recursos humanos, se estima un coste total de **nosecuántos €**, que se desglosa de la siguiente manera:
+  - El alumno Andrés Millán, con un coste total de **6750 €**. Considerando el número de créditos del Trabajo de Fin de Grado (18), se considera que se han trabajado 450 horas con un salario base de 15 €/hora correspondiente a un alumno en prácticas
+  - Los tutores Carlos Ureña y María del Carmen Segovia, para los que asciende un coste total de **nosecuantos €**. Esta cantidad de dinero proviene de las horas empleadas en la supervisión del trabajo, gestión del proyecto y bibliografía. Se utiliza un salario base de ¿50 €/hora?, habiendo trabajo unas ¿cuántas horas semanales?
+- ¿Queda algo más por considerar? ¿IVA?
+
+> TODO: hay que terminar de estimar el coste.
 
 ## Arquitectura del software
 
