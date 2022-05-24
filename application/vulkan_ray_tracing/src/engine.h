@@ -136,7 +136,7 @@ public:
     VkPipelineLayout                                  m_rtPipelineLayout;
     VkPipeline                                        m_rtPipeline;
 
-    // Miembros para el Shader Binding Table
+    // Members of the Shader Binding Table
     nvvk::Buffer m_rtSBTBuffer;
     VkStridedDeviceAddressRegionKHR m_rgenRegion{};
     VkStridedDeviceAddressRegionKHR m_missRegion{};
@@ -145,14 +145,13 @@ public:
 
     // Push constant for ray tracer
     PushConstantRay m_pcRay{
-        {},     // clear color
-        {},     // light position
-        0, -1, 0, // light normal
-        0,      // light intensity
-        0,      // light type
-        10,     // max depth
-        5,      // number of samples
-        0,      // actual frame
+        {},         // clear color
+        {},         // light position
+        0,          // light intensity
+        0,          // light type
+        10,         // max depth
+        5,          // number of samples
+        0,          // actual frame
     };
     int m_maxAcumFrames {100};
 

@@ -176,19 +176,6 @@ void main()
         L = normalize(pcRay.light_position);
         cos_theta_light = dot(L, world_normal);
     }
-    else {      // Area light
-        // Escoger un punto alrededor de pcRay.position +- 0.5, dado por la normal
-        vec3 light_normal = vec3(pcRay.light_normal_x, pcRay.light_normal_y, pcRay.light_normal_z);
-        vec3 light_position = random_point_in_plane(prd.seed, pcRay.light_position, light_normal);
-
-        vec3 L_dir = light_position - world_position;
-        light_distance  = length(L_dir);
-        light_intensity = pcRay.light_intensity / (light_distance * light_distance);
-        L               = normalize(L_dir);
-
-        cos_theta_light = dot(L, world_normal);
-    }
-
 
     if (dot(normal, L) > 0) {
         float tMin = 0.001;

@@ -86,9 +86,6 @@ struct PushConstantRay
 {
   vec4  clear_color;
   vec3  light_position;
-  float light_normal_x;     //
-  float light_normal_y;     //  Problemas de alineamiento.
-  float light_normal_z;     //
   float light_intensity;
   int   light_type;
   int   max_depth;
