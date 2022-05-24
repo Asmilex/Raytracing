@@ -83,6 +83,8 @@ A la hora de desarrollar un proyecto de software, es importante realizar una est
 >
 > (Odio los diagramas de clases. Me gustaría evitar como sea incluirlos.)
 
+![Diagrama de clases para Engine](./img/08/Mermaid.png){#fig:diagrama-clases-engine}
+
 ## Diseño
 
 El diseño juega un papel fundamental en este proyecto. Todos los elementos visuales han sido escogidos con cuidado, de forma que se preserve la estética.
