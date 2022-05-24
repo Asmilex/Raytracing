@@ -280,7 +280,7 @@ La estructura final del proyecto (es decir, la carpeta `application`) es la sigu
 
 El diagrama {@fig:estructura_repo} permite visualizar los puntos anteriores, así como la estructura general del repositorio.
 
-![Estructura del repositorio](./img/08/estructura_repositorio){#fig:estructura_repo}
+![Estructura del repositorio](./img/04/repo_diagram.png){#fig:estructura_repo}
 
 ### Diagramas
 
