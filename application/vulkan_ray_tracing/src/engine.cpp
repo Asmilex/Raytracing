@@ -592,7 +592,7 @@ void Engine::drawPost(VkCommandBuffer cmdBuf)
 //
 
 // ────────────────────────────────────────────────────────────────────────────────
-// Inicializar Vulkan ray tracing
+// Inicializar ray tracing
 //
 void Engine::initRayTracing() {
     // Mirar las propiedades de ray tracing
@@ -607,7 +607,7 @@ void Engine::initRayTracing() {
 }
 
 // ────────────────────────────────────────────────────────────────────────────────
-// Convertir un modelo OBJ en geometría de ray tracing para construir el BLAS
+// Convertir un modelo OBJ en geometría de ray tracing para construir la BLAS
 //
 auto Engine::objectToVkGeometryKHR(const ObjModel& model) {
     // El constructor BLAS requiere las direcciones del dispositivo en raw
@@ -707,7 +707,8 @@ void Engine::createTopLevelAS() {
 
 
 // ────────────────────────────────────────────────────────────────────────────────
-// Este conjunto de descriptores contiene la estructura de aceleración y la imagen de salida
+// Este conjunto de descriptores contiene la estructura de aceleración
+// y la imagen de salida
 //
 void Engine::createRtDescriptorSet() {
     m_rtDescSetLayoutBind.addBinding(
@@ -750,8 +751,8 @@ void Engine::createRtDescriptorSet() {
 }
 
 // ────────────────────────────────────────────────────────────────────────────────
-// Escribir la imagen de salida al conjunto de descriptores
-// - Necesario cuando se cambia la resolución; i.e. cuando se redimensiona la ventana
+// Escribir la imagen de salida al conjunto de descriptores. Necesario cuando
+// se cambia la resolución; i.e. cuando se redimensiona la ventana
 //
 void Engine::updateRtDescriptorSet() {
     // (1) Output buffer
@@ -799,9 +800,8 @@ void Engine::createRtPipeline() {
     stage.stage = VK_SHADER_STAGE_MISS_BIT_KHR;
     stages[eMiss] = stage;
 
-    // // El segundo miss shader se invoca cuando un shadow ray no ha colisionado con la geometría.
-    // // Simplemente, indica que no ha habido oclusión.
-
+    // El segundo miss shader se invoca cuando un shadow ray no ha colisionado con la geometría.
+    // Simplemente, indica que no ha habido oclusión.
     stage.module = nvvk::createShaderModule(m_device,
         nvh::loadFile("spv/raytraceShadow.rmiss.spv", true, defaultSearchPaths, true
     ));
@@ -905,17 +905,15 @@ void Engine::createRtPipeline() {
     rayPipelineInfo.stageCount = static_cast<uint32_t>(stages.size());  // Stages are shaders
     rayPipelineInfo.pStages    = stages.data();
 
-
     // In this case, m_rtShaderGroups.size() == 3 (later 4, with the Shadow Rays): we have one raygen group,
     // one miss shader group, and one hit group.
     rayPipelineInfo.groupCount = static_cast<uint32_t>(m_rtShaderGroups.size());
     rayPipelineInfo.pGroups    = m_rtShaderGroups.data();
 
-
     /*
         The ray generation and closest hit shaders can trace rays, making the ray tracing a potentially recursive process.
         To allow the underlying RTX layer to optimize the pipeline we indicate the maximum recursion depth used
-        by our shaders
+        by our shaders.
 
         For the simplistic shaders we currently have, we can set this depth to 1,
         meaning that we must not trigger recursion at all (i.e. a hit shader calling TraceRayEXT()).

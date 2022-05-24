@@ -155,7 +155,6 @@ public:
     };
     int m_maxAcumFrames {100};
 
-
     void initRayTracing();
 
     auto objectToVkGeometryKHR(const ObjModel& model);
