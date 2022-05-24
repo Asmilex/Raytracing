@@ -1,0 +1,33 @@
+classDiagram
+class Scene {
+    <<enumeration>>
+    cube_default
+    medieval_building
+    cube_reflective
+    any_hit
+    cornell_box_original
+    cornell_box_saturada
+    cornell_box_mirror
+    cornell_box_vacia
+    cornell_box_vacia_an
+    cornell_box_esferas
+    cornell_box_glossy
+    cornell_box_blanca
+    cornell_box_iow
+    cubes
+}
+
+class ModelInfo {
+    +string obj_path
+    +mat4f transform
+    +ModelInfo(string obj_path, vector~mat4f~ transforms)
+    +ModelInfo(string obj_path, mat4f transform)
+    +ModelInfo(string obj_path)
+}
+
+class SceneInfo {
+    +vector~ModelInfo~ models
+    +SceneInfo(Scene scene)
+}
+SceneInfo --> "many" ModelInfo
+SceneInfo --> Scene

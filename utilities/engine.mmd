@@ -1,0 +1,91 @@
+classDiagram
+class Engine {
+    +vector~ObjModel~ m_objModel
+    +vector~ObjDesc~ m_objDesc
+    +vector~ObjInstance~ m_instances
+    +loadModel(const string& filename, mat4f transform)
+    +createObjDescriptionBuffer()
+    +createTextureImages(const VkCommandBuffer& cmdBuf, const vector~string~& textures)
+    +updateUniformBuffer(const VkCommandBuffer& cmdBuf)
+    +PushConstantRaster m_pcRaster
+    +updateDescriptorSet()
+    +createUniformBuffer()
+    +rasterize(const VkCommandBuffer& cmdBuff)
+    +VkPipelineLayout m_pipelineLayout
+    +VkPipeline m_graphicsPipeline
+    +DescriptorSetBindings m_descSetLayoutBind
+    +VkDescriptorPool m_descPool
+    +VkDescriptorSetLayout m_descSetLayout
+    +VkDescriptorSet m_descSet
+    +Buffer m_bGlobals
+    +Buffer m_bObjDesc
+    +vector~Texture~ m_textures
+    +ResourceAllocatorDma m_alloc
+    +DebugUtil m_debug
+    +setup(const VkInstance& instance, const VkDevice& device, const VkPhysicalDevice& physicalDevice, uint32_t queueFamily) override
+    +createDescriptorSetLayout()
+    +createGraphicsPipeline()
+    +destroyResources()
+    +DescriptorSetBindings m_postDescSetLayoutBind
+    +VkDescriptorPool m_postDescPool
+    +VkDescriptorSetLayout m_postDescSetLayout
+    +VkDescriptorSet m_postDescSet
+    +VkPipeline m_postPipeline
+    +VkPipelineLayout m_postPipelineLayout
+    +VkRenderPass m_offscreenRenderPass
+    +VkFramebuffer m_offscreenFramebuffer
+    +Texture m_offscreenColor
+    +Texture m_offscreenDepth
+    +VkFormat m_offscreenColorFormat
+    +VkFormat m_offscreenDepthFormat
+    +createOffscreenRender()
+    +createPostPipeline()
+    +createPostDescriptor()
+    +updatePostDescriptorSet()
+    +drawPost(VkCommandBuffer cmdBuf)
+    +onResize(int w, int h) override
+    +resetFrame()
+    +updateFrame()
+    +VkPhysicalDeviceRayTracingPipelinePropertiesKHR m_rtProperties
+    +RaytracingBuilderKHR m_rtBuilder
+    +DescriptorSetBindings m_rtDescSetLayoutBind
+    +VkDescriptorPool m_rtDescPool
+    +VkDescriptorSetLayout m_rtDescSetLayout
+    +VkDescriptorSet m_rtDescSet
+    +vector~VkRayTracingShaderGroupCreateInfoKHR~ m_rtShaderGroups
+    +VkPipelineLayout m_rtPipelineLayout
+    +VkPipeline m_rtPipeline
+    +Buffer m_rtSBTBuffer
+    +VkStridedDeviceAddressRegionKHR m_rgenRegion
+    +VkStridedDeviceAddressRegionKHR m_missRegion
+    +VkStridedDeviceAddressRegionKHR m_hitRegion
+    +VkStridedDeviceAddressRegionKHR m_callRegion
+    +PushConstantRay m_pcRay
+    +int m_maxAcumFrames
+    +initRayTracing()
+    +objectToVkGeometryKHR(const ObjModel& model)
+    +createBottomLevelAS()
+    +createTopLevelAS()
+    +createRtShaderBindingTable()
+    +createRtPipeline()
+    +createRtDescriptorSet()
+    +updateRtDescriptorSet()
+    +raytrace (const VkCommandBuffer& cmdBuf, const vec4f& clear_color)
+}
+Engine --> "many" ObjModel
+Engine --> "many" ObjInstance
+Engine --|> AppBaseVk
+
+class ObjModel {
+    +uint32_t nbIndices
+    +uint32_t nbVertices
+    +Buffer vertexBuffer
+    +Buffer indexBuffer
+    +Buffer matColorBuffer
+    +Buffer matIndexBuffer
+}
+
+class ObjInstance {
+    +mat4f transform
+    +uint32_t objIndex
+}

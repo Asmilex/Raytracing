@@ -83,7 +83,9 @@ A la hora de desarrollar un proyecto de software, es importante realizar una est
 >
 > (Odio los diagramas de clases. Me gustaría evitar como sea incluirlos.)
 
-![Diagrama de clases para Engine](./img/08/Mermaid.png){#fig:diagrama-clases-engine}
+![Diagrama de clases para Engine](./img/08/Mermaid%20engine.png){#fig:diagrama-clases-engine}
+
+![Diagrama de clases para Scenes](./img/08/Mermaid%20scenes.png){#fig:diagrama-clases-scenes}
 
 ## Diseño
 
