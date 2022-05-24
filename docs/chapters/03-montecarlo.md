@@ -167,7 +167,7 @@ $$
 \E{X} = \sum_{i = 2}^{12}{i P[X = i]} = 2\frac{1}{36} + 3 \frac{2}{36} + \dots + 12 \frac{1}{36} = 7
 $$
 
-Para variables aleatorias uniformes en $(a, b)$ (es decir, $X \sim U(a, b)$), la esperanza es
+Para variables aleatorias uniformes en $(a, b)$ (es decir, $X \sim \mathcal{U}(a, b)$), la esperanza es
 
 $$
 \E{X} = \int_{a}^{b}{x \frac{1}{b - a}dx} = \frac{a + b}{2}
@@ -324,9 +324,8 @@ Para usar el estimador de [@eq:mc_integral], necesitamos saber la probabilidad d
 Bien, consideremos que una circunferencia de radio $r$ se encuentra inscrita en un cuadrado. El área de la circunferencia es $\pi r^2$, mientras que la del cuadrado es $(2r)^2 = 4r^2$. Por tanto, la probabilidad de obtener un punto dentro de la circunferencia es $\frac{\pi r^2}{4r^2} = \frac{\pi}{4}$. Podemos tomar $p(x, y) = \frac{1}{4}$, de forma que
 
 $$
-\pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con } (x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
+\pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con } (x_i, y_i) \sim \mathcal{U}(\small{[-1, 1] \times [-1, 1]})
 $$
-
 
 ### Integración de Monte Carlo
 
@@ -572,7 +571,7 @@ $$
 \int_{x_0}^{x_1} \int_{y_0}^{y_1} \int_{z_0}^{z_1}{f(x, y, z)dx dy dz}
 $$
 
-mediante una variable aleatoria $X \sim U(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]})$ con función de densidad $p(x, y, z) = \frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}$, tomamos el estimador
+mediante una variable aleatoria $X \sim \mathcal{U}(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]})$ con función de densidad $p(x, y, z) = \frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}$, tomamos el estimador
 
 $$
 \tilde{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)} \sum_{i = 1}^{N}{f(X_i)}
@@ -681,7 +680,7 @@ Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber 
 
 > **En resumen**: Para conseguir una muestra de una distribución específica $F_X$:
 >
-> 1. Generar un número aleatorio $\xi \sim U(0, 1)$.
+> 1. Generar un número aleatorio $\xi \sim \mathcal{U}(0, 1)$.
 > 2. Hallar la inversa de la función de distribución deseada $F_X$, denotada $F_X^{-1}(x)$.
 > 3. Calcular $F_X^{-1}(\xi) = X$.
 
@@ -734,11 +733,58 @@ $$
 
 Sacando un número aleatorio $\xi$, y pasándolo por la función obtenida, conseguimos un elemento con distribución $F(x)$.
 
+#### Ejemplo práctico del método de la transformada inversa en R
+
+Aunque el ejemplo anterior nos enseña cómo proceder para una función sencilla, resulta algo difícil de visualizar. Por ello, vamos a utilizar el programa R para dar otro ejemplo.
+
+Consideremos la distribución exponencial de parámetro $\lambda$, la cual tiene función de densidad y de distribución
+
+$$
+\begin{aligned}
+  f(x) & = \lambda e^{-\lambda x}, \quad & x \ge 0 \\
+  F(x) & =  1 - e^{-\lambda x},    \quad & x \ge 0
+\end{aligned}
+$$
+
+La función inversa se calcula tal que
+
+$$
+\begin{aligned}
+  \xi & = F(x)        = 1 - e^{-\lambda x} \quad \iff \\
+    x & = F^{-1}(\xi) = - \frac{log(1 - \xi)}{\lambda}
+\end{aligned}
+$$
+
+Podemos generar ahora $\xi_1, \dots, \xi_n$ valores en $\mathcal{U}(0, 1)$ y devolver $X_i = -\frac{log(\xi_i)}{\lambda}$.
+
+Para el ejemplo, fijemos $\lambda = 1.5$ y calculemos los valores para $X_i$:
+
+```R
+F <- function(xi, lambda) {
+  -log(xi) / lambda
+}
+
+N <- 1000
+xi <- runif(N)
+lambda <- 1.5
+x <- F(xi, lambda)
+```
+
+Es fácil comprobar que los valores generados se asemejan fielmente a una función de densidad exponencial:
+
+```R
+hist(x, freq = FALSE, breaks = 'FD', main = 'Método de la inversa para la exponencial', ylim = c(0, 1.5))
+lines(density(x), col = 'blue')
+curve(dexp(x, rate = lambda), add = TRUE, col = 2)
+```
+
+![Histograma del método de la función inversa](./img/03/metodo_inversa.png){#fig:metodo_inversa_R}
+
 ### Método del rechazo
 
 > **En resumen**: Para conseguir una muestra de una variable aleatoria $X$ con función de densidad $p_X$:
 >
-> 1. Obtener una muestra $y$ de $Y$ , y otra $\xi$ de $U(0, 1)$.
+> 1. Obtener una muestra $y$ de $Y$ , y otra $\xi$ de $\mathcal{U}(0, 1)$.
 > 2. Comprobar si $\xi < \frac{p_X(y)}{Mp_Y(y)}$. Si es así, aceptarla. Si no, sacar otra muestra.
 
 El método anterior presenta principalmente dos problemas:
@@ -750,15 +796,92 @@ Como alternativa, podemos usar este método (en inglés, *rejection method*). Pa
 
 La idea principal es aceptar una muestra de $Y$ con probabilidad $p_X/Mp_Y$, con $1 < M < \infty$. En esencia, estamos jugando a los dardos: si la muestra de $y$ que hemos obtenido se queda por debajo de la gráfica de la función $Mp_Y < p_X$, estaremos obteniendo una de $p_X$.
 
-> TODO dibujo de la gráfica $\frac{p_X(y)}{Mp_Y(y)}$.
->
-> ¿Quizás haga falta una demostración también? No estoy satisfecho con este apartado ahora mismo. Necesita trabajo.
-
 El algoritmo consiste en:
 
-1. Obtener una muestra de $Y$, denotada $y$, y otra de $U(0, 1)$, llamada $\xi$.
+1. Obtener una muestra de $Y \sim p_Y$, denotada $y$, y otra de $\mathcal{U}(0, 1)$, llamada $\xi$.
 2. Comprobar si $\xi < \frac{p_X(y)}{Mp_Y(y)}$.
    1. Si se cumple, se acepta $y$ como muestra de $p_X$
    2. En caso contrario, se rechaza $y$ y se vuelve al paso 1.
+
+#### Ejemplo práctico del método del rechazo en R
+
+De la misma forma que hicimos con el [método de la inversa](#ejemplo-práctico-del-método-de-la-transformada-inversa-en-r), implementaremos un ejemplo gráfico de esta técnica en el software R. En este caso, generaremos valores de una distribución Beta a partir de la uniforme. Es decir, podemos tomar
+
+$$
+\begin{aligned}
+p_X (x) & = \frac{\Gamma(a + b)}{\Gamma(a) \Gamma(b)} x^{a - 1} (1 - x)^{b - 1}, \quad 0 \le x \le 1, a = 2, b = 6 \\
+p_Y (x) & = 1, \quad 0 \le x \le 1
+\end{aligned}
+$$
+
+Como $M$ podemos tomar
+
+$$
+M = \sup_{x}\frac{p_Y(x)}{p_X(x)} = \sup_{x}{p_Y(x)}
+$$
+
+El siguiente fragmento de código de R calcula este valor:
+
+```R
+a <- 2
+b <- 6
+resultado <- optimize(
+    f = function(x) { dbeta(x, shape1 = a, shape2 = b) },
+    maximum = TRUE,
+    interval = c(0, 1)
+)
+
+# $maximum
+# [1] 0.1666692
+#
+# $objective
+# [1] 2.813143
+
+M <- resultado$objective
+```
+
+![](./img/03/metodo_rechazo_grafica.png)
+
+Veamos cómo de bien se aproxima el algoritmo:
+
+```R
+N <- 1000
+x <- double(N)
+
+p_X <- function(x) dbeta(x, shape1 = a, shape2 = b)
+p_Y <- function(x) 1
+
+valores_generados <- 0
+
+for (i in 1:N) {
+    xi <- runif(1)
+    y <- runif(1)
+    valores_generados <- valores_generados + 1
+
+    while (xi > p_X(y) / (M * p_Y(y))) {
+        # Seguir generando hasta que aceptemos uno
+        xi <- runif(1)
+        y <- runif(1)
+        valores_generados <- valores_generados + 1
+    }
+
+    # Aceptar el valor
+    x[i] <- y
+}
+```
+
+```R
+valores_generados
+# [1] 2906
+```
+
+```R
+hist(x, freq = FALSE, breaks = 'FD', main = 'Método del rechazo para la distribución Beta(a = 2, b = 6)')
+lines(density(x), col = 'blue')
+curve(dbeta(x, shape1 = a, shape2 = b), add = TRUE, col = 2)
+```
+
+![Histograma del método de rechazo](./img/03/metodo_rechazo.png){#fig:metodo_rechazo_R}
+
 
 [^1]: En su defecto, si tenemos una función de densidad $f_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{f_X(t)dt}$.
