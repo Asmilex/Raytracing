@@ -11,16 +11,13 @@ vec3 pathtrace(vec4 ray_origin, vec4 ray_dir, float t_min, float t_max, uint ray
     prd.ray_dir    = ray_dir.xyz;
     prd.weight     = vec3(0);
     //prd.attenuation = vec3(1.f, 1.f, 1.f);
-    // seed ya estaba puesto
+    // prd.seed ya estaba inicializado
 
     vec3 current_weight = vec3(1);
     vec3 hit_value      = vec3(0);
 
-    // Con este bucle evitamos generar rayos desde el closest hit
+    // Evitar llamadas recursivas a traceRayEXT() desde el closest hit.
     for (; prd.depth < pcRay.max_depth; prd.depth++) {
-        // Cada vez que impactemos con algo, se actualizará el origen y la nueva dirección.
-        // Dependerá del closest hit poner los parámetros de impacto correctos.
-
         traceRayEXT(topLevelAS, // acceleration structure
             ray_flags,          // rayFlags
             0xFF,               // cullMask
@@ -34,7 +31,7 @@ vec3 pathtrace(vec4 ray_origin, vec4 ray_dir, float t_min, float t_max, uint ray
             0                   // payload (location = 0)
         );
 
-        hit_value += prd.hit_value * current_weight;
+        hit_value      += prd.hit_value * current_weight;
         current_weight *= prd.weight;
     }
 
@@ -65,11 +62,5 @@ vec3 sample_pixel(ivec2 image_coords, ivec2 image_res) {
 
     vec3 radiance = pathtrace(origin, direction, t_min, t_max, ray_flags);
 
-    // Quitar las luciérnagas
-/*     float lum = dot(radiance, vec3(0.212671f, 0.715160f, 0.072169f));
-    if (lum > pcRay.firefly_clamp_threshold) {
-        radiance *= pcRay.firefly_clamp_threshold / lum;
-    }
- */
     return radiance;
 }

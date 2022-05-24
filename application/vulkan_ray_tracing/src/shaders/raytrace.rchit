@@ -87,7 +87,7 @@ void main()
         float prob_diffuse = length(mat.diffuse) / (length(mat.diffuse) + length(mat.specular));
 
         if (prob_diffuse > 0.98 || prob_diffuse > rnd(prd.seed)) { // Componente difusa
-            // Pick a random direction from here and keep going
+            // Escoger una dirección aleatoria y continuar el camino.
             vec3 tangent, bitangent;
             create_coordinate_system(world_normal, tangent, bitangent);
 
@@ -203,14 +203,6 @@ void main()
 
         prd.seed = prdShadow.seed;
         float attenuation = 1;
-
-/*         if (prdShadow.is_hit) {
-            attenuation = 1.0 / (1.0 + light_distance);
-        }
-        else {
-            vec3 specular = compute_specular(mat, gl_WorldRayDirectionEXT, L, normal);
-        }
-        weight = prd.weight * attenuation; */
 
         if (!prdShadow.is_hit) {
             hit_value = hit_value + light_intensity*BSDF*cos_theta_light / pdf_light;

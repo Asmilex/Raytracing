@@ -32,24 +32,19 @@ void main() {
 
     vec3 pixel_color = vec3(0);  // El color final de la imagen
 
-    for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {     // sample is a keyword, so we use smpl
+    for (int smpl = 0; smpl < pcRay.nb_samples; smpl++) {
         pixel_color += sample_pixel(image_coords, image_res);
     }
 
     pixel_color = pixel_color / pcRay.nb_samples;
 
     if (USE_GAMMA_CORRECTION == 1) {
-        pixel_color = pow(pixel_color, vec3(1.0 / 2.2));  // Gamma correction for 2.2
+        pixel_color = pow(pixel_color, vec3(1.0 / 2.2));  // Corrección para gamma 2.2
         pixel_color = clamp(pixel_color, 0.0, 1.0);
     }
 
 
 // ──────────────────────────────────────────────────────── FIN DE LA MUESTRA ─────
-
-
-    // Si tenemos varios frames acumulados en pixel_color, dividimos por el número de samples
-    // para obtener el frame resultante, atenuando el color.
-    // Si no es así, estamos en el primer frame, por lo que lo guardamos directamente.
 
     if (pcRay.frame > 0) {
         vec3 old_color = imageLoad(image, image_coords).xyz;

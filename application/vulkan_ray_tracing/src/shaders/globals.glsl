@@ -33,7 +33,7 @@ struct HitPayload
 {
     vec3 hit_value;
     vec3 weight;
-    vec3 attenuation;
+    vec3 attenuation;   // For shadow rays. Currently unused.
 
     vec3 ray_origin;
     vec3 ray_dir;

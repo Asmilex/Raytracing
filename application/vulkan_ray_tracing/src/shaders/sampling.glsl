@@ -72,13 +72,10 @@ float reflectance (in float cosine, in float eta) {
 // Return the tangent and binormal from the incoming normal
 // http://www.pbr-book.org/3ed-2018/Geometry_and_Transformations/Vectors.html#CoordinateSystemfromaVector
 void create_coordinate_system(in vec3 N, out vec3 Nt, out vec3 Nb) {
-    // if(abs(N.x) > abs(N.y))
-    //     Nt = vec3(N.z, 0, -N.x) / sqrt(N.x * N.x + N.z * N.z);
-    // else
-    //     Nt = vec3(0, -N.z, N.y) / sqrt(N.y * N.y + N.z * N.z);
-    // Nb = cross(N, Nt);
-
-    Nt = normalize(((abs(N.z) > 0.99999f) ? vec3(-N.x * N.y, 1.0f - N.y * N.y, -N.y * N.z) :
-                                          vec3(-N.x * N.z, -N.y * N.z, 1.0f - N.z * N.z)));
+    Nt = normalize(
+        (abs(N.z) > 0.99999f
+            ? vec3(-N.x * N.y, 1.0f - N.y * N.y, -N.y * N.z)
+            : vec3(-N.x * N.z, -N.y * N.z,       1.0f - N.z * N.z))
+    );
     Nb = cross(Nt, N);
 }
