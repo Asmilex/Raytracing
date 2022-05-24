@@ -205,476 +205,479 @@ Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan" />
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#a-brief-overview">A brief overview</a></li>
 <li><a href="#dedicatoria">Dedicatoria</a></li>
-<li><a href="#introducción"><span class="toc-section-number">1</span>
-Introducción</a>
+<li><a href="#introducción">Introducción</a>
 <ul>
 <li><a href="#nota-histórica"><span
-class="toc-section-number">1.1</span> Nota histórica</a></li>
+class="toc-section-number">0.1</span> Nota histórica</a></li>
 <li><a href="#qué-es-ray-tracing"><span
-class="toc-section-number">1.2</span> ¿Qué es ray tracing?</a></li>
+class="toc-section-number">0.2</span> ¿Qué es ray tracing?</a></li>
 <li><a href="#objetivos-del-trabajo"><span
-class="toc-section-number">1.3</span> Objetivos del trabajo</a></li>
+class="toc-section-number">0.3</span> Objetivos del trabajo</a></li>
 <li><a href="#técnicas-empleadas-para-la-resolución"><span
-class="toc-section-number">1.4</span> Técnicas empleadas para la
+class="toc-section-number">0.4</span> Técnicas empleadas para la
 resolución</a></li>
 <li><a href="#principales-fuentes-consultadas"><span
-class="toc-section-number">1.5</span> Principales fuentes
+class="toc-section-number">0.5</span> Principales fuentes
 consultadas</a></li>
 </ul></li>
-<li><a href="#las-bases"><span class="toc-section-number">2</span> Las
+<li><a href="#las-bases"><span class="toc-section-number">1</span> Las
 bases</a>
 <ul>
 <li><a href="#eligiendo-direcciones"><span
-class="toc-section-number">2.1</span> Eligiendo direcciones</a></li>
+class="toc-section-number">1.1</span> Eligiendo direcciones</a></li>
 <li><a href="#intersecciones-rayo---objeto"><span
-class="toc-section-number">2.2</span> Intersecciones rayo - objeto</a>
+class="toc-section-number">1.2</span> Intersecciones rayo - objeto</a>
 <ul>
 <li><a href="#superficies-implícitas"><span
-class="toc-section-number">2.2.1</span> Superficies implícitas</a></li>
+class="toc-section-number">1.2.1</span> Superficies implícitas</a></li>
 <li><a href="#superficies-paramétricas"><span
-class="toc-section-number">2.2.2</span> Superficies
+class="toc-section-number">1.2.2</span> Superficies
 paramétricas</a></li>
 <li><a href="#intersecciones-con-esferas"><span
-class="toc-section-number">2.2.3</span> Intersecciones con
+class="toc-section-number">1.2.3</span> Intersecciones con
 esferas</a></li>
 <li><a href="#intersecciones-con-triángulos"><span
-class="toc-section-number">2.2.4</span> Intersecciones con
+class="toc-section-number">1.2.4</span> Intersecciones con
 triángulos</a>
 <ul>
 <li><a href="#coordenadas-baricéntricas"><span
-class="toc-section-number">2.2.4.1</span> coordenadas
+class="toc-section-number">1.2.4.1</span> coordenadas
 baricéntricas</a></li>
 <li><a href="#calculando-la-intersección"><span
-class="toc-section-number">2.2.4.2</span> calculando la
+class="toc-section-number">1.2.4.2</span> calculando la
 intersección</a></li>
 </ul></li>
 </ul></li>
 </ul></li>
 <li><a href="#transporte-de-luz"><span
-class="toc-section-number">3</span> Transporte de luz</a>
+class="toc-section-number">2</span> Transporte de luz</a>
 <ul>
 <li><a href="#introducción-a-la-radiometría"><span
-class="toc-section-number">3.1</span> Introducción a la radiometría</a>
+class="toc-section-number">2.1</span> Introducción a la radiometría</a>
 <ul>
-<li><a href="#potencia"><span class="toc-section-number">3.1.1</span>
+<li><a href="#potencia"><span class="toc-section-number">2.1.1</span>
 Potencia</a></li>
-<li><a href="#irradiancia"><span class="toc-section-number">3.1.2</span>
+<li><a href="#irradiancia"><span class="toc-section-number">2.1.2</span>
 Irradiancia</a></li>
 <li><a href="#ángulos-sólidos"><span
-class="toc-section-number">3.1.3</span> Ángulos sólidos</a></li>
+class="toc-section-number">2.1.3</span> Ángulos sólidos</a></li>
 <li><a href="#intensidad-radiante"><span
-class="toc-section-number">3.1.4</span> Intensidad radiante</a></li>
-<li><a href="#radiancia"><span class="toc-section-number">3.1.5</span>
+class="toc-section-number">2.1.4</span> Intensidad radiante</a></li>
+<li><a href="#radiancia"><span class="toc-section-number">2.1.5</span>
 Radiancia</a></li>
 <li><a href="#integrales-radiométricas"><span
-class="toc-section-number">3.1.6</span> Integrales radiométricas</a>
+class="toc-section-number">2.1.6</span> Integrales radiométricas</a>
 <ul>
 <li><a href="#una-nueva-expresión-de-la-irradiancia-y-el-flujo"><span
-class="toc-section-number">3.1.6.1</span> Una nueva expresión de la
+class="toc-section-number">2.1.6.1</span> Una nueva expresión de la
 irradiancia y el flujo</a></li>
 <li><a href="#integrando-sobre-área"><span
-class="toc-section-number">3.1.6.2</span> Integrando sobre área</a></li>
+class="toc-section-number">2.1.6.2</span> Integrando sobre área</a></li>
 </ul></li>
 <li><a href="#fotometría-y-radiometría"><span
-class="toc-section-number">3.1.7</span> Fotometría y
+class="toc-section-number">2.1.7</span> Fotometría y
 radiometría</a></li>
 </ul></li>
 <li><a href="#dispersión-de-luz"><span
-class="toc-section-number">3.2</span> Dispersión de luz</a>
+class="toc-section-number">2.2</span> Dispersión de luz</a>
 <ul>
 <li><a
 href="#la-función-de-distribución-de-reflectancia-bidireccional-brdf"><span
-class="toc-section-number">3.2.1</span> La función de distribución de
+class="toc-section-number">2.2.1</span> La función de distribución de
 reflectancia bidireccional (BRDF)</a></li>
 <li><a
 href="#la-función-de-distribución-de-transmitancia-bidireccional-btdf"><span
-class="toc-section-number">3.2.2</span> La función de distribución de
+class="toc-section-number">2.2.2</span> La función de distribución de
 transmitancia bidireccional (BTDF)</a></li>
 <li><a
 href="#la-función-de-distribución-de-dispersión-bidireccional-bsdf"><span
-class="toc-section-number">3.2.3</span> La función de distribución de
+class="toc-section-number">2.2.3</span> La función de distribución de
 dispersión bidireccional (BSDF)</a></li>
 <li><a href="#reflectancia-hemisférica"><span
-class="toc-section-number">3.2.4</span> Reflectancia
+class="toc-section-number">2.2.4</span> Reflectancia
 hemisférica</a></li>
 </ul></li>
 <li><a href="#modelos-ópticos-de-materiales"><span
-class="toc-section-number">3.3</span> Modelos ópticos de materiales</a>
+class="toc-section-number">2.3</span> Modelos ópticos de materiales</a>
 <ul>
 <li><a href="#tipos-de-dispersión"><span
-class="toc-section-number">3.3.1</span> Tipos de dispersión</a></li>
-<li><a href="#reflexión"><span class="toc-section-number">3.3.2</span>
+class="toc-section-number">2.3.1</span> Tipos de dispersión</a></li>
+<li><a href="#reflexión"><span class="toc-section-number">2.3.2</span>
 Reflexión</a>
 <ul>
 <li><a href="#reflexión-especular-perfecta"><span
-class="toc-section-number">3.3.2.1</span> Reflexión especular
+class="toc-section-number">2.3.2.1</span> Reflexión especular
 perfecta</a></li>
 <li><a href="#reflexión-difusa-o-lamberiana"><span
-class="toc-section-number">3.3.2.2</span> Reflexión difusa o
+class="toc-section-number">2.3.2.2</span> Reflexión difusa o
 lamberiana</a></li>
 <li><a href="#reflexión-especular-no-perfecta"><span
-class="toc-section-number">3.3.2.3</span> Reflexión especular no
+class="toc-section-number">2.3.2.3</span> Reflexión especular no
 perfecta</a></li>
 </ul></li>
-<li><a href="#refracción"><span class="toc-section-number">3.3.3</span>
+<li><a href="#refracción"><span class="toc-section-number">2.3.3</span>
 Refracción</a>
 <ul>
 <li><a href="#ley-de-snell"><span
-class="toc-section-number">3.3.3.1</span> Ley de Snell</a></li>
+class="toc-section-number">2.3.3.1</span> Ley de Snell</a></li>
 <li><a href="#ecuaciones-de-fresnel"><span
-class="toc-section-number">3.3.3.2</span> Ecuaciones de Fresnel</a></li>
+class="toc-section-number">2.3.3.2</span> Ecuaciones de Fresnel</a></li>
 <li><a href="#la-aproximación-de-schlick"><span
-class="toc-section-number">3.3.3.3</span> La aproximación de
+class="toc-section-number">2.3.3.3</span> La aproximación de
 Schlick</a></li>
 </ul></li>
 <li><a href="#materiales-híbridos"><span
-class="toc-section-number">3.3.4</span> Materiales híbridos</a></li>
+class="toc-section-number">2.3.4</span> Materiales híbridos</a></li>
 <li><a href="#otros-modelos"><span
-class="toc-section-number">3.3.5</span> Otros modelos</a>
+class="toc-section-number">2.3.5</span> Otros modelos</a>
 <ul>
 <li><a href="#oren---nayar"><span
-class="toc-section-number">3.3.5.1</span> Oren - Nayar</a></li>
-<li><a href="#ggx"><span class="toc-section-number">3.3.5.2</span>
+class="toc-section-number">2.3.5.1</span> Oren - Nayar</a></li>
+<li><a href="#ggx"><span class="toc-section-number">2.3.5.2</span>
 GGX</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#la-rendering-equation"><span
-class="toc-section-number">3.4</span> La rendering equation</a></li>
+class="toc-section-number">2.4</span> La rendering equation</a></li>
 </ul></li>
 <li><a href="#métodos-de-monte-carlo"><span
-class="toc-section-number">4</span> Métodos de Monte Carlo</a>
+class="toc-section-number">3</span> Métodos de Monte Carlo</a>
 <ul>
 <li><a href="#repaso-de-probabilidad"><span
-class="toc-section-number">4.1</span> Repaso de probabilidad</a>
+class="toc-section-number">3.1</span> Repaso de probabilidad</a>
 <ul>
 <li><a href="#variables-aleatorias-discretas"><span
-class="toc-section-number">4.1.1</span> Variables aleatorias
+class="toc-section-number">3.1.1</span> Variables aleatorias
 discretas</a></li>
 <li><a href="#variables-aleatorias-continuas"><span
-class="toc-section-number">4.1.2</span> Variables aleatorias
+class="toc-section-number">3.1.2</span> Variables aleatorias
 continuas</a></li>
 <li><a href="#esperanza-y-varianza-de-una-variable-aleatoria"><span
-class="toc-section-number">4.1.3</span> Esperanza y varianza de una
+class="toc-section-number">3.1.3</span> Esperanza y varianza de una
 variable aleatoria</a></li>
 <li><a href="#teoremas-importantes"><span
-class="toc-section-number">4.1.4</span> Teoremas importantes</a></li>
-<li><a href="#estimadores"><span class="toc-section-number">4.1.5</span>
+class="toc-section-number">3.1.4</span> Teoremas importantes</a></li>
+<li><a href="#estimadores"><span class="toc-section-number">3.1.5</span>
 Estimadores</a></li>
 </ul></li>
 <li><a href="#el-estimador-de-monte-carlo"><span
-class="toc-section-number">4.2</span> El estimador de Monte Carlo</a>
+class="toc-section-number">3.2</span> El estimador de Monte Carlo</a>
 <ul>
 <li><a href="#monte-carlo-básico"><span
-class="toc-section-number">4.2.1</span> Monte Carlo básico</a></li>
+class="toc-section-number">3.2.1</span> Monte Carlo básico</a></li>
 <li><a href="#integración-de-monte-carlo"><span
-class="toc-section-number">4.2.2</span> Integración de Monte Carlo</a>
+class="toc-section-number">3.2.2</span> Integración de Monte Carlo</a>
 <ul>
 <li><a href="#un-ejemplo-práctico-en-r"><span
-class="toc-section-number">4.2.2.1</span> Un ejemplo práctico en
+class="toc-section-number">3.2.2.1</span> Un ejemplo práctico en
 R</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#técnicas-de-reducción-de-varianza"><span
-class="toc-section-number">4.3</span> Técnicas de reducción de
+class="toc-section-number">3.3</span> Técnicas de reducción de
 varianza</a>
 <ul>
 <li><a href="#muestreo-por-importancia"><span
-class="toc-section-number">4.3.1</span> Muestreo por importancia</a>
+class="toc-section-number">3.3.1</span> Muestreo por importancia</a>
 <ul>
 <li><a href="#muestreo-por-importancia-en-transporte-de-luz"><span
-class="toc-section-number">4.3.1.1</span> Muestreo por importancia en
+class="toc-section-number">3.3.1.1</span> Muestreo por importancia en
 transporte de luz</a></li>
 </ul></li>
 <li><a href="#muestreo-por-importancia-múltiple"><span
-class="toc-section-number">4.3.2</span> Muestreo por importancia
+class="toc-section-number">3.3.2</span> Muestreo por importancia
 múltiple</a>
 <ul>
 <li><a
 href="#muestreo-por-importancia-múltiple-en-transporte-de-luz"><span
-class="toc-section-number">4.3.2.1</span> Muestreo por importancia
+class="toc-section-number">3.3.2.1</span> Muestreo por importancia
 múltiple en transporte de luz</a></li>
 </ul></li>
 <li><a
 href="#otras-técnicas-de-reducción-de-varianza-en-transporte-de-luz"><span
-class="toc-section-number">4.3.3</span> Otras técnicas de reducción de
+class="toc-section-number">3.3.3</span> Otras técnicas de reducción de
 varianza en transporte de luz</a>
 <ul>
 <li><a href="#ruleta-rusa"><span
-class="toc-section-number">4.3.3.1</span> Ruleta rusa</a></li>
+class="toc-section-number">3.3.3.1</span> Ruleta rusa</a></li>
 <li><a
 href="#next-event-estimation-o-muestreo-directo-de-fuentes-de-luz"><span
-class="toc-section-number">4.3.3.2</span> Next event estimation, o
+class="toc-section-number">3.3.3.2</span> Next event estimation, o
 muestreo directo de fuentes de luz</a></li>
 <li><a href="#quasi-monte-carlo"><span
-class="toc-section-number">4.3.3.3</span> Quasi-Monte Carlo</a></li>
+class="toc-section-number">3.3.3.3</span> Quasi-Monte Carlo</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#escogiendo-puntos-aleatorios"><span
-class="toc-section-number">4.4</span> Escogiendo puntos aleatorios</a>
+class="toc-section-number">3.4</span> Escogiendo puntos aleatorios</a>
 <ul>
 <li><a href="#método-de-la-transformada-inversa"><span
-class="toc-section-number">4.4.1</span> Método de la transformada
+class="toc-section-number">3.4.1</span> Método de la transformada
 inversa</a>
 <ul>
+<li><a href="#ejemplo-práctico-de-la-transformada-inversa-para-x2"><span
+class="toc-section-number">3.4.1.1</span> Ejemplo práctico de la
+transformada inversa para <span
+class="math inline">\(x^2\)</span></a></li>
 <li><a
 href="#ejemplo-práctico-del-método-de-la-transformada-inversa-en-r"><span
-class="toc-section-number">4.4.1.1</span> Ejemplo práctico del método de
+class="toc-section-number">3.4.1.2</span> Ejemplo práctico del método de
 la transformada inversa en R</a></li>
 </ul></li>
 <li><a href="#método-del-rechazo"><span
-class="toc-section-number">4.4.2</span> Método del rechazo</a>
+class="toc-section-number">3.4.2</span> Método del rechazo</a>
 <ul>
 <li><a href="#ejemplo-práctico-del-método-del-rechazo-en-r"><span
-class="toc-section-number">4.4.2.1</span> Ejemplo práctico del método
+class="toc-section-number">3.4.2.1</span> Ejemplo práctico del método
 del rechazo en R</a></li>
 </ul></li>
 </ul></li>
 </ul></li>
 <li><a href="#construyamos-un-path-tracer"><span
-class="toc-section-number">5</span> ¡Construyamos un path tracer!</a>
+class="toc-section-number">4</span> ¡Construyamos un path tracer!</a>
 <ul>
 <li><a href="#el-algoritmo-de-path-tracing"><span
-class="toc-section-number">5.1</span> El algoritmo de path tracing</a>
+class="toc-section-number">4.1</span> El algoritmo de path tracing</a>
 <ul>
 <li><a href="#estimando-la-rendering-equation-con-monte-carlo"><span
-class="toc-section-number">5.1.1</span> Estimando la rendering equation
+class="toc-section-number">4.1.1</span> Estimando la rendering equation
 con Monte Carlo</a></li>
 <li><a href="#pseudocódigo-de-un-path-tracer"><span
-class="toc-section-number">5.1.2</span> Pseudocódigo de un path
+class="toc-section-number">4.1.2</span> Pseudocódigo de un path
 tracer</a></li>
 <li><a href="#evitando-la-recursividad"><span
-class="toc-section-number">5.1.3</span> Evitando la
+class="toc-section-number">4.1.3</span> Evitando la
 recursividad</a></li>
 </ul></li>
 <li><a href="#requisitos-de-ray-tracing-en-tiempo-real"><span
-class="toc-section-number">5.2</span> Requisitos de ray tracing en
+class="toc-section-number">4.2</span> Requisitos de ray tracing en
 tiempo real</a>
 <ul>
 <li><a href="#arquitecturas-de-gráficas"><span
-class="toc-section-number">5.2.1</span> Arquitecturas de
+class="toc-section-number">4.2.1</span> Arquitecturas de
 gráficas</a></li>
 <li><a href="#frameworks-y-api-de-ray-tracing-en-tiempo-real"><span
-class="toc-section-number">5.2.2</span> Frameworks y API de ray tracing
+class="toc-section-number">4.2.2</span> Frameworks y API de ray tracing
 en tiempo real</a></li>
 </ul></li>
 <li><a href="#setup-del-proyecto"><span
-class="toc-section-number">5.3</span> Setup del proyecto</a>
+class="toc-section-number">4.3</span> Setup del proyecto</a>
 <ul>
 <li><a href="#un-vistazo-general-a-la-estructura"><span
-class="toc-section-number">5.3.1</span> Un vistazo general a la
+class="toc-section-number">4.3.1</span> Un vistazo general a la
 estructura</a></li>
-<li><a href="#diagramas"><span class="toc-section-number">5.3.2</span>
+<li><a href="#diagramas"><span class="toc-section-number">4.3.2</span>
 Diagramas</a></li>
 </ul></li>
 <li><a href="#compilación-y-ejecución"><span
-class="toc-section-number">5.4</span> Compilación y ejecución</a></li>
+class="toc-section-number">4.4</span> Compilación y ejecución</a></li>
 <li><a href="#estructuras-de-aceleración"><span
-class="toc-section-number">5.5</span> Estructuras de aceleración</a>
+class="toc-section-number">4.5</span> Estructuras de aceleración</a>
 <ul>
 <li><a href="#botom-level-acceleration-structure-blas"><span
-class="toc-section-number">5.5.1</span> Botom-Level Acceleration
+class="toc-section-number">4.5.1</span> Botom-Level Acceleration
 Structure (BLAS)</a></li>
 <li><a href="#top-level-acceleration-structure-tlas"><span
-class="toc-section-number">5.5.2</span> Top-Level Acceleration Structure
+class="toc-section-number">4.5.2</span> Top-Level Acceleration Structure
 (TLAS)</a></li>
 </ul></li>
 <li><a href="#la-ray-tracing-pipeline"><span
-class="toc-section-number">5.6</span> La ray tracing pipeline</a>
+class="toc-section-number">4.6</span> La ray tracing pipeline</a>
 <ul>
 <li><a href="#descriptores-y-conceptos-básicos"><span
-class="toc-section-number">5.6.1</span> Descriptores y conceptos
+class="toc-section-number">4.6.1</span> Descriptores y conceptos
 básicos</a></li>
 <li><a href="#la-shader-binding-table"><span
-class="toc-section-number">5.6.2</span> La Shader Binding Table</a></li>
+class="toc-section-number">4.6.2</span> La Shader Binding Table</a></li>
 <li><a href="#tipos-de-shaders"><span
-class="toc-section-number">5.6.3</span> Tipos de shaders</a></li>
+class="toc-section-number">4.6.3</span> Tipos de shaders</a></li>
 <li><a href="#traspaso-de-información-entre-shaders"><span
-class="toc-section-number">5.6.4</span> Traspaso de información entre
+class="toc-section-number">4.6.4</span> Traspaso de información entre
 shaders</a></li>
 <li><a href="#creación-de-la-ray-tracing-pipeline"><span
-class="toc-section-number">5.6.5</span> Creación de la ray tracing
+class="toc-section-number">4.6.5</span> Creación de la ray tracing
 pipeline</a></li>
 </ul></li>
 <li><a href="#materiales-y-objetos"><span
-class="toc-section-number">5.7</span> Materiales y objetos</a></li>
+class="toc-section-number">4.7</span> Materiales y objetos</a></li>
 <li><a href="#fuentes-de-luz"><span
-class="toc-section-number">5.8</span> Fuentes de luz</a></li>
+class="toc-section-number">4.8</span> Fuentes de luz</a></li>
 <li><a
 href="#antialiasing-mediante-jittering-y-acumulación-temporal"><span
-class="toc-section-number">5.9</span> Antialiasing mediante jittering y
+class="toc-section-number">4.9</span> Antialiasing mediante jittering y
 acumulación temporal</a></li>
 <li><a href="#corrección-de-gamma"><span
-class="toc-section-number">5.10</span> Corrección de gamma</a></li>
+class="toc-section-number">4.10</span> Corrección de gamma</a></li>
 </ul></li>
 <li><a href="#análisis-de-rendimiento"><span
-class="toc-section-number">6</span> Análisis de rendimiento</a>
+class="toc-section-number">5</span> Análisis de rendimiento</a>
 <ul>
 <li><a href="#usando-el-motor"><span
-class="toc-section-number">6.1</span> Usando el motor</a>
+class="toc-section-number">5.1</span> Usando el motor</a>
 <ul>
 <li><a href="#cambio-de-escena"><span
-class="toc-section-number">6.1.1</span> Cambio de escena</a></li>
+class="toc-section-number">5.1.1</span> Cambio de escena</a></li>
 </ul></li>
 <li><a href="#path-tracing-showcase"><span
-class="toc-section-number">6.2</span> Path tracing showcase</a>
+class="toc-section-number">5.2</span> Path tracing showcase</a>
 <ul>
-<li><a href="#materiales"><span class="toc-section-number">6.2.1</span>
+<li><a href="#materiales"><span class="toc-section-number">5.2.1</span>
 Materiales</a></li>
 <li><a href="#fuentes-de-luz-1"><span
-class="toc-section-number">6.2.2</span> Fuentes de luz</a></li>
+class="toc-section-number">5.2.2</span> Fuentes de luz</a></li>
 <li><a href="#iluminación-global"><span
-class="toc-section-number">6.2.3</span> Iluminación global</a></li>
+class="toc-section-number">5.2.3</span> Iluminación global</a></li>
 </ul></li>
-<li><a href="#rendimiento"><span class="toc-section-number">6.3</span>
+<li><a href="#rendimiento"><span class="toc-section-number">5.3</span>
 Rendimiento</a>
 <ul>
 <li><a href="#número-de-muestras"><span
-class="toc-section-number">6.3.1</span> Número de muestras</a></li>
+class="toc-section-number">5.3.1</span> Número de muestras</a></li>
 <li><a href="#profundidad-de-un-rayo"><span
-class="toc-section-number">6.3.2</span> Profundidad de un rayo</a></li>
+class="toc-section-number">5.3.2</span> Profundidad de un rayo</a></li>
 <li><a href="#acumulación-temporal"><span
-class="toc-section-number">6.3.3</span> Acumulación temporal</a></li>
-<li><a href="#resolución"><span class="toc-section-number">6.3.4</span>
+class="toc-section-number">5.3.3</span> Acumulación temporal</a></li>
+<li><a href="#resolución"><span class="toc-section-number">5.3.4</span>
 Resolución</a></li>
 <li><a href="#importance-sampling"><span
-class="toc-section-number">6.3.5</span> Importance sampling</a></li>
+class="toc-section-number">5.3.5</span> Importance sampling</a></li>
 </ul></li>
 <li><a href="#comparativa-con-in-one-weekend"><span
-class="toc-section-number">6.4</span> Comparativa con In One Weekend</a>
+class="toc-section-number">5.4</span> Comparativa con In One Weekend</a>
 <ul>
 <li><a href="#sobre-la-implementación-de-in-one-weekend"><span
-class="toc-section-number">6.4.1</span> Sobre la implementación de In
+class="toc-section-number">5.4.1</span> Sobre la implementación de In
 One Weekend</a></li>
 <li><a href="#tiempos-de-renderizado"><span
-class="toc-section-number">6.4.2</span> Tiempos de renderizado</a>
+class="toc-section-number">5.4.2</span> Tiempos de renderizado</a>
 <ul>
 <li><a href="#por-número-de-muestras"><span
-class="toc-section-number">6.4.2.1</span> Por número de
+class="toc-section-number">5.4.2.1</span> Por número de
 muestras</a></li>
 <li><a href="#por-presupuesto-de-tiempo"><span
-class="toc-section-number">6.4.2.2</span> Por presupuesto de
+class="toc-section-number">5.4.2.2</span> Por presupuesto de
 tiempo</a></li>
 <li><a href="#conclusiones-de-la-comparativa"><span
-class="toc-section-number">6.4.2.3</span> Conclusiones de la
+class="toc-section-number">5.4.2.3</span> Conclusiones de la
 comparativa</a></li>
 </ul></li>
 </ul></li>
 </ul></li>
-<li><a href="#conclusiones"><span class="toc-section-number">7</span>
+<li><a href="#conclusiones"><span class="toc-section-number">6</span>
 Conclusiones</a>
 <ul>
 <li><a href="#posibles-mejoras"><span
-class="toc-section-number">7.1</span> Posibles mejoras</a>
+class="toc-section-number">6.1</span> Posibles mejoras</a>
 <ul>
-<li><a href="#interfaces"><span class="toc-section-number">7.1.1</span>
+<li><a href="#interfaces"><span class="toc-section-number">6.1.1</span>
 Interfaces</a></li>
 <li><a href="#nuevas-técnicas-de-reducción-de-ruido"><span
-class="toc-section-number">7.1.2</span> Nuevas técnicas de reducción de
+class="toc-section-number">6.1.2</span> Nuevas técnicas de reducción de
 ruido</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#el-presente-y-futuro-de-ray-tracing"><span
-class="toc-section-number">8</span> El presente y futuro de Ray
+class="toc-section-number">7</span> El presente y futuro de Ray
 Tracing</a>
 <ul>
-<li><a href="#denoising"><span class="toc-section-number">8.1</span>
+<li><a href="#denoising"><span class="toc-section-number">7.1</span>
 Denoising</a></li>
-<li><a href="#filtering"><span class="toc-section-number">8.2</span>
+<li><a href="#filtering"><span class="toc-section-number">7.2</span>
 Filtering</a></li>
 <li><a href="#offline-renderers"><span
-class="toc-section-number">8.3</span> Offline renderers</a></li>
+class="toc-section-number">7.3</span> Offline renderers</a></li>
 <li><a href="#la-industria-del-videojuego"><span
-class="toc-section-number">8.4</span> La industria del videojuego</a>
+class="toc-section-number">7.4</span> La industria del videojuego</a>
 <ul>
 <li><a href="#ray-tracing-híbrido"><span
-class="toc-section-number">8.4.1</span> Ray tracing híbrido</a></li>
+class="toc-section-number">7.4.1</span> Ray tracing híbrido</a></li>
 <li><a href="#productos-comerciales"><span
-class="toc-section-number">8.4.2</span> Productos comerciales</a></li>
+class="toc-section-number">7.4.2</span> Productos comerciales</a></li>
 <li><a href="#unreal-engine-5"><span
-class="toc-section-number">8.4.3</span> Unreal Engine 5</a></li>
+class="toc-section-number">7.4.3</span> Unreal Engine 5</a></li>
 <li><a href="#la-última-generación-de-consolas"><span
-class="toc-section-number">8.4.4</span> La última generación de
+class="toc-section-number">7.4.4</span> La última generación de
 consolas</a></li>
 </ul></li>
 <li><a href="#posibles-mejoras-del-trabajo"><span
-class="toc-section-number">8.5</span> Posibles mejoras del trabajo</a>
+class="toc-section-number">7.5</span> Posibles mejoras del trabajo</a>
 <ul>
 <li><a href="#blue-noise"><span
-class="toc-section-number">8.5.0.1</span> Blue noise</a></li>
+class="toc-section-number">7.5.0.1</span> Blue noise</a></li>
 <li><a href="#forced-random-sampling"><span
-class="toc-section-number">8.5.0.2</span> Forced random
+class="toc-section-number">7.5.0.2</span> Forced random
 sampling</a></li>
 <li><a href="#sampling-importance-resampling"><span
-class="toc-section-number">8.5.0.3</span> Sampling importance
+class="toc-section-number">7.5.0.3</span> Sampling importance
 resampling</a></li>
 <li><a href="#low-discrepancy-sampling"><span
-class="toc-section-number">8.5.0.4</span> Low discrepancy
+class="toc-section-number">7.5.0.4</span> Low discrepancy
 sampling</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#metodología-de-trabajo"><span
-class="toc-section-number">9</span> Metodología de trabajo</a>
+class="toc-section-number">8</span> Metodología de trabajo</a>
 <ul>
-<li><a href="#influencias"><span class="toc-section-number">9.1</span>
+<li><a href="#influencias"><span class="toc-section-number">8.1</span>
 Influencias</a></li>
 <li><a href="#ciclos-de-desarrollo"><span
-class="toc-section-number">9.2</span> Ciclos de desarrollo</a></li>
-<li><a href="#presupuesto"><span class="toc-section-number">9.3</span>
+class="toc-section-number">8.2</span> Ciclos de desarrollo</a></li>
+<li><a href="#presupuesto"><span class="toc-section-number">8.3</span>
 Presupuesto</a></li>
-<li><a href="#diseño"><span class="toc-section-number">9.4</span>
+<li><a href="#diseño"><span class="toc-section-number">8.4</span>
 Diseño</a>
 <ul>
 <li><a href="#bases-del-diseño"><span
-class="toc-section-number">9.4.1</span> Bases del diseño</a></li>
-<li><a href="#tipografías"><span class="toc-section-number">9.4.2</span>
+class="toc-section-number">8.4.1</span> Bases del diseño</a></li>
+<li><a href="#tipografías"><span class="toc-section-number">8.4.2</span>
 Tipografías</a></li>
 <li><a href="#paleta-de-colores"><span
-class="toc-section-number">9.4.3</span> Paleta de colores</a></li>
+class="toc-section-number">8.4.3</span> Paleta de colores</a></li>
 </ul></li>
 <li><a href="#flujo-de-trabajo-y-herramientas"><span
-class="toc-section-number">9.5</span> Flujo de trabajo y
+class="toc-section-number">8.5</span> Flujo de trabajo y
 herramientas</a>
 <ul>
-<li><a href="#pandoc"><span class="toc-section-number">9.5.1</span>
+<li><a href="#pandoc"><span class="toc-section-number">8.5.1</span>
 Pandoc</a></li>
-<li><a href="#figma"><span class="toc-section-number">9.5.2</span>
+<li><a href="#figma"><span class="toc-section-number">8.5.2</span>
 Figma</a></li>
 <li><a href="#otros-programas"><span
-class="toc-section-number">9.5.3</span> Otros programas</a></li>
+class="toc-section-number">8.5.3</span> Otros programas</a></li>
 </ul></li>
-<li><a href="#github"><span class="toc-section-number">9.6</span>
+<li><a href="#github"><span class="toc-section-number">8.6</span>
 Github</a>
 <ul>
 <li><a
 href="#integración-continua-con-github-actions-y-github-pages"><span
-class="toc-section-number">9.6.1</span> Integración continua con Github
+class="toc-section-number">8.6.1</span> Integración continua con Github
 Actions y Github Pages</a></li>
 <li><a href="#issues-y-github-projects"><span
-class="toc-section-number">9.6.2</span> Issues y Github
+class="toc-section-number">8.6.2</span> Issues y Github
 Projects</a></li>
 <li><a href="#estilo-de-commits"><span
-class="toc-section-number">9.6.3</span> Estilo de commits</a></li>
+class="toc-section-number">8.6.3</span> Estilo de commits</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#glosario-de-términos"><span
-class="toc-section-number">10</span> Glosario de términos</a>
+class="toc-section-number">9</span> Glosario de términos</a>
 <ul>
-<li><a href="#notación"><span class="toc-section-number">10.1</span>
+<li><a href="#notación"><span class="toc-section-number">9.1</span>
 Notación</a></li>
 <li><a href="#bases-de-ray-tracing"><span
-class="toc-section-number">10.2</span> <span>Bases de Ray
+class="toc-section-number">9.2</span> <span>Bases de Ray
 Tracing</span></a></li>
 <li><a href="#transporte-de-luz-1"><span
-class="toc-section-number">10.3</span> <span>Transporte de
+class="toc-section-number">9.3</span> <span>Transporte de
 luz</span></a></li>
 <li><a href="#métodos-de-monte-carlo-1"><span
-class="toc-section-number">10.4</span> <span>Métodos de Monte
+class="toc-section-number">9.4</span> <span>Métodos de Monte
 Carlo</span></a></li>
 <li><a href="#construyamos-un-path-tracer-1"><span
-class="toc-section-number">10.5</span> <span>Construyamos un path
+class="toc-section-number">9.5</span> <span>Construyamos un path
 tracer</span></a></li>
 <li><a href="#análisis-de-rendimiento-1"><span
-class="toc-section-number">10.6</span> <span>Análisis de
+class="toc-section-number">9.6</span> <span>Análisis de
 rendimiento</span></a></li>
 </ul></li>
 <li><a href="#bibliografía">Bibliografía</a></li>
@@ -707,27 +710,128 @@ Monte Carlo, integración de Monte Carlo, transporte de luz, iluminación
 global, Vulkan.</em></p>
 <hr>
 <h1 class="unnumbered" id="a-brief-overview">A brief overview</h1>
-<blockquote>
-<p>TODO</p>
-</blockquote>
+<!-- LTeX: language=en -->
+<p>Being able to capture a moment. Every human civilization in record
+has always found a way to immortalise the idiosyncrasies of its sociecy.
+We are not inmue to this phenomenon, so it is only natural we try to use
+the lastest technology to achieve the most faithful representation of
+our world. Computers have the ability to produce realistic images and
+astonishing simulations. Although, while there have been tremendous
+advances in the field, many of the techniques we use today are still
+based on the old days of computation; specially in 3D rendering.</p>
+<p><strong>Rasterization</strong> is one of those methods. It allows to
+transform a virtual environment to a raster image –a set of pixels–. It
+is an extremelly fast method given how it works, which is just a mapping
+of the scene geometry into a 2D plane. Its simplicity makes it a great
+way of rendering an image really fast, but it comes at the expense of
+fidelity.</p>
+<p>We can solve this issue with solves <strong>Ray tracing</strong>.
+Instead of projecting virtual geometry into a plane, this algorithm
+tries to simulate how light works by casting rays of light into the
+scene from the camera. These rays then intersect with objects and
+collect information about them. This has one key advantage over
+rasterization: it allows seeing parts of the scene which were not
+visible to the camera.</p>
+<p><strong>Path tracing</strong> takes this idea into the next level:
+instead of stopping in the first intersection, it makes the rays bounce
+freely through the scene. These rays gather information about object
+materials, light sources and many more elements. Then, the algorithm
+computes the color of the pixel by considering how much light have those
+rays acummulated over their traversal. Given the physically accurate
+nature of the algorithm, the results it produces are unmatched. But it
+comes with <strong>a major problem: rendering times</strong>.</p>
+<p>Rendering times can be crucial depending on the task at hand.
+Rasterization has been traditionally used in real time applications,
+such as video games, while path tracing is implemented in offline
+renderers, like the ones used for movie productions. We then need to ask
+one question:</p>
+<p><strong>Could it be possible to bring path tracing to real
+time?</strong></p>
+<p>In this project we will tackle this problem. We will build a
+physically based rendering engine based on path tracing with modern
+hardware, in order to produce a software capable of producing realistic
+images in mere milliseconds.</p>
+<p>As one could imagine, this task it not an easy one. In order to
+achieve it, we will need to understand multiple aspects of different
+fields: from mathematics to computer imaging, with some <em>light</em>
+notions from physics.</p>
+<p><a href="#las-bases">Chapter 1</a> will set the <strong>fundamentals
+of what is ray tracing</strong>, how does a ray work, and how can we
+intersect a ray with an object.</p>
+<p>On <a href="#transporte-de-luz">chapter 2</a> we will study the
+basics of <strong>radiometry and light transport</strong>, the field of
+physics that deals with the interaction between light and matter. We
+will introduce how photons work, how are they emitted from light sources
+and how do they travel through the environment. We will also need to
+understand the mathematical abstractions in which we represent these
+radiometric quantities. Then, we will need to analyse how light
+interacts with matter, which, in a nutshell, can be described by the
+bidirectional scattering distribution function of the material surface
+and the outgoing direction of photons –since light can be either
+scattered or transmitted–. At the end of the chapter we will obtain the
+most important equation in computer graphics: <strong>the rendering
+equation</strong>, which can be described as</p>
+<p><span class="math display">\[
+L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p,
+\omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
+\]</span></p>
+<p>Since reality is an absurdly complex –yet simple– set of rules, we
+will need to find a way of making the computations viable in real time.
+That’s why in <a href="#métodos-de-monte-carlo">chapter 3</a> we will
+explore how random sampling can be used to generate approximations of
+radiometric integrals. We will start with a brief summary of random
+variables. Then, we will introduce <strong>Monte Carlo
+techniques</strong>, which rely on sampling random variables from
+certain distributions (usually the uniform between 0 and 1) and
+averaging these samples to obtain the expected value of some other
+distribution. This will allow us to compute integrals relatively easily
+at the cost of some error. In order to improve these estimations, we
+will study how some methods can be use to reduce the variance of the
+estimator, such as (multiple) importance sampling, roussian roulette or
+next-event estimation.</p>
+<p>Once the theory is out of the way, it will be time to build an
+application. <a href="#construyamos-un-path-tracer">Chapter 4</a> will
+cover the <strong>implementation of the engine</strong>. We will first
+introduce our main set of tools, which will be Vulkan graphics API and
+Nvidia DesignWorks’ nvpro-samples framework. Then, we will learn about
+the structures that make real time ray tracing possible, such as the Top
+and Bottom-Level Acceleration Structures (TLAS and BLAS respectively),
+the Shader Binding Table (SBT). We will also understand how does the ray
+tracing pipepline works, what types of shaders are there and how can we
+use them to render a scene. Materials and light sources will also need
+to be explained, since they are a key component of the scene. Finally,
+we will implement some techniques which allow to reduce the noise of the
+final image, such as gamma correction and temporal accumulation of
+frames.</p>
+<p>Now that we have a working engine, it’s time to play with it. <a
+href="#análisis-de-rendimiento">Chapter 5</a> will <strong>exhibit the
+results of our work</strong>, comparing different scenes which showcase
+a variety of physical phenomenons. We will also analyse how it performs
+in terms of samples and frame time based on a set of parameters, like
+ray depth, number of samples taken on each frame and resolution.
+Finally, we will <strong>compare our implementation</strong> with Peter
+Shirley’s engine developed in <em>Ray Tracing In One Weekend</em> series
+<span class="citation" data-cites="Shirley2020RTW1">Shirley (<a
+href="#ref-Shirley2020RTW1" role="doc-biblioref">2020a</a>)</span>.</p>
+<p>We will end the project with the <a
+href="#conclusiones">conclusions</a> that can be drawn from the results
+of our work. We will also show what could be done to improve the engine
+in the future.</p>
+<p>The contents of this document, the Vulkan project, an <em>In One
+Weekend</em> implementation and other utilities can be found in the
+following repository:</p>
+<p><a
+href="https://github.com/Asmilex/Raytracing">https://github.com/Asmilex/Raytracing</a></p>
 <p><em>Keywords: raytracing, ray tracing, path tracing, Monte Carlo
 methods, Monte Carlo integration, light transport, global illumination,
 Vulkan.</em></p>
 <h1 class="unnumbered" id="dedicatoria">Dedicatoria</h1>
-<p>¡Parece que has llegado un poco pronto! Si lo has hecho
-voluntariamente, ¡muchas gracias! Este proyecto debería estar finalizado
-en verano de 2022. Mientras tanto, actualizaré poco a poco el contenido.
-Si quieres ir comprobando los progresos, puedes visitar <a
-href="github.com/Asmilex/Raytracing">Asmilex/Raytracing</a> en Github
-para ver el estado del desarrollo.</p>
-<p>Aun así, hay mucha gente que me ha ayudado a sacar este proyecto
-hacia delante.</p>
 <p>Gracias, en primer lugar, a mi familia por permitirme acabar la
-carrera. A Blanca, Cristina, Jorge, Jose OC, Lucas, Mari, Marina,
-Mapachana y Paula, Sergio por ayudarme con el contenido, feedback del
-desarrollo y guía de diseño.</p>
-<h1 data-number="1" id="introducción"><span
-class="header-section-number">1</span> Introducción</h1>
+carrera.</p>
+<p>Gracias también a Blanca, Cristina, Jorge, Jose OC, Lucas, Mari,
+Marina, Mapachana y Paula, Sergio por ayudarme con el contenido,
+feedback del desarrollo y diseño de la documentación.</p>
+<h1 class="unnumbered" id="introducción">Introducción</h1>
 <p>Este trabajo puede visualizarse en la web <a
 href="https://asmilex.github.io/Raytracing/">asmilex.github.io/Raytracing</a>
 o en el <a
@@ -736,8 +840,8 @@ disponible en el repositorio del trabajo <a
 href="https://github.com/Asmilex/Raytracing">Asmilex/Raytracing</a>.</p>
 <p>La página web contiene la versión más actualizada, además de recursos
 adicionales como vídeos.</p>
-<h2 data-number="1.1" id="nota-histórica"><span
-class="header-section-number">1.1</span> Nota histórica</h2>
+<h2 data-number="0.1" id="nota-histórica"><span
+class="header-section-number">0.1</span> Nota histórica</h2>
 <p>Ser capaces de capturar un momento.</p>
 <p>Desde siempre, este ha sido uno de los sueños de la humanidad. La
 capacidad de retener lo que ven nuestros ojos comenzó con simples
@@ -783,8 +887,8 @@ nuestra</em>.</p>
 aquello computacionalmente viable.</p>
 <p>Y, entonces, en 1960 el trazado de rayos con una simple idea
 intuitiva.</p>
-<h2 data-number="1.2" id="qué-es-ray-tracing"><span
-class="header-section-number">1.2</span> ¿Qué es ray tracing?</h2>
+<h2 data-number="0.2" id="qué-es-ray-tracing"><span
+class="header-section-number">0.2</span> ¿Qué es ray tracing?</h2>
 <p>En resumidas cuentas, <em>ray tracing</em> (o trazado de rayos en
 español), se basa en disparar fotones en forma de rayo desde nuestra
 cámara digital y hacerlos rebotar en la escena.</p>
@@ -833,8 +937,8 @@ día también ocurre esto, claro está. Pero la tecnología evoluciona.</p>
 <p>Podemos bajarlo a milisegundos.</p>
 <p>Hemos entrado en la era del <strong>real time ray
 tracing</strong>.</p>
-<h2 data-number="1.3" id="objetivos-del-trabajo"><span
-class="header-section-number">1.3</span> Objetivos del trabajo</h2>
+<h2 data-number="0.3" id="objetivos-del-trabajo"><span
+class="header-section-number">0.3</span> Objetivos del trabajo</h2>
 <p>Los objetivos del trabajo iniciales son los siguientes:</p>
 <ul>
 <li>Análisis de los algoritmos modernos de visualización en 3D basados
@@ -860,8 +964,8 @@ CPU.</li>
 <p>Afortunadamente, <strong>se ha conseguido realizar exitosamente cada
 uno de los objetivos</strong>. Esta memoria cubrirá todo el trabajo que
 ha sido necesario realizar para lograrlo.</p>
-<h2 data-number="1.4" id="técnicas-empleadas-para-la-resolución"><span
-class="header-section-number">1.4</span> Técnicas empleadas para la
+<h2 data-number="0.4" id="técnicas-empleadas-para-la-resolución"><span
+class="header-section-number">0.4</span> Técnicas empleadas para la
 resolución</h2>
 <blockquote>
 <p>TODO: echarle un ojo a esto cuando termine el trabajo.</p>
@@ -893,8 +997,8 @@ usado la plataforma para integrar la documentación, el código fuente y
 los ciclos de desarrollo.</p>
 <p>Como podemos ver, esta área relaciona íntimamente la matemática y la
 informática, con un poco de física de por medio.</p>
-<h2 data-number="1.5" id="principales-fuentes-consultadas"><span
-class="header-section-number">1.5</span> Principales fuentes
+<h2 data-number="0.5" id="principales-fuentes-consultadas"><span
+class="header-section-number">0.5</span> Principales fuentes
 consultadas</h2>
 <p>Esencialmente, este trabajo ha sido posible gracias a los siguientes
 recursos:</p>
@@ -956,8 +1060,8 @@ role="doc-biblioref">Haines and Akenine-Möller 2019</a>)</span></p>
 <ul>
 <li>https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html</li>
 </ul>
-<h1 data-number="2" id="las-bases"><span
-class="header-section-number">2</span> Las bases</h1>
+<h1 data-number="1" id="las-bases"><span
+class="header-section-number">1</span> Las bases</h1>
 <p>Empecemos por definir lo que es un rayo.</p>
 <p>Un rayo <span class="citation" data-cites="Shirley2020RTW1">(<a
 href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
@@ -1019,8 +1123,8 @@ como ray tracing.</p>
 <p>como este proceso puede continuar indefinidamente, tendremos que
 controlar la profundidad de la recursión. a mayor profundidad, mayor
 calidad de imagen; pero también, mayor tiempo de ejecución.</p>
-<h2 data-number="2.1" id="eligiendo-direcciones"><span
-class="header-section-number">2.1</span> Eligiendo direcciones</h2>
+<h2 data-number="1.1" id="eligiendo-direcciones"><span
+class="header-section-number">1.1</span> Eligiendo direcciones</h2>
 <p>Una de las partes más importantes de ray tracing, y a la que quizás
 dedicaremos más tiempo, es a la elección de la dirección.</p>
 <p>Hay varios factores que entran en juego a la hora de decidir qué
@@ -1037,8 +1141,8 @@ influencia.</li>
 </ol>
 <p>Estas cuestiones las exploraremos a fondo en las siguientes
 secciones.</p>
-<h2 data-number="2.2" id="intersecciones-rayo---objeto"><span
-class="header-section-number">2.2</span> Intersecciones rayo -
+<h2 data-number="1.2" id="intersecciones-rayo---objeto"><span
+class="header-section-number">1.2</span> Intersecciones rayo -
 objeto</h2>
 <p>como dijimos al principio del capítulo, representaremos un rayo
 como</p>
@@ -1076,8 +1180,8 @@ poquito del origen evitará errores de coma flotante</figcaption>
 <p>Una de las principales cuestiones que debemos hacernos es saber
 cuándo un rayo impacta con una superficie. Lo definiremos
 analíticamente.</p>
-<h3 data-number="2.2.1" id="superficies-implícitas"><span
-class="header-section-number">2.2.1</span> Superficies implícitas</h3>
+<h3 data-number="1.2.1" id="superficies-implícitas"><span
+class="header-section-number">1.2.1</span> Superficies implícitas</h3>
 <p>Generalmente, cuando hablemos de superficies, nos referiremos
 superficies diferenciables <span class="citation"
 data-cites="wikipedia-contributors-2022O">(<a
@@ -1153,8 +1257,8 @@ si la dirección y el vector normal a la superficie son paralelos.</p>
 <p>TODO: dibujo de dos rayos con un plano: uno corta a la superficie,
 mientras que el otro es paralelo.</p>
 </blockquote>
-<h3 data-number="2.2.2" id="superficies-paramétricas"><span
-class="header-section-number">2.2.2</span> Superficies paramétricas</h3>
+<h3 data-number="1.2.2" id="superficies-paramétricas"><span
+class="header-section-number">1.2.2</span> Superficies paramétricas</h3>
 <p>Otra forma de definir una superficie en el espacio es mediante un
 subconjunto <span class="math inline">\(S \subset \mathbb{R}^2\)</span>
 y una serie de funciones, <span class="math inline">\(f, g, h: S
@@ -1211,8 +1315,8 @@ o_z + td_z &amp; = h(u, v) \\
 <p>Es posible que el rayo no impacte en ningún punto. En ese caso, el
 sistema de ecuaciones no tendría solución. Otra posibilidad es que
 intersequen en varios puntos.</p>
-<h3 data-number="2.2.3" id="intersecciones-con-esferas"><span
-class="header-section-number">2.2.3</span> Intersecciones con
+<h3 data-number="1.2.3" id="intersecciones-con-esferas"><span
+class="header-section-number">1.2.3</span> Intersecciones con
 esferas</h3>
 <p>Estudiemos ahora cómo intersecan una esfera con nuestro rayo. Una
 esfera de centro <span class="math inline">\(c\)</span> y radio <span
@@ -1288,8 +1392,8 @@ normal resultante viene dado por</p>
 <p><span class="math display">\[
 \hat{\mathbf{n}} = \frac{(P(t_0) - c)}{r}
 \]</span></p>
-<h3 data-number="2.2.4" id="intersecciones-con-triángulos"><span
-class="header-section-number">2.2.4</span> Intersecciones con
+<h3 data-number="1.2.4" id="intersecciones-con-triángulos"><span
+class="header-section-number">1.2.4</span> Intersecciones con
 triángulos</h3>
 <p>Este tipo de intersecciones serán las más útiles en nuestro path
 tracer. Generalmente, nuestras geometrías estarán compuestas por mallas
@@ -1300,8 +1404,8 @@ class="math inline">\(a, b\)</span>, y <span
 class="math inline">\(c\)</span>; correspondientes a sus vértices. Para
 evitar casos absurdos, supongamos que estos puntos son afinmente
 independientes; es decir, que no están alineados.</p>
-<h4 data-number="2.2.4.1" id="coordenadas-baricéntricas"><span
-class="header-section-number">2.2.4.1</span> coordenadas
+<h4 data-number="1.2.4.1" id="coordenadas-baricéntricas"><span
+class="header-section-number">1.2.4.1</span> coordenadas
 baricéntricas</h4>
 <p>Podemos describir los puntos contenidos en el plano que forman estos
 vertices mediante <strong>coordenadas baricéntricas</strong>. Este
@@ -1342,8 +1446,8 @@ que 1, eso significaría que el punto estaría más allá del triángulo.</p>
 <p>TODO: dibujo con explicación de cómo funciona (libreta Shinrin -
 Yoku)</p>
 </blockquote>
-<h4 data-number="2.2.4.2" id="calculando-la-intersección"><span
-class="header-section-number">2.2.4.2</span> calculando la
+<h4 data-number="1.2.4.2" id="calculando-la-intersección"><span
+class="header-section-number">1.2.4.2</span> calculando la
 intersección</h4>
 <p>Podemos eliminar una de las varibales escribiendo <span
 class="math inline">\(\alpha = 1 - \beta - \gamma\)</span>, lo que nos
@@ -1416,14 +1520,14 @@ fuera del objeto, entonces</p>
 <p><span class="math display">\[
 \mathbf{n} = (b - a) \times (c - a)
 \]</span></p>
-<h1 data-number="3" id="transporte-de-luz"><span
-class="header-section-number">3</span> Transporte de luz</h1>
+<h1 data-number="2" id="transporte-de-luz"><span
+class="header-section-number">2</span> Transporte de luz</h1>
 <p>En este capítulo estudiaremos las bases de la radiometría. Esta área
 de la óptica nos proporcionará una serie de herramientas con las cuales
 podremos responder a la pregunta <em>cuánta luz existe en un
 punto</em>.</p>
-<h2 data-number="3.1" id="introducción-a-la-radiometría"><span
-class="header-section-number">3.1</span> Introducción a la
+<h2 data-number="2.1" id="introducción-a-la-radiometría"><span
+class="header-section-number">2.1</span> Introducción a la
 radiometría</h2>
 <blockquote>
 <p><strong>Nota</strong>: cuando usemos un paréntesis tras una ecuación,
@@ -1470,8 +1574,8 @@ class="math inline">\(Q\)</span>, por ejemplo, debería denotarse <span
 class="math inline">\(Q_\lambda\)</span>. Sin embargo, en la literatura
 de informática gráfica, <strong>se ha optado por omitirla</strong>.
 ¡Tenlo en cuenta a partir de aquí!</p>
-<h3 data-number="3.1.1" id="potencia"><span
-class="header-section-number">3.1.1</span> Potencia</h3>
+<h3 data-number="2.1.1" id="potencia"><span
+class="header-section-number">2.1.1</span> Potencia</h3>
 <p>A partir de la energía anterior, podemos estimar <em>la tasa de
 producción de energía</em>. A esta tasa la llamaremos
 <strong>potencia</strong>, o <strong>flujo radiante</strong> <span
@@ -1492,8 +1596,8 @@ flujo radiante:</p>
 <p><span class="math display">\[
 Q = \int_{t_0}^{t_1}{\Phi(t)dt}
 \]</span></p>
-<h3 data-number="3.1.2" id="irradiancia"><span
-class="header-section-number">3.1.2</span> Irradiancia</h3>
+<h3 data-number="2.1.2" id="irradiancia"><span
+class="header-section-number">2.1.2</span> Irradiancia</h3>
 <p>La <strong>irradiancia</strong> o <strong>radiancia emitida</strong>
 es el flujo radiante que recibe una superficie. Dada un área <span
 class="math inline">\(A\)</span>, se define como</p>
@@ -1528,8 +1632,8 @@ radiante:</p>
 \]</span></p>
 <p>El principal problema de la irradiancia es que <em>no nos dice nada
 sobre las direcciones</em> desde las que ha llegado la luz.</p>
-<h3 data-number="3.1.3" id="ángulos-sólidos"><span
-class="header-section-number">3.1.3</span> Ángulos sólidos</h3>
+<h3 data-number="2.1.3" id="ángulos-sólidos"><span
+class="header-section-number">2.1.3</span> Ángulos sólidos</h3>
 <p>Con estas tres unidades básicas, nos surge una pregunta muy natural:
 <em>¿cómo mido cuánta luz llega a una superficie?</em></p>
 <p>Para responder a esta pregunta, necesitaremos los <strong>ángulos
@@ -1656,8 +1760,8 @@ d\omega &amp; = \frac{dA_h}{r^2} = \frac{lado_1 lado_2}{r^2} = \\
 <p>¡Genial! Acabamos de añadir un recurso muy potente a nuestro
 inventario. Esta expresión nos permitirá convertir integrales sobre
 ángulos sólidos en integrales sobre ángulos esféricos.</p>
-<h3 data-number="3.1.4" id="intensidad-radiante"><span
-class="header-section-number">3.1.4</span> Intensidad radiante</h3>
+<h3 data-number="2.1.4" id="intensidad-radiante"><span
+class="header-section-number">2.1.4</span> Intensidad radiante</h3>
 <p>Los ángulos sólidos nos proporcionan una variedad de herramientas
 nuevas considerable. Gracias a ellos, podemos desarrollar algunos
 conceptos nuevos. Uno de ellos es la <strong>intensidad
@@ -1683,8 +1787,8 @@ la potencia integrando sobre un conjunto de direcciones:</p>
 <p><span class="math display">\[
 \Phi = \int_{\Omega}{I(\omega)d\omega}
 \]</span></p>
-<h3 data-number="3.1.5" id="radiancia"><span
-class="header-section-number">3.1.5</span> Radiancia</h3>
+<h3 data-number="2.1.5" id="radiancia"><span
+class="header-section-number">2.1.5</span> Radiancia</h3>
 <p>Finalmente, llegamos al concepto más importante. La <strong>radiancia
 espectral</strong> (o radiancia a secas<a href="#fn2"
 class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>)
@@ -1821,14 +1925,14 @@ L_1 \frac{dA_2}{r^2} dA_1 = L_2 \frac{dA_1}{r^2} dA_2
 \]</span></p>
 <p>Lo que finalmente nos dice que <span class="math inline">\(L_1 =
 L_2\)</span>, como queríamos ver.</p>
-<h3 data-number="3.1.6" id="integrales-radiométricas"><span
-class="header-section-number">3.1.6</span> Integrales radiométricas</h3>
+<h3 data-number="2.1.6" id="integrales-radiométricas"><span
+class="header-section-number">2.1.6</span> Integrales radiométricas</h3>
 <p>En esta sección, vamos a explorar las nuevas herramientas que nos
 proporciona la radiancia. Veremos también cómo integrar ángulos sólidos,
 y cómo simplificar dichas integrales.</p>
-<h4 data-number="3.1.6.1"
+<h4 data-number="2.1.6.1"
 id="una-nueva-expresión-de-la-irradiancia-y-el-flujo"><span
-class="header-section-number">3.1.6.1</span> Una nueva expresión de la
+class="header-section-number">2.1.6.1</span> Una nueva expresión de la
 irradiancia y el flujo</h4>
 <p>Como dijimos al final de <a href="#irradiancia">la sección de la
 irradiancia</a>, esta medida no tiene en cuenta las direcciones desde
@@ -1897,8 +2001,8 @@ tipos de luz, como en
 https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf
 p.41? O a lo mejor un capítulo para hablar de luces en general.</p>
 </blockquote>
-<h4 data-number="3.1.6.2" id="integrando-sobre-área"><span
-class="header-section-number">3.1.6.2</span> Integrando sobre área</h4>
+<h4 data-number="2.1.6.2" id="integrando-sobre-área"><span
+class="header-section-number">2.1.6.2</span> Integrando sobre área</h4>
 <p>Una herramienta más que nos vendrá bien será la capacidad de
 convertir integrales sobre direcciones en integrales sobre área. Hemos
 hecho algo similar en las secciones anteriores, así que no perdemos nada
@@ -1936,14 +2040,14 @@ cuadrilátero <span class="math inline">\(dA\)</span>:</p>
 \]</span></p>
 <p>siendo <span class="math inline">\(\theta_o\)</span> el ángulo de la
 radiancia de salida de la superficie del cuadrilátero.</p>
-<h3 data-number="3.1.7" id="fotometría-y-radiometría"><span
-class="header-section-number">3.1.7</span> Fotometría y radiometría</h3>
+<h3 data-number="2.1.7" id="fotometría-y-radiometría"><span
+class="header-section-number">2.1.7</span> Fotometría y radiometría</h3>
 <blockquote>
 <p>TODO: hablar sobre las diferencias. Hay información útil en
 01_lights.pdf, p.43</p>
 </blockquote>
-<h2 data-number="3.2" id="dispersión-de-luz"><span
-class="header-section-number">3.2</span> Dispersión de luz</h2>
+<h2 data-number="2.2" id="dispersión-de-luz"><span
+class="header-section-number">2.2</span> Dispersión de luz</h2>
 <p>Cuando una luz impacta en una superficie, ocurren un par de sucesos:
 parte de los fotones se reflejan saliendo disparados hacia alguna
 dirección, mientras que otros se absorben.</p>
@@ -1958,9 +2062,9 @@ superficie</strong> (<em>subsurface scattering</em>)</p>
 que ocurre cuando los fotones alcanzan una superficie, en qué dirección
 se reflejan, y cómo cambia el comportamiento dependiendo de las
 propiedades del material.</p>
-<h3 data-number="3.2.1"
+<h3 data-number="2.2.1"
 id="la-función-de-distribución-de-reflectancia-bidireccional-brdf"><span
-class="header-section-number">3.2.1</span> La función de distribución de
+class="header-section-number">2.2.1</span> La función de distribución de
 reflectancia bidireccional (BRDF)</h3>
 <p>La <strong>función de distribución de reflectancia
 bidireccional</strong> (en inglés, <em>bidirectional reflectance
@@ -2037,9 +2141,9 @@ tiene que ser menor o igual que la incidente:</li>
 \int_{H^2(\mathbf{n})}{f_r(p, \omega_o \leftarrow \omega_i)
 \cos\theta_i\ d\omega_i} \leq 1
 \]</span></p>
-<h3 data-number="3.2.2"
+<h3 data-number="2.2.2"
 id="la-función-de-distribución-de-transmitancia-bidireccional-btdf"><span
-class="header-section-number">3.2.2</span> La función de distribución de
+class="header-section-number">2.2.2</span> La función de distribución de
 transmitancia bidireccional (BTDF)</h3>
 <p>Si la BRDF describe cómo se refleja la luz, la <em>bidirectional
 transmittance distribution function</em> (abreviada BTDF) nos informará
@@ -2057,9 +2161,9 @@ f_t(p, \omega_o \leftarrow \omega_i)
 class="math inline">\(\omega_o\)</span> y <span
 class="math inline">\(\omega_i\)</span> se encuentran en hemisferios
 diferentes.</p>
-<h3 data-number="3.2.3"
+<h3 data-number="2.2.3"
 id="la-función-de-distribución-de-dispersión-bidireccional-bsdf"><span
-class="header-section-number">3.2.3</span> La función de distribución de
+class="header-section-number">2.2.3</span> La función de distribución de
 dispersión bidireccional (BSDF)</h3>
 <p>Convenientemente, podemos unir la BRDF y la BTDF en una sola
 expresión, llamada <strong>la función de distribución de dispersión
@@ -2116,8 +2220,8 @@ se emite ningún fotón nuevo:</li>
 \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) \cos\theta_i\
 d\omega_i} \le 1\ \forall \omega_o
 \]</span></p>
-<h3 data-number="3.2.4" id="reflectancia-hemisférica"><span
-class="header-section-number">3.2.4</span> Reflectancia hemisférica</h3>
+<h3 data-number="2.2.4" id="reflectancia-hemisférica"><span
+class="header-section-number">2.2.4</span> Reflectancia hemisférica</h3>
 <p>Puede ser útil tomar el comportamiento agregado de las BRDFs y las
 BTDFs y reducirlo un cierto valor que describa su comportamiento general
 de dispersión. Sería Algo así como un resumen de su distribución. Para
@@ -2147,8 +2251,8 @@ misma luz desde todas direcciones:</p>
 \leftarrow \omega_i) \left\lvert \cos\theta_o\ \cos\theta_i
 \right\rvert\ d\omega_o\ d\omega_i}
 \]</span></p>
-<h2 data-number="3.3" id="modelos-ópticos-de-materiales"><span
-class="header-section-number">3.3</span> Modelos ópticos de
+<h2 data-number="2.3" id="modelos-ópticos-de-materiales"><span
+class="header-section-number">2.3</span> Modelos ópticos de
 materiales</h2>
 <p>En la práctica, cada superficie tendrá una BSDF característica. Esto
 hace que la luz adquiera una dirección particular al incidir en cada
@@ -2162,8 +2266,8 @@ espejos y algunas BSDFs compuestas. Un repertorio de implementaciones se
 encuentra en el repositorio de BRDFs de <span class="citation"
 data-cites="disney-brdfs">(<a href="#ref-disney-brdfs"
 role="doc-biblioref">Walt Disney Animation Studios 2019</a>)</span>.</p>
-<h3 data-number="3.3.1" id="tipos-de-dispersión"><span
-class="header-section-number">3.3.1</span> Tipos de dispersión</h3>
+<h3 data-number="2.3.1" id="tipos-de-dispersión"><span
+class="header-section-number">2.3.1</span> Tipos de dispersión</h3>
 <p>Prácticamente toda superficie, en mayor o menor medida, refleja parte
 de la luz incidente. Otros tipos de materiales reflejan y refractan a la
 vez, como puede ser un espejo o el agua.</p>
@@ -2209,12 +2313,12 @@ distribución de luz es la misma en todas direcciones. Por el contrario,
 los anisotrópicos reflejan diferentes cantidades de luz dependiendo
 desde dónde los miremos. Los ejemplos más habituales de materiales
 anisotrópicos son las rocas y la madera.</p>
-<h3 data-number="3.3.2" id="reflexión"><span
-class="header-section-number">3.3.2</span> Reflexión</h3>
+<h3 data-number="2.3.2" id="reflexión"><span
+class="header-section-number">2.3.2</span> Reflexión</h3>
 <p>Primero, tratemos con materiales que únicamente reflejan luz; es
 decir, su BSDF es una BRDF.</p>
-<h4 data-number="3.3.2.1" id="reflexión-especular-perfecta"><span
-class="header-section-number">3.3.2.1</span> Reflexión especular
+<h4 data-number="2.3.2.1" id="reflexión-especular-perfecta"><span
+class="header-section-number">2.3.2.1</span> Reflexión especular
 perfecta</h4>
 <p>Para un material especular perfecto (es decir, espejos), la dirección
 reflejada <span class="math inline">\(\mathbf{r}\)</span> dado un rayo
@@ -2247,8 +2351,8 @@ f_r(\mathbf{r} \leftarrow \mathbf{i} ) = \frac{\delta(\mathbf{i},
 class="math inline">\(k_r\)</span> el coeficiente de reflectividad, cuyo
 valor se encuentra entre 0 y 1, dependiendo de la energía que se
 pierda.</p>
-<h4 data-number="3.3.2.2" id="reflexión-difusa-o-lamberiana"><span
-class="header-section-number">3.3.2.2</span> Reflexión difusa o
+<h4 data-number="2.3.2.2" id="reflexión-difusa-o-lamberiana"><span
+class="header-section-number">2.3.2.2</span> Reflexión difusa o
 lamberiana</h4>
 <p>Este es uno de los modelos más sencillos. Es conocido también como el
 modelo lambertiano. Se asume que la superficie es completamente difusa,
@@ -2273,11 +2377,11 @@ difusión.</p>
 <p>Para que se cumpla la condición de conservación de energía,
 necesariamente <span class="math inline">\(k_d \le 1/\pi\)</span>.</p>
 <p>En la práctica no se utiliza mucho, pues está muy limitado.</p>
-<h4 data-number="3.3.2.3" id="reflexión-especular-no-perfecta"><span
-class="header-section-number">3.3.2.3</span> Reflexión especular no
+<h4 data-number="2.3.2.3" id="reflexión-especular-no-perfecta"><span
+class="header-section-number">2.3.2.3</span> Reflexión especular no
 perfecta</h4>
-<h5 data-number="3.3.2.3.1" id="phong"><span
-class="header-section-number">3.3.2.3.1</span> Phong</h5>
+<h5 data-number="2.3.2.3.1" id="phong"><span
+class="header-section-number">2.3.2.3.1</span> Phong</h5>
 <p>El modelo de Phong se basa en la observación de que, cuando el punto
 de vista se alinea con la dirección del vector de luz reflejado <span
 class="math inline">\(r = i - 2(\mathbf{n} \cdot
@@ -2314,8 +2418,8 @@ para usarlo en ciertas partes.</p>
         shininess
     );
 }</code></pre>
-<h5 data-number="3.3.2.3.2" id="blinn---phong"><span
-class="header-section-number">3.3.2.3.2</span> Blinn - Phong</h5>
+<h5 data-number="2.3.2.3.2" id="blinn---phong"><span
+class="header-section-number">2.3.2.3.2</span> Blinn - Phong</h5>
 <p>Este es una pequeña modificación al de Phong. En vez de usar el
 vector reflejado de luz, se define un vector unitario entre el
 observador y la luz, <span class="math inline">\(\mathbf{h} =
@@ -2338,8 +2442,8 @@ L_o^s(p, \omega_o \leftarrow \omega_i) =
         shininess
     );
 }</code></pre>
-<h3 data-number="3.3.3" id="refracción"><span
-class="header-section-number">3.3.3</span> Refracción</h3>
+<h3 data-number="2.3.3" id="refracción"><span
+class="header-section-number">2.3.3</span> Refracción</h3>
 <p>Algunos materiales permiten que la luz los atraviese –conocido como
 transmisión–. En estos casos, decimos que se produce un cambio en el
 medio. Para conocer cómo de rápido viajan los fotones a través de ellos,
@@ -2359,8 +2463,8 @@ class="math inline">\(\eta_{\text{aire}} = 1.0003\)</span>, mientras que
 el del agua vale <span class="math inline">\(\eta_{\text{agua}} =
 1.333\)</span>, y el del cristal vale <span
 class="math inline">\(\eta_{\text{cristal}} = 1.52\)</span>.</p>
-<h4 data-number="3.3.3.1" id="ley-de-snell"><span
-class="header-section-number">3.3.3.1</span> Ley de Snell</h4>
+<h4 data-number="2.3.3.1" id="ley-de-snell"><span
+class="header-section-number">2.3.3.1</span> Ley de Snell</h4>
 <p>La <strong>ley de Snell</strong> nos proporciona una ecuación muy
 sencilla que relaciona el cambio de un medio con índice de refracción
 <span class="math inline">\(\eta_1\)</span> a otro con índice de
@@ -2412,8 +2516,8 @@ parte inferior, ¡observamos luz solar y el edificio de
 nuevo!</figcaption>
 </figure>
 </div>
-<h4 data-number="3.3.3.2" id="ecuaciones-de-fresnel"><span
-class="header-section-number">3.3.3.2</span> Ecuaciones de Fresnel</h4>
+<h4 data-number="2.3.3.2" id="ecuaciones-de-fresnel"><span
+class="header-section-number">2.3.3.2</span> Ecuaciones de Fresnel</h4>
 <p>Aquellos materiales que refractan y reflejan luz (como el agua de la
 foto anterior) no pueden generar energía de la nada; por lo que la
 combinación de ambos efectos debe ser proporcional a la luz incidente.
@@ -2457,8 +2561,8 @@ simple:</p>
 class="math display">\[
 R = \frac{R_s + R_p}{2}
 \]</span><span class="eqnos-number">(20)</span></span></p>
-<h4 data-number="3.3.3.3" id="la-aproximación-de-schlick"><span
-class="header-section-number">3.3.3.3</span> La aproximación de
+<h4 data-number="2.3.3.3" id="la-aproximación-de-schlick"><span
+class="header-section-number">2.3.3.3</span> La aproximación de
 Schlick</h4>
 <p>Como podemos imaginarnos, calcular las expresiones de Fresnel [<a
 href="#eq:fresnel_equations">19</a>] no es precisamente barato. En la
@@ -2480,12 +2584,12 @@ class="citation"
 data-cites="https://doi.org/10.1111/1467-8659.1330233">(<a
 href="#ref-https://doi.org/10.1111/1467-8659.1330233"
 role="doc-biblioref">Schlick 1994</a>)</span></p>
-<h3 data-number="3.3.4" id="materiales-híbridos"><span
-class="header-section-number">3.3.4</span> Materiales híbridos</h3>
-<h3 data-number="3.3.5" id="otros-modelos"><span
-class="header-section-number">3.3.5</span> Otros modelos</h3>
-<h4 data-number="3.3.5.1" id="oren---nayar"><span
-class="header-section-number">3.3.5.1</span> Oren - Nayar</h4>
+<h3 data-number="2.3.4" id="materiales-híbridos"><span
+class="header-section-number">2.3.4</span> Materiales híbridos</h3>
+<h3 data-number="2.3.5" id="otros-modelos"><span
+class="header-section-number">2.3.5</span> Otros modelos</h3>
+<h4 data-number="2.3.5.1" id="oren---nayar"><span
+class="header-section-number">2.3.5.1</span> Oren - Nayar</h4>
 <p>Este modelo intenta aproximar superficies difusas utilizando un ratio
 de lambertiano, lo cual mejora el rendimiento el <em>white furnace
 test</em>:</p>
@@ -2507,8 +2611,8 @@ test</em>:</p>
 
     return m.albedo * max(0.0, N_dot_L) * (A + B * s / t) / PI;
 }</code></pre>
-<h4 data-number="3.3.5.2" id="ggx"><span
-class="header-section-number">3.3.5.2</span> GGX</h4>
+<h4 data-number="2.3.5.2" id="ggx"><span
+class="header-section-number">2.3.5.2</span> GGX</h4>
 <p>El modelo Ground Glass Unknown es una BSDF analítica que se basa en
 la distribución de microfacetas del material subyacente. Es una de las
 técnicas más avanzadas y exploradas recientemente. Los motores modernos
@@ -2516,8 +2620,8 @@ como Unreal Engine 4 y Unity lo utilizan en sus pipelines físicamente
 realistas.</p>
 <p>A diferencia de los otros modelos, no entraremos en detalles de la
 implementación.</p>
-<h2 data-number="3.4" id="la-rendering-equation"><span
-class="header-section-number">3.4</span> La rendering equation</h2>
+<h2 data-number="2.4" id="la-rendering-equation"><span
+class="header-section-number">2.4</span> La rendering equation</h2>
 <p>Y, finalmente, tras esta introducción de los principales conceptos
 radiométricos, llegamos a la ecuación más importante de todo este
 trabajo: la <strong>rendering equation</strong>; también llamada la
@@ -2612,8 +2716,8 @@ la luz. Además, no se conocen las radiancias de salida.</li>
 <p>Este último matiz es importante. Para renderizar una imagen, se
 necesita calcular la radiancia de salida para aquellos puntos visibles
 desde nuestra cámara.</p>
-<h1 data-number="4" id="métodos-de-monte-carlo"><span
-class="header-section-number">4</span> Métodos de Monte Carlo</h1>
+<h1 data-number="3" id="métodos-de-monte-carlo"><span
+class="header-section-number">3</span> Métodos de Monte Carlo</h1>
 <p>Como vimos en el capítulo anterior, la clave para conseguir una
 imagen en nuestro ray tracer es calcular la cantidad de luz en un punto
 de la escena. Para ello, necesitamos hallar la radiancia en dicha
@@ -2637,8 +2741,8 @@ reducir el error a la mitad, necesitaríamos 4 veces más muestras.</p>
 <p>En este capítulo veremos los fundamentos de la integración de Monte
 Carlo, cómo muestrear distribuciones específicas y métodos para afinar
 el resultado final.</p>
-<h2 data-number="4.1" id="repaso-de-probabilidad"><span
-class="header-section-number">4.1</span> Repaso de probabilidad</h2>
+<h2 data-number="3.1" id="repaso-de-probabilidad"><span
+class="header-section-number">3.1</span> Repaso de probabilidad</h2>
 <p>Antes de comenzar a fondo, necesitaremos unas nociones de variable
 aleatoria para poder entender la integración de Monte Carlo, por lo que
 vamos a hacer un breve repaso.</p>
@@ -2664,8 +2768,8 @@ clasificarse atendiendo a cómo sea su rango <span
 class="math inline">\(R_X = \left\{x \in \mathbb{R} \,\middle|\, \exists
 \omega \in \Omega \text{ tal que } X(\omega) = x \right\}\)</span>: en
 discreta o continua.</p>
-<h3 data-number="4.1.1" id="variables-aleatorias-discretas"><span
-class="header-section-number">4.1.1</span> Variables aleatorias
+<h3 data-number="3.1.1" id="variables-aleatorias-discretas"><span
+class="header-section-number">3.1.1</span> Variables aleatorias
 discretas</h3>
 <p>Las v.a. discretas son aquellas cuyo rango es un conjunto
 discreto.</p>
@@ -2759,8 +2863,8 @@ F_X(x) &amp; = \sum_{i = 1}^{3}{P(X = i)} = P(X = 1) + P(X = 2) + P(X =
        &amp; = \frac{1}{36} + \frac{2}{36} + \frac{3}{36} = \frac{1}{12}
 \end{aligned}
 \]</span></p>
-<h3 data-number="4.1.2" id="variables-aleatorias-continuas"><span
-class="header-section-number">4.1.2</span> Variables aleatorias
+<h3 data-number="3.1.2" id="variables-aleatorias-continuas"><span
+class="header-section-number">3.1.2</span> Variables aleatorias
 continuas</h3>
 <p>Este tipo de variables aleatorias tienen un rango no numerable; es
 decir, el conjunto de valores que puede tomar abarca un intervalo de
@@ -2837,9 +2941,9 @@ distribución y función de densidad directamente:</p>
 <p><span class="math display">\[
 f_X(x) = \frac{dF_X(x)}{dx}
 \]</span></p>
-<h3 data-number="4.1.3"
+<h3 data-number="3.1.3"
 id="esperanza-y-varianza-de-una-variable-aleatoria"><span
-class="header-section-number">4.1.3</span> Esperanza y varianza de una
+class="header-section-number">3.1.3</span> Esperanza y varianza de una
 variable aleatoria</h3>
 <p>La <strong>esperanza de una variable aleatoria</strong>, denotada
 <span class="math inline">\(E\left[ X \right]\)</span>, es una
@@ -2949,8 +3053,8 @@ class="math inline">\(Var[X] + Var[Y]\)</span>.</li>
 </ul>
 <p>La varianza nos será útil a la hora de medir el error cometido por
 una estimación de Monte Carlo.</p>
-<h3 data-number="4.1.4" id="teoremas-importantes"><span
-class="header-section-number">4.1.4</span> Teoremas importantes</h3>
+<h3 data-number="3.1.4" id="teoremas-importantes"><span
+class="header-section-number">3.1.4</span> Teoremas importantes</h3>
 <p>Además de las anteriores propiedades, existen una serie de teoremas
 esenciales que necesitaremos más adelante:</p>
 <p><strong>Ley del estadístico insconciente</strong> (<em>Law of the
@@ -2999,8 +3103,8 @@ class="math inline">\(N\)</span> es suficientemente grande:</p>
 \lim_{N \to \infty}{P[Z_N \le z]} = \int_{-\infty}^{z}{\frac{1}{\sqrt{2
 \pi}} e^{- \frac{x^2}{2}}dx}
 \]</span><span class="eqnos-number">(25)</span></span></p>
-<h3 data-number="4.1.5" id="estimadores"><span
-class="header-section-number">4.1.5</span> Estimadores</h3>
+<h3 data-number="3.1.5" id="estimadores"><span
+class="header-section-number">3.1.5</span> Estimadores</h3>
 <p>A veces, no podremos conocer de antemano el valor que toma un cierto
 parámetro de una distribución. Sin embargo, conocemos el tipo de
 distribución que nuestra variable aleatoria <span
@@ -3035,14 +3139,14 @@ E\left[ T(X_1, \dots, X_n) \right] = \theta\quad \forall \theta \in
 class="math inline">\(T(X_1, \dots, X_N)\)</span> está
 <strong>sesgado</strong> si <span class="math inline">\(E\left[ T(X_1,
 \dots, X_N) \right] \not = \theta\)</span>.</p>
-<h2 data-number="4.2" id="el-estimador-de-monte-carlo"><span
-class="header-section-number">4.2</span> El estimador de Monte
+<h2 data-number="3.2" id="el-estimador-de-monte-carlo"><span
+class="header-section-number">3.2</span> El estimador de Monte
 Carlo</h2>
 <p>Tras este breve repaso de probabilidad, estamos en condiciones de
 definir el estimador de Monte Carlo. Primero, vamos con su versión más
 sencilla.</p>
-<h3 data-number="4.2.1" id="monte-carlo-básico"><span
-class="header-section-number">4.2.1</span> Monte Carlo básico</h3>
+<h3 data-number="3.2.1" id="monte-carlo-básico"><span
+class="header-section-number">3.2.1</span> Monte Carlo básico</h3>
 <p>Los estimadores de Monte Carlo nos permiten hallar la esperanza de
 una variable aleatoria, digamos, <span class="math inline">\(Y\)</span>,
 sin necesidad de calcular explícitamente su valor. Para ello, tomamos
@@ -3119,8 +3223,8 @@ Podemos tomar <span class="math inline">\(p(x, y) =
 \pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con }
 (x_i, y_i) \sim \mathcal{U}(\small{[-1, 1] \times [-1, 1]})
 \]</span></p>
-<h3 data-number="4.2.2" id="integración-de-monte-carlo"><span
-class="header-section-number">4.2.2</span> Integración de Monte
+<h3 data-number="3.2.2" id="integración-de-monte-carlo"><span
+class="header-section-number">3.2.2</span> Integración de Monte
 Carlo</h3>
 <p>Generalmente nos encontraremos en la situación en la que <span
 class="math inline">\(Y = f(X)\)</span>, donde <span
@@ -3257,8 +3361,8 @@ dimensión</strong>. Sabemos que <span class="math inline">\(X \in S
 class="math inline">\(d\)</span> en la expresión de la desviación
 estándar [<a href="#eq:desviacion_estandar">31</a>]. Este hecho es una
 de las ventajas de la integración de Monte Carlo.</p>
-<h4 data-number="4.2.2.1" id="un-ejemplo-práctico-en-r"><span
-class="header-section-number">4.2.2.1</span> Un ejemplo práctico en
+<h4 data-number="3.2.2.1" id="un-ejemplo-práctico-en-r"><span
+class="header-section-number">3.2.2.1</span> Un ejemplo práctico en
 R</h4>
 <p>Hagamos un ejemplo práctico para visualizar lo que hemos aprendido en
 el software estadístico <strong>R</strong>.</p>
@@ -3304,25 +3408,19 @@ lines(estimacion - z * error, col = &quot;blue&quot;, lwd = 2, lty = 3)
 lines(estimacion + z * error, col = &quot;blue&quot;, lwd = 2, lty = 3)
 abline(h = 0.4, col = 2)</code></pre>
 <p>Este código produce la siguiente gráfica:</p>
-<div id="fig:error_simulacion" class="fignos">
-<figure>
-<img loading="lazy" src="./img/03/Error%20simulación.png"
-alt="Figura 11: Error de la simulación para el estimador de la integral \int_0^1{2x^4\ dx}" />
-<figcaption aria-hidden="true"><span>Figura 11:</span> Error de la
-simulación para el estimador de la integral <span
-class="math inline">\(\int_0^1{2x^4\ dx}\)</span></figcaption>
-</figure>
-</div>
+<p><img loading="lazy" src="./img/03/Error%20simulación.png" id="fig:error_simulacion"
+alt="Error de la simulación para el estimador de la integral \int_0^1{2x^4\ dx}" />
+{width=80%}</p>
 <p>Se puede ver cómo debemos usar un número considerable de muestras,
 alrededor de 200, para que el error se mantenga bajo control. Aún así,
 aumentar el tamaño de <span class="math inline">\(N\)</span> no
 disminuye necesariamente el error; nos encontramos en una situación de
 retornos reducidos.</p>
-<h2 data-number="4.3" id="técnicas-de-reducción-de-varianza"><span
-class="header-section-number">4.3</span> Técnicas de reducción de
+<h2 data-number="3.3" id="técnicas-de-reducción-de-varianza"><span
+class="header-section-number">3.3</span> Técnicas de reducción de
 varianza</h2>
-<h3 data-number="4.3.1" id="muestreo-por-importancia"><span
-class="header-section-number">4.3.1</span> Muestreo por importancia</h3>
+<h3 data-number="3.3.1" id="muestreo-por-importancia"><span
+class="header-section-number">3.3.1</span> Muestreo por importancia</h3>
 <p>Como hemos visto, <span class="math inline">\(Var\left[ \hat{I}_N
 \right]\)</span> depende del número de muestras <span
 class="math inline">\(N\)</span> y de <span
@@ -3415,9 +3513,9 @@ importancia. Puede probarse que la función de densidad que minimiza
 class="math inline">\(\left\lvert f(x) \right\rvert p_X(x)\)</span>
 <span class="citation" data-cites="mcbook">(<a href="#ref-mcbook"
 role="doc-biblioref">Owen 2013, 6</a>)</span>.</p>
-<h4 data-number="4.3.1.1"
+<h4 data-number="3.3.1.1"
 id="muestreo-por-importancia-en-transporte-de-luz"><span
-class="header-section-number">4.3.1.1</span> Muestreo por importancia en
+class="header-section-number">3.3.1.1</span> Muestreo por importancia en
 transporte de luz</h4>
 <p>Esta técnica es especialmente importante en nuestra área de estudio.
 En transporte de luz, buscamos calcular el valor de la rendering
@@ -3511,8 +3609,8 @@ z_0}\)</span>, tomamos el estimador</p>
 \tilde{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)}
 \sum_{i = 1}^{N}{f(X_i)}
 \]</span></p>
-<h3 data-number="4.3.2" id="muestreo-por-importancia-múltiple"><span
-class="header-section-number">4.3.2</span> Muestreo por importancia
+<h3 data-number="3.3.2" id="muestreo-por-importancia-múltiple"><span
+class="header-section-number">3.3.2</span> Muestreo por importancia
 múltiple</h3>
 <p>Las técnicas de <a href="#muestreo-por-importancia">muestreo por
 importancia</a> nos proporcionan estimadores para una integral de la
@@ -3554,9 +3652,9 @@ p_i(x)\right)^\beta}}
 <p>la cual reduce la varianza con respecto a la heurística de balanceo.
 Un valor para <span class="math inline">\(\beta\)</span> habitual es
 <span class="math inline">\(\beta = 2\)</span>.</p>
-<h4 data-number="4.3.2.1"
+<h4 data-number="3.3.2.1"
 id="muestreo-por-importancia-múltiple-en-transporte-de-luz"><span
-class="header-section-number">4.3.2.1</span> Muestreo por importancia
+class="header-section-number">3.3.2.1</span> Muestreo por importancia
 múltiple en transporte de luz</h4>
 <p>Si queremos evaluar la contribución de luz en un punto teniendo en
 cuenta la luz directa, la expresión utilizada es</p>
@@ -3572,18 +3670,18 @@ importancia múltiple se conseguiría un mejor resultado.</p>
 <div id="fig:multiple_importance_sampling" class="fignos">
 <figure>
 <img loading="lazy" src="./img/03/Multiple%20importance%20sampling.png"
-style="width:67.0%"
-alt="Figura 12: Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: (Eric Veach December 1997, Multiple Importance Sampling)" />
-<figcaption aria-hidden="true"><span>Figura 12:</span> Muestreo por
+style="width:60.0%"
+alt="Figura 11: Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: (Eric Veach December 1997, Multiple Importance Sampling)" />
+<figcaption aria-hidden="true"><span>Figura 11:</span> Muestreo por
 importancia múltiple en transporte de luz ilustrado. Fuente: <span
 class="citation" data-cites="robust-monte-carlo">(<a
 href="#ref-robust-monte-carlo" role="doc-biblioref">Eric Veach December
 1997</a>, Multiple Importance Sampling)</span></figcaption>
 </figure>
 </div>
-<h3 data-number="4.3.3"
+<h3 data-number="3.3.3"
 id="otras-técnicas-de-reducción-de-varianza-en-transporte-de-luz"><span
-class="header-section-number">4.3.3</span> Otras técnicas de reducción
+class="header-section-number">3.3.3</span> Otras técnicas de reducción
 de varianza en transporte de luz</h3>
 <p>Hasta ahora, la principal técnica estudiada ha sido muestreo por
 importancia (sea o no múltiple). Esto no quiere decir que sea la única.
@@ -3591,8 +3689,8 @@ Al contrario; esas dos son de las más sencillas que se pueden usar.</p>
 <p>En esta sección vamos a ver de forma breve otras formas de reducir la
 varianza de un estimador, centrádonos específicamente en el contexto de
 transporte de luz.</p>
-<h4 data-number="4.3.3.1" id="ruleta-rusa"><span
-class="header-section-number">4.3.3.1</span> Ruleta rusa</h4>
+<h4 data-number="3.3.3.1" id="ruleta-rusa"><span
+class="header-section-number">3.3.3.1</span> Ruleta rusa</h4>
 <p>Un problema habitual en la práctica es saber cuándo terminar la
 propagación de un rayo. Una solución simple es utilizar un parámetro de
 profundidad –lo cual hemos implementado en el motor–. Otra opción más
@@ -3609,9 +3707,9 @@ fuertes, rechazando aquellas rutas con excesivo ruido.</p>
 data-cites="PBRT3e">(<a href="#ref-PBRT3e" role="doc-biblioref">Pharr,
 Jakob, and Humphreys 2016</a>, Russian Roulette and
 Splitting)</span>.</p>
-<h4 data-number="4.3.3.2"
+<h4 data-number="3.3.3.2"
 id="next-event-estimation-o-muestreo-directo-de-fuentes-de-luz"><span
-class="header-section-number">4.3.3.2</span> Next event estimation, o
+class="header-section-number">3.3.3.2</span> Next event estimation, o
 muestreo directo de fuentes de luz</h4>
 <blockquote>
 <p><strong>Idea</strong>: Tracing shadow rays to the light source on
@@ -3676,8 +3774,8 @@ rayos para conocer si está ocluido.</p>
 <div id="fig:next_event_estimation" class="fignos">
 <figure>
 <img loading="lazy" src="./img/03/Next%20event%20estimation.png" style="width:67.0%"
-alt="Figura 13: El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: (Carlos Ureña 2021)" />
-<figcaption aria-hidden="true"><span>Figura 13:</span> El muestreo
+alt="Figura 12: El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: (Carlos Ureña 2021)" />
+<figcaption aria-hidden="true"><span>Figura 12:</span> El muestreo
 directo de fuentes de luz cambia la forma de calcular la radiancia en un
 punto, pero mejora considerablemente el ruido de una imagen. Fuente:
 <span class="citation" data-cites="carlos-path-tracing">(<a
@@ -3689,8 +3787,8 @@ href="#ref-carlos-path-tracing" role="doc-biblioref">Carlos Ureña
 class="citation" data-cites="Marrs2021">(<a href="#ref-Marrs2021"
 role="doc-biblioref">Adam Marrs and Wald 2021</a>, Importance Sampling
 of Many Lights on the GPU)</span>.</p>
-<h4 data-number="4.3.3.3" id="quasi-monte-carlo"><span
-class="header-section-number">4.3.3.3</span> Quasi-Monte Carlo</h4>
+<h4 data-number="3.3.3.3" id="quasi-monte-carlo"><span
+class="header-section-number">3.3.3.3</span> Quasi-Monte Carlo</h4>
 <p>Generalmente, en los estimadores de Monte Carlo se utilizan variables
 aleatorias distribuidas uniformemente a las que se le aplican
 transformaciones, pues resulta más sencillo generar un número aleatorio
@@ -3710,39 +3808,29 @@ role="doc-biblioref">Martin Roberts 2018</a>)</span></p>
 <div id="fig:quasimontecarlo" class="fignos">
 <figure>
 <img loading="lazy" src="./img/03/Quasi-Monte%20Carlo.png"
-alt="Figura 14: Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: (Martin Roberts 2018)" />
-<figcaption aria-hidden="true"><span>Figura 14:</span> Comparativa entre
+alt="Figura 13: Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: (Martin Roberts 2018)" />
+<figcaption aria-hidden="true"><span>Figura 13:</span> Comparativa entre
 diferentes métodos de quasi-aleatoriedad. Fuente: <span class="citation"
 data-cites="quasi-monte-carlo">(<a href="#ref-quasi-monte-carlo"
 role="doc-biblioref">Martin Roberts 2018</a>)</span></figcaption>
 </figure>
 </div>
-<h2 data-number="4.4" id="escogiendo-puntos-aleatorios"><span
-class="header-section-number">4.4</span> Escogiendo puntos
+<h2 data-number="3.4" id="escogiendo-puntos-aleatorios"><span
+class="header-section-number">3.4</span> Escogiendo puntos
 aleatorios</h2>
 <p>Una de las partes clave del estimador de Monte Carlo [<a
 href="#eq:mc_integral">27</a>] es saber escoger la función de densidad
 <span class="math inline">\(p_X\)</span> correctamente. En esta sección,
 veremos algunos métodos para conseguir distribuciones específicas
 partiendo de funciones de densidad sencillas, así como formas de elegir
-funciones de densidad próximas a <span
-class="math inline">\(f\)</span>.</p>
-<h3 data-number="4.4.1" id="método-de-la-transformada-inversa"><span
-class="header-section-number">4.4.1</span> Método de la transformada
+funciones de densidad próximas a <span class="math inline">\(f\)</span>.
+Los dos métodos principales que estudiaremos se han extraído del libro
+<span class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
+role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>, Sampling
+Random Variables)</span></p>
+<h3 data-number="3.4.1" id="método-de-la-transformada-inversa"><span
+class="header-section-number">3.4.1</span> Método de la transformada
 inversa</h3>
-<blockquote>
-<p><strong>En resumen</strong>: Para conseguir una muestra de una
-distribución específica <span class="math inline">\(F_X\)</span>:</p>
-<ol type="1">
-<li>Generar un número aleatorio <span class="math inline">\(\xi \sim
-\mathcal{U}(0, 1)\)</span>.</li>
-<li>Hallar la inversa de la función de distribución deseada <span
-class="math inline">\(F_X\)</span>, denotada <span
-class="math inline">\(F_X^{-1}(x)\)</span>.</li>
-<li>Calcular <span class="math inline">\(F_X^{-1}(\xi) =
-X\)</span>.</li>
-</ol>
-</blockquote>
 <p>Este método nos permite conseguir muestras de cualquier distribución
 continua a partir de variables aleatorias uniformes, siempre que se
 conozca la inversa de la función de distribución.</p>
@@ -3768,11 +3856,26 @@ class="math inline">\((0, 1)\)</span>, <span class="math inline">\(P[\xi
 &lt; x] = x\)</span>. Es decir, hemos obtenido que <span
 class="math inline">\(F_X\)</span> es la inversa de <span
 class="math inline">\(T\)</span>.</p>
+<p>En resumen: Para conseguir una muestra de una distribución específica
+<span class="math inline">\(F_X\)</span>:</p>
+<ol type="1">
+<li>Generar un número aleatorio <span class="math inline">\(\xi \sim
+\mathcal{U}(0, 1)\)</span>.</li>
+<li>Hallar la inversa de la función de distribución deseada <span
+class="math inline">\(F_X\)</span>, denotada <span
+class="math inline">\(F_X^{-1}(x)\)</span>.</li>
+<li>Calcular <span class="math inline">\(F_X^{-1}(\xi) =
+X\)</span>.</li>
+</ol>
 <blockquote>
 <p>TODO: dibujo similar a <a
 href="https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf">este:
 p.52</a></p>
 </blockquote>
+<h4 data-number="3.4.1.1"
+id="ejemplo-práctico-de-la-transformada-inversa-para-x2"><span
+class="header-section-number">3.4.1.1</span> Ejemplo práctico de la
+transformada inversa para <span class="math inline">\(x^2\)</span></h4>
 <p>Como ejemplo, vamos a muestrear la función <span
 class="math inline">\(f(x) = x^2,\ x \in [0, 2]\)</span> <span
 class="citation" data-cites="berkeley-cs184">(<a
@@ -3808,9 +3911,9 @@ x &amp; = \sqrt[3]{8 \xi}
 <p>Sacando un número aleatorio <span class="math inline">\(\xi\)</span>,
 y pasándolo por la función obtenida, conseguimos un elemento con
 distribución <span class="math inline">\(F(x)\)</span>.</p>
-<h4 data-number="4.4.1.1"
+<h4 data-number="3.4.1.2"
 id="ejemplo-práctico-del-método-de-la-transformada-inversa-en-r"><span
-class="header-section-number">4.4.1.1</span> Ejemplo práctico del método
+class="header-section-number">3.4.1.2</span> Ejemplo práctico del método
 de la transformada inversa en R</h4>
 <p>Aunque el ejemplo anterior nos enseña cómo proceder para una función
 sencilla, resulta algo difícil de visualizar. Por ello, vamos a utilizar
@@ -3847,34 +3950,20 @@ xi &lt;- runif(N)
 lambda &lt;- 1.5
 x &lt;- F(xi, lambda)</code></pre>
 <p>Es fácil comprobar que los valores generados se asemejan fielmente a
-una función de densidad exponencial:</p>
+la función de densidad exponencial:</p>
 <pre><code class="language-r">hist(x, freq = FALSE, breaks = &#39;FD&#39;, main = &#39;Método de la inversa para la exponencial&#39;, ylim = c(0, 1.5))
 lines(density(x), col = &#39;blue&#39;)
 curve(dexp(x, rate = lambda), add = TRUE, col = 2)</code></pre>
 <div id="fig:metodo_inversa_R" class="fignos">
 <figure>
-<img loading="lazy" src="./img/03/metodo_inversa.png"
-alt="Figura 15: Histograma del método de la función inversa" />
-<figcaption aria-hidden="true"><span>Figura 15:</span> Histograma del
-método de la función inversa</figcaption>
+<img loading="lazy" src="./img/03/metodo_inversa.png" style="width:70.0%"
+alt="Figura 14: Histograma del método de la función inversa." />
+<figcaption aria-hidden="true"><span>Figura 14:</span> Histograma del
+método de la función inversa.</figcaption>
 </figure>
 </div>
-<h3 data-number="4.4.2" id="método-del-rechazo"><span
-class="header-section-number">4.4.2</span> Método del rechazo</h3>
-<blockquote>
-<p><strong>En resumen</strong>: Para conseguir una muestra de una
-variable aleatoria <span class="math inline">\(X\)</span> con función de
-densidad <span class="math inline">\(p_X\)</span>:</p>
-<ol type="1">
-<li>Obtener una muestra <span class="math inline">\(y\)</span> de <span
-class="math inline">\(Y\)</span> , y otra <span
-class="math inline">\(\xi\)</span> de <span
-class="math inline">\(\mathcal{U}(0, 1)\)</span>.</li>
-<li>Comprobar si <span class="math inline">\(\xi &lt;
-\frac{p_X(y)}{Mp_Y(y)}\)</span>. Si es así, aceptarla. Si no, sacar otra
-muestra.</li>
-</ol>
-</blockquote>
+<h3 data-number="3.4.2" id="método-del-rechazo"><span
+class="header-section-number">3.4.2</span> Método del rechazo</h3>
 <p>El método anterior presenta principalmente dos problemas:</p>
 <ol type="1">
 <li>No siempre es posible integrar una función para hallar su función de
@@ -3912,9 +4001,9 @@ muestra de <span class="math inline">\(p_X\)</span></li>
 y se vuelve al paso 1.</li>
 </ol></li>
 </ol>
-<h4 data-number="4.4.2.1"
+<h4 data-number="3.4.2.1"
 id="ejemplo-práctico-del-método-del-rechazo-en-r"><span
-class="header-section-number">4.4.2.1</span> Ejemplo práctico del método
+class="header-section-number">3.4.2.1</span> Ejemplo práctico del método
 del rechazo en R</h4>
 <p>De la misma forma que hicimos con el <a
 href="#ejemplo-práctico-del-método-de-la-transformada-inversa-en-r">método
@@ -3924,7 +4013,7 @@ Beta a partir de la uniforme. Es decir, podemos tomar</p>
 <p><span class="math display">\[
 \begin{aligned}
 p_X (x) &amp; = \frac{\Gamma(a + b)}{\Gamma(a) \Gamma(b)} x^{a - 1} (1 -
-x)^{b - 1}, \quad 0 \le x \le 1, a = 2, b = 6 \\
+x)^{b - 1}, \quad 0 \le x \le 1; a = 2, b = 6 \\
 p_Y (x) &amp; = 1, \quad 0 \le x \le 1
 \end{aligned}
 \]</span></p>
@@ -3932,7 +4021,10 @@ p_Y (x) &amp; = 1, \quad 0 \le x \le 1
 <p><span class="math display">\[
 M = \sup_{x}\frac{p_Y(x)}{p_X(x)} = \sup_{x}{p_Y(x)}
 \]</span></p>
-<p>El siguiente fragmento de código de R calcula este valor:</p>
+<p>En la sección anterior dijimos que este algoritmo es “como jugar a
+los dardos”. Pues bien, la siguiente figura [<a
+href="#fig:metodo_rechazo_grafica">15</a>] muestra la diana. El
+siguiente fragmento de código de R calcula este valor:</p>
 <pre><code class="language-r">a &lt;- 2
 b &lt;- 6
 resultado &lt;- optimize(
@@ -3948,10 +4040,17 @@ resultado &lt;- optimize(
 # [1] 2.813143
 
 M &lt;- resultado$objective</code></pre>
+<div id="fig:metodo_rechazo_grafica" class="fignos">
 <figure>
-<img loading="lazy" src="./img/03/metodo_rechazo_grafica.png" />
+<img loading="lazy" src="./img/03/metodo_rechazo_grafica.png" style="width:60.0%"
+alt="Figura 15: Podemos ver la función de densidad objetivo y la de densidad reescalada de la que tomamos muestras." />
+<figcaption aria-hidden="true"><span>Figura 15:</span> Podemos ver la
+función de densidad objetivo y la de densidad reescalada de la que
+tomamos muestras.</figcaption>
 </figure>
-<p>Veamos cómo de bien se aproxima el algoritmo:</p>
+</div>
+<p>Para resolver el problema planteado, podemos usar el siguiente
+código:</p>
 <pre><code class="language-r">N &lt;- 1000
 x &lt;- double(N)
 
@@ -3975,21 +4074,27 @@ for (i in 1:N) {
     # Aceptar el valor
     x[i] &lt;- y
 }</code></pre>
+<p>El hecho de que exista una posibilidad de que falle evidencia que el
+algoritmo no es muy eficiente. De hecho, podemos ver una medida de las
+veces que ha fallado:</p>
 <pre><code class="language-r">valores_generados
 # [1] 2906</code></pre>
+<p>Es decir, para sacar 1000 muestras válidas ha hecho falta generar
+2906; casi 3 veces más de las que queríamos.</p>
+<p>Finalmente, veamos cómo de buena es la aproximación:</p>
 <pre><code class="language-r">hist(x, freq = FALSE, breaks = &#39;FD&#39;, main = &#39;Método del rechazo para la distribución Beta(a = 2, b = 6)&#39;)
 lines(density(x), col = &#39;blue&#39;)
 curve(dbeta(x, shape1 = a, shape2 = b), add = TRUE, col = 2)</code></pre>
 <div id="fig:metodo_rechazo_R" class="fignos">
 <figure>
-<img loading="lazy" src="./img/03/metodo_rechazo.png"
-alt="Figura 16: Histograma del método de rechazo" />
+<img loading="lazy" src="./img/03/metodo_rechazo.png" style="width:70.0%"
+alt="Figura 16: Histograma del método de rechazo." />
 <figcaption aria-hidden="true"><span>Figura 16:</span> Histograma del
-método de rechazo</figcaption>
+método de rechazo.</figcaption>
 </figure>
 </div>
-<h1 data-number="5" id="construyamos-un-path-tracer"><span
-class="header-section-number">5</span> ¡Construyamos un path
+<h1 data-number="4" id="construyamos-un-path-tracer"><span
+class="header-section-number">4</span> ¡Construyamos un path
 tracer!</h1>
 <p>Ahora que hemos introducido toda la teoría necesaria, es hora de
 ponernos manos a la obra. En este capítulo escogeremos una serie de
@@ -4005,8 +4110,8 @@ class="citation" data-cites="video">(<a href="#ref-video"
 role="doc-biblioref">Andrés Millán 2022c</a>)</span></p>
 <iframe width="784" height="441" src="https://www.youtube.com/embed/pXrD3K69MqE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
-<h2 data-number="5.1" id="el-algoritmo-de-path-tracing"><span
-class="header-section-number">5.1</span> El algoritmo de path
+<h2 data-number="4.1" id="el-algoritmo-de-path-tracing"><span
+class="header-section-number">4.1</span> El algoritmo de path
 tracing</h2>
 <p>Hemos llegado a una de las partes más importantes de este trabajo. Es
 el momento de poner en concordancia todo lo que hemos visto a lo largo
@@ -4019,9 +4124,9 @@ teniendo en cuenta las propiedades de los diferentes materiales.</p>
 href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
 2022a</a>)</span>, aunque se pueden encontrar numerosísimas
 modificaciones en la literatura del sector.</p>
-<h3 data-number="5.1.1"
+<h3 data-number="4.1.1"
 id="estimando-la-rendering-equation-con-monte-carlo"><span
-class="header-section-number">5.1.1</span> Estimando la rendering
+class="header-section-number">4.1.1</span> Estimando la rendering
 equation con Monte Carlo</h3>
 <p>Lo que buscamos en esta sección es aproximar el valor de la radiancia
 en un cierto punto, que dependerá de cada píxel dela pantalla.
@@ -4098,8 +4203,8 @@ class="math display">\[
 materiales difusos.</p>
 <p>Por lo general, no será necesario simplificar hasta tal punto la
 expresión.</p>
-<h3 data-number="5.1.2" id="pseudocódigo-de-un-path-tracer"><span
-class="header-section-number">5.1.2</span> Pseudocódigo de un path
+<h3 data-number="4.1.2" id="pseudocódigo-de-un-path-tracer"><span
+class="header-section-number">4.1.2</span> Pseudocódigo de un path
 tracer</h3>
 <p>Con lo que conocemos hasta ahora, podemos empezar a programar los
 shaders. Una primera implementación inspirada en la rendering equation
@@ -4145,8 +4250,8 @@ recursividad. Como bien es conocido, abusar de recursividad provoca que
 el tiempo de ejecución aumente significativamente. Además, con la
 implementación anterior, se generan rayos desde el closest hit shader,
 lo cual no es ideal.</p>
-<h3 data-number="5.1.3" id="evitando-la-recursividad"><span
-class="header-section-number">5.1.3</span> Evitando la recursividad</h3>
+<h3 data-number="4.1.3" id="evitando-la-recursividad"><span
+class="header-section-number">4.1.3</span> Evitando la recursividad</h3>
 <p>Podemos evitar los problemas de la implementación anterior con una
 pequeña modificación. En vez de calcular la radiancia desde el closest
 hit, nos traemos la información necesaria al raygen shader, y calculamos
@@ -4263,9 +4368,9 @@ que el recursivo <span class="citation"
 data-cites="nvpro-samples-tutorial">(<a
 href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
 2022a</a>, glTF Scene)</span>.</p>
-<h2 data-number="5.2"
+<h2 data-number="4.2"
 id="requisitos-de-ray-tracing-en-tiempo-real"><span
-class="header-section-number">5.2</span> Requisitos de ray tracing en
+class="header-section-number">4.2</span> Requisitos de ray tracing en
 tiempo real</h2>
 <p>Como es natural, el tiempo es una limitación enorme para cualquier
 programa en tiempo real. Mientras que en un <em>offline renderer</em>
@@ -4288,8 +4393,8 @@ en tiempo real y <em>offline</em>. Como es natural, necesitaremos
 introducir unos pocos conceptos más para llevarlo a tiempo real. Además,
 existen una serie de requisitos hardware que debemos cumplir para que un
 motor en tiempo real con ray tracing funcione.</p>
-<h3 data-number="5.2.1" id="arquitecturas-de-gráficas"><span
-class="header-section-number">5.2.1</span> Arquitecturas de
+<h3 data-number="4.2.1" id="arquitecturas-de-gráficas"><span
+class="header-section-number">4.2.1</span> Arquitecturas de
 gráficas</h3>
 <p>El requisito más importante de todos es la gráfica. Para ser capaces
 de realizar cálculos de ray tracing en tiempo real, necesitaremos una
@@ -4351,9 +4456,9 @@ se han incluido las gráficas de escritorio de consumidor.</p>
 <p>Para este trabajo se ha utilizado una <strong>RTX 2070
 Super</strong>. En el capítulo de análisis del rendimiento se hablará
 con mayor profundidad de este apartado.</p>
-<h3 data-number="5.2.2"
+<h3 data-number="4.2.2"
 id="frameworks-y-api-de-ray-tracing-en-tiempo-real"><span
-class="header-section-number">5.2.2</span> Frameworks y API de ray
+class="header-section-number">4.2.2</span> Frameworks y API de ray
 tracing en tiempo real</h3>
 <p>Una vez hemos cumplido los requisitos de hardware, es hora de escoger
 los frameworks de trabajo.</p>
@@ -4406,8 +4511,8 @@ href="#ref-alain-API" role="doc-biblioref">Alain Galvan
 se puede encontrar en <span class="citation" data-cites="vulkan">(<a
 href="#ref-vulkan" role="doc-biblioref">The Khronos Vulkan Working Group
 2022</a>)</span>.</p>
-<h2 data-number="5.3" id="setup-del-proyecto"><span
-class="header-section-number">5.3</span> Setup del proyecto</h2>
+<h2 data-number="4.3" id="setup-del-proyecto"><span
+class="header-section-number">4.3</span> Setup del proyecto</h2>
 <p>Un proyecto de Vulkan necesita una cantidad de código inicial
 considerable. Para acelerar este trámite y partir de una base más
 sólida, se ha decidido usar un pequeño framework de trabajo de Nvidia
@@ -4442,8 +4547,8 @@ programa muestra un cubo rasterizado muy simple. Es, prácticamente, un
 <em>hello world</em> gráfico</figcaption>
 </figure>
 </div>
-<h3 data-number="5.3.1" id="un-vistazo-general-a-la-estructura"><span
-class="header-section-number">5.3.1</span> Un vistazo general a la
+<h3 data-number="4.3.1" id="un-vistazo-general-a-la-estructura"><span
+class="header-section-number">4.3.1</span> Un vistazo general a la
 estructura</h3>
 <p>La estructura final del proyecto (es decir, la carpeta
 <code>application</code>) es la siguiente:</p>
@@ -4499,8 +4604,8 @@ alt="Figura 18: Estructura del repositorio" />
 repositorio</figcaption>
 </figure>
 </div>
-<h3 data-number="5.3.2" id="diagramas"><span
-class="header-section-number">5.3.2</span> Diagramas</h3>
+<h3 data-number="4.3.2" id="diagramas"><span
+class="header-section-number">4.3.2</span> Diagramas</h3>
 <p>Teniendo en cuenta que utilizamos un framework que no está pensado
 para producción y la naturaleza de Vulkan, realizar un diagrama de clase
 es muy complicado. Sin embargo, podemos ilustrar las clases más
@@ -4527,8 +4632,8 @@ alt="Figura 20: Diagrama de clases para Scenes" />
 clases para Scenes</figcaption>
 </figure>
 </div>
-<h2 data-number="5.4" id="compilación-y-ejecución"><span
-class="header-section-number">5.4</span> Compilación y ejecución</h2>
+<h2 data-number="4.4" id="compilación-y-ejecución"><span
+class="header-section-number">4.4</span> Compilación y ejecución</h2>
 <p>Las dependencias necesarias son:</p>
 <ol type="1">
 <li><strong>CMake</strong>.</li>
@@ -4550,8 +4655,8 @@ $ cmake --build .</code></pre>
 encontrarte tras seguir las instrucciones, puedes conseguir ejecutarlo
 con</p>
 <pre class="sh"><code>$ ..\..\bin_x64\Debug\asmiray.exe</code></pre>
-<h2 data-number="5.5" id="estructuras-de-aceleración"><span
-class="header-section-number">5.5</span> Estructuras de aceleración</h2>
+<h2 data-number="4.5" id="estructuras-de-aceleración"><span
+class="header-section-number">4.5</span> Estructuras de aceleración</h2>
 <p>El principal coste de ray tracing es el cálculo de las intersecciones
 con objetos; hasta un 95% del tiempo de ejecución total <span
 class="citation" data-cites="scratchapixel-2019">(<a
@@ -4609,9 +4714,9 @@ href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
 <blockquote>
 <p>TODO: Deberíamos cambiar esa foto por otra propia.</p>
 </blockquote>
-<h3 data-number="5.5.1"
+<h3 data-number="4.5.1"
 id="botom-level-acceleration-structure-blas"><span
-class="header-section-number">5.5.1</span> Botom-Level Acceleration
+class="header-section-number">4.5.1</span> Botom-Level Acceleration
 Structure (BLAS)</h3>
 <p>Las <strong>estructuras de aceleración de bajo nivel</strong>
 (<em>Bottom-Level Acceleration Structure</em>, BLAS) almacenan la
@@ -4645,8 +4750,8 @@ el siguiente:</p>
         VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR
     );
 }</code></pre>
-<h3 data-number="5.5.2" id="top-level-acceleration-structure-tlas"><span
-class="header-section-number">5.5.2</span> Top-Level Acceleration
+<h3 data-number="4.5.2" id="top-level-acceleration-structure-tlas"><span
+class="header-section-number">4.5.2</span> Top-Level Acceleration
 Structure (TLAS)</h3>
 <p>Las Top-Level Acceleration Structures almacenan las instancias de los
 objetos, cada una con su matriz de transformación y referencia a la BLAS
@@ -4683,10 +4788,10 @@ href="#shader-binding-table">Shader Binding Table</a>.</p>
         VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR
     );
 }</code></pre>
-<h2 data-number="5.6" id="la-ray-tracing-pipeline"><span
-class="header-section-number">5.6</span> La ray tracing pipeline</h2>
-<h3 data-number="5.6.1" id="descriptores-y-conceptos-básicos"><span
-class="header-section-number">5.6.1</span> Descriptores y conceptos
+<h2 data-number="4.6" id="la-ray-tracing-pipeline"><span
+class="header-section-number">4.6</span> La ray tracing pipeline</h2>
+<h3 data-number="4.6.1" id="descriptores-y-conceptos-básicos"><span
+class="header-section-number">4.6.1</span> Descriptores y conceptos
 básicos</h3>
 <p>Primero, debemos introducir unas nociones básicas de Vulkan sobre
 cómo gestiona la información que se pasa a los shaders.</p>
@@ -4712,8 +4817,8 @@ material</strong> se va a usar: un rayo puede impactar en
 <em>cualquier</em> material presente en la escena, lo cual invocaría un
 shader específico. Debido a esto, empaquetaremos todos los recursos en
 un único set de descriptores.</p>
-<h3 data-number="5.6.2" id="la-shader-binding-table"><span
-class="header-section-number">5.6.2</span> La Shader Binding Table</h3>
+<h3 data-number="4.6.2" id="la-shader-binding-table"><span
+class="header-section-number">4.6.2</span> La Shader Binding Table</h3>
 <p>Para solucionar esto, vamos a crear la <strong>Shader Binding
 Table</strong> (SBT). Esta estructura permitirá cargar el shader
 correspondiente dependiendo de dónde impacte un rayo.</p>
@@ -4782,8 +4887,8 @@ href="#ref-shader-binding-table" role="doc-biblioref">Will Usher
 2019</a>)</span></figcaption>
 </figure>
 </div>
-<h3 data-number="5.6.3" id="tipos-de-shaders"><span
-class="header-section-number">5.6.3</span> Tipos de shaders</h3>
+<h3 data-number="4.6.3" id="tipos-de-shaders"><span
+class="header-section-number">4.6.3</span> Tipos de shaders</h3>
 <p>El pipeline soporta varios tipos de shaders diferentes que cubren la
 funcionalidad esencial de un ray tracer:</p>
 <ul>
@@ -4822,8 +4927,8 @@ oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque
 if-else por un shader para hacer cálculos de iluminación. Este tipo de
 shaders no se han implementado en el path tracer, pero se podrían añadir
 con un poco de trabajo.</p>
-<h3 data-number="5.6.4" id="traspaso-de-información-entre-shaders"><span
-class="header-section-number">5.6.4</span> Traspaso de información entre
+<h3 data-number="4.6.4" id="traspaso-de-información-entre-shaders"><span
+class="header-section-number">4.6.4</span> Traspaso de información entre
 shaders</h3>
 <p>En ray tracing, los shaders por sí solos no pueden realizar todos los
 cálculos necesarios para conseguir la imagen final. Necesitaremos enviar
@@ -4857,8 +4962,8 @@ rayo. Se crean mediante la estructura <code>rayPayloadEXT</code>, y se
 reciben en otro shader mediante <code>rayPayloadInEXT</code>. Es
 importante controlar que el tamaño de la carga no sea excesivamente
 grande.</p>
-<h3 data-number="5.6.5" id="creación-de-la-ray-tracing-pipeline"><span
-class="header-section-number">5.6.5</span> Creación de la ray tracing
+<h3 data-number="4.6.5" id="creación-de-la-ray-tracing-pipeline"><span
+class="header-section-number">4.6.5</span> Creación de la ray tracing
 pipeline</h3>
 <p>El código de la creación de la pipeline está encapsulado en la
 función <code>Engine::createRtPipeline()</code>, que se puede consultar
@@ -4877,8 +4982,8 @@ estructura junto con sus parámetros correctos.</li>
 sets.</li>
 <li>Limpia la información innecesaria creada por la función.</li>
 </ol>
-<h2 data-number="5.7" id="materiales-y-objetos"><span
-class="header-section-number">5.7</span> Materiales y objetos</h2>
+<h2 data-number="4.7" id="materiales-y-objetos"><span
+class="header-section-number">4.7</span> Materiales y objetos</h2>
 <p>El formato de materiales y objetos usados es el
 <strong>Wavefront</strong> (<code>.obj</code>). Aunque es un sistema
 relativamente antiguo y sencillo, se han usado definiciones específicas
@@ -5009,8 +5114,8 @@ struct WaveFrontMaterial
   int   illum;     // illumination model (see http://www.fileformat.info/format/material/)
   int   textureId;
 };</code></pre>
-<h2 data-number="5.8" id="fuentes-de-luz"><span
-class="header-section-number">5.8</span> Fuentes de luz</h2>
+<h2 data-number="4.8" id="fuentes-de-luz"><span
+class="header-section-number">4.8</span> Fuentes de luz</h2>
 <p>La última estructura de datos importante que debemos estudiar es la
 utilizada para las fuentes de luces. Desafortunadamente, en este trabajo
 no se ha implementado una abstracción sólida.</p>
@@ -5113,9 +5218,9 @@ shadow rays precisamente por este motivo.</p>
 }</code></pre>
 <p>Y con esto, hemos conseguido añadir dos tipos de fuentes de
 iluminación.</p>
-<h2 data-number="5.9"
+<h2 data-number="4.9"
 id="antialiasing-mediante-jittering-y-acumulación-temporal"><span
-class="header-section-number">5.9</span> Antialiasing mediante jittering
+class="header-section-number">4.9</span> Antialiasing mediante jittering
 y acumulación temporal</h2>
 <p>Normalmente, mandamos los rayos desde el centro de un pixel. Podemos
 conseguir una mejora sustancial de la calidad con un pequeño truco: en
@@ -5193,8 +5298,8 @@ vec3 sample_pixel() {
 <blockquote>
 <p>TODO: mostrar vídeo de ejemplo</p>
 </blockquote>
-<h2 data-number="5.10" id="corrección-de-gamma"><span
-class="header-section-number">5.10</span> Corrección de gamma</h2>
+<h2 data-number="4.10" id="corrección-de-gamma"><span
+class="header-section-number">4.10</span> Corrección de gamma</h2>
 <p>Con el código de la sección <a
 href="#antialiasing-mediante-jittering-y-acumulación-temporal">anterior</a>,
 existe un problema con los colores finales. El algoritmo de pathtracing
@@ -5266,15 +5371,15 @@ anterior produciría variaciones significativas para pequeños
 movimientos. Hay otras formas de compensarlo, como dividir por el valor
 promedio de las muestras más brillantes. Nosotros hemos optado por
 mezclar los píxeles generados a lo largo del tiempo.</p>
-<h1 data-number="6" id="análisis-de-rendimiento"><span
-class="header-section-number">6</span> Análisis de rendimiento</h1>
+<h1 data-number="5" id="análisis-de-rendimiento"><span
+class="header-section-number">5</span> Análisis de rendimiento</h1>
 <p>En este capítulo vamos a analizar el resultado final del proyecto.
 Estudiaremos cómo se ve el motor, cómo rinde en términos de <em>frame
 time</em>, y compararemos las imágenes producidas con otras similares;
 tanto producidas por otros motores, como situaciones en la vida
 real.</p>
-<h2 data-number="6.1" id="usando-el-motor"><span
-class="header-section-number">6.1</span> Usando el motor</h2>
+<h2 data-number="5.1" id="usando-el-motor"><span
+class="header-section-number">5.1</span> Usando el motor</h2>
 <p>Una vez se ha <a href="#compilación-y-ejecución">compilado</a> el
 proyecto, puedes encontrar el ejecutable en
 <code>./application/bin_x64/Debug</code>. Abre el binario para entrar en
@@ -5310,8 +5415,8 @@ izquierdo</strong>.</li>
 gráfica. Los diferentes modos alternan entre las acciones listadas
 anteriormente.</p>
 <p>Para ocultar la interfaz gráfica, pulsa <strong>F10</strong>.</p>
-<h3 data-number="6.1.1" id="cambio-de-escena"><span
-class="header-section-number">6.1.1</span> Cambio de escena</h3>
+<h3 data-number="5.1.1" id="cambio-de-escena"><span
+class="header-section-number">5.1.1</span> Cambio de escena</h3>
 <p>El programa viene acompañado de varios mapas. Desafortunadamente,
 para cambiar de escena es necesario recompilar el programa. Las
 instrucciones necesarias para conseguirlo son las siguientes:</p>
@@ -5430,13 +5535,13 @@ la iluminación global.</td>
 <p>Ten en cuenta que las imágenes de las escenas no son definitivas.
 Están sujetas a cambios, pues se podría cambiar el comportamiento de los
 shaders.</p>
-<h2 data-number="6.2" id="path-tracing-showcase"><span
-class="header-section-number">6.2</span> Path tracing showcase</h2>
+<h2 data-number="5.2" id="path-tracing-showcase"><span
+class="header-section-number">5.2</span> Path tracing showcase</h2>
 <p>A lo largo de este trabajo hemos visto una gran variedad de conceptos
 desde el punto de vista teórico. Ahora es el momento de ponerlo en
 práctica.</p>
-<h3 data-number="6.2.1" id="materiales"><span
-class="header-section-number">6.2.1</span> Materiales</h3>
+<h3 data-number="5.2.1" id="materiales"><span
+class="header-section-number">5.2.1</span> Materiales</h3>
 <p>Empecemos por materiales. Se han implementado unos cuantos tipos
 diferentes, los cuales veremos ilustrados a continuación.</p>
 <p>Los más simples son los <a
@@ -5503,8 +5608,8 @@ alt="Figura 31: El modelo del Wuson, pero transparente." />
 Wuson, pero transparente.</figcaption>
 </figure>
 </div>
-<h3 data-number="6.2.2" id="fuentes-de-luz-1"><span
-class="header-section-number">6.2.2</span> Fuentes de luz</h3>
+<h3 data-number="5.2.2" id="fuentes-de-luz-1"><span
+class="header-section-number">5.2.2</span> Fuentes de luz</h3>
 <p>En la primera versión del motor, se han implementado dos tipos de
 fuentes de luces: puntuales y direccionales.</p>
 <p>Las <strong>fuentes de luz puntuales</strong> (<em>spotlights</em> en
@@ -5554,8 +5659,8 @@ alt="Figura 35: Luz direccional en la escena medieval_building." />
 en la escena <code>medieval_building</code>.</figcaption>
 </figure>
 </div>
-<h3 data-number="6.2.3" id="iluminación-global"><span
-class="header-section-number">6.2.3</span> Iluminación global</h3>
+<h3 data-number="5.2.3" id="iluminación-global"><span
+class="header-section-number">5.2.3</span> Iluminación global</h3>
 <p>La <strong>iluminación global</strong> es un fenómeno físico que se
 refiere a luz que proviene de <em>todas</em> direcciones. Es el efecto
 que propicia el rebote constante de los fotones emitidos por fuentes de
@@ -5646,8 +5751,8 @@ href="#ref-df-global-illumination" role="doc-biblioref">Digital Foundry
 2021</a>)</span>, en el cual cubre diferentes formas de resolver este
 problema, tanto en el caso de ray tracing como en el de
 rasterización.</p>
-<h2 data-number="6.3" id="rendimiento"><span
-class="header-section-number">6.3</span> Rendimiento</h2>
+<h2 data-number="5.3" id="rendimiento"><span
+class="header-section-number">5.3</span> Rendimiento</h2>
 <p>Path tracing es un algoritmo costoso. Teniendo en cuenta que tratamos
 de desarrollar una aplicación en tiempo real, debemos prestar especial
 atención al coste de renderizar un <em>frame</em>. En esta sección vamos
@@ -5666,8 +5771,8 @@ contrario, todas las imágenes tienen una resolución de 1280 x 720. Con
 el fin de realizar una comparación justa, se ha implementado un modo de
 benchmarking que se puede activar en el archivo
 <code>globals.hpp</code>.</p>
-<h3 data-number="6.3.1" id="número-de-muestras"><span
-class="header-section-number">6.3.1</span> Número de muestras</h3>
+<h3 data-number="5.3.1" id="número-de-muestras"><span
+class="header-section-number">5.3.1</span> Número de muestras</h3>
 <p>El principal parámetro que podemos variar es el número de muestras
 por píxel. En un estimador de Monte Carlo [<a
 href="#eq:mc_integral">27</a>], <span class="math inline">\(\hat{I}_N =
@@ -5730,8 +5835,8 @@ muestras</figcaption>
 <p>No obstante, el cambio de 10 a 20 no es tan significativo como de 1 a
 5. Esto sugiere que debemos usar otras técnicas para reducir la varianza
 del estimador. ¡La fuerza bruta no suele ser la solución!</p>
-<h3 data-number="6.3.2" id="profundidad-de-un-rayo"><span
-class="header-section-number">6.3.2</span> Profundidad de un rayo</h3>
+<h3 data-number="5.3.2" id="profundidad-de-un-rayo"><span
+class="header-section-number">5.3.2</span> Profundidad de un rayo</h3>
 <p>Una de las decisiones que tenemos que tomar en el diseño del
 algoritmo es saber cuándo cortar un camino. Hay varias formas de
 hacerlo, aunque destacan principalmente dos: fijar un valor máximo de
@@ -5847,8 +5952,8 @@ alt="Figura 49: depth = 50" />
 <code>depth = 50</code></figcaption>
 </figure>
 </div>
-<h3 data-number="6.3.3" id="acumulación-temporal"><span
-class="header-section-number">6.3.3</span> Acumulación temporal</h3>
+<h3 data-number="5.3.3" id="acumulación-temporal"><span
+class="header-section-number">5.3.3</span> Acumulación temporal</h3>
 <p>La acumulación temporal proporcionará una mejora enorme de la calidad
 visual sin perder rendimiento. Sin embargo, tiene como contrapartida que
 necesita dejar la cámara estática. Dependiendo de la situación esto
@@ -5881,8 +5986,8 @@ acumulación temporal de 200 frames.</figcaption>
 normalización entre imágenes. Interpolando linealmente los resultados de
 diferentes frames, con el tiempo se conseguirá una foto de lo que se
 debe ver realmente, eliminando así el ruido y las luciérnagas.</p>
-<h3 data-number="6.3.4" id="resolución"><span
-class="header-section-number">6.3.4</span> Resolución</h3>
+<h3 data-number="5.3.4" id="resolución"><span
+class="header-section-number">5.3.4</span> Resolución</h3>
 <p>Como se ha mencionado en la introducción, todas las escenas
 anteriores se han renderizado a 720p. Podemos controlar la resolución
 interna del motor desde el archivo <code>globals.hpp</code>. Veamos cómo
@@ -5905,8 +6010,8 @@ tiene 1.7 veces más píxeles que 1080p.</p>
 <p>En la práctica, ray tracing no suele utilizar resoluciones internas
 tan grandes. Se aplican otro tipo de técnicas para reducir el ruido,
 como veremos en el capítulo de estado del arte.</p>
-<h3 data-number="6.3.5" id="importance-sampling"><span
-class="header-section-number">6.3.5</span> Importance sampling</h3>
+<h3 data-number="5.3.5" id="importance-sampling"><span
+class="header-section-number">5.3.5</span> Importance sampling</h3>
 <p>El <a href="#muestreo-por-importancia">muestreo por importancia</a>
 consiste en tomar una función de densidad proporcional a la función a
 integrar para reducir la varianza. Se ha implementado muestreo por
@@ -5930,8 +6035,8 @@ tomado una foto, y hemos ampliado la caja de la derecha digitalmente. De
 esta forma, podemos ver cómo la caja de la derecha contiene una menor
 cantidad de ruido, aún manteniendo los mismos parámetros de
 renderizado.</p>
-<h2 data-number="6.4" id="comparativa-con-in-one-weekend"><span
-class="header-section-number">6.4</span> Comparativa con In One
+<h2 data-number="5.4" id="comparativa-con-in-one-weekend"><span
+class="header-section-number">5.4</span> Comparativa con In One
 Weekend</h2>
 <p>Con el fin de preparar este trabajo, se ha implementado la serie de
 libros de P. Shirley: <em>In One Weekend</em> <span class="citation"
@@ -5948,9 +6053,9 @@ nuestro motor que corre en tiempo real.</p>
 <p>En esta sección enseñaremos escenas similares, mostraremos cuánto
 tarda en renderizar un frame en comparación a nuestro motor, y
 estudiaremos las diferencias en la calidad visual.</p>
-<h3 data-number="6.4.1"
+<h3 data-number="5.4.1"
 id="sobre-la-implementación-de-in-one-weekend"><span
-class="header-section-number">6.4.1</span> Sobre la implementación de In
+class="header-section-number">5.4.1</span> Sobre la implementación de In
 One Weekend</h3>
 <p>La implementación de los tres libros se encuentra en la carpeta
 <code>./RT_in_one_weekend</code> del repositorio. Aunque el proyecto
@@ -5976,8 +6081,8 @@ didáctico. Es por ello que el procesamiento está <strong>limitado a un
 CPU</strong>. Las imágenes que genera este motor utilizan el formato
 <code>.ppm</code> y han sido reconvertidas a <code>.png</code> para este
 trabajo.</p>
-<h3 data-number="6.4.2" id="tiempos-de-renderizado"><span
-class="header-section-number">6.4.2</span> Tiempos de renderizado</h3>
+<h3 data-number="5.4.2" id="tiempos-de-renderizado"><span
+class="header-section-number">5.4.2</span> Tiempos de renderizado</h3>
 <p>Se ha implementado una escena específica para esta comparativa,
 llamada <code>cornell_box_iow</code>. Es una situación análoga a la
 última caja de Cornell del tercer libro. Para sacar las imágenes de In
@@ -6063,8 +6168,8 @@ gráfica de cada uno?</p>
 primero, nos fijaremos puramente en el número de muestras; y en el
 segundo, fijaremos un cierto margen de milisegundos por frame y
 comprobaremos el resultado en cada motor.</p>
-<h4 data-number="6.4.2.1" id="por-número-de-muestras"><span
-class="header-section-number">6.4.2.1</span> Por número de muestras</h4>
+<h4 data-number="5.4.2.1" id="por-número-de-muestras"><span
+class="header-section-number">5.4.2.1</span> Por número de muestras</h4>
 <p>Comencemos la comparativa utilizando el número de muestras. Para las
 primeras imágenes fijaremos la acumulación temporal a un único frame.
 Explicaremos el motivo después.</p>
@@ -6153,8 +6258,8 @@ Weekend (1000 muestras). <strong>Derecha</strong>: nuestro motor (10
 muestras, 100 frames de acumulación temporal)</figcaption>
 </figure>
 </div>
-<h4 data-number="6.4.2.2" id="por-presupuesto-de-tiempo"><span
-class="header-section-number">6.4.2.2</span> Por presupuesto de
+<h4 data-number="5.4.2.2" id="por-presupuesto-de-tiempo"><span
+class="header-section-number">5.4.2.2</span> Por presupuesto de
 tiempo</h4>
 <p>El presupuesto de tiempo (o <em>frame budget</em> en inglés) es la
 cantidad de milisegundos que disponemos para renderizar un frame. Este
@@ -6201,8 +6306,8 @@ milisegundos de <em>frame budget</em>. <strong>Izquierda</strong>: In
 One Weekend. <strong>Derecha</strong>: nuestro motor</figcaption>
 </figure>
 </div>
-<h4 data-number="6.4.2.3" id="conclusiones-de-la-comparativa"><span
-class="header-section-number">6.4.2.3</span> Conclusiones de la
+<h4 data-number="5.4.2.3" id="conclusiones-de-la-comparativa"><span
+class="header-section-number">5.4.2.3</span> Conclusiones de la
 comparativa</h4>
 <p>Analizando las imágenes proporcionadas por ambos motores, podemos
 concluir que In One Weekend consigue un mejor resultado si nos basamos
@@ -6216,8 +6321,8 @@ sus inconvenientes debido a la naturaleza de los respectivos trabajos,
 por lo que en ambos casos se podría mejorar el rendimiento. En el caso
 de In One Weekend, paralelizando el programa; y en el de nuestro motor,
 haciendo más robusto el muestreo directo de fuentes de luz.</p>
-<h1 data-number="7" id="conclusiones"><span
-class="header-section-number">7</span> Conclusiones</h1>
+<h1 data-number="6" id="conclusiones"><span
+class="header-section-number">6</span> Conclusiones</h1>
 <p>Al inicio de este trabajo nos propusimos crear un motor de path
 tracing en tiempo real. Esta no era una tarea fácil, así que tuvimos que
 empezar desde las bases de la informática gráfica.</p>
@@ -6274,16 +6379,16 @@ href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 genera las muestras de forma más naïve, la rapidez con la que rinde
 consigue compensar el ruido de la imagen, produciendo así resultados más
 nítidos.</p>
-<h2 data-number="7.1" id="posibles-mejoras"><span
-class="header-section-number">7.1</span> Posibles mejoras</h2>
+<h2 data-number="6.1" id="posibles-mejoras"><span
+class="header-section-number">6.1</span> Posibles mejoras</h2>
 <p>Crear un software de este calibre es una tarea de una complejidad
 enorme. Los motores de renderización requieren un equipo de desarrollo
 de un tamaño considerable, una gran inversión y un esfuerzo constante.
 Teniendo en cuenta el contexto del proyecto, en el camino ha sido
 necesario tomar decisiones imperfectas. En esta sección exploraremos
 algunas posibles mejoras para este trabajo.</p>
-<h3 data-number="7.1.1" id="interfaces"><span
-class="header-section-number">7.1.1</span> Interfaces</h3>
+<h3 data-number="6.1.1" id="interfaces"><span
+class="header-section-number">6.1.1</span> Interfaces</h3>
 <p>La parte que más margen de mejora presenta es <strong>la interfaz de
 las fuentes de luz</strong>. En su estado actual, únicamente es posible
 utilizar dos tipos de fuentes externas a la escena: luces puntuales y
@@ -6324,8 +6429,8 @@ acoplamiento. Separar en varias clases más reducidas, como una clase
 para rasterización y otra para ray tracing, sería esencial. Sin embargo,
 Vulkan es una API muy compleja, por lo que requeriría de una gran
 cantidad de trabajo.</p>
-<h3 data-number="7.1.2" id="nuevas-técnicas-de-reducción-de-ruido"><span
-class="header-section-number">7.1.2</span> Nuevas técnicas de reducción
+<h3 data-number="6.1.2" id="nuevas-técnicas-de-reducción-de-ruido"><span
+class="header-section-number">6.1.2</span> Nuevas técnicas de reducción
 de ruido</h3>
 <p>En este trabajo hemos implementado algunas técnicas de reducción de
 varianza del estimador de Monte Carlo para la ecuación del transporte de
@@ -6339,31 +6444,31 @@ muestreo por importancia múltiple, ruleta rusa o secuencias de baja
 discrepancia (métodos de quasi-Monte Carlo). Resultaría interesante ver
 cómo estas técnicas se comportan en comparación con las que sí hemos
 usado.</p>
-<h1 data-number="8" id="el-presente-y-futuro-de-ray-tracing"><span
-class="header-section-number">8</span> El presente y futuro de Ray
+<h1 data-number="7" id="el-presente-y-futuro-de-ray-tracing"><span
+class="header-section-number">7</span> El presente y futuro de Ray
 Tracing</h1>
 <blockquote>
 <p>TODO: de momento, se queda como está. Es un capítulo bastante fácil
 de escribir, así que en unos tres días como muchísimo podría estar todo
 listo.</p>
 </blockquote>
-<h2 data-number="8.1" id="denoising"><span
-class="header-section-number">8.1</span> Denoising</h2>
+<h2 data-number="7.1" id="denoising"><span
+class="header-section-number">7.1</span> Denoising</h2>
 <p>https://alain.xyz/blog/ray-tracing-denoising</p>
-<h2 data-number="8.2" id="filtering"><span
-class="header-section-number">8.2</span> Filtering</h2>
+<h2 data-number="7.2" id="filtering"><span
+class="header-section-number">7.2</span> Filtering</h2>
 <p>https://alain.xyz/blog/ray-tracing-filtering</p>
-<h2 data-number="8.3" id="offline-renderers"><span
-class="header-section-number">8.3</span> Offline renderers</h2>
+<h2 data-number="7.3" id="offline-renderers"><span
+class="header-section-number">7.3</span> Offline renderers</h2>
 <p>https://www.disneyanimation.com/technology/hyperion/</p>
-<h2 data-number="8.4" id="la-industria-del-videojuego"><span
-class="header-section-number">8.4</span> La industria del
+<h2 data-number="7.4" id="la-industria-del-videojuego"><span
+class="header-section-number">7.4</span> La industria del
 videojuego</h2>
-<h3 data-number="8.4.1" id="ray-tracing-híbrido"><span
-class="header-section-number">8.4.1</span> Ray tracing híbrido</h3>
+<h3 data-number="7.4.1" id="ray-tracing-híbrido"><span
+class="header-section-number">7.4.1</span> Ray tracing híbrido</h3>
 <p>https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</p>
-<h3 data-number="8.4.2" id="productos-comerciales"><span
-class="header-section-number">8.4.2</span> Productos comerciales</h3>
+<h3 data-number="7.4.2" id="productos-comerciales"><span
+class="header-section-number">7.4.2</span> Productos comerciales</h3>
 <ul>
 <li>Control
 <ul>
@@ -6392,14 +6497,14 @@ class="header-section-number">8.4.2</span> Productos comerciales</h3>
 </ul></li>
 <li>Metro Exodus</li>
 </ul>
-<h3 data-number="8.4.3" id="unreal-engine-5"><span
-class="header-section-number">8.4.3</span> Unreal Engine 5</h3>
+<h3 data-number="7.4.3" id="unreal-engine-5"><span
+class="header-section-number">7.4.3</span> Unreal Engine 5</h3>
 <p>https://twitter.com/Yurukuyaru/status/1523643949826588674</p>
-<h3 data-number="8.4.4" id="la-última-generación-de-consolas"><span
-class="header-section-number">8.4.4</span> La última generación de
+<h3 data-number="7.4.4" id="la-última-generación-de-consolas"><span
+class="header-section-number">7.4.4</span> La última generación de
 consolas</h3>
-<h2 data-number="8.5" id="posibles-mejoras-del-trabajo"><span
-class="header-section-number">8.5</span> Posibles mejoras del
+<h2 data-number="7.5" id="posibles-mejoras-del-trabajo"><span
+class="header-section-number">7.5</span> Posibles mejoras del
 trabajo</h2>
 <ul>
 <li>Test Driven Development
@@ -6420,39 +6525,39 @@ trabajo</h2>
 <li>Focal lenght, depth of field, motion blur</li>
 </ul></li>
 </ul>
-<h4 data-number="8.5.0.1" id="blue-noise"><span
-class="header-section-number">8.5.0.1</span> Blue noise</h4>
+<h4 data-number="7.5.0.1" id="blue-noise"><span
+class="header-section-number">7.5.0.1</span> Blue noise</h4>
 <ul>
 <li>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</li>
 <li>https://alain.xyz/blog/ray-tracing-filtering</li>
 <li>Minecraft RTX usa blue noise para el sampling:
 https://alain.xyz/blog/frame-analysis-minecraftrtx/assets/diffuse-1spp.jpg</li>
 </ul>
-<h4 data-number="8.5.0.2" id="forced-random-sampling"><span
-class="header-section-number">8.5.0.2</span> Forced random sampling</h4>
+<h4 data-number="7.5.0.2" id="forced-random-sampling"><span
+class="header-section-number">7.5.0.2</span> Forced random sampling</h4>
 <p>http://drivenbynostalgia.com/ (ctrl + f -&gt; forced random
 sampling)</p>
-<h4 data-number="8.5.0.3" id="sampling-importance-resampling"><span
-class="header-section-number">8.5.0.3</span> Sampling importance
+<h4 data-number="7.5.0.3" id="sampling-importance-resampling"><span
+class="header-section-number">7.5.0.3</span> Sampling importance
 resampling</h4>
 <ul>
 <li>https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</li>
 <li>https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf</li>
 </ul>
-<h4 data-number="8.5.0.4" id="low-discrepancy-sampling"><span
-class="header-section-number">8.5.0.4</span> Low discrepancy
+<h4 data-number="7.5.0.4" id="low-discrepancy-sampling"><span
+class="header-section-number">7.5.0.4</span> Low discrepancy
 sampling</h4>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias-1">Referencias</h2>
-<h1 data-number="9" id="metodología-de-trabajo"><span
-class="header-section-number">9</span> Metodología de trabajo</h1>
+<h1 data-number="8" id="metodología-de-trabajo"><span
+class="header-section-number">8</span> Metodología de trabajo</h1>
 <p>Cualquier proyecto de una envergadura considerable necesita ser
 planificado con antelación. En este capítulo vamos a hablar de cómo se
 ha realizado este trabajo: mostraremos las herramientas usadas, los
 ciclos de desarrollo, integración entre documentación y path tracer, y
 otras influencias que han afectado al producto final.</p>
-<h2 data-number="9.1" id="influencias"><span
-class="header-section-number">9.1</span> Influencias</h2>
+<h2 data-number="8.1" id="influencias"><span
+class="header-section-number">8.1</span> Influencias</h2>
 <p>Antes de comenzar con la labor, primero uno se debe hacer una simple
 pregunta:</p>
 <blockquote>
@@ -6502,8 +6607,8 @@ matemático de “teorema, lema, demostración, corolario” no me agrada
 especialmente. He intentado preservar su estructura, pero sin ser tan
 explícito. Estos dos puntos, en conjunto, suponen un balance entre
 formalidad y distensión difícil de mantener.</p>
-<h2 data-number="9.2" id="ciclos-de-desarrollo"><span
-class="header-section-number">9.2</span> Ciclos de desarrollo</h2>
+<h2 data-number="8.2" id="ciclos-de-desarrollo"><span
+class="header-section-number">8.2</span> Ciclos de desarrollo</h2>
 <p>Este proyecto está compuesto por 2 grandes pilares: documentación –lo
 que estás leyendo, ya sea en PDF o en la web– y software. Podemos
 distinguir varias fases en la planificación del proyecto, que quedan
@@ -6577,8 +6682,8 @@ href="#github">Github</a>, diseñamos un sistema de requisitos mediante
 issues, tanto para la memoria como para el software. Más adelante
 veremos más a fondo cómo esta herramienta ha facilitado enormemente el
 desarrollo.</p>
-<h2 data-number="9.3" id="presupuesto"><span
-class="header-section-number">9.3</span> Presupuesto</h2>
+<h2 data-number="8.3" id="presupuesto"><span
+class="header-section-number">8.3</span> Presupuesto</h2>
 <p>A la hora de desarrollar un proyecto de software, es importante
 realizar una estimación del coste del trabajo. En otro caso, se corre el
 riesgo de que no se pueda llegar a cumplir el objetivo. En este caso,
@@ -6630,15 +6735,15 @@ del Trabajo de Fin de Grado son 18, y que un crédito son 25 horas de
 estudio individual, se ha trabajado un total de 450 horas en el
 proyecto.</li>
 </ul>
-<h2 data-number="9.4" id="diseño"><span
-class="header-section-number">9.4</span> Diseño</h2>
+<h2 data-number="8.4" id="diseño"><span
+class="header-section-number">8.4</span> Diseño</h2>
 <p>El diseño juega un papel fundamental en este proyecto. Todos los
 elementos visuales han sido escogidos con cuidado, de forma que se
 preserve la estética.</p>
 <p>Se ha creado <strong>un diseño que preserve el equilibrio entre la
 profesionalidad y la distensión</strong>.</p>
-<h3 data-number="9.4.1" id="bases-del-diseño"><span
-class="header-section-number">9.4.1</span> Bases del diseño</h3>
+<h3 data-number="8.4.1" id="bases-del-diseño"><span
+class="header-section-number">8.4.1</span> Bases del diseño</h3>
 <p>Para la documentación en versión PDF, usamos como base la
 <em>template</em> <span class="citation" data-cites="eisvogel">(<a
 href="#ref-eisvogel" role="doc-biblioref">Pascal Wagler
@@ -6649,8 +6754,8 @@ aprovecharemos para darle un toque diferente.</p>
 microframework de CSS <span class="citation" data-cites="bamboo">(<a
 href="#ref-bamboo" role="doc-biblioref">Tran Ngoc Tuan Anh
 2022</a>)</span> y unas modificaciones personales.</p>
-<h3 data-number="9.4.2" id="tipografías"><span
-class="header-section-number">9.4.2</span> Tipografías</h3>
+<h3 data-number="8.4.2" id="tipografías"><span
+class="header-section-number">8.4.2</span> Tipografías</h3>
 <p>Un apartado al que se le debe prestar especial énfasis es a la
 combinación de tipografías. A fin de cuentas, esto es un libro; así que
 escoger un tipo de letra correcto facilitará al lector comprender los
@@ -6701,8 +6806,8 @@ alt="Figura 64: Showcase de las tipografías utilizadas" />
 tipografías utilizadas</figcaption>
 </figure>
 </div>
-<h3 data-number="9.4.3" id="paleta-de-colores"><span
-class="header-section-number">9.4.3</span> Paleta de colores</h3>
+<h3 data-number="8.4.3" id="paleta-de-colores"><span
+class="header-section-number">8.4.3</span> Paleta de colores</h3>
 <p>A fin de mantener consistencia, se ha creado una paleta de colores
 específica.</p>
 <div id="fig:paleta_de_colores" class="fignos">
@@ -6728,8 +6833,8 @@ necesitamos. Puedes encontrar las definiciones en el fichero de estilos,
 ubicado en <code>./docs/headers/style.css</code>.</p>
 <p>Todos los colores que puedes ver en este documento se han extraído de
 la paleta. ¡La consistencia es clave!</p>
-<h2 data-number="9.5" id="flujo-de-trabajo-y-herramientas"><span
-class="header-section-number">9.5</span> Flujo de trabajo y
+<h2 data-number="8.5" id="flujo-de-trabajo-y-herramientas"><span
+class="header-section-number">8.5</span> Flujo de trabajo y
 herramientas</h2>
 <p>Encontrar una herramienta que se adapte a un <em>workflow</em> es
 complicado. Aunque hay muchos programas maravilosos, debemos hacerlos
@@ -6742,8 +6847,8 @@ otras.</p>
 <blockquote>
 <p>TODO: foto del workflow.</p>
 </blockquote>
-<h3 data-number="9.5.1" id="pandoc"><span
-class="header-section-number">9.5.1</span> Pandoc</h3>
+<h3 data-number="8.5.1" id="pandoc"><span
+class="header-section-number">8.5.1</span> Pandoc</h3>
 <p><strong>Pandoc</strong> <span class="citation"
 data-cites="pandoc">(<a href="#ref-pandoc" role="doc-biblioref">John
 MacFarlane 2021</a>)</span> es una estupendísima de conversión de
@@ -6775,8 +6880,8 @@ correctamente los bloques de código para la web.</li>
 órdenes para generar ambos formatos. Tienen varios parámetros
 adicionales de por sí, como puede ser la bibliografía
 (<code>docs/chapters/bibliography.bib</code>).</p>
-<h3 data-number="9.5.2" id="figma"><span
-class="header-section-number">9.5.2</span> Figma</h3>
+<h3 data-number="8.5.2" id="figma"><span
+class="header-section-number">8.5.2</span> Figma</h3>
 <p><strong>Figma</strong> <span class="citation" data-cites="figma">(<a
 href="#ref-figma" role="doc-biblioref">Figma 2022</a>)</span> es otro de
 esos programas que te hace preguntarte por qué es gratis. Es una
@@ -6798,8 +6903,8 @@ ha resultado especialmente útil: Latex Complete <span class="citation"
 data-cites="latex-complete">(<a href="#ref-latex-complete"
 role="doc-biblioref">Max Krieger 2022</a>)</span>. Esto nos permite
 incrustar código LaTeX en el documento en forma de SVG.</p>
-<h3 data-number="9.5.3" id="otros-programas"><span
-class="header-section-number">9.5.3</span> Otros programas</h3>
+<h3 data-number="8.5.3" id="otros-programas"><span
+class="header-section-number">8.5.3</span> Otros programas</h3>
 <p>Como es normal, hay muchos otros programas que han intervenido en el
 desarrollo. Estos son algunos de ellos:</p>
 <ul>
@@ -6824,8 +6929,8 @@ role="doc-biblioref">Docker 2022</a>)</span></li>
 <li>Cualquier proyecto informático debería usar <code>git</code>. Este
 no es una excepción.</li>
 </ul>
-<h2 data-number="9.6" id="github"><span
-class="header-section-number">9.6</span> Github</h2>
+<h2 data-number="8.6" id="github"><span
+class="header-section-number">8.6</span> Github</h2>
 <p>La página <strong>Github</strong> <span class="citation"
 data-cites="github">(<a href="#ref-github" role="doc-biblioref">Github
 2022</a>)</span> ha alojado prácticamente todo el contenido del trabajo;
@@ -6846,9 +6951,9 @@ resulta más fácil sincronizarlos.</li>
 usar.</li>
 </ol>
 <p>Entremos en detalle en algunos de los puntos anteriores:</p>
-<h3 data-number="9.6.1"
+<h3 data-number="8.6.1"
 id="integración-continua-con-github-actions-y-github-pages"><span
-class="header-section-number">9.6.1</span> Integración continua con
+class="header-section-number">8.6.1</span> Integración continua con
 Github Actions y Github Pages</h3>
 <p>Cuando hablamos de <strong>integración continua</strong>, nos
 referimos a ciertos programas que corren en un repositorio y se encargan
@@ -6915,8 +7020,8 @@ instalación de LaTeX ocupa una cantidad de espacio considerable; y para
 compilar el PDF necesitamos una muy completa, por lo que debemos lidiar
 con este <em>overhead</em>. Puedes encontrar el Dockerfile en
 <code>./Dockerfile</code>.</p>
-<h3 data-number="9.6.2" id="issues-y-github-projects"><span
-class="header-section-number">9.6.2</span> Issues y Github Projects</h3>
+<h3 data-number="8.6.2" id="issues-y-github-projects"><span
+class="header-section-number">8.6.2</span> Issues y Github Projects</h3>
 <p>Las tareas pendientes se gestionan mediante issues. Cada vez que se
 tenga un objetivo particular para el desarrollo, se anota un issue.
 Cuando se genere un commit que avance dicha tarea, se etiqueta con el
@@ -6976,8 +7081,8 @@ considerablemente más compleja…) se genera una nueva rama. Cuando se ha
 cumplido el objetivo, se <em>mergea</em> la rama con la principal
 <code>main</code> mediante un <em>pull request</em>. Esto proporciona un
 mecanismo de robustez ante cambios complejos.</p>
-<h3 data-number="9.6.3" id="estilo-de-commits"><span
-class="header-section-number">9.6.3</span> Estilo de commits</h3>
+<h3 data-number="8.6.3" id="estilo-de-commits"><span
+class="header-section-number">8.6.3</span> Estilo de commits</h3>
 <p>Una de los detalles que has podido apreciar si has entrado al
 repositorio es un estilo de commit un tanto inusual. Aunque parece un
 detalle de lo más insustancial, añadir emojis a los mensajes de commits
@@ -6994,8 +7099,8 @@ permiten reconocer el objetivo de cada commit. Esta tabla recoge el
 significado de cada uno</figcaption>
 </figure>
 </div>
-<h1 data-number="10" id="glosario-de-términos"><span
-class="header-section-number">10</span> Glosario de términos</h1>
+<h1 data-number="9" id="glosario-de-términos"><span
+class="header-section-number">9</span> Glosario de términos</h1>
 <blockquote>
 <p><em>It’s dangerous to go alone, take this.</em></p>
 </blockquote>
@@ -7004,8 +7109,8 @@ aparecen en un libro como este es prácticamente imposible. Tampoco hay
 necesidad de ello, realmente. ¡Vaya desperdicio de cabeza! Por eso, aquí
 tienes recopilada una lista con todos los elementos importantes y un
 enlace a sus secciones correspondientes.</p>
-<h2 data-number="10.1" id="notación"><span
-class="header-section-number">10.1</span> Notación</h2>
+<h2 data-number="9.1" id="notación"><span
+class="header-section-number">9.1</span> Notación</h2>
 <table>
 <colgroup>
 <col style="width: 28%" />
@@ -7063,8 +7168,8 @@ aleatoria con distribución uniforme en <span class="math inline">\([0,
 </tr>
 </tbody>
 </table>
-<h2 data-number="10.2" id="bases-de-ray-tracing"><span
-class="header-section-number">10.2</span> <a href="#las-bases">Bases de
+<h2 data-number="9.2" id="bases-de-ray-tracing"><span
+class="header-section-number">9.2</span> <a href="#las-bases">Bases de
 Ray Tracing</a></h2>
 <table>
 <colgroup>
@@ -7102,8 +7207,8 @@ y}, \frac{\partial F(P)}{\partial z}\right )\)</span></td>
 </tr>
 </tbody>
 </table>
-<h2 data-number="10.3" id="transporte-de-luz-1"><span
-class="header-section-number">10.3</span> <a
+<h2 data-number="9.3" id="transporte-de-luz-1"><span
+class="header-section-number">9.3</span> <a
 href="#transporte-de-luz">Transporte de luz</a></h2>
 <table>
 <colgroup>
@@ -7297,8 +7402,8 @@ d\omega_i}\)</span></td>
 </tr>
 </tbody>
 </table>
-<h2 data-number="10.4" id="métodos-de-monte-carlo-1"><span
-class="header-section-number">10.4</span> <a
+<h2 data-number="9.4" id="métodos-de-monte-carlo-1"><span
+class="header-section-number">9.4</span> <a
 href="#métodos-de-monte-carlo">Métodos de Monte Carlo</a></h2>
 <table>
 <thead>
@@ -7314,8 +7419,8 @@ href="#métodos-de-monte-carlo">Métodos de Monte Carlo</a></h2>
 </tr>
 </tbody>
 </table>
-<h2 data-number="10.5" id="construyamos-un-path-tracer-1"><span
-class="header-section-number">10.5</span> <a
+<h2 data-number="9.5" id="construyamos-un-path-tracer-1"><span
+class="header-section-number">9.5</span> <a
 href="#construyamos-un-path-tracer">Construyamos un path tracer</a></h2>
 <table>
 <thead>
@@ -7331,8 +7436,8 @@ href="#construyamos-un-path-tracer">Construyamos un path tracer</a></h2>
 </tr>
 </tbody>
 </table>
-<h2 data-number="10.6" id="análisis-de-rendimiento-1"><span
-class="header-section-number">10.6</span> <a
+<h2 data-number="9.6" id="análisis-de-rendimiento-1"><span
+class="header-section-number">9.6</span> <a
 href="#análisis-de-rendimiento">Análisis de rendimiento</a></h2>
 <h1 class="unnumbered" id="bibliografía">Bibliografía</h1>
 <div id="refs" class="references csl-bib-body hanging-indent"
