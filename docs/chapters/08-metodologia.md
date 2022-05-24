@@ -46,9 +46,9 @@ Con respecto a la metodología de trabajo que se ha seguido es podemos decir que
 
 ## Presupuesto
 
-A la hora de desarrollar un proyecto de software, es importante realizar una estimación del coste del trabajo. En otro caso, se corre el riesgo de que no se pueda llegar a cumplir el objetivo.
+A la hora de desarrollar un proyecto de software, es importante realizar una estimación del coste del trabajo. En otro caso, se corre el riesgo de que no se pueda llegar a cumplir el objetivo. En este caso, **el proyecto ha tenido un coste de 10314 euros**, que puede desglosarse de la siguiente manera:
 
-- El **coste del software** en total ha sido de **0€**. Las herramientas utilizadas para el desarrollo son todas de código abierto, por lo que su uso es gratuito. Aunque se comentarán individualmente en una sección posterior, las más importantes han sido:
+- El **coste del software** en total ha sido de **0 €**. Las herramientas utilizadas para el desarrollo son todas de código abierto, por lo que su uso es gratuito. Aunque se comentarán individualmente en una sección posterior, las más importantes han sido:
   - Pandoc.
   - LaTeX.
   - Vulkan.
@@ -70,12 +70,7 @@ A la hora de desarrollar un proyecto de software, es importante realizar una est
     - **HDD**: WDC 500 GB (40 €).
     - **Fuente de alimentación**: Corsair RM650x 80 PLUS Gold (110 €).
   - **Portátil**: Xiaomi Mi Notebook Pro (8250U) (800 €).
-- Atendiendo al apartado de recursos humanos, se estima un coste total de **nosecuántos €**, que se desglosa de la siguiente manera:
-  - El alumno Andrés Millán, con un coste total de **6750 €**. Considerando el número de créditos del Trabajo de Fin de Grado (18), se considera que se han trabajado 450 horas con un salario base de 15 €/hora correspondiente a un alumno en prácticas
-  - Los tutores Carlos Ureña y María del Carmen Segovia, para los que asciende un coste total de **nosecuantos €**. Esta cantidad de dinero proviene de las horas empleadas en la supervisión del trabajo, gestión del proyecto y bibliografía. Se utiliza un salario base de ¿50 €/hora?, habiendo trabajo unas ¿cuántas horas semanales?
-- ¿Queda algo más por considerar? ¿IVA?
-
-> TODO: hay que terminar de estimar el coste.
+- Atendiendo al apartado de recursos humanos, se estima un coste total de **8100 €**. Se calcula a partir de que, como alumno, recibo un sueldo de 18 €/h. Teniendo en cuenta que el número de créditos del Trabajo de Fin de Grado son 18, y que un crédito son 25 horas de estudio individual, se ha trabajado un total de 450 horas en el proyecto.
 
 ## Diseño
 
