@@ -449,9 +449,11 @@ en tiempo real</a></li>
 <li><a href="#setup-del-proyecto"><span
 class="toc-section-number">5.3</span> Setup del proyecto</a>
 <ul>
-<li><a href="#vistazo-general-a-la-estructura"><span
-class="toc-section-number">5.3.1</span> Vistazo general a la
+<li><a href="#un-vistazo-general-a-la-estructura"><span
+class="toc-section-number">5.3.1</span> Un vistazo general a la
 estructura</a></li>
+<li><a href="#diagramas"><span class="toc-section-number">5.3.2</span>
+Diagramas</a></li>
 </ul></li>
 <li><a href="#compilación-y-ejecución"><span
 class="toc-section-number">5.4</span> Compilación y ejecución</a></li>
@@ -608,41 +610,39 @@ Influencias</a></li>
 class="toc-section-number">9.2</span> Ciclos de desarrollo</a></li>
 <li><a href="#presupuesto"><span class="toc-section-number">9.3</span>
 Presupuesto</a></li>
-<li><a href="#arquitectura-del-software"><span
-class="toc-section-number">9.4</span> Arquitectura del software</a></li>
-<li><a href="#diseño"><span class="toc-section-number">9.5</span>
+<li><a href="#diseño"><span class="toc-section-number">9.4</span>
 Diseño</a>
 <ul>
 <li><a href="#bases-del-diseño"><span
-class="toc-section-number">9.5.1</span> Bases del diseño</a></li>
-<li><a href="#tipografías"><span class="toc-section-number">9.5.2</span>
+class="toc-section-number">9.4.1</span> Bases del diseño</a></li>
+<li><a href="#tipografías"><span class="toc-section-number">9.4.2</span>
 Tipografías</a></li>
 <li><a href="#paleta-de-colores"><span
-class="toc-section-number">9.5.3</span> Paleta de colores</a></li>
+class="toc-section-number">9.4.3</span> Paleta de colores</a></li>
 </ul></li>
 <li><a href="#flujo-de-trabajo-y-herramientas"><span
-class="toc-section-number">9.6</span> Flujo de trabajo y
+class="toc-section-number">9.5</span> Flujo de trabajo y
 herramientas</a>
 <ul>
-<li><a href="#pandoc"><span class="toc-section-number">9.6.1</span>
+<li><a href="#pandoc"><span class="toc-section-number">9.5.1</span>
 Pandoc</a></li>
-<li><a href="#figma"><span class="toc-section-number">9.6.2</span>
+<li><a href="#figma"><span class="toc-section-number">9.5.2</span>
 Figma</a></li>
 <li><a href="#otros-programas"><span
-class="toc-section-number">9.6.3</span> Otros programas</a></li>
+class="toc-section-number">9.5.3</span> Otros programas</a></li>
 </ul></li>
-<li><a href="#github"><span class="toc-section-number">9.7</span>
+<li><a href="#github"><span class="toc-section-number">9.6</span>
 Github</a>
 <ul>
 <li><a
 href="#integración-continua-con-github-actions-y-github-pages"><span
-class="toc-section-number">9.7.1</span> Integración continua con Github
+class="toc-section-number">9.6.1</span> Integración continua con Github
 Actions y Github Pages</a></li>
 <li><a href="#issues-y-github-projects"><span
-class="toc-section-number">9.7.2</span> Issues y Github
+class="toc-section-number">9.6.2</span> Issues y Github
 Projects</a></li>
 <li><a href="#estilo-de-commits"><span
-class="toc-section-number">9.7.3</span> Estilo de commits</a></li>
+class="toc-section-number">9.6.3</span> Estilo de commits</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#glosario-de-términos"><span
@@ -4309,8 +4309,8 @@ programa muestra un cubo rasterizado muy simple. Es, prácticamente, un
 <em>hello world</em> gráfico</figcaption>
 </figure>
 </div>
-<h3 data-number="5.3.1" id="vistazo-general-a-la-estructura"><span
-class="header-section-number">5.3.1</span> Vistazo general a la
+<h3 data-number="5.3.1" id="un-vistazo-general-a-la-estructura"><span
+class="header-section-number">5.3.1</span> Un vistazo general a la
 estructura</h3>
 <p>La estructura final del proyecto (es decir, la carpeta
 <code>application</code>) es la siguiente:</p>
@@ -4355,6 +4355,45 @@ generadores de números aleatorios).</li>
 compilados a SPIR-V.</li>
 </ul></li>
 </ul>
+<p>El diagrama <a href="#fig:estructura_repo">16</a> permite visualizar
+los puntos anteriores, así como la estructura general del
+repositorio.</p>
+<div id="fig:estructura_repo" class="fignos">
+<figure>
+<img loading="lazy" src="./img/04/repo_diagram.png"
+alt="Figura 16: Estructura del repositorio" />
+<figcaption aria-hidden="true"><span>Figura 16:</span> Estructura del
+repositorio</figcaption>
+</figure>
+</div>
+<h3 data-number="5.3.2" id="diagramas"><span
+class="header-section-number">5.3.2</span> Diagramas</h3>
+<p>Teniendo en cuenta que utilizamos un framework que no está pensado
+para producción y la naturaleza de Vulkan, realizar un diagrama de clase
+es muy complicado. Sin embargo, podemos ilustrar las clases más
+importantes de la aplicación: la el motor [<a
+href="#fig:diagrama-clases-engine">17</a>] y la de escenas [<a
+href="#fig:diagrama-clases-scenes">18</a>] . En las secciones
+posteriores detallaremos algunos de los miembros de estas.</p>
+<p>Una figura que se asemeja a un diagrama de secuencia específico para
+el loop de ray tracing puede encontrarse en [<a
+href="#fig:pipeline">20</a>].</p>
+<div id="fig:diagrama-clases-engine" class="fignos">
+<figure>
+<img loading="lazy" src="./img/08/Mermaid%20engine.png"
+alt="Figura 17: Diagrama de clases para Engine" />
+<figcaption aria-hidden="true"><span>Figura 17:</span> Diagrama de
+clases para Engine</figcaption>
+</figure>
+</div>
+<div id="fig:diagrama-clases-scenes" class="fignos">
+<figure>
+<img loading="lazy" src="./img/08/Mermaid%20scenes.png"
+alt="Figura 18: Diagrama de clases para Scenes" />
+<figcaption aria-hidden="true"><span>Figura 18:</span> Diagrama de
+clases para Scenes</figcaption>
+</figure>
+</div>
 <h2 data-number="5.4" id="compilación-y-ejecución"><span
 class="header-section-number">5.4</span> Compilación y ejecución</h2>
 <p>Las dependencias necesarias son:</p>
@@ -4425,8 +4464,8 @@ partes: <strong>Top-Level Acceleration Structure</strong> (TLAS) y
 <div id="fig:TLAS" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Acceleration%20structure.png" style="width:70.0%"
-alt="Figura 16: La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: (Nvidia 2022a)" />
-<figcaption aria-hidden="true"><span>Figura 16:</span> La TLAS guarda
+alt="Figura 19: La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: (Nvidia 2022a)" />
+<figcaption aria-hidden="true"><span>Figura 19:</span> La TLAS guarda
 información de las instancias de un objeto, así como una referencia a
 BLAS que contiene la geometría correspondiente. Fuente: <span
 class="citation" data-cites="nvpro-samples-tutorial">(<a
@@ -4565,8 +4604,8 @@ generar un <code>vkCreateRayTracingPipelineKHR</code>.</li>
 <div id="fig:pipeline" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Pipeline.png"
-alt="Figura 17: La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader raygen, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un closest hit, any hit, o miss shaders. Fuente: (Adam Marrs and Wald 2021, 194)" />
-<figcaption aria-hidden="true"><span>Figura 17:</span> La Shader Binding
+alt="Figura 20: La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader raygen, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un closest hit, any hit, o miss shaders. Fuente: (Adam Marrs and Wald 2021, 194)" />
+<figcaption aria-hidden="true"><span>Figura 20:</span> La Shader Binding
 Table permite selccionar un tipo de shader dependiendo del objeto en el
 que se impacte. Para ello, se genera un rayo desde el shader
 <code>raygen</code>, el cual viaja a través de la Acceleration
@@ -4603,8 +4642,8 @@ role="doc-biblioref">Will Usher 2019</a>)</span></p>
 <div id="fig:SBT" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/SBT.png"
-alt="Figura 18: Fuente: (Will Usher 2019)" />
-<figcaption aria-hidden="true"><span>Figura 18:</span> Fuente: <span
+alt="Figura 21: Fuente: (Will Usher 2019)" />
+<figcaption aria-hidden="true"><span>Figura 21:</span> Fuente: <span
 class="citation" data-cites="shader-binding-table">(<a
 href="#ref-shader-binding-table" role="doc-biblioref">Will Usher
 2019</a>)</span></figcaption>
@@ -5032,8 +5071,8 @@ espera que la terna RGB provista esté en <span class="math inline">\([0,
 <div id="fig:quemado" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Quemado.png"
-alt="Figura 19: Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz." />
-<figcaption aria-hidden="true"><span>Figura 19:</span> Fíjate en la
+alt="Figura 22: Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz." />
+<figcaption aria-hidden="true"><span>Figura 22:</span> Fíjate en la
 parte de la izquierda. La pared roja aparece demasiado brillante;
 especialmente, aquella impactada por la fuente de luz.</figcaption>
 </figure>
@@ -5067,8 +5106,8 @@ if (USE_GAMMA_CORRECTION == 1) {
 <div id="fig:correccion_gamma" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Corrección%20de%20gamma.png"
-alt="Figura 20: Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos." />
-<figcaption aria-hidden="true"><span>Figura 20:</span> Con la corección
+alt="Figura 23: Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos." />
+<figcaption aria-hidden="true"><span>Figura 23:</span> Con la corección
 de gamma aplicada, vemos que los colores de la foto no son tan
 intensos.</figcaption>
 </figure>
@@ -5110,8 +5149,8 @@ el programa.</p>
 <div id="fig:asmiray" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Asmiray.png" style="width:70.0%"
-alt="Figura 21: Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones." />
-<figcaption aria-hidden="true"><span>Figura 21:</span> Al abrir el
+alt="Figura 24: Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones." />
+<figcaption aria-hidden="true"><span>Figura 24:</span> Al abrir el
 motor, te encontrarás con una pantalla similar a esta: una escena
 cargada junto a un panel lateral con numerosas opciones.</figcaption>
 </figure>
@@ -5273,8 +5312,8 @@ original contiene dos objetos de este tipo:</p>
 <div id="fig:materiales_difusos" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20difusos.png" style="width:70.0%"
-alt="Figura 22: Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
-<figcaption aria-hidden="true"><span>Figura 22:</span> Materiales
+alt="Figura 25: Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
+<figcaption aria-hidden="true"><span>Figura 25:</span> Materiales
 difusos de la escena Cornell Box original. Vemos que la luz se esparce
 uniformemente al rebotar en el objeto.</figcaption>
 </figure>
@@ -5288,8 +5327,8 @@ href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 <div id="fig:materiales_glossy" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20glossy.png" style="width:70.0%"
-alt="Figura 23: Materiales especulares metálicos de la escena Cornell Box glossy" />
-<figcaption aria-hidden="true"><span>Figura 23:</span> Materiales
+alt="Figura 26: Materiales especulares metálicos de la escena Cornell Box glossy" />
+<figcaption aria-hidden="true"><span>Figura 26:</span> Materiales
 especulares metálicos de la escena Cornell Box glossy</figcaption>
 </figure>
 </div>
@@ -5300,8 +5339,8 @@ debemos recurrir a técnicas específicas como reflejos planares o
 <div id="fig:materiales_espejos" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20espejos.png" style="width:70.0%"
-alt="Figura 24: Una caja que actúa como un espejo prácticamente perfecto en la escena cornell_box_mirror" />
-<figcaption aria-hidden="true"><span>Figura 24:</span> Una caja que
+alt="Figura 27: Una caja que actúa como un espejo prácticamente perfecto en la escena cornell_box_mirror" />
+<figcaption aria-hidden="true"><span>Figura 27:</span> Una caja que
 actúa como un espejo prácticamente perfecto en la escena
 <code>cornell_box_mirror</code></figcaption>
 </figure>
@@ -5312,8 +5351,8 @@ modelar el comportamiento de la luz.</p>
 <div id="fig:reflectantes" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20reflectantes.png" style="width:70.0%"
-alt="Figura 25: La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera." />
-<figcaption aria-hidden="true"><span>Figura 25:</span> La esfera de la
+alt="Figura 28: La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera." />
+<figcaption aria-hidden="true"><span>Figura 28:</span> La esfera de la
 derecha refracta la luz al pasar por ella, adquiriendo en el proceso un
 color más oscuro. También podemos ver la esfera de la izquierda
 recursivamente, dentro del propio reflejo de la esfera.</figcaption>
@@ -5326,8 +5365,8 @@ algunos rayos:</p>
 <div id="fig:materiales_transparentes" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20transparentes.png" style="width:70.0%"
-alt="Figura 26: El modelo del Wuson, pero transparente." />
-<figcaption aria-hidden="true"><span>Figura 26:</span> El modelo del
+alt="Figura 29: El modelo del Wuson, pero transparente." />
+<figcaption aria-hidden="true"><span>Figura 29:</span> El modelo del
 Wuson, pero transparente.</figcaption>
 </figure>
 </div>
@@ -5337,25 +5376,25 @@ class="header-section-number">6.2.2</span> Fuentes de luz</h3>
 fuentes de luces: puntuales y direccionales.</p>
 <p>Las <strong>fuentes de luz puntuales</strong> (<em>spotlights</em> en
 inglés) emiten luz alrededor suya, como si de pequeños soles se
-trataran. La figura [<a href="#fig:spotlights">27</a>] muestra cómo se
+trataran. La figura [<a href="#fig:spotlights">30</a>] muestra cómo se
 comportan en la caja de Cornell original.</p>
 <div id="fig:spotlights" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Spotlight.png" style="width:60.0%"
-alt="Figura 27: Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared." />
-<figcaption aria-hidden="true"><span>Figura 27:</span> Una fuente de luz
+alt="Figura 30: Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared." />
+<figcaption aria-hidden="true"><span>Figura 30:</span> Una fuente de luz
 puntual iluminando la caja de Cornell original. Vemos cómo se proyectan
 sombras hacian la pared.</figcaption>
 </figure>
 </div>
 <p>Por otro lado, las <strong>luces direccionales</strong>: imitan la
 luz proporcionada por algún objeto infinitamente lejano. Puedes ver un
-ejemplo en la figura [<a href="#fig:directional_lights">28</a>].</p>
+ejemplo en la figura [<a href="#fig:directional_lights">31</a>].</p>
 <div id="fig:directional_lights" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Directional.png" style="width:60.0%"
-alt="Figura 28: La caja de Cornell original iluminada por una luz direccional" />
-<figcaption aria-hidden="true"><span>Figura 28:</span> La caja de
+alt="Figura 31: La caja de Cornell original iluminada por una luz direccional" />
+<figcaption aria-hidden="true"><span>Figura 31:</span> La caja de
 Cornell original iluminada por una <strong>luz
 direccional</strong></figcaption>
 </figure>
@@ -5363,22 +5402,22 @@ direccional</strong></figcaption>
 <p>Como las puntuales se comportan de manera muy similar en la caja de
 Cornell, podemos referirnos a la escena del edificio medieval para ver
 una diferencia más sustancial [<a
-href="#fig:spotlights_medieval">29</a>, <a
-href="#fig:directional_medieval">30</a>]. En este caso, se aprecia el
+href="#fig:spotlights_medieval">32</a>, <a
+href="#fig:directional_medieval">33</a>]. En este caso, se aprecia el
 radio de influencia de la luz puntual.</p>
 <div id="fig:spotlights_medieval" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Spotlight%202.png" style="width:60.0%"
-alt="Figura 29: Luz puntual en la escena medieval_building." />
-<figcaption aria-hidden="true"><span>Figura 29:</span> Luz puntual en la
+alt="Figura 32: Luz puntual en la escena medieval_building." />
+<figcaption aria-hidden="true"><span>Figura 32:</span> Luz puntual en la
 escena <code>medieval_building</code>.</figcaption>
 </figure>
 </div>
 <div id="fig:directional_medieval" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Directional%202.png" style="width:60.0%"
-alt="Figura 30: Luz direccional en la escena medieval_building." />
-<figcaption aria-hidden="true"><span>Figura 30:</span> Luz direccional
+alt="Figura 33: Luz direccional en la escena medieval_building." />
+<figcaption aria-hidden="true"><span>Figura 33:</span> Luz direccional
 en la escena <code>medieval_building</code>.</figcaption>
 </figure>
 </div>
@@ -5395,24 +5434,24 @@ similar a la caja de Cornell:</p>
 <div id="fig:cornell_bath_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Cornell%20bath%201.jpg" style="width:60.0%"
-alt="Figura 31: Escena similar a la caja de Cornell, en la vida real. También es mi baño." />
-<figcaption aria-hidden="true"><span>Figura 31:</span> Escena similar a
+alt="Figura 34: Escena similar a la caja de Cornell, en la vida real. También es mi baño." />
+<figcaption aria-hidden="true"><span>Figura 34:</span> Escena similar a
 la caja de Cornell, en la vida real. También es mi baño.</figcaption>
 </figure>
 </div>
-<p>En la escena [<a href="#fig:cornell_bath_1">31</a>] observamos cómo
+<p>En la escena [<a href="#fig:cornell_bath_1">34</a>] observamos cómo
 la luz del sol entra desde la parte de la derecha, rebotando en todo el
 espacio. Notamos cómo la escena tiene una tonalidad natural y cálida.
 Sin embargo, esta impresión es fácilmente modificable si alteramos la
 forma de arrojar la luz. Cerrando la puerta (la cual no puede ser vista
 en la fotografía, pero se encuentra a la derecha y es idéntica al
 cristal), la iluminación cambia completamente [<a
-href="#fig:cornell_bath_2">32</a>].</p>
+href="#fig:cornell_bath_2">35</a>].</p>
 <div id="fig:cornell_bath_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Cornell%20bath%202.jpg" style="width:60.0%"
-alt="Figura 32: Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados" />
-<figcaption aria-hidden="true"><span>Figura 32:</span> Cuando cambiamos
+alt="Figura 35: Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados" />
+<figcaption aria-hidden="true"><span>Figura 35:</span> Cuando cambiamos
 la forma de iluminar la escena, los colores se ven drásticamente
 modificados</figcaption>
 </figure>
@@ -5428,32 +5467,32 @@ cuales se visualizan como una tonalidad roja.</p>
 <p><strong>Path tracing consigue este efecto de manera natural</strong>
 por diseño. Este es uno de sus mayores puntos fuertes, pero a la vez lo
 hace computacionalmente caro. Dado que la escena de [<a
-href="#fig:cornell_bath_1">31</a>] y [<a
-href="#fig:cornell_bath_2">32</a>] es, esencialmente, una caja de
+href="#fig:cornell_bath_1">34</a>] y [<a
+href="#fig:cornell_bath_2">35</a>] es, esencialmente, una caja de
 Cornell, deberíamos apreciar un efecto similar en nuestra escena,
 ¿verdad?</p>
-<p>¡Así es! La figura [<a href="#fig:global_illumination_1">33</a>] es
-muy similar a la [<a href="#fig:cornell_bath_2">32</a>]. Se pueden
+<p>¡Así es! La figura [<a href="#fig:global_illumination_1">36</a>] es
+muy similar a la [<a href="#fig:cornell_bath_2">35</a>]. Se pueden
 apreciar los mismos efectos en la caja izquierda, los cuales no ocurrían
 con tanta intensidad en la escena original [fig. <a
-href="#fig:materiales_difusos">22</a>]</p>
+href="#fig:materiales_difusos">25</a>]</p>
 <div id="fig:global_illumination_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Ambient%20occlusion%201.png" style="width:60.0%"
-alt="Figura 33: La caja de Cornell original con luz direccional apuntando a la pared de la izquierda" />
-<figcaption aria-hidden="true"><span>Figura 33:</span> La caja de
+alt="Figura 36: La caja de Cornell original con luz direccional apuntando a la pared de la izquierda" />
+<figcaption aria-hidden="true"><span>Figura 36:</span> La caja de
 Cornell original con luz direccional apuntando a la pared de la
 izquierda</figcaption>
 </figure>
 </div>
 <p>Lo mismo ocurre cuando cambiamos el foco a la pared de la derecha. Al
 ser verde, tintará el resto de los materiales de dicho color [<a
-href="#fig:global_illumination_2">34</a>].</p>
+href="#fig:global_illumination_2">37</a>].</p>
 <div id="fig:global_illumination_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Ambient%20occlusion%202.png" style="width:60.0%"
-alt="Figura 34: Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena" />
-<figcaption aria-hidden="true"><span>Figura 34:</span> Enfocando a la
+alt="Figura 37: Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena" />
+<figcaption aria-hidden="true"><span>Figura 37:</span> Enfocando a la
 pared de la derecha, conseguimos un tinte verde para la
 escena</figcaption>
 </figure>
@@ -5504,13 +5543,13 @@ class="math inline">\(N \in \mathbb{N}\)</span>.</p>
 <div id="fig:grafica_samples" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_samples.png"
-alt="Figura 35: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
-<figcaption aria-hidden="true"><span>Figura 35:</span> Para conseguir
+alt="Figura 38: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
+<figcaption aria-hidden="true"><span>Figura 38:</span> Para conseguir
 esta gráfica, iniciamos la escena <code>cornell_box_original</code>, y
 sin mover la cámara, vamos cambiando el número de muestras.</figcaption>
 </figure>
 </div>
-<p>La figura [<a href="#fig:grafica_samples">35</a>] muestra cómo afecta
+<p>La figura [<a href="#fig:grafica_samples">38</a>] muestra cómo afecta
 al rendimiento el valor de <span class="math inline">\(N\)</span>. Vemos
 cómo un número bajo de muestras (alrededor de 5) produce un frametime de
 aproximadamente 12 milisegundos, lo cual corresponde a 83 frames por
@@ -5534,12 +5573,12 @@ href="#acumulación-temporal">acumulación temporal</a>, pues en esencia,
 proporcionaría un mayor número de muestras en el tiempo.</p>
 <p>Con una única muestra por píxel, la imagen final aparece muy ruidosa.
 Aumentarlo a 5 mejora bastante la situación, pero sigue habiendo
-demasiado ruido [<a href="#fig:samples_1">36</a>]</p>
+demasiado ruido [<a href="#fig:samples_1">39</a>]</p>
 <div id="fig:samples_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/1,%205%20samples.png"
-alt="Figura 36: Izquierda: 1 muestra. Derecha: 5 muestras" />
-<figcaption aria-hidden="true"><span>Figura 36:</span>
+alt="Figura 39: Izquierda: 1 muestra. Derecha: 5 muestras" />
+<figcaption aria-hidden="true"><span>Figura 39:</span>
 <strong>Izquierda</strong>: 1 muestra. <strong>Derecha</strong>: 5
 muestras</figcaption>
 </figure>
@@ -5549,8 +5588,8 @@ calidad visual significativa.</p>
 <div id="fig:samples_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/10,%2020%20samples.png"
-alt="Figura 37: Izquierda: 10 muestras. Derecha: 20 muestras" />
-<figcaption aria-hidden="true"><span>Figura 37:</span>
+alt="Figura 40: Izquierda: 10 muestras. Derecha: 20 muestras" />
+<figcaption aria-hidden="true"><span>Figura 40:</span>
 <strong>Izquierda</strong>: 10 muestras. <strong>Derecha</strong>: 20
 muestras</figcaption>
 </figure>
@@ -5572,13 +5611,13 @@ de un camino.</p>
 <div id="fig:grafica_depth" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_depth.png"
-alt="Figura 38: Coste de un frame en función de la profundidad de" />
-<figcaption aria-hidden="true"><span>Figura 38:</span> Coste de un frame
+alt="Figura 41: Coste de un frame en función de la profundidad de" />
+<figcaption aria-hidden="true"><span>Figura 41:</span> Coste de un frame
 en función de la profundidad de</figcaption>
 </figure>
 </div>
-<p>En esta figura [<a href="#fig:grafica_depth">38</a>] ocurre algo
-similar a [<a href="#fig:grafica_samples">35</a>]: como es evidente,
+<p>En esta figura [<a href="#fig:grafica_depth">41</a>] ocurre algo
+similar a [<a href="#fig:grafica_samples">38</a>]: como es evidente,
 aumentar la profundidad de un rayo aumenta el coste de renderizar un
 frame. Sin embargo, hay algunos matices que debemos estudiar con más
 detalle.</p>
@@ -5613,65 +5652,65 @@ pena el coste adicional?</strong>.</p>
 <p>Para responder a esta pregunta, primero debemos conocer cómo actúa
 este parámetro. Empezando con un número extremadamente bajo para los
 rebotes, vemos que parte de la escena ni siquiera se renderiza [<a
-href="#fig:depth_1">39</a>].</p>
+href="#fig:depth_1">42</a>].</p>
 <div id="fig:depth_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/1%20bounce.png" style="width:70.0%"
-alt="Figura 39: depth = 1" />
-<figcaption aria-hidden="true"><span>Figura 39:</span>
+alt="Figura 42: depth = 1" />
+<figcaption aria-hidden="true"><span>Figura 42:</span>
 <code>depth = 1</code></figcaption>
 </figure>
 </div>
 <p>Aumentar el número de rebotes progresivamente permite que el camino
 adquiera mayor información. Con dos rebotes, permitimos que un camino
 adquiera información sobre la caja por dentro, así como un reflejo
-primitivo en las esferas [<a href="#fig:depth_2">40</a>].</p>
+primitivo en las esferas [<a href="#fig:depth_2">43</a>].</p>
 <div id="fig:depth_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/2%20bounces.png" style="width:70.0%"
-alt="Figura 40: depth = 2" />
-<figcaption aria-hidden="true"><span>Figura 40:</span>
+alt="Figura 43: depth = 2" />
+<figcaption aria-hidden="true"><span>Figura 43:</span>
 <code>depth = 2</code></figcaption>
 </figure>
 </div>
 <p>Con 3 rebotes, la esfera izquierda refleja casi en su totalidad la
 esfera, pero vemos que el reflejo de la esfera derecha <em>dentro</em>
-de la izquierda está oscurecido [<a href="#fig:depth_3">41</a>].</p>
+de la izquierda está oscurecido [<a href="#fig:depth_3">44</a>].</p>
 <div id="fig:depth_3" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/3%20bounces.png" style="width:70.0%"
-alt="Figura 41: depth = 3" />
-<figcaption aria-hidden="true"><span>Figura 41:</span>
+alt="Figura 44: depth = 3" />
+<figcaption aria-hidden="true"><span>Figura 44:</span>
 <code>depth = 3</code></figcaption>
 </figure>
 </div>
-<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">42</a>] se arregla
+<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">45</a>] se arregla
 mayoritariamente esto.</p>
 <div id="fig:depth_4" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/4%20bounces.png" style="width:70.0%"
-alt="Figura 42: depth = 4" />
-<figcaption aria-hidden="true"><span>Figura 42:</span>
+alt="Figura 45: depth = 4" />
+<figcaption aria-hidden="true"><span>Figura 45:</span>
 <code>depth = 4</code></figcaption>
 </figure>
 </div>
 <p>En esta escena, aumentar más allá de 5 o 6 rebotes produce una
 situación de retornos reducidos. La calidad de imagen no aumenta
 prácticamente nada, pero el coste se vuelve muy elevado [<a
-href="#fig:depth_20">43</a>, <a href="#fig:depth_50">44</a>].</p>
+href="#fig:depth_20">46</a>, <a href="#fig:depth_50">47</a>].</p>
 <div id="fig:depth_20" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/20%20bounces.png" style="width:70.0%"
-alt="Figura 43: depth = 20" />
-<figcaption aria-hidden="true"><span>Figura 43:</span>
+alt="Figura 46: depth = 20" />
+<figcaption aria-hidden="true"><span>Figura 46:</span>
 <code>depth = 20</code></figcaption>
 </figure>
 </div>
 <div id="fig:depth_50" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/50%20bounces.png" style="width:70.0%"
-alt="Figura 44: depth = 50" />
-<figcaption aria-hidden="true"><span>Figura 44:</span>
+alt="Figura 47: depth = 50" />
+<figcaption aria-hidden="true"><span>Figura 47:</span>
 <code>depth = 50</code></figcaption>
 </figure>
 </div>
@@ -5684,24 +5723,24 @@ podría ser un motivo factor no negociable, pero en nuestro caso, nos
 servirá.</p>
 <p>Utilizando una única muestra, pero un valor de acumulación temporal
 de 100 frames máximos, proporciona una imagen sin apenas ruido [<a
-href="#fig:acumulacion_temp">45</a>].</p>
+href="#fig:acumulacion_temp">48</a>].</p>
 <div id="fig:acumulacion_temp" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%201.png" style="width:40.0%"
-alt="Figura 45: 1 muestra, acumulación temporal de 100 frames. A diferencia de 36, el resultado es impecable." />
-<figcaption aria-hidden="true"><span>Figura 45:</span> 1 muestra,
+alt="Figura 48: 1 muestra, acumulación temporal de 100 frames. A diferencia de 39, el resultado es impecable." />
+<figcaption aria-hidden="true"><span>Figura 48:</span> 1 muestra,
 acumulación temporal de 100 frames. A diferencia de <a
-href="#fig:samples_1">36</a>, el resultado es impecable.</figcaption>
+href="#fig:samples_1">39</a>, el resultado es impecable.</figcaption>
 </figure>
 </div>
 <p>Subiendo los parámetros a 200 frames de acumulación temporal y 10
 muestras, se obtiene una imagen muy buena[<a
-href="#fig:acumulacion_temp_2">46</a>].</p>
+href="#fig:acumulacion_temp_2">49</a>].</p>
 <div id="fig:acumulacion_temp_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%202.png" style="width:40.0%"
-alt="Figura 46: 10 muestras, acumulación temporal de 200 frames." />
-<figcaption aria-hidden="true"><span>Figura 46:</span> 10 muestras,
+alt="Figura 49: 10 muestras, acumulación temporal de 200 frames." />
+<figcaption aria-hidden="true"><span>Figura 49:</span> 10 muestras,
 acumulación temporal de 200 frames.</figcaption>
 </figure>
 </div>
@@ -5718,8 +5757,8 @@ escala al variarla.</p>
 <div id="fig:resolucion" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_resolucion.png"
-alt="Figura 47: Tiempo de renderización de un frame dependiendo de la resolución" />
-<figcaption aria-hidden="true"><span>Figura 47:</span> Tiempo de
+alt="Figura 50: Tiempo de renderización de un frame dependiendo de la resolución" />
+<figcaption aria-hidden="true"><span>Figura 50:</span> Tiempo de
 renderización de un frame dependiendo de la resolución</figcaption>
 </figure>
 </div>
@@ -5741,12 +5780,12 @@ integrar para reducir la varianza. Se ha implementado muestreo por
 importancia para los materiales difusos. En particular, se ha utilizado
 dos estrategias diferentes para escoger direcciones aleatorias, que
 pueden observarse en la figura [<a
-href="#fig:importance_sample">48</a>].</p>
+href="#fig:importance_sample">51</a>].</p>
 <div id="fig:importance_sample" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Importance%20sample.png"
-alt="Figura 48: Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling.   Escena: cornell_box_original, 10 rebotes, acumulación temporal off, 10 muestras" />
-<figcaption aria-hidden="true"><span>Figura 48:</span>
+alt="Figura 51: Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling.   Escena: cornell_box_original, 10 rebotes, acumulación temporal off, 10 muestras" />
+<figcaption aria-hidden="true"><span>Figura 51:</span>
 <strong>Izquierda</strong>: <em>hemisphere sampling</em>.
 <strong>Derecha</strong>: <em>Cosine-Weighted Hemisphere Sampling</em>.
 <br> Escena: <code>cornell_box_original</code>, 10 rebotes, acumulación
@@ -5897,7 +5936,7 @@ class="header-section-number">6.4.2.1</span> Por número de muestras</h4>
 primeras imágenes fijaremos la acumulación temporal a un único frame.
 Explicaremos el motivo después.</p>
 <p>Con una única muestra, se observa una diferencia enorme entre ambas
-versiones [<a href="#fig:comparativa_1s">49</a>]. En nuestra
+versiones [<a href="#fig:comparativa_1s">52</a>]. En nuestra
 implementación no se observa prácticamente nada. Solo somos capaces de
 distinguir la luz, un poco del reflejo de la caja izquierda y los
 <em>caustics</em> causados por la luz del techo. Mientras tanto, en In
@@ -5905,8 +5944,8 @@ One Weekend, la imagen es ruidosa pero definida.</p>
 <div id="fig:comparativa_1s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_1s.png" style="width:85.0%"
-alt="Figura 49: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 49:</span> 1 muestra.
+alt="Figura 52: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 52:</span> 1 muestra.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -5919,7 +5958,7 @@ la fuente. En cambio, en nuestro motor, este tipo de fuentes no se
 muestrean directamente, sino que debemos contar con el azar para que
 aporten radiancia.</p>
 <p>Una vez pasamos a 5 muestras [Figura <a
-href="#fig:comparativa_5s">50</a>], nuestro motor consigue una imagen
+href="#fig:comparativa_5s">53</a>], nuestro motor consigue una imagen
 más nítida, similar a la que In One Weekend genera con una muestra. En
 cambio, In One Weekend consigue un resultado muy bueno, aunque con
 muchas luciérnagas. Este fenómeno no ocurre en nuestra implementación
@@ -5927,8 +5966,8 @@ por el tipo de muestreo.</p>
 <div id="fig:comparativa_5s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_5s.png" style="width:85.0%"
-alt="Figura 50: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 50:</span> 5 muestras.
+alt="Figura 53: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 53:</span> 5 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -5938,8 +5977,8 @@ ruidoso. ¿Se podría hacer algo para mejorarlo?</p>
 <div id="fig:comparativa_20s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_20s.png" style="width:85.0%"
-alt="Figura 51: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 51:</span> 20 muestras.
+alt="Figura 54: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 54:</span> 20 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -5950,7 +5989,7 @@ respecto al tiempo, nuestra implementación utiliza interpolación para
 mezclar los colores de los frames. De esta forma, se consigue el efecto
 de normalización, lo cual elimina el ruido de la imagen con el tiempo.
 De esta forma conseguimos equiparar la imagen de ambas versiones [Figura
-<a href="#fig:comparativa_100s">52</a>].</p>
+<a href="#fig:comparativa_100s">55</a>].</p>
 <p>Se puede observar cómo el tipo de ruido es diferente. En In One
 Weekend, el ruido se presenta en forma de píxeles blancos, debido a las
 luciérnagas generadas por el muestreo directo de la fuente de luz. En
@@ -5959,8 +5998,8 @@ rayos que no impactan en ninguna superficie tras rebotar.</p>
 <div id="fig:comparativa_100s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_100s.png" style="width:85.0%"
-alt="Figura 52: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
-<figcaption aria-hidden="true"><span>Figura 52:</span> 100 muestras.
+alt="Figura 55: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
+<figcaption aria-hidden="true"><span>Figura 55:</span> 100 muestras.
 <strong>Izquierda</strong>: In One Weekend (100 muestras).
 <strong>Derecha</strong>: nuestro motor (7 muestras, 15 frames de
 acumulación temporal)</figcaption>
@@ -5968,14 +6007,14 @@ acumulación temporal)</figcaption>
 </div>
 <p>Por último, subiendo el número de muestras a 1000 conseguimos una
 imagen muy nítida en ambas implementaciones [Figura <a
-href="#fig:comparativa_1000s">53</a>]. Conseguimos apreciar una
+href="#fig:comparativa_1000s">56</a>]. Conseguimos apreciar una
 diferencia en los bordes de la esfera de la derecha, la cual seguramente
 se deba a un fallo en la implementación de la BRDF.</p>
 <div id="fig:comparativa_1000s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_1000s.png" style="width:100.0%"
-alt="Figura 53: La imagen final, con 1000 muestras para cada versión. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de acumulación temporal)" />
-<figcaption aria-hidden="true"><span>Figura 53:</span> La imagen final,
+alt="Figura 56: La imagen final, con 1000 muestras para cada versión. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de acumulación temporal)" />
+<figcaption aria-hidden="true"><span>Figura 56:</span> La imagen final,
 con 1000 muestras para cada versión. <strong>Izquierda</strong>: In One
 Weekend (1000 muestras). <strong>Derecha</strong>: nuestro motor (10
 muestras, 100 frames de acumulación temporal)</figcaption>
@@ -5994,7 +6033,7 @@ calidad de imagen podemos conseguir con ambas implementaciones</p>
 <p>Utilizando un presupuesto de 4000 milisegundos, In One Weekend es
 capaz de utilizar 5 muestras para la imagen, mientras que nuestro motor
 podría utilizar 10 muestras y 19 frames de acumulación temporal [Figura
-<a href="#fig:comparativa_4000ms">54</a>].</p>
+<a href="#fig:comparativa_4000ms">57</a>].</p>
 <p><span class="math display">\[
 20.4 \frac{\text{ms}}{\text{10 muestras}} \cdot 19 \text{ frames de
 temp. acum.} = 3876 \text{ ms}
@@ -6002,8 +6041,8 @@ temp. acum.} = 3876 \text{ ms}
 <div id="fig:comparativa_4000ms" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_4000ms.png" style="width:85.0%"
-alt="Figura 54: 4000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 54:</span> 4000 milisegundos
+alt="Figura 57: 4000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 57:</span> 4000 milisegundos
 de <em>frame budget</em>. <strong>Izquierda</strong>: In One Weekend.
 <strong>Derecha</strong>: nuestro motor</figcaption>
 </figure>
@@ -6019,12 +6058,12 @@ temp. acum.} = 70000 \text{ ms}
 <p>Esencialmente, la imagen que genera nuestra implementación es
 perfecta. No muestra ni un ápice de ruido; mientras que la de In One
 Weeekend presenta un resultado poco nítido [Figura <a
-href="#fig:comparativa_70000ms">55</a>].</p>
+href="#fig:comparativa_70000ms">58</a>].</p>
 <div id="fig:comparativa_70000ms" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_70000ms.png" style="width:85.0%"
-alt="Figura 55: 70000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 55:</span> 70000
+alt="Figura 58: 70000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 58:</span> 70000
 milisegundos de <em>frame budget</em>. <strong>Izquierda</strong>: In
 One Weekend. <strong>Derecha</strong>: nuestro motor</figcaption>
 </figure>
@@ -6080,8 +6119,8 @@ capaz de producir imágenes de escenas virtuales.</p>
 <div id="fig:pathtracing_showcase" class="fignos">
 <figure>
 <img loading="lazy" src="./img/06/Showcase.png"
-alt="Figura 56: El motor es capaz de producir preciosas imágenes de objetos físicamente realistas que se mueven en tiempo real" />
-<figcaption aria-hidden="true"><span>Figura 56:</span> El motor es capaz
+alt="Figura 59: El motor es capaz de producir preciosas imágenes de objetos físicamente realistas que se mueven en tiempo real" />
+<figcaption aria-hidden="true"><span>Figura 59:</span> El motor es capaz
 de producir preciosas imágenes de objetos físicamente realistas que se
 mueven en tiempo real</figcaption>
 </figure>
@@ -6336,7 +6375,7 @@ class="header-section-number">9.2</span> Ciclos de desarrollo</h2>
 que estás leyendo, ya sea en PDF o en la web– y software. Podemos
 distinguir varias fases en la planificación del proyecto, que quedan
 resumidas en el diagrama de Grant [Figuras <a
-href="#fig:grantt_1">57</a>, <a href="#fig:grantt_2">58</a>]</p>
+href="#fig:grantt_1">60</a>, <a href="#fig:grantt_2">61</a>]</p>
 <p>Para comenzar, durante el verano de 2021 se implementarían los tres
 libros de Shirley de la “serie In One Weekend”: In One Weekend <span
 class="citation" data-cites="Shirley2020RTW1">(<a
@@ -6351,8 +6390,8 @@ acelerando así el aprendizaje.</p>
 <div id="fig:grantt_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%201.png"
-alt="Figura 57: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
-<figcaption aria-hidden="true"><span>Figura 57:</span> Diagrama de
+alt="Figura 60: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
+<figcaption aria-hidden="true"><span>Figura 60:</span> Diagrama de
 Grantt de la primera parte del desarrollo. Los libros de Peter Shirley
 servirían como introducción al trabajo</figcaption>
 </figure>
@@ -6364,8 +6403,8 @@ pues no se puede implementar algo que no se entiende.</p>
 <div id="fig:grantt_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%202.png"
-alt="Figura 58: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
-<figcaption aria-hidden="true"><span>Figura 58:</span> Diagrama de
+alt="Figura 61: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
+<figcaption aria-hidden="true"><span>Figura 61:</span> Diagrama de
 Grantt de la segunda parte del desarrollo. Durante el segundo
 cuatrimestre se trabajaría tanto la memoria como el
 software</figcaption>
@@ -6469,27 +6508,15 @@ gestión del proyecto y bibliografía. Se utiliza un salario base de ¿50
 <blockquote>
 <p>TODO: hay que terminar de estimar el coste.</p>
 </blockquote>
-<h2 data-number="9.4" id="arquitectura-del-software"><span
-class="header-section-number">9.4</span> Arquitectura del software</h2>
-<blockquote>
-<p>TODO: especificaciones de los requerimientos y metodología de
-desarrollo, así como los planos del proyecto que contendrán las
-historias de usuario o casos de uso, diagrama conceptual, de iteración,
-de diseño, esquema arquitectónico y bocetos de las interfaces de
-usuario. Se describirán las estructuras de datos no fundamentales y
-algoritmos no triviales</p>
-<p>(Odio los diagramas de clases. Me gustaría evitar como sea
-incluirlos.)</p>
-</blockquote>
-<h2 data-number="9.5" id="diseño"><span
-class="header-section-number">9.5</span> Diseño</h2>
+<h2 data-number="9.4" id="diseño"><span
+class="header-section-number">9.4</span> Diseño</h2>
 <p>El diseño juega un papel fundamental en este proyecto. Todos los
 elementos visuales han sido escogidos con cuidado, de forma que se
 preserve la estética.</p>
 <p>Se ha creado <strong>un diseño que preserve el equilibrio entre la
 profesionalidad y la distensión</strong>.</p>
-<h3 data-number="9.5.1" id="bases-del-diseño"><span
-class="header-section-number">9.5.1</span> Bases del diseño</h3>
+<h3 data-number="9.4.1" id="bases-del-diseño"><span
+class="header-section-number">9.4.1</span> Bases del diseño</h3>
 <p>Para la documentación en versión PDF, usamos como base la
 <em>template</em> <span class="citation" data-cites="eisvogel">(<a
 href="#ref-eisvogel" role="doc-biblioref">Pascal Wagler
@@ -6500,8 +6527,8 @@ aprovecharemos para darle un toque diferente.</p>
 microframework de CSS <span class="citation" data-cites="bamboo">(<a
 href="#ref-bamboo" role="doc-biblioref">Tran Ngoc Tuan Anh
 2022</a>)</span> y unas modificaciones personales.</p>
-<h3 data-number="9.5.2" id="tipografías"><span
-class="header-section-number">9.5.2</span> Tipografías</h3>
+<h3 data-number="9.4.2" id="tipografías"><span
+class="header-section-number">9.4.2</span> Tipografías</h3>
 <p>Un apartado al que se le debe prestar especial énfasis es a la
 combinación de tipografías. A fin de cuentas, esto es un libro; así que
 escoger un tipo de letra correcto facilitará al lector comprender los
@@ -6547,20 +6574,20 @@ Jetbrains. Se utiliza en la web para los bloques de código.</li>
 <div id="fig:tipografías" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Tipografías.png" style="width:70.0%"
-alt="Figura 59: Showcase de las tipografías utilizadas" />
-<figcaption aria-hidden="true"><span>Figura 59:</span> Showcase de las
+alt="Figura 62: Showcase de las tipografías utilizadas" />
+<figcaption aria-hidden="true"><span>Figura 62:</span> Showcase de las
 tipografías utilizadas</figcaption>
 </figure>
 </div>
-<h3 data-number="9.5.3" id="paleta-de-colores"><span
-class="header-section-number">9.5.3</span> Paleta de colores</h3>
+<h3 data-number="9.4.3" id="paleta-de-colores"><span
+class="header-section-number">9.4.3</span> Paleta de colores</h3>
 <p>A fin de mantener consistencia, se ha creado una paleta de colores
 específica.</p>
 <div id="fig:paleta_de_colores" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Paleta%20de%20colores.png" width="400"
-alt="Figura 60: La paleta de colores del proyecto" />
-<figcaption aria-hidden="true"><span>Figura 60:</span> La paleta de
+alt="Figura 63: La paleta de colores del proyecto" />
+<figcaption aria-hidden="true"><span>Figura 63:</span> La paleta de
 colores del proyecto</figcaption>
 </figure>
 </div>
@@ -6579,8 +6606,8 @@ necesitamos. Puedes encontrar las definiciones en el fichero de estilos,
 ubicado en <code>./docs/headers/style.css</code>.</p>
 <p>Todos los colores que puedes ver en este documento se han extraído de
 la paleta. ¡La consistencia es clave!</p>
-<h2 data-number="9.6" id="flujo-de-trabajo-y-herramientas"><span
-class="header-section-number">9.6</span> Flujo de trabajo y
+<h2 data-number="9.5" id="flujo-de-trabajo-y-herramientas"><span
+class="header-section-number">9.5</span> Flujo de trabajo y
 herramientas</h2>
 <p>Encontrar una herramienta que se adapte a un <em>workflow</em> es
 complicado. Aunque hay muchos programas maravilosos, debemos hacerlos
@@ -6593,8 +6620,8 @@ otras.</p>
 <blockquote>
 <p>TODO: foto del workflow.</p>
 </blockquote>
-<h3 data-number="9.6.1" id="pandoc"><span
-class="header-section-number">9.6.1</span> Pandoc</h3>
+<h3 data-number="9.5.1" id="pandoc"><span
+class="header-section-number">9.5.1</span> Pandoc</h3>
 <p><strong>Pandoc</strong> <span class="citation"
 data-cites="pandoc">(<a href="#ref-pandoc" role="doc-biblioref">John
 MacFarlane 2021</a>)</span> es una estupendísima de conversión de
@@ -6626,8 +6653,8 @@ correctamente los bloques de código para la web.</li>
 órdenes para generar ambos formatos. Tienen varios parámetros
 adicionales de por sí, como puede ser la bibliografía
 (<code>docs/chapters/bibliography.bib</code>).</p>
-<h3 data-number="9.6.2" id="figma"><span
-class="header-section-number">9.6.2</span> Figma</h3>
+<h3 data-number="9.5.2" id="figma"><span
+class="header-section-number">9.5.2</span> Figma</h3>
 <p><strong>Figma</strong> <span class="citation" data-cites="figma">(<a
 href="#ref-figma" role="doc-biblioref">Figma 2022</a>)</span> es otro de
 esos programas que te hace preguntarte por qué es gratis. Es una
@@ -6637,8 +6664,8 @@ diseños de este trabajo se han hecho con esta herramienta.</p>
 <div id="fig:figma" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Figma.png"
-alt="Figura 61: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 61:</span> Tablón principal
+alt="Figura 64: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 64:</span> Tablón principal
 del proyecto de Figma, a día 15 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -6649,8 +6676,8 @@ ha resultado especialmente útil: Latex Complete <span class="citation"
 data-cites="latex-complete">(<a href="#ref-latex-complete"
 role="doc-biblioref">Max Krieger 2022</a>)</span>. Esto nos permite
 incrustar código LaTeX en el documento en forma de SVG.</p>
-<h3 data-number="9.6.3" id="otros-programas"><span
-class="header-section-number">9.6.3</span> Otros programas</h3>
+<h3 data-number="9.5.3" id="otros-programas"><span
+class="header-section-number">9.5.3</span> Otros programas</h3>
 <p>Como es normal, hay muchos otros programas que han intervenido en el
 desarrollo. Estos son algunos de ellos:</p>
 <ul>
@@ -6675,8 +6702,8 @@ role="doc-biblioref">Docker 2022</a>)</span></li>
 <li>Cualquier proyecto informático debería usar <code>git</code>. Este
 no es una excepción.</li>
 </ul>
-<h2 data-number="9.7" id="github"><span
-class="header-section-number">9.7</span> Github</h2>
+<h2 data-number="9.6" id="github"><span
+class="header-section-number">9.6</span> Github</h2>
 <p>La página <strong>Github</strong> <span class="citation"
 data-cites="github">(<a href="#ref-github" role="doc-biblioref">Github
 2022</a>)</span> ha alojado prácticamente todo el contenido del trabajo;
@@ -6697,9 +6724,9 @@ resulta más fácil sincronizarlos.</li>
 usar.</li>
 </ol>
 <p>Entremos en detalle en algunos de los puntos anteriores:</p>
-<h3 data-number="9.7.1"
+<h3 data-number="9.6.1"
 id="integración-continua-con-github-actions-y-github-pages"><span
-class="header-section-number">9.7.1</span> Integración continua con
+class="header-section-number">9.6.1</span> Integración continua con
 Github Actions y Github Pages</h3>
 <p>Cuando hablamos de <strong>integración continua</strong>, nos
 referimos a ciertos programas que corren en un repositorio y se encargan
@@ -6733,8 +6760,8 @@ Github Pages.</li>
 <div id="fig:github_actions" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Github%20Actions.png"
-alt="Figura 62: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
-<figcaption aria-hidden="true"><span>Figura 62:</span> La pestaña de
+alt="Figura 65: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
+<figcaption aria-hidden="true"><span>Figura 65:</span> La pestaña de
 Github Actions permite controlar con facilidad el resultado de un
 workflow y cuánto tarda en ejecutarse</figcaption>
 </figure>
@@ -6766,8 +6793,8 @@ instalación de LaTeX ocupa una cantidad de espacio considerable; y para
 compilar el PDF necesitamos una muy completa, por lo que debemos lidiar
 con este <em>overhead</em>. Puedes encontrar el Dockerfile en
 <code>./Dockerfile</code>.</p>
-<h3 data-number="9.7.2" id="issues-y-github-projects"><span
-class="header-section-number">9.7.2</span> Issues y Github Projects</h3>
+<h3 data-number="9.6.2" id="issues-y-github-projects"><span
+class="header-section-number">9.6.2</span> Issues y Github Projects</h3>
 <p>Las tareas pendientes se gestionan mediante issues. Cada vez que se
 tenga un objetivo particular para el desarrollo, se anota un issue.
 Cuando se genere un commit que avance dicha tarea, se etiqueta con el
@@ -6778,8 +6805,8 @@ objetivos pendientes de la aplicación.</p>
 <div id="fig:github_issues" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Issues.png" style="width:80.0%"
-alt="Figura 63: Pestaña de issues, día 16 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 63:</span> Pestaña de
+alt="Figura 66: Pestaña de issues, día 16 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 66:</span> Pestaña de
 issues, día 16 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -6789,8 +6816,8 @@ importante del desarrollo.</p>
 <div id="fig:github_milestones" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Milestones.png" style="width:80.0%"
-alt="Figura 64: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
-<figcaption aria-hidden="true"><span>Figura 64:</span> Los
+alt="Figura 67: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
+<figcaption aria-hidden="true"><span>Figura 67:</span> Los
 <em>milestones</em> agrupan una serie de issues relacionados con un
 punto clave del desarrollo</figcaption>
 </figure>
@@ -6803,8 +6830,8 @@ aplicación es un acompañante del repositorio estilo Asana.</p>
 <div id="fig:github_projects" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Projects.png" style="width:80.0%"
-alt="Figura 65: Projects agrupa los issues y les asigna prioridades" />
-<figcaption aria-hidden="true"><span>Figura 65:</span> Projects agrupa
+alt="Figura 68: Projects agrupa los issues y les asigna prioridades" />
+<figcaption aria-hidden="true"><span>Figura 68:</span> Projects agrupa
 los issues y les asigna prioridades</figcaption>
 </figure>
 </div>
@@ -6827,8 +6854,8 @@ considerablemente más compleja…) se genera una nueva rama. Cuando se ha
 cumplido el objetivo, se <em>mergea</em> la rama con la principal
 <code>main</code> mediante un <em>pull request</em>. Esto proporciona un
 mecanismo de robustez ante cambios complejos.</p>
-<h3 data-number="9.7.3" id="estilo-de-commits"><span
-class="header-section-number">9.7.3</span> Estilo de commits</h3>
+<h3 data-number="9.6.3" id="estilo-de-commits"><span
+class="header-section-number">9.6.3</span> Estilo de commits</h3>
 <p>Una de los detalles que has podido apreciar si has entrado al
 repositorio es un estilo de commit un tanto inusual. Aunque parece un
 detalle de lo más insustancial, añadir emojis a los mensajes de commits
@@ -6839,8 +6866,8 @@ sus significados:</p>
 <div id="fig:github_emojis" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Commits.png"
-alt="Figura 66: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
-<figcaption aria-hidden="true"><span>Figura 66:</span> Los emojis
+alt="Figura 69: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
+<figcaption aria-hidden="true"><span>Figura 69:</span> Los emojis
 permiten reconocer el objetivo de cada commit. Esta tabla recoge el
 significado de cada uno</figcaption>
 </figure>
