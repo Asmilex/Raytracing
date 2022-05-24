@@ -465,7 +465,7 @@ abline(h = 0.4, col = 2)
 
 Este código produce la siguiente gráfica:
 
-![Error de la simulación para el estimador de la integral $\int_0^1{2x^4\ dx}$](./img/03/Error%20simulación.png){#fig:error_simulacion}
+![Error de la simulación para el estimador de la integral $\int_0^1{2x^4\ dx}$](./img/03/Error%20simulación.png){#fig:error_simulacion} {width=80%}
 
 Se puede ver cómo debemos usar un número considerable de muestras, alrededor de 200, para que el error se mantenga bajo control. Aún así, aumentar el tamaño de $N$ no disminuye necesariamente el error; nos encontramos en una situación de retornos reducidos.
 
@@ -613,7 +613,7 @@ $$
 
 Si utilizáramos muestreo por importancia basándonos en las distribuciones de $L_{directa}$ o $f$ por separado, algunas de las dos no rendiría especialmente bien. Combinando ambas mediante muestreo por importancia múltiple se conseguiría un mejor resultado.
 
-![Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: [@robust-monte-carlo, Multiple Importance Sampling]](./img/03/Multiple%20importance%20sampling.png){ #fig:multiple_importance_sampling width=67% }
+![Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: [@robust-monte-carlo, Multiple Importance Sampling]](./img/03/Multiple%20importance%20sampling.png){ #fig:multiple_importance_sampling width=60% }
 
 ### Otras técnicas de reducción de varianza en transporte de luz
 
@@ -678,12 +678,6 @@ Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber 
 
 ### Método de la transformada inversa
 
-> **En resumen**: Para conseguir una muestra de una distribución específica $F_X$:
->
-> 1. Generar un número aleatorio $\xi \sim \mathcal{U}(0, 1)$.
-> 2. Hallar la inversa de la función de distribución deseada $F_X$, denotada $F_X^{-1}(x)$.
-> 3. Calcular $F_X^{-1}(\xi) = X$.
-
 Este método nos permite conseguir muestras de cualquier distribución continua a partir de variables aleatorias uniformes, siempre que se conozca la inversa de la función de distribución.
 
 Sea $X$ una variable aleatoria con función de distribución $F_X$[^1]. Queremos buscar una transformación $T: [0, 1] \rightarrow \mathbb{R}$ tal que $T(\xi) \stackrel{\text{\small d}}{=} X$, siendo $\xi$ una v.a. uniformemente distribuida. Para que esto se cumpla, se debe dar
@@ -699,7 +693,16 @@ $$
 
 Este último paso se debe a que, como $\xi$ es uniforme en $(0, 1)$, $P[\xi < x] = x$. Es decir, hemos obtenido que $F_X$ es la inversa de $T$.
 
+En resumen: Para conseguir una muestra de una distribución específica $F_X$:
+
+1. Generar un número aleatorio $\xi \sim \mathcal{U}(0, 1)$.
+2. Hallar la inversa de la función de distribución deseada $F_X$, denotada $F_X^{-1}(x)$.
+3. Calcular $F_X^{-1}(\xi) = X$.
+
 > TODO: dibujo similar a [este: p.52](https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf)
+
+
+#### Ejemplo práctico de la transformada inversa para $x^2$
 
 Como ejemplo, vamos a muestrear la función $f(x) =  x^2,\ x \in [0, 2]$ [@berkeley-cs184, Monte Carlo Integration].
 
@@ -778,14 +781,9 @@ lines(density(x), col = 'blue')
 curve(dexp(x, rate = lambda), add = TRUE, col = 2)
 ```
 
-![Histograma del método de la función inversa.](./img/03/metodo_inversa.png){#fig:metodo_inversa_R}
+![Histograma del método de la función inversa.](./img/03/metodo_inversa.png){#fig:metodo_inversa_R width=70%}
 
 ### Método del rechazo
-
-> **En resumen**: Para conseguir una muestra de una variable aleatoria $X$ con función de densidad $p_X$:
->
-> 1. Obtener una muestra $y$ de $Y$ , y otra $\xi$ de $\mathcal{U}(0, 1)$.
-> 2. Comprobar si $\xi < \frac{p_X(y)}{Mp_Y(y)}$. Si es así, aceptarla. Si no, sacar otra muestra.
 
 El método anterior presenta principalmente dos problemas:
 
@@ -840,7 +838,7 @@ resultado <- optimize(
 M <- resultado$objective
 ```
 
-![Podemos ver la función de densidad objetivo y la de densidad de la que tomamos muestras reescalada.](./img/03/metodo_rechazo_grafica.png){#fig:metodo_rechazo_grafica}
+![Podemos ver la función de densidad objetivo y la de densidad reescalada de la que tomamos muestras.](./img/03/metodo_rechazo_grafica.png){#fig:metodo_rechazo_grafica width=60%}
 
 Para resolver el problema planteado, podemos usar el siguiente código:
 
@@ -887,7 +885,7 @@ lines(density(x), col = 'blue')
 curve(dbeta(x, shape1 = a, shape2 = b), add = TRUE, col = 2)
 ```
 
-![Histograma del método de rechazo.](./img/03/metodo_rechazo.png){#fig:metodo_rechazo_R}
+![Histograma del método de rechazo.](./img/03/metodo_rechazo.png){#fig:metodo_rechazo_R width=70%}
 
 
 [^1]: En su defecto, si tenemos una función de densidad $f_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{f_X(t)dt}$.
