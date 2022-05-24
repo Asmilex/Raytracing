@@ -1,4 +1,4 @@
-# Introducción
+# Introducción{.unnumbered}
 
 Este trabajo puede visualizarse en la web [asmilex.github.io/Raytracing](https://asmilex.github.io/Raytracing/) o en el [PDF](https://github.com/Asmilex/Raytracing/raw/main/docs/TFG.pdf) disponible en el repositorio del trabajo [Asmilex/Raytracing](https://github.com/Asmilex/Raytracing).
 
