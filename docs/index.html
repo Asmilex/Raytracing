@@ -414,9 +414,20 @@ class="toc-section-number">4.4</span> Escogiendo puntos aleatorios</a>
 <ul>
 <li><a href="#método-de-la-transformada-inversa"><span
 class="toc-section-number">4.4.1</span> Método de la transformada
-inversa</a></li>
+inversa</a>
+<ul>
+<li><a
+href="#ejemplo-práctico-del-método-de-la-transformada-inversa-en-r"><span
+class="toc-section-number">4.4.1.1</span> Ejemplo práctico del método de
+la transformada inversa en R</a></li>
+</ul></li>
 <li><a href="#método-del-rechazo"><span
-class="toc-section-number">4.4.2</span> Método del rechazo</a></li>
+class="toc-section-number">4.4.2</span> Método del rechazo</a>
+<ul>
+<li><a href="#ejemplo-práctico-del-método-del-rechazo-en-r"><span
+class="toc-section-number">4.4.2.1</span> Ejemplo práctico del método
+del rechazo en R</a></li>
+</ul></li>
 </ul></li>
 </ul></li>
 <li><a href="#construyamos-un-path-tracer"><span
@@ -2857,7 +2868,8 @@ E\left[ X \right] = \sum_{i = 2}^{12}{i P[X = i]} = 2\frac{1}{36} + 3
 \]</span></p>
 <p>Para variables aleatorias uniformes en <span
 class="math inline">\((a, b)\)</span> (es decir, <span
-class="math inline">\(X \sim U(a, b)\)</span>), la esperanza es</p>
+class="math inline">\(X \sim \mathcal{U}(a, b)\)</span>), la esperanza
+es</p>
 <p><span class="math display">\[
 E\left[ X \right] = \int_{a}^{b}{x \frac{1}{b - a}dx} = \frac{a + b}{2}
 \]</span></p>
@@ -3105,7 +3117,7 @@ Podemos tomar <span class="math inline">\(p(x, y) =
 \frac{1}{4}\)</span>, de forma que</p>
 <p><span class="math display">\[
 \pi \approx \frac{4}{N} \sum_{i = 1}^{N}{f(x_i, y_i)}, \text{  con }
-(x_i, y_i) \sim U(\small{[-1, 1] \times [-1, 1]})
+(x_i, y_i) \sim \mathcal{U}(\small{[-1, 1] \times [-1, 1]})
 \]</span></p>
 <h3 data-number="4.2.2" id="integración-de-monte-carlo"><span
 class="header-section-number">4.2.2</span> Integración de Monte
@@ -3491,10 +3503,10 @@ función <span class="math inline">\(f: \mathbb{R}^3 \rightarrow
 \int_{x_0}^{x_1} \int_{y_0}^{y_1} \int_{z_0}^{z_1}{f(x, y, z)dx dy dz}
 \]</span></p>
 <p>mediante una variable aleatoria <span class="math inline">\(X \sim
-U(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0, z_1]})\)</span> con
-función de densidad <span class="math inline">\(p(x, y, z) =
-\frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 - z_0}\)</span>,
-tomamos el estimador</p>
+\mathcal{U}(\small{[x_0, x_1] \times [y_0, y_1] \times [z_0,
+z_1]})\)</span> con función de densidad <span class="math inline">\(p(x,
+y, z) = \frac{1}{x_1 - x_0} \frac{1}{y_1 - y_0} \frac{1}{z_1 -
+z_0}\)</span>, tomamos el estimador</p>
 <p><span class="math display">\[
 \tilde{I}_N = \frac{1}{(x_1 - x_0) \cdot (y_1 - y_0) \cdot (z_1 - z_0)}
 \sum_{i = 1}^{N}{f(X_i)}
@@ -3723,7 +3735,7 @@ inversa</h3>
 distribución específica <span class="math inline">\(F_X\)</span>:</p>
 <ol type="1">
 <li>Generar un número aleatorio <span class="math inline">\(\xi \sim
-U(0, 1)\)</span>.</li>
+\mathcal{U}(0, 1)\)</span>.</li>
 <li>Hallar la inversa de la función de distribución deseada <span
 class="math inline">\(F_X\)</span>, denotada <span
 class="math inline">\(F_X^{-1}(x)\)</span>.</li>
@@ -3796,6 +3808,57 @@ x &amp; = \sqrt[3]{8 \xi}
 <p>Sacando un número aleatorio <span class="math inline">\(\xi\)</span>,
 y pasándolo por la función obtenida, conseguimos un elemento con
 distribución <span class="math inline">\(F(x)\)</span>.</p>
+<h4 data-number="4.4.1.1"
+id="ejemplo-práctico-del-método-de-la-transformada-inversa-en-r"><span
+class="header-section-number">4.4.1.1</span> Ejemplo práctico del método
+de la transformada inversa en R</h4>
+<p>Aunque el ejemplo anterior nos enseña cómo proceder para una función
+sencilla, resulta algo difícil de visualizar. Por ello, vamos a utilizar
+el programa R para dar otro ejemplo.</p>
+<p>Consideremos la distribución exponencial de parámetro <span
+class="math inline">\(\lambda\)</span>, la cual tiene función de
+densidad y de distribución</p>
+<p><span class="math display">\[
+\begin{aligned}
+  f(x) &amp; = \lambda e^{-\lambda x}, \quad &amp; x \ge 0 \\
+  F(x) &amp; =  1 - e^{-\lambda x},    \quad &amp; x \ge 0
+\end{aligned}
+\]</span></p>
+<p>La función inversa se calcula tal que</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \xi &amp; = F(x)        = 1 - e^{-\lambda x} \quad \iff \\
+    x &amp; = F^{-1}(\xi) = - \frac{log(1 - \xi)}{\lambda}
+\end{aligned}
+\]</span></p>
+<p>Podemos generar ahora <span class="math inline">\(\xi_1, \dots,
+\xi_n\)</span> valores en <span class="math inline">\(\mathcal{U}(0,
+1)\)</span> y devolver <span class="math inline">\(X_i =
+-\frac{log(\xi_i)}{\lambda}\)</span>.</p>
+<p>Para el ejemplo, fijemos <span class="math inline">\(\lambda =
+1.5\)</span> y calculemos los valores para <span
+class="math inline">\(X_i\)</span>:</p>
+<pre><code class="language-r">F &lt;- function(xi, lambda) {
+  -log(xi) / lambda
+}
+
+N &lt;- 1000
+xi &lt;- runif(N)
+lambda &lt;- 1.5
+x &lt;- F(xi, lambda)</code></pre>
+<p>Es fácil comprobar que los valores generados se asemejan fielmente a
+una función de densidad exponencial:</p>
+<pre><code class="language-r">hist(x, freq = FALSE, breaks = &#39;FD&#39;, main = &#39;Método de la inversa para la exponencial&#39;, ylim = c(0, 1.5))
+lines(density(x), col = &#39;blue&#39;)
+curve(dexp(x, rate = lambda), add = TRUE, col = 2)</code></pre>
+<div id="fig:metodo_inversa_R" class="fignos">
+<figure>
+<img loading="lazy" src="./img/03/metodo_inversa.png"
+alt="Figura 15: Histograma del método de la función inversa" />
+<figcaption aria-hidden="true"><span>Figura 15:</span> Histograma del
+método de la función inversa</figcaption>
+</figure>
+</div>
 <h3 data-number="4.4.2" id="método-del-rechazo"><span
 class="header-section-number">4.4.2</span> Método del rechazo</h3>
 <blockquote>
@@ -3805,8 +3868,8 @@ densidad <span class="math inline">\(p_X\)</span>:</p>
 <ol type="1">
 <li>Obtener una muestra <span class="math inline">\(y\)</span> de <span
 class="math inline">\(Y\)</span> , y otra <span
-class="math inline">\(\xi\)</span> de <span class="math inline">\(U(0,
-1)\)</span>.</li>
+class="math inline">\(\xi\)</span> de <span
+class="math inline">\(\mathcal{U}(0, 1)\)</span>.</li>
 <li>Comprobar si <span class="math inline">\(\xi &lt;
 \frac{p_X(y)}{Mp_Y(y)}\)</span>. Si es así, aceptarla. Si no, sacar otra
 muestra.</li>
@@ -3834,17 +3897,11 @@ class="math inline">\(y\)</span> que hemos obtenido se queda por debajo
 de la gráfica de la función <span class="math inline">\(Mp_Y &lt;
 p_X\)</span>, estaremos obteniendo una de <span
 class="math inline">\(p_X\)</span>.</p>
-<blockquote>
-<p>TODO dibujo de la gráfica <span
-class="math inline">\(\frac{p_X(y)}{Mp_Y(y)}\)</span>.</p>
-<p>¿Quizás haga falta una demostración también? No estoy satisfecho con
-este apartado ahora mismo. Necesita trabajo.</p>
-</blockquote>
 <p>El algoritmo consiste en:</p>
 <ol type="1">
-<li>Obtener una muestra de <span class="math inline">\(Y\)</span>,
-denotada <span class="math inline">\(y\)</span>, y otra de <span
-class="math inline">\(U(0, 1)\)</span>, llamada <span
+<li>Obtener una muestra de <span class="math inline">\(Y \sim
+p_Y\)</span>, denotada <span class="math inline">\(y\)</span>, y otra de
+<span class="math inline">\(\mathcal{U}(0, 1)\)</span>, llamada <span
 class="math inline">\(\xi\)</span>.</li>
 <li>Comprobar si <span class="math inline">\(\xi &lt;
 \frac{p_X(y)}{Mp_Y(y)}\)</span>.
@@ -3855,6 +3912,82 @@ muestra de <span class="math inline">\(p_X\)</span></li>
 y se vuelve al paso 1.</li>
 </ol></li>
 </ol>
+<h4 data-number="4.4.2.1"
+id="ejemplo-práctico-del-método-del-rechazo-en-r"><span
+class="header-section-number">4.4.2.1</span> Ejemplo práctico del método
+del rechazo en R</h4>
+<p>De la misma forma que hicimos con el <a
+href="#ejemplo-práctico-del-método-de-la-transformada-inversa-en-r">método
+de la inversa</a>, implementaremos un ejemplo gráfico de esta técnica en
+el software R. En este caso, generaremos valores de una distribución
+Beta a partir de la uniforme. Es decir, podemos tomar</p>
+<p><span class="math display">\[
+\begin{aligned}
+p_X (x) &amp; = \frac{\Gamma(a + b)}{\Gamma(a) \Gamma(b)} x^{a - 1} (1 -
+x)^{b - 1}, \quad 0 \le x \le 1, a = 2, b = 6 \\
+p_Y (x) &amp; = 1, \quad 0 \le x \le 1
+\end{aligned}
+\]</span></p>
+<p>Como <span class="math inline">\(M\)</span> podemos tomar</p>
+<p><span class="math display">\[
+M = \sup_{x}\frac{p_Y(x)}{p_X(x)} = \sup_{x}{p_Y(x)}
+\]</span></p>
+<p>El siguiente fragmento de código de R calcula este valor:</p>
+<pre><code class="language-r">a &lt;- 2
+b &lt;- 6
+resultado &lt;- optimize(
+    f = function(x) { dbeta(x, shape1 = a, shape2 = b) },
+    maximum = TRUE,
+    interval = c(0, 1)
+)
+
+# $maximum
+# [1] 0.1666692
+#
+# $objective
+# [1] 2.813143
+
+M &lt;- resultado$objective</code></pre>
+<figure>
+<img loading="lazy" src="./img/03/metodo_rechazo_grafica.png" />
+</figure>
+<p>Veamos cómo de bien se aproxima el algoritmo:</p>
+<pre><code class="language-r">N &lt;- 1000
+x &lt;- double(N)
+
+p_X &lt;- function(x) dbeta(x, shape1 = a, shape2 = b)
+p_Y &lt;- function(x) 1
+
+valores_generados &lt;- 0
+
+for (i in 1:N) {
+    xi &lt;- runif(1)
+    y &lt;- runif(1)
+    valores_generados &lt;- valores_generados + 1
+
+    while (xi &gt; p_X(y) / (M * p_Y(y))) {
+        # Seguir generando hasta que aceptemos uno
+        xi &lt;- runif(1)
+        y &lt;- runif(1)
+        valores_generados &lt;- valores_generados + 1
+    }
+
+    # Aceptar el valor
+    x[i] &lt;- y
+}</code></pre>
+<pre><code class="language-r">valores_generados
+# [1] 2906</code></pre>
+<pre><code class="language-r">hist(x, freq = FALSE, breaks = &#39;FD&#39;, main = &#39;Método del rechazo para la distribución Beta(a = 2, b = 6)&#39;)
+lines(density(x), col = &#39;blue&#39;)
+curve(dbeta(x, shape1 = a, shape2 = b), add = TRUE, col = 2)</code></pre>
+<div id="fig:metodo_rechazo_R" class="fignos">
+<figure>
+<img loading="lazy" src="./img/03/metodo_rechazo.png"
+alt="Figura 16: Histograma del método de rechazo" />
+<figcaption aria-hidden="true"><span>Figura 16:</span> Histograma del
+método de rechazo</figcaption>
+</figure>
+</div>
 <h1 data-number="5" id="construyamos-un-path-tracer"><span
 class="header-section-number">5</span> ¡Construyamos un path
 tracer!</h1>
@@ -4303,8 +4436,8 @@ cargando correspondientemente el dispositivo.</p>
 <div id="fig:raster" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Raster.jpg" style="width:70.0%"
-alt="Figura 15: Por defecto, el programa muestra un cubo rasterizado muy simple. Es, prácticamente, un hello world gráfico" />
-<figcaption aria-hidden="true"><span>Figura 15:</span> Por defecto, el
+alt="Figura 17: Por defecto, el programa muestra un cubo rasterizado muy simple. Es, prácticamente, un hello world gráfico" />
+<figcaption aria-hidden="true"><span>Figura 17:</span> Por defecto, el
 programa muestra un cubo rasterizado muy simple. Es, prácticamente, un
 <em>hello world</em> gráfico</figcaption>
 </figure>
@@ -4355,14 +4488,14 @@ generadores de números aleatorios).</li>
 compilados a SPIR-V.</li>
 </ul></li>
 </ul>
-<p>El diagrama <a href="#fig:estructura_repo">16</a> permite visualizar
+<p>El diagrama <a href="#fig:estructura_repo">18</a> permite visualizar
 los puntos anteriores, así como la estructura general del
 repositorio.</p>
 <div id="fig:estructura_repo" class="fignos">
 <figure>
-<img loading="lazy" src="./img/04/repo_diagram.png"
-alt="Figura 16: Estructura del repositorio" />
-<figcaption aria-hidden="true"><span>Figura 16:</span> Estructura del
+<img loading="lazy" src="./img/04/repo_diagram.png" style="width:90.0%"
+alt="Figura 18: Estructura del repositorio" />
+<figcaption aria-hidden="true"><span>Figura 18:</span> Estructura del
 repositorio</figcaption>
 </figure>
 </div>
@@ -4372,25 +4505,25 @@ class="header-section-number">5.3.2</span> Diagramas</h3>
 para producción y la naturaleza de Vulkan, realizar un diagrama de clase
 es muy complicado. Sin embargo, podemos ilustrar las clases más
 importantes de la aplicación: la el motor [<a
-href="#fig:diagrama-clases-engine">17</a>] y la de escenas [<a
-href="#fig:diagrama-clases-scenes">18</a>] . En las secciones
+href="#fig:diagrama-clases-engine">19</a>] y la de escenas [<a
+href="#fig:diagrama-clases-scenes">20</a>] . En las secciones
 posteriores detallaremos algunos de los miembros de estas.</p>
 <p>Una figura que se asemeja a un diagrama de secuencia específico para
 el loop de ray tracing puede encontrarse en [<a
-href="#fig:pipeline">20</a>].</p>
+href="#fig:pipeline">22</a>].</p>
 <div id="fig:diagrama-clases-engine" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Mermaid%20engine.png"
-alt="Figura 17: Diagrama de clases para Engine" />
-<figcaption aria-hidden="true"><span>Figura 17:</span> Diagrama de
+alt="Figura 19: Diagrama de clases para Engine" />
+<figcaption aria-hidden="true"><span>Figura 19:</span> Diagrama de
 clases para Engine</figcaption>
 </figure>
 </div>
 <div id="fig:diagrama-clases-scenes" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Mermaid%20scenes.png"
-alt="Figura 18: Diagrama de clases para Scenes" />
-<figcaption aria-hidden="true"><span>Figura 18:</span> Diagrama de
+alt="Figura 20: Diagrama de clases para Scenes" />
+<figcaption aria-hidden="true"><span>Figura 20:</span> Diagrama de
 clases para Scenes</figcaption>
 </figure>
 </div>
@@ -4464,8 +4597,8 @@ partes: <strong>Top-Level Acceleration Structure</strong> (TLAS) y
 <div id="fig:TLAS" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Acceleration%20structure.png" style="width:70.0%"
-alt="Figura 19: La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: (Nvidia 2022a)" />
-<figcaption aria-hidden="true"><span>Figura 19:</span> La TLAS guarda
+alt="Figura 21: La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: (Nvidia 2022a)" />
+<figcaption aria-hidden="true"><span>Figura 21:</span> La TLAS guarda
 información de las instancias de un objeto, así como una referencia a
 BLAS que contiene la geometría correspondiente. Fuente: <span
 class="citation" data-cites="nvpro-samples-tutorial">(<a
@@ -4604,8 +4737,8 @@ generar un <code>vkCreateRayTracingPipelineKHR</code>.</li>
 <div id="fig:pipeline" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Pipeline.png"
-alt="Figura 20: La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader raygen, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un closest hit, any hit, o miss shaders. Fuente: (Adam Marrs and Wald 2021, 194)" />
-<figcaption aria-hidden="true"><span>Figura 20:</span> La Shader Binding
+alt="Figura 22: La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader raygen, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un closest hit, any hit, o miss shaders. Fuente: (Adam Marrs and Wald 2021, 194)" />
+<figcaption aria-hidden="true"><span>Figura 22:</span> La Shader Binding
 Table permite selccionar un tipo de shader dependiendo del objeto en el
 que se impacte. Para ello, se genera un rayo desde el shader
 <code>raygen</code>, el cual viaja a través de la Acceleration
@@ -4642,8 +4775,8 @@ role="doc-biblioref">Will Usher 2019</a>)</span></p>
 <div id="fig:SBT" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/SBT.png"
-alt="Figura 21: Fuente: (Will Usher 2019)" />
-<figcaption aria-hidden="true"><span>Figura 21:</span> Fuente: <span
+alt="Figura 23: Fuente: (Will Usher 2019)" />
+<figcaption aria-hidden="true"><span>Figura 23:</span> Fuente: <span
 class="citation" data-cites="shader-binding-table">(<a
 href="#ref-shader-binding-table" role="doc-biblioref">Will Usher
 2019</a>)</span></figcaption>
@@ -5071,8 +5204,8 @@ espera que la terna RGB provista esté en <span class="math inline">\([0,
 <div id="fig:quemado" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Quemado.png"
-alt="Figura 22: Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz." />
-<figcaption aria-hidden="true"><span>Figura 22:</span> Fíjate en la
+alt="Figura 24: Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz." />
+<figcaption aria-hidden="true"><span>Figura 24:</span> Fíjate en la
 parte de la izquierda. La pared roja aparece demasiado brillante;
 especialmente, aquella impactada por la fuente de luz.</figcaption>
 </figure>
@@ -5106,8 +5239,8 @@ if (USE_GAMMA_CORRECTION == 1) {
 <div id="fig:correccion_gamma" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Corrección%20de%20gamma.png"
-alt="Figura 23: Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos." />
-<figcaption aria-hidden="true"><span>Figura 23:</span> Con la corección
+alt="Figura 25: Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos." />
+<figcaption aria-hidden="true"><span>Figura 25:</span> Con la corección
 de gamma aplicada, vemos que los colores de la foto no son tan
 intensos.</figcaption>
 </figure>
@@ -5149,8 +5282,8 @@ el programa.</p>
 <div id="fig:asmiray" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Asmiray.png" style="width:70.0%"
-alt="Figura 24: Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones." />
-<figcaption aria-hidden="true"><span>Figura 24:</span> Al abrir el
+alt="Figura 26: Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones." />
+<figcaption aria-hidden="true"><span>Figura 26:</span> Al abrir el
 motor, te encontrarás con una pantalla similar a esta: una escena
 cargada junto a un panel lateral con numerosas opciones.</figcaption>
 </figure>
@@ -5312,8 +5445,8 @@ original contiene dos objetos de este tipo:</p>
 <div id="fig:materiales_difusos" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20difusos.png" style="width:70.0%"
-alt="Figura 25: Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
-<figcaption aria-hidden="true"><span>Figura 25:</span> Materiales
+alt="Figura 27: Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
+<figcaption aria-hidden="true"><span>Figura 27:</span> Materiales
 difusos de la escena Cornell Box original. Vemos que la luz se esparce
 uniformemente al rebotar en el objeto.</figcaption>
 </figure>
@@ -5327,8 +5460,8 @@ href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 <div id="fig:materiales_glossy" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20glossy.png" style="width:70.0%"
-alt="Figura 26: Materiales especulares metálicos de la escena Cornell Box glossy" />
-<figcaption aria-hidden="true"><span>Figura 26:</span> Materiales
+alt="Figura 28: Materiales especulares metálicos de la escena Cornell Box glossy" />
+<figcaption aria-hidden="true"><span>Figura 28:</span> Materiales
 especulares metálicos de la escena Cornell Box glossy</figcaption>
 </figure>
 </div>
@@ -5339,8 +5472,8 @@ debemos recurrir a técnicas específicas como reflejos planares o
 <div id="fig:materiales_espejos" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20espejos.png" style="width:70.0%"
-alt="Figura 27: Una caja que actúa como un espejo prácticamente perfecto en la escena cornell_box_mirror" />
-<figcaption aria-hidden="true"><span>Figura 27:</span> Una caja que
+alt="Figura 29: Una caja que actúa como un espejo prácticamente perfecto en la escena cornell_box_mirror" />
+<figcaption aria-hidden="true"><span>Figura 29:</span> Una caja que
 actúa como un espejo prácticamente perfecto en la escena
 <code>cornell_box_mirror</code></figcaption>
 </figure>
@@ -5351,8 +5484,8 @@ modelar el comportamiento de la luz.</p>
 <div id="fig:reflectantes" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20reflectantes.png" style="width:70.0%"
-alt="Figura 28: La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera." />
-<figcaption aria-hidden="true"><span>Figura 28:</span> La esfera de la
+alt="Figura 30: La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera." />
+<figcaption aria-hidden="true"><span>Figura 30:</span> La esfera de la
 derecha refracta la luz al pasar por ella, adquiriendo en el proceso un
 color más oscuro. También podemos ver la esfera de la izquierda
 recursivamente, dentro del propio reflejo de la esfera.</figcaption>
@@ -5365,8 +5498,8 @@ algunos rayos:</p>
 <div id="fig:materiales_transparentes" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20transparentes.png" style="width:70.0%"
-alt="Figura 29: El modelo del Wuson, pero transparente." />
-<figcaption aria-hidden="true"><span>Figura 29:</span> El modelo del
+alt="Figura 31: El modelo del Wuson, pero transparente." />
+<figcaption aria-hidden="true"><span>Figura 31:</span> El modelo del
 Wuson, pero transparente.</figcaption>
 </figure>
 </div>
@@ -5376,25 +5509,25 @@ class="header-section-number">6.2.2</span> Fuentes de luz</h3>
 fuentes de luces: puntuales y direccionales.</p>
 <p>Las <strong>fuentes de luz puntuales</strong> (<em>spotlights</em> en
 inglés) emiten luz alrededor suya, como si de pequeños soles se
-trataran. La figura [<a href="#fig:spotlights">30</a>] muestra cómo se
+trataran. La figura [<a href="#fig:spotlights">32</a>] muestra cómo se
 comportan en la caja de Cornell original.</p>
 <div id="fig:spotlights" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Spotlight.png" style="width:60.0%"
-alt="Figura 30: Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared." />
-<figcaption aria-hidden="true"><span>Figura 30:</span> Una fuente de luz
+alt="Figura 32: Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared." />
+<figcaption aria-hidden="true"><span>Figura 32:</span> Una fuente de luz
 puntual iluminando la caja de Cornell original. Vemos cómo se proyectan
 sombras hacian la pared.</figcaption>
 </figure>
 </div>
 <p>Por otro lado, las <strong>luces direccionales</strong>: imitan la
 luz proporcionada por algún objeto infinitamente lejano. Puedes ver un
-ejemplo en la figura [<a href="#fig:directional_lights">31</a>].</p>
+ejemplo en la figura [<a href="#fig:directional_lights">33</a>].</p>
 <div id="fig:directional_lights" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Directional.png" style="width:60.0%"
-alt="Figura 31: La caja de Cornell original iluminada por una luz direccional" />
-<figcaption aria-hidden="true"><span>Figura 31:</span> La caja de
+alt="Figura 33: La caja de Cornell original iluminada por una luz direccional" />
+<figcaption aria-hidden="true"><span>Figura 33:</span> La caja de
 Cornell original iluminada por una <strong>luz
 direccional</strong></figcaption>
 </figure>
@@ -5402,22 +5535,22 @@ direccional</strong></figcaption>
 <p>Como las puntuales se comportan de manera muy similar en la caja de
 Cornell, podemos referirnos a la escena del edificio medieval para ver
 una diferencia más sustancial [<a
-href="#fig:spotlights_medieval">32</a>, <a
-href="#fig:directional_medieval">33</a>]. En este caso, se aprecia el
+href="#fig:spotlights_medieval">34</a>, <a
+href="#fig:directional_medieval">35</a>]. En este caso, se aprecia el
 radio de influencia de la luz puntual.</p>
 <div id="fig:spotlights_medieval" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Spotlight%202.png" style="width:60.0%"
-alt="Figura 32: Luz puntual en la escena medieval_building." />
-<figcaption aria-hidden="true"><span>Figura 32:</span> Luz puntual en la
+alt="Figura 34: Luz puntual en la escena medieval_building." />
+<figcaption aria-hidden="true"><span>Figura 34:</span> Luz puntual en la
 escena <code>medieval_building</code>.</figcaption>
 </figure>
 </div>
 <div id="fig:directional_medieval" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Directional%202.png" style="width:60.0%"
-alt="Figura 33: Luz direccional en la escena medieval_building." />
-<figcaption aria-hidden="true"><span>Figura 33:</span> Luz direccional
+alt="Figura 35: Luz direccional en la escena medieval_building." />
+<figcaption aria-hidden="true"><span>Figura 35:</span> Luz direccional
 en la escena <code>medieval_building</code>.</figcaption>
 </figure>
 </div>
@@ -5434,24 +5567,24 @@ similar a la caja de Cornell:</p>
 <div id="fig:cornell_bath_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Cornell%20bath%201.jpg" style="width:60.0%"
-alt="Figura 34: Escena similar a la caja de Cornell, en la vida real. También es mi baño." />
-<figcaption aria-hidden="true"><span>Figura 34:</span> Escena similar a
+alt="Figura 36: Escena similar a la caja de Cornell, en la vida real. También es mi baño." />
+<figcaption aria-hidden="true"><span>Figura 36:</span> Escena similar a
 la caja de Cornell, en la vida real. También es mi baño.</figcaption>
 </figure>
 </div>
-<p>En la escena [<a href="#fig:cornell_bath_1">34</a>] observamos cómo
+<p>En la escena [<a href="#fig:cornell_bath_1">36</a>] observamos cómo
 la luz del sol entra desde la parte de la derecha, rebotando en todo el
 espacio. Notamos cómo la escena tiene una tonalidad natural y cálida.
 Sin embargo, esta impresión es fácilmente modificable si alteramos la
 forma de arrojar la luz. Cerrando la puerta (la cual no puede ser vista
 en la fotografía, pero se encuentra a la derecha y es idéntica al
 cristal), la iluminación cambia completamente [<a
-href="#fig:cornell_bath_2">35</a>].</p>
+href="#fig:cornell_bath_2">37</a>].</p>
 <div id="fig:cornell_bath_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Cornell%20bath%202.jpg" style="width:60.0%"
-alt="Figura 35: Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados" />
-<figcaption aria-hidden="true"><span>Figura 35:</span> Cuando cambiamos
+alt="Figura 37: Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados" />
+<figcaption aria-hidden="true"><span>Figura 37:</span> Cuando cambiamos
 la forma de iluminar la escena, los colores se ven drásticamente
 modificados</figcaption>
 </figure>
@@ -5467,32 +5600,32 @@ cuales se visualizan como una tonalidad roja.</p>
 <p><strong>Path tracing consigue este efecto de manera natural</strong>
 por diseño. Este es uno de sus mayores puntos fuertes, pero a la vez lo
 hace computacionalmente caro. Dado que la escena de [<a
-href="#fig:cornell_bath_1">34</a>] y [<a
-href="#fig:cornell_bath_2">35</a>] es, esencialmente, una caja de
+href="#fig:cornell_bath_1">36</a>] y [<a
+href="#fig:cornell_bath_2">37</a>] es, esencialmente, una caja de
 Cornell, deberíamos apreciar un efecto similar en nuestra escena,
 ¿verdad?</p>
-<p>¡Así es! La figura [<a href="#fig:global_illumination_1">36</a>] es
-muy similar a la [<a href="#fig:cornell_bath_2">35</a>]. Se pueden
+<p>¡Así es! La figura [<a href="#fig:global_illumination_1">38</a>] es
+muy similar a la [<a href="#fig:cornell_bath_2">37</a>]. Se pueden
 apreciar los mismos efectos en la caja izquierda, los cuales no ocurrían
 con tanta intensidad en la escena original [fig. <a
-href="#fig:materiales_difusos">25</a>]</p>
+href="#fig:materiales_difusos">27</a>]</p>
 <div id="fig:global_illumination_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Ambient%20occlusion%201.png" style="width:60.0%"
-alt="Figura 36: La caja de Cornell original con luz direccional apuntando a la pared de la izquierda" />
-<figcaption aria-hidden="true"><span>Figura 36:</span> La caja de
+alt="Figura 38: La caja de Cornell original con luz direccional apuntando a la pared de la izquierda" />
+<figcaption aria-hidden="true"><span>Figura 38:</span> La caja de
 Cornell original con luz direccional apuntando a la pared de la
 izquierda</figcaption>
 </figure>
 </div>
 <p>Lo mismo ocurre cuando cambiamos el foco a la pared de la derecha. Al
 ser verde, tintará el resto de los materiales de dicho color [<a
-href="#fig:global_illumination_2">37</a>].</p>
+href="#fig:global_illumination_2">39</a>].</p>
 <div id="fig:global_illumination_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Ambient%20occlusion%202.png" style="width:60.0%"
-alt="Figura 37: Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena" />
-<figcaption aria-hidden="true"><span>Figura 37:</span> Enfocando a la
+alt="Figura 39: Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena" />
+<figcaption aria-hidden="true"><span>Figura 39:</span> Enfocando a la
 pared de la derecha, conseguimos un tinte verde para la
 escena</figcaption>
 </figure>
@@ -5543,13 +5676,13 @@ class="math inline">\(N \in \mathbb{N}\)</span>.</p>
 <div id="fig:grafica_samples" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_samples.png"
-alt="Figura 38: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
-<figcaption aria-hidden="true"><span>Figura 38:</span> Para conseguir
+alt="Figura 40: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
+<figcaption aria-hidden="true"><span>Figura 40:</span> Para conseguir
 esta gráfica, iniciamos la escena <code>cornell_box_original</code>, y
 sin mover la cámara, vamos cambiando el número de muestras.</figcaption>
 </figure>
 </div>
-<p>La figura [<a href="#fig:grafica_samples">38</a>] muestra cómo afecta
+<p>La figura [<a href="#fig:grafica_samples">40</a>] muestra cómo afecta
 al rendimiento el valor de <span class="math inline">\(N\)</span>. Vemos
 cómo un número bajo de muestras (alrededor de 5) produce un frametime de
 aproximadamente 12 milisegundos, lo cual corresponde a 83 frames por
@@ -5573,12 +5706,12 @@ href="#acumulación-temporal">acumulación temporal</a>, pues en esencia,
 proporcionaría un mayor número de muestras en el tiempo.</p>
 <p>Con una única muestra por píxel, la imagen final aparece muy ruidosa.
 Aumentarlo a 5 mejora bastante la situación, pero sigue habiendo
-demasiado ruido [<a href="#fig:samples_1">39</a>]</p>
+demasiado ruido [<a href="#fig:samples_1">41</a>]</p>
 <div id="fig:samples_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/1,%205%20samples.png"
-alt="Figura 39: Izquierda: 1 muestra. Derecha: 5 muestras" />
-<figcaption aria-hidden="true"><span>Figura 39:</span>
+alt="Figura 41: Izquierda: 1 muestra. Derecha: 5 muestras" />
+<figcaption aria-hidden="true"><span>Figura 41:</span>
 <strong>Izquierda</strong>: 1 muestra. <strong>Derecha</strong>: 5
 muestras</figcaption>
 </figure>
@@ -5588,8 +5721,8 @@ calidad visual significativa.</p>
 <div id="fig:samples_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/10,%2020%20samples.png"
-alt="Figura 40: Izquierda: 10 muestras. Derecha: 20 muestras" />
-<figcaption aria-hidden="true"><span>Figura 40:</span>
+alt="Figura 42: Izquierda: 10 muestras. Derecha: 20 muestras" />
+<figcaption aria-hidden="true"><span>Figura 42:</span>
 <strong>Izquierda</strong>: 10 muestras. <strong>Derecha</strong>: 20
 muestras</figcaption>
 </figure>
@@ -5611,13 +5744,13 @@ de un camino.</p>
 <div id="fig:grafica_depth" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_depth.png"
-alt="Figura 41: Coste de un frame en función de la profundidad de" />
-<figcaption aria-hidden="true"><span>Figura 41:</span> Coste de un frame
+alt="Figura 43: Coste de un frame en función de la profundidad de" />
+<figcaption aria-hidden="true"><span>Figura 43:</span> Coste de un frame
 en función de la profundidad de</figcaption>
 </figure>
 </div>
-<p>En esta figura [<a href="#fig:grafica_depth">41</a>] ocurre algo
-similar a [<a href="#fig:grafica_samples">38</a>]: como es evidente,
+<p>En esta figura [<a href="#fig:grafica_depth">43</a>] ocurre algo
+similar a [<a href="#fig:grafica_samples">40</a>]: como es evidente,
 aumentar la profundidad de un rayo aumenta el coste de renderizar un
 frame. Sin embargo, hay algunos matices que debemos estudiar con más
 detalle.</p>
@@ -5652,65 +5785,65 @@ pena el coste adicional?</strong>.</p>
 <p>Para responder a esta pregunta, primero debemos conocer cómo actúa
 este parámetro. Empezando con un número extremadamente bajo para los
 rebotes, vemos que parte de la escena ni siquiera se renderiza [<a
-href="#fig:depth_1">42</a>].</p>
+href="#fig:depth_1">44</a>].</p>
 <div id="fig:depth_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/1%20bounce.png" style="width:70.0%"
-alt="Figura 42: depth = 1" />
-<figcaption aria-hidden="true"><span>Figura 42:</span>
+alt="Figura 44: depth = 1" />
+<figcaption aria-hidden="true"><span>Figura 44:</span>
 <code>depth = 1</code></figcaption>
 </figure>
 </div>
 <p>Aumentar el número de rebotes progresivamente permite que el camino
 adquiera mayor información. Con dos rebotes, permitimos que un camino
 adquiera información sobre la caja por dentro, así como un reflejo
-primitivo en las esferas [<a href="#fig:depth_2">43</a>].</p>
+primitivo en las esferas [<a href="#fig:depth_2">45</a>].</p>
 <div id="fig:depth_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/2%20bounces.png" style="width:70.0%"
-alt="Figura 43: depth = 2" />
-<figcaption aria-hidden="true"><span>Figura 43:</span>
+alt="Figura 45: depth = 2" />
+<figcaption aria-hidden="true"><span>Figura 45:</span>
 <code>depth = 2</code></figcaption>
 </figure>
 </div>
 <p>Con 3 rebotes, la esfera izquierda refleja casi en su totalidad la
 esfera, pero vemos que el reflejo de la esfera derecha <em>dentro</em>
-de la izquierda está oscurecido [<a href="#fig:depth_3">44</a>].</p>
+de la izquierda está oscurecido [<a href="#fig:depth_3">46</a>].</p>
 <div id="fig:depth_3" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/3%20bounces.png" style="width:70.0%"
-alt="Figura 44: depth = 3" />
-<figcaption aria-hidden="true"><span>Figura 44:</span>
+alt="Figura 46: depth = 3" />
+<figcaption aria-hidden="true"><span>Figura 46:</span>
 <code>depth = 3</code></figcaption>
 </figure>
 </div>
-<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">45</a>] se arregla
+<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">47</a>] se arregla
 mayoritariamente esto.</p>
 <div id="fig:depth_4" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/4%20bounces.png" style="width:70.0%"
-alt="Figura 45: depth = 4" />
-<figcaption aria-hidden="true"><span>Figura 45:</span>
+alt="Figura 47: depth = 4" />
+<figcaption aria-hidden="true"><span>Figura 47:</span>
 <code>depth = 4</code></figcaption>
 </figure>
 </div>
 <p>En esta escena, aumentar más allá de 5 o 6 rebotes produce una
 situación de retornos reducidos. La calidad de imagen no aumenta
 prácticamente nada, pero el coste se vuelve muy elevado [<a
-href="#fig:depth_20">46</a>, <a href="#fig:depth_50">47</a>].</p>
+href="#fig:depth_20">48</a>, <a href="#fig:depth_50">49</a>].</p>
 <div id="fig:depth_20" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/20%20bounces.png" style="width:70.0%"
-alt="Figura 46: depth = 20" />
-<figcaption aria-hidden="true"><span>Figura 46:</span>
+alt="Figura 48: depth = 20" />
+<figcaption aria-hidden="true"><span>Figura 48:</span>
 <code>depth = 20</code></figcaption>
 </figure>
 </div>
 <div id="fig:depth_50" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/50%20bounces.png" style="width:70.0%"
-alt="Figura 47: depth = 50" />
-<figcaption aria-hidden="true"><span>Figura 47:</span>
+alt="Figura 49: depth = 50" />
+<figcaption aria-hidden="true"><span>Figura 49:</span>
 <code>depth = 50</code></figcaption>
 </figure>
 </div>
@@ -5723,24 +5856,24 @@ podría ser un motivo factor no negociable, pero en nuestro caso, nos
 servirá.</p>
 <p>Utilizando una única muestra, pero un valor de acumulación temporal
 de 100 frames máximos, proporciona una imagen sin apenas ruido [<a
-href="#fig:acumulacion_temp">48</a>].</p>
+href="#fig:acumulacion_temp">50</a>].</p>
 <div id="fig:acumulacion_temp" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%201.png" style="width:40.0%"
-alt="Figura 48: 1 muestra, acumulación temporal de 100 frames. A diferencia de 39, el resultado es impecable." />
-<figcaption aria-hidden="true"><span>Figura 48:</span> 1 muestra,
+alt="Figura 50: 1 muestra, acumulación temporal de 100 frames. A diferencia de 41, el resultado es impecable." />
+<figcaption aria-hidden="true"><span>Figura 50:</span> 1 muestra,
 acumulación temporal de 100 frames. A diferencia de <a
-href="#fig:samples_1">39</a>, el resultado es impecable.</figcaption>
+href="#fig:samples_1">41</a>, el resultado es impecable.</figcaption>
 </figure>
 </div>
 <p>Subiendo los parámetros a 200 frames de acumulación temporal y 10
 muestras, se obtiene una imagen muy buena[<a
-href="#fig:acumulacion_temp_2">49</a>].</p>
+href="#fig:acumulacion_temp_2">51</a>].</p>
 <div id="fig:acumulacion_temp_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%202.png" style="width:40.0%"
-alt="Figura 49: 10 muestras, acumulación temporal de 200 frames." />
-<figcaption aria-hidden="true"><span>Figura 49:</span> 10 muestras,
+alt="Figura 51: 10 muestras, acumulación temporal de 200 frames." />
+<figcaption aria-hidden="true"><span>Figura 51:</span> 10 muestras,
 acumulación temporal de 200 frames.</figcaption>
 </figure>
 </div>
@@ -5757,8 +5890,8 @@ escala al variarla.</p>
 <div id="fig:resolucion" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_resolucion.png"
-alt="Figura 50: Tiempo de renderización de un frame dependiendo de la resolución" />
-<figcaption aria-hidden="true"><span>Figura 50:</span> Tiempo de
+alt="Figura 52: Tiempo de renderización de un frame dependiendo de la resolución" />
+<figcaption aria-hidden="true"><span>Figura 52:</span> Tiempo de
 renderización de un frame dependiendo de la resolución</figcaption>
 </figure>
 </div>
@@ -5780,12 +5913,12 @@ integrar para reducir la varianza. Se ha implementado muestreo por
 importancia para los materiales difusos. En particular, se ha utilizado
 dos estrategias diferentes para escoger direcciones aleatorias, que
 pueden observarse en la figura [<a
-href="#fig:importance_sample">51</a>].</p>
+href="#fig:importance_sample">53</a>].</p>
 <div id="fig:importance_sample" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Importance%20sample.png"
-alt="Figura 51: Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling.   Escena: cornell_box_original, 10 rebotes, acumulación temporal off, 10 muestras" />
-<figcaption aria-hidden="true"><span>Figura 51:</span>
+alt="Figura 53: Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling.   Escena: cornell_box_original, 10 rebotes, acumulación temporal off, 10 muestras" />
+<figcaption aria-hidden="true"><span>Figura 53:</span>
 <strong>Izquierda</strong>: <em>hemisphere sampling</em>.
 <strong>Derecha</strong>: <em>Cosine-Weighted Hemisphere Sampling</em>.
 <br> Escena: <code>cornell_box_original</code>, 10 rebotes, acumulación
@@ -5936,7 +6069,7 @@ class="header-section-number">6.4.2.1</span> Por número de muestras</h4>
 primeras imágenes fijaremos la acumulación temporal a un único frame.
 Explicaremos el motivo después.</p>
 <p>Con una única muestra, se observa una diferencia enorme entre ambas
-versiones [<a href="#fig:comparativa_1s">52</a>]. En nuestra
+versiones [<a href="#fig:comparativa_1s">54</a>]. En nuestra
 implementación no se observa prácticamente nada. Solo somos capaces de
 distinguir la luz, un poco del reflejo de la caja izquierda y los
 <em>caustics</em> causados por la luz del techo. Mientras tanto, en In
@@ -5944,8 +6077,8 @@ One Weekend, la imagen es ruidosa pero definida.</p>
 <div id="fig:comparativa_1s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_1s.png" style="width:85.0%"
-alt="Figura 52: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 52:</span> 1 muestra.
+alt="Figura 54: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 54:</span> 1 muestra.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -5958,7 +6091,7 @@ la fuente. En cambio, en nuestro motor, este tipo de fuentes no se
 muestrean directamente, sino que debemos contar con el azar para que
 aporten radiancia.</p>
 <p>Una vez pasamos a 5 muestras [Figura <a
-href="#fig:comparativa_5s">53</a>], nuestro motor consigue una imagen
+href="#fig:comparativa_5s">55</a>], nuestro motor consigue una imagen
 más nítida, similar a la que In One Weekend genera con una muestra. En
 cambio, In One Weekend consigue un resultado muy bueno, aunque con
 muchas luciérnagas. Este fenómeno no ocurre en nuestra implementación
@@ -5966,8 +6099,8 @@ por el tipo de muestreo.</p>
 <div id="fig:comparativa_5s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_5s.png" style="width:85.0%"
-alt="Figura 53: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 53:</span> 5 muestras.
+alt="Figura 55: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 55:</span> 5 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -5977,8 +6110,8 @@ ruidoso. ¿Se podría hacer algo para mejorarlo?</p>
 <div id="fig:comparativa_20s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_20s.png" style="width:85.0%"
-alt="Figura 54: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 54:</span> 20 muestras.
+alt="Figura 56: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 56:</span> 20 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -5989,7 +6122,7 @@ respecto al tiempo, nuestra implementación utiliza interpolación para
 mezclar los colores de los frames. De esta forma, se consigue el efecto
 de normalización, lo cual elimina el ruido de la imagen con el tiempo.
 De esta forma conseguimos equiparar la imagen de ambas versiones [Figura
-<a href="#fig:comparativa_100s">55</a>].</p>
+<a href="#fig:comparativa_100s">57</a>].</p>
 <p>Se puede observar cómo el tipo de ruido es diferente. En In One
 Weekend, el ruido se presenta en forma de píxeles blancos, debido a las
 luciérnagas generadas por el muestreo directo de la fuente de luz. En
@@ -5998,8 +6131,8 @@ rayos que no impactan en ninguna superficie tras rebotar.</p>
 <div id="fig:comparativa_100s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_100s.png" style="width:85.0%"
-alt="Figura 55: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
-<figcaption aria-hidden="true"><span>Figura 55:</span> 100 muestras.
+alt="Figura 57: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
+<figcaption aria-hidden="true"><span>Figura 57:</span> 100 muestras.
 <strong>Izquierda</strong>: In One Weekend (100 muestras).
 <strong>Derecha</strong>: nuestro motor (7 muestras, 15 frames de
 acumulación temporal)</figcaption>
@@ -6007,14 +6140,14 @@ acumulación temporal)</figcaption>
 </div>
 <p>Por último, subiendo el número de muestras a 1000 conseguimos una
 imagen muy nítida en ambas implementaciones [Figura <a
-href="#fig:comparativa_1000s">56</a>]. Conseguimos apreciar una
+href="#fig:comparativa_1000s">58</a>]. Conseguimos apreciar una
 diferencia en los bordes de la esfera de la derecha, la cual seguramente
 se deba a un fallo en la implementación de la BRDF.</p>
 <div id="fig:comparativa_1000s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_1000s.png" style="width:100.0%"
-alt="Figura 56: La imagen final, con 1000 muestras para cada versión. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de acumulación temporal)" />
-<figcaption aria-hidden="true"><span>Figura 56:</span> La imagen final,
+alt="Figura 58: La imagen final, con 1000 muestras para cada versión. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de acumulación temporal)" />
+<figcaption aria-hidden="true"><span>Figura 58:</span> La imagen final,
 con 1000 muestras para cada versión. <strong>Izquierda</strong>: In One
 Weekend (1000 muestras). <strong>Derecha</strong>: nuestro motor (10
 muestras, 100 frames de acumulación temporal)</figcaption>
@@ -6033,7 +6166,7 @@ calidad de imagen podemos conseguir con ambas implementaciones</p>
 <p>Utilizando un presupuesto de 4000 milisegundos, In One Weekend es
 capaz de utilizar 5 muestras para la imagen, mientras que nuestro motor
 podría utilizar 10 muestras y 19 frames de acumulación temporal [Figura
-<a href="#fig:comparativa_4000ms">57</a>].</p>
+<a href="#fig:comparativa_4000ms">59</a>].</p>
 <p><span class="math display">\[
 20.4 \frac{\text{ms}}{\text{10 muestras}} \cdot 19 \text{ frames de
 temp. acum.} = 3876 \text{ ms}
@@ -6041,8 +6174,8 @@ temp. acum.} = 3876 \text{ ms}
 <div id="fig:comparativa_4000ms" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_4000ms.png" style="width:85.0%"
-alt="Figura 57: 4000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 57:</span> 4000 milisegundos
+alt="Figura 59: 4000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 59:</span> 4000 milisegundos
 de <em>frame budget</em>. <strong>Izquierda</strong>: In One Weekend.
 <strong>Derecha</strong>: nuestro motor</figcaption>
 </figure>
@@ -6058,12 +6191,12 @@ temp. acum.} = 70000 \text{ ms}
 <p>Esencialmente, la imagen que genera nuestra implementación es
 perfecta. No muestra ni un ápice de ruido; mientras que la de In One
 Weeekend presenta un resultado poco nítido [Figura <a
-href="#fig:comparativa_70000ms">58</a>].</p>
+href="#fig:comparativa_70000ms">60</a>].</p>
 <div id="fig:comparativa_70000ms" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_70000ms.png" style="width:85.0%"
-alt="Figura 58: 70000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 58:</span> 70000
+alt="Figura 60: 70000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 60:</span> 70000
 milisegundos de <em>frame budget</em>. <strong>Izquierda</strong>: In
 One Weekend. <strong>Derecha</strong>: nuestro motor</figcaption>
 </figure>
@@ -6119,8 +6252,8 @@ capaz de producir imágenes de escenas virtuales.</p>
 <div id="fig:pathtracing_showcase" class="fignos">
 <figure>
 <img loading="lazy" src="./img/06/Showcase.png"
-alt="Figura 59: El motor es capaz de producir preciosas imágenes de objetos físicamente realistas que se mueven en tiempo real" />
-<figcaption aria-hidden="true"><span>Figura 59:</span> El motor es capaz
+alt="Figura 61: El motor es capaz de producir preciosas imágenes de objetos físicamente realistas que se mueven en tiempo real" />
+<figcaption aria-hidden="true"><span>Figura 61:</span> El motor es capaz
 de producir preciosas imágenes de objetos físicamente realistas que se
 mueven en tiempo real</figcaption>
 </figure>
@@ -6375,7 +6508,7 @@ class="header-section-number">9.2</span> Ciclos de desarrollo</h2>
 que estás leyendo, ya sea en PDF o en la web– y software. Podemos
 distinguir varias fases en la planificación del proyecto, que quedan
 resumidas en el diagrama de Grant [Figuras <a
-href="#fig:grantt_1">60</a>, <a href="#fig:grantt_2">61</a>]</p>
+href="#fig:grantt_1">62</a>, <a href="#fig:grantt_2">63</a>]</p>
 <p>Para comenzar, durante el verano de 2021 se implementarían los tres
 libros de Shirley de la “serie In One Weekend”: In One Weekend <span
 class="citation" data-cites="Shirley2020RTW1">(<a
@@ -6390,8 +6523,8 @@ acelerando así el aprendizaje.</p>
 <div id="fig:grantt_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%201.png"
-alt="Figura 60: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
-<figcaption aria-hidden="true"><span>Figura 60:</span> Diagrama de
+alt="Figura 62: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
+<figcaption aria-hidden="true"><span>Figura 62:</span> Diagrama de
 Grantt de la primera parte del desarrollo. Los libros de Peter Shirley
 servirían como introducción al trabajo</figcaption>
 </figure>
@@ -6403,8 +6536,8 @@ pues no se puede implementar algo que no se entiende.</p>
 <div id="fig:grantt_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%202.png"
-alt="Figura 61: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
-<figcaption aria-hidden="true"><span>Figura 61:</span> Diagrama de
+alt="Figura 63: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
+<figcaption aria-hidden="true"><span>Figura 63:</span> Diagrama de
 Grantt de la segunda parte del desarrollo. Durante el segundo
 cuatrimestre se trabajaría tanto la memoria como el
 software</figcaption>
@@ -6448,13 +6581,14 @@ desarrollo.</p>
 class="header-section-number">9.3</span> Presupuesto</h2>
 <p>A la hora de desarrollar un proyecto de software, es importante
 realizar una estimación del coste del trabajo. En otro caso, se corre el
-riesgo de que no se pueda llegar a cumplir el objetivo.</p>
+riesgo de que no se pueda llegar a cumplir el objetivo. En este caso,
+<strong>el proyecto ha tenido un coste de 10314 euros</strong>, que
+puede desglosarse de la siguiente manera:</p>
 <ul>
-<li>El <strong>coste del software</strong> en total ha sido de
-<strong>0€</strong>. Las herramientas utilizadas para el desarrollo son
-todas de código abierto, por lo que su uso es gratuito. Aunque se
-comentarán individualmente en una sección posterior, las más importantes
-han sido:
+<li>El <strong>coste del software</strong> en total ha sido de <strong>0
+€</strong>. Las herramientas utilizadas para el desarrollo son todas de
+código abierto, por lo que su uso es gratuito. Aunque se comentarán
+individualmente en una sección posterior, las más importantes han sido:
 <ul>
 <li>Pandoc.</li>
 <li>LaTeX.</li>
@@ -6490,24 +6624,12 @@ y un portátil para trabajar en remoto:
 €).</li>
 </ul></li>
 <li>Atendiendo al apartado de recursos humanos, se estima un coste total
-de <strong>nosecuántos €</strong>, que se desglosa de la siguiente
-manera:
-<ul>
-<li>El alumno Andrés Millán, con un coste total de <strong>6750
-€</strong>. Considerando el número de créditos del Trabajo de Fin de
-Grado (18), se considera que se han trabajado 450 horas con un salario
-base de 15 €/hora correspondiente a un alumno en prácticas</li>
-<li>Los tutores Carlos Ureña y María del Carmen Segovia, para los que
-asciende un coste total de <strong>nosecuantos €</strong>. Esta cantidad
-de dinero proviene de las horas empleadas en la supervisión del trabajo,
-gestión del proyecto y bibliografía. Se utiliza un salario base de ¿50
-€/hora?, habiendo trabajo unas ¿cuántas horas semanales?</li>
-</ul></li>
-<li>¿Queda algo más por considerar? ¿IVA?</li>
+de <strong>8100 €</strong>. Se calcula a partir de que, como alumno,
+recibo un sueldo de 18 €/h. Teniendo en cuenta que el número de créditos
+del Trabajo de Fin de Grado son 18, y que un crédito son 25 horas de
+estudio individual, se ha trabajado un total de 450 horas en el
+proyecto.</li>
 </ul>
-<blockquote>
-<p>TODO: hay que terminar de estimar el coste.</p>
-</blockquote>
 <h2 data-number="9.4" id="diseño"><span
 class="header-section-number">9.4</span> Diseño</h2>
 <p>El diseño juega un papel fundamental en este proyecto. Todos los
@@ -6574,8 +6696,8 @@ Jetbrains. Se utiliza en la web para los bloques de código.</li>
 <div id="fig:tipografías" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Tipografías.png" style="width:70.0%"
-alt="Figura 62: Showcase de las tipografías utilizadas" />
-<figcaption aria-hidden="true"><span>Figura 62:</span> Showcase de las
+alt="Figura 64: Showcase de las tipografías utilizadas" />
+<figcaption aria-hidden="true"><span>Figura 64:</span> Showcase de las
 tipografías utilizadas</figcaption>
 </figure>
 </div>
@@ -6586,8 +6708,8 @@ específica.</p>
 <div id="fig:paleta_de_colores" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Paleta%20de%20colores.png" width="400"
-alt="Figura 63: La paleta de colores del proyecto" />
-<figcaption aria-hidden="true"><span>Figura 63:</span> La paleta de
+alt="Figura 65: La paleta de colores del proyecto" />
+<figcaption aria-hidden="true"><span>Figura 65:</span> La paleta de
 colores del proyecto</figcaption>
 </figure>
 </div>
@@ -6664,8 +6786,8 @@ diseños de este trabajo se han hecho con esta herramienta.</p>
 <div id="fig:figma" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Figma.png"
-alt="Figura 64: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 64:</span> Tablón principal
+alt="Figura 66: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 66:</span> Tablón principal
 del proyecto de Figma, a día 15 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -6760,8 +6882,8 @@ Github Pages.</li>
 <div id="fig:github_actions" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Github%20Actions.png"
-alt="Figura 65: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
-<figcaption aria-hidden="true"><span>Figura 65:</span> La pestaña de
+alt="Figura 67: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
+<figcaption aria-hidden="true"><span>Figura 67:</span> La pestaña de
 Github Actions permite controlar con facilidad el resultado de un
 workflow y cuánto tarda en ejecutarse</figcaption>
 </figure>
@@ -6805,8 +6927,8 @@ objetivos pendientes de la aplicación.</p>
 <div id="fig:github_issues" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Issues.png" style="width:80.0%"
-alt="Figura 66: Pestaña de issues, día 16 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 66:</span> Pestaña de
+alt="Figura 68: Pestaña de issues, día 16 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 68:</span> Pestaña de
 issues, día 16 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -6816,8 +6938,8 @@ importante del desarrollo.</p>
 <div id="fig:github_milestones" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Milestones.png" style="width:80.0%"
-alt="Figura 67: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
-<figcaption aria-hidden="true"><span>Figura 67:</span> Los
+alt="Figura 69: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
+<figcaption aria-hidden="true"><span>Figura 69:</span> Los
 <em>milestones</em> agrupan una serie de issues relacionados con un
 punto clave del desarrollo</figcaption>
 </figure>
@@ -6830,8 +6952,8 @@ aplicación es un acompañante del repositorio estilo Asana.</p>
 <div id="fig:github_projects" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Projects.png" style="width:80.0%"
-alt="Figura 68: Projects agrupa los issues y les asigna prioridades" />
-<figcaption aria-hidden="true"><span>Figura 68:</span> Projects agrupa
+alt="Figura 70: Projects agrupa los issues y les asigna prioridades" />
+<figcaption aria-hidden="true"><span>Figura 70:</span> Projects agrupa
 los issues y les asigna prioridades</figcaption>
 </figure>
 </div>
@@ -6866,8 +6988,8 @@ sus significados:</p>
 <div id="fig:github_emojis" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Commits.png"
-alt="Figura 69: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
-<figcaption aria-hidden="true"><span>Figura 69:</span> Los emojis
+alt="Figura 71: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
+<figcaption aria-hidden="true"><span>Figura 71:</span> Los emojis
 permiten reconocer el objetivo de cada commit. Esta tabla recoge el
 significado de cada uno</figcaption>
 </figure>
