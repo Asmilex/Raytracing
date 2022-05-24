@@ -674,7 +674,7 @@ Se puede estudiar el tema en profundidad en [@quasi-monte-carlo]
 
 ## Escogiendo puntos aleatorios
 
-Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber escoger la función de densidad $p_X$ correctamente. En esta sección, veremos algunos métodos para conseguir distribuciones específicas partiendo de funciones de densidad sencillas, así como formas de elegir funciones de densidad próximas a $f$.
+Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber escoger la función de densidad $p_X$ correctamente. En esta sección, veremos algunos métodos para conseguir distribuciones específicas partiendo de funciones de densidad sencillas, así como formas de elegir funciones de densidad próximas a $f$. Los dos métodos principales que estudiaremos se han extraído del libro [@PBRT3e, Sampling Random Variables]
 
 ### Método de la transformada inversa
 
@@ -770,7 +770,7 @@ lambda <- 1.5
 x <- F(xi, lambda)
 ```
 
-Es fácil comprobar que los valores generados se asemejan fielmente a una función de densidad exponencial:
+Es fácil comprobar que los valores generados se asemejan fielmente a la función de densidad exponencial:
 
 ```R
 hist(x, freq = FALSE, breaks = 'FD', main = 'Método de la inversa para la exponencial', ylim = c(0, 1.5))
@@ -778,7 +778,7 @@ lines(density(x), col = 'blue')
 curve(dexp(x, rate = lambda), add = TRUE, col = 2)
 ```
 
-![Histograma del método de la función inversa](./img/03/metodo_inversa.png){#fig:metodo_inversa_R}
+![Histograma del método de la función inversa.](./img/03/metodo_inversa.png){#fig:metodo_inversa_R}
 
 ### Método del rechazo
 
@@ -809,7 +809,7 @@ De la misma forma que hicimos con el [método de la inversa](#ejemplo-práctico-
 
 $$
 \begin{aligned}
-p_X (x) & = \frac{\Gamma(a + b)}{\Gamma(a) \Gamma(b)} x^{a - 1} (1 - x)^{b - 1}, \quad 0 \le x \le 1, a = 2, b = 6 \\
+p_X (x) & = \frac{\Gamma(a + b)}{\Gamma(a) \Gamma(b)} x^{a - 1} (1 - x)^{b - 1}, \quad 0 \le x \le 1; a = 2, b = 6 \\
 p_Y (x) & = 1, \quad 0 \le x \le 1
 \end{aligned}
 $$
@@ -820,7 +820,7 @@ $$
 M = \sup_{x}\frac{p_Y(x)}{p_X(x)} = \sup_{x}{p_Y(x)}
 $$
 
-El siguiente fragmento de código de R calcula este valor:
+En la sección anterior dijimos que este algoritmo es "como jugar a los dardos". Pues bien, la siguiente figura [@fig:metodo_rechazo_grafica] muestra la diana. El siguiente fragmento de código de R calcula este valor:
 
 ```R
 a <- 2
@@ -840,9 +840,9 @@ resultado <- optimize(
 M <- resultado$objective
 ```
 
-![](./img/03/metodo_rechazo_grafica.png)
+![Podemos ver la función de densidad objetivo y la de densidad de la que tomamos muestras reescalada.](./img/03/metodo_rechazo_grafica.png){#fig:metodo_rechazo_grafica}
 
-Veamos cómo de bien se aproxima el algoritmo:
+Para resolver el problema planteado, podemos usar el siguiente código:
 
 ```R
 N <- 1000
@@ -870,10 +870,16 @@ for (i in 1:N) {
 }
 ```
 
+El hecho de que exista una posibilidad de que falle evidencia que el algoritmo no es muy eficiente. De hecho, podemos ver una medida de las veces que ha fallado:
+
 ```R
 valores_generados
 # [1] 2906
 ```
+
+Es decir, para sacar 1000 muestras válidas ha hecho falta generar 2906; casi 3 veces más de las que queríamos.
+
+Finalmente, veamos cómo de buena es la aproximación:
 
 ```R
 hist(x, freq = FALSE, breaks = 'FD', main = 'Método del rechazo para la distribución Beta(a = 2, b = 6)')
@@ -881,7 +887,7 @@ lines(density(x), col = 'blue')
 curve(dbeta(x, shape1 = a, shape2 = b), add = TRUE, col = 2)
 ```
 
-![Histograma del método de rechazo](./img/03/metodo_rechazo.png){#fig:metodo_rechazo_R}
+![Histograma del método de rechazo.](./img/03/metodo_rechazo.png){#fig:metodo_rechazo_R}
 
 
 [^1]: En su defecto, si tenemos una función de densidad $f_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{f_X(t)dt}$.
