@@ -260,7 +260,7 @@ Nuestro repositorio utiliza las herramientas citadas anteriormente para compilar
 
 ![Por defecto, el programa muestra un cubo rasterizado muy simple. Es, prácticamente, un *hello world* gráfico](./img/04/Raster.jpg){#fig:raster width=70%}
 
-### Vistazo general a la estructura
+### Un vistazo general a la estructura
 
 La estructura final del proyecto (es decir, la carpeta `application`) es la siguiente:
 
@@ -277,6 +277,20 @@ La estructura final del proyecto (es decir, la carpeta `application`) es la sigu
     - En rasterización se usan principalmente `frag_shader.frag`, `passthrough.vert`, `post.frag`, `vert_shader.vert`.
     - El resto de shaders son archivos comunes a ambos o utilidades varias, como pueden ser `sampling.glsl` (donde se implementan distribuciones aleatorias) o `random.glsl` (que contiene generadores de números aleatorios).
   - Finalmente, la carpeta `application/vulkan_ray_tracing/src/spv` contiene los shaders compilados a SPIR-V.
+
+El diagrama {@fig:estructura_repo} permite visualizar los puntos anteriores, así como la estructura general del repositorio.
+
+![Estructura del repositorio](./img/08/estructura_repositorio){#fig:estructura_repo}
+
+### Diagramas
+
+Teniendo en cuenta que utilizamos un framework que no está pensado para producción y la naturaleza de Vulkan, realizar un diagrama de clase es muy complicado. Sin embargo, podemos ilustrar las clases más importantes de la aplicación: la el motor [@fig:diagrama-clases-engine] y la de escenas [@fig:diagrama-clases-scenes] . En las secciones posteriores detallaremos algunos de los miembros de estas.
+
+Una figura que se asemeja a un diagrama de secuencia específico para el loop de ray tracing puede encontrarse en [@fig:pipeline].
+
+![Diagrama de clases para Engine](./img/08/Mermaid%20engine.png){#fig:diagrama-clases-engine}
+
+![Diagrama de clases para Scenes](./img/08/Mermaid%20scenes.png){#fig:diagrama-clases-scenes}
 
 ## Compilación y ejecución
 

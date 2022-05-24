@@ -77,16 +77,6 @@ A la hora de desarrollar un proyecto de software, es importante realizar una est
 
 > TODO: hay que terminar de estimar el coste.
 
-## Arquitectura del software
-
-> TODO: especificaciones de los requerimientos y metodología de desarrollo, así como los planos del proyecto que contendrán las historias de usuario o casos de uso, diagrama conceptual, de iteración, de diseño, esquema arquitectónico y bocetos de las interfaces de usuario. Se describirán las estructuras de datos no fundamentales y algoritmos no triviales
->
-> (Odio los diagramas de clases. Me gustaría evitar como sea incluirlos.)
-
-![Diagrama de clases para Engine](./img/08/Mermaid%20engine.png){#fig:diagrama-clases-engine}
-
-![Diagrama de clases para Scenes](./img/08/Mermaid%20scenes.png){#fig:diagrama-clases-scenes}
-
 ## Diseño
 
 El diseño juega un papel fundamental en este proyecto. Todos los elementos visuales han sido escogidos con cuidado, de forma que se preserve la estética.
