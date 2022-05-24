@@ -57,6 +57,10 @@ Now that we have a working engine, it's time to play with it. [Chapter 5](#anál
 
 We will end the project with the [conclusions](#conclusiones) that can be drawn from the results of our work. We will also show what could be done to improve the engine in the future.
 
+The contents of this document, the Vulkan project, an *In One Weekend* implementation and other utilities can be found in the following repository:
+
+[https://github.com/Asmilex/Raytracing](https://github.com/Asmilex/Raytracing)
+
 *Keywords: raytracing, ray tracing, path tracing, Monte Carlo methods, Monte Carlo integration, light transport, global illumination, Vulkan.*
 
 \newpage
