@@ -202,22 +202,18 @@ Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan" />
 <nav id="TOC" role="doc-toc">
 <h2 id="toc-title">Tabla de contenidos</h2>
 <ul>
-<li><a href="#abstract">Abstract</a></li>
+<li><a href="#sinopsis">Sinopsis</a></li>
 <li><a href="#a-brief-overview">A brief overview</a></li>
 <li><a href="#dedicatoria">Dedicatoria</a></li>
 <li><a href="#introducción">Introducción</a>
 <ul>
-<li><a href="#nota-histórica"><span
-class="toc-section-number">0.1</span> Nota histórica</a></li>
-<li><a href="#qué-es-ray-tracing"><span
-class="toc-section-number">0.2</span> ¿Qué es ray tracing?</a></li>
-<li><a href="#objetivos-del-trabajo"><span
-class="toc-section-number">0.3</span> Objetivos del trabajo</a></li>
-<li><a href="#técnicas-empleadas-para-la-resolución"><span
-class="toc-section-number">0.4</span> Técnicas empleadas para la
-resolución</a></li>
-<li><a href="#principales-fuentes-consultadas"><span
-class="toc-section-number">0.5</span> Principales fuentes
+<li><a href="#nota-histórica">Nota histórica</a></li>
+<li><a href="#qué-es-ray-tracing">¿Qué es ray tracing?</a></li>
+<li><a href="#objetivos-del-trabajo">Objetivos del trabajo</a></li>
+<li><a href="#técnicas-empleadas-para-la-resolución">Técnicas empleadas
+para la resolución</a></li>
+<li><a href="#sobre-esta-memoria">Sobre esta memoria</a></li>
+<li><a href="#principales-fuentes-consultadas">Principales fuentes
 consultadas</a></li>
 </ul></li>
 <li><a href="#las-bases"><span class="toc-section-number">1</span> Las
@@ -683,7 +679,7 @@ rendimiento</span></a></li>
 <li><a href="#bibliografía">Bibliografía</a></li>
 </ul>
 </nav>
-<h1 class="unnumbered" id="abstract">Abstract</h1>
+<h1 class="unnumbered" id="sinopsis">Sinopsis</h1>
 <p>En este trabajo se explorarán las técnicas modernas de informática
 gráfica físicamente realistas basadas en <em>ray tracing</em> en tiempo
 real. Para ello, se utilizarán métodos de integración de Monte Carlo con
@@ -699,12 +695,12 @@ tiempo de ejecución.</p>
 de la imagen, se estudiarán algunas técnicas de reducción de varianza
 como muestreo directo de fuentes de iluminación, muestreo por
 importancia o acumulación temporal. Además, el motor desarrollado se
-comparará con una implementación puramente en CPU basada en el software
-creado en los libros de <span class="citation"
-data-cites="Shirley2020RTW1">(<a href="#ref-Shirley2020RTW1"
-role="doc-biblioref">Shirley 2020a</a>)</span> “Ray Tracing in One
-Weekend series”. Se comporbarán las diferencias entre ambas versiones,
-estudiando los puntos fuertes de cada una.</p>
+comparará con una implementación del software creado en los libros de
+<span class="citation" data-cites="Shirley2020RTW1">(<a
+href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
+2020a</a>)</span> “Ray Tracing in One Weekend series”, la cual utiliza
+exclusivamente la CPU. Se comporbarán las diferencias entre ambas
+versiones, estudiando los puntos fuertes de cada una.</p>
 <p><em>Palabras clave: raytracing, ray tracing, path tracing, métodos de
 Monte Carlo, integración de Monte Carlo, transporte de luz, iluminación
 global, Vulkan.</em></p>
@@ -725,13 +721,13 @@ is an extremelly fast method given how it works, which is just a mapping
 of the scene geometry into a 2D plane. Its simplicity makes it a great
 way of rendering an image really fast, but it comes at the expense of
 fidelity.</p>
-<p>We can solve this issue with solves <strong>Ray tracing</strong>.
-Instead of projecting virtual geometry into a plane, this algorithm
-tries to simulate how light works by casting rays of light into the
-scene from the camera. These rays then intersect with objects and
-collect information about them. This has one key advantage over
-rasterization: it allows seeing parts of the scene which were not
-visible to the camera.</p>
+<p>We can solve this issue with <strong>Ray tracing</strong>. Instead of
+projecting virtual geometry into a plane, this algorithm tries to
+simulate how light works by casting rays of light into the scene from
+the camera. These rays then intersect with objects and collect
+information about them. This has one key advantage over rasterization:
+it allows seeing parts of the scene which were not visible to the
+camera.</p>
 <p><strong>Path tracing</strong> takes this idea into the next level:
 instead of stopping in the first intersection, it makes the rays bounce
 freely through the scene. These rays gather information about object
@@ -786,9 +782,9 @@ certain distributions (usually the uniform between 0 and 1) and
 averaging these samples to obtain the expected value of some other
 distribution. This will allow us to compute integrals relatively easily
 at the cost of some error. In order to improve these estimations, we
-will study how some methods can be use to reduce the variance of the
-estimator, such as (multiple) importance sampling, roussian roulette or
-next-event estimation.</p>
+will study how different methods can be used to reduce the variance of
+the estimator, such as (multiple) importance sampling, roussian roulette
+or next-event estimation.</p>
 <p>Once the theory is out of the way, it will be time to build an
 application. <a href="#construyamos-un-path-tracer">Chapter 4</a> will
 cover the <strong>implementation of the engine</strong>. We will first
@@ -807,16 +803,31 @@ frames.</p>
 href="#análisis-de-rendimiento">Chapter 5</a> will <strong>exhibit the
 results of our work</strong>, comparing different scenes which showcase
 a variety of physical phenomenons. We will also analyse how it performs
-in terms of samples and frame time based on a set of parameters, like
-ray depth, number of samples taken on each frame and resolution.
+in terms of image quality and frame time based on a set of parameters,
+like ray depth, number of samples taken on each frame and resolution.
 Finally, we will <strong>compare our implementation</strong> with Peter
 Shirley’s engine developed in <em>Ray Tracing In One Weekend</em> series
-<span class="citation" data-cites="Shirley2020RTW1">Shirley (<a
-href="#ref-Shirley2020RTW1" role="doc-biblioref">2020a</a>)</span>.</p>
+<span class="citation" data-cites="Shirley2020RTW1">(<a
+href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
+2020a</a>)</span> <span class="citation"
+data-cites="Shirley2020RTW2">(<a href="#ref-Shirley2020RTW2"
+role="doc-biblioref">Shirley 2020b</a>)</span> <span class="citation"
+data-cites="Shirley2020RTW1">(<a href="#ref-Shirley2020RTW1"
+role="doc-biblioref">Shirley 2020a</a>)</span>.</p>
 <p>We will end the project with the <a
 href="#conclusiones">conclusions</a> that can be drawn from the results
-of our work. We will also show what could be done to improve the engine
-in the future.</p>
+of our work, as well as show what could be done to improve the engine in
+the future. To summarize, we’ve found that the engine could improve its
+sampling stategy. The images it produces are very noisy and need a
+considerable ammount of samples to become sharp. This is mainly due to
+the weak light interface that has been implemented, since it doesn’t
+take into account emissive materials found in the scene. Nevertheless,
+the combination of how fast it can render a frame and the ability to mix
+multiple accumulated frames over time manages to overcome this issue.
+Other areas that could be further improved include the material
+interface and the main engine class, which presents a high degree of
+coupling.</p>
+<hr>
 <p>The contents of this document, the Vulkan project, an <em>In One
 Weekend</em> implementation and other utilities can be found in the
 following repository:</p>
@@ -826,22 +837,20 @@ href="https://github.com/Asmilex/Raytracing">https://github.com/Asmilex/Raytraci
 methods, Monte Carlo integration, light transport, global illumination,
 Vulkan.</em></p>
 <h1 class="unnumbered" id="dedicatoria">Dedicatoria</h1>
-<p>Gracias, en primer lugar, a mi familia por permitirme acabar la
-carrera.</p>
-<p>Gracias también a Blanca, Cristina, Jorge, Jose OC, Lucas, Mari,
-Marina, Mapachana y Paula, Sergio por ayudarme con el contenido,
-feedback del desarrollo y diseño de la documentación.</p>
+<p>A mi familia por su apoyo constante y permitirme empezar una carrera
+que ni siquiera sabía que quería.</p>
+<p>A Blanca, Cristina, Jorge, José <em>“OC”</em>, Lucas, Mari, Marina,
+Mapachana y Paula, Sergio por ayudarme con el contenido, feedback del
+desarrollo y diseño de la documentación.</p>
 <h1 class="unnumbered" id="introducción">Introducción</h1>
 <p>Este trabajo puede visualizarse en la web <a
 href="https://asmilex.github.io/Raytracing/">asmilex.github.io/Raytracing</a>
 o en el <a
 href="https://github.com/Asmilex/Raytracing/raw/main/docs/TFG.pdf">PDF</a>
 disponible en el repositorio del trabajo <a
-href="https://github.com/Asmilex/Raytracing">Asmilex/Raytracing</a>.</p>
-<p>La página web contiene la versión más actualizada, además de recursos
-adicionales como vídeos.</p>
-<h2 data-number="0.1" id="nota-histórica"><span
-class="header-section-number">0.1</span> Nota histórica</h2>
+href="https://github.com/Asmilex/Raytracing">github.com/Asmilex/Raytracing</a>.
+La página web contiene recursos adicionales como vídeos.</p>
+<h2 class="unnumbered" id="nota-histórica">Nota histórica</h2>
 <p>Ser capaces de capturar un momento.</p>
 <p>Desde siempre, este ha sido uno de los sueños de la humanidad. La
 capacidad de retener lo que ven nuestros ojos comenzó con simples
@@ -872,11 +881,6 @@ podemos imaginarnos, esto es un proceso costoso.</p>
 estos objetos tridimensionales se transforman en bidimensionales.
 Proyectando acordemente el entorno a una cámara, conseguimos colorear un
 pixel, de forma que represente lo que se ve en ese mundo.</p>
-<blockquote>
-<p>TODO insertar imagen rasterización.</p>
-<p>NOTE ¿quizás debería extender un poco más esta parte? Parece que se
-queda algo coja la explicación.</p>
-</blockquote>
 <p>Aunque esta técnica es bastante eficiente en términos de computación
 y ha evolucionado mucho, rápidamente saturamos sus posibilidades.
 Conceptos como <em>shadow maps</em>, <em>baked lightning</em>, o
@@ -887,8 +891,7 @@ nuestra</em>.</p>
 aquello computacionalmente viable.</p>
 <p>Y, entonces, en 1960 el trazado de rayos con una simple idea
 intuitiva.</p>
-<h2 data-number="0.2" id="qué-es-ray-tracing"><span
-class="header-section-number">0.2</span> ¿Qué es ray tracing?</h2>
+<h2 class="unnumbered" id="qué-es-ray-tracing">¿Qué es ray tracing?</h2>
 <p>En resumidas cuentas, <em>ray tracing</em> (o trazado de rayos en
 español), se basa en disparar fotones en forma de rayo desde nuestra
 cámara digital y hacerlos rebotar en la escena.</p>
@@ -937,8 +940,8 @@ día también ocurre esto, claro está. Pero la tecnología evoluciona.</p>
 <p>Podemos bajarlo a milisegundos.</p>
 <p>Hemos entrado en la era del <strong>real time ray
 tracing</strong>.</p>
-<h2 data-number="0.3" id="objetivos-del-trabajo"><span
-class="header-section-number">0.3</span> Objetivos del trabajo</h2>
+<h2 class="unnumbered" id="objetivos-del-trabajo">Objetivos del
+trabajo</h2>
 <p>Los objetivos del trabajo iniciales son los siguientes:</p>
 <ul>
 <li>Análisis de los algoritmos modernos de visualización en 3D basados
@@ -958,18 +961,12 @@ CPU.</li>
 <li>Investigación de las técnicas modernas y sobre el futuro del
 área.</li>
 </ul>
-<blockquote>
-<p>TODO: determinar si lo siguiente es cierto.</p>
-</blockquote>
 <p>Afortunadamente, <strong>se ha conseguido realizar exitosamente cada
 uno de los objetivos</strong>. Esta memoria cubrirá todo el trabajo que
 ha sido necesario realizar para lograrlo.</p>
-<h2 data-number="0.4" id="técnicas-empleadas-para-la-resolución"><span
-class="header-section-number">0.4</span> Técnicas empleadas para la
+<h2 class="unnumbered"
+id="técnicas-empleadas-para-la-resolución">Técnicas empleadas para la
 resolución</h2>
-<blockquote>
-<p>TODO: echarle un ojo a esto cuando termine el trabajo.</p>
-</blockquote>
 <p>Además del antedicho algoritmo ray tracing y su versión más pura path
 tracing, se han empleado técnicas de Monte Carlo para calcular la luz
 resultante de un punto.</p>
@@ -997,32 +994,47 @@ usado la plataforma para integrar la documentación, el código fuente y
 los ciclos de desarrollo.</p>
 <p>Como podemos ver, esta área relaciona íntimamente la matemática y la
 informática, con un poco de física de por medio.</p>
-<h2 data-number="0.5" id="principales-fuentes-consultadas"><span
-class="header-section-number">0.5</span> Principales fuentes
-consultadas</h2>
-<p>Esencialmente, este trabajo ha sido posible gracias a los siguientes
-recursos:</p>
+<h2 class="unnumbered" id="sobre-esta-memoria">Sobre esta memoria</h2>
+<h2 class="unnumbered" id="principales-fuentes-consultadas">Principales
+fuentes consultadas</h2>
+<p>Aunque en la realización de este trabajo se han utilizado múltiples
+fuentes de información, destacan una serie de libros por encima del
+resto:</p>
 <ul>
-<li>La serie de libros de <em>Ray Tracing</em> de <em>Peter
-Shirley</em>, conocidos como “Ray tracing In One Weekend Series” <span
-class="citation" data-cites="Shirley2020RTW1">(<a
+<li>La colección de libros digitales de Peter Shirley <em>Ray Tracing In
+One Weekend</em> <span class="citation" data-cites="Shirley2020RTW1">(<a
 href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
-2020a</a>)</span>, <span class="citation"
+2020a</a>)</span> <span class="citation"
 data-cites="Shirley2020RTW2">(<a href="#ref-Shirley2020RTW2"
-role="doc-biblioref">Shirley 2020b</a>)</span>, <span class="citation"
+role="doc-biblioref">Shirley 2020b</a>)</span> <span class="citation"
 data-cites="Shirley2020RTW3">(<a href="#ref-Shirley2020RTW3"
-role="doc-biblioref">Shirley 2020c</a>)</span>. El motor desarrollado en
-estos libros es el que se utilizará para la comparación.</li>
-<li>Physically Based Rendering: From Theory to Implementation (3rd ed.)
-<span class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
-role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>)</span>,
-considerado como el santo grial de la informática gráfica moderna.</li>
-<li>Ray Tracing Gems I y II <span class="citation"
+role="doc-biblioref">Shirley 2020c</a>)</span>. En esencia, han sido la
+inspiración de todo este proyecto. Se han utilizado como introducción al
+área y para implementar algunos de los métodos que veremos en futuras
+secciones; así como comparativa final con nuestro motor. Esto significa
+que aparecerán múltiples veces en la memoria.</li>
+<li><em>Physically Based Rendering: From Theory to Implementation (3rd
+ed.)</em> <span class="citation" data-cites="PBRT3e">(<a
+href="#ref-PBRT3e" role="doc-biblioref">Pharr, Jakob, and Humphreys
+2016</a>)</span>. Considerado por muchos como el santo grial de la
+informática gráfica moderna. El capítulo “Transporte de luz” está
+fielmente basado en el trabajo de este libro. Además, algunas de las
+técnicas del capítulo “Técnicas de Monte Carlo” utilizan sus
+contenidos.</li>
+<li><em>Ray Tracing Gems I</em> <span class="citation"
 data-cites="Haines2019">(<a href="#ref-Haines2019"
-role="doc-biblioref">Haines and Akenine-Möller 2019</a>)</span>, <span
-class="citation" data-cites="Marrs2021">(<a href="#ref-Marrs2021"
-role="doc-biblioref">Adam Marrs and Wald 2021</a>)</span>, una colección
-de papers esenciales sobre ray tracing publicada por Nvidia.</li>
+role="doc-biblioref">Haines and Akenine-Möller 2019</a>)</span> y
+<em>Ray Tracing Gems II</em> <span class="citation"
+data-cites="Marrs2021">(<a href="#ref-Marrs2021"
+role="doc-biblioref">Adam Marrs and Wald 2021</a>)</span> una colección
+de artículos esenciales sobre Ray Tracing publicada por Nvidia. Una
+enorme variedad de expertos en el medio han participado en estos dos
+libros.</li>
+</ul>
+<blockquote>
+<p>TODO: quiero reescribir esto:</p>
+</blockquote>
+<ul>
 <li>El autor <a href="https://users.cg.tuwien.ac.at/zsolnai/">Károly
 Zsolnai, de Two Minute Papers</a>. No solo ha inspirado parte del
 trabajo, sino que su curso sobre transporte de luz de la <a
@@ -1030,9 +1042,6 @@ href="https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html">universidad
 de Austria</a> ha sido una gran fuente de información para el
 trabajo.</li>
 </ul>
-<blockquote>
-<p>TODO: tengo que ver exactamente cómo cito esa fuente anterior.</p>
-</blockquote>
 <hr>
 <h2 class="unlisted unnumbered" id="referencias">Referencias</h2>
 <p><span class="citation" data-cites="wikipedia-contributors-2022A">(<a
@@ -1680,9 +1689,9 @@ tiene que <span class="math inline">\(\omega \in [0, 4\pi]\)</span>. Si
 <span class="math inline">\(2 \pi\)</span> radianes corresponden a la
 circunferencia completa, para la esfera se tiene que <span
 class="math inline">\(4 \pi\)</span> esteorradianes cubren toda la
-superficie de esta. Se tiene también que <span
-class="math inline">\(2\pi \text{sr}\)</span> cubren un hemisferio.
-Además, un esteorradián corresponde a una superficie con área <span
+superficie de esta; y por lo tanto,<span class="math inline">\(2\pi
+\text{sr}\)</span> cubren un hemisferio. Además, un esteorradián
+corresponde a una superficie con área <span
 class="math inline">\(r^2\)</span>: <span class="math inline">\(1
 \text{sr} = \frac{r^2}{r^2}\)</span>.</p>
 <div id="fig:angulo_solido" class="fignos">
