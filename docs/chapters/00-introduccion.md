@@ -1,10 +1,8 @@
-# Introducción{.unnumbered}
+# Introducción {.unnumbered}
 
-Este trabajo puede visualizarse en la web [asmilex.github.io/Raytracing](https://asmilex.github.io/Raytracing/) o en el [PDF](https://github.com/Asmilex/Raytracing/raw/main/docs/TFG.pdf) disponible en el repositorio del trabajo [Asmilex/Raytracing](https://github.com/Asmilex/Raytracing).
+Este trabajo puede visualizarse en la web [asmilex.github.io/Raytracing](https://asmilex.github.io/Raytracing/) o en el [PDF](https://github.com/Asmilex/Raytracing/raw/main/docs/TFG.pdf) disponible en el repositorio del trabajo [github.com/Asmilex/Raytracing](https://github.com/Asmilex/Raytracing). La página web contiene recursos adicionales como vídeos.
 
-La página web contiene la versión más actualizada, además de recursos adicionales como vídeos.
-
-## Nota histórica
+## Nota histórica {.unnumbered}
 
 Ser capaces de capturar un momento.
 
@@ -22,17 +20,13 @@ Así, nació la geometría, los puntos de luces, texturas, sombreados, y otros e
 
 La **rasterización** es el proceso mediante el cual estos objetos tridimensionales se transforman en bidimensionales. Proyectando acordemente el entorno a una cámara, conseguimos colorear un pixel, de forma que represente lo que se ve en ese mundo.
 
-> TODO insertar imagen rasterización.
->
-> NOTE ¿quizás debería extender un poco más esta parte? Parece que se queda algo coja la explicación.
-
 Aunque esta técnica es bastante eficiente en términos de computación y ha evolucionado mucho, rápidamente saturamos sus posibilidades. Conceptos como *shadow maps*, *baked lightning*, o *reflection cubemaps* intentan solventar lo que no es posible con rasterización: preguntrarnos *qué es lo que se encuentra alrededor nuestra*.
 
 En parte, nos olvidamos de la intuitiva realidad, para centrarnos en aquello computacionalmente viable.
 
 Y, entonces, en 1960 el trazado de rayos con una simple idea intuitiva.
 
-## ¿Qué es ray tracing?
+## ¿Qué es ray tracing? {.unnumbered}
 
 En resumidas cuentas, *ray tracing* (o trazado de rayos en español), se basa en disparar fotones en forma de rayo desde nuestra cámara digital y hacerlos rebotar en la escena.
 
@@ -60,7 +54,7 @@ Podemos bajarlo a milisegundos.
 
 Hemos entrado en la era del **real time ray tracing**.
 
-## Objetivos del trabajo
+## Objetivos del trabajo {.unnumbered}
 
 Los objetivos del trabajo iniciales son los siguientes:
 
@@ -72,13 +66,9 @@ Los objetivos del trabajo iniciales son los siguientes:
 - Comparación del motor desarrollado con una implementación por CPU.
 - Investigación de las técnicas modernas y sobre el futuro del área.
 
-> TODO: determinar si lo siguiente es cierto.
-
 Afortunadamente, **se ha conseguido realizar exitosamente cada uno de los objetivos**. Esta memoria cubrirá todo el trabajo que ha sido necesario realizar para lograrlo.
 
-## Técnicas empleadas para la resolución
-
-> TODO: echarle un ojo a esto cuando termine el trabajo.
+## Técnicas empleadas para la resolución {.unnumbered}
 
 Además del antedicho algoritmo ray tracing y su versión más pura path tracing, se han empleado técnicas de Monte Carlo para calcular la luz resultante de un punto.
 
@@ -92,16 +82,20 @@ Todo este programa estará alojado en Github. En el [apéndice](#metodología-de
 
 Como podemos ver, esta área relaciona íntimamente la matemática y la informática, con un poco de física de por medio.
 
-## Principales fuentes consultadas
+## Sobre esta memoria {.unnumbered}
 
-Esencialmente, este trabajo ha sido posible gracias a los siguientes recursos:
+## Principales fuentes consultadas {.unnumbered}
 
-- La serie de libros de *Ray Tracing* de *Peter Shirley*, conocidos como "Ray tracing In One Weekend Series" [@Shirley2020RTW1], [@Shirley2020RTW2], [@Shirley2020RTW3]. El motor desarrollado en estos libros es el que se utilizará para la comparación.
-- Physically Based Rendering: From Theory to Implementation (3rd ed.) [@PBRT3e], considerado como el santo grial de la informática gráfica moderna.
-- Ray Tracing Gems I y II [@Haines2019], [@Marrs2021], una colección de papers esenciales sobre ray tracing publicada por Nvidia.
+Aunque en la realización de este trabajo se han utilizado múltiples fuentes de información, destacan una serie de libros por encima del resto:
+
+- La colección de libros digitales de Peter Shirley  *Ray Tracing In One Weekend* [@Shirley2020RTW1] [@Shirley2020RTW2] [@Shirley2020RTW3]. En esencia, han sido la inspiración de todo este proyecto. Se han utilizado como introducción al área y para implementar algunos de los métodos que veremos en futuras secciones; así como comparativa final con nuestro motor. Esto significa que aparecerán múltiples veces en la memoria.
+- *Physically Based Rendering: From Theory to Implementation (3rd ed.)* [@PBRT3e]. Considerado por muchos como el santo grial de la informática gráfica moderna. El capítulo "Transporte de luz" está fielmente basado en el trabajo de este libro. Además, algunas de las técnicas del capítulo "Técnicas de Monte Carlo" utilizan sus contenidos.
+- *Ray Tracing Gems I* [@Haines2019] y *Ray Tracing Gems II* [@Marrs2021] una colección de artículos esenciales sobre Ray Tracing publicada por Nvidia. Una enorme variedad de expertos en el medio han participado en estos dos libros.
+
+
+> TODO: quiero reescribir esto:
+
 - El autor [Károly Zsolnai, de Two Minute Papers](https://users.cg.tuwien.ac.at/zsolnai/). No solo ha inspirado parte del trabajo, sino que su curso sobre transporte de luz de la [universidad de Austria](https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html) ha sido una gran fuente de información para el trabajo.
-
-> TODO: tengo que ver exactamente cómo cito esa fuente anterior.
 
 <hr>
 
