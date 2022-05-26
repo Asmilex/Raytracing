@@ -46,19 +46,20 @@ Se da el pistoletazo de salida a una nueva transición.
 
 ## Objetivos del trabajo {.unnumbered}
 
+En este trabajo se estudiarán los **fundamentos de ray tracing en tiempo real**. Para conseguirlo, se han propuesto los siguientes objetivos:
 
-
-- Análisis de los algoritmos modernos de visualización en 3D basados en métodos de Monte Carlo.
-- Revisión de las técnicas de Monte Carlo, examinando puntos fuertes y débiles de cada una. Se busca minimizar el error en la reconstrucción de la imagen y minimizar el tiempo de ejecución.
-- Implementación de dichos algoritmos en hardware gráfico moderno (GPUs) específicamente diseñado para aceleración de ray tracing.
-- Diseño e implementación de un software de síntesis de imágenes realistas por path tracing y muestreo directo de fuentes de luz por GPU.
-- Análisis del rendimiento del motor con respecto al tiempo de ejecución y calidad de imagen.
+- Analizar los algoritmos modernos de visualización en 3D basados en métodos de Monte Carlo, entre los que se encuentra path tracing.
+- Revisar de las técnicas de Monte Carlo, examinando puntos fuertes y débiles de cada una. Se buscará minimizar tanto el error en la reconstrucción de la imagen como el tiempo de ejecución.
+- Implementar dichos algoritmos en una tarjeta gráfica moderna específicamente diseñada para acelerar los cálculos de ray tracing.
+- Diseñar e implementar de un software de síntesis de imágenes realistas por path tracing y muestreo directo de fuentes de luz por GPU.
+- Analizar el rendimiento del motor con respecto al tiempo de ejecución y calidad de imagen.
 - Comparación del motor desarrollado con una implementación por CPU.
 - Investigación de las técnicas modernas y sobre el futuro del área.
 
 Afortunadamente, **se ha conseguido realizar exitosamente cada uno de los objetivos**. Esta memoria cubrirá todo el trabajo que ha sido necesario realizar para lograrlo.
 
-## Técnicas empleadas para la resolución {.unnumbered}
+## Sobre esta memoria {.unnumbered}
+
 
 Además del antedicho algoritmo ray tracing y su versión más pura path tracing, se han empleado técnicas de Monte Carlo para calcular la luz resultante de un punto.
 
