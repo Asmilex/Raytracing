@@ -2,13 +2,37 @@
 
 Este trabajo puede visualizarse en la web [asmilex.github.io/Raytracing](https://asmilex.github.io/Raytracing/) o en el [PDF](https://github.com/Asmilex/Raytracing/raw/main/docs/TFG.pdf) disponible en el repositorio del trabajo [github.com/Asmilex/Raytracing](https://github.com/Asmilex/Raytracing). La página web contiene recursos adicionales como vídeos.
 
+## Nota histórica V2 {.unnumbered}
+
+De [@RT-history] y [@PBRT3e]
+
+- Primer uso documentado de Ray tracing por Appel en los años 60. Dispara un rayo desde una cámara estenopeica para comprobar si un objeto está ocluído. Al mismo tiempo y por separado, se usan técnicas de MC para hacer simulaciones de luz, en las cuales se cuenta el número de fotones.
+- Durante los años 70 salen muchos modelos de iluminación, como el de Phong y Gouraud.
+- En los años 80 empiezan a salir imágenes hechas por ray tracing muy realistas. En estos años también se experimenta un gran crecimiento de técnicas para acelerar el trazado. Se dan cuenta de que el bottleneck es la intersección con objetos (95% del tiempo de cómputo). Bounding boxes de Kay y Kajiya. Empiezan a proliferar los métodos de MC para ray tracing. Cook et. al. y Kajiya asientan rendering equation.
+- Años 90 RT se vuelve mainstream, con muchos motores comerciales utilizados por una gran variedad de empresas de diferentes sectores.
+
+Fuente de lo siguiente: yo
+
+- RT prácticamente inviable en tiempo real. Sectores como videojuegos utilizan rasterización. Se implementan técnicas basadas en *backeo* de fuentes con mapas de texturas prerenderizadas.
+- Nvidia introduce Ray tracing acelerado por hardware en gráficas de consumidor (2018). Diferentes formas de ray tracing se vuelven viables en escasos milisegundos.
+- Industria empieza a abandonar rasterización para algunos métodos. Enlazar a estado del arte.
+
+![Ray tracing en los años 80. Fuente: [@Whitted1979AnII]](./img/00/RT%20prehistórico.jpg)
+
+
+
 ## Nota histórica {.unnumbered}
 
 Ser capaces de capturar un momento.
 
-Desde siempre, este ha sido uno de los sueños de la humanidad. La capacidad de retener lo que ven nuestros ojos comenzó con simples pinturas ruprestres. Con el tiempo, el arte evolucionó, así como la capacidad de retratar nuestra percepción con mayor fidelidad.
+Desde tiempos inmemoriales, este ha sido uno de los sueños de la humanidad. La capacidad de retener lo que ven nuestros ojos comenzó con simples pinturas ruprestres que nuestros ancestros dejaron enmarcadas en las paredes de sus hogares.
 
-A inicios del siglo XVIII, se caputaron las primeras imágenes con una cámara gracias a Nicéphore Niépce. Sería una imagen primitiva, claro; pero era funcional. Gracias a la compañía Kodak, la fotografía se extendió al consumidor rápidamente sobre 1890. Más tarde llegaría la fotografía digital, la cual simplificaría muchos de los problemas de las cámaras tradicionales.
+Con el tiempo, la tecnología evolucionó; lo cual propició formas más realistas de representar la realidad. El físico árabe Ibn al-Haytham, a finales de los años 900, describió el efecto de la cámara oscura [@pinhole], un efecto óptico mediante el cual se puede proyectar una imagen invertida en una pared. A inicios del siglo XVIII, Nicéphore Niépce consiguió arreglar una imagen capturada por las primeras cámaras [@history-photography]. Era una impresión primitiva, por supuesto; pero funcional. A finales de este siglo, sobre los años 1890, la fotografía se extendió rápidamente en el espacio del consumidor gracias a la compañía Kodak. Finalmente, a mediados del siglo XX la fotografía digital, la cual simplificaría muchos de los problemas de las cámaras tradicionales.
+
+
+
+
+
 
 Hablando de digital. Los ordenadores personales modernos nacieron unos años más tarde. Los usuarios eran capaces de mostrar imágenes en pantalla, que cambiaban bajo demanda. Y, entonces, nos hicimos una pregunta...
 
