@@ -60,20 +60,33 @@ Afortunadamente, **se ha conseguido realizar exitosamente cada uno de los objeti
 
 ## Sobre esta memoria {.unnumbered}
 
+Esta memoria recapitulará todas las técnicas utilizadas para resolver el problema propuesto. En los primeros capítulos, estudiaremos los fundamentos teóricos, mientras que en los posteriores construiremos una implementación de ray tracing, la cual analizaremos con detalle para finalizar.
 
-Además del antedicho algoritmo ray tracing y su versión más pura path tracing, se han empleado técnicas de Monte Carlo para calcular la luz resultante de un punto.
+El [capítulo 1](#las-bases) **sentará las bases de ray tracing**: qué es un rayo exactamente, cómo podemos representarlo matemáticamente y cuáles son las ecuaciones que nos permiten modelar la propagación e impacto con diferentes objetos.
 
-En particular, con respecto a la [matemática](#integración-de-monte-carlo) empleada, estudiaremos diferentes formas de generar números aleatorios mediante distribuciones particulares, *(multiple) importance sampling*, next event estimation, ...
+En el [capítulo 2](#transporte-de-luz) introduciremos los fundamentos de **la radiometría y el transporte de luz**, el área de la física que se encarga de la interacción entre la luz y la materia. Estudiaremos cómo funcionan los fotones, cómo son emitidos desde las denominadas fuentes de iluminación, y cómo se propagan por el medio. Para conseguirlo, necesitaremos construir ciertas abstracciones que representen propiedades radiométricas. Entre las más importantes se encuentran la potencia, la intensidad radiante y la radiancia. También será necesario el concepto de ángulos sólidos, los cuales generalizan la concepción clásica de ángulo planar.
 
-En un área híbrida se encuentra la [radiometría](#transporte-de-luz). Dado que estamos tratando con transporte de luz, será esencial introducir los conceptos más importantes de la radiometría. Trataremos con algunos términos como irradiancia, ángulos sólidos, radiancia, funciones de distribuciones de reflectancia y transmitancia bidireccionales, etc.
+Será entonces cuando aprendamos cómo interacciona la luz con la materia. Esto nos llevará a crear una familia específica de funciones denominadas *bidirectional distribution functions*, las cuales describen cómo cambian los fotones cuando impactan con una superficie. Asimismo, será importante conocer la dirección de salida de estos, por lo que habrá que estudiar los fenómenos de reflexión y refracción. Al final del capítulo obtendremos la ecuación del transporte de luz o *rendering equation*.
 
-Finalmente, la parte [informática](#construyamos-un-path-tracer) usará en la API gráfica Vulkan junto a un framework de Nvidia para acelerar la adopción de ray tracing en KHR. Veremos qué se necesita para implementar ray tracing en tiempo real, lo que nos llevará aprender sobre programación en Vulkan, las estructuras de aceleración de nivel alto y bajo (TLAS y BLAS), la Shader Binding Table, comunicación con CPU y GPU, etc.
+Esta ecuación modela fielmente cuánta luz existe en un punto dependiendo de su entorno. Sin embargo, es prácticamente imposible resolverla analíticamente. Por ello, con el fin de poder realizar los cálculos en tiempo real, en el [capítulo 3](#métodos-de-monte-carlo) exploraremos las **técnicas de Monte Carlo**. Estas técnicas se basan en el uso de muestreo aleatorio. A partir de promediar muestras de una variable aleatoria seremos capaces de determinar, primero, la media de una transformación de una v.a.; y después, el valor de una integral. Esto nos permitirá estimar el valor de la ecuación del transporte de luz.
 
-Todo este programa estará alojado en Github. En el [apéndice](#metodología-de-trabajo), aprenderemos cómo se ha usado la plataforma para integrar la documentación, el código fuente y los ciclos de desarrollo.
+Sin embargo, muestrear sin cabeza no producirá resultados especialmente buenos. Por ello, comprobaremos cómo algunas técnicas reducen la varianza del estimador de Monte Carlo; y con ello, el ruido de la imagen final. Entre los métodos estudiados se encuentran el muestreo (múltiple) por importancia, la ruleta rusa, el muestreo directo de fuentes de iluminación o los métodos de Quasi-Monte Carlo. Todos estos los acabaremos enfocando al área que estamos explorando.
 
-Como podemos ver, esta área relaciona íntimamente la matemática y la informática, con un poco de física de por medio.
+Cuando hayamos acabado con la teoría física y matemática, será el momento de producir la aplicación. El [capítulo 4](#construyamos-un-path-tracer) cubirá la **construcción de un motor de renderizado** físicamente realista. Presentaremos algunas herramientas clave en la resolución del problema; entre las que se encuentran Vulkan, una interfaz de programación de aplicaciones gráfica, y el framework para Vulkan Ray tracing de Nvidia DesignWorks denominado *nvpro-samples*.
 
-## Sobre esta memoria {.unnumbered}
+Debido a la gran complejidad del problema, será necesario introducir algunas estructuras clave que habilitan la ejecución de ray tracing en tiempo real. Las dos más destacables son la *Top* y *Bottom-Level Acceleration Structures* (TLAS y BLAS, respectivamente), que albergan información sobre la geometría de una escena; y la *Shader Binding Table* (SBT), una estructura que permite seleccionar shaders dinámicamente a partir de la intersección de los rayos.
+
+Será entonces cuando hablemos de cómo funciona la *ray tracing pipeline*, qué tipos de shaders existen y cómo podemos usarlos para renderizar una escena. Además, hablaremos sobre cómo hemos representado los materiales y las fuentes de iluminación. Finalmente, veremos algunas técnicas adicionales que hemos usado para reducir el ruido de la imagen, como la corrección de gamma y acumulación temporal de frames.
+
+Una vez tengamos un motor funcional, será hora de jugar con él. El [capítulo 5](#análisis-de-rendimiento) mostrará los **resultados de nuestro trabajo**. Visualizaremos algunos fenómenos físicos que hemos estudiado a lo largo de la memoria. Estos serán encapsulados en aproximadamente una docena de escenas, centrándose cada una en cierta particularidad; como puede ser la iluminación global, la refracción y reflexión, o el comportamiento de materiales específicos.
+
+También analizaremos cómo rinde el motor en términos de calidad visual de imagen y tiempo de renderizado. Para ello, comprobaremos cómo varían estas dos métricas al cambiar los parámetros del algoritmo path tracing y las técnicas de reducción de ruido. Entre estos parámetros, se encuentran el número de muestras del estimador de Monte Carlo, la profunidad de rebotes de un rayo, la acumulación temporal y la resolución.
+
+Para poner en contexto el rendimiento, compararemos nuestra implementación con el path tracer desarollado en los libros de Peter Shirley *Ray Tracing In One Weekend* series [@Shirley2020RTW1] [@Shirley2020RTW2] [@Shirley2020RTW1].
+
+Terminaremos el grueso del trabajo con el [capítulo de conclusiones](#conclusiones). Reflexionaremos sobre todo lo que hemos aprendido; desde los éxitos logrados hasta las dificultades que presenta este complejo algoritmo. Además, explicaremos cómo se podría mejorar este trabajo, analizando de qué pie cojea la implementación.
+
+En los anexos se puede encontrar contenido adicional. El [primer anexo](#el-presente-y-futuro-de-ray-tracing) cubre el **estado del arte** del área --aunque este trabajo es prácticamente estado del arte--. En el [segundo](#metodología-de-trabajo) hablaremos sobre **cómo se ha realizado este trabajo**: desde las principales influencias hasta el diseño gráfico; pasando por el presupeusto y los ciclos de desarrollo. Por último, se ha incluído un glosario de [términos y conceptos](#glosario-de-términos) para facilitar la lectura de este documento.
 
 ## Principales fuentes consultadas {.unnumbered}
 
