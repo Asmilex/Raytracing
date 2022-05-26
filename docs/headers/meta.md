@@ -38,7 +38,7 @@ Rendering times can be crucial depending on the task at hand. Rasterization has 
 
 In this project we will tackle this problem. We will build a physically based rendering engine based on path tracing with modern hardware, in order to produce a software capable of producing realistic images in mere milliseconds.
 
-As one could imagine, this task it not an easy one. In order to achieve it, we will need to understand multiple aspects of different fields: from mathematics to computer imaging, with some *light* notions from physics.
+As one could imagine, this task it not an easy one. In order to achieve it, we will need to understand multiple aspects of different fields: from mathematics to computer imaging, with some light notions from physics.
 
 [Chapter 1](#las-bases) will set the **fundamentals of what is ray tracing**, how does a ray work, and how can we intersect a ray with an object.
 
