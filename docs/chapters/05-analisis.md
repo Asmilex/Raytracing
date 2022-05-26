@@ -155,6 +155,8 @@ Utilizaremos principalmente dos escenas: `cornell_box_original` y `cornell_box_e
 
 Para los análisis del rendimiento, se ha utilizado un procesador **Intel i5 12600K**, una tarjeta gráfica Nvidia **2070 Super** con un ligero overclock a 1900MHz y **2x8GB DDR4 3200MHz** de RAM. A no ser que se diga lo contrario, todas las imágenes tienen una resolución de 1280 x 720. Con el fin de realizar una comparación justa, se ha implementado un modo de benchmarking que se puede activar en el archivo `globals.hpp`.
 
+La medición del framerate ha sido realizada mediante la combinación de los programas Afterburner y RTSS, los cuales han tomado muestras a una tasa de 10 veces/s. EL procesamiento del *log* se ha llevado a cabo con los notebooks de Jupyter disponibles en la carpeta `./utilities` del repositorio; en la cual también se encuentran los ya mencionados logs.
+
 ### Número de muestras
 
 El principal parámetro que podemos variar es el número de muestras por píxel. En un estimador de Monte Carlo [@eq:mc_integral], $\hat{I}_N = \frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}$, corresponde a $N \in \mathbb{N}$.
