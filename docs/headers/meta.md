@@ -1,5 +1,5 @@
 ---
-title: Los fundamentos de Ray Tracing
+title: Los fundamentos de Ray Tracing en tiempo real
 author: Andrés Millán Muñoz
 keywords: [raytracing, ray tracing, Monte Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan]
 link-citations: true
@@ -19,7 +19,6 @@ Con el fin de explorar cómo afectan diferentes métodos al ruido final de la im
 
 *Palabras clave: raytracing, ray tracing, path tracing, métodos de Monte Carlo, integración de Monte Carlo, transporte de luz, iluminación global, Vulkan.*
 
-<hr>
 
 # A brief overview{.unnumbered}
 
