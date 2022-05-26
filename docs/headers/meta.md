@@ -27,7 +27,7 @@ Con el fin de explorar cómo afectan diferentes métodos al ruido final de la im
 
 Being able to capture a moment. Every human civilization in record has always found a way to immortalise the idiosyncrasies of its sociecy. We are not inmue to this phenomenon, so it is only natural we try to use the lastest technology to achieve the most faithful representation of our world. Computers have the ability to produce realistic images and astonishing simulations. Although, while there have been tremendous advances in the field, many of the techniques we use today are still based on the old days of computation; specially in 3D rendering.
 
-**Rasterization** is one of those methods. It allows to transform a virtual environment to a raster image --a set of pixels--. It is an extremelly fast method given how it works, which is just a mapping of the scene geometry into a 2D plane. Its simplicity makes it a great way of rendering an image really fast, but it comes at the expense of fidelity.
+**Rasterization** is one of those methods. It allows to transform a virtual environment to a raster image --a set of pixels--. It is an extremelly fast method given how it works, which is just a mapping of the scene geometry into a 2D plane. Its simplicity makes it a great quick way of rendering an image, but it comes at the expense of fidelity.
 
 We can solve this issue with **Ray tracing**. Instead of projecting virtual geometry into a plane, this algorithm tries to simulate how light works by casting rays of light into the scene from the camera. These rays then intersect with objects and collect information about them. This has one key advantage over rasterization: it allows seeing parts of the scene which were not visible to the camera.
 
