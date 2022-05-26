@@ -20,7 +20,7 @@ Como era de esperar, se buscaron vías alternativas a rasterización para produc
 
 Un par de décadas más tarde, sobre 1980, comienzan a ser publicadas imágenes hechas por ray tracing muy realistas. En estos años también se experimenta un crecimiento en el número de publicaciones sobre cómo hacer más rápido ray tracing. Uno de los puntos clave fue reducir el tiempo requerido para calcular intersecciones con objetos, pues suponen hasta el 95% del cómputo total. Kay y Kajiya publican un tipo de estructura denominada *bounding box* que simplifica este problema de manera considerable.
 
-![Ray tracing en los años 80. Fuente: [@Whitted1979AnII]](./img/00/RT%20prehistórico.jpg)
+![Ray tracing en los años 80. Fuente: [@Whitted1979AnII]](./img/00/RT%20prehistórico.jpg){#fig:rt-original width=40%}
 
 En 1986 Kajiya introdujo la denominada **rendering equation** [@PBRT3e]. Esta es una ecuación que modela analíticamente la cantidad de luz de un cierto basándose en las propiedades del material y la luz que llega a dicho punto.
 
