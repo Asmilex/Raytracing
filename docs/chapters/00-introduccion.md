@@ -90,17 +90,6 @@ Aunque en la realización de este trabajo se han utilizado múltiples fuentes de
 
 - La colección de libros digitales de Peter Shirley  *Ray Tracing In One Weekend* [@Shirley2020RTW1] [@Shirley2020RTW2] [@Shirley2020RTW3]. En esencia, han sido la inspiración de todo este proyecto. Se han utilizado como introducción al área y para implementar algunos de los métodos que veremos en futuras secciones; así como comparativa final con nuestro motor. Esto significa que aparecerán múltiples veces en la memoria.
 - *Physically Based Rendering: From Theory to Implementation (3rd ed.)* [@PBRT3e]. Considerado por muchos como el santo grial de la informática gráfica moderna. El capítulo "Transporte de luz" está fielmente basado en el trabajo de este libro. Además, algunas de las técnicas del capítulo "Técnicas de Monte Carlo" utilizan sus contenidos.
+- La teoría de Monte Carlo ha sido sintetizada principalmente de *Métodos de Monte Carlo* [@metodos-monte-carlo] y de *Monte Carlo Theory, Methods and Examples* [@mcbook].
 - *Ray Tracing Gems I* [@Haines2019] y *Ray Tracing Gems II* [@Marrs2021] una colección de artículos esenciales sobre Ray Tracing publicada por Nvidia. Una enorme variedad de expertos en el medio han participado en estos dos libros.
-
-
-> TODO: quiero reescribir esto:
-
-- El autor [Károly Zsolnai, de Two Minute Papers](https://users.cg.tuwien.ac.at/zsolnai/). No solo ha inspirado parte del trabajo, sino que su curso sobre transporte de luz de la [universidad de Austria](https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html) ha sido una gran fuente de información para el trabajo.
-
-<hr>
-
-## Referencias {.unlisted .unnumbered}
-
-[@wikipedia-contributors-2022A], [@wikipedia-contributors-2022B], [@wikipedia-contributors-2022C], [@wikipedia-contributors-2022D], [@caulfield-2020], [@wikipedia-contributors-2022E], [@unknown-author-no-date], [@Haines2019]
-
-- https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html
+- Aunque no han sido tan decisivos, existen muchos otros recursos que han ayudado a solidificar y cohesionar el trabajo. Entre estos, se encuentran libros como *Graphics Codex* [@McGuire2018GraphicsCodex] y *Realistic Ray Tracing* [@ShirleyRRT]; así como los cursos *Computer Graphics and Imaging* [@berkeley-cs184], *Fundamentals of Computer Graphics* [@pellacini-marschner-2017], y *Lecture Rendering* [@tuwien].

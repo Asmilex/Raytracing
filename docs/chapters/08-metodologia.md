@@ -145,7 +145,7 @@ Una de las características más útiles es poder exportar rápidamente la image
 
 Como es normal, hay muchos otros programas que han intervenido en el desarrollo. Estos son algunos de ellos:
 
-- El editor por excelencia VSCode [@vscode]. Ha facilitado en gran medida el desarrollo de la aplicación y la documentación. En particular, se ha usado una extensión denominada *Trigger Task on Save* [@trigger-task] que compila la documentación HTML automáticamente al guardar un fichero. ¡Muy útil y rápido!
+- El editor por excelencia Visual Studio Code [@vscode]. Ha facilitado en gran medida el desarrollo de la aplicación y la documentación. En particular, se ha usado una extensión denominada *Trigger Task on Save* [@trigger-task] que compila la documentación HTML automáticamente al guardar un fichero. ¡Muy útil y rápido!
 - **Vectary** [@vectary] para hacer los diseños en 3D fácilmente. Permite exportar una escena rápidamente a png para editarla en Figma.
 - Como veremos más adelante, la documentación se compila en el repositorio usando un contenedor de **Docker** [@docker]
 - Cualquier proyecto informático debería usar `git`. Este no es una excepción.
