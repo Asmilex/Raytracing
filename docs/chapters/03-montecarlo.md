@@ -20,7 +20,7 @@ $$
 
 A $\Omega$ lo conocemos como espacio muestral (conjunto de todas las posibilidades), $\mathcal{A}$ es una $\sigma$-álgebra de subconjuntos de $\Omega$ que refleja todas las posibilidades de eventos aleatorios, y $P$ es una función probabilidad, que asigna a cada evento una probabilidad.
 
-Una variable aleatoria $X$ puede clasificarse atendiendo a cómo sea su rango $R_X = \set{x \in \mathbb{R}}{\exists \omega \in \Omega \text{ tal que } X(\omega) = x}$: en discreta o continua.
+Una variable aleatoria $X$ puede clasificarse atendiendo a cómo sea su rango $R_X = \set{x \in \mathbb{R}}{\exists \omega \in \Omega \text{ tal que } X(\omega) = x}$: en discreta o continua, dependiendo de si $X$ toma valores en un conjunto numerable o no numerable.
 
 ### Variables aleatorias discretas
 
@@ -64,16 +64,18 @@ Las parejas serían $(1, 3), (2, 2)$ y $(3, 1)$.
 Por definición, si el conjunto de valores que puede tomar $X$ es $\{x_1, \dots, x_n\}$, la función masa de probabilidad debe cumplir que
 
 $$
-\sum_{i = 1}^{n}{P(X = x_i)} = 1
+\sum_{i = 1}^{n}{\Prob{X = x_i}} = 1
 $$
 
-Muchas veces nos interesará conocer la probabilidad de que $X$ se quede por debajo de un cierto valor $x$ (de hecho, podemos caracterizar distribuciones aleatorias gracias a esto). Para ello, usamos la **función de distribución**:
+Siendo $\Prob{X = x_i} \ge 0$, pues la f.m.p. es no negativa.
+
+Muchas veces nos interesará conocer la probabilidad de que $X$ se quede por debajo o igual que un cierto valor $x$ (de hecho, podemos caracterizar distribuciones aleatorias gracias a esto). Para ello, usamos la **función de distribución**:
 
 $$
 F_X(x) = P(X \le x) = \sum_{\substack{k \in \mathbb{R} \\ k \le x}}{P(X = k)}
 $$
 
-Es una función continua por la derecha y monótona no decreciente. Además, se cumple que $0 \le F_X \le 1(x)$ y $\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$.
+Es una función continua por la derecha y monótona no decreciente. Además, se cumple que $0 \le F_X(x) \le 1$ y $\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$.
 
 En nuestro ejemplo, si consideramos $x = 3$:
 
@@ -104,14 +106,14 @@ La función de densidad tiene dos características importantes:
 2. $f_X$ integra uno en todo $\mathbb{R}$:
 
 $$
-\int_{-\infty}^{\infty}{f_X(x)} = 1
+\int_{-\infty}^{\infty}{f_X(x)\ dx} = 1
 $$
 
-Estas dos propiedades caracterizan a una función de densidad; es decir, toda función $f: \mathbb{R} \rightarrow \mathbb{R}$ no negativa e integrable tal que $\int_{\infty}^{\infty}{f_X(x)} = 1$ es la función de densidad de alguna variable continua.
+Estas dos propiedades caracterizan a una función de densidad; es decir, toda función $f: \mathbb{R} \rightarrow \mathbb{R}$ no negativa e integrable tal que $\int_{-\infty}^{\infty}{f_X(x)\ dx} = 1$ es la función de densidad de alguna variable continua.
 
-Intuitivamente, podemos ver esta última propiedad como *si acumulamos todos los valores que puede tomar la variable aleatoria, la probabilidad de que te encuentres en el conjunto debe ser 1*. Si tratamos con un conjunto de números reales, podemos escribir la integral como $\int_{-\infty}^{\infty}{f_X(x)} = 1$.
+> Intuitivamente, podemos ver esta última propiedad como *si acumulamos todos los valores que puede tomar la variable aleatoria, la probabilidad de que te encuentres en el conjunto debe ser 1*
 
-Una de las variables aleatorias que más juego nos darán en el futuro será la **v.a. con distribución uniforme en $[0, 1)$**. La denotaremos $\Xi \sim \mathcal{U}\left([0, 1)\right)$. La probabilidad de que $\xi$ tome un valor es constante, por lo que podemos definir su función de densidad como
+Una de las variables aleatorias que más juego nos darán en el futuro será la **v.a. con distribución uniforme en $[0, 1)$**. La denotaremos $\Xi \sim \mathcal{U}\left([0, 1)\right)$. La probabilidad de que $\Xi$ tome un valor es constante, por lo que podemos definir su función de densidad como
 
 $$
 f_\Xi(\xi) = \left\{  \begin{array}{llc}
@@ -136,6 +138,10 @@ F_X(x) = P(X \le x) = \int_{-\infty}^{x}{f_X(t)dt}
 $$
 
 Es decir, dado un $x$, ¿cuál sería la probabilidad de que $X$ se quede por debajo de $x$?
+
+Al igual que ocurre en el caso discreto, $F_X$ toma valores entre 0 y 1 ($0 \le F_X(x) \le 1$) y sus límites laterales coinciden con las cotas anteriores ($\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$).
+
+Además, se cumple que $0 \le F_X \le 1(x)$ y $\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$.
 
 El Teorema Fundamental del Cálculo nos permite relacionar función de distribución y función de densidad directamente:
 
@@ -179,7 +185,8 @@ La esperanza tiene unas cuantas propiedades que nos resultarán muy útiles. Est
   - Si $X, Y$ son dos v.a., $\E{X + Y} = \E{X} + \E{Y}$
   - Si $a$ es una constante, $X$ una v.a., entonces $\E{aX} = a\E{X}$
   - Análogamente, para ciertas $X_1, \dots, X_k$, $\E{\sum_{i = 1}^{k}{X_i}} = \sum_{i = 1}^{k}{\E{X_i}}$
-  - Estas propiedades no necesitan que las variables aleatorias sean independientes. Este hecho será clave para las técnicas de Monte Carlo.
+
+Estas propiedades no necesitan que las variables aleatorias sean independientes, lo cual supondrá un punto clave para las técnicas de Monte Carlo.
 
 Será habitual encontrarnos con el problema de que no conocemos la distribución de una variable aleatoria $Y$. Sin embargo, si encontramos una transformación medible de una variable aleatoria $X$ de forma que obtengamos $Y$ (esto es, $\exists g$ función medible tal que $g(X) = Y$), entonces podemos calcular la esperanza de $Y$ fácilmente. Esta propiedad hará que las variables aleatorias con distribución uniforme adquieran muchísima importancia. Generar números aleatorios en $[0, 1)$ es muy fácil, así [que obtendremos otras vv.aa a partir de $\xi$](#método-de-la-transformada-inversa).
 
