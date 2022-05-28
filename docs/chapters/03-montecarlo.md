@@ -338,13 +338,17 @@ $$
 
 Generalmente nos encontraremos en la situación en la que $Y = f(X)$, donde $X \in S \subset \mathbb{R}^d$ sigue una distribución con función de densidad $p_X(x)$ con media $\mu = \E{X}$, y $f: S \rightarrow \mathbb{R}$.
 
+> **Nota**ción: nos encontramos ante un caso de *"choque de notaciones"*. Tradicionalmente las funciones de densidad utilizan $f$, pero en transporte de luz se suele reservar esta letra para las BRDF y/u otras funciones genéricas, dejando la letra $p$ para las funciones de densidad.
+>
+> En este capítulo usaré la notación $p_X$ para dejar claro de que estamos hablando de una función de densidad, manteniendo $f$ para la transformación de la variable aleatoria.
+
 Consideremos el promedio de $N$ muestras de $f(X)$:
 
 $$
-\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}, \quad X_i \text{ idénticamente distribuidas}
+\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}
 $$
 
-En ese caso, la esperanza es
+siendo $X_1 \dots X_N$ idénticamente distribuidas. En ese caso, la esperanza es
 
 $$
 \begin{aligned}
@@ -370,7 +374,7 @@ La varianza del estimador se puede calcular fácilmente utilizando las propiedad
 
 $$
 \begin{aligned}
-  Var[\hat{I}_N]
+  \Var{\hat{I}_N}
     & = \Var{\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}} = \\
     & = \frac{1}{N^2} \Var{ \sum_{i = 1}^{N}{f(X_i)}} = \\
     & = \frac{1}{N^2} N \Var{f(X)} = \\
@@ -386,8 +390,8 @@ Para comprobarlo, debemos introducir dos nuevos teoremas: la desigualdad de Mark
 
 $$
 \begin{aligned}
-\E{X}  &   =  \int_0^x t p_X(t) dt + \int_x^\infty t p_X(t) dt \ge  \int_x^\infty t p_X(t) \\
-      & \ge  \int_x^\infty x p_X(t) = x \Prob{X \ge x} \\
+\E{X}  &   =  \int_0^x t p_X(t)\ dt + \int_x^\infty t p_X(t)\ dt \ge  \int_x^\infty t p_X(t)\ dt \\
+      & \ge  \int_x^\infty x p_X(t)\ dt = x \Prob{X \ge x} \\
       & \Rightarrow \Prob{X \ge x} \le \frac{\E{X}}{x}
 \end{aligned}
 $${#eq:desigualdad_markov}
@@ -474,7 +478,7 @@ Este código produce la siguiente gráfica:
 
 ![Error de la simulación para el estimador de la integral $\int_0^1{2x^4\ dx}$](./img/03/Error%20simulación.png){#fig:error_simulacion} {width=80%}
 
-Se puede ver cómo debemos usar un número considerable de muestras, alrededor de 200, para que el error se mantenga bajo control. Aún así, aumentar el tamaño de $N$ no disminuye necesariamente el error; nos encontramos en una situación de retornos reducidos.
+Se puede ver cómo debemos usar un número considerable de muestras, alrededor de 200, para que el error se mantenga bajo control. Aún así, aumentar el tamaño de $N$ no disminuye necesariamente el error; nos encontramos en una situación de rendimientos decrecientes.
 
 ## Técnicas de reducción de varianza
 
@@ -542,7 +546,7 @@ para que, utilizando muestras $X_i \sim p_X$, $\E{\frac{f}{p_X}} = \int_S{\frac{
 Esta forma de escribir el estimador nos permite amenizar algunos casos particulares. Por ejemplo, si usamos muestras $X_i$ que sigan una distribución uniforme en $[a, b]$, entonces, su función de densidad es $p_X(x) = \frac{1}{b - a}$. Esto da lugar a
 
 $$
-\tilde{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{g(X_i)}
+\tilde{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
 $$
 
 **En lo que resta de capítulo, se utilizará indistintamente $\frac{1}{N} \sum_{i=1}^N{\frac{f(X_i)p_X(X_i)}{q_X(X_i)}}$ o $\frac{1}{N} \sum_{i=1}^N{\frac{f(X_i)}{p_X(X_i)}}$ según convenga**. ¡Tenlo en cuenta!
@@ -568,7 +572,7 @@ $$
 
 En la práctica, esto es inviable. El problema que queremos resolver es calcular la integral de $f$. Y para sacar $s$, necesitaríamos el valor de la integral de $f$. ¡Estamos dando vueltas!
 
-Por fortuna, hay algoritmos que son capaces de proporcionar la constante $s$ sin necesidad de calcular la integral. Uno de los más conocidos es **Metropolis-Hastings**, el cual se basa en cadenas de Markov de Monte Carlo.
+Por fortuna, hay algoritmos que son capaces de proporcionar la constante $s$ sin necesidad de calcular la integral. Uno de los más conocidos es **Metropolis-Hastings**, el cual se basa en cadenas de Markov de Monte Carlo. Sin embargo, su complejidad hace que se escape del ámbito de este trabajo. Se puede encontrar más información en [@PBRT3e, Metropolis Light Transport].
 
 En este trabajo nos centraremos en buscar funciones de densidad $p_X$ que se aproximen a $f$ lo más fielmente posible, dentro del contexto del transporte de luz.
 
@@ -700,7 +704,7 @@ $$
 
 Este último paso se debe a que, como $\xi$ es uniforme en $(0, 1)$, $P[\xi < x] = x$. Es decir, hemos obtenido que $F_X$ es la inversa de $T$.
 
-En resumen: Para conseguir una muestra de una distribución específica $F_X$:
+**En resumen**: Para conseguir una muestra de una distribución específica $F_X$, podemos seguir el siguiente algoritmo:
 
 1. Generar un número aleatorio $\xi \sim \mathcal{U}(0, 1)$.
 2. Hallar la inversa de la función de distribución deseada $F_X$, denotada $F_X^{-1}(x)$.
@@ -745,7 +749,7 @@ Sacando un número aleatorio $\xi$, y pasándolo por la función obtenida, conse
 
 #### Ejemplo práctico del método de la transformada inversa en R
 
-Aunque el ejemplo anterior nos enseña cómo proceder para una función sencilla, resulta algo difícil de visualizar. Por ello, vamos a utilizar el programa R para dar otro ejemplo.
+Aunque el ejemplo anterior nos enseña cómo calcular a mano una función sencilla, resulta algo difícil de visualizar qué es lo que está ocurriendo. Por ello, vamos a utilizar el programa **R** para dar otro ejemplo.
 
 Consideremos la distribución exponencial de parámetro $\lambda$, la cual tiene función de densidad y de distribución
 
@@ -760,12 +764,12 @@ La función inversa se calcula tal que
 
 $$
 \begin{aligned}
-  \xi & = F(x)        = 1 - e^{-\lambda x} \quad \iff \\
-    x & = F^{-1}(\xi) = - \frac{log(1 - \xi)}{\lambda}
+  \xi & = F(x)        = 1 - e^{-\lambda x}  & \iff \\
+    x & = F^{-1}(\xi) = - \frac{log(1 - \xi)}{\lambda} &
 \end{aligned}
 $$
 
-Podemos generar ahora $\xi_1, \dots, \xi_n$ valores en $\mathcal{U}(0, 1)$ y devolver $X_i = -\frac{log(\xi_i)}{\lambda}$.
+Generemos ahora $\xi_1, \dots, \xi_n$ valores en $\mathcal{U}(0, 1)$ y obtengamos las imágenes inversas $X_i = -\frac{log(\xi_i)}{\lambda}$.
 
 Para el ejemplo, fijemos $\lambda = 1.5$ y calculemos los valores para $X_i$:
 
@@ -797,9 +801,19 @@ El método anterior presenta principalmente dos problemas:
 1. No siempre es posible integrar una función para hallar su función de densidad.
 2. La inversa de la función de distribución, $F_X^{-1}$ no tiene por qué existir.
 
-Como alternativa, podemos usar este método (en inglés, *rejection method*). Para ello, necesitamos una variable aleatoria $Y$ con función de densidad $p_Y(y)$. El objetivo es conseguir una muestra de $X$ con función de densidad $p_X(x)$.
+Como alternativa, existe el **método del rechazo** o **aceptación-rechazo** (en inglés, *rejection method*) [@mcbook, Non-uniform random variables]. Necesitamos una variable aleatoria $Y$ con función de densidad $p_Y(y)$ de la cual resulta sencillo generar muestras. El objetivo es conseguir muestras de $X \sim p_X$.
 
-La idea principal es aceptar una muestra de $Y$ con probabilidad $p_X/Mp_Y$, con $1 < M < \infty$. En esencia, estamos jugando a los dardos: si la muestra de $y$ que hemos obtenido se queda por debajo de la gráfica de la función $Mp_Y < p_X$, estaremos obteniendo una de $p_X$.
+Como premisa, debemos buscar un $M \in [1, \infty)$ tal que
+
+$$
+p_X(x) \le M p_Y(x) \quad \forall x \in \mathbb{R}
+$$
+
+La idea principal es sacar una muestra de $Y$ y aceptarla con probabilidad $p_X/Mp_Y$. En otro caso, desecharla y volver a sacar otra. Para evitar casos absurdos, se puede especificar que p_Y(y) sea 0 cuando p_X(y) lo sea.
+
+El valor más pequeño que podemos tomar para $M$ es $\sup_x{\frac{p_X(x)}{p_Y(x)}}$. Cuanto más se acerque a este supremo, mejor, pues hará que la toma de muestras sea más eficiente.
+
+En esencia, estamos jugando a los dardos: si la muestra de $y$ que hemos obtenido se queda por debajo de la gráfica de la función $Mp_Y < p_X$, estaremos obteniendo una de $p_X$.
 
 El algoritmo consiste en:
 
@@ -807,6 +821,26 @@ El algoritmo consiste en:
 2. Comprobar si $\xi < \frac{p_X(y)}{Mp_Y(y)}$.
    1. Si se cumple, se acepta $y$ como muestra de $p_X$
    2. En caso contrario, se rechaza $y$ y se vuelve al paso 1.
+
+Probemos por qué este algoritmo produce una muestras de una función de densidad $p_X$:
+
+Sea $Y \sim p_Y$, $\xi \sim \mathcal{U}(0, 1)$ independientes. Dada una muestra $Y = y$, esta es aceptada si se cumple que $\xi \le \frac{p_X(y)}{Mp_Y(y)}$. La probabilidad de que esto ocurra es
+
+$$
+\int_{-\infty}^{\infty}{p_Y(y) \frac{p_X(y)}{Mp_Y(y)} dy} = \int_{-\infty}^{\infty}{\frac{p_X(y)}{M} dy} = \frac{1}{M}
+$$
+
+Ahora bien, para cualquier $x \in \mathbb{R}$
+
+$$
+\begin{aligned}
+\Prob{X \le x} & = \int_{-\infty}^{x}{p_Y(y) \frac{p_X(y)}{Mp_Y(y)} dy + \left(1 - \frac{1}{M}\right) \Prob{X \le x}} =  \\
+               & = \frac{1}{M} \int_{-\infty}^{x}{p_X(y) dy} + \left(1 - \frac{1}{M}\right) \Prob{X \le x} \\
+               & = \int_{\infty}^{\infty}{p_X(y) dy}
+\end{aligned}
+$$
+
+Lo que nos dice que $X \sim p_X$ como queríamos comprobar.
 
 #### Ejemplo práctico del método del rechazo en R
 
@@ -825,7 +859,7 @@ $$
 M = \sup_{x}\frac{p_Y(x)}{p_X(x)} = \sup_{x}{p_Y(x)}
 $$
 
-En la sección anterior dijimos que este algoritmo es "como jugar a los dardos". Pues bien, la siguiente figura [@fig:metodo_rechazo_grafica] muestra la diana. El siguiente fragmento de código de R calcula este valor:
+En la sección anterior dijimos que este algoritmo es "como jugar a los dardos". Pues bien, la figura [@fig:metodo_rechazo_grafica] muestra la diana. El siguiente fragmento de código de R calcula este valor:
 
 ```R
 a <- 2
@@ -895,4 +929,4 @@ curve(dbeta(x, shape1 = a, shape2 = b), add = TRUE, col = 2)
 ![Histograma del método de rechazo.](./img/03/metodo_rechazo.png){#fig:metodo_rechazo_R width=70%}
 
 
-[^1]: En su defecto, si tenemos una función de densidad $f_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{f_X(t)dt}$.
+[^1]: En su defecto, si tenemos una función de densidad $p_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{p_X(t)dt}$.
