@@ -809,22 +809,22 @@ $$
 p_X(x) \le M p_Y(x) \quad \forall x \in \mathbb{R}
 $$
 
-La idea principal es sacar una muestra de $Y$ y aceptarla con probabilidad $p_X/Mp_Y$. En otro caso, desecharla y volver a sacar otra. Para evitar casos absurdos, se puede especificar que p_Y(y) sea 0 cuando p_X(y) lo sea.
+La idea principal es sacar una muestra de $Y$ y aceptarla con probabilidad $p_X/Mp_Y$. En otro caso, desecharla y volver a sacar otra. Para evitar casos absurdos, se puede especificar que $p_Y(y)$ sea 0 cuando $p_X(y)$ lo sea.
 
-El valor más pequeño que podemos tomar para $M$ es $\sup_x{\frac{p_X(x)}{p_Y(x)}}$. Cuanto más se acerque a este supremo, mejor, pues hará que la toma de muestras sea más eficiente.
+El valor más pequeño que podemos tomar para $M$ es $\sup_x{\frac{p_X(x)}{p_Y(x)}}$. De hecho, debemos buscar cotas próximas a este supremo, pues hará que el método sea más eficiente.
 
 En esencia, estamos jugando a los dardos: si la muestra de $y$ que hemos obtenido se queda por debajo de la gráfica de la función $Mp_Y < p_X$, estaremos obteniendo una de $p_X$.
 
 El algoritmo consiste en:
 
-1. Obtener una muestra de $Y \sim p_Y$, denotada $y$, y otra de $\mathcal{U}(0, 1)$, llamada $\xi$.
+1. Obtener una muestra de $Y \sim p_Y$, denotada $y$, y otra de $\mathcal{U}(0, 1)$, denominada $\xi$.
 2. Comprobar si $\xi < \frac{p_X(y)}{Mp_Y(y)}$.
    1. Si se cumple, se acepta $y$ como muestra de $p_X$
    2. En caso contrario, se rechaza $y$ y se vuelve al paso 1.
 
-Probemos por qué este algoritmo produce una muestras de una función de densidad $p_X$:
+Probemos por qué este algoritmo produce una muestra de la función de densidad $p_X$:
 
-Sea $Y \sim p_Y$, $\xi \sim \mathcal{U}(0, 1)$ independientes. Dada una muestra $Y = y$, esta es aceptada si se cumple que $\xi \le \frac{p_X(y)}{Mp_Y(y)}$. La probabilidad de que esto ocurra es
+Sea $Y \sim p_Y$, $\xi \sim \mathcal{U}(0, 1)$ independientes. Una muestra $Y = y$ es aceptada si se cumple que $\xi \le \frac{p_X(y)}{Mp_Y(y)}$. La probabilidad de que esto ocurra es
 
 $$
 \int_{-\infty}^{\infty}{p_Y(y) \frac{p_X(y)}{Mp_Y(y)} dy} = \int_{-\infty}^{\infty}{\frac{p_X(y)}{M} dy} = \frac{1}{M}
@@ -834,9 +834,12 @@ Ahora bien, para cualquier $x \in \mathbb{R}$
 
 $$
 \begin{aligned}
-\Prob{X \le x} & = \int_{-\infty}^{x}{p_Y(y) \frac{p_X(y)}{Mp_Y(y)} dy + \left(1 - \frac{1}{M}\right) \Prob{X \le x}} =  \\
-               & = \frac{1}{M} \int_{-\infty}^{x}{p_X(y) dy} + \left(1 - \frac{1}{M}\right) \Prob{X \le x} \\
-               & = \int_{\infty}^{\infty}{p_X(y) dy}
+\Prob{X \le x} & = \int_{-\infty}^{x}{
+  \underbrace{p_Y(y) \frac{p_X(y)}{Mp_Y(y)} dy}_{\text{Si } y \text{ se acepta}}
+  + \underbrace{\left(1 - \frac{1}{M}\right) \Prob{X \le x}}_{\text{Si } y \text{ se rechaza}}
+} =  \\
+  & = \frac{1}{M} \int_{-\infty}^{x}{p_X(y) dy} + \left(1 - \frac{1}{M}\right) \Prob{X \le x} \\
+  & = \int_{\infty}^{\infty}{p_X(y) dy}
 \end{aligned}
 $$
 
