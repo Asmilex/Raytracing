@@ -3366,13 +3366,26 @@ distribución con función de densidad <span
 class="math inline">\(p_X(x)\)</span> con media <span
 class="math inline">\(\mu = E\left[ X \right]\)</span>, y <span
 class="math inline">\(f: S \rightarrow \mathbb{R}\)</span>.</p>
+<blockquote>
+<p><strong>Nota</strong>ción: nos encontramos ante un caso de
+<em>“choque de notaciones”</em>. Tradicionalmente las funciones de
+densidad utilizan <span class="math inline">\(f\)</span>, pero en
+transporte de luz se suele reservar esta letra para las BRDF y/u otras
+funciones genéricas, dejando la letra <span
+class="math inline">\(p\)</span> para las funciones de densidad.</p>
+<p>En este capítulo usaré la notación <span
+class="math inline">\(p_X\)</span> para dejar claro de que estamos
+hablando de una función de densidad, manteniendo <span
+class="math inline">\(f\)</span> para la transformación de la variable
+aleatoria.</p>
+</blockquote>
 <p>Consideremos el promedio de <span class="math inline">\(N\)</span>
 muestras de <span class="math inline">\(f(X)\)</span>:</p>
 <p><span class="math display">\[
-\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}, \quad X_i \text{ idénticamente
-distribuidas}
+\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}
 \]</span></p>
-<p>En ese caso, la esperanza es</p>
+<p>siendo <span class="math inline">\(X_1 \dots X_N\)</span>
+idénticamente distribuidas. En ese caso, la esperanza es</p>
 <p><span class="math display">\[
 \begin{aligned}
 E\left[ \frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \right] &amp; =
@@ -3413,7 +3426,7 @@ href="#esperanza-y-varianza-de-una-variable-aleatoria">sección de la
 varianza</a>:</p>
 <p><span id="eq:mc_varianza" class="eqnos"><span class="math display">\[
 \begin{aligned}
-  Var[\hat{I}_N]
+  Var\left[ \hat{I}_N \right]
     &amp; = Var\left[ \frac{1}{N} \sum_{i = 1}^{N}{f(X_i)} \right] = \\
     &amp; = \frac{1}{N^2} Var\left[  \sum_{i = 1}^{N}{f(X_i)} \right] =
 \\
@@ -3440,9 +3453,10 @@ de densidad. Entonces, <span class="math inline">\(\forall x &gt;
 <p><span id="eq:desigualdad_markov" class="eqnos"><span
 class="math display">\[
 \begin{aligned}
-E\left[ X \right]  &amp;   =  \int_0^x t p_X(t) dt + \int_x^\infty t
-p_X(t) dt \ge  \int_x^\infty t p_X(t) \\
-      &amp; \ge  \int_x^\infty x p_X(t) = x P\left[ X \ge x \right] \\
+E\left[ X \right]  &amp;   =  \int_0^x t p_X(t)\ dt + \int_x^\infty t
+p_X(t)\ dt \ge  \int_x^\infty t p_X(t)\ dt \\
+      &amp; \ge  \int_x^\infty x p_X(t)\ dt = x P\left[ X \ge x \right]
+\\
       &amp; \Rightarrow P\left[ X \ge x \right] \le \frac{E\left[ X
 \right]}{x}
 \end{aligned}
@@ -3548,7 +3562,7 @@ alt="Error de la simulación para el estimador de la integral \int_0^1{2x^4\ dx}
 alrededor de 200, para que el error se mantenga bajo control. Aún así,
 aumentar el tamaño de <span class="math inline">\(N\)</span> no
 disminuye necesariamente el error; nos encontramos en una situación de
-retornos reducidos.</p>
+rendimientos decrecientes.</p>
 <h2 data-number="3.3" id="técnicas-de-reducción-de-varianza"><span
 class="header-section-number">3.3</span> Técnicas de reducción de
 varianza</h2>
@@ -3680,7 +3694,7 @@ en <span class="math inline">\([a, b]\)</span>, entonces, su función de
 densidad es <span class="math inline">\(p_X(x) = \frac{1}{b -
 a}\)</span>. Esto da lugar a</p>
 <p><span class="math display">\[
-\tilde{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{g(X_i)}
+\tilde{I}_N = \frac{b - a}{N} \sum_{i = 1}^{N}{f(X_i)}
 \]</span></p>
 <p><strong>En lo que resta de capítulo, se utilizará indistintamente
 <span class="math inline">\(\frac{1}{N}
@@ -3720,7 +3734,11 @@ dando vueltas!</p>
 constante <span class="math inline">\(s\)</span> sin necesidad de
 calcular la integral. Uno de los más conocidos es
 <strong>Metropolis-Hastings</strong>, el cual se basa en cadenas de
-Markov de Monte Carlo.</p>
+Markov de Monte Carlo. Sin embargo, su complejidad hace que se escape
+del ámbito de este trabajo. Se puede encontrar más información en <span
+class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
+role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>, Metropolis
+Light Transport)</span>.</p>
 <p>En este trabajo nos centraremos en buscar funciones de densidad <span
 class="math inline">\(p_X\)</span> que se aproximen a <span
 class="math inline">\(f\)</span> lo más fielmente posible, dentro del
@@ -3989,8 +4007,9 @@ class="math inline">\((0, 1)\)</span>, <span class="math inline">\(P[\xi
 &lt; x] = x\)</span>. Es decir, hemos obtenido que <span
 class="math inline">\(F_X\)</span> es la inversa de <span
 class="math inline">\(T\)</span>.</p>
-<p>En resumen: Para conseguir una muestra de una distribución específica
-<span class="math inline">\(F_X\)</span>:</p>
+<p><strong>En resumen</strong>: Para conseguir una muestra de una
+distribución específica <span class="math inline">\(F_X\)</span>,
+podemos seguir el siguiente algoritmo:</p>
 <ol type="1">
 <li>Generar un número aleatorio <span class="math inline">\(\xi \sim
 \mathcal{U}(0, 1)\)</span>.</li>
@@ -4048,9 +4067,10 @@ distribución <span class="math inline">\(F(x)\)</span>.</p>
 id="ejemplo-práctico-del-método-de-la-transformada-inversa-en-r"><span
 class="header-section-number">3.4.1.2</span> Ejemplo práctico del método
 de la transformada inversa en R</h4>
-<p>Aunque el ejemplo anterior nos enseña cómo proceder para una función
-sencilla, resulta algo difícil de visualizar. Por ello, vamos a utilizar
-el programa R para dar otro ejemplo.</p>
+<p>Aunque el ejemplo anterior nos enseña cómo calcular a mano una
+función sencilla, resulta algo difícil de visualizar qué es lo que está
+ocurriendo. Por ello, vamos a utilizar el programa <strong>R</strong>
+para dar otro ejemplo.</p>
 <p>Consideremos la distribución exponencial de parámetro <span
 class="math inline">\(\lambda\)</span>, la cual tiene función de
 densidad y de distribución</p>
@@ -4063,14 +4083,14 @@ densidad y de distribución</p>
 <p>La función inversa se calcula tal que</p>
 <p><span class="math display">\[
 \begin{aligned}
-  \xi &amp; = F(x)        = 1 - e^{-\lambda x} \quad \iff \\
-    x &amp; = F^{-1}(\xi) = - \frac{log(1 - \xi)}{\lambda}
+  \xi &amp; = F(x)        = 1 - e^{-\lambda x}  &amp; \iff \\
+    x &amp; = F^{-1}(\xi) = - \frac{log(1 - \xi)}{\lambda} &amp;
 \end{aligned}
 \]</span></p>
-<p>Podemos generar ahora <span class="math inline">\(\xi_1, \dots,
+<p>Generemos ahora <span class="math inline">\(\xi_1, \dots,
 \xi_n\)</span> valores en <span class="math inline">\(\mathcal{U}(0,
-1)\)</span> y devolver <span class="math inline">\(X_i =
--\frac{log(\xi_i)}{\lambda}\)</span>.</p>
+1)\)</span> y obtengamos las imágenes inversas <span
+class="math inline">\(X_i = -\frac{log(\xi_i)}{\lambda}\)</span>.</p>
 <p>Para el ejemplo, fijemos <span class="math inline">\(\lambda =
 1.5\)</span> y calculemos los valores para <span
 class="math inline">\(X_i\)</span>:</p>
@@ -4104,17 +4124,32 @@ densidad.</li>
 <li>La inversa de la función de distribución, <span
 class="math inline">\(F_X^{-1}\)</span> no tiene por qué existir.</li>
 </ol>
-<p>Como alternativa, podemos usar este método (en inglés, <em>rejection
-method</em>). Para ello, necesitamos una variable aleatoria <span
+<p>Como alternativa, existe el <strong>método del rechazo</strong> o
+<strong>aceptación-rechazo</strong> (en inglés, <em>rejection
+method</em>) <span class="citation" data-cites="mcbook">(<a
+href="#ref-mcbook" role="doc-biblioref">Owen 2013</a>, Non-uniform
+random variables)</span>. Necesitamos una variable aleatoria <span
 class="math inline">\(Y\)</span> con función de densidad <span
-class="math inline">\(p_Y(y)\)</span>. El objetivo es conseguir una
-muestra de <span class="math inline">\(X\)</span> con función de
-densidad <span class="math inline">\(p_X(x)\)</span>.</p>
-<p>La idea principal es aceptar una muestra de <span
-class="math inline">\(Y\)</span> con probabilidad <span
-class="math inline">\(p_X/Mp_Y\)</span>, con <span
-class="math inline">\(1 &lt; M &lt; \infty\)</span>. En esencia, estamos
-jugando a los dardos: si la muestra de <span
+class="math inline">\(p_Y(y)\)</span> de la cual resulta sencillo
+generar muestras. El objetivo es conseguir muestras de <span
+class="math inline">\(X \sim p_X\)</span>.</p>
+<p>Como premisa, debemos buscar un <span class="math inline">\(M \in [1,
+\infty)\)</span> tal que</p>
+<p><span class="math display">\[
+p_X(x) \le M p_Y(x) \quad \forall x \in \mathbb{R}
+\]</span></p>
+<p>La idea principal es sacar una muestra de <span
+class="math inline">\(Y\)</span> y aceptarla con probabilidad <span
+class="math inline">\(p_X/Mp_Y\)</span>. En otro caso, desecharla y
+volver a sacar otra. Para evitar casos absurdos, se puede especificar
+que <span class="math inline">\(p_Y(y)\)</span> sea 0 cuando <span
+class="math inline">\(p_X(y)\)</span> lo sea.</p>
+<p>El valor más pequeño que podemos tomar para <span
+class="math inline">\(M\)</span> es <span
+class="math inline">\(\sup_x{\frac{p_X(x)}{p_Y(x)}}\)</span>. De hecho,
+debemos buscar cotas próximas a este supremo, pues hará que el método
+sea más eficiente.</p>
+<p>En esencia, estamos jugando a los dardos: si la muestra de <span
 class="math inline">\(y\)</span> que hemos obtenido se queda por debajo
 de la gráfica de la función <span class="math inline">\(Mp_Y &lt;
 p_X\)</span>, estaremos obteniendo una de <span
@@ -4123,7 +4158,7 @@ class="math inline">\(p_X\)</span>.</p>
 <ol type="1">
 <li>Obtener una muestra de <span class="math inline">\(Y \sim
 p_Y\)</span>, denotada <span class="math inline">\(y\)</span>, y otra de
-<span class="math inline">\(\mathcal{U}(0, 1)\)</span>, llamada <span
+<span class="math inline">\(\mathcal{U}(0, 1)\)</span>, denominada <span
 class="math inline">\(\xi\)</span>.</li>
 <li>Comprobar si <span class="math inline">\(\xi &lt;
 \frac{p_X(y)}{Mp_Y(y)}\)</span>.
@@ -4134,6 +4169,35 @@ muestra de <span class="math inline">\(p_X\)</span></li>
 y se vuelve al paso 1.</li>
 </ol></li>
 </ol>
+<p>Probemos por qué este algoritmo produce una muestra de la función de
+densidad <span class="math inline">\(p_X\)</span>:</p>
+<p>Sea <span class="math inline">\(Y \sim p_Y\)</span>, <span
+class="math inline">\(\xi \sim \mathcal{U}(0, 1)\)</span>
+independientes. Una muestra <span class="math inline">\(Y = y\)</span>
+es aceptada si se cumple que <span class="math inline">\(\xi \le
+\frac{p_X(y)}{Mp_Y(y)}\)</span>. La probabilidad de que esto ocurra
+es</p>
+<p><span class="math display">\[
+\int_{-\infty}^{\infty}{p_Y(y) \frac{p_X(y)}{Mp_Y(y)} dy} =
+\int_{-\infty}^{\infty}{\frac{p_X(y)}{M} dy} = \frac{1}{M}
+\]</span></p>
+<p>Ahora bien, para cualquier <span class="math inline">\(x \in
+\mathbb{R}\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+P\left[ X \le x \right] &amp; = \int_{-\infty}^{x}{
+  \underbrace{p_Y(y) \frac{p_X(y)}{Mp_Y(y)} dy}_{\text{Si } y \text{ se
+acepta}}
+  + \underbrace{\left(1 - \frac{1}{M}\right) P\left[ X \le x
+\right]}_{\text{Si } y \text{ se rechaza}}
+} =  \\
+  &amp; = \frac{1}{M} \int_{-\infty}^{x}{p_X(y) dy} + \left(1 -
+\frac{1}{M}\right) P\left[ X \le x \right] \\
+  &amp; = \int_{\infty}^{\infty}{p_X(y) dy}
+\end{aligned}
+\]</span></p>
+<p>Lo que nos dice que <span class="math inline">\(X \sim p_X\)</span>
+como queríamos comprobar.</p>
 <h4 data-number="3.4.2.1"
 id="ejemplo-práctico-del-método-del-rechazo-en-r"><span
 class="header-section-number">3.4.2.1</span> Ejemplo práctico del método
@@ -4155,7 +4219,7 @@ p_Y (x) &amp; = 1, \quad 0 \le x \le 1
 M = \sup_{x}\frac{p_Y(x)}{p_X(x)} = \sup_{x}{p_Y(x)}
 \]</span></p>
 <p>En la sección anterior dijimos que este algoritmo es “como jugar a
-los dardos”. Pues bien, la siguiente figura [<a
+los dardos”. Pues bien, la figura [<a
 href="#fig:metodo_rechazo_grafica">16</a>] muestra la diana. El
 siguiente fragmento de código de R calcula este valor:</p>
 <pre><code class="language-r">a &lt;- 2
@@ -8303,9 +8367,9 @@ class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 longitud de onda <span class="math inline">\(\lambda\)</span>.<a
 href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3" role="doc-endnote"><p>En su defecto, si tenemos una función
-de densidad <span class="math inline">\(f_X\)</span>, podemos hallar la
+de densidad <span class="math inline">\(p_X\)</span>, podemos hallar la
 función de distribución haciendo <span class="math inline">\(F_X(x) =
-P[X &lt; x] = \int_{x_{min}}^{x}{f_X(t)dt}\)</span>.<a href="#fnref3"
+P[X &lt; x] = \int_{x_{min}}^{x}{p_X(t)dt}\)</span>.<a href="#fnref3"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4" role="doc-endnote"><p>Esto no es del todo cierto. Aunque
 generalmente suelen ser excepciones debido al coste computacional de RT
