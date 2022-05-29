@@ -567,46 +567,25 @@ Interfaces</a></li>
 <li><a href="#nuevas-técnicas-de-reducción-de-ruido"><span
 class="toc-section-number">6.1.2</span> Nuevas técnicas de reducción de
 ruido</a></li>
+<li><a href="#otras-mejoras-varias"><span
+class="toc-section-number">6.1.3</span> Otras mejoras varias</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#el-presente-y-futuro-de-ray-tracing"><span
 class="toc-section-number">7</span> El presente y futuro de Ray
 Tracing</a>
 <ul>
-<li><a href="#denoising"><span class="toc-section-number">7.1</span>
-Denoising</a></li>
-<li><a href="#filtering"><span class="toc-section-number">7.2</span>
-Filtering</a></li>
+<li><a href="#denoising-filtering"><span
+class="toc-section-number">7.1</span> <em>Denoising</em> &amp;
+<em>filtering</em></a></li>
+<li><a href="#la-industria-del-videojuego"><span
+class="toc-section-number">7.2</span> La industria del
+videojuego</a></li>
 <li><a href="#offline-renderers"><span
 class="toc-section-number">7.3</span> Offline renderers</a></li>
-<li><a href="#la-industria-del-videojuego"><span
-class="toc-section-number">7.4</span> La industria del videojuego</a>
-<ul>
-<li><a href="#ray-tracing-híbrido"><span
-class="toc-section-number">7.4.1</span> Ray tracing híbrido</a></li>
-<li><a href="#productos-comerciales"><span
-class="toc-section-number">7.4.2</span> Productos comerciales</a></li>
-<li><a href="#unreal-engine-5"><span
-class="toc-section-number">7.4.3</span> Unreal Engine 5</a></li>
-<li><a href="#la-última-generación-de-consolas"><span
-class="toc-section-number">7.4.4</span> La última generación de
-consolas</a></li>
-</ul></li>
-<li><a href="#posibles-mejoras-del-trabajo"><span
-class="toc-section-number">7.5</span> Posibles mejoras del trabajo</a>
-<ul>
-<li><a href="#blue-noise"><span
-class="toc-section-number">7.5.0.1</span> Blue noise</a></li>
-<li><a href="#forced-random-sampling"><span
-class="toc-section-number">7.5.0.2</span> Forced random
-sampling</a></li>
-<li><a href="#sampling-importance-resampling"><span
-class="toc-section-number">7.5.0.3</span> Sampling importance
-resampling</a></li>
-<li><a href="#low-discrepancy-sampling"><span
-class="toc-section-number">7.5.0.4</span> Low discrepancy
-sampling</a></li>
-</ul></li>
+<li><a href="#unreal-engine-5-lumen"><span
+class="toc-section-number">7.4</span> Unreal Engine 5 &amp;
+Lumen</a></li>
 </ul></li>
 <li><a href="#metodología-de-trabajo"><span
 class="toc-section-number">8</span> Metodología de trabajo</a>
@@ -5941,6 +5920,18 @@ suplir este efecto. Destacan los <em>lightmaps</em>, la <a
 href="#materiales-y-objetos">componente ambiental</a> de los materiales,
 <em>cubemaps</em>, oclusión ambiental e iluminación indirecta basada en
 <em>probes</em>.</p>
+<div id="fig:lightmpas" class="fignos">
+<figure>
+<img loading="lazy"
+src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image22-1999x1194-28fbbcb61a3c.png?resize=1&amp;w=1000"
+alt="Figura 41: Los lightmaps requieren que la geometría no pueda ser movida debido a que la sombra no es calculada en tiempo real. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 41:</span> Los
+<em>lightmaps</em> requieren que la geometría no pueda ser movida debido
+a que la sombra no es calculada en tiempo real. Fuente: <span
+class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
+role="doc-biblioref">2022b</a>)</span></figcaption>
+</figure>
+</div>
 <p>Para un vistazo más a fondo de la iluminación global, puedes
 referirte al vídeo de Alex Battaglia en <span class="citation"
 data-cites="df-global-illumination">(<a
@@ -5984,13 +5975,13 @@ class="math inline">\(N \in \mathbb{N}\)</span>.</p>
 <div id="fig:grafica_samples" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_samples.png"
-alt="Figura 41: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
-<figcaption aria-hidden="true"><span>Figura 41:</span> Para conseguir
+alt="Figura 42: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
+<figcaption aria-hidden="true"><span>Figura 42:</span> Para conseguir
 esta gráfica, iniciamos la escena <code>cornell_box_original</code>, y
 sin mover la cámara, vamos cambiando el número de muestras.</figcaption>
 </figure>
 </div>
-<p>La figura [<a href="#fig:grafica_samples">41</a>] muestra cómo afecta
+<p>La figura [<a href="#fig:grafica_samples">42</a>] muestra cómo afecta
 al rendimiento el valor de <span class="math inline">\(N\)</span>. Vemos
 cómo un número bajo de muestras (alrededor de 5) produce un frametime de
 aproximadamente 12 milisegundos, lo cual corresponde a 83 frames por
@@ -6014,12 +6005,12 @@ href="#acumulación-temporal">acumulación temporal</a>, pues en esencia,
 proporcionaría un mayor número de muestras en el tiempo.</p>
 <p>Con una única muestra por píxel, la imagen final aparece muy ruidosa.
 Aumentarlo a 5 mejora bastante la situación, pero sigue habiendo
-demasiado ruido [<a href="#fig:samples_1">42</a>]</p>
+demasiado ruido [<a href="#fig:samples_1">43</a>]</p>
 <div id="fig:samples_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/1,%205%20samples.png"
-alt="Figura 42: Izquierda: 1 muestra. Derecha: 5 muestras" />
-<figcaption aria-hidden="true"><span>Figura 42:</span>
+alt="Figura 43: Izquierda: 1 muestra. Derecha: 5 muestras" />
+<figcaption aria-hidden="true"><span>Figura 43:</span>
 <strong>Izquierda</strong>: 1 muestra. <strong>Derecha</strong>: 5
 muestras</figcaption>
 </figure>
@@ -6029,8 +6020,8 @@ calidad visual significativa.</p>
 <div id="fig:samples_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/10,%2020%20samples.png"
-alt="Figura 43: Izquierda: 10 muestras. Derecha: 20 muestras" />
-<figcaption aria-hidden="true"><span>Figura 43:</span>
+alt="Figura 44: Izquierda: 10 muestras. Derecha: 20 muestras" />
+<figcaption aria-hidden="true"><span>Figura 44:</span>
 <strong>Izquierda</strong>: 10 muestras. <strong>Derecha</strong>: 20
 muestras</figcaption>
 </figure>
@@ -6052,13 +6043,13 @@ de un camino.</p>
 <div id="fig:grafica_depth" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_depth.png"
-alt="Figura 44: Coste de un frame en función de la profundidad de" />
-<figcaption aria-hidden="true"><span>Figura 44:</span> Coste de un frame
+alt="Figura 45: Coste de un frame en función de la profundidad de" />
+<figcaption aria-hidden="true"><span>Figura 45:</span> Coste de un frame
 en función de la profundidad de</figcaption>
 </figure>
 </div>
-<p>En esta figura [<a href="#fig:grafica_depth">44</a>] ocurre algo
-similar a [<a href="#fig:grafica_samples">41</a>]: como es evidente,
+<p>En esta figura [<a href="#fig:grafica_depth">45</a>] ocurre algo
+similar a [<a href="#fig:grafica_samples">42</a>]: como es evidente,
 aumentar la profundidad de un rayo aumenta el coste de renderizar un
 frame. Sin embargo, hay algunos matices que debemos estudiar con más
 detalle.</p>
@@ -6093,65 +6084,65 @@ pena el coste adicional?</strong>.</p>
 <p>Para responder a esta pregunta, primero debemos conocer cómo actúa
 este parámetro. Empezando con un número extremadamente bajo para los
 rebotes, vemos que parte de la escena ni siquiera se renderiza [<a
-href="#fig:depth_1">45</a>].</p>
+href="#fig:depth_1">46</a>].</p>
 <div id="fig:depth_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/1%20bounce.png" style="width:70.0%"
-alt="Figura 45: depth = 1" />
-<figcaption aria-hidden="true"><span>Figura 45:</span>
+alt="Figura 46: depth = 1" />
+<figcaption aria-hidden="true"><span>Figura 46:</span>
 <code>depth = 1</code></figcaption>
 </figure>
 </div>
 <p>Aumentar el número de rebotes progresivamente permite que el camino
 adquiera mayor información. Con dos rebotes, permitimos que un camino
 adquiera información sobre la caja por dentro, así como un reflejo
-primitivo en las esferas [<a href="#fig:depth_2">46</a>].</p>
+primitivo en las esferas [<a href="#fig:depth_2">47</a>].</p>
 <div id="fig:depth_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/2%20bounces.png" style="width:70.0%"
-alt="Figura 46: depth = 2" />
-<figcaption aria-hidden="true"><span>Figura 46:</span>
+alt="Figura 47: depth = 2" />
+<figcaption aria-hidden="true"><span>Figura 47:</span>
 <code>depth = 2</code></figcaption>
 </figure>
 </div>
 <p>Con 3 rebotes, la esfera izquierda refleja casi en su totalidad la
 esfera, pero vemos que el reflejo de la esfera derecha <em>dentro</em>
-de la izquierda está oscurecido [<a href="#fig:depth_3">47</a>].</p>
+de la izquierda está oscurecido [<a href="#fig:depth_3">48</a>].</p>
 <div id="fig:depth_3" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/3%20bounces.png" style="width:70.0%"
-alt="Figura 47: depth = 3" />
-<figcaption aria-hidden="true"><span>Figura 47:</span>
+alt="Figura 48: depth = 3" />
+<figcaption aria-hidden="true"><span>Figura 48:</span>
 <code>depth = 3</code></figcaption>
 </figure>
 </div>
-<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">48</a>] se arregla
+<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">49</a>] se arregla
 mayoritariamente esto.</p>
 <div id="fig:depth_4" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/4%20bounces.png" style="width:70.0%"
-alt="Figura 48: depth = 4" />
-<figcaption aria-hidden="true"><span>Figura 48:</span>
+alt="Figura 49: depth = 4" />
+<figcaption aria-hidden="true"><span>Figura 49:</span>
 <code>depth = 4</code></figcaption>
 </figure>
 </div>
 <p>En esta escena, aumentar más allá de 5 o 6 rebotes produce una
 situación de retornos reducidos. La calidad de imagen no aumenta
 prácticamente nada, pero el coste se vuelve muy elevado [<a
-href="#fig:depth_20">49</a>, <a href="#fig:depth_50">50</a>].</p>
+href="#fig:depth_20">50</a>, <a href="#fig:depth_50">51</a>].</p>
 <div id="fig:depth_20" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/20%20bounces.png" style="width:70.0%"
-alt="Figura 49: depth = 20" />
-<figcaption aria-hidden="true"><span>Figura 49:</span>
+alt="Figura 50: depth = 20" />
+<figcaption aria-hidden="true"><span>Figura 50:</span>
 <code>depth = 20</code></figcaption>
 </figure>
 </div>
 <div id="fig:depth_50" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/50%20bounces.png" style="width:70.0%"
-alt="Figura 50: depth = 50" />
-<figcaption aria-hidden="true"><span>Figura 50:</span>
+alt="Figura 51: depth = 50" />
+<figcaption aria-hidden="true"><span>Figura 51:</span>
 <code>depth = 50</code></figcaption>
 </figure>
 </div>
@@ -6164,24 +6155,24 @@ podría ser un motivo factor no negociable, pero en nuestro caso, nos
 servirá.</p>
 <p>Utilizando una única muestra, pero un valor de acumulación temporal
 de 100 frames máximos, proporciona una imagen sin apenas ruido [<a
-href="#fig:acumulacion_temp">51</a>].</p>
+href="#fig:acumulacion_temp">52</a>].</p>
 <div id="fig:acumulacion_temp" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%201.png" style="width:40.0%"
-alt="Figura 51: 1 muestra, acumulación temporal de 100 frames. A diferencia de 42, el resultado es impecable." />
-<figcaption aria-hidden="true"><span>Figura 51:</span> 1 muestra,
+alt="Figura 52: 1 muestra, acumulación temporal de 100 frames. A diferencia de 43, el resultado es impecable." />
+<figcaption aria-hidden="true"><span>Figura 52:</span> 1 muestra,
 acumulación temporal de 100 frames. A diferencia de <a
-href="#fig:samples_1">42</a>, el resultado es impecable.</figcaption>
+href="#fig:samples_1">43</a>, el resultado es impecable.</figcaption>
 </figure>
 </div>
 <p>Subiendo los parámetros a 200 frames de acumulación temporal y 10
 muestras, se obtiene una imagen muy buena[<a
-href="#fig:acumulacion_temp_2">52</a>].</p>
+href="#fig:acumulacion_temp_2">53</a>].</p>
 <div id="fig:acumulacion_temp_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%202.png" style="width:40.0%"
-alt="Figura 52: 10 muestras, acumulación temporal de 200 frames." />
-<figcaption aria-hidden="true"><span>Figura 52:</span> 10 muestras,
+alt="Figura 53: 10 muestras, acumulación temporal de 200 frames." />
+<figcaption aria-hidden="true"><span>Figura 53:</span> 10 muestras,
 acumulación temporal de 200 frames.</figcaption>
 </figure>
 </div>
@@ -6198,8 +6189,8 @@ escala al variarla.</p>
 <div id="fig:resolucion" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_resolucion.png"
-alt="Figura 53: Tiempo de renderización de un frame dependiendo de la resolución" />
-<figcaption aria-hidden="true"><span>Figura 53:</span> Tiempo de
+alt="Figura 54: Tiempo de renderización de un frame dependiendo de la resolución" />
+<figcaption aria-hidden="true"><span>Figura 54:</span> Tiempo de
 renderización de un frame dependiendo de la resolución</figcaption>
 </figure>
 </div>
@@ -6221,12 +6212,12 @@ integrar para reducir la varianza. Se ha implementado muestreo por
 importancia para los materiales difusos. En particular, se ha utilizado
 dos estrategias diferentes para escoger direcciones aleatorias, que
 pueden observarse en la figura [<a
-href="#fig:importance_sample">54</a>].</p>
+href="#fig:importance_sample">55</a>].</p>
 <div id="fig:importance_sample" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Importance%20sample.png"
-alt="Figura 54: Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling.   Escena: cornell_box_original, 10 rebotes, acumulación temporal off, 10 muestras" />
-<figcaption aria-hidden="true"><span>Figura 54:</span>
+alt="Figura 55: Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling.   Escena: cornell_box_original, 10 rebotes, acumulación temporal off, 10 muestras" />
+<figcaption aria-hidden="true"><span>Figura 55:</span>
 <strong>Izquierda</strong>: <em>hemisphere sampling</em>.
 <strong>Derecha</strong>: <em>Cosine-Weighted Hemisphere Sampling</em>.
 <br> Escena: <code>cornell_box_original</code>, 10 rebotes, acumulación
@@ -6377,7 +6368,7 @@ class="header-section-number">5.4.2.1</span> Por número de muestras</h4>
 primeras imágenes fijaremos la acumulación temporal a un único frame.
 Explicaremos el motivo después.</p>
 <p>Con una única muestra, se observa una diferencia enorme entre ambas
-versiones [<a href="#fig:comparativa_1s">55</a>]. En nuestra
+versiones [<a href="#fig:comparativa_1s">56</a>]. En nuestra
 implementación no se observa prácticamente nada. Solo somos capaces de
 distinguir la luz, un poco del reflejo de la caja izquierda y los
 <em>caustics</em> causados por la luz del techo. Mientras tanto, en In
@@ -6385,8 +6376,8 @@ One Weekend, la imagen es ruidosa pero definida.</p>
 <div id="fig:comparativa_1s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_1s.png" style="width:85.0%"
-alt="Figura 55: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 55:</span> 1 muestra.
+alt="Figura 56: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 56:</span> 1 muestra.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -6399,7 +6390,7 @@ la fuente. En cambio, en nuestro motor, este tipo de fuentes no se
 muestrean directamente, sino que debemos contar con el azar para que
 aporten radiancia.</p>
 <p>Una vez pasamos a 5 muestras [Figura <a
-href="#fig:comparativa_5s">56</a>], nuestro motor consigue una imagen
+href="#fig:comparativa_5s">57</a>], nuestro motor consigue una imagen
 más nítida, similar a la que In One Weekend genera con una muestra. En
 cambio, In One Weekend consigue un resultado muy bueno, aunque con
 muchas luciérnagas. Este fenómeno no ocurre en nuestra implementación
@@ -6407,8 +6398,8 @@ por el tipo de muestreo.</p>
 <div id="fig:comparativa_5s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_5s.png" style="width:85.0%"
-alt="Figura 56: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 56:</span> 5 muestras.
+alt="Figura 57: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 57:</span> 5 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -6418,8 +6409,8 @@ ruidoso. ¿Se podría hacer algo para mejorarlo?</p>
 <div id="fig:comparativa_20s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_20s.png" style="width:85.0%"
-alt="Figura 57: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 57:</span> 20 muestras.
+alt="Figura 58: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 58:</span> 20 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -6430,7 +6421,7 @@ respecto al tiempo, nuestra implementación utiliza interpolación para
 mezclar los colores de los frames. De esta forma, se consigue el efecto
 de normalización, lo cual elimina el ruido de la imagen con el tiempo.
 De esta forma conseguimos equiparar la imagen de ambas versiones [Figura
-<a href="#fig:comparativa_100s">58</a>].</p>
+<a href="#fig:comparativa_100s">59</a>].</p>
 <p>Se puede observar cómo el tipo de ruido es diferente. En In One
 Weekend, el ruido se presenta en forma de píxeles blancos, debido a las
 luciérnagas generadas por el muestreo directo de la fuente de luz. En
@@ -6439,8 +6430,8 @@ rayos que no impactan en ninguna superficie tras rebotar.</p>
 <div id="fig:comparativa_100s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_100s.png" style="width:85.0%"
-alt="Figura 58: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
-<figcaption aria-hidden="true"><span>Figura 58:</span> 100 muestras.
+alt="Figura 59: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
+<figcaption aria-hidden="true"><span>Figura 59:</span> 100 muestras.
 <strong>Izquierda</strong>: In One Weekend (100 muestras).
 <strong>Derecha</strong>: nuestro motor (7 muestras, 15 frames de
 acumulación temporal)</figcaption>
@@ -6448,14 +6439,14 @@ acumulación temporal)</figcaption>
 </div>
 <p>Por último, subiendo el número de muestras a 1000 conseguimos una
 imagen muy nítida en ambas implementaciones [Figura <a
-href="#fig:comparativa_1000s">59</a>]. Conseguimos apreciar una
+href="#fig:comparativa_1000s">60</a>]. Conseguimos apreciar una
 diferencia en los bordes de la esfera de la derecha, la cual seguramente
 se deba a un fallo en la implementación de la BRDF.</p>
 <div id="fig:comparativa_1000s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_1000s.png" style="width:100.0%"
-alt="Figura 59: La imagen final, con 1000 muestras para cada versión. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de acumulación temporal)" />
-<figcaption aria-hidden="true"><span>Figura 59:</span> La imagen final,
+alt="Figura 60: La imagen final, con 1000 muestras para cada versión. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de acumulación temporal)" />
+<figcaption aria-hidden="true"><span>Figura 60:</span> La imagen final,
 con 1000 muestras para cada versión. <strong>Izquierda</strong>: In One
 Weekend (1000 muestras). <strong>Derecha</strong>: nuestro motor (10
 muestras, 100 frames de acumulación temporal)</figcaption>
@@ -6474,7 +6465,7 @@ calidad de imagen podemos conseguir con ambas implementaciones</p>
 <p>Utilizando un presupuesto de 4000 milisegundos, In One Weekend es
 capaz de utilizar 5 muestras para la imagen, mientras que nuestro motor
 podría utilizar 10 muestras y 19 frames de acumulación temporal [Figura
-<a href="#fig:comparativa_4000ms">60</a>].</p>
+<a href="#fig:comparativa_4000ms">61</a>].</p>
 <p><span class="math display">\[
 20.4 \frac{\text{ms}}{\text{10 muestras}} \cdot 19 \text{ frames de
 temp. acum.} = 3876 \text{ ms}
@@ -6482,8 +6473,8 @@ temp. acum.} = 3876 \text{ ms}
 <div id="fig:comparativa_4000ms" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_4000ms.png" style="width:85.0%"
-alt="Figura 60: 4000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 60:</span> 4000 milisegundos
+alt="Figura 61: 4000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 61:</span> 4000 milisegundos
 de <em>frame budget</em>. <strong>Izquierda</strong>: In One Weekend.
 <strong>Derecha</strong>: nuestro motor</figcaption>
 </figure>
@@ -6499,12 +6490,12 @@ temp. acum.} = 70000 \text{ ms}
 <p>Esencialmente, la imagen que genera nuestra implementación es
 perfecta. No muestra ni un ápice de ruido; mientras que la de In One
 Weeekend presenta un resultado poco nítido [Figura <a
-href="#fig:comparativa_70000ms">61</a>].</p>
+href="#fig:comparativa_70000ms">62</a>].</p>
 <div id="fig:comparativa_70000ms" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_70000ms.png" style="width:85.0%"
-alt="Figura 61: 70000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 61:</span> 70000
+alt="Figura 62: 70000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 62:</span> 70000
 milisegundos de <em>frame budget</em>. <strong>Izquierda</strong>: In
 One Weekend. <strong>Derecha</strong>: nuestro motor</figcaption>
 </figure>
@@ -6560,8 +6551,8 @@ capaz de producir imágenes de escenas virtuales.</p>
 <div id="fig:pathtracing_showcase" class="fignos">
 <figure>
 <img loading="lazy" src="./img/06/Showcase.png"
-alt="Figura 62: El motor es capaz de producir preciosas imágenes de objetos físicamente realistas que se mueven en tiempo real" />
-<figcaption aria-hidden="true"><span>Figura 62:</span> El motor es capaz
+alt="Figura 63: El motor es capaz de producir preciosas imágenes de objetos físicamente realistas que se mueven en tiempo real" />
+<figcaption aria-hidden="true"><span>Figura 63:</span> El motor es capaz
 de producir preciosas imágenes de objetos físicamente realistas que se
 mueven en tiempo real</figcaption>
 </figure>
@@ -6647,31 +6638,92 @@ muestreo por importancia múltiple, ruleta rusa o secuencias de baja
 discrepancia (métodos de quasi-Monte Carlo). Resultaría interesante ver
 cómo estas técnicas se comportan en comparación con las que sí hemos
 usado.</p>
+<h3 data-number="6.1.3" id="otras-mejoras-varias"><span
+class="header-section-number">6.1.3</span> Otras mejoras varias</h3>
+<p>Como es evidente, nos hemos dejado muchos detalles en el tintero.
+Otro aspecto que me hubiera gustado explorar, pero que no ha sido
+posible, es la capcacidad de hacer tests unitarios (lo que se conoce
+como <em>Test Driven Development</em>). Debido a la gran velocidad de
+desarrollo que ha sido requerida para sacar este proyecto adelante,
+integrar test unitarios hubiera supuesto una inversión de tiempo
+considerable.</p>
+<p>Esto, evidentemente, es un gran problema. Hoy en día un software
+profesional requiere la comprobación de que el código funciona. En este
+caso, se podrían hacer algunas comprobaciones como el <em>white furnace
+test</em>. Aun así, integrar test en un ray tracer resulta algo más
+complicado que de costumbre teniendo en cuenta la naturaleza del
+programa.</p>
+<p>Sería también conveniente aprender un sistema de <em>debugging</em>
+sólido. En el blog de <span class="citation"
+data-cites="alain-debug">(<a href="#ref-alain-debug"
+role="doc-biblioref">Alain Galvan 2019</a>)</span> se pueden encontrar
+algunas herramientras muy útiles para este propósito.</p>
 <h1 data-number="7" id="el-presente-y-futuro-de-ray-tracing"><span
 class="header-section-number">7</span> El presente y futuro de Ray
 Tracing</h1>
-<blockquote>
-<p>TODO: de momento, se queda como está. Es un capítulo bastante fácil
-de escribir, así que en unos tres días como muchísimo podría estar todo
-listo.</p>
-</blockquote>
-<h2 data-number="7.1" id="denoising"><span
-class="header-section-number">7.1</span> Denoising</h2>
-<p>https://alain.xyz/blog/ray-tracing-denoising</p>
-<h2 data-number="7.2" id="filtering"><span
-class="header-section-number">7.2</span> Filtering</h2>
-<p>https://alain.xyz/blog/ray-tracing-filtering</p>
-<h2 data-number="7.3" id="offline-renderers"><span
-class="header-section-number">7.3</span> Offline renderers</h2>
-<p>https://www.disneyanimation.com/technology/hyperion/</p>
-<h2 data-number="7.4" id="la-industria-del-videojuego"><span
-class="header-section-number">7.4</span> La industria del
+<p>Cosas de las que quiero hablar:</p>
+<ul>
+<li>Este trabajo es estado del arte</li>
+<li>Hablar de algunos offline renderers</li>
+<li>Denoising &amp; filtering muy importantes
+<ul>
+<li>Enlazar con acumulación temporal</li>
+</ul></li>
+<li>Series X &amp; PS5</li>
+<li>Juegos de útlima generación
+<ul>
+<li>Control</li>
+<li>Minecraft RTX</li>
+<li>Cyberpunk</li>
+<li>Quake II RTX y Doom RTX</li>
+</ul></li>
+<li>UE5 Lumen
+<ul>
+<li>Enlazar varias veces con trabajo</li>
+</ul></li>
+</ul>
+<p>Después de un esfuerzo monumental como el que supone el desarrollo de
+un motor de rendering es satisfactorio ver el resultado; y más sabiendo
+que tratamos con tecnología puntera. Sin embargo, en el fondo, este
+trabajo no es más que un juguete. Mientras que este proyecto ha durado
+escasos meses, los profesionales llevan años trabajando en transporte de
+luz. Así que, ¡veamos qué se cuece en la industria!</p>
+<p>En esta sección vamos a explorar ligeralmente el estado del arte.
+Veremos algunas de las técnicas que están cobrando fuerza en los últimos
+años, así como algunos renderers profesionales. Le pondremos especial
+atención a cómo funciona el sistema de iluminación global de Unreal
+Engine 5, conocido como <em>Lumen</em>.</p>
+<h2 data-number="7.1" id="denoising-filtering"><span
+class="header-section-number">7.1</span> <em>Denoising</em> &amp;
+<em>filtering</em></h2>
+<ul>
+<li>https://s2022.siggraph.org/</li>
+<li>https://alain.xyz/blog/ray-tracing-denoising</li>
+<li>https://alain.xyz/blog/ray-tracing-filtering</li>
+<li>STIR
+https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</li>
+<li>ReSTIR
+https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf</li>
+<li>DLSS https://www.nvidia.com/es-es/geforce/technologies/dlss,
+https://www.youtube.com/watch?v=YWIKzRhYZm4</li>
+<li>FSR https://www.youtube.com/watch?v=y2RR2770H8E</li>
+<li>Blue noise
+<ul>
+<li>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</li>
+<li>https://alain.xyz/blog/ray-tracing-filtering</li>
+<li>Minecraft RTX usa blue noise para el sampling:
+https://alain.xyz/blog/frame-analysis-minecraftrtx/assets/diffuse-1spp.jpg</li>
+</ul></li>
+</ul>
+<h2 data-number="7.2" id="la-industria-del-videojuego"><span
+class="header-section-number">7.2</span> La industria del
 videojuego</h2>
-<h3 data-number="7.4.1" id="ray-tracing-híbrido"><span
-class="header-section-number">7.4.1</span> Ray tracing híbrido</h3>
-<p>https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</p>
-<h3 data-number="7.4.2" id="productos-comerciales"><span
-class="header-section-number">7.4.2</span> Productos comerciales</h3>
+<ul>
+<li>Hybrid RT
+<ul>
+<li>https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</li>
+</ul></li>
+<li>Productos comerciales
 <ul>
 <li>Control
 <ul>
@@ -6699,59 +6751,170 @@ class="header-section-number">7.4.2</span> Productos comerciales</h3>
 <li>Path tracing</li>
 </ul></li>
 <li>Metro Exodus</li>
-</ul>
-<h3 data-number="7.4.3" id="unreal-engine-5"><span
-class="header-section-number">7.4.3</span> Unreal Engine 5</h3>
-<p>https://twitter.com/Yurukuyaru/status/1523643949826588674</p>
-<h3 data-number="7.4.4" id="la-última-generación-de-consolas"><span
-class="header-section-number">7.4.4</span> La última generación de
-consolas</h3>
-<h2 data-number="7.5" id="posibles-mejoras-del-trabajo"><span
-class="header-section-number">7.5</span> Posibles mejoras del
-trabajo</h2>
-<ul>
-<li>Test Driven Development
-<ul>
-<li><em>White furnace test</em> (01_lights.pdf, p.61)</li>
-</ul></li>
-<li>Debugging https://alain.xyz/blog/graphics-debugging</li>
-<li>Materiales
-<ul>
-<li>Physically based materials</li>
-<li>Diferentes tipos de materiales</li>
-<li>Subsurface scattering</li>
-</ul></li>
-<li>HDR</li>
-<li>Cámara
-<ul>
-<li>Diferentes tipos de cámaras</li>
-<li>Focal lenght, depth of field, motion blur</li>
 </ul></li>
 </ul>
-<h4 data-number="7.5.0.1" id="blue-noise"><span
-class="header-section-number">7.5.0.1</span> Blue noise</h4>
+<h2 data-number="7.3" id="offline-renderers"><span
+class="header-section-number">7.3</span> Offline renderers</h2>
 <ul>
-<li>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</li>
-<li>https://alain.xyz/blog/ray-tracing-filtering</li>
-<li>Minecraft RTX usa blue noise para el sampling:
-https://alain.xyz/blog/frame-analysis-minecraftrtx/assets/diffuse-1spp.jpg</li>
+<li>https://www.disneyanimation.com/technology/hyperion/</li>
+<li>https://arnoldrenderer.com/</li>
+<li>Unity https://unity.com/es</li>
+<li>Unreal Engine 5</li>
 </ul>
-<h4 data-number="7.5.0.2" id="forced-random-sampling"><span
-class="header-section-number">7.5.0.2</span> Forced random sampling</h4>
-<p>http://drivenbynostalgia.com/ (ctrl + f -&gt; forced random
-sampling)</p>
-<h4 data-number="7.5.0.3" id="sampling-importance-resampling"><span
-class="header-section-number">7.5.0.3</span> Sampling importance
-resampling</h4>
+<h2 data-number="7.4" id="unreal-engine-5-lumen"><span
+class="header-section-number">7.4</span> Unreal Engine 5 &amp;
+Lumen</h2>
 <ul>
-<li>https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</li>
-<li>https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf</li>
+<li>https://www.unrealengine.com/en-US/tech-blog/unreal-engine-5-goes-all-in-on-dynamic-global-illumination-with-lumen</li>
+<li>https://twitter.com/Yurukuyaru/status/1523643949826588674</li>
 </ul>
-<h4 data-number="7.5.0.4" id="low-discrepancy-sampling"><span
-class="header-section-number">7.5.0.4</span> Low discrepancy
-sampling</h4>
-<hr>
-<h2 class="unlisted unnumbered" id="referencias">Referencias</h2>
+<p>Unreal Engine 5 <span class="citation" data-cites="UE5">(<a
+href="#ref-UE5" role="doc-biblioref">Epic Games 2022a</a>)</span> es la
+última generación del Motor <em>Unreal Engine</em> creado por Epic
+Games. Es un software extremadamente complejo que empaqueta múltiples
+funciones, como animación, físicas, renderizado, audio, y un largo
+etcétera. Se usa tanto en la industria de la animación como en la de los
+videojuegos.</p>
+<p>Una de las novedades de esta versión es la integración de un sistema
+de iluminación global, llamado <strong>Lumen</strong>. Junto a
+<strong>Nanite</strong>, que es un sistema de geometría virtualizada, es
+la caracaterística más importante que han presentado. Recientemente han
+detallado cómo funciona Lumen <span class="citation"
+data-cites="lumen">(<a href="#ref-lumen" role="doc-biblioref">Epic Games
+2022b</a>)</span>, así que estudiaremos qué técnicas han utilizado.</p>
+<div id="fig:lumen1" class="fignos">
+<figure>
+<img loading="lazy"
+src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image12-1999x1130-4bfd11e88c9d.png"
+style="width:70.0%"
+alt="Figura 64: Habitación interior iluminada por el sistema Lumen" />
+<figcaption aria-hidden="true"><span>Figura 64:</span> Habitación
+interior iluminada por el sistema Lumen</figcaption>
+</figure>
+</div>
+<p>La <a href="#iluminación-global">iluminación global</a> es el efecto
+que produce la luz cuando los fotones que la componen rebotan dentro de
+una escena. En el pasado (i.e., rasterización) se ha simulado mediante
+técnicas como <em>lightmap baking</em>, oclusión ambiental y similares.
+Sin embargo, como ya explicamos en secciones anteriores, estas técnicas
+presentan grandes limitaciones.</p>
+<p>Lumen simula infinitos rebotes de la luz en una escena en tiempo
+real, actualizando la iluminación automáticamente Esto funciona tanto
+para interiores como exteriores, puesto que simula la luz proveniente
+del cielo. Además, el sistema tiene en cuenta materiales emisivos y la
+niebla volumétrica.</p>
+<div id="fig:lumen2" class="fignos">
+<figure>
+<img loading="lazy"
+src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image16-1999x1125-48a619533ccb.jpg"
+alt="Figura 65: Una escena exterior con materiales emisivos en Unreal Engine 5. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 65:</span> Una escena
+exterior con materiales emisivos en Unreal Engine 5. Fuente: <span
+class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
+role="doc-biblioref">2022b</a>)</span></figcaption>
+</figure>
+</div>
+<p>Como era de esperar, Lumen utiliza ray tracing para hacer el cálculo
+de la iluminación. Para conseguirlo, el sistema crea una versión
+simplificada de la escena en la cual resulta más fácil hacer
+intersecciones de rayos con objetos.</p>
+<p>Por defecto se ha optado una forma de ray tracing basada en software,
+pues de esta manera se soporta más tipos de hardware. Se combinan
+<em>Mesh Distance Fields</em> (mallas de polígonos que resultan
+eficientes a la hora de intersecar) mezcladas en un <em>Global Distance
+Field</em> en este tipo de ray tracing. No obstante, su versión de ray
+tracing basado en hardware es mandatoria para conseguir algunos efectos
+como reflejos especulares perfectos, pues de otra manera no se podrían
+conseguir en tiempo real.</p>
+<p>Una optimización clave para que este sistema funcione de forma
+eficiente es el uso de <em>surface caching</em>. Trabajando en conjunto
+junto a Nanite, Lumen crea un atlas de texturas de aquellas mallas
+presentes alrededor del jugador de forma que se cubran las caras
+visibles desde algún punto de vista. Esto simplifica el coste de la
+evaluación del material.</p>
+<div id="fig:lumen3" class="fignos">
+<figure>
+<img loading="lazy" src="./img/07/Lumen1.jpg"
+alt="Figura 66: Visualización de Mesh Distance Fields de una escena. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 66:</span> Visualización de
+<em>Mesh Distance Fields</em> de una escena. Fuente: <span
+class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
+role="doc-biblioref">2022b</a>)</span></figcaption>
+</figure>
+</div>
+<p>Para el paso final del cálculo de la radiancia se usa un algoritmo
+basado en radiance caching presentado en <span class="citation"
+data-cites="siggraph2021">(<a href="#ref-siggraph2021"
+role="doc-biblioref">Siggraph 2021</a>)</span>. Como no resulta viable
+tirar rayos a diestro y siniestro por toda la escena, Lumen toma una
+pequeña porción de muestras y combina los cálculos de radiancia con
+información aportada por el material.</p>
+<div id="fig:lumen4" class="fignos">
+<figure>
+<img loading="lazy"
+src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image24-1920x1080-3158475cf4a8.png"
+style="width:70.0%"
+alt="Figura 67: Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 67:</span> Lumen combina los
+cálculos de la iluminación global con la información del material para
+crear la imagen final. Fuente: <span class="citation"
+data-cites="lumen">Epic Games (<a href="#ref-lumen"
+role="doc-biblioref">2022b</a>)</span></figcaption>
+</figure>
+</div>
+<p>Otro punto clave del sistema es la elección de las direcciones que se
+van a trazar. Para escogerlas, se comprueba qué partes del último frame
+resultaron muy brillantes. Entonces, se mandan rayos hacia esas zonas,
+pues esto producirá resultados menos ruidos en este frame. Esta técnica
+la hemos estudiado, y se llama <strong>muestreo por importancia</strong>
+(de la luz entrante en este caso).</p>
+<blockquote>
+<p>Este punto enlaza con nuestra <a
+href="#comparativa-con-in-one-weekend">comparativa con In One
+Weekend</a>. Una de las conclusiones más interesantes que obtuvimos fue
+que utilizar muestreo por importancia de las fuentes de iluminación
+proporcionaba unos resultados considerablemente mejores que una
+estrategia de muestreo basada en direcciones aleatorias. Aunque en este
+caso no se muestrean las fuentes de luz, sí que se utilizan partes de la
+escena con mucha radiancia, por lo que el fundamento es similar.</p>
+</blockquote>
+<div id="fig:lumen5" class="fignos">
+<figure>
+<img loading="lazy"
+src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image1-1999x1109-d3b299670791.png"
+alt="Figura 68: Lumen utiliza las partes más brillantes del último frame para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 68:</span> Lumen utiliza las
+partes más brillantes del último frame para la distribución de las
+nuevas direcciones de un rayo tras el impacto. Fuente: <span
+class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
+role="doc-biblioref">2022b</a>)</span></figcaption>
+</figure>
+</div>
+<p>Para calcular los reflejos de superficies se ha optado por promediar
+la radiancia de puntos en el mismo vecindario y acumulación temporal de
+frames para suavizar el resultado.</p>
+<figure>
+<img loading="lazy" src="./img/07/Lumen2.jpg"
+alt="Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true">Nuestro método principal de reducción de
+ruido fue la acumulación temporal de frames. Lumen utiliza una forma
+mucho más avanzada para lograr el mismo resultado con sus reflejos.
+Fuente: <span class="citation" data-cites="lumen">Epic Games (<a
+href="#ref-lumen" role="doc-biblioref">2022b</a>)</span></figcaption>
+</figure>
+<p>Finalmente, es importante destacar que las imágenes no son generadas
+a una gran resolución. Para conseguir una imagen digna de los tiempos
+actuales, los motores modernos utilizan una resolución interna cercana a
+720p o 1080p que es escalada mediante algún método de
+<em>upsampling</em>. En este caso, se ha optado por <em>Temporal Super
+Resolution</em>, una técnica que comenzó con Unreal Engine 4 y ha
+evolucionado en esta versión. Su comportamiento es similar a DLSS o
+FSR.</p>
+<p>Todas estas optimizaciones son esenciales para hacer que el motor
+corra en tiempo real. Aunque el rendimiento es extremadamente
+dependiente del tipo de contenido que se esté visualizando y los
+parámetros del sistema, Unreal Engine 5 puede correr a 60 FPS en
+consolas de la generación actual.</p>
 <h1 data-number="8" id="metodología-de-trabajo"><span
 class="header-section-number">8</span> Metodología de trabajo</h1>
 <p>Cualquier proyecto de una envergadura considerable necesita ser
@@ -6816,7 +6979,7 @@ class="header-section-number">8.2</span> Ciclos de desarrollo</h2>
 que estás leyendo, ya sea en PDF o en la web– y software. Podemos
 distinguir varias fases en la planificación del proyecto, que quedan
 resumidas en el diagrama de Grant [Figuras <a
-href="#fig:grantt_1">63</a>, <a href="#fig:grantt_2">64</a>]</p>
+href="#fig:grantt_1">69</a>, <a href="#fig:grantt_2">70</a>]</p>
 <p>Para comenzar, durante el verano de 2021 se implementarían los tres
 libros de Shirley de la “serie In One Weekend”: In One Weekend <span
 class="citation" data-cites="Shirley2020RTW1">(<a
@@ -6831,8 +6994,8 @@ acelerando así el aprendizaje.</p>
 <div id="fig:grantt_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%201.png"
-alt="Figura 63: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
-<figcaption aria-hidden="true"><span>Figura 63:</span> Diagrama de
+alt="Figura 69: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
+<figcaption aria-hidden="true"><span>Figura 69:</span> Diagrama de
 Grantt de la primera parte del desarrollo. Los libros de Peter Shirley
 servirían como introducción al trabajo</figcaption>
 </figure>
@@ -6844,8 +7007,8 @@ pues no se puede implementar algo que no se entiende.</p>
 <div id="fig:grantt_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%202.png"
-alt="Figura 64: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
-<figcaption aria-hidden="true"><span>Figura 64:</span> Diagrama de
+alt="Figura 70: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
+<figcaption aria-hidden="true"><span>Figura 70:</span> Diagrama de
 Grantt de la segunda parte del desarrollo. Durante el segundo
 cuatrimestre se trabajaría tanto la memoria como el
 software</figcaption>
@@ -7004,8 +7167,8 @@ Jetbrains. Se utiliza en la web para los bloques de código.</li>
 <div id="fig:tipografías" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Tipografías.png" style="width:70.0%"
-alt="Figura 65: Showcase de las tipografías utilizadas" />
-<figcaption aria-hidden="true"><span>Figura 65:</span> Showcase de las
+alt="Figura 71: Showcase de las tipografías utilizadas" />
+<figcaption aria-hidden="true"><span>Figura 71:</span> Showcase de las
 tipografías utilizadas</figcaption>
 </figure>
 </div>
@@ -7016,8 +7179,8 @@ específica.</p>
 <div id="fig:paleta_de_colores" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Paleta%20de%20colores.png" width="400"
-alt="Figura 66: La paleta de colores del proyecto" />
-<figcaption aria-hidden="true"><span>Figura 66:</span> La paleta de
+alt="Figura 72: La paleta de colores del proyecto" />
+<figcaption aria-hidden="true"><span>Figura 72:</span> La paleta de
 colores del proyecto</figcaption>
 </figure>
 </div>
@@ -7094,8 +7257,8 @@ diseños de este trabajo se han hecho con esta herramienta.</p>
 <div id="fig:figma" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Figma.png"
-alt="Figura 67: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 67:</span> Tablón principal
+alt="Figura 73: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 73:</span> Tablón principal
 del proyecto de Figma, a día 15 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -7190,8 +7353,8 @@ Github Pages.</li>
 <div id="fig:github_actions" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Github%20Actions.png"
-alt="Figura 68: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
-<figcaption aria-hidden="true"><span>Figura 68:</span> La pestaña de
+alt="Figura 74: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
+<figcaption aria-hidden="true"><span>Figura 74:</span> La pestaña de
 Github Actions permite controlar con facilidad el resultado de un
 workflow y cuánto tarda en ejecutarse</figcaption>
 </figure>
@@ -7235,8 +7398,8 @@ objetivos pendientes de la aplicación.</p>
 <div id="fig:github_issues" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Issues.png" style="width:80.0%"
-alt="Figura 69: Pestaña de issues, día 16 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 69:</span> Pestaña de
+alt="Figura 75: Pestaña de issues, día 16 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 75:</span> Pestaña de
 issues, día 16 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -7246,8 +7409,8 @@ importante del desarrollo.</p>
 <div id="fig:github_milestones" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Milestones.png" style="width:80.0%"
-alt="Figura 70: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
-<figcaption aria-hidden="true"><span>Figura 70:</span> Los
+alt="Figura 76: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
+<figcaption aria-hidden="true"><span>Figura 76:</span> Los
 <em>milestones</em> agrupan una serie de issues relacionados con un
 punto clave del desarrollo</figcaption>
 </figure>
@@ -7260,8 +7423,8 @@ aplicación es un acompañante del repositorio estilo Asana.</p>
 <div id="fig:github_projects" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Projects.png" style="width:80.0%"
-alt="Figura 71: Projects agrupa los issues y les asigna prioridades" />
-<figcaption aria-hidden="true"><span>Figura 71:</span> Projects agrupa
+alt="Figura 77: Projects agrupa los issues y les asigna prioridades" />
+<figcaption aria-hidden="true"><span>Figura 77:</span> Projects agrupa
 los issues y les asigna prioridades</figcaption>
 </figure>
 </div>
@@ -7296,8 +7459,8 @@ sus significados:</p>
 <div id="fig:github_emojis" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Commits.png"
-alt="Figura 72: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
-<figcaption aria-hidden="true"><span>Figura 72:</span> Los emojis
+alt="Figura 78: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
+<figcaption aria-hidden="true"><span>Figura 78:</span> Los emojis
 permiten reconocer el objetivo de cada commit. Esta tabla recoge el
 significado de cada uno</figcaption>
 </figure>
@@ -7918,9 +8081,14 @@ Adam Marrs, Peter Shirley, and I. Wald, eds. 2021. <span>“Ray tracing
 gems II.”</span> Apress. 2021. <a
 href="http://raytracinggems.com/rtg2">http://raytracinggems.com/rtg2</a>.
 </div>
+<div id="ref-alain-debug" class="csl-entry" role="doc-biblioentry">
+Alain Galvan. 2019. <span>“Graphics debugging.”</span> June 22, 2019.
+Accessed May 29, 2022. <a
+href="https://alain.xyz/blog/graphics-debugging">https://alain.xyz/blog/graphics-debugging</a>.
+</div>
 <div id="ref-alain-API" class="csl-entry" role="doc-biblioentry">
-Alain Galvan. 2022. <span>“A comparison of modern graphics APIs.”</span>
-2022. Accessed May 13, 2022. <a
+———. 2022. <span>“A comparison of modern graphics APIs.”</span> 2022.
+Accessed May 13, 2022. <a
 href="https://alain.xyz/blog/comparison-of-modern-graphics-apis">https://alain.xyz/blog/comparison-of-modern-graphics-apis</a>.
 </div>
 <div id="ref-asmilex-raytracing-docker" class="csl-entry"
@@ -8017,6 +8185,16 @@ Dockershelf. 2022. <span>“Repository for docker images of latex. Test
 driven, lightweight and reliable. Rebuilt daily.”</span> 2022. Accessed
 May 7, 2022. <a
 href="https://hub.docker.com/r/dockershelf/latex">https://hub.docker.com/r/dockershelf/latex</a>.
+</div>
+<div id="ref-UE5" class="csl-entry" role="doc-biblioentry">
+Epic Games. 2022a. <span>“Unreal engine 5.”</span> 2022. Accessed May
+29, 2022. <a
+href="https://www.unrealengine.com/en-US/unreal-engine-5">https://www.unrealengine.com/en-US/unreal-engine-5</a>.
+</div>
+<div id="ref-lumen" class="csl-entry" role="doc-biblioentry">
+———. 2022b. <span>“Unreal engine 5 goes all-in on dynamic global
+illumination with lumen.”</span> May 27, 2022. Accessed May 29, 2022. <a
+href="https://www.unrealengine.com/en-US/tech-blog/unreal-engine-5-goes-all-in-on-dynamic-global-illumination-with-lumen">https://www.unrealengine.com/en-US/tech-blog/unreal-engine-5-goes-all-in-on-dynamic-global-illumination-with-lumen</a>.
 </div>
 <div id="ref-berkeley-mc-lecture" class="csl-entry"
 role="doc-biblioentry">
@@ -8251,6 +8429,11 @@ href="https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html">https
 Shirley, P., and R. K. Morley. 2003. <em>Realistic Ray Tracing</em>. 2nd
 ed. USA: A. K. Peters, Ltd. <a
 href="https://www.taylorfrancis.com/books/mono/10.1201/9780429294891/realistic-ray-tracing-peter-shirley-keith-morley">https://www.taylorfrancis.com/books/mono/10.1201/9780429294891/realistic-ray-tracing-peter-shirley-keith-morley</a>.
+</div>
+<div id="ref-siggraph2021" class="csl-entry" role="doc-biblioentry">
+Siggraph. 2021. <span>“Advances in real-time rendering in gaming
+courses.”</span> 2021. Accessed May 29, 2022. <a
+href="http://advances.realtimerendering.com/s2021/index.html">http://advances.realtimerendering.com/s2021/index.html</a>.
 </div>
 <div id="ref-Szirmay-Kalos00monte-carlomethods" class="csl-entry"
 role="doc-biblioentry">
