@@ -37,3 +37,11 @@ Estas nuevas interfaces deberían ir acompañadas de una **refactorización de l
 En este trabajo hemos implementado algunas técnicas de reducción de varianza del estimador de Monte Carlo para la ecuación del transporte de luz [@eq:rendering_equation], lo cual permite reducir el ruido de la imagen final. Entre estas, se encuentran muestreo por importancia, *next-event estimation* o acumulación temporal de las muestras.
 
 Sin embargo, existen numerosas técnicas que no se han desarrollado. Entre estas, se encuentran el uso de ruido como *blue noise*, muestreo por importancia múltiple, ruleta rusa o secuencias de baja discrepancia (métodos de quasi-Monte Carlo).  Resultaría interesante ver cómo estas técnicas se comportan en comparación con las que sí hemos usado.
+
+### Otras mejoras varias
+
+Como es evidente, nos hemos dejado muchos detalles en el tintero. Otro aspecto que me hubiera gustado explorar, pero que no ha sido posible, es la capcacidad de hacer tests unitarios (lo que se conoce como *Test Driven Development*). Debido a la gran velocidad de desarrollo que ha sido requerida para sacar este proyecto adelante, integrar test unitarios hubiera supuesto una inversión de tiempo considerable.
+
+Esto, evidentemente, es un gran problema. Hoy en día un software profesional requiere la comprobación de que el código funciona. En este caso, se podrían hacer algunas comprobaciones como el *white furnace test*. Aun así, integrar test en un ray tracer resulta algo más complicado que de costumbre teniendo en cuenta la naturaleza del programa.
+
+Sería también conveniente aprender un sistema de *debugging* sólido. En el blog de [@alain-debug] se pueden encontrar algunas herramientras muy útiles para este propósito.
