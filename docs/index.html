@@ -585,12 +585,16 @@ class="toc-section-number">7.1.2</span> <em>Machine Learning</em> y
 técnicas de <em>super sampling</em></a></li>
 </ul></li>
 <li><a href="#la-industria-del-videojuego"><span
-class="toc-section-number">7.2</span> La industria del
-videojuego</a></li>
-<li><a href="#offline-renderers"><span
-class="toc-section-number">7.3</span> Offline renderers</a></li>
+class="toc-section-number">7.2</span> La industria del videojuego</a>
+<ul>
+<li><a href="#productos-comerciales"><span
+class="toc-section-number">7.2.1</span> Productos comerciales</a></li>
+<li><a href="#consolas-de-nueva-generación"><span
+class="toc-section-number">7.2.2</span> Consolas de nueva
+generación</a></li>
+</ul></li>
 <li><a href="#unreal-engine-5-y-lumen"><span
-class="toc-section-number">7.4</span> Unreal Engine 5 y Lumen</a></li>
+class="toc-section-number">7.3</span> Unreal Engine 5 y Lumen</a></li>
 </ul></li>
 <li><a href="#metodología-de-trabajo"><span
 class="toc-section-number">8</span> Metodología de trabajo</a>
@@ -845,7 +849,7 @@ mediante el cual se puede proyectar una imagen invertida en una pared. A
 inicios del siglo XVIII, Nicéphore Niépce consiguió arreglar una imagen
 capturada por las primeras cámaras <span class="citation"
 data-cites="history-photography">(<a href="#ref-history-photography"
-role="doc-biblioref">Wikipedia 2022h</a>)</span>. Era una impresión
+role="doc-biblioref">Wikipedia 2022j</a>)</span>. Era una impresión
 primitiva, por supuesto; pero funcional. A finales de este siglo, sobre
 los años 1890, la fotografía se extendió rápidamente en el espacio del
 consumidor gracias a la compañía Kodak. Finalmente, a mediados del siglo
@@ -1303,7 +1307,7 @@ class="header-section-number">1.2.1</span> Superficies implícitas</h3>
 superficies diferenciables <span class="citation"
 data-cites="wikipedia-contributors-2022O">(<a
 href="#ref-wikipedia-contributors-2022O" role="doc-biblioref">Wikipedia
-2022f</a>)</span>, pues nos interesará conocer el vector normal en cada
+2022h</a>)</span>, pues nos interesará conocer el vector normal en cada
 punto.</p>
 <p>Una superficie implícita es una superficie en un espacio euclidiano
 definida como</p>
@@ -1530,7 +1534,7 @@ sistema de coordenadas expresa cada punto del plano como una combinación
 convexa de los vértices <span class="citation"
 data-cites="wikipedia-contributors-2022G">(<a
 href="#ref-wikipedia-contributors-2022G" role="doc-biblioref">Wikipedia
-2022g</a>)</span>. Es decir, que para cada punto <span
+2022i</a>)</span>. Es decir, que para cada punto <span
 class="math inline">\(P\)</span> del triángulo existen <span
 class="math inline">\(\alpha, \beta\)</span> y <span
 class="math inline">\(\gamma\)</span> tales que <span
@@ -4635,7 +4639,7 @@ XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT</td>
 <p>Se puede encontrar más información sobre las diferentes arquitecturas
 y gráficas en el siguiente artículo de AMD Radeon <span class="citation"
 data-cites="wikipedia-radeon">(<a href="#ref-wikipedia-radeon"
-role="doc-biblioref">Wikipedia 2022e</a>)</span>, Nvidia <span
+role="doc-biblioref">Wikipedia 2022f</a>)</span>, Nvidia <span
 class="citation" data-cites="wikipedia-nvidia">(<a
 href="#ref-wikipedia-nvidia" role="doc-biblioref">Wikipedia
 2022b</a>)</span>, e <span class="citation" data-cites="intel-arc">(<a
@@ -4814,7 +4818,7 @@ clases para Engine</figcaption>
 </div>
 <div id="fig:diagrama-clases-scenes" class="fignos">
 <figure>
-<img loading="lazy" src="./img/08/Mermaid%20scenes.png"
+<img loading="lazy" src="./img/08/Mermaid%20scenes.png" style="width:60.0%"
 alt="Figura 21: Diagrama de clases para Scenes" />
 <figcaption aria-hidden="true"><span>Figura 21:</span> Diagrama de
 clases para Scenes</figcaption>
@@ -5483,9 +5487,9 @@ vec3 sample_pixel() {
 
     vec3 radiance = pathtrace(rayo);
 }</code></pre>
-<blockquote>
-<p>TODO: mostrar vídeo de ejemplo</p>
-</blockquote>
+<p>En la sección de la <a
+href="#comparativa-con-in-one-weekend">comparativa</a> estudiaremos a
+fondo los efectos de esta técnica.</p>
 <h2 data-number="4.10" id="corrección-de-gamma"><span
 class="header-section-number">4.10</span> Corrección de gamma</h2>
 <p>Con el código de la sección <a
@@ -5496,7 +5500,7 @@ espera que la terna RGB provista esté en <span class="math inline">\([0,
 1]^3\)</span>. Esto implica que los colores acabarán quemados.</p>
 <div id="fig:quemado" class="fignos">
 <figure>
-<img loading="lazy" src="./img/04/Quemado.png"
+<img loading="lazy" src="./img/04/Quemado.png" style="width:80.0%"
 alt="Figura 25: Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz." />
 <figcaption aria-hidden="true"><span>Figura 25:</span> Fíjate en la
 parte de la izquierda. La pared roja aparece demasiado brillante;
@@ -5531,7 +5535,7 @@ if (USE_GAMMA_CORRECTION == 1) {
 }</code></pre>
 <div id="fig:correccion_gamma" class="fignos">
 <figure>
-<img loading="lazy" src="./img/04/Corrección%20de%20gamma.png"
+<img loading="lazy" src="./img/04/Corrección%20de%20gamma.png" style="width:80.0%"
 alt="Figura 26: Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos." />
 <figcaption aria-hidden="true"><span>Figura 26:</span> Con la corección
 de gamma aplicada, vemos que los colores de la foto no son tan
@@ -5855,16 +5859,8 @@ que propicia el rebote constante de los fotones emitidos por fuentes de
 luz hacia una escena, adquiriendo las propiedades de los materiales en
 los que rebotan.</p>
 <p>Dicho de esta forma, es difícil imaginarse cómo se comporta en la
-vida real. Para ilustrarlo, tomemos dos fotografías de una escena
-similar a la caja de Cornell:</p>
-<div id="fig:cornell_bath_1" class="fignos">
-<figure>
-<img loading="lazy" src="./img/05/Cornell%20bath%201.jpg" style="width:60.0%"
-alt="Figura 37: Escena similar a la caja de Cornell, en la vida real. También es mi baño." />
-<figcaption aria-hidden="true"><span>Figura 37:</span> Escena similar a
-la caja de Cornell, en la vida real. También es mi baño.</figcaption>
-</figure>
-</div>
+vida real. Para ilustrarlo, tomemos dos fotografías que se asemejan a la
+caja de Cornell.</p>
 <p>En la escena [<a href="#fig:cornell_bath_1">37</a>] observamos cómo
 la luz del sol entra desde la parte de la derecha, rebotando en todo el
 espacio. Notamos cómo la escena tiene una tonalidad natural y cálida.
@@ -5873,13 +5869,12 @@ forma de arrojar la luz. Cerrando la puerta (la cual no puede ser vista
 en la fotografía, pero se encuentra a la derecha y es idéntica al
 cristal), la iluminación cambia completamente [<a
 href="#fig:cornell_bath_2">38</a>].</p>
-<div id="fig:cornell_bath_2" class="fignos">
+<div id="fig:cornell_bath_1" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Cornell%20bath%202.jpg" style="width:60.0%"
-alt="Figura 38: Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados" />
-<figcaption aria-hidden="true"><span>Figura 38:</span> Cuando cambiamos
-la forma de iluminar la escena, los colores se ven drásticamente
-modificados</figcaption>
+<img loading="lazy" src="./img/05/Cornell%20bath%201.jpg" style="width:60.0%"
+alt="Figura 37: Escena similar a la caja de Cornell, en la vida real. También es mi baño." />
+<figcaption aria-hidden="true"><span>Figura 37:</span> Escena similar a
+la caja de Cornell, en la vida real. También es mi baño.</figcaption>
 </figure>
 </div>
 <p>Podemos observar cómo todos los materiales adquieren un tinte rojizo,
@@ -5890,6 +5885,15 @@ rojizo. Esto es debido a que los fotones rebotan en el cristal rojo
 cuando más energía tienen. De esta forma, en la siguiente dirección
 tomada, los rayos transportan esta propiedad al resto de materiales, los
 cuales se visualizan como una tonalidad roja.</p>
+<div id="fig:cornell_bath_2" class="fignos">
+<figure>
+<img loading="lazy" src="./img/05/Cornell%20bath%202.jpg" style="width:60.0%"
+alt="Figura 38: Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados" />
+<figcaption aria-hidden="true"><span>Figura 38:</span> Cuando cambiamos
+la forma de iluminar la escena, los colores se ven drásticamente
+modificados</figcaption>
+</figure>
+</div>
 <p><strong>Path tracing consigue este efecto de manera natural</strong>
 por diseño. Este es uno de sus mayores puntos fuertes, pero a la vez lo
 hace computacionalmente caro. Dado que la escena de [<a
@@ -5904,7 +5908,7 @@ con tanta intensidad en la escena original [fig. <a
 href="#fig:materiales_difusos">28</a>]</p>
 <div id="fig:global_illumination_1" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Ambient%20occlusion%201.png" style="width:60.0%"
+<img loading="lazy" src="./img/05/Ambient%20occlusion%201.png" style="width:50.0%"
 alt="Figura 39: La caja de Cornell original con luz direccional apuntando a la pared de la izquierda" />
 <figcaption aria-hidden="true"><span>Figura 39:</span> La caja de
 Cornell original con luz direccional apuntando a la pared de la
@@ -5912,11 +5916,11 @@ izquierda</figcaption>
 </figure>
 </div>
 <p>Lo mismo ocurre cuando cambiamos el foco a la pared de la derecha. Al
-ser verde, tintará el resto de los materiales de dicho color [<a
+ser verde, tintará el resto de los materiales de dicho color [Figura <a
 href="#fig:global_illumination_2">40</a>].</p>
 <div id="fig:global_illumination_2" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Ambient%20occlusion%202.png" style="width:60.0%"
+<img loading="lazy" src="./img/05/Ambient%20occlusion%202.png" style="width:50.0%"
 alt="Figura 40: Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena" />
 <figcaption aria-hidden="true"><span>Figura 40:</span> Enfocando a la
 pared de la derecha, conseguimos un tinte verde para la
@@ -5948,7 +5952,7 @@ role="doc-biblioref">2022b</a>)</span></figcaption>
 referirte al vídeo de Alex Battaglia en <span class="citation"
 data-cites="df-global-illumination">(<a
 href="#ref-df-global-illumination" role="doc-biblioref">Digital Foundry
-2021a</a>)</span>, en el cual cubre diferentes formas de resolver este
+2021b</a>)</span>, en el cual cubre diferentes formas de resolver este
 problema, tanto en el caso de ray tracing como en el de
 rasterización.</p>
 <h2 data-number="5.3" id="rendimiento"><span
@@ -6673,18 +6677,6 @@ algunas herramientras muy útiles para este propósito.</p>
 <h1 data-number="7" id="el-presente-y-futuro-de-ray-tracing"><span
 class="header-section-number">7</span> El presente y futuro de Ray
 Tracing</h1>
-<p>Cosas de las que quiero hablar:</p>
-<ul>
-<li>Hablar de algunos offline renderers</li>
-<li>Series X &amp; PS5</li>
-<li>Juegos de útlima generación
-<ul>
-<li>Control</li>
-<li>Minecraft RTX</li>
-<li>Cyberpunk</li>
-<li>Quake II RTX y Doom RTX</li>
-</ul></li>
-</ul>
 <p>Después de un esfuerzo monumental como el que supone el desarrollo de
 un motor de rendering es satisfactorio ver el resultado; y más sabiendo
 que tratamos con tecnología puntera. Sin embargo, en el fondo, este
@@ -6779,8 +6771,7 @@ class="citation" data-cites="stir">(<a href="#ref-stir"
 role="doc-biblioref">Wolfe 2022</a>)</span></p>
 <div id="fig:restir" class="fignos">
 <figure>
-<img loading="lazy"
-src="https://research.nvidia.com/sites/default/files/styles/wide/public/publications/piratesTeaser_nvrSite_scaled.png?itok=ZlOnc27K"
+<img loading="lazy" src="./img/07/restir.png"
 alt="Figura 65: ReSTIR en acción. Fuente: Benedikt Bitterli (2020)" />
 <figcaption aria-hidden="true"><span>Figura 65:</span> ReSTIR en acción.
 Fuente: <span class="citation" data-cites="restir">Benedikt Bitterli (<a
@@ -6825,9 +6816,9 @@ consiguen un rendimiento mucho mayor que a resolución nativa sin perder
 calidad de imagen. En algunos casos, la reconstrucción acaba teniendo
 mayor nitidez que la imagen original, pues la red neuronal aplica
 antialiasing en el proceso.</p>
-<div id="fig:dlss-control" class="fignos">
+<div id="fig:df-dlss" class="fignos">
 <figure>
-<img loading="lazy" src="./img/07/Control.jpg"
+<img loading="lazy" src="./img/07/Control.jpg" style="width:80.0%"
 alt="Figura 66: Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se duplica al utilizar DLSS. Fuente: Digital Foundry (2020a).   Izquierda: DLSS 2.0 con resolución interna a 1080p. Derecha: 4K nativo." />
 <figcaption aria-hidden="true"><span>Figura 66:</span> Control, de
 Remedy Games. Uno de los primeros videojuegos que integraron ray tracing
@@ -6843,7 +6834,7 @@ todavía no se conocen los detalles. Su lanzamiento es extremadamente
 reciente, por lo que se están explorando los resultados. Se puede leer
 una entrevista realizada por Digital Foundry a los autores del proyecto
 en <span class="citation" data-cites="df-xess">(<a href="#ref-df-xess"
-role="doc-biblioref">Digital Foundry 2021b</a>)</span>.</p>
+role="doc-biblioref">Digital Foundry 2021c</a>)</span>.</p>
 <p>Los beneficios de estas técnicas son evidentes. Tal y como
 descubrimos en la comparativa, la <a href="#resolución">resolución</a>
 afecta en gran medida al rendimiento. Cuantos más píxeles tenga la
@@ -6867,58 +6858,89 @@ AMD FSR 2.0. <strong>Derecha</strong>: Temporal
 antialiasing.</figcaption>
 </figure>
 </div>
-<p>Intel XeSS, DLSS: acumulación temporal + jitter -&gt; reconstrucción
-de imagen. FSR: Heurística + jitter -&gt; reconstrucción de imagen.</p>
-<p>DLSS, Intel Open Image Denoise
-(https://github.com/OpenImageDenoise/oidn)</p>
 <h2 data-number="7.2" id="la-industria-del-videojuego"><span
 class="header-section-number">7.2</span> La industria del
 videojuego</h2>
-<ul>
-<li>Hybrid RT
-<ul>
-<li>https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</li>
-</ul></li>
-<li>Productos comerciales
-<ul>
-<li>Control
-<ul>
-<li>Híbrido</li>
-<li>https://alain.xyz/blog/frame-analysis-control</li>
-<li>https://www.youtube.com/watch?v=blbu0g9DAGA</li>
-</ul></li>
-<li>Minecraft RTX
-<ul>
-<li>Path tracing</li>
-<li>https://alain.xyz/blog/frame-analysis-minecraftrtx</li>
-<li>https://www.youtube.com/watch?v=s_eeWr622Ss</li>
-<li>https://www.youtube.com/watch?v=TVtSsJf86_Y</li>
-</ul></li>
-<li>Cyberpunk 2077
-<ul>
-<li>Híbrido</li>
-</ul></li>
-<li>Quake II RTX
-<ul>
-<li>Path tracing</li>
-</ul></li>
-<li>Doom RTX
-<ul>
-<li>Path tracing</li>
-</ul></li>
-<li>Metro Exodus</li>
-</ul></li>
-</ul>
-<h2 data-number="7.3" id="offline-renderers"><span
-class="header-section-number">7.3</span> Offline renderers</h2>
-<ul>
-<li>https://www.disneyanimation.com/technology/hyperion/</li>
-<li>https://arnoldrenderer.com/</li>
-<li>Unity https://unity.com/es</li>
-<li>Unreal Engine 5</li>
-</ul>
-<h2 data-number="7.4" id="unreal-engine-5-y-lumen"><span
-class="header-section-number">7.4</span> Unreal Engine 5 y Lumen</h2>
+<p>Con la llegada de ray tracing en tiempo gracias a la arquitectura
+Turing en 2018, un mundo de nuevas posibilidades se abrió ante los ojos
+de la industria. La más beneficiada fue, sin lugar a dudas, la de los
+videojuegos debido a sus limitaciones del frame budget.</p>
+<h3 data-number="7.2.1" id="productos-comerciales"><span
+class="header-section-number">7.2.1</span> Productos comerciales</h3>
+<p>Es mandatorio que la imagen se produzca en un margen de tiempo muy
+reducido; como máximo, de 33 milisegundos. Teniendo en cuenta esta
+estrechísimo margen, la mayor parte de las empresas se optó por una
+<strong>solución híbrida</strong>: en vez de utilizar ray tracing
+puramente, este algoritmo se reserva para ciertas partes de la pipeline
+de procesamiento. Entre estas se encuentran los
+<strong>reflejos</strong> y la <strong>iluminación global</strong> <span
+class="citation" data-cites="khonos-best-practices">(<a
+href="#ref-khonos-best-practices" role="doc-biblioref">Ana Mihut
+2020</a>)</span>.</p>
+<p>En vez de recaer en técnicas antiguas como reflejos en espacio de
+pantalla (<em>screen-space</em>) se utiliza una forma reducida de ray
+tracing para computar estos efectos. En el proceso final de la pipeline
+híbrida de rasterización y ray tracing se combina el resultado de ambas
+técnicas para producir la imagen final.</p>
+<div id="fig:spiderman-reflections" class="fignos">
+<figure>
+<img loading="lazy" src="./img/07/HybridRT.jpg"
+alt="Figura 68: En vez de utilizar screen-space reflections, los cuales sufren de los problemas clásicos de rasterización debido a su naturaleza (como el fallback a los cubemaps cuando el ángulo es demasiado agudo), ray tracing resuelve estos efectos de forma magistral. Fuente: (Digital Foundry 2021a)" />
+<figcaption aria-hidden="true"><span>Figura 68:</span> En vez de
+utilizar <em>screen-space reflections</em>, los cuales sufren de los
+problemas clásicos de rasterización debido a su naturaleza (como el
+<em>fallback</em> a los cubemaps cuando el ángulo es demasiado agudo),
+ray tracing resuelve estos efectos de forma magistral. Fuente: <span
+class="citation" data-cites="df-spiderman">(<a href="#ref-df-spiderman"
+role="doc-biblioref">Digital Foundry 2021a</a>)</span></figcaption>
+</figure>
+</div>
+<p>Algunos productos comerciales que destacan por su uso de ray tracing
+híbrido son <em>Ratchet &amp; Clank: Rift Apart</em> y
+<em>Spiderman</em> [Figura <a href="#fig:spiderman-reflections">68</a>]
+de Insommiac Games, <em>Cyberpunk 2077</em> de CD Project Red, Control
+de Remedy <span class="citation" data-cites="df-dlss">(Figura <a
+href="#ref-df-dlss" role="doc-biblioref">Digital Foundry
+2020a</a>)</span>.</p>
+<p>No obstante, existen algunas implementaciones de motores que utilizan
+únicamente path tracing como algoritmo de renderizado. Entre estos, se
+cuentran <em>Quake II RTX</em> <span class="citation"
+data-cites="Q2RTX">(<a href="#ref-Q2RTX" role="doc-biblioref">Nvidia
+2018</a>)</span> o <em>Minecraft RTX</em>, del cual se puede encontrar
+un análisis técnico en el blog de <span class="citation"
+data-cites="alain-minecraft">(<a href="#ref-alain-minecraft"
+role="doc-biblioref">Alain Galvan 2020</a>)</span>. Los resultados
+gráficos son espectaculares, aunque se necesita un hardware gráfico
+considerable para poder ejecutarlos.</p>
+<h3 data-number="7.2.2" id="consolas-de-nueva-generación"><span
+class="header-section-number">7.2.2</span> Consolas de nueva
+generación</h3>
+<p>Parte de la transición de la industria a ray tracing se debe a las
+capacidades de las consolas de la actual generación: <strong>Playstation
+5</strong> de Sony <span class="citation" data-cites="ps5">(<a
+href="#ref-ps5" role="doc-biblioref">Wikipedia 2022e</a>)</span>, y
+<strong>Xbox Series X</strong> y <strong>Series S</strong> de Microsoft
+<span class="citation" data-cites="series-x">(<a href="#ref-series-x"
+role="doc-biblioref">Wikipedia 2022g</a>)</span>. Ambas fueron lanzadas
+a finales del año 2020. Las dos consolas utilizan la arquitectura de AMD
+denominada RDNA 2 de AMD, la misma que se usa en sus gráficas de
+escritorio de última generación. PS5 empaqueta 36 unidades de cómputo
+(<em>Compute Units</em> CUs), con una potencia de 10.23 TFLOPS para
+operaciones en coma flotante de 32 bits y 21.46 TFLOPS para las de 16.
+Por otra parte, Series X monta 52 CUs con una potencia teórica de 12.16
+TFLOPSl, mientras que Series S reduce el número de CUs a 20.</p>
+<p>En verano de 2020 Mark Cerny habló sobre cómo se utilizaría las
+capacidades de la arquitectura en el futuro de la consola <span
+class="citation" data-cites="cerny-ps5">(<a href="#ref-cerny-ps5"
+role="doc-biblioref">Mark Cerny 2020</a>)</span>. Entre estos usos,
+destaca el audio, la iluminación global, las sombras, los reflejos e
+incluso ray puro.</p>
+<p>Hace media década, el hecho de tener ray tracing en tiempo real en
+gráficas de consumidor parecía imposible; más aún en consolas. Resulta,
+por tanto, una evolución enorme en una industria que se ha convertido en
+una de las más importantes del mundo.</p>
+<h2 data-number="7.3" id="unreal-engine-5-y-lumen"><span
+class="header-section-number">7.3</span> Unreal Engine 5 y Lumen</h2>
 <p>Unreal Engine 5 <span class="citation" data-cites="UE5">(<a
 href="#ref-UE5" role="doc-biblioref">Epic Games 2022a</a>)</span> es la
 última generación del Motor <em>Unreal Engine</em> creado por Epic
@@ -6935,11 +6957,9 @@ data-cites="lumen">(<a href="#ref-lumen" role="doc-biblioref">Epic Games
 2022b</a>)</span>, así que estudiaremos qué técnicas han utilizado.</p>
 <div id="fig:lumen1" class="fignos">
 <figure>
-<img loading="lazy"
-src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image12-1999x1130-4bfd11e88c9d.png"
-style="width:70.0%"
-alt="Figura 68: Habitación interior iluminada por el sistema Lumen" />
-<figcaption aria-hidden="true"><span>Figura 68:</span> Habitación
+<img loading="lazy" src="./img/07/Lumen3.png" style="width:85.0%"
+alt="Figura 69: Habitación interior iluminada por el sistema Lumen" />
+<figcaption aria-hidden="true"><span>Figura 69:</span> Habitación
 interior iluminada por el sistema Lumen</figcaption>
 </figure>
 </div>
@@ -6956,10 +6976,9 @@ del cielo. Además, el sistema tiene en cuenta materiales emisivos y la
 niebla volumétrica.</p>
 <div id="fig:lumen2" class="fignos">
 <figure>
-<img loading="lazy"
-src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image16-1999x1125-48a619533ccb.jpg"
-alt="Figura 69: Una escena exterior con materiales emisivos en Unreal Engine 5. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 69:</span> Una escena
+<img loading="lazy" src="./img/07/Lumen4.jpg" style="width:85.0%"
+alt="Figura 70: Una escena exterior con materiales emisivos en Unreal Engine 5. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 70:</span> Una escena
 exterior con materiales emisivos en Unreal Engine 5. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
 role="doc-biblioref">2022b</a>)</span></figcaption>
@@ -6985,9 +7004,9 @@ visibles desde algún punto de vista. Esto simplifica el coste de la
 evaluación del material.</p>
 <div id="fig:lumen3" class="fignos">
 <figure>
-<img loading="lazy" src="./img/07/Lumen1.jpg"
-alt="Figura 70: Visualización de Mesh Distance Fields de una escena. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 70:</span> Visualización de
+<img loading="lazy" src="./img/07/Lumen1.jpg" style="width:100.0%"
+alt="Figura 71: Visualización de Mesh Distance Fields de una escena. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 71:</span> Visualización de
 <em>Mesh Distance Fields</em> de una escena. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
 role="doc-biblioref">2022b</a>)</span></figcaption>
@@ -7002,11 +7021,9 @@ pequeña porción de muestras y combina los cálculos de radiancia con
 información aportada por el material.</p>
 <div id="fig:lumen4" class="fignos">
 <figure>
-<img loading="lazy"
-src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image24-1920x1080-3158475cf4a8.png"
-style="width:70.0%"
-alt="Figura 71: Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 71:</span> Lumen combina los
+<img loading="lazy" src="./img/07/Lumen5.png" style="width:100.0%"
+alt="Figura 72: Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 72:</span> Lumen combina los
 cálculos de la iluminación global con la información del material para
 crear la imagen final. Fuente: <span class="citation"
 data-cites="lumen">Epic Games (<a href="#ref-lumen"
@@ -7017,8 +7034,8 @@ role="doc-biblioref">2022b</a>)</span></figcaption>
 van a trazar. Para escogerlas, se comprueba qué partes del último frame
 resultaron muy brillantes. Entonces, se mandan rayos hacia esas zonas,
 pues esto producirá resultados menos ruidos en este frame. Esta técnica
-la hemos estudiado, y se llama <strong>muestreo por importancia</strong>
-(de la luz entrante en este caso).</p>
+la hemos estudiado, y se llama muestreo por importancia (de la luz
+entrante en este caso).</p>
 <blockquote>
 <p>Este punto enlaza con nuestra <a
 href="#comparativa-con-in-one-weekend">comparativa con In One
@@ -7031,10 +7048,9 @@ escena con mucha radiancia, por lo que el fundamento es similar.</p>
 </blockquote>
 <div id="fig:lumen5" class="fignos">
 <figure>
-<img loading="lazy"
-src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image1-1999x1109-d3b299670791.png"
-alt="Figura 72: Lumen utiliza las partes más brillantes del último frame para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 72:</span> Lumen utiliza las
+<img loading="lazy" src="./img/07/Lumen6.png"
+alt="Figura 73: Lumen utiliza las partes más brillantes del último frame para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 73:</span> Lumen utiliza las
 partes más brillantes del último frame para la distribución de las
 nuevas direcciones de un rayo tras el impacto. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
@@ -7047,8 +7063,8 @@ frames para suavizar el resultado.</p>
 <div id="fig:lumen6" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen2.jpg"
-alt="Figura 73: Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 73:</span> Nuestro método
+alt="Figura 74: Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 74:</span> Nuestro método
 principal de reducción de ruido fue la acumulación temporal de frames.
 Lumen utiliza una forma mucho más avanzada para lograr el mismo
 resultado con sus reflejos. Fuente: <span class="citation"
@@ -7133,7 +7149,7 @@ class="header-section-number">8.2</span> Ciclos de desarrollo</h2>
 que estás leyendo, ya sea en PDF o en la web– y software. Podemos
 distinguir varias fases en la planificación del proyecto, que quedan
 resumidas en el diagrama de Grant [Figuras <a
-href="#fig:grantt_1">74</a>, <a href="#fig:grantt_2">75</a>]</p>
+href="#fig:grantt_1">75</a>, <a href="#fig:grantt_2">76</a>]</p>
 <p>Para comenzar, durante el verano de 2021 se implementarían los tres
 libros de Shirley de la “serie In One Weekend”: In One Weekend <span
 class="citation" data-cites="Shirley2020RTW1">(<a
@@ -7148,8 +7164,8 @@ acelerando así el aprendizaje.</p>
 <div id="fig:grantt_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%201.png"
-alt="Figura 74: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
-<figcaption aria-hidden="true"><span>Figura 74:</span> Diagrama de
+alt="Figura 75: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
+<figcaption aria-hidden="true"><span>Figura 75:</span> Diagrama de
 Grantt de la primera parte del desarrollo. Los libros de Peter Shirley
 servirían como introducción al trabajo</figcaption>
 </figure>
@@ -7161,8 +7177,8 @@ pues no se puede implementar algo que no se entiende.</p>
 <div id="fig:grantt_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%202.png"
-alt="Figura 75: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
-<figcaption aria-hidden="true"><span>Figura 75:</span> Diagrama de
+alt="Figura 76: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
+<figcaption aria-hidden="true"><span>Figura 76:</span> Diagrama de
 Grantt de la segunda parte del desarrollo. Durante el segundo
 cuatrimestre se trabajaría tanto la memoria como el
 software</figcaption>
@@ -7321,8 +7337,8 @@ Jetbrains. Se utiliza en la web para los bloques de código.</li>
 <div id="fig:tipografías" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Tipografías.png" style="width:70.0%"
-alt="Figura 76: Showcase de las tipografías utilizadas" />
-<figcaption aria-hidden="true"><span>Figura 76:</span> Showcase de las
+alt="Figura 77: Showcase de las tipografías utilizadas" />
+<figcaption aria-hidden="true"><span>Figura 77:</span> Showcase de las
 tipografías utilizadas</figcaption>
 </figure>
 </div>
@@ -7333,8 +7349,8 @@ específica.</p>
 <div id="fig:paleta_de_colores" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Paleta%20de%20colores.png" width="400"
-alt="Figura 77: La paleta de colores del proyecto" />
-<figcaption aria-hidden="true"><span>Figura 77:</span> La paleta de
+alt="Figura 78: La paleta de colores del proyecto" />
+<figcaption aria-hidden="true"><span>Figura 78:</span> La paleta de
 colores del proyecto</figcaption>
 </figure>
 </div>
@@ -7408,8 +7424,8 @@ diseños de este trabajo se han hecho con esta herramienta.</p>
 <div id="fig:figma" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Figma.png"
-alt="Figura 78: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 78:</span> Tablón principal
+alt="Figura 79: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 79:</span> Tablón principal
 del proyecto de Figma, a día 15 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -7504,8 +7520,8 @@ Github Pages.</li>
 <div id="fig:github_actions" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Github%20Actions.png"
-alt="Figura 79: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
-<figcaption aria-hidden="true"><span>Figura 79:</span> La pestaña de
+alt="Figura 80: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
+<figcaption aria-hidden="true"><span>Figura 80:</span> La pestaña de
 Github Actions permite controlar con facilidad el resultado de un
 workflow y cuánto tarda en ejecutarse</figcaption>
 </figure>
@@ -7519,8 +7535,8 @@ cada <em>release</em> que se crea.</p>
 <div id="fig:actions-workflow" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Actions.png"
-alt="Figura 80: Diagrama con los workflows" />
-<figcaption aria-hidden="true"><span>Figura 80:</span> Diagrama con los
+alt="Figura 81: Diagrama con los workflows" />
+<figcaption aria-hidden="true"><span>Figura 81:</span> Diagrama con los
 workflows</figcaption>
 </figure>
 </div>
@@ -7557,8 +7573,8 @@ objetivos pendientes de la aplicación.</p>
 <div id="fig:github_issues" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Issues.png" style="width:80.0%"
-alt="Figura 81: Pestaña de issues, día 16 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 81:</span> Pestaña de
+alt="Figura 82: Pestaña de issues, día 16 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 82:</span> Pestaña de
 issues, día 16 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -7568,8 +7584,8 @@ importante del desarrollo.</p>
 <div id="fig:github_milestones" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Milestones.png" style="width:80.0%"
-alt="Figura 82: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
-<figcaption aria-hidden="true"><span>Figura 82:</span> Los
+alt="Figura 83: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
+<figcaption aria-hidden="true"><span>Figura 83:</span> Los
 <em>milestones</em> agrupan una serie de issues relacionados con un
 punto clave del desarrollo</figcaption>
 </figure>
@@ -7582,8 +7598,8 @@ aplicación es un acompañante del repositorio estilo Asana.</p>
 <div id="fig:github_projects" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Projects.png" style="width:80.0%"
-alt="Figura 83: Projects agrupa los issues y les asigna prioridades" />
-<figcaption aria-hidden="true"><span>Figura 83:</span> Projects agrupa
+alt="Figura 84: Projects agrupa los issues y les asigna prioridades" />
+<figcaption aria-hidden="true"><span>Figura 84:</span> Projects agrupa
 los issues y les asigna prioridades</figcaption>
 </figure>
 </div>
@@ -7618,8 +7634,8 @@ sus significados:</p>
 <div id="fig:github_emojis" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Commits.png"
-alt="Figura 84: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
-<figcaption aria-hidden="true"><span>Figura 84:</span> Los emojis
+alt="Figura 85: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
+<figcaption aria-hidden="true"><span>Figura 85:</span> Los emojis
 permiten reconocer el objetivo de cada commit. Esta tabla recoge el
 significado de cada uno</figcaption>
 </figure>
@@ -8240,9 +8256,14 @@ Adam Marrs, Peter Shirley, and I. Wald, eds. 2021. <span>“Ray tracing
 gems II.”</span> Apress. 2021. <a
 href="http://raytracinggems.com/rtg2">http://raytracinggems.com/rtg2</a>.
 </div>
+<div id="ref-alain-minecraft" class="csl-entry" role="doc-biblioentry">
+Alain Galvan. 2020. <span>“Frame analysis - minecraft RTX beta.”</span>
+2020. Accessed May 30, 2022. <a
+href="https://alain.xyz/blog/frame-analysis-minecraftrtx">https://alain.xyz/blog/frame-analysis-minecraftrtx</a>.
+</div>
 <div id="ref-alain-API" class="csl-entry" role="doc-biblioentry">
-Alain Galvan. 2022a. <span>“A comparison of modern graphics
-APIs.”</span> 2022. Accessed May 13, 2022. <a
+———. 2022a. <span>“A comparison of modern graphics APIs.”</span> 2022.
+Accessed May 13, 2022. <a
 href="https://alain.xyz/blog/comparison-of-modern-graphics-apis">https://alain.xyz/blog/comparison-of-modern-graphics-apis</a>.
 </div>
 <div id="ref-alain-materials" class="csl-entry" role="doc-biblioentry">
@@ -8276,6 +8297,12 @@ href="https://developer.nvidia.com/blog/rendering-in-real-time-with-spatiotempor
 AMD. 2022. <span>“AMD FidelityFX™ super resolution.”</span> 2022.
 Accessed May 30, 2022. <a
 href="https://www.amd.com/en/technologies/fidelityfx-super-resolution">https://www.amd.com/en/technologies/fidelityfx-super-resolution</a>.
+</div>
+<div id="ref-khonos-best-practices" class="csl-entry"
+role="doc-biblioentry">
+Ana Mihut. 2020. <span>“Vulkan ray tracing best practices for hybrid
+rendering.”</span> November 23, 2020. Accessed May 30, 2022. <a
+href="https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering">https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</a>.
 </div>
 <div id="ref-asmilex-raytracing-docker" class="csl-entry"
 role="doc-biblioentry">
@@ -8361,15 +8388,20 @@ And is it worth it?”</span> December 19, 2020. Accessed April 10, 2022.
 <a
 href="https://www.youtube.com/watch?v=6bqA8F6B6NQ">https://www.youtube.com/watch?v=6bqA8F6B6NQ</a>.
 </div>
+<div id="ref-df-spiderman" class="csl-entry" role="doc-biblioentry">
+———. 2021a. <span>“Spider-man remastered PS5 vs PS4 pro + performance
+ray tracing 60fps mode tested!”</span> 2021. Accessed May 30, 2022. <a
+href="https://www.youtube.com/watch?v=o2HrOxwH0_Q">https://www.youtube.com/watch?v=o2HrOxwH0_Q</a>.
+</div>
 <div id="ref-df-global-illumination" class="csl-entry"
 role="doc-biblioentry">
-———. 2021a. <span>“Tech focus: Global illumination - what it is, how
+———. 2021b. <span>“Tech focus: Global illumination - what it is, how
 does it work and why do we need it?”</span> July 24, 2021. Accessed May
 20, 2022. <a
 href="https://www.youtube.com/watch?v=yEkryaaAsBU">https://www.youtube.com/watch?v=yEkryaaAsBU</a>.
 </div>
 <div id="ref-df-xess" class="csl-entry" role="doc-biblioentry">
-———. 2021b. <span>“The big interview: How intel alchemist GPUs and XeSS
+———. 2021c. <span>“The big interview: How intel alchemist GPUs and XeSS
 upscaling will change PC gaming.”</span> August 24, 2021. Accessed May
 30, 2022. <a
 href="https://www.eurogamer.net/digitalfoundry-2021-the-big-intel-interview-how-intel-alchemist-gpus-and-xess-upscaling-will-change-the-market">https://www.eurogamer.net/digitalfoundry-2021-the-big-intel-interview-how-intel-alchemist-gpus-and-xess-upscaling-will-change-the-market</a>.
@@ -8546,6 +8578,11 @@ Linear. 2022. <span>“Linear - the issue tracking tool you’ll enjoy
 using.”</span> 2022. Accessed May 7, 2022. <a
 href="https://linear.app/">https://linear.app/</a>.
 </div>
+<div id="ref-cerny-ps5" class="csl-entry" role="doc-biblioentry">
+Mark Cerny. 2020. <span>“The road to PS5.”</span> 2020. Accessed May 30,
+2022. <a
+href="https://www.youtube.com/watch?v=ph8LyNIT9sg">https://www.youtube.com/watch?v=ph8LyNIT9sg</a>.
+</div>
 <div id="ref-quasi-monte-carlo" class="csl-entry"
 role="doc-biblioentry">
 Martin Roberts. 2018. <span>“The unreasonable effectiveness of
@@ -8581,6 +8618,11 @@ href="https://doi.org/10.1038/539140a">https://doi.org/10.1038/539140a</a>.
 role="doc-biblioentry">
 Ncase. 2022. <span>“Explorable explanations.”</span> 2022. Accessed May
 7, 2022. <a href="https://explorabl.es/">https://explorabl.es/</a>.
+</div>
+<div id="ref-Q2RTX" class="csl-entry" role="doc-biblioentry">
+Nvidia. 2018. <span>“Quake II RTX.”</span> 2018. Accessed May 30, 2022.
+<a
+href="https://github.com/NVIDIA/Q2RTX">https://github.com/NVIDIA/Q2RTX</a>.
 </div>
 <div id="ref-dlss" class="csl-entry" role="doc-biblioentry">
 Nvidia. 2020a. <span>“NVIDIA DLSS 2.0: A big leap in AI
@@ -8745,25 +8787,35 @@ Wikipedia. 2022d. <span>“Pinhole camera.”</span> 2022. Accessed May 26,
 2022. <a
 href="https://en.wikipedia.org/wiki/Pinhole_camera">https://en.wikipedia.org/wiki/Pinhole_camera</a>.
 </div>
+<div id="ref-ps5" class="csl-entry" role="doc-biblioentry">
+———. 2022e. <span>“PlayStation 5.”</span> 2022. Accessed May 30, 2022.
+<a
+href="https://en.wikipedia.org/wiki/PlayStation_5?oldformat=true">https://en.wikipedia.org/wiki/PlayStation_5?oldformat=true</a>.
+</div>
 <div id="ref-wikipedia-radeon" class="csl-entry" role="doc-biblioentry">
-———. 2022e. <span>“Radeon.”</span> 2022. Accessed May 13, 2022. <a
+———. 2022f. <span>“Radeon.”</span> 2022. Accessed May 13, 2022. <a
 href="https://en.wikipedia.org/wiki/Radeon">https://en.wikipedia.org/wiki/Radeon</a>.
+</div>
+<div id="ref-series-x" class="csl-entry" role="doc-biblioentry">
+———. 2022g. <span>“Xbox series x and series s.”</span> 2022. Accessed
+May 30, 2022. <a
+href="https://en.wikipedia.org/wiki/Xbox_Series_X_and_Series_S?oldformat=true">https://en.wikipedia.org/wiki/Xbox_Series_X_and_Series_S?oldformat=true</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022O" class="csl-entry"
 role="doc-biblioentry">
-———. 2022f. <span>“Differential geometry of surfaces.”</span> January
+———. 2022h. <span>“Differential geometry of surfaces.”</span> January
 14, 2022. Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Differential_geometry_of_surfaces">https://en.wikipedia.org/wiki/Differential_geometry_of_surfaces</a>.
 </div>
 <div id="ref-wikipedia-contributors-2022G" class="csl-entry"
 role="doc-biblioentry">
-———. 2022g. <span>“Barycentric coordinate system.”</span> March 14,
+———. 2022i. <span>“Barycentric coordinate system.”</span> March 14,
 2022. Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/Barycentric_coordinate_system">https://en.wikipedia.org/wiki/Barycentric_coordinate_system</a>.
 </div>
 <div id="ref-history-photography" class="csl-entry"
 role="doc-biblioentry">
-———. 2022h. <span>“History of photography.”</span> March 18, 2022.
+———. 2022j. <span>“History of photography.”</span> March 18, 2022.
 Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/History_of_photography">https://en.wikipedia.org/wiki/History_of_photography</a>.
 </div>
