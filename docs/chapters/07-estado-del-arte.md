@@ -4,10 +4,7 @@
 
 Cosas de las que quiero hablar:
 
-- Este trabajo es estado del arte
 - Hablar de algunos offline renderers
-- Denoising & filtering muy importantes
-  - Enlazar con acumulación temporal
 - Series X & PS5
 - Juegos de útlima generación
   - Control
@@ -27,7 +24,7 @@ Con los avances de ray tracing en tiempo real surgió una nueva rama del tratami
 
 A continuación, veremos una introducción a las técnicas modernas que se utilizan en ray tracing para acelerar la convergencia de rayos. Nos basaremos en las notas recogidas por Alain Galvan en su blog [@alain-filtering] [@alain-denoising] para enumerar algunas de las técnicas. Todas las referencias a los trabajos originales se encuentran recogidas en dicha entrada, por lo que recomiendo leerla para comprender mejor cada técnica.
 
-## Filtrado
+### Filtrado
 
 Entre las **técnicas basadas en muestreo** que ya hemos estudiado se encuentran multiple importance sampling, next-event estimation, ruleta rusa y series de quasi-Monte Carlo.
 
@@ -47,21 +44,26 @@ Un algoritmo que se ha utilizado exitosamente en los últimos años es *Spatiote
 
 La mayor parte de estas técnicas requieren el uso de un *motion buffer*, el cual calcula el cambio en la posición de un vértice de un frame a otro. En la práctica suelen venir acompañados de *motion vectors*, los cuales también son usados para técnicas como temporal antialiasing (TAA) o temporal upscaling [@temporal-supersampling] (TAA es una técnica de muestreo).
 
-## Machine Learning
+### *Machine Learning* y técnicas de *super sampling*
+
+Para cualquier persona que haya seguido el mundo de la tecnología en los últimos años, no debe resultarle sorprendente la afirmación de que las técnicas basadas en machine learning están de moda. Nuestro campo de investigación, el transporte de luz, también se ha visto beneficiado por ellas.
+
+En la actualidad el propósito de las redes neuronales suele ser reconstruir la imagen desde una resolución considerablemente menor: en vez de renderizar una imagen a, por ejemplo, 4K, se computa primero a 1080p o menor y luego se reescala mediante inteligencia artificial. Las tecnologías más famosas que existen de este estilo son Nvidia Deep Learning Super Sampling 2.0 [@dlss] e Intel XeSS [@xess]. AMD lanzó recientemente FidelityFX Super Resolution 2.0 (FSR) [@fsr], pero no utiliza redes neuronales. Sin embargo, la consideraremos en esta sección, pues sus resultados son muy similares.
+
+**DLSS** recibe imágenes a baja resolución y *motion vectors*, produciendo imágenes a alta resolución mediante un autoenconder convolucional. Los resultados son espectaculares, y consiguen un rendimiento mucho mayor que a resolución nativa sin perder calidad de imagen. En algunos casos, la reconstrucción acaba teniendo mayor nitidez que la imagen original, pues la red neuronal aplica antialiasing en el proceso.
+
+![Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se duplica al utilizar DLSS. Fuente: @df-dlss. \newline <br> **Izquierda**: DLSS 2.0 con resolución interna a 1080p. **Derecha**: 4K nativo.](./img/07/Control.jpg){ #fig:dlss-control }
+
+**Intel XeSS** funciona de manera similar a DLSS, aunque todavía no se conocen los detalles. Su lanzamiento es extremadamente reciente, por lo que se están explorando los resultados. Se puede leer una entrevista realizada por Digital Foundry a los autores del proyecto en [@df-xess].
+
+Los beneficios de estas técnicas son evidentes. Tal y como descubrimos en la comparativa, la [resolución](#resolución) afecta en gran medida al rendimiento. Cuantos más píxeles tenga la imagen, mayor será el número de muestras que debamos tomar; y por lo tanto, mayor el coste de renderizar un frame. Bajando la resolución conseguimos una imagen con menos ruido pero poco apta para las pantallas de hoy en día. Haciendo *super sampling* solventamos este problema. Si la reconstrucción es de suficiente calidad, estaremos consiguiendo rendimiento superior a la resolución nativa.
+
+![Comparativa entre las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo son reconstruidas las vallas, así como el texto de los globos. Fuente: @df-fsr. \newline <br> **Izquierda**: Nvidia DLSS 2.3. **Centro**: AMD FSR 2.0. **Derecha**: Temporal antialiasing.](./img/07/Comparación.jpg){  #fig:dlss-fsr-taa }
+
+Intel XeSS, DLSS: acumulación temporal + jitter -> reconstrucción de imagen.
+FSR: Heurística + jitter -> reconstrucción de imagen.
 
 DLSS, Intel Open Image Denoise (https://github.com/OpenImageDenoise/oidn)
-
--
-- https://alain.xyz/blog/ray-tracing-denoising
-- https://alain.xyz/blog/ray-tracing-filtering
-- STIR /
-- ReSTIR https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf
-- DLSS https://www.nvidia.com/es-es/geforce/technologies/dlss, https://www.youtube.com/watch?v=YWIKzRhYZm4
-- FSR https://www.youtube.com/watch?v=y2RR2770H8E
-- Blue noise
-  - https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/
-  - https://alain.xyz/blog/ray-tracing-filtering
-  - Minecraft RTX usa blue noise para el sampling: https://alain.xyz/blog/frame-analysis-minecraftrtx/assets/diffuse-1spp.jpg
 
 ## La industria del videojuego
 
@@ -92,10 +94,7 @@ DLSS, Intel Open Image Denoise (https://github.com/OpenImageDenoise/oidn)
 - Unity https://unity.com/es
 - Unreal Engine 5
 
-## Unreal Engine 5 & Lumen
-
-- https://www.unrealengine.com/en-US/tech-blog/unreal-engine-5-goes-all-in-on-dynamic-global-illumination-with-lumen
-- https://twitter.com/Yurukuyaru/status/1523643949826588674
+## Unreal Engine 5 y Lumen
 
 Unreal Engine 5 [@UE5] es la última generación del Motor *Unreal Engine* creado por Epic Games. Es un software extremadamente complejo que empaqueta múltiples funciones, como animación, físicas, renderizado, audio, y un largo etcétera. Se usa tanto en la industria de la animación como en la de los videojuegos.
 
