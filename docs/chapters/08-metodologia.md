@@ -118,8 +118,6 @@ Encontrar una herramienta que se adapte a un *workflow* es complicado. Aunque ha
 
 Principalmente destacan tres de ellas: **Github**, **Pandoc** y **Figma**. La primera tendrá [su propia sección](#github), así que hablaremos de las otras.
 
-> TODO: foto del workflow.
-
 ### Pandoc
 
 **Pandoc** [@pandoc] es una estupendísima de conversión de documentos. Se puede usar para convertir un tipo de archivo a otro. En este caso, se usa para convertir una serie de ficheros Markdown (los capítulos) a un fichero HTML (la web) y a PDF. Su punto más fuerte es que permite escribir LaTeX de forma simplificada, como si se tratara de *sugar syntax*. Combina la simplicidad de Markdown y la correctitud de LaTeX.
@@ -180,6 +178,8 @@ Tendremos dos tipos de `Actions`: uno que se encarga de compilar la web, y otro 
 ![La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse](./img/08/Github%20Actions.png){#fig:github_actions}
 
 El workflow de la web corre automáticamente, mientras que para generar el PDF hace falta activación manual. Aunque no es *del todo* correcto almacenar ficheros binarios en un repositorio de git, no me resulta molesto personalmente. Así que, cuando considero que es el momento oportuno, lo hago manualmente. Además, también se activa por cada *release* que se crea.
+
+![Diagrama con los workflows](./img/08/Actions.png){#fig:actions-workflow}
 
 Volviendo a la web, Github permite alojar páginas web para un repositorio. Activando el parámetro correcto en las opciones del repositorio, y configurándolo debidamente, conseguimos que lea el archivo `index.html` generado por el Action y lo despliegue. Esto es potentísimo: con solo editar una línea de código y subir los cambios, conseguimos que la web se actualice al instante.
 

@@ -1,0 +1,16 @@
+graph TD
+    A(Actualizar archivos en repositorio) --> |Push a Github fa:fa-code-branch| C{fa:fa-file .md actualizado?}
+    C ---->|Sí| D("(fa:fa-robot) Construir fa:fa-file-code.html mediante Pandoc")
+    D --> |Commitear el archivo y pushearlo | F("(fa:fa-robot) Publicar a Github Pages")
+    C ---->|No| E[Fin]
+
+    G(Crear una release) --> I("(fa:fa-robot) Construir fa:fa-file-pdf.pdf mediante Pandoc")
+    H(Accionar manualmente el workflow) --> I
+    I ----> |Commitear el archivo y pushearlo| E
+
+    style D fill:#a4d5be,stroke:#333,stroke-width:2px
+    style I fill:#a4d5be,stroke:#333,stroke-width:2px
+    style F fill:#f8bca5,stroke:#333,stroke-width:2px
+    style A fill:#b7d1fb,stroke:#333,stroke-width:2px
+    style G fill:#b7d1fb,stroke:#333,stroke-width:2px
+    style H fill:#b7d1fb,stroke:#333,stroke-width:2px
