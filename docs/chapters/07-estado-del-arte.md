@@ -40,7 +40,7 @@ Un método muy sencillo que hemos estudiado es la [acumulación temporal](#antia
 
 Un algoritmo que se ha utilizado exitosamente en los últimos años es *Spatiotemporal importance Resampling* (ReSTIR) [@restir], el cual es capaz de procesar millones de luces dinámicas en tiempo real en alta calidad sin necesidad de introducir estructuras de datos excesivamente complejas. Está basado en el algoritmo *Sampling Importance Resampling* (STIR). Este último se puede estudiar a fondo en [@stir]
 
-![ReSTIR en acción. Fuente: @restir](https://research.nvidia.com/sites/default/files/styles/wide/public/publications/piratesTeaser_nvrSite_scaled.png?itok=ZlOnc27K)
+![ReSTIR en acción. Fuente: @restir](https://research.nvidia.com/sites/default/files/styles/wide/public/publications/piratesTeaser_nvrSite_scaled.png?itok=ZlOnc27K){ #fig:restir }
 
 La mayor parte de estas técnicas requieren el uso de un *motion buffer*, el cual calcula el cambio en la posición de un vértice de un frame a otro. En la práctica suelen venir acompañados de *motion vectors*, los cuales también son usados para técnicas como temporal antialiasing (TAA) o temporal upscaling [@temporal-supersampling] (TAA es una técnica de muestreo).
 
@@ -128,7 +128,7 @@ Otro punto clave del sistema es la elección de las direcciones que se van a tra
 
 Para calcular los reflejos de superficies se ha optado por promediar la radiancia de puntos en el mismo vecindario y acumulación temporal de frames para suavizar el resultado.
 
-![Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: @lumen](./img/07/Lumen2.jpg)
+![Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: @lumen](./img/07/Lumen2.jpg){ #fig:lumen6 }
 
 Finalmente, es importante destacar que las imágenes no son generadas a una gran resolución. Para conseguir una imagen digna de los tiempos actuales, los motores modernos utilizan una resolución interna cercana a 720p o 1080p que es escalada mediante algún método de *upsampling*. En este caso, se ha optado por *Temporal Super Resolution*, una técnica que comenzó con Unreal Engine 4 y ha evolucionado en esta versión. Su comportamiento es similar a DLSS o FSR.
 

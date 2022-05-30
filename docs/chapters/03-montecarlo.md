@@ -338,7 +338,7 @@ $$
 
 Generalmente nos encontraremos en la situación en la que $Y = f(X)$, donde $X \in S \subset \mathbb{R}^d$ sigue una distribución con función de densidad $p_X(x)$ con media $\mu = \E{X}$, y $f: S \rightarrow \mathbb{R}$.
 
-> **Nota**ción: nos encontramos ante un caso de *"choque de notaciones"*. Tradicionalmente las funciones de densidad utilizan $f$, pero en transporte de luz se suele reservar esta letra para las BRDF y/u otras funciones genéricas, dejando la letra $p$ para las funciones de densidad.
+> **Nota**(ción): nos encontramos ante un caso de *"choque de notaciones"*. Tradicionalmente las funciones de densidad utilizan $f$, pero en transporte de luz se suele reservar esta letra para las BRDF y/u otras funciones genéricas, dejando la letra $p$ para las funciones de densidad.
 >
 > En este capítulo usaré la notación $p_X$ para dejar claro de que estamos hablando de una función de densidad, manteniendo $f$ para la transformación de la variable aleatoria.
 
@@ -641,8 +641,6 @@ En esencia, la idea es que se genere un número aleatorio $\xi \in [0, 1)$. Si $
 Más información puede encontrarse en [@PBRT3e, Russian Roulette and Splitting].
 
 #### Next event estimation, o muestreo directo de fuentes de luz
-
-> **Idea**: Tracing shadow rays to the light source on each bounce to see if you can terminate the current path. This involves shooting a shadow ray towards light sources, if it's occluded, terminate the ray.
 
 Esta técnica recibe dos nombres. Tradicionalmente, se la conocía como muestreo directo de fuentes de luz, pero en los últimos años ha adoptado el nombre de next event estimation. Esencialmente, se trata de utilizar las luces de la escena para calcular la radiancia de un punto.
 

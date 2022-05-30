@@ -4,11 +4,11 @@ En este capítulo estudiaremos las bases de la radiometría. Esta área de la ó
 
 ## Introducción a la radiometría
 
-> **Nota**: cuando usemos un paréntesis tras una ecuación, dentro denotaremos sus unidades de medida.
-
 Antes de comenzar a trabajar, necesitamos conocer *qué entendemos* por luz. Aunque hay muchas formas de trabajar con ella (a fin de cuentas, todavía seguimos discutiendo sobre qué es exactamente la luz [^2]), nosotros nos quedaremos con la definición clásica y algunas pinceladas de la cuántica. Nos será suficiente utilizar el concepto de fotón.
 
 **Un fotón** es aquella particula emitida por una fuente de iluminación. Estos fotones tienen una posición, una dirección de propagación y una longitud de onda $\lambda$ [@ShirleyRRT]; así como una velocidad $c$ que depende del índice de refracción del medio, $n$. La unidad de medida de $\lambda$ es el nanómetro ($\text{nm}$).
+
+> **Nota**:(ción) cuando usemos un paréntesis tras una ecuación, dentro denotaremos sus unidades de medida.
 
 Necesitaremos también definir qué es **la frecuencia**, $f$. Su utilidad viene del hecho de que, cuando la luz cambia de medio al propagarse, la frecuencia se mantiene constante.
 
