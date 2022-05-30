@@ -488,7 +488,7 @@ Como hemos visto, $\Var{\hat{I}_N}$ depende del número de muestras $N$ y de $\V
 
 Vamos a jugar con él.
 
-La integral que estamos evaluando ahora mismo es $\int_S{f(x)p_X(x)}dx$, con $p_X$ una función de densidad sobre $S \subset \mathbb{R}^d$ $\Rightarrow p_X = 0\ \forall x \notin S$. Ahora bien, si $q_X$ es otra función de densidad en $\mathbb{R}^d$, entonces [@mcbook, Importance Sampling]:
+La integral que estamos evaluando ahora mismo es $\int_S{f(x)p_X(x)}dx$, con $p_X$ una función de densidad sobre $S \subset \mathbb{R}^d$ $\Rightarrow p_X(x) = 0\ \forall x \notin S$. Ahora bien, si $q_X$ es otra función de densidad en $\mathbb{R}^d$, entonces [@mcbook, Importance Sampling]:
 
 $$
 I = \int_S{f(x)p_X(x)dx} = \int_S{\frac{f(x)p_X(x)}{q_X(x)}q_X(x)dx} = \E{\frac{f(X)p_X(X)}{q_X(X)}}
