@@ -41,16 +41,20 @@ Las **técnicas de acumulación** permiten reutilizar información anterior para
 
 Un método muy sencillo que hemos estudiado es la [acumulación temporal](#antialiasing-mediante-jittering-y-acumulación-temporal), pero requiere que la cámara se quede estática. En la práctica se puede lo mismo con una escena en movimiento. Algunos de los algoritmos más famosos son *Spatio-Temporal Variance Guided Filter* (SVGF), *Spatial Denoising*, Adaptive SVGF (A-SVGF) y *Temporally dense ray tracing*.
 
-La mayor parte de estas técnicas requieren el uso de un *motion buffer*, el cual calcula el cambio en la posición de un vértice de un frame a otro. En la práctica suelen venir acompañados de *motion vectors*, los cuales también son usados para técnicas como temporal antialiasing o temporal upscaling [@temporal-supersampling].
+Un algoritmo que se ha utilizado exitosamente en los últimos años es *Spatiotemporal importance Resampling* (ReSTIR) [@restir], el cual es capaz de procesar millones de luces dinámicas en tiempo real en alta calidad sin necesidad de introducir estructuras de datos excesivamente complejas. Está basado en el algoritmo *Sampling Importance Resampling* (STIR). Este último se puede estudiar a fondo en [@stir]
+
+![ReSTIR en acción. Fuente: @restir](https://research.nvidia.com/sites/default/files/styles/wide/public/publications/piratesTeaser_nvrSite_scaled.png?itok=ZlOnc27K)
+
+La mayor parte de estas técnicas requieren el uso de un *motion buffer*, el cual calcula el cambio en la posición de un vértice de un frame a otro. En la práctica suelen venir acompañados de *motion vectors*, los cuales también son usados para técnicas como temporal antialiasing (TAA) o temporal upscaling [@temporal-supersampling] (TAA es una técnica de muestreo).
 
 ## Machine Learning
 
 DLSS, Intel Open Image Denoise (https://github.com/OpenImageDenoise/oidn)
 
-- https://s2022.siggraph.org/
+-
 - https://alain.xyz/blog/ray-tracing-denoising
 - https://alain.xyz/blog/ray-tracing-filtering
-- STIR https://blog.demofox.org/2022/03/02/sampling-importance-resampling/
+- STIR /
 - ReSTIR https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf
 - DLSS https://www.nvidia.com/es-es/geforce/technologies/dlss, https://www.youtube.com/watch?v=YWIKzRhYZm4
 - FSR https://www.youtube.com/watch?v=y2RR2770H8E
