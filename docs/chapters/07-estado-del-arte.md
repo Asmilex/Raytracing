@@ -25,7 +25,7 @@ Durante el desarrollo del trabajo aprendimos que el número de muestras no lo es
 
 Con los avances de ray tracing en tiempo real surgió una nueva rama del tratamiento de la computación gráfica conocida como *denoising*. Este proceso consiste en eliminar el ruido de la imagen final, y es una técnica que se puede aplicar a cualquier imagen.
 
-A continuación, veremos una introducción a las técnicas modernas que se utilizan en ray tracing para acelerar la convergencia de rayos. Nos basaremos en las notas recogidas por Alain Galvan en su blog [@alain-filtering] [@alain-denoising].
+A continuación, veremos una introducción a las técnicas modernas que se utilizan en ray tracing para acelerar la convergencia de rayos. Nos basaremos en las notas recogidas por Alain Galvan en su blog [@alain-filtering] [@alain-denoising] para enumerar algunas de las técnicas. Todas las referencias a los trabajos originales se encuentran recogidas en dicha entrada, por lo que recomiendo leerla para comprender mejor cada técnica.
 
 ## Filtrado
 
@@ -36,6 +36,12 @@ Otro método muy común es el uso de **ruido azul**, o *Blue Noise* [@blue-noise
 ![En comparación con el ruido blanco, el ruido azul resulta más fácil de difuminar. Fuente: @alain-filtering](./img/07/Bluenoise.png){#fig:blue-noise width=40%}
 
 Del área del **procesamiento de señales** se han filtros Gaussianos, Medianos y Guiados para promediar regiones de baja varianza. En los últimos años, una nueva variante de este tipo de técnicas ha surgido como consecuencia del *machine learning*, el cual estudiaremos más tarde.
+
+Las **técnicas de acumulación** permiten reutilizar información anterior para suavizar el resultado final. Este tipo de técnicas empezaron originalmente en 1988 con *irradiance caching* [@irradiance-caching].
+
+Un método muy sencillo que hemos estudiado es la [acumulación temporal](#antialiasing-mediante-jittering-y-acumulación-temporal), pero requiere que la cámara se quede estática. En la práctica se puede lo mismo con una escena en movimiento. Algunos de los algoritmos más famosos son *Spatio-Temporal Variance Guided Filter* (SVGF), *Spatial Denoising*, Adaptive SVGF (A-SVGF) y *Temporally dense ray tracing*.
+
+La mayor parte de estas técnicas requieren el uso de un *motion buffer*, el cual calcula el cambio en la posición de un vértice de un frame a otro. En la práctica suelen venir acompañados de *motion vectors*, los cuales también son usados para técnicas como temporal antialiasing o temporal upscaling [@temporal-supersampling].
 
 ## Machine Learning
 
