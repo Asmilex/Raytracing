@@ -575,17 +575,22 @@ class="toc-section-number">6.1.3</span> Otras mejoras varias</a></li>
 class="toc-section-number">7</span> El presente y futuro de Ray
 Tracing</a>
 <ul>
-<li><a href="#denoising-filtering"><span
-class="toc-section-number">7.1</span> <em>Denoising</em> &amp;
-<em>filtering</em></a></li>
+<li><a href="#denoising"><span class="toc-section-number">7.1</span>
+<em>Denoising</em></a>
+<ul>
+<li><a href="#filtrado"><span class="toc-section-number">7.1.1</span>
+Filtrado</a></li>
+<li><a href="#machine-learning-y-técnicas-de-super-sampling"><span
+class="toc-section-number">7.1.2</span> <em>Machine Learning</em> y
+técnicas de <em>super sampling</em></a></li>
+</ul></li>
 <li><a href="#la-industria-del-videojuego"><span
 class="toc-section-number">7.2</span> La industria del
 videojuego</a></li>
 <li><a href="#offline-renderers"><span
 class="toc-section-number">7.3</span> Offline renderers</a></li>
-<li><a href="#unreal-engine-5-lumen"><span
-class="toc-section-number">7.4</span> Unreal Engine 5 &amp;
-Lumen</a></li>
+<li><a href="#unreal-engine-5-y-lumen"><span
+class="toc-section-number">7.4</span> Unreal Engine 5 y Lumen</a></li>
 </ul></li>
 <li><a href="#metodología-de-trabajo"><span
 class="toc-section-number">8</span> Metodología de trabajo</a>
@@ -957,9 +962,9 @@ rasterización se convierta en un algoritmo del pasado. Y ese momento es
 la actualidad.</p>
 <p>En 2018 Nvidia introdujo la arquitectura de tarjetas gráficas Turing
 <span class="citation" data-cites="turing-arquitecture">(<a
-href="#ref-turing-arquitecture" role="doc-biblioref">Nvidia
-2018</a>)</span>. Esta arquitectura tiene la capacidad de realizar
-cómputos de ray tracing acelerados por hardware en gráficas de
+href="#ref-turing-arquitecture" role="doc-biblioref">H. M. Nvidia Emmett
+Kilgariff 2018</a>)</span>. Esta arquitectura tiene la capacidad de
+realizar cómputos de ray tracing acelerados por hardware en gráficas de
 consumidor. Esto significa que ray <strong>tracing se vuelve viable en
 tiempo real</strong>. En lugar de horas, renderizar una imagen costará
 milisegundos.</p>
@@ -1157,7 +1162,20 @@ data-cites="pellacini-marschner-2017">(<a
 href="#ref-pellacini-marschner-2017" role="doc-biblioref">Fabio
 Pellacini 2022</a>)</span>, y <em>Lecture Rendering</em> <span
 class="citation" data-cites="tuwien">(<a href="#ref-tuwien"
-role="doc-biblioref">TU Wien 2022</a>)</span>.</li>
+role="doc-biblioref">TU Wien 2022</a>)</span>. Además, la recolección de
+técnicas y estudios de Alain Galvan han supuesto un gran refuerzo <span
+class="citation" data-cites="alain-API">(<a href="#ref-alain-API"
+role="doc-biblioref">Alain Galvan 2022a</a>)</span> <span
+class="citation" data-cites="alain-materials">(<a
+href="#ref-alain-materials" role="doc-biblioref">Alain Galvan
+2022b</a>)</span> <span class="citation" data-cites="alain-debug">(<a
+href="#ref-alain-debug" role="doc-biblioref">Alain Galvan
+2022c</a>)</span> <span class="citation"
+data-cites="alain-denoising">(<a href="#ref-alain-denoising"
+role="doc-biblioref">Alain Galvan 2022d</a>)</span> <span
+class="citation" data-cites="alain-filtering">(<a
+href="#ref-alain-filtering" role="doc-biblioref">Alain Galvan
+2022e</a>)</span>.</li>
 </ul>
 <h1 data-number="1" id="las-bases"><span
 class="header-section-number">1</span> Las bases</h1>
@@ -1628,10 +1646,6 @@ punto</em>.</p>
 <h2 data-number="2.1" id="introducción-a-la-radiometría"><span
 class="header-section-number">2.1</span> Introducción a la
 radiometría</h2>
-<blockquote>
-<p><strong>Nota</strong>: cuando usemos un paréntesis tras una ecuación,
-dentro denotaremos sus unidades de medida.</p>
-</blockquote>
 <p>Antes de comenzar a trabajar, necesitamos conocer <em>qué
 entendemos</em> por luz. Aunque hay muchas formas de trabajar con ella
 (a fin de cuentas, todavía seguimos discutiendo sobre qué es exactamente
@@ -1649,6 +1663,10 @@ velocidad <span class="math inline">\(c\)</span> que depende del índice
 de refracción del medio, <span class="math inline">\(n\)</span>. La
 unidad de medida de <span class="math inline">\(\lambda\)</span> es el
 nanómetro (<span class="math inline">\(\text{nm}\)</span>).</p>
+<blockquote>
+<p><strong>Nota</strong>:(ción) cuando usemos un paréntesis tras una
+ecuación, dentro denotaremos sus unidades de medida.</p>
+</blockquote>
 <p>Necesitaremos también definir qué es <strong>la frecuencia</strong>,
 <span class="math inline">\(f\)</span>. Su utilidad viene del hecho de
 que, cuando la luz cambia de medio al propagarse, la frecuencia se
@@ -3346,7 +3364,7 @@ class="math inline">\(p_X(x)\)</span> con media <span
 class="math inline">\(\mu = E\left[ X \right]\)</span>, y <span
 class="math inline">\(f: S \rightarrow \mathbb{R}\)</span>.</p>
 <blockquote>
-<p><strong>Nota</strong>ción: nos encontramos ante un caso de
+<p><strong>Nota</strong>(ción): nos encontramos ante un caso de
 <em>“choque de notaciones”</em>. Tradicionalmente las funciones de
 densidad utilizan <span class="math inline">\(f\)</span>, pero en
 transporte de luz se suele reservar esta letra para las BRDF y/u otras
@@ -3841,12 +3859,6 @@ Splitting)</span>.</p>
 id="next-event-estimation-o-muestreo-directo-de-fuentes-de-luz"><span
 class="header-section-number">3.3.3.2</span> Next event estimation, o
 muestreo directo de fuentes de luz</h4>
-<blockquote>
-<p><strong>Idea</strong>: Tracing shadow rays to the light source on
-each bounce to see if you can terminate the current path. This involves
-shooting a shadow ray towards light sources, if it’s occluded, terminate
-the ray.</p>
-</blockquote>
 <p>Esta técnica recibe dos nombres. Tradicionalmente, se la conocía como
 muestreo directo de fuentes de luz, pero en los últimos años ha adoptado
 el nombre de next event estimation. Esencialmente, se trata de utilizar
@@ -4627,7 +4639,7 @@ role="doc-biblioref">Wikipedia 2022e</a>)</span>, Nvidia <span
 class="citation" data-cites="wikipedia-nvidia">(<a
 href="#ref-wikipedia-nvidia" role="doc-biblioref">Wikipedia
 2022b</a>)</span>, e <span class="citation" data-cites="intel-arc">(<a
-href="#ref-intel-arc" role="doc-biblioref">Intel 2022</a>)</span>. Solo
+href="#ref-intel-arc" role="doc-biblioref">Intel 2022a</a>)</span>. Solo
 se han incluido las gráficas de escritorio de consumidor.</p>
 <p>Para este trabajo se ha utilizado una <strong>RTX 2070
 Super</strong>. En el capítulo de análisis del rendimiento se hablará
@@ -4683,8 +4695,8 @@ trabajo.</p>
 <p>Si se desea, se puede encontrar una comparación más a fondo de las
 API en el blog de <span class="citation" data-cites="alain-API">(<a
 href="#ref-alain-API" role="doc-biblioref">Alain Galvan
-2022</a>)</span>. Además, el manual de Vulkan con las extensiones de KHR
-se puede encontrar en <span class="citation" data-cites="vulkan">(<a
+2022a</a>)</span>. Además, el manual de Vulkan con las extensiones de
+KHR se puede encontrar en <span class="citation" data-cites="vulkan">(<a
 href="#ref-vulkan" role="doc-biblioref">The Khronos Vulkan Working Group
 2022</a>)</span>.</p>
 <h2 data-number="4.3" id="setup-del-proyecto"><span
@@ -4904,7 +4916,7 @@ instanciado varias veces <em>dentro de la misma BLAS</em>, la geometría
 se duplica. Esto se hace para mejorar el rendimiento.</p>
 <p>Como regla general, cuantas menos BLAS, mejor <span class="citation"
 data-cites="nvidia-best-practices">(<a href="#ref-nvidia-best-practices"
-role="doc-biblioref">Nvidia 2020</a>)</span>.</p>
+role="doc-biblioref">Nvidia 2020b</a>)</span>.</p>
 <p>El código correspondiente a la creación de la BLAS en el programa es
 el siguiente:</p>
 <pre><code class="language-cpp">void Engine::createBottomLevelAS() {
@@ -5936,7 +5948,7 @@ role="doc-biblioref">2022b</a>)</span></figcaption>
 referirte al vídeo de Alex Battaglia en <span class="citation"
 data-cites="df-global-illumination">(<a
 href="#ref-df-global-illumination" role="doc-biblioref">Digital Foundry
-2021</a>)</span>, en el cual cubre diferentes formas de resolver este
+2021a</a>)</span>, en el cual cubre diferentes formas de resolver este
 problema, tanto en el caso de ray tracing como en el de
 rasterización.</p>
 <h2 data-number="5.3" id="rendimiento"><span
@@ -6216,12 +6228,12 @@ href="#fig:importance_sample">55</a>].</p>
 <div id="fig:importance_sample" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Importance%20sample.png"
-alt="Figura 55: Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling.   Escena: cornell_box_original, 10 rebotes, acumulación temporal off, 10 muestras" />
-<figcaption aria-hidden="true"><span>Figura 55:</span>
-<strong>Izquierda</strong>: <em>hemisphere sampling</em>.
-<strong>Derecha</strong>: <em>Cosine-Weighted Hemisphere Sampling</em>.
-<br> Escena: <code>cornell_box_original</code>, 10 rebotes, acumulación
-temporal off, 10 muestras</figcaption>
+alt="Figura 55: Escena: cornell_box_original. 10 rebotes, acumulación temporal off, 10 muestras   Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling." />
+<figcaption aria-hidden="true"><span>Figura 55:</span> Escena:
+<code>cornell_box_original</code>. 10 rebotes, acumulación temporal off,
+10 muestras <br> <strong>Izquierda</strong>: <em>hemisphere
+sampling</em>. <strong>Derecha</strong>: <em>Cosine-Weighted Hemisphere
+Sampling</em>.</figcaption>
 </figure>
 </div>
 <p>Para facilitar la comparativa, desde una posición estática se ha
@@ -6656,19 +6668,14 @@ programa.</p>
 <p>Sería también conveniente aprender un sistema de <em>debugging</em>
 sólido. En el blog de <span class="citation"
 data-cites="alain-debug">(<a href="#ref-alain-debug"
-role="doc-biblioref">Alain Galvan 2019</a>)</span> se pueden encontrar
+role="doc-biblioref">Alain Galvan 2022c</a>)</span> se pueden encontrar
 algunas herramientras muy útiles para este propósito.</p>
 <h1 data-number="7" id="el-presente-y-futuro-de-ray-tracing"><span
 class="header-section-number">7</span> El presente y futuro de Ray
 Tracing</h1>
 <p>Cosas de las que quiero hablar:</p>
 <ul>
-<li>Este trabajo es estado del arte</li>
 <li>Hablar de algunos offline renderers</li>
-<li>Denoising &amp; filtering muy importantes
-<ul>
-<li>Enlazar con acumulación temporal</li>
-</ul></li>
 <li>Series X &amp; PS5</li>
 <li>Juegos de útlima generación
 <ul>
@@ -6676,10 +6683,6 @@ Tracing</h1>
 <li>Minecraft RTX</li>
 <li>Cyberpunk</li>
 <li>Quake II RTX y Doom RTX</li>
-</ul></li>
-<li>UE5 Lumen
-<ul>
-<li>Enlazar varias veces con trabajo</li>
 </ul></li>
 </ul>
 <p>Después de un esfuerzo monumental como el que supone el desarrollo de
@@ -6693,28 +6696,181 @@ Veremos algunas de las técnicas que están cobrando fuerza en los últimos
 años, así como algunos renderers profesionales. Le pondremos especial
 atención a cómo funciona el sistema de iluminación global de Unreal
 Engine 5, conocido como <em>Lumen</em>.</p>
-<h2 data-number="7.1" id="denoising-filtering"><span
-class="header-section-number">7.1</span> <em>Denoising</em> &amp;
-<em>filtering</em></h2>
-<ul>
-<li>https://s2022.siggraph.org/</li>
-<li>https://alain.xyz/blog/ray-tracing-denoising</li>
-<li>https://alain.xyz/blog/ray-tracing-filtering</li>
-<li>STIR
-https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</li>
-<li>ReSTIR
-https://research.nvidia.com/sites/default/files/pubs/2020-07_Spatiotemporal-reservoir-resampling/ReSTIR.pdf</li>
-<li>DLSS https://www.nvidia.com/es-es/geforce/technologies/dlss,
-https://www.youtube.com/watch?v=YWIKzRhYZm4</li>
-<li>FSR https://www.youtube.com/watch?v=y2RR2770H8E</li>
-<li>Blue noise
-<ul>
-<li>https://blog.demofox.org/2020/05/16/using-blue-noise-for-raytraced-soft-shadows/</li>
-<li>https://alain.xyz/blog/ray-tracing-filtering</li>
-<li>Minecraft RTX usa blue noise para el sampling:
-https://alain.xyz/blog/frame-analysis-minecraftrtx/assets/diffuse-1spp.jpg</li>
-</ul></li>
-</ul>
+<h2 data-number="7.1" id="denoising"><span
+class="header-section-number">7.1</span> <em>Denoising</em></h2>
+<p>Durante el desarrollo del trabajo aprendimos que el número de
+muestras no lo es todo. De hecho, es una de las partes menos
+importantes. Para reducir el ruido de la imagen final, resulta muchísimo
+más eficiente usar una buena estrategia de muestreo.</p>
+<p>Con los avances de ray tracing en tiempo real surgió una nueva rama
+del tratamiento de la computación gráfica conocida como
+<em>denoising</em>. Este proceso consiste en eliminar el ruido de la
+imagen final, y es una técnica que se puede aplicar a cualquier
+imagen.</p>
+<p>A continuación, veremos una introducción a las técnicas modernas que
+se utilizan en ray tracing para acelerar la convergencia de rayos. Nos
+basaremos en las notas recogidas por Alain Galvan en su blog <span
+class="citation" data-cites="alain-filtering">(<a
+href="#ref-alain-filtering" role="doc-biblioref">Alain Galvan
+2022e</a>)</span> <span class="citation"
+data-cites="alain-denoising">(<a href="#ref-alain-denoising"
+role="doc-biblioref">Alain Galvan 2022d</a>)</span> para enumerar
+algunas de las técnicas. Todas las referencias a los trabajos originales
+se encuentran recogidas en dicha entrada, por lo que recomiendo leerla
+para comprender mejor cada técnica.</p>
+<h3 data-number="7.1.1" id="filtrado"><span
+class="header-section-number">7.1.1</span> Filtrado</h3>
+<p>Entre las <strong>técnicas basadas en muestreo</strong> que ya hemos
+estudiado se encuentran multiple importance sampling, next-event
+estimation, ruleta rusa y series de quasi-Monte Carlo.</p>
+<p>Otro método muy común es el uso de <strong>ruido azul</strong>, o
+<em>Blue Noise</em> <span class="citation" data-cites="blue-noise">(<a
+href="#ref-blue-noise" role="doc-biblioref">Eric Heitz 2019</a>)</span>.
+Este tipo de ruido proporcionan valores aleatorios por píxel para crear
+patrones de ruido. Lo bueno de este tipo de patrones es que pueden ser
+tratados con mayor facilidad que otros tipos de ruido. <span
+class="citation" data-cites="nvidia-blue-noise">(<a
+href="#ref-nvidia-blue-noise" role="doc-biblioref">Alan Wolfe
+2021</a>)</span>. Esto es debido a su distribución uniforme, que produce
+menos instancias de errores de alta frecuencia, lo cual hace que sean
+fáciles de difuminar y acumular <span class="citation"
+data-cites="alain-filtering">(<a href="#ref-alain-filtering"
+role="doc-biblioref">Alain Galvan 2022e</a>)</span>. Este tipo de ruido
+puede ser creado eficientemente mediante generadores de secuencias
+cuasi-aleatorias como las de Sobol.</p>
+<div id="fig:blue-noise" class="fignos">
+<figure>
+<img loading="lazy" src="./img/07/Bluenoise.png" style="width:40.0%"
+alt="Figura 64: En comparación con el ruido blanco, el ruido azul resulta más fácil de difuminar. Fuente: Alain Galvan (2022e)" />
+<figcaption aria-hidden="true"><span>Figura 64:</span> En comparación
+con el ruido blanco, el ruido azul resulta más fácil de difuminar.
+Fuente: <span class="citation" data-cites="alain-filtering">Alain Galvan
+(<a href="#ref-alain-filtering"
+role="doc-biblioref">2022e</a>)</span></figcaption>
+</figure>
+</div>
+<p>Del área del <strong>procesamiento de señales</strong> se han filtros
+Gaussianos, Medianos y Guiados para promediar regiones de baja varianza.
+En los últimos años, una nueva variante de este tipo de técnicas ha
+surgido como consecuencia del <em>machine learning</em>, el cual
+estudiaremos más tarde.</p>
+<p>Las <strong>técnicas de acumulación</strong> permiten reutilizar
+información anterior para suavizar el resultado final. Este tipo de
+técnicas empezaron originalmente en 1988 con <em>irradiance caching</em>
+<span class="citation" data-cites="irradiance-caching">(<a
+href="#ref-irradiance-caching" role="doc-biblioref">Greg Ward
+1988</a>)</span>.</p>
+<p>Un método muy sencillo que hemos estudiado es la <a
+href="#antialiasing-mediante-jittering-y-acumulación-temporal">acumulación
+temporal</a>, pero requiere que la cámara se quede estática. En la
+práctica se puede lo mismo con una escena en movimiento. Algunos de los
+algoritmos más famosos son <em>Spatio-Temporal Variance Guided
+Filter</em> (SVGF), <em>Spatial Denoising</em>, Adaptive SVGF (A-SVGF) y
+<em>Temporally dense ray tracing</em>.</p>
+<p>Un algoritmo que se ha utilizado exitosamente en los últimos años es
+<em>Spatiotemporal importance Resampling</em> (ReSTIR) <span
+class="citation" data-cites="restir">(<a href="#ref-restir"
+role="doc-biblioref">Benedikt Bitterli 2020</a>)</span>, el cual es
+capaz de procesar millones de luces dinámicas en tiempo real en alta
+calidad sin necesidad de introducir estructuras de datos excesivamente
+complejas. Está basado en el algoritmo <em>Sampling Importance
+Resampling</em> (STIR). Este último se puede estudiar a fondo en <span
+class="citation" data-cites="stir">(<a href="#ref-stir"
+role="doc-biblioref">Wolfe 2022</a>)</span></p>
+<div id="fig:restir" class="fignos">
+<figure>
+<img loading="lazy"
+src="https://research.nvidia.com/sites/default/files/styles/wide/public/publications/piratesTeaser_nvrSite_scaled.png?itok=ZlOnc27K"
+alt="Figura 65: ReSTIR en acción. Fuente: Benedikt Bitterli (2020)" />
+<figcaption aria-hidden="true"><span>Figura 65:</span> ReSTIR en acción.
+Fuente: <span class="citation" data-cites="restir">Benedikt Bitterli (<a
+href="#ref-restir" role="doc-biblioref">2020</a>)</span></figcaption>
+</figure>
+</div>
+<p>La mayor parte de estas técnicas requieren el uso de un <em>motion
+buffer</em>, el cual calcula el cambio en la posición de un vértice de
+un frame a otro. En la práctica suelen venir acompañados de <em>motion
+vectors</em>, los cuales también son usados para técnicas como temporal
+antialiasing (TAA) o temporal upscaling <span class="citation"
+data-cites="temporal-supersampling">(<a
+href="#ref-temporal-supersampling" role="doc-biblioref">Karis
+2014</a>)</span> (TAA es una técnica de muestreo).</p>
+<h3 data-number="7.1.2"
+id="machine-learning-y-técnicas-de-super-sampling"><span
+class="header-section-number">7.1.2</span> <em>Machine Learning</em> y
+técnicas de <em>super sampling</em></h3>
+<p>Para cualquier persona que haya seguido el mundo de la tecnología en
+los últimos años, no debe resultarle sorprendente la afirmación de que
+las técnicas basadas en machine learning están de moda. Nuestro campo de
+investigación, el transporte de luz, también se ha visto beneficiado por
+ellas.</p>
+<p>En la actualidad el propósito de las redes neuronales suele ser
+reconstruir la imagen desde una resolución considerablemente menor: en
+vez de renderizar una imagen a, por ejemplo, 4K, se computa primero a
+1080p o menor y luego se reescala mediante inteligencia artificial. Las
+tecnologías más famosas que existen de este estilo son Nvidia Deep
+Learning Super Sampling 2.0 <span class="citation" data-cites="dlss">(<a
+href="#ref-dlss" role="doc-biblioref">Nvidia 2020a</a>)</span> e Intel
+XeSS <span class="citation" data-cites="xess">(<a href="#ref-xess"
+role="doc-biblioref">Intel 2022b</a>)</span>. AMD lanzó recientemente
+FidelityFX Super Resolution 2.0 (FSR) <span class="citation"
+data-cites="fsr">(<a href="#ref-fsr" role="doc-biblioref">AMD
+2022</a>)</span>, pero no utiliza redes neuronales. Sin embargo, la
+consideraremos en esta sección, pues sus resultados son muy
+similares.</p>
+<p><strong>DLSS</strong> recibe imágenes a baja resolución y <em>motion
+vectors</em>, produciendo imágenes a alta resolución mediante un
+autoenconder convolucional. Los resultados son espectaculares, y
+consiguen un rendimiento mucho mayor que a resolución nativa sin perder
+calidad de imagen. En algunos casos, la reconstrucción acaba teniendo
+mayor nitidez que la imagen original, pues la red neuronal aplica
+antialiasing en el proceso.</p>
+<div id="fig:dlss-control" class="fignos">
+<figure>
+<img loading="lazy" src="./img/07/Control.jpg"
+alt="Figura 66: Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se duplica al utilizar DLSS. Fuente: Digital Foundry (2020a).   Izquierda: DLSS 2.0 con resolución interna a 1080p. Derecha: 4K nativo." />
+<figcaption aria-hidden="true"><span>Figura 66:</span> Control, de
+Remedy Games. Uno de los primeros videojuegos que integraron ray tracing
+en tiempo real basado en DX12. El rendimiento se duplica al utilizar
+DLSS. Fuente: <span class="citation" data-cites="df-dlss">Digital
+Foundry (<a href="#ref-df-dlss" role="doc-biblioref">2020a</a>)</span>.
+<br> <strong>Izquierda</strong>: DLSS 2.0 con resolución interna a
+1080p. <strong>Derecha</strong>: 4K nativo.</figcaption>
+</figure>
+</div>
+<p><strong>Intel XeSS</strong> funciona de manera similar a DLSS, aunque
+todavía no se conocen los detalles. Su lanzamiento es extremadamente
+reciente, por lo que se están explorando los resultados. Se puede leer
+una entrevista realizada por Digital Foundry a los autores del proyecto
+en <span class="citation" data-cites="df-xess">(<a href="#ref-df-xess"
+role="doc-biblioref">Digital Foundry 2021b</a>)</span>.</p>
+<p>Los beneficios de estas técnicas son evidentes. Tal y como
+descubrimos en la comparativa, la <a href="#resolución">resolución</a>
+afecta en gran medida al rendimiento. Cuantos más píxeles tenga la
+imagen, mayor será el número de muestras que debamos tomar; y por lo
+tanto, mayor el coste de renderizar un frame. Bajando la resolución
+conseguimos una imagen con menos ruido pero poco apta para las pantallas
+de hoy en día. Haciendo <em>super sampling</em> solventamos este
+problema. Si la reconstrucción es de suficiente calidad, estaremos
+consiguiendo rendimiento superior a la resolución nativa.</p>
+<div id="fig:dlss-fsr-taa" class="fignos">
+<figure>
+<img loading="lazy" src="./img/07/Comparación.jpg"
+alt="Figura 67: Comparativa entre las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo son reconstruidas las vallas, así como el texto de los globos. Fuente: Digital Foundry (2022b).   Izquierda: Nvidia DLSS 2.3. Centro: AMD FSR 2.0. Derecha: Temporal antialiasing." />
+<figcaption aria-hidden="true"><span>Figura 67:</span> Comparativa entre
+las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo
+son reconstruidas las vallas, así como el texto de los globos. Fuente:
+<span class="citation" data-cites="df-fsr">Digital Foundry (<a
+href="#ref-df-fsr" role="doc-biblioref">2022b</a>)</span>. <br>
+<strong>Izquierda</strong>: Nvidia DLSS 2.3. <strong>Centro</strong>:
+AMD FSR 2.0. <strong>Derecha</strong>: Temporal
+antialiasing.</figcaption>
+</figure>
+</div>
+<p>Intel XeSS, DLSS: acumulación temporal + jitter -&gt; reconstrucción
+de imagen. FSR: Heurística + jitter -&gt; reconstrucción de imagen.</p>
+<p>DLSS, Intel Open Image Denoise
+(https://github.com/OpenImageDenoise/oidn)</p>
 <h2 data-number="7.2" id="la-industria-del-videojuego"><span
 class="header-section-number">7.2</span> La industria del
 videojuego</h2>
@@ -6761,13 +6917,8 @@ class="header-section-number">7.3</span> Offline renderers</h2>
 <li>Unity https://unity.com/es</li>
 <li>Unreal Engine 5</li>
 </ul>
-<h2 data-number="7.4" id="unreal-engine-5-lumen"><span
-class="header-section-number">7.4</span> Unreal Engine 5 &amp;
-Lumen</h2>
-<ul>
-<li>https://www.unrealengine.com/en-US/tech-blog/unreal-engine-5-goes-all-in-on-dynamic-global-illumination-with-lumen</li>
-<li>https://twitter.com/Yurukuyaru/status/1523643949826588674</li>
-</ul>
+<h2 data-number="7.4" id="unreal-engine-5-y-lumen"><span
+class="header-section-number">7.4</span> Unreal Engine 5 y Lumen</h2>
 <p>Unreal Engine 5 <span class="citation" data-cites="UE5">(<a
 href="#ref-UE5" role="doc-biblioref">Epic Games 2022a</a>)</span> es la
 última generación del Motor <em>Unreal Engine</em> creado por Epic
@@ -6787,8 +6938,8 @@ data-cites="lumen">(<a href="#ref-lumen" role="doc-biblioref">Epic Games
 <img loading="lazy"
 src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image12-1999x1130-4bfd11e88c9d.png"
 style="width:70.0%"
-alt="Figura 64: Habitación interior iluminada por el sistema Lumen" />
-<figcaption aria-hidden="true"><span>Figura 64:</span> Habitación
+alt="Figura 68: Habitación interior iluminada por el sistema Lumen" />
+<figcaption aria-hidden="true"><span>Figura 68:</span> Habitación
 interior iluminada por el sistema Lumen</figcaption>
 </figure>
 </div>
@@ -6807,8 +6958,8 @@ niebla volumétrica.</p>
 <figure>
 <img loading="lazy"
 src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image16-1999x1125-48a619533ccb.jpg"
-alt="Figura 65: Una escena exterior con materiales emisivos en Unreal Engine 5. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 65:</span> Una escena
+alt="Figura 69: Una escena exterior con materiales emisivos en Unreal Engine 5. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 69:</span> Una escena
 exterior con materiales emisivos en Unreal Engine 5. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
 role="doc-biblioref">2022b</a>)</span></figcaption>
@@ -6835,8 +6986,8 @@ evaluación del material.</p>
 <div id="fig:lumen3" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen1.jpg"
-alt="Figura 66: Visualización de Mesh Distance Fields de una escena. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 66:</span> Visualización de
+alt="Figura 70: Visualización de Mesh Distance Fields de una escena. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 70:</span> Visualización de
 <em>Mesh Distance Fields</em> de una escena. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
 role="doc-biblioref">2022b</a>)</span></figcaption>
@@ -6854,8 +7005,8 @@ información aportada por el material.</p>
 <img loading="lazy"
 src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image24-1920x1080-3158475cf4a8.png"
 style="width:70.0%"
-alt="Figura 67: Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 67:</span> Lumen combina los
+alt="Figura 71: Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 71:</span> Lumen combina los
 cálculos de la iluminación global con la información del material para
 crear la imagen final. Fuente: <span class="citation"
 data-cites="lumen">Epic Games (<a href="#ref-lumen"
@@ -6882,8 +7033,8 @@ escena con mucha radiancia, por lo que el fundamento es similar.</p>
 <figure>
 <img loading="lazy"
 src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image1-1999x1109-d3b299670791.png"
-alt="Figura 68: Lumen utiliza las partes más brillantes del último frame para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 68:</span> Lumen utiliza las
+alt="Figura 72: Lumen utiliza las partes más brillantes del último frame para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 72:</span> Lumen utiliza las
 partes más brillantes del último frame para la distribución de las
 nuevas direcciones de un rayo tras el impacto. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
@@ -6893,15 +7044,18 @@ role="doc-biblioref">2022b</a>)</span></figcaption>
 <p>Para calcular los reflejos de superficies se ha optado por promediar
 la radiancia de puntos en el mismo vecindario y acumulación temporal de
 frames para suavizar el resultado.</p>
+<div id="fig:lumen6" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen2.jpg"
-alt="Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true">Nuestro método principal de reducción de
-ruido fue la acumulación temporal de frames. Lumen utiliza una forma
-mucho más avanzada para lograr el mismo resultado con sus reflejos.
-Fuente: <span class="citation" data-cites="lumen">Epic Games (<a
-href="#ref-lumen" role="doc-biblioref">2022b</a>)</span></figcaption>
+alt="Figura 73: Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 73:</span> Nuestro método
+principal de reducción de ruido fue la acumulación temporal de frames.
+Lumen utiliza una forma mucho más avanzada para lograr el mismo
+resultado con sus reflejos. Fuente: <span class="citation"
+data-cites="lumen">Epic Games (<a href="#ref-lumen"
+role="doc-biblioref">2022b</a>)</span></figcaption>
 </figure>
+</div>
 <p>Finalmente, es importante destacar que las imágenes no son generadas
 a una gran resolución. Para conseguir una imagen digna de los tiempos
 actuales, los motores modernos utilizan una resolución interna cercana a
@@ -6934,14 +7088,14 @@ fácil. Sin embargo, sí que puedo proporcionar motivos por los que he
 querido escribir sobre ray tracing.</p>
 <p>Una de las principales influencias ha sido <span class="citation"
 data-cites="digital-foundry">(<a href="#ref-digital-foundry"
-role="doc-biblioref">Digital Foundry 2022</a>)</span>. Este grupo de
+role="doc-biblioref">Digital Foundry 2022a</a>)</span>. Este grupo de
 divulgación se dedica al estudio de las técnicas utilizadas en el mundo
 de los videojuegos. El inicio de la era del ray tracing en tiempo real
 les llevó a dedicar una serie de vídeos y artículos a esta tecnología, y
 a las diferentes maneras en las que se ha implementado. Se puede ver un
 ejemplo en <span class="citation" data-cites="digital-foundry-2020">(<a
 href="#ref-digital-foundry-2020" role="doc-biblioref">Digital Foundry
-2020</a>)</span>.</p>
+2020b</a>)</span>.</p>
 <iframe width="784" height="441" src="https://www.youtube.com/embed/6bqA8F6B6NQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <p>Dado que esta área combina tanto informática, matemáticas y una
@@ -6979,7 +7133,7 @@ class="header-section-number">8.2</span> Ciclos de desarrollo</h2>
 que estás leyendo, ya sea en PDF o en la web– y software. Podemos
 distinguir varias fases en la planificación del proyecto, que quedan
 resumidas en el diagrama de Grant [Figuras <a
-href="#fig:grantt_1">69</a>, <a href="#fig:grantt_2">70</a>]</p>
+href="#fig:grantt_1">74</a>, <a href="#fig:grantt_2">75</a>]</p>
 <p>Para comenzar, durante el verano de 2021 se implementarían los tres
 libros de Shirley de la “serie In One Weekend”: In One Weekend <span
 class="citation" data-cites="Shirley2020RTW1">(<a
@@ -6994,8 +7148,8 @@ acelerando así el aprendizaje.</p>
 <div id="fig:grantt_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%201.png"
-alt="Figura 69: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
-<figcaption aria-hidden="true"><span>Figura 69:</span> Diagrama de
+alt="Figura 74: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
+<figcaption aria-hidden="true"><span>Figura 74:</span> Diagrama de
 Grantt de la primera parte del desarrollo. Los libros de Peter Shirley
 servirían como introducción al trabajo</figcaption>
 </figure>
@@ -7007,8 +7161,8 @@ pues no se puede implementar algo que no se entiende.</p>
 <div id="fig:grantt_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%202.png"
-alt="Figura 70: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
-<figcaption aria-hidden="true"><span>Figura 70:</span> Diagrama de
+alt="Figura 75: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
+<figcaption aria-hidden="true"><span>Figura 75:</span> Diagrama de
 Grantt de la segunda parte del desarrollo. Durante el segundo
 cuatrimestre se trabajaría tanto la memoria como el
 software</figcaption>
@@ -7167,8 +7321,8 @@ Jetbrains. Se utiliza en la web para los bloques de código.</li>
 <div id="fig:tipografías" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Tipografías.png" style="width:70.0%"
-alt="Figura 71: Showcase de las tipografías utilizadas" />
-<figcaption aria-hidden="true"><span>Figura 71:</span> Showcase de las
+alt="Figura 76: Showcase de las tipografías utilizadas" />
+<figcaption aria-hidden="true"><span>Figura 76:</span> Showcase de las
 tipografías utilizadas</figcaption>
 </figure>
 </div>
@@ -7179,8 +7333,8 @@ específica.</p>
 <div id="fig:paleta_de_colores" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Paleta%20de%20colores.png" width="400"
-alt="Figura 72: La paleta de colores del proyecto" />
-<figcaption aria-hidden="true"><span>Figura 72:</span> La paleta de
+alt="Figura 77: La paleta de colores del proyecto" />
+<figcaption aria-hidden="true"><span>Figura 77:</span> La paleta de
 colores del proyecto</figcaption>
 </figure>
 </div>
@@ -7210,9 +7364,6 @@ las que hemos usado.</p>
 <strong>Pandoc</strong> y <strong>Figma</strong>. La primera tendrá <a
 href="#github">su propia sección</a>, así que hablaremos de las
 otras.</p>
-<blockquote>
-<p>TODO: foto del workflow.</p>
-</blockquote>
 <h3 data-number="8.5.1" id="pandoc"><span
 class="header-section-number">8.5.1</span> Pandoc</h3>
 <p><strong>Pandoc</strong> <span class="citation"
@@ -7257,8 +7408,8 @@ diseños de este trabajo se han hecho con esta herramienta.</p>
 <div id="fig:figma" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Figma.png"
-alt="Figura 73: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 73:</span> Tablón principal
+alt="Figura 78: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 78:</span> Tablón principal
 del proyecto de Figma, a día 15 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -7353,8 +7504,8 @@ Github Pages.</li>
 <div id="fig:github_actions" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Github%20Actions.png"
-alt="Figura 74: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
-<figcaption aria-hidden="true"><span>Figura 74:</span> La pestaña de
+alt="Figura 79: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
+<figcaption aria-hidden="true"><span>Figura 79:</span> La pestaña de
 Github Actions permite controlar con facilidad el resultado de un
 workflow y cuánto tarda en ejecutarse</figcaption>
 </figure>
@@ -7365,6 +7516,14 @@ todo</em> correcto almacenar ficheros binarios en un repositorio de git,
 no me resulta molesto personalmente. Así que, cuando considero que es el
 momento oportuno, lo hago manualmente. Además, también se activa por
 cada <em>release</em> que se crea.</p>
+<div id="fig:actions-workflow" class="fignos">
+<figure>
+<img loading="lazy" src="./img/08/Actions.png"
+alt="Figura 80: Diagrama con los workflows" />
+<figcaption aria-hidden="true"><span>Figura 80:</span> Diagrama con los
+workflows</figcaption>
+</figure>
+</div>
 <p>Volviendo a la web, Github permite alojar páginas web para un
 repositorio. Activando el parámetro correcto en las opciones del
 repositorio, y configurándolo debidamente, conseguimos que lea el
@@ -7398,8 +7557,8 @@ objetivos pendientes de la aplicación.</p>
 <div id="fig:github_issues" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Issues.png" style="width:80.0%"
-alt="Figura 75: Pestaña de issues, día 16 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 75:</span> Pestaña de
+alt="Figura 81: Pestaña de issues, día 16 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 81:</span> Pestaña de
 issues, día 16 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -7409,8 +7568,8 @@ importante del desarrollo.</p>
 <div id="fig:github_milestones" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Milestones.png" style="width:80.0%"
-alt="Figura 76: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
-<figcaption aria-hidden="true"><span>Figura 76:</span> Los
+alt="Figura 82: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
+<figcaption aria-hidden="true"><span>Figura 82:</span> Los
 <em>milestones</em> agrupan una serie de issues relacionados con un
 punto clave del desarrollo</figcaption>
 </figure>
@@ -7423,8 +7582,8 @@ aplicación es un acompañante del repositorio estilo Asana.</p>
 <div id="fig:github_projects" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Projects.png" style="width:80.0%"
-alt="Figura 77: Projects agrupa los issues y les asigna prioridades" />
-<figcaption aria-hidden="true"><span>Figura 77:</span> Projects agrupa
+alt="Figura 83: Projects agrupa los issues y les asigna prioridades" />
+<figcaption aria-hidden="true"><span>Figura 83:</span> Projects agrupa
 los issues y les asigna prioridades</figcaption>
 </figure>
 </div>
@@ -7459,8 +7618,8 @@ sus significados:</p>
 <div id="fig:github_emojis" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Commits.png"
-alt="Figura 78: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
-<figcaption aria-hidden="true"><span>Figura 78:</span> Los emojis
+alt="Figura 84: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
+<figcaption aria-hidden="true"><span>Figura 84:</span> Los emojis
 permiten reconocer el objetivo de cada commit. Esta tabla recoge el
 significado de cada uno</figcaption>
 </figure>
@@ -8081,15 +8240,42 @@ Adam Marrs, Peter Shirley, and I. Wald, eds. 2021. <span>“Ray tracing
 gems II.”</span> Apress. 2021. <a
 href="http://raytracinggems.com/rtg2">http://raytracinggems.com/rtg2</a>.
 </div>
+<div id="ref-alain-API" class="csl-entry" role="doc-biblioentry">
+Alain Galvan. 2022a. <span>“A comparison of modern graphics
+APIs.”</span> 2022. Accessed May 13, 2022. <a
+href="https://alain.xyz/blog/comparison-of-modern-graphics-apis">https://alain.xyz/blog/comparison-of-modern-graphics-apis</a>.
+</div>
+<div id="ref-alain-materials" class="csl-entry" role="doc-biblioentry">
+———. 2022b. <span>“Advances in material models.”</span> 2022. Accessed
+May 7, 2022. <a
+href="https://alain.xyz/blog/advances-in-material-models">https://alain.xyz/blog/advances-in-material-models</a>.
+</div>
 <div id="ref-alain-debug" class="csl-entry" role="doc-biblioentry">
-Alain Galvan. 2019. <span>“Graphics debugging.”</span> June 22, 2019.
-Accessed May 29, 2022. <a
+———. 2022c. <span>“Graphics debugging.”</span> 2022. Accessed May 29,
+2022. <a
 href="https://alain.xyz/blog/graphics-debugging">https://alain.xyz/blog/graphics-debugging</a>.
 </div>
-<div id="ref-alain-API" class="csl-entry" role="doc-biblioentry">
-———. 2022. <span>“A comparison of modern graphics APIs.”</span> 2022.
-Accessed May 13, 2022. <a
-href="https://alain.xyz/blog/comparison-of-modern-graphics-apis">https://alain.xyz/blog/comparison-of-modern-graphics-apis</a>.
+<div id="ref-alain-denoising" class="csl-entry" role="doc-biblioentry">
+———. 2022d. <span>“Ray tracing denoising.”</span> 2022. Accessed May 30,
+2022. <a
+href="https://alain.xyz/blog/ray-tracing-denoising">https://alain.xyz/blog/ray-tracing-denoising</a>.
+</div>
+<div id="ref-alain-filtering" class="csl-entry" role="doc-biblioentry">
+———. 2022e. <span>“Ray tracing filtering.”</span> 2022. Accessed May 30,
+2022. <a
+href="https://alain.xyz/blog/ray-tracing-filtering">https://alain.xyz/blog/ray-tracing-filtering</a>.
+</div>
+<div id="ref-nvidia-blue-noise" class="csl-entry"
+role="doc-biblioentry">
+Alan Wolfe, T. A.-M., Nathan Morrical. 2021. <span>“Rendering in real
+time with spatiotemporal blue noise textures, part 1.”</span> 2021.
+Accessed May 30, 2022. <a
+href="https://developer.nvidia.com/blog/rendering-in-real-time-with-spatiotemporal-blue-noise-textures-part-1/">https://developer.nvidia.com/blog/rendering-in-real-time-with-spatiotemporal-blue-noise-textures-part-1/</a>.
+</div>
+<div id="ref-fsr" class="csl-entry" role="doc-biblioentry">
+AMD. 2022. <span>“AMD FidelityFX™ super resolution.”</span> 2022.
+Accessed May 30, 2022. <a
+href="https://www.amd.com/en/technologies/fidelityfx-super-resolution">https://www.amd.com/en/technologies/fidelityfx-super-resolution</a>.
 </div>
 <div id="ref-asmilex-raytracing-docker" class="csl-entry"
 role="doc-biblioentry">
@@ -8124,6 +8310,12 @@ Fowler, J. Grenning, et al. 2001. <span>“Manifesto for Agile Software
 Development.”</span> Accessed April 20, 2022. <a
 href="http://www.agilemanifesto.org/">http://www.agilemanifesto.org/</a>.
 </div>
+<div id="ref-restir" class="csl-entry" role="doc-biblioentry">
+Benedikt Bitterli, M. P., Chris Wyman. 2020. <span>“Spatiotemporal
+reservoir resampling for real-time ray tracing with dynamic direct
+lighting.”</span> July 19, 2020. Accessed May 30, 2022. <a
+href="https://research.nvidia.com/publication/2020-07_spatiotemporal-reservoir-resampling-real-time-ray-tracing-dynamic-direct">https://research.nvidia.com/publication/2020-07_spatiotemporal-reservoir-resampling-real-time-ray-tracing-dynamic-direct</a>.
+</div>
 <div id="ref-berkeley-cs184" class="csl-entry" role="doc-biblioentry">
 Berkeley cs184. 2022. <span>“Computer graphics and imaging.”</span>
 2022. Accessed March 20, 2022. <a
@@ -8156,24 +8348,42 @@ Crytek. 2020. <span>“Crysis remastered brings ray tracing to current-gen
 consoles.”</span> September 11, 2020. Accessed April 17, 2022. <a
 href="https://www.cryengine.com/news/view/crysis-remastered-brings-ray-tracing-to-current-gen-consoles">https://www.cryengine.com/news/view/crysis-remastered-brings-ray-tracing-to-current-gen-consoles</a>.
 </div>
+<div id="ref-df-dlss" class="csl-entry" role="doc-biblioentry">
+Digital Foundry. 2020a. <span>“Control vs DLSS 2.0: Can 540p match 1080p
+image quality? Full ray tracing on RTX 2060?”</span> April 4, 2020.
+Accessed May 30, 2022. <a
+href="https://www.youtube.com/watch?v=YWIKzRhYZm4">https://www.youtube.com/watch?v=YWIKzRhYZm4</a>.
+</div>
 <div id="ref-digital-foundry-2020" class="csl-entry"
 role="doc-biblioentry">
-Digital Foundry. 2020. <span>“Cyberpunk 2077 PC: What does ray tracing
-deliver... And is it worth it?”</span> December 19, 2020. Accessed April
-10, 2022. <a
+———. 2020b. <span>“Cyberpunk 2077 PC: What does ray tracing deliver...
+And is it worth it?”</span> December 19, 2020. Accessed April 10, 2022.
+<a
 href="https://www.youtube.com/watch?v=6bqA8F6B6NQ">https://www.youtube.com/watch?v=6bqA8F6B6NQ</a>.
 </div>
 <div id="ref-df-global-illumination" class="csl-entry"
 role="doc-biblioentry">
-———. 2021. <span>“Tech focus: Global illumination - what it is, how does
-it work and why do we need it?”</span> July 24, 2021. Accessed May 20,
-2022. <a
+———. 2021a. <span>“Tech focus: Global illumination - what it is, how
+does it work and why do we need it?”</span> July 24, 2021. Accessed May
+20, 2022. <a
 href="https://www.youtube.com/watch?v=yEkryaaAsBU">https://www.youtube.com/watch?v=yEkryaaAsBU</a>.
 </div>
+<div id="ref-df-xess" class="csl-entry" role="doc-biblioentry">
+———. 2021b. <span>“The big interview: How intel alchemist GPUs and XeSS
+upscaling will change PC gaming.”</span> August 24, 2021. Accessed May
+30, 2022. <a
+href="https://www.eurogamer.net/digitalfoundry-2021-the-big-intel-interview-how-intel-alchemist-gpus-and-xess-upscaling-will-change-the-market">https://www.eurogamer.net/digitalfoundry-2021-the-big-intel-interview-how-intel-alchemist-gpus-and-xess-upscaling-will-change-the-market</a>.
+</div>
 <div id="ref-digital-foundry" class="csl-entry" role="doc-biblioentry">
-———. 2022. <span>“Canal de youtube de digital foundry.”</span> 2022.
+———. 2022a. <span>“Canal de youtube de digital foundry.”</span> 2022.
 Accessed May 7, 2022. <a
 href="https://www.youtube.com/user/DigitalFoundry">https://www.youtube.com/user/DigitalFoundry</a>.
+</div>
+<div id="ref-df-fsr" class="csl-entry" role="doc-biblioentry">
+———. 2022b. <span>“AMD FidelityFX super resolution 2.0 - FSR 2.0 vs
+native vs DLSS - the DF tech review.”</span> May 13, 2022. Accessed May
+30, 2022. <a
+href="https://www.youtube.com/watch?v=y2RR2770H8E">https://www.youtube.com/watch?v=y2RR2770H8E</a>.
 </div>
 <div id="ref-docker" class="csl-entry" role="doc-biblioentry">
 Docker. 2022. <span>“Docker - the world’s most popular container
@@ -8201,6 +8411,12 @@ role="doc-biblioentry">
 Eric C. Anderson. 1999. <span>“Monte carlo methods and importance
 sampling.”</span> 1999. Accessed May 9, 2022. <a
 href="https://ib.berkeley.edu/labs/slatkin/eriq/classes/guest_lect/mc_lecture_notes.pdf">https://ib.berkeley.edu/labs/slatkin/eriq/classes/guest_lect/mc_lecture_notes.pdf</a>.
+</div>
+<div id="ref-blue-noise" class="csl-entry" role="doc-biblioentry">
+Eric Heitz, L. B. 2019. <span>“Distributing monte carlo errors as a blue
+noise in screen space by permuting pixel seeds between frames.”</span>
+2019. Accessed May 30, 2022. <a
+href="https://eheitzresearch.wordpress.com/772-2/">https://eheitzresearch.wordpress.com/772-2/</a>.
 </div>
 <div id="ref-robust-monte-carlo" class="csl-entry"
 role="doc-biblioentry">
@@ -8249,6 +8465,13 @@ Grant Sanderson. 2022. <span>“3Blue1Brown.”</span> 2022. Accessed May 7,
 2022. <a
 href="https://www.3blue1brown.com/">https://www.3blue1brown.com/</a>.
 </div>
+<div id="ref-irradiance-caching" class="csl-entry"
+role="doc-biblioentry">
+Greg Ward, R. C., Francis Rubinstein. 1988. <span>“A ray tracing
+solution to diffuse interreflection.”</span> 1988. Accessed May 30,
+2022. <a
+href="https://floyd.lbl.gov/radiance/papers/sg88/paper.html">https://floyd.lbl.gov/radiance/papers/sg88/paper.html</a>.
+</div>
 <div id="ref-trigger-task" class="csl-entry" role="doc-biblioentry">
 Gruntfuggly. 2022. <span>“Trigger task on save.”</span> 2022. Accessed
 May 7, 2022. <a
@@ -8276,9 +8499,14 @@ May 16, 2022. <a
 href="https://iquilezles.org/articles/outdoorslighting/">https://iquilezles.org/articles/outdoorslighting/</a>.
 </div>
 <div id="ref-intel-arc" class="csl-entry" role="doc-biblioentry">
-Intel. 2022. <span>“A new player has entered the game.”</span> 2022.
+Intel. 2022a. <span>“A new player has entered the game.”</span> 2022.
 Accessed May 13, 2022. <a
 href="https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/overview.html">https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/overview.html</a>.
+</div>
+<div id="ref-xess" class="csl-entry" role="doc-biblioentry">
+Intel. 2022b. <span>“Xe super sampling: AI-enhanced upscaling.”</span>
+2022. Accessed May 30, 2022. <a
+href="https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/xess.html">https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/xess.html</a>.
 </div>
 <div id="ref-crimson-pro" class="csl-entry" role="doc-biblioentry">
 Jacques Le Bailly. 2022. <span>“Crimson pro typography.”</span> 2022.
@@ -8306,6 +8534,12 @@ role="doc-biblioentry">
 José Luis Crespo. 2021. <span>“Ya, en serio, ¿qué es la luz?”</span>
 December 10, 2021. Accessed April 22, 2022. <a
 href="https://www.youtube.com/watch?v=DkcEAz09Buo">https://www.youtube.com/watch?v=DkcEAz09Buo</a>.
+</div>
+<div id="ref-temporal-supersampling" class="csl-entry"
+role="doc-biblioentry">
+Karis, B. 2014. <span>“Unreal engine 4 - high quality temporal
+supersampling.”</span> 2014. Accessed May 30, 2022. <a
+href="https://de45xmedrsdbp.cloudfront.net/Resources/files/TemporalAA_small-59732822.pdf">https://de45xmedrsdbp.cloudfront.net/Resources/files/TemporalAA_small-59732822.pdf</a>.
 </div>
 <div id="ref-linear" class="csl-entry" role="doc-biblioentry">
 Linear. 2022. <span>“Linear - the issue tracking tool you’ll enjoy
@@ -8348,9 +8582,14 @@ role="doc-biblioentry">
 Ncase. 2022. <span>“Explorable explanations.”</span> 2022. Accessed May
 7, 2022. <a href="https://explorabl.es/">https://explorabl.es/</a>.
 </div>
+<div id="ref-dlss" class="csl-entry" role="doc-biblioentry">
+Nvidia. 2020a. <span>“NVIDIA DLSS 2.0: A big leap in AI
+rendering.”</span> 2020. Accessed May 30, 2022. <a
+href="https://www.nvidia.com/en-us/geforce/news/nvidia-dlss-2-0-a-big-leap-in-ai-rendering/">https://www.nvidia.com/en-us/geforce/news/nvidia-dlss-2-0-a-big-leap-in-ai-rendering/</a>.
+</div>
 <div id="ref-nvidia-best-practices" class="csl-entry"
 role="doc-biblioentry">
-Nvidia. 2020. <span>“Best practices: Using nvidia RTX ray
+Nvidia. 2020b. <span>“Best practices: Using nvidia RTX ray
 tracing.”</span> October 10, 2020. Accessed May 13, 2022. <a
 href="https://developer.nvidia.com/blog/best-practices-using-nvidia-rtx-ray-tracing/">https://developer.nvidia.com/blog/best-practices-using-nvidia-rtx-ray-tracing/</a>.
 </div>
@@ -8533,6 +8772,11 @@ role="doc-biblioentry">
 Will Usher. 2019. <span>“The RTX shader binding table three
 ways.”</span> November 20, 2019. Accessed May 13, 2022. <a
 href="https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways">https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways</a>.
+</div>
+<div id="ref-stir" class="csl-entry" role="doc-biblioentry">
+Wolfe, A. 2022. <span>“Sampling importance resampling.”</span> March 2,
+2022. Accessed May 30, 2022. <a
+href="https://blog.demofox.org/2022/03/02/sampling-importance-resampling/">https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</a>.
 </div>
 </div>
 <section class="footnotes footnotes-end-of-document"
