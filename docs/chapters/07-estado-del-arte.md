@@ -14,14 +14,32 @@ Cosas de las que quiero hablar:
   - Minecraft RTX
   - Cyberpunk
   - Quake II RTX y Doom RTX
-- UE5 Lumen
-  - Enlazar varias veces con trabajo
 
 Después de un esfuerzo monumental como el que supone el desarrollo de un motor de rendering es satisfactorio ver el resultado; y más sabiendo que tratamos con tecnología puntera. Sin embargo, en el fondo, este trabajo no es más que un juguete. Mientras que este proyecto ha durado escasos meses, los profesionales llevan años trabajando en transporte de luz. Así que, ¡veamos qué se cuece en la industria!
 
 En esta sección vamos a explorar ligeralmente el estado del arte. Veremos algunas de las técnicas que están cobrando fuerza en los últimos años, así como algunos renderers profesionales. Le pondremos especial atención a cómo funciona el sistema de iluminación global de Unreal Engine 5, conocido como *Lumen*.
 
-## *Denoising* & *filtering*
+## *Denoising*
+
+Durante el desarrollo del trabajo aprendimos que el número de muestras no lo es todo. De hecho, es una de las partes menos importantes. Para reducir el ruido de la imagen final, resulta muchísimo más eficiente usar una buena estrategia de muestreo.
+
+Con los avances de ray tracing en tiempo real surgió una nueva rama del tratamiento de la computación gráfica conocida como *denoising*. Este proceso consiste en eliminar el ruido de la imagen final, y es una técnica que se puede aplicar a cualquier imagen.
+
+A continuación, veremos una introducción a las técnicas modernas que se utilizan en ray tracing para acelerar la convergencia de rayos. Nos basaremos en las notas recogidas por Alain Galvan en su blog [@alain-filtering] [@alain-denoising].
+
+## Filtrado
+
+Entre las **técnicas basadas en muestreo** que ya hemos estudiado se encuentran multiple importance sampling, next-event estimation, ruleta rusa y series de quasi-Monte Carlo.
+
+Otro método muy común es el uso de **ruido azul**, o *Blue Noise* [@blue-noise]. Este tipo de ruido proporcionan valores aleatorios por píxel para crear patrones de ruido. Lo bueno de este tipo de patrones es que pueden ser tratados con mayor facilidad que otros tipos de ruido. [@nvidia-blue-noise]. Esto es debido a su distribución uniforme, que produce menos instancias de errores de alta frecuencia, lo cual hace que sean fáciles de difuminar y acumular [@alain-filtering]. Este tipo de ruido puede ser creado eficientemente mediante generadores de secuencias cuasi-aleatorias como las de Sobol.
+
+![En comparación con el ruido blanco, el ruido azul resulta más fácil de difuminar. Fuente: @alain-filtering](./img/07/Bluenoise.png){#fig:blue-noise width=40%}
+
+Del área del **procesamiento de señales** se han filtros Gaussianos, Medianos y Guiados para promediar regiones de baja varianza. En los últimos años, una nueva variante de este tipo de técnicas ha surgido como consecuencia del *machine learning*, el cual estudiaremos más tarde.
+
+## Machine Learning
+
+DLSS, Intel Open Image Denoise (https://github.com/OpenImageDenoise/oidn)
 
 - https://s2022.siggraph.org/
 - https://alain.xyz/blog/ray-tracing-denoising
