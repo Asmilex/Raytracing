@@ -290,7 +290,7 @@ Una figura que se asemeja a un diagrama de secuencia específico para el loop de
 
 ![Diagrama de clases para Engine](./img/08/Mermaid%20engine.png){#fig:diagrama-clases-engine}
 
-![Diagrama de clases para Scenes](./img/08/Mermaid%20scenes.png){#fig:diagrama-clases-scenes}
+![Diagrama de clases para Scenes](./img/08/Mermaid%20scenes.png){#fig:diagrama-clases-scenes width=60%}
 
 ## Compilación y ejecución
 
@@ -716,13 +716,13 @@ vec3 sample_pixel() {
 }
 ```
 
-> TODO: mostrar vídeo de ejemplo
+En la sección de la [comparativa](#comparativa-con-in-one-weekend) estudiaremos a fondo los efectos de esta técnica.
 
 ## Corrección de gamma
 
 Con el código de la sección [anterior](#antialiasing-mediante-jittering-y-acumulación-temporal), existe un problema con los colores finales. El algoritmo de pathtracing no limita el máximo valor que puede tomar un camino. Sin embargo, Vulkan espera que la terna RGB provista esté en $[0, 1]^3$. Esto implica que los colores acabarán quemados.
 
-![Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz.](./img/04/Quemado.png){#fig:quemado}
+![Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz.](./img/04/Quemado.png){#fig:quemado width=80%}
 
 Podemos corregir este problema mediante **corrección de gamma**. Esta es una operación no lineal utilizada en fotografía para corregir la luminacia, con el fin de compensar la percepción no lineal del brillo por parte de los humanos. En este caso, lo haremos al estilo [@Shirley2020RTW1]: tras tomar las muestras, aplicaremos una corrección para $\gamma = 2.2$, lo cual implica elevar cada componente del píxel a la potencia $\frac{1}{2.2}$; es decir, $(r_f, g_f, b_f) = (r^{\frac{1}{2.2}}, g^{\frac{1}{2.2}}, b^{\frac{1}{2.2}})$.
 
@@ -743,7 +743,7 @@ if (USE_GAMMA_CORRECTION == 1) {
 }
 ```
 
-![Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos.](./img/04/Corrección%20de%20gamma.png){#fig:correccion_gamma}
+![Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos.](./img/04/Corrección%20de%20gamma.png){#fig:correccion_gamma width=80%}
 
 > Espera. Esa no parece la misma escena. ¿No han cambiado los colores demasiado?
 
