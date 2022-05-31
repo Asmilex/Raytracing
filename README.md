@@ -1,8 +1,16 @@
-<h1 align=center>🔦 Un TFG sobre Raytracing 🔦</h1>
+<h1 align=center>🔦 Los fundamentos de Ray Tracing en tiempo real 🔦</h1>
+
 
 <div align=center>
   <h3>
-    <a href="https://asmilex.github.io/Raytracing">:small_orange_diamond: ¡Visita la documentación online! :small_orange_diamond:</a>
+    <p> :small_orange_diamond:  Web:
+    <a href="https://asmilex.github.io/Raytracing">asmilex.github.io/Raytracing</a>
+    </p>
+  </h3>
+  <h3>
+    <p> :small_blue_diamond:  PDF:
+    <a href="https://github.com/Asmilex/Raytracing/raw/main/docs/TFG.pdf">Descargar</a>
+    </p>
   </h3>
 </div>
 
@@ -13,8 +21,8 @@
   <img src="https://img.shields.io/github/workflow/status/Asmilex/Raytracing/Construir%20PDF?color=%23fdcb6e&label=PDF&style=for-the-badge">
 </div>
 
-<hr>
 
+<hr>
 
 <p align="center" dir="auto">
   <a href="#bulb-y-esto-de-qu%C3%A9-va-exactamente">Sobre el proyecto</a> •
@@ -25,8 +33,7 @@
 </p>
 
 <div align=center>
-  <img align=center src="https://i.imgur.com/RrWQVRE.jpg" width="600">
-  <p align=center><i>En el futuro, esto será una foto mucho más chula</i></p>
+  <img align=center src="./docs/img/06/Showcase.png" width="600">
 </div>
 
 ## :bulb: Y esto, ¿de qué va exactamente?
