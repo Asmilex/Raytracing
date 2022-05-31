@@ -3,13 +3,17 @@
 
 <div align=center>
   <h3>
-    <p> :small_orange_diamond:  Web:
-    <a href="https://asmilex.github.io/Raytracing">asmilex.github.io/Raytracing</a>
+    <p>
+      :small_orange_diamond:  Web:
+        <a href="https://asmilex.github.io/Raytracing">asmilex.github.io/Raytracing</a>
+      :small_orange_diamond:
     </p>
   </h3>
   <h3>
-    <p> :small_blue_diamond:  PDF:
-    <a href="https://github.com/Asmilex/Raytracing/raw/main/docs/TFG.pdf">Descargar</a>
+    <p>
+      :small_blue_diamond:  PDF:
+        <a href="https://github.com/Asmilex/Raytracing/raw/main/docs/TFG.pdf">Descargar</a>
+      :small_blue_diamond:
     </p>
   </h3>
 </div>
