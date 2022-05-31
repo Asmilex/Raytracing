@@ -29,6 +29,9 @@
 <hr>
 
 <p align="center" dir="auto">
+  <h2 align="center">:beginner: Tabla de contenidos :beginner:</h2>
+</p>
+<p align="center" dir="auto">
   <a href="#bulb-y-esto-de-qu%C3%A9-va-exactamente">Sobre el proyecto</a> •
   <a href="#gear-instalaci%C3%B3n">Instalación</a> •
   <a href="#evergreen_tree-estructura-del-repositorio">Estructura</a> •
@@ -42,11 +45,9 @@
 
 ## :bulb: Y esto, ¿de qué va exactamente?
 
-Este repositorio contiene una implementación del ray tracer de Peter Shirley en VkRay, así como la documentación asociada al desarrollo.
+Este repositorio contiene el desarrollo de un path tracer en tiempo real implementado en Vulkan con extensiones de Ray Tracing (KHR) basado en el de Ray Tracing In One Weekend, de Peter Shirley. Se incluye una memoria y varias utilidades relacionadas con el proyecto.
 
-Ah, también es el trabajo de fin de grado de mi doble grado en Ingeniería Informática y Matemáticas 🎓.
-
-Actualmente se encuentra en una fase temprana de desarrollo. Con un poco de suerte, ¡debería estar listo para verano de 2022!
+Es el trabajo de fin de grado de mi doble grado en Ingeniería Informática y Matemáticas 🎓.
 
 ## :gear: Instalación
 
