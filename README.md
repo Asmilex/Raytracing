@@ -18,7 +18,7 @@
   </h3>
 </div>
 
-<br>
+&nbsp;
 
 <div align=center>
   <img src="https://img.shields.io/github/workflow/status/Asmilex/Raytracing/Publicar%20a%20Github%20Pages?color=00b894&label=WEB&style=for-the-badge">
