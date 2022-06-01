@@ -857,7 +857,7 @@ $$
 Como $M$ podemos tomar
 
 $$
-M = \sup_{x}\frac{p_Y(x)}{p_X(x)} = \sup_{x}{p_Y(x)}
+M = \sup_{x}\frac{p_Y(x)}{p_X(x)} = \sup_{x}{p_X(x)}
 $$
 
 En la sección anterior dijimos que este algoritmo es "como jugar a los dardos". Pues bien, la figura [@fig:metodo_rechazo_grafica] muestra la diana. El siguiente fragmento de código de R calcula este valor:
