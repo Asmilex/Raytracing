@@ -7,7 +7,7 @@
   <meta name="author" content="Andrés Millán Muñoz" />
   <meta name="keywords" content="raytracing, ray tracing, Monte
 Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan" />
-  <title>Los fundamentos de Ray Tracing en tiempo real</title>
+  <title>Métodos de Monte Carlo para síntesis de imágenes.  Análisis teórico e implementaciones basadas en path tracing acelerado por hardware</title>
   <style>
     html {
       line-height: 1.5;
@@ -196,7 +196,9 @@ Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan" />
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Los fundamentos de Ray Tracing en tiempo real</h1>
+<h1 class="title">Métodos de Monte Carlo para síntesis de imágenes.
+ Análisis teórico e implementaciones basadas en path tracing acelerado
+por hardware</h1>
 <p class="author">Andrés Millán Muñoz</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -665,10 +667,10 @@ rendimiento</span></a></li>
 </ul>
 </nav>
 <h1 class="unnumbered" id="sinopsis">Sinopsis</h1>
-<p>En este trabajo se explorarán las técnicas modernas de informática
-gráfica físicamente realistas basadas en <em>ray tracing</em> en tiempo
-real. Para ello, se utilizarán métodos de integración de Monte Carlo con
-el fin de disminuir el tiempo de cómputo.</p>
+<p>En este trabajo se explorarán las técnicas modernas de síntesis de
+imágenes físicamente realistas basadas en Path-Tracing en tiempo real.
+Para ello, se utilizarán métodos de integración de Monte Carlo con el
+fin de disminuir el tiempo de cómputo.</p>
 <p>Se diseñará un software basado en la interfaz de programación de
 aplicaciones gráficas Vulkan, utilizando como soporte un entorno de
 desarrollo de Nvidia conocido como nvpro-samples. El software
@@ -717,14 +719,22 @@ instead of stopping in the first intersection, it makes the rays bounce
 freely through the scene. These rays gather information about object
 materials, light sources and many more elements. Then, the algorithm
 computes the color of the pixel by considering how much light those rays
-have acummulated over their traversal. Given the physically accurate
-nature of the algorithm, the results it produces are unmatched. But it
-comes with <strong>a major problem: rendering times</strong>.</p>
-<p>Rendering times can be crucial depending on the task at hand.
-Rasterization has been traditionally used in real time applications,
-such as video games, while path tracing is implemented in offline
-renderers, like the ones used for movie productions. We then need to ask
-one question:</p>
+have acummulated over their traversal. This manner of working results in
+an improvement over ray tracing, which is often called global
+illumination.</p>
+<p><strong>Global illumination</strong> is a physical phenomenon related
+to indirect lightning that occurs when photons bounce off of objects and
+are reflected back into a room. In rasterization, it has been
+traditionally faked by using methods such as ambient occlusion, light
+maps and so on, since it is crucial in order to get a realistic image.
+Path tracing naturally solves this issue given the physically accurate
+nature of the algorithm.</p>
+<p>The results it produces are unmatched. But they come with <strong>a
+major problem: rendering times</strong>. Rendering times can be crucial
+depending on the task at hand. Rasterization has been traditionally used
+in real time applications, such as video games, while path tracing is
+implemented in offline renderers, like the ones used for movie
+productions. We then need to ask one question:</p>
 <p><strong>Could it be possible to bring path tracing to real
 time?</strong></p>
 <p>In this project we will tackle this problem. We will build a
@@ -773,7 +783,9 @@ or next-event estimation.</p>
 application. <a href="#construyamos-un-path-tracer">Chapter 4</a> will
 cover the <strong>implementation of the engine</strong>. We will first
 introduce our main set of tools, which will be Vulkan graphics API and
-Nvidia DesignWorks’ nvpro-samples framework. Then, we will learn about
+Nvidia DesignWorks’ nvpro-samples framework <span class="citation"
+data-cites="nvpro-samples">(<a href="#ref-nvpro-samples"
+role="doc-biblioref">Nvidia 2022b</a>)</span>. Then, we will learn about
 the structures that make real time ray tracing possible, such as the Top
 and Bottom-Level Acceleration Structures (TLAS and BLAS respectively)
 and the Shader Binding Table (SBT). We will also understand how the ray
@@ -909,11 +921,11 @@ href="#ref-Whitted1979AnII" role="doc-biblioref">Whitted
 </figure>
 </div>
 <p>En 1986 Kajiya introdujo la denominada <strong>rendering
-equation</strong> <span class="citation" data-cites="PBRT3e">(<a
-href="#ref-PBRT3e" role="doc-biblioref">Pharr, Jakob, and Humphreys
-2016</a>)</span>. Esta es una ecuación que modela analíticamente la
-cantidad de luz de un cierto basándose en las propiedades del material y
-la luz que llega a dicho punto.</p>
+equation</strong> <span class="citation" data-cites="kajiya">(<a
+href="#ref-kajiya" role="doc-biblioref">Kajiya 1986</a>)</span>. Esta es
+una ecuación que modela analíticamente la cantidad de luz de un cierto
+basándose en las propiedades del material y la luz que llega a dicho
+punto.</p>
 <p><span class="math display">\[
 L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p,
 \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
@@ -4211,7 +4223,7 @@ p_Y (x) &amp; = 1, \quad 0 \le x \le 1
 \]</span></p>
 <p>Como <span class="math inline">\(M\)</span> podemos tomar</p>
 <p><span class="math display">\[
-M = \sup_{x}\frac{p_Y(x)}{p_X(x)} = \sup_{x}{p_Y(x)}
+M = \sup_{x}\frac{p_Y(x)}{p_X(x)} = \sup_{x}{p_X(x)}
 \]</span></p>
 <p>En la sección anterior dijimos que este algoritmo es “como jugar a
 los dardos”. Pues bien, la figura [<a
@@ -5938,8 +5950,7 @@ href="#materiales-y-objetos">componente ambiental</a> de los materiales,
 <em>probes</em>.</p>
 <div id="fig:lightmpas" class="fignos">
 <figure>
-<img loading="lazy"
-src="https://cdn2.unrealengine.com/lumen-unreal-engine-5-image22-1999x1194-28fbbcb61a3c.png?resize=1&amp;w=1000"
+<img loading="lazy" src="./img/05/Shadowmap.png"
 alt="Figura 41: Los lightmaps requieren que la geometría no pueda ser movida debido a que la sombra no es calculada en tiempo real. Fuente: Epic Games (2022b)" />
 <figcaption aria-hidden="true"><span>Figura 41:</span> Los
 <em>lightmaps</em> requieren que la geometría no pueda ser movida debido
@@ -8566,6 +8577,11 @@ role="doc-biblioentry">
 José Luis Crespo. 2021. <span>“Ya, en serio, ¿qué es la luz?”</span>
 December 10, 2021. Accessed April 22, 2022. <a
 href="https://www.youtube.com/watch?v=DkcEAz09Buo">https://www.youtube.com/watch?v=DkcEAz09Buo</a>.
+</div>
+<div id="ref-kajiya" class="csl-entry" role="doc-biblioentry">
+Kajiya, J. T. 1986. <span>“The Rendering Equation.”</span> <em>SIGGRAPH
+Comput. Graph.</em> 20 (4): 143–50. <a
+href="https://doi.org/10.1145/15886.15902">https://doi.org/10.1145/15886.15902</a>.
 </div>
 <div id="ref-temporal-supersampling" class="csl-entry"
 role="doc-biblioentry">
