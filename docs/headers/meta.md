@@ -11,7 +11,7 @@ fignos-caption-name: "Figura"
 
 # Sinopsis{.unnumbered}
 
-En este trabajo se explorarán las técnicas modernas de informática gráfica físicamente realistas basadas en *ray tracing* en tiempo real. Para ello, se utilizarán métodos de integración de Monte Carlo con el fin de disminuir el tiempo de cómputo.
+En este trabajo se explorarán las técnicas modernas de síntesis de imágenes físicamente realistas basadas en Path-Tracing en tiempo real. Para ello, se utilizarán métodos de integración de Monte Carlo con el fin de disminuir el tiempo de cómputo.
 
 Se diseñará un software basado en la interfaz de programación de aplicaciones gráficas Vulkan, utilizando como soporte un entorno de desarrollo de Nvidia conocido como nvpro-samples. El software implementará un motor gráfico basado en *path tracing*. Este motor será capaz de renderizar numerosas escenas, cambiar los parámetros del algoritmo path tracing y modificar las fuentes de iluminación en tiempo de ejecución.
 
