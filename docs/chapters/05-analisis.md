@@ -129,7 +129,6 @@ En la escena [@fig:cornell_bath_1] observamos cómo la luz del sol entra desde l
 
 ![Escena similar a la caja de Cornell, en la vida real. También es mi baño. ](./img/05/Cornell%20bath%201.jpg){#fig:cornell_bath_1 width=60%}
 
-
 Podemos observar cómo todos los materiales adquieren un tinte rojizo, debido a la influencia tanto difusa como especular de la pared de la izquierda. Objetos que antes eran blancos inmaculados se vuelven rojos, como el inodoro. Incluso aquellas zonas en sombra consiguen un color rojizo. Esto es debido a que los fotones rebotan en el cristal rojo cuando más energía tienen. De esta forma, en la siguiente dirección tomada, los rayos transportan esta propiedad al resto de materiales, los cuales se visualizan como una tonalidad roja.
 
 ![Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados](./img/05/Cornell%20bath%202.jpg){#fig:cornell_bath_2 width=60%}
