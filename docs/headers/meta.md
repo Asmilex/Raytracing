@@ -1,5 +1,5 @@
 ---
-title: Los fundamentos de Ray Tracing en tiempo real
+title: "Métodos de Monte Carlo para síntesis de imágenes. \\ \\newline \\Large Análisis teórico e implementaciones basadas en path tracing acelerado por hardware"
 author: Andrés Millán Muñoz
 keywords: [raytracing, ray tracing, Monte Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan]
 link-citations: true
