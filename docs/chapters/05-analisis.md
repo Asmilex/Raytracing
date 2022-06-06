@@ -146,7 +146,7 @@ Lo mismo ocurre cuando cambiamos el foco a la pared de la derecha. Al ser verde,
 
 Este efecto es esencial para proporcionar realismo a una imagen digital. Sin iluminación global, los motores presentan un aspecto que podríamos considerar *videojueguil*: imágenes planas, con sombras abruptas y un aire de falsedad al que nos hemos llegado a acostumbrar. Por ello se han implementado varias técnicas en rasterización para suplir este efecto. Destacan los *lightmaps*, la [componente ambiental](#materiales-y-objetos) de los materiales, *cubemaps*, oclusión ambiental e iluminación indirecta basada en *probes*.
 
-![Los *lightmaps* requieren que la geometría no pueda ser movida debido a que la sombra no es calculada en tiempo real. Fuente: @lumen](https://cdn2.unrealengine.com/lumen-unreal-engine-5-image22-1999x1194-28fbbcb61a3c.png?resize=1&w=1000){ #fig:lightmpas }
+![Los *lightmaps* requieren que la geometría no pueda ser movida debido a que la sombra no es calculada en tiempo real. Fuente: @lumen](./img/05/Shadowmap.png){ #fig:lightmpas }
 
 Para un vistazo más a fondo de la iluminación global, puedes referirte al vídeo de Alex Battaglia en [@df-global-illumination], en el cual cubre diferentes formas de resolver este problema, tanto en el caso de ray tracing como en el de rasterización.
 
