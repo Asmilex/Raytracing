@@ -71,7 +71,7 @@ El principal problema de la irradiancia es que *no nos dice nada sobre las direc
 
 Con estas tres unidades básicas, nos surge una pregunta muy natural: *¿cómo mido cuánta luz llega a una superficie?*
 
-Para responder a esta pregunta, necesitaremos los **ángulos sólidos**. Son la extensión de los **ángulos planares**, en dos dimensiones.
+Para responder a esta pregunta, necesitaremos los **ángulos sólidos**. Son la extensión de los ángulos bidimensionales a los que estamos acostumbrados (llamados técnicamente **ángulos planares**).
 
 Ilustremos el sentido de estos ángulos: imaginemos que tenemos un cierto objeto en dos dimensiones delante de nosotros, a una distancia desconocida. ¿Sabríamos cuál es su tamaño, solo con esta información? Es más, si entrara otro objeto en la escena, ¿podríamos distinguir cuál de ellos es más grande?
 
@@ -82,19 +82,18 @@ Parece difícil responder a estas preguntas. Sin embargo, sí que podemos determ
 Llevando esta idea a las tres dimensiones es como conseguimos el concepto de **ángulo sólido**. Si en dos dimensiones teníamos una circunferencia, aquí tendremos una esfera. Cuando generemos las rectas proyectantes hacia el volumen, a diferencia de los ángulos planares, se inscribirá un área en la esfera. La razón entre dicha área $A$ y el cuadrado del radio $r$ nos dará un ángulo sólido:
 
 $$
-\omega = \frac{A}{r^2} \text{(sr)}
+\sigma = \frac{A}{r^2} \text{(sr)}
 $${#eq:angulo_solido_omega}
 
-
-Los denotaremos por $\omega$. En física se suele usar $\Omega$, pero aquí optaremos por la minúscula. Su unidad de medida es el estereorradián ($\text{sr}$).  Se tiene que $\omega \in [0, 4\pi]$. Si $2 \pi$ radianes corresponden a la circunferencia completa, para la esfera se tiene que $4 \pi$ esteorradianes cubren toda la superficie de esta; y por lo tanto,$2\pi \text{sr}$ cubren un hemisferio. Además, un esteorradián corresponde a una superficie con área $r^2$: $1 \text{sr} = \frac{r^2}{r^2}$.
+Los denotaremos por $\sigma$, aunque también se pueden encontrar en la literatura como $\Omega$. Su unidad de medida es el estereorradián ($\text{sr}$). Se tiene que $\sigma \in [0, 4\pi]$. Si $2 \pi$ radianes corresponden a la circunferencia completa, para la esfera se tiene que $4 \pi$ esteorradianes cubren toda la superficie de esta; y por lo tanto,$2\pi \text{sr}$ cubren un hemisferio. Además, un esteorradián corresponde a una superficie con área $r^2$: $1 \text{sr} = \frac{r^2}{r^2}$.
 
 ![Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio](./img/02/Ángulo%20sólido.png){#fig:angulo_solido width=80%}
 
-Debido a la forma en la que se trabaja con ellos, es costumbre usar $\omega$ **como un vector dirección unitario en la esfera**.
+Usaremos $\omega$ para representar **vectores dirección unitarios en la esfera** alrededor de un punto $p$.
 
 ![Como de costumbre, hay un XKCD relevante [@xkcd-size]](./img/02/xkcd_1276.png){#fig:xkcd_1276 width=60%}
 
-Usualmente emplearemos coordenadas esféricas cuando trabajemos con ellos, dado que resulta más cómodo.
+Puesto que estamos trabajando con esferas, nos resultará muy cómodo emplear coordenadas esféricas. Para un cierto punto de coordenadas $(x, y, z)$ de la esfera unitaria, se tiene que
 
 $$
 \begin{aligned}
