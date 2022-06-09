@@ -236,10 +236,10 @@ class="toc-section-number">1.2.4</span> Intersecciones con
 triángulos</a>
 <ul>
 <li><a href="#coordenadas-baricéntricas"><span
-class="toc-section-number">1.2.4.1</span> coordenadas
+class="toc-section-number">1.2.4.1</span> Coordenadas
 baricéntricas</a></li>
 <li><a href="#calculando-la-intersección"><span
-class="toc-section-number">1.2.4.2</span> calculando la
+class="toc-section-number">1.2.4.2</span> Calculando la
 intersección</a></li>
 </ul></li>
 </ul></li>
@@ -935,19 +935,20 @@ denominado <strong>path tracing</strong>, el cual es capaz de estimar
 numéricamente su valor. Su idea principal se basa en hacer rebotar rayos
 por la escena una y otra vez, de forma que en cada impacto se adquiera
 nueva información.</p>
-<p>Los métodos de Monte Carlo proliferaron debido a su fundamente
-teórico, el cual es idóneo para ray tracing. Estas técnicas se basan en
-el uso de muestras de alguna distribución para calcular un valor
-determinado. En este caso, aproximan el valor que toma la integral de la
-rendering equation. Comenzaron siendo utilizados en 1960 para el cálculo
-de la radiancia generada por los fotones en simulaciones físicas, por lo
-que transicionaron fácilmente a ray tracing.</p>
-<p>A finales del siglo XX ray tracing penetra de lleno en la industria.
+<p>Los métodos de Monte Carlo proliferaron debido a su fundamento
+teórico, el cual es idóneo para las diferentes formas de ray tracing.
+Estas técnicas se basan en el uso de muestras de alguna distribución
+para calcular un valor determinado. En este caso, aproximan el valor que
+toma la integral de la rendering equation. Comenzaron siendo utilizados
+en 1960 para el cálculo de la radiancia generada por los fotones en
+simulaciones físicas, por lo que transicionaron fácilmente a ray
+tracing.</p>
+<p>A finales del siglo XX path tracing penetra de lleno en la industria.
 Numerosas empresas comienzan a desarrollar motores de renderizado basado
-en ray tracing, abandonando así rasterización. Las productoras de cine
-empiezan a utilizar exclusivamente medios digitales para crear
+en dicho algoritmo, abandonando así rasterización. Las productoras de
+cine empiezan a utilizar exclusivamente medios digitales para crear
 películas, una forma de crear arte nunca vista hasta la fecha.</p>
-<p>La elegancia de ray tracing reside en su naturaleza tan intuitiva.
+<p>La elegancia de path tracing reside en su naturaleza tan intuitiva.
 Pues claro que la respuesta a “<em>¿Cómo simulamos fielmente una imagen
 en un ordenador?</em>” es “<em>Representando la luz de forma
 realista</em>”. Gracias a la física sabemos que los fotones emitidos por
@@ -957,7 +958,7 @@ nuestros problemas ya existe en el mundo exterior. Aprendiendo sobre
 cómo funciona nuestro alrededor nos permitirá modelar nuevos mundos a
 nuestro gusto. De esta manera, podemos dejar atrás los <em>hacks</em>
 que utilizábamos en rasterización; no habrá necesidad de falsificar los
-efectos de iluminación, puesto que ray tracing los solventa de manera
+efectos de iluminación, puesto que path tracing los solventa de manera
 natural.</p>
 <p>Aún con todos los avances del medio, <strong>el elefante en la sala
 seguía siendo el rendimiento</strong>. Producir una única imagen podría
@@ -966,7 +967,7 @@ nosotros no podemos permitirnos el lujo de usar un elevado número de
 fotones, ni hacer rebotar la luz tantas veces como queramos. Nos
 pasaríamos una eternidad esperando. Y para ver una imagen en nuestra
 pantalla necesitaremos estar vivos, claro. En la práctica, esto supuso
-que no todos los medios pudieron pasarse a ray tracing. Aquellas
+que no todos los medios pudieron pasarse a path tracing. Aquellas
 industrias como la de los videojuegos, en las que se prioriza la rapidez
 sobre fidelidad continuaron, tuvieron que continuar usando
 rasterización. A fin de cuentas, solo disponen de unos escasos
@@ -979,17 +980,23 @@ la actualidad.</p>
 <p>En 2018 Nvidia introdujo la arquitectura de tarjetas gráficas Turing
 <span class="citation" data-cites="turing-arquitecture">(<a
 href="#ref-turing-arquitecture" role="doc-biblioref">H. M. Nvidia Emmett
-Kilgariff 2018</a>)</span>. Esta arquitectura tiene la capacidad de
-realizar cómputos de ray tracing acelerados por hardware en gráficas de
-consumidor. Esto significa que ray <strong>tracing se vuelve viable en
-tiempo real</strong>. En lugar de horas, renderizar una imagen costará
-milisegundos.</p>
+Kilgariff 2018</a>)</span>. Aunque por estos años ya existían
+implementaciones de ray tracing en gráficas (tan temprano como <span
+class="citation" data-cites="10.1145/566654.566640">(<a
+href="#ref-10.1145/566654.566640" role="doc-biblioref">Purcell et al.
+2002</a>)</span>, <span class="citation" data-cites="Ertl_theray">(<a
+href="#ref-Ertl_theray" role="doc-biblioref">Ertl et al.
+2022</a>)</span>), esta arquitectura presenta la capacidad de realizar
+cómputos específicos de ray tracing acelerados por hardware en gráficas
+de consumidor. Esto significa que <strong>path tracing se vuelve viable
+en tiempo real</strong>. En lugar de horas, renderizar una imagen
+costará milisegundos.</p>
 <p>Se da el pistoletazo de salida a una nueva transición.</p>
 <h2 class="unnumbered" id="objetivos-del-trabajo">Objetivos del
 trabajo</h2>
 <p>En este trabajo se estudiarán los <strong>fundamentos de ray tracing
-en tiempo real</strong>. Para conseguirlo, se han propuesto los
-siguientes objetivos:</p>
+y path tracing en tiempo real</strong>. Para conseguirlo, se han
+propuesto los siguientes objetivos:</p>
 <ul>
 <li>Analizar los algoritmos modernos de visualización en 3D basados en
 métodos de Monte Carlo, entre los que se encuentra path tracing.</li>
@@ -1034,11 +1041,11 @@ concepción clásica de ángulo planar.</p>
 <p>Será entonces cuando aprendamos cómo interacciona la luz con la
 materia. Esto nos llevará a crear una familia específica de funciones
 denominadas <em>bidirectional distribution functions</em>, las cuales
-describen cómo cambian los fotones cuando impactan con una superficie.
-Asimismo, será importante conocer la dirección de salida de estos, por
-lo que habrá que estudiar los fenómenos de reflexión y refracción. Al
-final del capítulo obtendremos la ecuación del transporte de luz o
-<em>rendering equation</em>.</p>
+describen como se reflejan los fotones cuando impactan con una
+superficie. Asimismo, será importante conocer la dirección de salida de
+estos, por lo que habrá que estudiar los fenómenos de reflexión y
+refracción. Al final del capítulo obtendremos la ecuación del transporte
+de luz o <em>rendering equation</em>.</p>
 <p>Esta ecuación modela fielmente cuánta luz existe en un punto
 dependiendo de su entorno. Sin embargo, es prácticamente imposible
 resolverla analíticamente. Por ello, con el fin de poder realizar los
@@ -1064,7 +1071,10 @@ href="#construyamos-un-path-tracer">capítulo 4</a> cubirá la
 realista. Presentaremos algunas herramientas clave en la resolución del
 problema; entre las que se encuentran Vulkan, una interfaz de
 programación de aplicaciones gráfica, y el framework para Vulkan Ray
-tracing de Nvidia DesignWorks denominado <em>nvpro-samples</em>.</p>
+tracing de Nvidia DesignWorks denominado <em>nvpro-samples</em> <span
+class="citation" data-cites="nvpro-samples-tutorial">(<a
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+2022a</a>)</span>.</p>
 <p>Debido a la gran complejidad del problema, será necesario introducir
 algunas estructuras clave que habilitan la ejecución de ray tracing en
 tiempo real. Las dos más destacables son la <em>Top</em> y
@@ -1178,33 +1188,33 @@ data-cites="pellacini-marschner-2017">(<a
 href="#ref-pellacini-marschner-2017" role="doc-biblioref">Fabio
 Pellacini 2022</a>)</span>, y <em>Lecture Rendering</em> <span
 class="citation" data-cites="tuwien">(<a href="#ref-tuwien"
-role="doc-biblioref">TU Wien 2022</a>)</span>. Además, la recolección de
-técnicas y estudios de Alain Galvan han supuesto un gran refuerzo <span
-class="citation" data-cites="alain-API">(<a href="#ref-alain-API"
-role="doc-biblioref">Alain Galvan 2022a</a>)</span> <span
-class="citation" data-cites="alain-materials">(<a
-href="#ref-alain-materials" role="doc-biblioref">Alain Galvan
+role="doc-biblioref">Zsolnai-Fehér 2022</a>)</span>. Además, la
+recolección de técnicas y estudios de Alain Galvan han supuesto un gran
+refuerzo <span class="citation" data-cites="alain-API">(<a
+href="#ref-alain-API" role="doc-biblioref">Galvan 2022a</a>)</span>
+<span class="citation" data-cites="alain-materials">(<a
+href="#ref-alain-materials" role="doc-biblioref">Galvan
 2022b</a>)</span> <span class="citation" data-cites="alain-debug">(<a
-href="#ref-alain-debug" role="doc-biblioref">Alain Galvan
-2022c</a>)</span> <span class="citation"
-data-cites="alain-denoising">(<a href="#ref-alain-denoising"
-role="doc-biblioref">Alain Galvan 2022d</a>)</span> <span
-class="citation" data-cites="alain-filtering">(<a
-href="#ref-alain-filtering" role="doc-biblioref">Alain Galvan
-2022e</a>)</span>.</li>
+href="#ref-alain-debug" role="doc-biblioref">Galvan 2022c</a>)</span>
+<span class="citation" data-cites="alain-denoising">(<a
+href="#ref-alain-denoising" role="doc-biblioref">Galvan
+2022d</a>)</span> <span class="citation"
+data-cites="alain-filtering">(<a href="#ref-alain-filtering"
+role="doc-biblioref">Galvan 2022e</a>)</span>.</li>
 </ul>
 <h1 data-number="1" id="las-bases"><span
 class="header-section-number">1</span> Las bases</h1>
 <p>Empecemos por definir lo que es un rayo.</p>
 <p>Un rayo <span class="citation" data-cites="Shirley2020RTW1">(<a
 href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
-2020a</a>)</span> es una función <span class="math inline">\(P(t) = o +
-td\)</span>, donde <span class="math inline">\(o\)</span> es el origin,
-<span class="math inline">\(d\)</span> la dirección, y <span
-class="math inline">\(t \in \mathbb{R}\)</span>. Podemos considerarlo
-una interpolación entre dos puntos en el espacio, donde <span
-class="math inline">\(t\)</span> controla la posición en la que nos
-encontramos.</p>
+2020a</a>)</span> es una función <span class="math inline">\(P(t) =
+\mathbf{\mathbf{o}} + t\mathbf{d}\)</span>, donde <span
+class="math inline">\(\mathbf{\mathbf{o}}\)</span> el origen, un punto
+del espacio afín; <span class="math inline">\(\mathbf{d}\)</span> un
+vector libre, y <span class="math inline">\(t \in \mathbb{R}\)</span>.
+Podemos considerarlo una interpolación entre dos puntos en el espacio,
+donde <span class="math inline">\(t\)</span> controla la posición en la
+que nos encontramos.</p>
 <p>Por ejemplo, si <span class="math inline">\(t = 0\)</span>,
 obtendremos el origen. Si <span class="math inline">\(t = 1\)</span>,
 obtendremos el punto correspondiente a la dirección. Usando valores
@@ -1238,7 +1248,7 @@ casting</figcaption>
 <p>Generalmente, nos quedaremos con el primer objeto que nos encontremos
 en su camino. Aunque, a veces, nos interesará saber todos con los que se
 encuentre.</p>
-<p>cuando un rayo impacta con un objeto, adquirirá parte de las
+<p>Cuando un rayo impacta con un objeto, adquirirá parte de las
 propiedades lumínicas del punto de impacto. Por ejemplo, cuánta luz
 proporciona la lámpara que tiene encima la esfera de la figura
 anterior.</p>
@@ -1253,7 +1263,7 @@ raycast.</p>
 <p>Usando suficientes rayos obtendremos la imagen de la escena. a este
 proceso de <strong>ray casting recursivo</strong> es lo que se conoce
 como ray tracing.</p>
-<p>como este proceso puede continuar indefinidamente, tendremos que
+<p>Como este proceso puede continuar indefinidamente, tendremos que
 controlar la profundidad de la recursión. a mayor profundidad, mayor
 calidad de imagen; pero también, mayor tiempo de ejecución.</p>
 <h2 data-number="1.1" id="eligiendo-direcciones"><span
@@ -1263,11 +1273,11 @@ dedicaremos más tiempo, es a la elección de la dirección.</p>
 <p>Hay varios factores que entran en juego a la hora de decidir qué
 hacemos cuando impactamos con un nuevo objeto:</p>
 <ol type="1">
-<li><strong>¿cómo es la superficie del material?</strong> a mayor
+<li><strong>¿Cómo es la superficie del material?</strong> a mayor
 rugosidad, mayor aleatoriedad en la dirección. Por ejemplo, no es lo
 mismo el asfalto de una carretera que una lámina de aluminio
 impecable.</li>
-<li><strong>¿cómo de fiel es nuestra geometría?</strong></li>
+<li><strong>¿Cómo de fiel es nuestra geometría?</strong></li>
 <li><strong>¿Dónde se encuentran las luces en la escena?</strong>
 Dependiendo de la posición, nos interesará muestrear la luz con mayor
 influencia.</li>
@@ -1277,7 +1287,7 @@ secciones.</p>
 <h2 data-number="1.2" id="intersecciones-rayo---objeto"><span
 class="header-section-number">1.2</span> Intersecciones rayo -
 objeto</h2>
-<p>como dijimos al principio del capítulo, representaremos un rayo
+<p>Como dijimos al principio del capítulo, representaremos un rayo
 como</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -1285,8 +1295,8 @@ P(t) &amp; = (o_x, o_y, o_z) + t (d_x, d_y, d_z) = \\
 &amp; = (o_x + t d_x, o_y + t d_y, o_y + t d_z)
 \end{aligned}
 \]</span></p>
-<p>Por ejemplo, tomando <span class="math inline">\(o = (1, 3, 2), d =
-(1, 2, 1)\)</span>:</p>
+<p>Por ejemplo, tomando <span class="math inline">\(\mathbf{\mathbf{o}}
+= (1, 3, 2), \mathbf{d} = (1, 2, 1)\)</span>:</p>
 <ul>
 <li>Para <span class="math inline">\(t = 0\)</span>, <span
 class="math inline">\(P(t) = (1, 3, 2)\)</span>.</li>
@@ -1300,14 +1310,15 @@ puntos del dominio de forma que <span class="math inline">\(t \in
 [t_{min}, t_{max})\)</span>, con <span class="math inline">\(t_{min}
 &lt; t_{max}\)</span>. En general, nos interesará separarnos de las
 superficies un pequeño pero no despreciable <span
-class="math inline">\(\varepsilon\)</span> para evitar errores de
-redondeo.</p>
+class="math inline">\(\varepsilon\)</span> para evitar intersecar con el
+origen.</p>
 <div id="fig:limites_rayo" class="fignos">
 <figure>
 <img loading="lazy" src="./img/01/Límites%20de%20un%20rayo.png"
-alt="Figura 4: Separarnos un poquito del origen evitará errores de coma flotante" />
+alt="Figura 4: Separarnos un poquito del origen evitará que el rayo interseque con la superficie desde la que proviene." />
 <figcaption aria-hidden="true"><span>Figura 4:</span> Separarnos un
-poquito del origen evitará errores de coma flotante</figcaption>
+poquito del origen evitará que el rayo interseque con la superficie
+desde la que proviene.</figcaption>
 </figure>
 </div>
 <p>Una de las principales cuestiones que debemos hacernos es saber
@@ -1328,56 +1339,61 @@ F(x, y, z) = 0
 \]</span></p>
 <p>Esta ecuación implícita define una serie de puntos del espacio <span
 class="math inline">\(\mathbb{R}^3\)</span> que se encuentran en la
-superficie.</p>
-<p>Por ejemplo, la esfera se define como <span class="math inline">\(x^2
-+ y^2 + z^2 - 1 = 0\)</span>.</p>
-<p>consideremos una superficie <span class="math inline">\(S\)</span> y
-un punto regular de ella <span class="math inline">\(p\)</span>; es
-decir, un punto tal que el gradiente de <span
-class="math inline">\(F\)</span> en <span
-class="math inline">\(p\)</span> no es 0. Se define el vector normal
-<span class="math inline">\(\mathbf{n}\)</span> a la superficie en ese
-punto como</p>
+superficie. Por ejemplo, la esfera se define como <span
+class="math inline">\(x^2 + y^2 + z^2 - 1 = 0\)</span>.</p>
+<p>Consideremos una superficie <span class="math inline">\(S\)</span> y
+un punto regular <span
+class="math inline">\(\mathbf{\mathbf{p}}\)</span> de ella; es decir, un
+punto tal que el gradiente de <span class="math inline">\(F\)</span> en
+<span class="math inline">\(\mathbf{\mathbf{p}}\)</span> no es 0. Se
+define el vector normal <span class="math inline">\(\mathbf{n}\)</span>
+a la superficie en ese punto como</p>
 <p><span id="eq:normal_superficie" class="eqnos"><span
 class="math display">\[
-\mathbf{n} = \nabla F(p) = \left( \frac{\partial F(p)}{\partial x},
-\frac{\partial F(p)}{\partial y}, \frac{\partial F(p)}{\partial z}\right
-)
+\mathbf{n} = \nabla F(\mathbf{p}) = \left( \frac{\partial
+F(\mathbf{p})}{\partial x}, \frac{\partial F(\mathbf{p})}{\partial y},
+\frac{\partial F(\mathbf{p})}{\partial z}\right )
 \]</span><span class="eqnos-number">(2)</span></span></p>
 <blockquote>
 <p>TODO: dibujo de la normal a una superficie.</p>
 </blockquote>
-<p>Dado un punto <span class="math inline">\(q \in
+<p>Dado un punto <span class="math inline">\(\mathbf{q} \in
 \mathbb{R}^3\)</span>, queremos saber dónde interseca un rayo <span
 class="math inline">\(P(t)\)</span>. Es decir, para qué <span
 class="math inline">\(t\)</span> se cumple que <span
-class="math inline">\(F(P(t)) = 0 \iff F(o + td) = 0\)</span>.</p>
-<p>consideremos ahora un plano. Para ello, nos tomamos un punto <span
-class="math inline">\(Q_0\)</span> del plano y un vector normal a la
-superficie <span class="math inline">\(\mathbf{n}\)</span>. La ecuación
-implícita del plano será <span class="citation"
-data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
-role="doc-biblioref">Shirley and Morley 2003</a>)</span></p>
+class="math inline">\(F(P(t)) = 0 \iff F(\mathbf{\mathbf{o}} +
+t\mathbf{d}) = 0\)</span>.</p>
+<p>Este tipo de superficies suele requerir un cálculo numérico iterativo
+por lo general, pero algunos objetos presentan expresiones sencillas que
+permiten una resolución analítica.</p>
+<p>Este es el caso de los planos. Para comprobarlo, tomemos un punto
+<span class="math inline">\(\mathbf{q}_0\)</span> de un cierto plano y
+un vector normal a la superficie <span
+class="math inline">\(\mathbf{n}\)</span>. La ecuación implícita del
+plano será <span class="citation" data-cites="ShirleyRRT">(<a
+href="#ref-ShirleyRRT" role="doc-biblioref">Shirley and Morley
+2003</a>)</span></p>
 <p><span class="math display">\[
-F(Q) = (q - q_0) \cdot \mathbf{n} = 0
+F(Q) = (\mathbf{q} - \mathbf{q}_0) \cdot \mathbf{n} = 0
 \]</span></p>
 <p>Si pinchamos nuestro rayo en la ecuación,</p>
 <p><span class="math display">\[
 \begin{aligned}
-F(P(t)) &amp; = (P(t) - q_0) \cdot \mathbf{n} \\
-        &amp; = (o + td - q_0) \cdot \mathbf{n} = 0 \\
+F(P(t)) &amp; = (P(t) - \mathbf{q}_0) \cdot \mathbf{n} \\
+        &amp; = (\mathbf{\mathbf{o}} + t\mathbf{d} - \mathbf{q}_0) \cdot
+\mathbf{n} = 0 \\
 \end{aligned}
 \]</span></p>
 <p>Resolviendo para <span class="math inline">\(t\)</span>, esto se da
 si</p>
 <p><span class="math display">\[
 \begin{aligned}
-o \cdot \mathbf{n} + td \cdot \mathbf{n} - Q_0 \cdot \mathbf{n} &amp; =
-0 &amp; \iff \\
-td \cdot \mathbf{n} &amp; = Q_0 \cdot \mathbf{n} - o \cdot \mathbf{n}
-&amp; \iff \\
-t &amp; = \frac{Q_0 \cdot \mathbf{n} - o \cdot \mathbf{n}}{d \cdot
-\mathbf{n}}
+\mathbf{\mathbf{o}} \cdot \mathbf{n} + t\mathbf{d} \cdot \mathbf{n} -
+\mathbf{q}_0 \cdot \mathbf{n} &amp; = 0 &amp; \iff \\
+t\mathbf{d} \cdot \mathbf{n} &amp; = \mathbf{q}_0 \cdot \mathbf{n} -
+\mathbf{\mathbf{o}} \cdot \mathbf{n} &amp; \iff \\
+t &amp; = \frac{\mathbf{q}_0 \cdot \mathbf{n} - \mathbf{\mathbf{o}}
+\cdot \mathbf{n}}{\mathbf{d} \cdot \mathbf{n}}
 \end{aligned}
 \]</span></p>
 <p>Es decir, hemos obtenido el único valor de <span
@@ -1434,29 +1450,36 @@ u}, \frac{\partial h}{\partial u} \right)
         \left( \frac{\partial f}{\partial v}, \frac{\partial g}{\partial
 v}, \frac{\partial h}{\partial v} \right)
 \]</span></p>
-<p>Encontrar el punto de intersección de una superficie paramétrica con
-un rayo es sencillo. Basta con encontrar aquellos puntos <span
-class="math inline">\((u, v)\)</span> y <span
-class="math inline">\(t\)</span> para los que</p>
+<p>El punto de intersección de una superficie paramétrica con un rayo
+viene dado por aquellos puntos de la superifice <span
+class="math inline">\((u, v)\)</span> para los que</p>
 <p><span class="math display">\[
 \begin{aligned}
-o_x + td_x &amp; = f(u, v) \\
-o_y + td_y &amp; = g(u, v) \\
-o_z + td_z &amp; = h(u, v) \\
+\begin{cases}
+o_x + td_x = f(u, v) \\
+o_y + td_y = g(u, v) \\
+o_z + td_z = h(u, v)
+\end{cases}
 \end{aligned}
 \]</span></p>
-<p>Es posible que el rayo no impacte en ningún punto. En ese caso, el
-sistema de ecuaciones no tendría solución. Otra posibilidad es que
-intersequen en varios puntos.</p>
+<p>Con <span class="math inline">\(t \in \mathbb{R}\)</span>. Es posible
+que el rayo no impacte en ningún punto. En ese caso, el sistema de
+ecuaciones no tendría solución. Otra posibilidad es que intersequen en
+varios puntos.</p>
+<p>Por regla general este tipo de superficies no permiten un cálculo
+fácil del punto de intersección, lo cual hace que se evitan en ray
+tracing. En su lugar se opta por otro tipo de estructuras como las <a
+href="#intersecciones-con-triángulos">mallas de triángulos</a>.</p>
 <h3 data-number="1.2.3" id="intersecciones-con-esferas"><span
 class="header-section-number">1.2.3</span> Intersecciones con
 esferas</h3>
 <p>Estudiemos ahora cómo intersecan una esfera con nuestro rayo. Una
-esfera de centro <span class="math inline">\(c\)</span> y radio <span
-class="math inline">\(r\)</span> viene dada por aquellos puntos <span
-class="math inline">\(p = (x, y, z)\)</span> que cumplen</p>
+esfera de centro <span class="math inline">\(\mathbf{c}\)</span> y radio
+<span class="math inline">\(r\)</span> viene dada por aquellos puntos
+<span class="math inline">\(\mathbf{p} = (x, y, z)\)</span> que
+cumplen</p>
 <p><span class="math display">\[
-(p - c) \cdot (p - c) = r^2
+(\mathbf{p} - \mathbf{c}) \cdot (\mathbf{p} - \mathbf{c}) = r^2
 \]</span></p>
 <p>Podemos reescribir esta ecuación en términos de sus coordenadas para
 obtener</p>
@@ -1467,42 +1490,48 @@ obtener</p>
 nuestro rayo se cumple esa ecuación:</p>
 <p><span class="math display">\[
 \begin{aligned}
-(P(t) - c) \cdot (P(t) - c) &amp; = r^2 &amp; \iff \\
-(o + td - c) \cdot (o + td - c) &amp; = r^2 &amp; \iff \\
+(P(t) - \mathbf{c}) \cdot (P(t) - \mathbf{c}) &amp; = r^2 &amp; \iff \\
+(\mathbf{o} + t\mathbf{d} - \mathbf{c}) \cdot (\mathbf{o} + t\mathbf{d}
+- \mathbf{c}) &amp; = r^2 &amp; \iff \\
 \end{aligned}
 \]</span></p>
 <p>Aplicando las propiedades del producto escalar de la conmutatividad
-(<span class="math inline">\(a \cdot b = b \cdot a\)</span>) y la
-distributiva (<span class="math inline">\(a \cdot (b + c) = a \cdot b +
-a \cdot c\)</span>), podemos escribir</p>
+(<span class="math inline">\(a \cdot \mathbf{b} = \mathbf{b} \cdot
+a\)</span>) y la distributiva (<span class="math inline">\(a \cdot
+(\mathbf{b} + \mathbf{c}) = a \cdot \mathbf{b} + a \cdot
+\mathbf{c}\)</span>), podemos escribir</p>
 <p><span class="math display">\[
 \begin{aligned}
-((o - c) + td) \cdot ((o - c) + td) &amp; = r^2 &amp; \iff \\
-(o - c)^2 + 2 \cdot (o - c) \cdot td + (td)^2 &amp; = r^2 &amp; \iff \\
-d^2t^2 + 2 d \cdot (o - c)t + (o - c)^2 - r^2 &amp; = 0 &amp; \iff \\
+((\mathbf{o} - \mathbf{c}) + t\mathbf{d}) \cdot ((\mathbf{o} -
+\mathbf{c}) + t\mathbf{d}) &amp; = r^2 &amp; \iff \\
+(\mathbf{o} - \mathbf{c})^2 + 2 \cdot (\mathbf{o} - \mathbf{c}) \cdot
+t\mathbf{d} + (t\mathbf{d})^2 &amp; = r^2 &amp; \iff \\
+d^2t^2 + 2 d \cdot (\mathbf{o} - \mathbf{c})t + (\mathbf{o} -
+\mathbf{c})^2 - r^2 &amp; = 0 &amp; \iff \\
 \end{aligned}
 \]</span></p>
 <p>Así que tenemos una ecuación de segundo grado. Resolviéndola, nos
 salen nuestros puntos de intersección:</p>
 <p><span class="math display">\[
 t = \frac{
-    - d \cdot (o - c) \pm \sqrt{(d \cdot (o - c))^2 - 4 (d^2)((o - c)^2
-- r^2)}
+    - d \cdot (\mathbf{o} - \mathbf{c}) \pm \sqrt{(d \cdot (\mathbf{o} -
+\mathbf{c}))^2 - 4 (\mathbf{d}^2)((\mathbf{o} - \mathbf{c})^2 - r^2)}
 }{
-    2 d^2
+    2 \mathbf{d}^2
 }
 \]</span></p>
 <p>Debemos distinguir tres casos, atiendiendo al valor que toma el
-discriminante <span class="math inline">\(\Delta = \small{(D \cdot (o -
-c))^2 - 4 (d^2)((o - c)^2 - r^2)}\)</span>:</p>
+discriminante <span class="math inline">\(\Delta = \small{(\mathbf{d}
+\cdot (\mathbf{o} - \mathbf{c}))^2 - 4 (\mathbf{d}^2)((\mathbf{o} -
+\mathbf{c})^2 - r^2)}\)</span>:</p>
 <ol type="1">
 <li>Si <span class="math inline">\(\Delta &lt; 0\)</span>, <span
 class="math inline">\(\sqrt{\Delta} \notin \mathbb{R}\)</span>, y el
 rayo no impacta con la esfera</li>
 <li>Si <span class="math inline">\(\Delta = 0\)</span>, el rayo impacta
 en un punto, que toma el valor <span class="math inline">\(t = \frac{-d
-\cdot (o - c)}{2 d \cdot d}\)</span>. Digamos que <em>pegaría</em> justo
-en el borde.</li>
+\cdot (\mathbf{o} - \mathbf{c})}{2 d \cdot d}\)</span>. En esta
+situación, decimos que el rayo es tangente a la esfera.</li>
 <li>Si <span class="math inline">\(\Delta &gt; 0\)</span>, existen dos
 soluciones. En ese caso, el rayo atraviesa la esfera.</li>
 </ol>
@@ -1519,11 +1548,11 @@ intersección con una esfera.</figcaption>
 class="math inline">\(t_0\)</span> cualquier solución válida, el vector
 normal resultante viene dado por</p>
 <p><span class="math display">\[
-\mathbf{n} = 2 (P(t_0) - c)
+\mathbf{n} = 2 (P(t_0) - \mathbf{c})
 \]</span></p>
 <p>o, normalizando,</p>
 <p><span class="math display">\[
-\hat{\mathbf{n}} = \frac{(P(t_0) - c)}{r}
+\hat{\mathbf{n}} = \frac{(P(t_0) - \mathbf{c})}{r}
 \]</span></p>
 <h3 data-number="1.2.4" id="intersecciones-con-triángulos"><span
 class="header-section-number">1.2.4</span> Intersecciones con
@@ -1533,26 +1562,27 @@ tracer. Generalmente, nuestras geometrías estarán compuestas por mallas
 de triángulos, así que conocer dónde impacta nuestro rayo será clave.
 Empecemos por la base:</p>
 <p>Un triángulo viene dado por tres puntos, <span
-class="math inline">\(a, b\)</span>, y <span
-class="math inline">\(c\)</span>; correspondientes a sus vértices. Para
-evitar casos absurdos, supongamos que estos puntos son afinmente
-independientes; es decir, que no están alineados.</p>
+class="math inline">\(a, \mathbf{b}\)</span>, y <span
+class="math inline">\(\mathbf{c}\)</span>; correspondientes a sus
+vértices. Para evitar casos absurdos, supongamos que estos puntos son
+afinmente independientes; es decir, que no están alineados.</p>
 <h4 data-number="1.2.4.1" id="coordenadas-baricéntricas"><span
-class="header-section-number">1.2.4.1</span> coordenadas
+class="header-section-number">1.2.4.1</span> Coordenadas
 baricéntricas</h4>
 <p>Podemos describir los puntos contenidos en el plano que forman estos
 vertices mediante <strong>coordenadas baricéntricas</strong>. Este
 sistema de coordenadas expresa cada punto del plano como una combinación
-convexa de los vértices <span class="citation"
+convexa de los vértices <span class="math inline">\(\mathbf{a},
+\mathbf{b}, \mathbf{c}\)</span> <span class="citation"
 data-cites="wikipedia-contributors-2022G">(<a
 href="#ref-wikipedia-contributors-2022G" role="doc-biblioref">Wikipedia
 2022i</a>)</span>. Es decir, que para cada punto <span
-class="math inline">\(P\)</span> del triángulo existen <span
+class="math inline">\(\mathbf{p}\)</span> del triángulo existen <span
 class="math inline">\(\alpha, \beta\)</span> y <span
 class="math inline">\(\gamma\)</span> tales que <span
 class="math inline">\(\alpha + \beta + \gamma = 1\)</span> y</p>
 <p><span class="math display">\[
-P = \alpha a + \beta b + \gamma c
+\mathbf{p} = \alpha a + \beta \mathbf{b} + \gamma \mathbf{c}
 \]</span></p>
 <blockquote>
 <p>TODO: triángulo con coordenadas baricéntricas.</p>
@@ -1560,18 +1590,18 @@ P = \alpha a + \beta b + \gamma c
 <p>Debemos destacar que existen dos grados de libertad debido a la
 restricción de que las coordenadas sumen 1.</p>
 <p>Una propiedad de estas coordenadas que nos puede resultar útil es que
-un punto <span class="math inline">\(p\)</span> está contenido en el
-triángulo si y solo si <span class="math inline">\(0 &lt; \alpha, \beta,
-\gamma &lt; 1\)</span>.</p>
+un punto <span class="math inline">\(\mathbf{p}\)</span> está contenido
+en el triángulo si y solo si <span class="math inline">\(0 &lt; \alpha,
+\beta, \gamma &lt; 1\)</span>.</p>
 <p>Esta propiedad y la restricción de que sumen 1 nos da una cierta
 intuición de cómo funcionan. Podemos ver las coordenadas baricéntricas
 como la contribución de los vértices a un punto <span
-class="math inline">\(p\)</span>. Por ejemplo, si <span
+class="math inline">\(\mathbf{p}\)</span>. Por ejemplo, si <span
 class="math inline">\(\alpha = 0\)</span>, eso significa que el punto
-viene dado por <span class="math inline">\(\beta b + \gamma c\)</span>;
-es decir, una combinación lineal de <span
-class="math inline">\(b\)</span> y <span
-class="math inline">\(c\)</span>. Se encuentra en la recta que
+viene dado por <span class="math inline">\(\beta \mathbf{b} + \gamma
+\mathbf{c}\)</span>; es decir, una combinación lineal de <span
+class="math inline">\(\mathbf{b}\)</span> y <span
+class="math inline">\(\mathbf{c}\)</span>. Se encuentra en la recta que
 generan.</p>
 <p>Por proponer otro ejemplo, si alguna de las coordenadas fuera mayor
 que 1, eso significaría que el punto estaría más allá del triángulo.</p>
@@ -1580,15 +1610,17 @@ que 1, eso significaría que el punto estaría más allá del triángulo.</p>
 Yoku)</p>
 </blockquote>
 <h4 data-number="1.2.4.2" id="calculando-la-intersección"><span
-class="header-section-number">1.2.4.2</span> calculando la
+class="header-section-number">1.2.4.2</span> Calculando la
 intersección</h4>
 <p>Podemos eliminar una de las varibales escribiendo <span
 class="math inline">\(\alpha = 1 - \beta - \gamma\)</span>, lo que nos
 dice</p>
 <p><span class="math display">\[
 \begin{aligned}
-p &amp; = (1 - \beta - \gamma) a + \beta b + \gamma c \\
-  &amp; = a + (b - a) \beta + (c - a) \gamma
+\mathbf{p} &amp; = (1 - \beta - \gamma) \mathbf{a} + \beta \mathbf{b} +
+\gamma \mathbf{c} \\
+  &amp; = \mathbf{a} + (\mathbf{b} - \mathbf{a}) \beta + (\mathbf{c} -
+\mathbf{a}) \gamma
 \end{aligned}
 \]</span></p>
 <p>bajo la restricción</p>
@@ -1598,11 +1630,13 @@ p &amp; = (1 - \beta - \gamma) a + \beta b + \gamma c \\
 0 &amp; &lt; \beta          \\
 0 &amp; &lt; \gamma
 \end{aligned}
-\]</span><span class="eqnos-number">(3)</span></span> </p>
-<p>Un rayo <span class="math inline">\(P(t) = o + td\)</span> impactará
-en un punto del triángulo si se cumple</p>
+\]</span><span class="eqnos-number">(3)</span></span></p>
+<p>Un rayo <span class="math inline">\(P(t) = \mathbf{o} +
+t\mathbf{d}\)</span> impactará en un punto del triángulo si se
+cumple</p>
 <p><span class="math display">\[
-P(t) = o + td = a + (b - a) \beta + (c - a) \gamma
+P(t) = \mathbf{o} + t\mathbf{d} = \mathbf{a} + (\mathbf{b} - \mathbf{a})
+\beta + (\mathbf{c} - \mathbf{a}) \gamma
 \]</span></p>
 <p>cumpliendo [<a href="#eq:beta_gamma">3</a>]. Podemos expandir la
 ecuación anterior en sus coordenadas para obtener</p>
@@ -1636,11 +1670,11 @@ o_z + td_z &amp; = a_z + (b_z - a_z) \beta + (c_z - a_z) \gamma \\
         a_x - o_x \\ a_y - o_y \\ a_z - o_z
 \end{pmatrix}
 \]</span></p>
-<p>calcular rápidamente la solución a un sistema de ecuaciones lineales
+<p>Calcular rápidamente la solución a un sistema de ecuaciones lineales
 es un problema habitual. En <span class="citation"
 data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
 role="doc-biblioref">Shirley and Morley 2003</a>)</span> se utiliza la
-regla de cramer para hacerlo, esperando que el compilador optimice las
+regla de Cramer para hacerlo, esperando que el compilador optimice las
 variables intermedias creadas. Nosotros no nos tendremos que preocupar
 de esto en particular, ya que el punto de impacto lo calculará la GPU
 gracias a las herramientras aportadas por KHR <span class="citation"
@@ -1651,7 +1685,7 @@ dos vectores que se encuentren en el plano del triángulo. como, por
 convención, los vértices se guardan en sentido antihorario visto desde
 fuera del objeto, entonces</p>
 <p><span class="math display">\[
-\mathbf{n} = (b - a) \times (c - a)
+\mathbf{n} = (\mathbf{b} - \mathbf{a}) \times (\mathbf{c} - \mathbf{a})
 \]</span></p>
 <h1 data-number="2" id="transporte-de-luz"><span
 class="header-section-number">2</span> Transporte de luz</h1>
@@ -1709,8 +1743,9 @@ de informática gráfica, <strong>se ha optado por omitirla</strong>.
 ¡Tenlo en cuenta a partir de aquí!</p>
 <h3 data-number="2.1.1" id="potencia"><span
 class="header-section-number">2.1.1</span> Potencia</h3>
-<p>A partir de la energía anterior, podemos estimar <em>la tasa de
-producción de energía</em>. A esta tasa la llamaremos
+<p>A partir de la energía <span class="math inline">\(Q\)</span>,
+podemos estimar la cantidad total de energía que pasa por una región del
+espacio por unidad de tiempo. A esta tasa la llamaremos
 <strong>potencia</strong>, o <strong>flujo radiante</strong> <span
 class="math inline">\(\Phi\)</span> <span class="citation"
 data-cites="PBRT3e">(<a href="#ref-PBRT3e" role="doc-biblioref">Pharr,
@@ -1732,8 +1767,10 @@ Q = \int_{t_0}^{t_1}{\Phi(t)dt}
 <h3 data-number="2.1.2" id="irradiancia"><span
 class="header-section-number">2.1.2</span> Irradiancia</h3>
 <p>La <strong>irradiancia</strong> o <strong>radiancia emitida</strong>
-es el flujo radiante que recibe una superficie. Dada un área <span
-class="math inline">\(A\)</span>, se define como</p>
+es la potencia por unidad de área que recibe una región de una
+superficie o un punto de la misma. Si <span
+class="math inline">\(A\)</span> es el área de dicha superficie, la
+irradiancia se define como</p>
 <p><span id="eq:irradiancia" class="eqnos"><span class="math display">\[
 E = \frac{\Phi}{A} (\text{W/m}^2)
 \]</span><span class="eqnos-number">(7)</span></span></p>
@@ -1770,8 +1807,9 @@ class="header-section-number">2.1.3</span> Ángulos sólidos</h3>
 <p>Con estas tres unidades básicas, nos surge una pregunta muy natural:
 <em>¿cómo mido cuánta luz llega a una superficie?</em></p>
 <p>Para responder a esta pregunta, necesitaremos los <strong>ángulos
-sólidos</strong>. Son la extensión de los <strong>ángulos
-planares</strong>, en dos dimensiones.</p>
+sólidos</strong>. Son la extensión de los ángulos bidimensionales a los
+que estamos acostumbrados (llamados técnicamente <strong>ángulos
+planares</strong>).</p>
 <p>Ilustremos el sentido de estos ángulos: imaginemos que tenemos un
 cierto objeto en dos dimensiones delante de nosotros, a una distancia
 desconocida. ¿Sabríamos cuál es su tamaño, solo con esta información? Es
@@ -1803,13 +1841,13 @@ planares, se inscribirá un área en la esfera. La razón entre dicha área
 class="math inline">\(r\)</span> nos dará un ángulo sólido:</p>
 <p><span id="eq:angulo_solido_omega" class="eqnos"><span
 class="math display">\[
-\omega = \frac{A}{r^2} \text{(sr)}
+\sigma = \frac{A}{r^2} \text{(sr)}
 \]</span><span class="eqnos-number">(9)</span></span></p>
-<p>Los denotaremos por <span class="math inline">\(\omega\)</span>. En
-física se suele usar <span class="math inline">\(\Omega\)</span>, pero
-aquí optaremos por la minúscula. Su unidad de medida es el
+<p>Los denotaremos por <span class="math inline">\(\sigma\)</span>,
+aunque también se pueden encontrar en la literatura como <span
+class="math inline">\(\Omega\)</span>. Su unidad de medida es el
 estereorradián (<span class="math inline">\(\text{sr}\)</span>). Se
-tiene que <span class="math inline">\(\omega \in [0, 4\pi]\)</span>. Si
+tiene que <span class="math inline">\(\sigma \in [0, 4\pi]\)</span>. Si
 <span class="math inline">\(2 \pi\)</span> radianes corresponden a la
 circunferencia completa, para la esfera se tiene que <span
 class="math inline">\(4 \pi\)</span> esteorradianes cubren toda la
@@ -1827,21 +1865,23 @@ es la razón entre el área proyectada y el cuadrado del
 radio</figcaption>
 </figure>
 </div>
-<p>Debido a la forma en la que se trabaja con ellos, es costumbre usar
-<span class="math inline">\(\omega\)</span> <strong>como un vector
-dirección unitario en la esfera</strong>.</p>
+<p>Usaremos <span class="math inline">\(\omega\)</span> para representar
+<strong>vectores dirección unitarios en la esfera</strong> alrededor de
+un punto <span class="math inline">\(p\)</span>.</p>
 <div id="fig:xkcd_1276" class="fignos">
 <figure>
 <img loading="lazy" src="./img/02/xkcd_1276.png" style="width:60.0%"
-alt="Figura 9: Como de costumbre, hay un XKCD relevante (Randall Munroe n.d.)" />
+alt="Figura 9: Como de costumbre, hay un XKCD relevante (Munroe n.d.)" />
 <figcaption aria-hidden="true"><span>Figura 9:</span> Como de costumbre,
 hay un XKCD relevante <span class="citation" data-cites="xkcd-size">(<a
-href="#ref-xkcd-size" role="doc-biblioref">Randall Munroe
+href="#ref-xkcd-size" role="doc-biblioref">Munroe
 n.d.</a>)</span></figcaption>
 </figure>
 </div>
-<p>Usualmente emplearemos coordenadas esféricas cuando trabajemos con
-ellos, dado que resulta más cómodo.</p>
+<p>Puesto que estamos trabajando con esferas, nos resultará muy cómodo
+emplear coordenadas esféricas. Para un cierto punto de coordenadas <span
+class="math inline">\((x, y, z)\)</span> de la esfera unitaria, se tiene
+que</p>
 <p><span id="eq:coordenadas_esféricas" class="eqnos"><span
 class="math display">\[
 \begin{aligned}
@@ -3699,7 +3739,7 @@ p_X\)</span>, <span class="math inline">\(E\left[ \frac{f}{p_X} \right]
 integral de <span class="math inline">\(f\)</span>. En cualquiera de los
 casos, el fundamento teórico es el mismo <span class="citation"
 data-cites="berkeley-mc-lecture">(<a href="#ref-berkeley-mc-lecture"
-role="doc-biblioref">Eric C. Anderson 1999</a>)</span>.</p>
+role="doc-biblioref">Anderson 1999</a>)</span>.</p>
 <p>Esta forma de escribir el estimador nos permite amenizar algunos
 casos particulares. Por ejemplo, si usamos muestras <span
 class="math inline">\(X_i\)</span> que sigan una distribución uniforme
@@ -3835,11 +3875,11 @@ importancia múltiple se conseguiría un mejor resultado.</p>
 <figure>
 <img loading="lazy" src="./img/03/Multiple%20importance%20sampling.png"
 style="width:60.0%"
-alt="Figura 12: Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: (Eric Veach December 1997, Multiple Importance Sampling)" />
+alt="Figura 12: Muestreo por importancia múltiple en transporte de luz ilustrado. Fuente: (Veach December 1997, Multiple Importance Sampling)" />
 <figcaption aria-hidden="true"><span>Figura 12:</span> Muestreo por
 importancia múltiple en transporte de luz ilustrado. Fuente: <span
 class="citation" data-cites="robust-monte-carlo">(<a
-href="#ref-robust-monte-carlo" role="doc-biblioref">Eric Veach December
+href="#ref-robust-monte-carlo" role="doc-biblioref">Veach December
 1997</a>, Multiple Importance Sampling)</span></figcaption>
 </figure>
 </div>
@@ -3882,7 +3922,7 @@ las luces de la escena para calcular la radiancia de un punto.</p>
 <p>Podemos dividir la rendering equation [<a
 href="#eq:rendering_equation">22</a>] en dos sumandos <span
 class="citation" data-cites="carlos-path-tracing">(<a
-href="#ref-carlos-path-tracing" role="doc-biblioref">Carlos Ureña
+href="#ref-carlos-path-tracing" role="doc-biblioref">Ureña
 2021</a>)</span>:</p>
 <p><span class="math display">\[
 L(p, \omega_o) = L_e(p, \omega_o) + \underbrace{L_{directa}(p, \omega_o
@@ -3932,12 +3972,12 @@ rayos para conocer si está ocluido.</p>
 <div id="fig:next_event_estimation" class="fignos">
 <figure>
 <img loading="lazy" src="./img/03/Next%20event%20estimation.png" style="width:67.0%"
-alt="Figura 13: El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: (Carlos Ureña 2021)" />
+alt="Figura 13: El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: (Ureña 2021)" />
 <figcaption aria-hidden="true"><span>Figura 13:</span> El muestreo
 directo de fuentes de luz cambia la forma de calcular la radiancia en un
 punto, pero mejora considerablemente el ruido de una imagen. Fuente:
 <span class="citation" data-cites="carlos-path-tracing">(<a
-href="#ref-carlos-path-tracing" role="doc-biblioref">Carlos Ureña
+href="#ref-carlos-path-tracing" role="doc-biblioref">Ureña
 2021</a>)</span></figcaption>
 </figure>
 </div>
@@ -3962,15 +4002,15 @@ presentan menores discrepancias; o las series de Halton, que son más
 fáciles de conseguir.</p>
 <p>Se puede estudiar el tema en profundidad en <span class="citation"
 data-cites="quasi-monte-carlo">(<a href="#ref-quasi-monte-carlo"
-role="doc-biblioref">Martin Roberts 2018</a>)</span></p>
+role="doc-biblioref">Roberts 2018</a>)</span></p>
 <div id="fig:quasimontecarlo" class="fignos">
 <figure>
 <img loading="lazy" src="./img/03/Quasi-Monte%20Carlo.png"
-alt="Figura 14: Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: (Martin Roberts 2018)" />
+alt="Figura 14: Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: (Roberts 2018)" />
 <figcaption aria-hidden="true"><span>Figura 14:</span> Comparativa entre
 diferentes métodos de quasi-aleatoriedad. Fuente: <span class="citation"
 data-cites="quasi-monte-carlo">(<a href="#ref-quasi-monte-carlo"
-role="doc-biblioref">Martin Roberts 2018</a>)</span></figcaption>
+role="doc-biblioref">Roberts 2018</a>)</span></figcaption>
 </figure>
 </div>
 <h2 data-number="3.4" id="escogiendo-puntos-aleatorios"><span
@@ -4311,7 +4351,7 @@ href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 2020a</a>)</span>, Ray Tracing In One Weekend.</p>
 <p>El resultado final puede verse en el siguiente vídeo <span
 class="citation" data-cites="video">(<a href="#ref-video"
-role="doc-biblioref">Andrés Millán 2022c</a>)</span></p>
+role="doc-biblioref">Millán 2022c</a>)</span></p>
 <iframe width="784" height="441" src="https://www.youtube.com/embed/pXrD3K69MqE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <h2 data-number="4.1" id="el-algoritmo-de-path-tracing"><span
@@ -4710,9 +4750,9 @@ por lo que estos dos puntos no resultan especialmente relevantes para el
 trabajo.</p>
 <p>Si se desea, se puede encontrar una comparación más a fondo de las
 API en el blog de <span class="citation" data-cites="alain-API">(<a
-href="#ref-alain-API" role="doc-biblioref">Alain Galvan
-2022a</a>)</span>. Además, el manual de Vulkan con las extensiones de
-KHR se puede encontrar en <span class="citation" data-cites="vulkan">(<a
+href="#ref-alain-API" role="doc-biblioref">Galvan 2022a</a>)</span>.
+Además, el manual de Vulkan con las extensiones de KHR se puede
+encontrar en <span class="citation" data-cites="vulkan">(<a
 href="#ref-vulkan" role="doc-biblioref">The Khronos Vulkan Working Group
 2022</a>)</span>.</p>
 <h2 data-number="4.3" id="setup-del-proyecto"><span
@@ -5080,14 +5120,13 @@ visitar <span class="citation" data-cites="Marrs2021">(<a
 href="#ref-Marrs2021" role="doc-biblioref">Adam Marrs and Wald 2021,
 193</a>)</span> o <span class="citation"
 data-cites="shader-binding-table">(<a href="#ref-shader-binding-table"
-role="doc-biblioref">Will Usher 2019</a>)</span></p>
+role="doc-biblioref">Usher 2019</a>)</span></p>
 <div id="fig:SBT" class="fignos">
 <figure>
-<img loading="lazy" src="./img/04/SBT.png"
-alt="Figura 24: Fuente: (Will Usher 2019)" />
+<img loading="lazy" src="./img/04/SBT.png" alt="Figura 24: Fuente: (Usher 2019)" />
 <figcaption aria-hidden="true"><span>Figura 24:</span> Fuente: <span
 class="citation" data-cites="shader-binding-table">(<a
-href="#ref-shader-binding-table" role="doc-biblioref">Will Usher
+href="#ref-shader-binding-table" role="doc-biblioref">Usher
 2019</a>)</span></figcaption>
 </figure>
 </div>
@@ -5564,8 +5603,8 @@ respuesta de radiancia a uno logarítmico. Algunos autores como Íñigo
 Quílez (coautor de la página Shader Toy) prefieren asumir esta
 deficiencia, y modificar los materiales acordemente a esto <span
 class="citation" data-cites="gamma-correction">(<a
-href="#ref-gamma-correction" role="doc-biblioref">Íñigo Quílez 2013</a>,
-The Color Space)</span>.</p>
+href="#ref-gamma-correction" role="doc-biblioref">Quílez 2013</a>, The
+Color Space)</span>.</p>
 <p>Nosotros no nos preocuparemos especialmente por esto. Este no es un
 trabajo sobre teoría del color, aunque nos metamos en varias partes en
 ella. El área de tone mapping es extensa y merecería su propio
@@ -5708,7 +5747,7 @@ saturadas.</td>
 <td>En esta caja se encuentran dos esferas de diferente material. Se
 puede comparar con <span class="citation"
 data-cites="cornell-box-glossy">(<a href="#ref-cornell-box-glossy"
-role="doc-biblioref">Jensen 1996, 17</a>, fig. 6)</span></td>
+role="doc-biblioref">"Jensen "1996", 17</a>, fig. 6)</span></td>
 <td><img loading="lazy" src="./img/05/cornell_box_glossy.png" title="fig:" /></td>
 </tr>
 <tr class="odd">
@@ -6683,7 +6722,7 @@ programa.</p>
 <p>Sería también conveniente aprender un sistema de <em>debugging</em>
 sólido. En el blog de <span class="citation"
 data-cites="alain-debug">(<a href="#ref-alain-debug"
-role="doc-biblioref">Alain Galvan 2022c</a>)</span> se pueden encontrar
+role="doc-biblioref">Galvan 2022c</a>)</span> se pueden encontrar
 algunas herramientras muy útiles para este propósito.</p>
 <h1 data-number="7" id="el-presente-y-futuro-de-ray-tracing"><span
 class="header-section-number">7</span> El presente y futuro de Ray
@@ -6714,13 +6753,13 @@ imagen.</p>
 se utilizan en ray tracing para acelerar la convergencia de rayos. Nos
 basaremos en las notas recogidas por Alain Galvan en su blog <span
 class="citation" data-cites="alain-filtering">(<a
-href="#ref-alain-filtering" role="doc-biblioref">Alain Galvan
+href="#ref-alain-filtering" role="doc-biblioref">Galvan
 2022e</a>)</span> <span class="citation"
 data-cites="alain-denoising">(<a href="#ref-alain-denoising"
-role="doc-biblioref">Alain Galvan 2022d</a>)</span> para enumerar
-algunas de las técnicas. Todas las referencias a los trabajos originales
-se encuentran recogidas en dicha entrada, por lo que recomiendo leerla
-para comprender mejor cada técnica.</p>
+role="doc-biblioref">Galvan 2022d</a>)</span> para enumerar algunas de
+las técnicas. Todas las referencias a los trabajos originales se
+encuentran recogidas en dicha entrada, por lo que recomiendo leerla para
+comprender mejor cada técnica.</p>
 <h3 data-number="7.1.1" id="filtrado"><span
 class="header-section-number">7.1.1</span> Filtrado</h3>
 <p>Entre las <strong>técnicas basadas en muestreo</strong> que ya hemos
@@ -6738,17 +6777,17 @@ href="#ref-nvidia-blue-noise" role="doc-biblioref">Alan Wolfe
 menos instancias de errores de alta frecuencia, lo cual hace que sean
 fáciles de difuminar y acumular <span class="citation"
 data-cites="alain-filtering">(<a href="#ref-alain-filtering"
-role="doc-biblioref">Alain Galvan 2022e</a>)</span>. Este tipo de ruido
-puede ser creado eficientemente mediante generadores de secuencias
+role="doc-biblioref">Galvan 2022e</a>)</span>. Este tipo de ruido puede
+ser creado eficientemente mediante generadores de secuencias
 cuasi-aleatorias como las de Sobol.</p>
 <div id="fig:blue-noise" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Bluenoise.png" style="width:40.0%"
-alt="Figura 64: En comparación con el ruido blanco, el ruido azul resulta más fácil de difuminar. Fuente: Alain Galvan (2022e)" />
+alt="Figura 64: En comparación con el ruido blanco, el ruido azul resulta más fácil de difuminar. Fuente: Galvan (2022e)" />
 <figcaption aria-hidden="true"><span>Figura 64:</span> En comparación
 con el ruido blanco, el ruido azul resulta más fácil de difuminar.
-Fuente: <span class="citation" data-cites="alain-filtering">Alain Galvan
-(<a href="#ref-alain-filtering"
+Fuente: <span class="citation" data-cites="alain-filtering">Galvan (<a
+href="#ref-alain-filtering"
 role="doc-biblioref">2022e</a>)</span></figcaption>
 </figure>
 </div>
@@ -6886,7 +6925,7 @@ puramente, este algoritmo se reserva para ciertas partes de la pipeline
 de procesamiento. Entre estas se encuentran los
 <strong>reflejos</strong> y la <strong>iluminación global</strong> <span
 class="citation" data-cites="khonos-best-practices">(<a
-href="#ref-khonos-best-practices" role="doc-biblioref">Ana Mihut
+href="#ref-khonos-best-practices" role="doc-biblioref">Mihut
 2020</a>)</span>.</p>
 <p>En vez de recaer en técnicas antiguas como reflejos en espacio de
 pantalla (<em>screen-space</em>) se utiliza una forma reducida de ray
@@ -6920,9 +6959,9 @@ data-cites="Q2RTX">(<a href="#ref-Q2RTX" role="doc-biblioref">Nvidia
 2018</a>)</span> o <em>Minecraft RTX</em>, del cual se puede encontrar
 un análisis técnico en el blog de <span class="citation"
 data-cites="alain-minecraft">(<a href="#ref-alain-minecraft"
-role="doc-biblioref">Alain Galvan 2020</a>)</span>. Los resultados
-gráficos son espectaculares, aunque se necesita un hardware gráfico
-considerable para poder ejecutarlos.</p>
+role="doc-biblioref">Galvan 2020</a>)</span>. Los resultados gráficos
+son espectaculares, aunque se necesita un hardware gráfico considerable
+para poder ejecutarlos.</p>
 <h3 data-number="7.2.2" id="consolas-de-nueva-generación"><span
 class="header-section-number">7.2.2</span> Consolas de nueva
 generación</h3>
@@ -6943,9 +6982,9 @@ TFLOPSl, mientras que Series S reduce el número de CUs a 20.</p>
 <p>En verano de 2020 Mark Cerny habló sobre cómo se utilizaría las
 capacidades de la arquitectura en el futuro de la consola <span
 class="citation" data-cites="cerny-ps5">(<a href="#ref-cerny-ps5"
-role="doc-biblioref">Mark Cerny 2020</a>)</span>. Entre estos usos,
-destaca el audio, la iluminación global, las sombras, los reflejos e
-incluso ray puro.</p>
+role="doc-biblioref">Cerny 2020</a>)</span>. Entre estos usos, destaca
+el audio, la iluminación global, las sombras, los reflejos e incluso ray
+puro.</p>
 <p>Hace media década, el hecho de tener ray tracing en tiempo real en
 gráficas de consumidor parecía imposible; más aún en consolas. Resulta,
 por tanto, una evolución enorme en una industria que se ha convertido en
@@ -7134,12 +7173,12 @@ data-cites="explorable-explanations">(<a
 href="#ref-explorable-explanations" role="doc-biblioref">Ncase
 2022</a>)</span>, el blog de <span class="citation"
 data-cites="ciechanowski">(<a href="#ref-ciechanowski"
-role="doc-biblioref">Bartosz Ciechanowski 2022</a>)</span>, el proyecto
-<em>The napkin</em> <span class="citation" data-cites="napkin">(<a
-href="#ref-napkin" role="doc-biblioref">Evan Chen 2022</a>)</span> o el
+role="doc-biblioref">Ciechanowski 2022</a>)</span>, el proyecto <em>The
+napkin</em> <span class="citation" data-cites="napkin">(<a
+href="#ref-napkin" role="doc-biblioref">Chen 2022</a>)</span> o el
 divulgador 3Blue1Brown <span class="citation"
 data-cites="3blue1brown">(<a href="#ref-3blue1brown"
-role="doc-biblioref">Grant Sanderson 2022</a>)</span> repercuten
+role="doc-biblioref">Sanderson 2022</a>)</span> repercuten
 inevitablemente en la manera en la que te planteas cómo comunicar textos
 científicos. Por ello, aunque esto a fin de cuentas es un trabajo de fin
 de grado de una carrera, quería ver hasta dónde era capaz de
@@ -7293,14 +7332,14 @@ profesionalidad y la distensión</strong>.</p>
 class="header-section-number">8.4.1</span> Bases del diseño</h3>
 <p>Para la documentación en versión PDF, usamos como base la
 <em>template</em> <span class="citation" data-cites="eisvogel">(<a
-href="#ref-eisvogel" role="doc-biblioref">Pascal Wagler
-2022</a>)</span>. Esta es una elegante plantilla fácil de usar para
-LaTeX. Uno de sus puntos fuertes es la personalización, la cual
-aprovecharemos para darle un toque diferente.</p>
+href="#ref-eisvogel" role="doc-biblioref">Wagler 2022</a>)</span>. Esta
+es una elegante plantilla fácil de usar para LaTeX. Uno de sus puntos
+fuertes es la personalización, la cual aprovecharemos para darle un
+toque diferente.</p>
 <p>La web utiliza como base el estilo generado por Pandoc, el
 microframework de CSS <span class="citation" data-cites="bamboo">(<a
-href="#ref-bamboo" role="doc-biblioref">Tran Ngoc Tuan Anh
-2022</a>)</span> y unas modificaciones personales.</p>
+href="#ref-bamboo" role="doc-biblioref">Anh 2022</a>)</span> y unas
+modificaciones personales.</p>
 <h3 data-number="8.4.2" id="tipografías"><span
 class="header-section-number">8.4.2</span> Tipografías</h3>
 <p>Un apartado al que se le debe prestar especial énfasis es a la
@@ -7311,18 +7350,18 @@ conceptos. Puede parecer trivial a priori, pero es importante.</p>
 <ul>
 <li><strong>Crimson Pro</strong>, por <span class="citation"
 data-cites="crimson-pro">(<a href="#ref-crimson-pro"
-role="doc-biblioref">Jacques Le Bailly 2022</a>)</span>: una tipografía
-serif clara, legible y contemporánea. Funciona muy bien en densidades
-más bajas, como 11pt. Es ideal para la versión en PDF. Además, liga
+role="doc-biblioref">Bailly 2022</a>)</span>: una tipografía serif
+clara, legible y contemporánea. Funciona muy bien en densidades más
+bajas, como 11pt. Es ideal para la versión en PDF. Además, liga
 estupendamente con Source Sans Pro, utilizada para los títulos en la
 plantilla Eisvogel.</li>
 <li><strong>Fraunces</strong>, por <span class="citation"
 data-cites="fraunces">(<a href="#ref-fraunces"
-role="doc-biblioref">Undercase Type 2022</a>)</span>: de lejos, la
-fuente más interesante de todo este proyecto. Es una soft-serif <em>old
-style</em>, pensada para títulos y similares (lo que se conoce como
-<em>display</em>). Es usada en los títulos de la web. Una de sus
-propiedades más curiosas es que modifica activamente los glifos
+role="doc-biblioref">Undercase Type and Zimbardi 2022</a>)</span>: de
+lejos, la fuente más interesante de todo este proyecto. Es una
+soft-serif <em>old style</em>, pensada para títulos y similares (lo que
+se conoce como <em>display</em>). Es usada en los títulos de la web. Una
+de sus propiedades más curiosas es que modifica activamente los glifos
 dependiendo del valor del <em>optical size axis</em>, el peso y
 similares. Recomiendo echarle un ojo a su repositorio de Github, pues
 incluyen detalles sobre la implementación.</li>
@@ -7340,7 +7379,7 @@ para computación científica. Llevo usándola bastante tiempo, y combia
 bien con Crimson Pro.</li>
 <li><strong>Jetbrains Mono</strong>, por <span class="citation"
 data-cites="jetbrains-mono">(<a href="#ref-jetbrains-mono"
-role="doc-biblioref">Philipp Nurullin 2022</a>)</span>: otra tipografía
+role="doc-biblioref">Nurullin 2022</a>)</span>: otra tipografía
 monoespaciada open source muy sólida, producida por la compañía
 Jetbrains. Se utiliza en la web para los bloques de código.</li>
 </ul>
@@ -7394,14 +7433,14 @@ otras.</p>
 <h3 data-number="8.5.1" id="pandoc"><span
 class="header-section-number">8.5.1</span> Pandoc</h3>
 <p><strong>Pandoc</strong> <span class="citation"
-data-cites="pandoc">(<a href="#ref-pandoc" role="doc-biblioref">John
-MacFarlane 2021</a>)</span> es una estupendísima de conversión de
-documentos. Se puede usar para convertir un tipo de archivo a otro. En
-este caso, se usa para convertir una serie de ficheros Markdown (los
-capítulos) a un fichero HTML (la web) y a PDF. Su punto más fuerte es
-que permite escribir LaTeX de forma simplificada, como si se tratara de
-<em>sugar syntax</em>. Combina la simplicidad de Markdown y la
-correctitud de LaTeX.</p>
+data-cites="pandoc">(<a href="#ref-pandoc"
+role="doc-biblioref">MacFarlane 2021</a>)</span> es una estupendísima de
+conversión de documentos. Se puede usar para convertir un tipo de
+archivo a otro. En este caso, se usa para convertir una serie de
+ficheros Markdown (los capítulos) a un fichero HTML (la web) y a PDF. Su
+punto más fuerte es que permite escribir LaTeX de forma simplificada,
+como si se tratara de <em>sugar syntax</em>. Combina la simplicidad de
+Markdown y la correctitud de LaTeX.</p>
 <p>Su funcionamiento en este proyecto es el siguiente: Primero, recoge
 los capítulos que se encuentra en <code>docs/chapters</code>, usando una
 serie de cabeceras en YAML que especifican ciertos parámetros (como
@@ -7445,7 +7484,7 @@ la imagen. Esto permite hacer cambios rápidos y registrarlos en el
 repositorio fácilmente. Además, permite instalar plugins. Uno de ellos
 ha resultado especialmente útil: Latex Complete <span class="citation"
 data-cites="latex-complete">(<a href="#ref-latex-complete"
-role="doc-biblioref">Max Krieger 2022</a>)</span>. Esto nos permite
+role="doc-biblioref">Krieger 2022</a>)</span>. Esto nos permite
 incrustar código LaTeX en el documento en forma de SVG.</p>
 <h3 data-number="8.5.3" id="otros-programas"><span
 class="header-section-number">8.5.3</span> Otros programas</h3>
@@ -7481,7 +7520,7 @@ data-cites="github">(<a href="#ref-github" role="doc-biblioref">Github
 desde el programa, hasta la documentación online. El repositorio se
 puede consultar en <code>github.com/Asmilex/Raytracing</code> <span
 class="citation" data-cites="asmilex-raytracing-repo">(<a
-href="#ref-asmilex-raytracing-repo" role="doc-biblioref">Andrés Millán
+href="#ref-asmilex-raytracing-repo" role="doc-biblioref">Millán
 2022b</a>)</span>.</p>
 <p>Se ha escogido Github en vez de sus competidores por los siguientes
 motivos:</p>
@@ -7562,7 +7601,7 @@ Pandoc, y todas las dependencias (como filtros). Como no encontré ningún
 contenedor que sirviera mi propósito, decidí crear uno. Se encuentra en
 el repositorio de Dockerhub <span class="citation"
 data-cites="asmilex-raytracing-docker">(<a
-href="#ref-asmilex-raytracing-docker" role="doc-biblioref">Andrés Millán
+href="#ref-asmilex-raytracing-docker" role="doc-biblioref">Millán
 2022a</a>)</span>. Esta imagen está basada en
 <code>dockershelf/latex:full</code> <span class="citation"
 data-cites="dockershelf">(<a href="#ref-dockershelf"
@@ -7682,8 +7721,9 @@ class="math inline">\(a, b, c, k, \dots\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Puntos</strong></td>
-<td style="text-align: left;">Letras minúsculas. Generalmente, <span
-class="math inline">\(p, q, \dots\)</span></td>
+<td style="text-align: left;">Letras minúsculas en negrita.
+Generalmente, <span class="math inline">\(\mathbf{p}, \mathbf{q},
+\dots\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Vectores</strong></td>
@@ -7799,11 +7839,10 @@ o radiancia emitida</strong></a></td>
 sólido</strong></a>, derivada [<a href="#eq:d_omega">11</a>] [<a
 href="#eq:diferencial_angulo_solido">16</a>]</td>
 <td style="text-align: left;">Medida del campo de visión de un objeto
-desde un cierto punto. A veces un vector unitario en la esfera. <br>
-<span class="math inline">\(\omega = \frac{A}{r^2}\)</span> <br> <span
-class="math inline">\(d\omega = \sin\theta\ d\theta\ d\phi\)</span> <br>
-<span class="math inline">\(d\omega =
-\frac{dA\cos\theta}{r^2}\)</span></td>
+desde un cierto punto. <br> <span class="math inline">\(\sigma =
+\frac{A}{r^2}\)</span> <br> <span class="math inline">\(d\omega =
+\sin\theta\ d\theta\ d\phi\)</span> <br> <span
+class="math inline">\(d\omega = \frac{dA\cos\theta}{r^2}\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a
@@ -8267,36 +8306,6 @@ Adam Marrs, Peter Shirley, and I. Wald, eds. 2021. <span>“Ray tracing
 gems II.”</span> Apress. 2021. <a
 href="http://raytracinggems.com/rtg2">http://raytracinggems.com/rtg2</a>.
 </div>
-<div id="ref-alain-minecraft" class="csl-entry" role="doc-biblioentry">
-Alain Galvan. 2020. <span>“Frame analysis - minecraft RTX beta.”</span>
-2020. Accessed May 30, 2022. <a
-href="https://alain.xyz/blog/frame-analysis-minecraftrtx">https://alain.xyz/blog/frame-analysis-minecraftrtx</a>.
-</div>
-<div id="ref-alain-API" class="csl-entry" role="doc-biblioentry">
-———. 2022a. <span>“A comparison of modern graphics APIs.”</span> 2022.
-Accessed May 13, 2022. <a
-href="https://alain.xyz/blog/comparison-of-modern-graphics-apis">https://alain.xyz/blog/comparison-of-modern-graphics-apis</a>.
-</div>
-<div id="ref-alain-materials" class="csl-entry" role="doc-biblioentry">
-———. 2022b. <span>“Advances in material models.”</span> 2022. Accessed
-May 7, 2022. <a
-href="https://alain.xyz/blog/advances-in-material-models">https://alain.xyz/blog/advances-in-material-models</a>.
-</div>
-<div id="ref-alain-debug" class="csl-entry" role="doc-biblioentry">
-———. 2022c. <span>“Graphics debugging.”</span> 2022. Accessed May 29,
-2022. <a
-href="https://alain.xyz/blog/graphics-debugging">https://alain.xyz/blog/graphics-debugging</a>.
-</div>
-<div id="ref-alain-denoising" class="csl-entry" role="doc-biblioentry">
-———. 2022d. <span>“Ray tracing denoising.”</span> 2022. Accessed May 30,
-2022. <a
-href="https://alain.xyz/blog/ray-tracing-denoising">https://alain.xyz/blog/ray-tracing-denoising</a>.
-</div>
-<div id="ref-alain-filtering" class="csl-entry" role="doc-biblioentry">
-———. 2022e. <span>“Ray tracing filtering.”</span> 2022. Accessed May 30,
-2022. <a
-href="https://alain.xyz/blog/ray-tracing-filtering">https://alain.xyz/blog/ray-tracing-filtering</a>.
-</div>
 <div id="ref-nvidia-blue-noise" class="csl-entry"
 role="doc-biblioentry">
 Alan Wolfe, T. A.-M., Nathan Morrical. 2021. <span>“Rendering in real
@@ -8309,38 +8318,26 @@ AMD. 2022. <span>“AMD FidelityFX™ super resolution.”</span> 2022.
 Accessed May 30, 2022. <a
 href="https://www.amd.com/en/technologies/fidelityfx-super-resolution">https://www.amd.com/en/technologies/fidelityfx-super-resolution</a>.
 </div>
-<div id="ref-khonos-best-practices" class="csl-entry"
+<div id="ref-berkeley-mc-lecture" class="csl-entry"
 role="doc-biblioentry">
-Ana Mihut. 2020. <span>“Vulkan ray tracing best practices for hybrid
-rendering.”</span> November 23, 2020. Accessed May 30, 2022. <a
-href="https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering">https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</a>.
+Anderson, E. C. 1999. <span>“Monte carlo methods and importance
+sampling.”</span> 1999. Accessed May 9, 2022. <a
+href="https://ib.berkeley.edu/labs/slatkin/eriq/classes/guest_lect/mc_lecture_notes.pdf">https://ib.berkeley.edu/labs/slatkin/eriq/classes/guest_lect/mc_lecture_notes.pdf</a>.
 </div>
-<div id="ref-asmilex-raytracing-docker" class="csl-entry"
-role="doc-biblioentry">
-Andrés Millán. 2022a. <span>“Docker del TFG.”</span> 2022. Accessed May
-7, 2022. <a
-href="https://hub.docker.com/r/asmilex/raytracing">https://hub.docker.com/r/asmilex/raytracing</a>.
-</div>
-<div id="ref-asmilex-raytracing-repo" class="csl-entry"
-role="doc-biblioentry">
-———. 2022b. <span>“Repositorio del TFG.”</span> 2022. Accessed May 7,
+<div id="ref-bamboo" class="csl-entry" role="doc-biblioentry">
+Anh, T. N. T. 2022. <span>“Bamboo CSS.”</span> 2022. Accessed May 7,
 2022. <a
-href="https://github.com/Asmilex/Raytracing">https://github.com/Asmilex/Raytracing</a>.
-</div>
-<div id="ref-video" class="csl-entry" role="doc-biblioentry">
-———. 2022c. <span>“Path tracing showcase.”</span> May 18, 2022. Accessed
-May 22, 2022. <a
-href="https://www.youtube.com/watch?v=pXrD3K69MqE">https://www.youtube.com/watch?v=pXrD3K69MqE</a>.
+href="https://github.com/rilwis/bamboo">https://github.com/rilwis/bamboo</a>.
 </div>
 <div id="ref-arneback-2019" class="csl-entry" role="doc-biblioentry">
 Arnebäck. 2019. <span>“An explanation of the rendering equation.”</span>
 January 10, 2019. Accessed April 9, 2022. <a
 href="https://www.youtube.com/watch?v=eo_MTI-d28s">https://www.youtube.com/watch?v=eo_MTI-d28s</a>.
 </div>
-<div id="ref-ciechanowski" class="csl-entry" role="doc-biblioentry">
-Bartosz Ciechanowski. 2022. <span>“Lights and shadows.”</span> 2022.
+<div id="ref-crimson-pro" class="csl-entry" role="doc-biblioentry">
+Bailly, J. L. 2022. <span>“Crimson pro typography.”</span> 2022.
 Accessed May 7, 2022. <a
-href="https://ciechanow.ski/lights-and-shadows/">https://ciechanow.ski/lights-and-shadows/</a>.
+href="https://fonts.google.com/specimen/Crimson+Pro">https://fonts.google.com/specimen/Crimson+Pro</a>.
 </div>
 <div id="ref-beck2001agile" class="csl-entry" role="doc-biblioentry">
 Beck, K., M. Beedle, A. van Bennekum, A. Cockburn, W. Cunningham, M.
@@ -8359,10 +8356,20 @@ Berkeley cs184. 2022. <span>“Computer graphics and imaging.”</span>
 2022. Accessed March 20, 2022. <a
 href="https://cs184.eecs.berkeley.edu/sp22">https://cs184.eecs.berkeley.edu/sp22</a>.
 </div>
-<div id="ref-carlos-path-tracing" class="csl-entry"
-role="doc-biblioentry">
-Carlos Ureña. 2021. <span>“Realismo e iluminación global.”</span> 2021.
-<a href="https://lsi2.ugr.es/curena/">https://lsi2.ugr.es/curena/</a>.
+<div id="ref-cerny-ps5" class="csl-entry" role="doc-biblioentry">
+Cerny, M. 2020. <span>“The road to PS5.”</span> 2020. Accessed May 30,
+2022. <a
+href="https://www.youtube.com/watch?v=ph8LyNIT9sg">https://www.youtube.com/watch?v=ph8LyNIT9sg</a>.
+</div>
+<div id="ref-napkin" class="csl-entry" role="doc-biblioentry">
+Chen, E. 2022. <span>“The napkin project.”</span> 2022. Accessed May 7,
+2022. <a
+href="https://web.evanchen.cc/napkin.html">https://web.evanchen.cc/napkin.html</a>.
+</div>
+<div id="ref-ciechanowski" class="csl-entry" role="doc-biblioentry">
+Ciechanowski, B. 2022. <span>“Lights and shadows.”</span> 2022. Accessed
+May 7, 2022. <a
+href="https://ciechanow.ski/lights-and-shadows/">https://ciechanow.ski/lights-and-shadows/</a>.
 </div>
 <div id="ref-julia-mono" class="csl-entry" role="doc-biblioentry">
 Cormullion. 2022. <span>“JuliaMono - a monospaced font for scientific
@@ -8380,6 +8387,12 @@ role="doc-biblioentry">
 ———. 2005. <span>“Photograhic images of the cornell box.”</span>
 February 2, 2005. Accessed May 16, 2022. <a
 href="http://www.graphics.cornell.edu/online/box/data.html">http://www.graphics.cornell.edu/online/box/data.html</a>.
+</div>
+<div id="ref-quantumfracture-2021" class="csl-entry"
+role="doc-biblioentry">
+Crespo, J. L. 2021. <span>“Ya, en serio, ¿qué es la luz?”</span>
+December 10, 2021. Accessed April 22, 2022. <a
+href="https://www.youtube.com/watch?v=DkcEAz09Buo">https://www.youtube.com/watch?v=DkcEAz09Buo</a>.
 </div>
 <div id="ref-crytek-2020" class="csl-entry" role="doc-biblioentry">
 Crytek. 2020. <span>“Crysis remastered brings ray tracing to current-gen
@@ -8449,28 +8462,15 @@ href="https://www.unrealengine.com/en-US/unreal-engine-5">https://www.unrealengi
 illumination with lumen.”</span> May 27, 2022. Accessed May 29, 2022. <a
 href="https://www.unrealengine.com/en-US/tech-blog/unreal-engine-5-goes-all-in-on-dynamic-global-illumination-with-lumen">https://www.unrealengine.com/en-US/tech-blog/unreal-engine-5-goes-all-in-on-dynamic-global-illumination-with-lumen</a>.
 </div>
-<div id="ref-berkeley-mc-lecture" class="csl-entry"
-role="doc-biblioentry">
-Eric C. Anderson. 1999. <span>“Monte carlo methods and importance
-sampling.”</span> 1999. Accessed May 9, 2022. <a
-href="https://ib.berkeley.edu/labs/slatkin/eriq/classes/guest_lect/mc_lecture_notes.pdf">https://ib.berkeley.edu/labs/slatkin/eriq/classes/guest_lect/mc_lecture_notes.pdf</a>.
-</div>
 <div id="ref-blue-noise" class="csl-entry" role="doc-biblioentry">
 Eric Heitz, L. B. 2019. <span>“Distributing monte carlo errors as a blue
 noise in screen space by permuting pixel seeds between frames.”</span>
 2019. Accessed May 30, 2022. <a
 href="https://eheitzresearch.wordpress.com/772-2/">https://eheitzresearch.wordpress.com/772-2/</a>.
 </div>
-<div id="ref-robust-monte-carlo" class="csl-entry"
-role="doc-biblioentry">
-Eric Veach. December 1997. <span>“Robust monte carlo methods for light
-transport simulation.”</span> December 1997. Accessed May 9, 2022. <a
-href="https://graphics.stanford.edu/papers/veach_thesis/">https://graphics.stanford.edu/papers/veach_thesis/</a>.
-</div>
-<div id="ref-napkin" class="csl-entry" role="doc-biblioentry">
-Evan Chen. 2022. <span>“The napkin project.”</span> 2022. Accessed May
-7, 2022. <a
-href="https://web.evanchen.cc/napkin.html">https://web.evanchen.cc/napkin.html</a>.
+<div id="ref-Ertl_theray" class="csl-entry" role="doc-biblioentry">
+Ertl, T., W. Heidrich, M. D. (editors, N. A. Carr, J. D. Hall, and J. C.
+Hart. 2022. <span>“The Ray Engine.”</span>
 </div>
 <div id="ref-pellacini-marschner-2017" class="csl-entry"
 role="doc-biblioentry">
@@ -8493,6 +8493,36 @@ Smith, and Paul R. Yoder Jr., 3130:170–78. International Society for
 Optics; Photonics; SPIE. <a
 href="https://doi.org/10.1117/12.284059">https://doi.org/10.1117/12.284059</a>.
 </div>
+<div id="ref-alain-minecraft" class="csl-entry" role="doc-biblioentry">
+Galvan, A. 2020. <span>“Frame analysis - minecraft RTX beta.”</span>
+2020. Accessed May 30, 2022. <a
+href="https://alain.xyz/blog/frame-analysis-minecraftrtx">https://alain.xyz/blog/frame-analysis-minecraftrtx</a>.
+</div>
+<div id="ref-alain-API" class="csl-entry" role="doc-biblioentry">
+———. 2022a. <span>“A comparison of modern graphics APIs.”</span> 2022.
+Accessed May 13, 2022. <a
+href="https://alain.xyz/blog/comparison-of-modern-graphics-apis">https://alain.xyz/blog/comparison-of-modern-graphics-apis</a>.
+</div>
+<div id="ref-alain-materials" class="csl-entry" role="doc-biblioentry">
+———. 2022b. <span>“Advances in material models.”</span> 2022. Accessed
+May 7, 2022. <a
+href="https://alain.xyz/blog/advances-in-material-models">https://alain.xyz/blog/advances-in-material-models</a>.
+</div>
+<div id="ref-alain-debug" class="csl-entry" role="doc-biblioentry">
+———. 2022c. <span>“Graphics debugging.”</span> 2022. Accessed May 29,
+2022. <a
+href="https://alain.xyz/blog/graphics-debugging">https://alain.xyz/blog/graphics-debugging</a>.
+</div>
+<div id="ref-alain-denoising" class="csl-entry" role="doc-biblioentry">
+———. 2022d. <span>“Ray tracing denoising.”</span> 2022. Accessed May 30,
+2022. <a
+href="https://alain.xyz/blog/ray-tracing-denoising">https://alain.xyz/blog/ray-tracing-denoising</a>.
+</div>
+<div id="ref-alain-filtering" class="csl-entry" role="doc-biblioentry">
+———. 2022e. <span>“Ray tracing filtering.”</span> 2022. Accessed May 30,
+2022. <a
+href="https://alain.xyz/blog/ray-tracing-filtering">https://alain.xyz/blog/ray-tracing-filtering</a>.
+</div>
 <div id="ref-galvin-no-date" class="csl-entry" role="doc-biblioentry">
 Galvin. n.d. <span>“Random variables.”</span> Accessed March 20, 2022.
 <a
@@ -8502,11 +8532,6 @@ href="https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf
 Github. 2022. <span>“Github - where the world builds software.”</span>
 2022. Accessed May 7, 2022. <a
 href="https://github.com">https://github.com</a>.
-</div>
-<div id="ref-3blue1brown" class="csl-entry" role="doc-biblioentry">
-Grant Sanderson. 2022. <span>“3Blue1Brown.”</span> 2022. Accessed May 7,
-2022. <a
-href="https://www.3blue1brown.com/">https://www.3blue1brown.com/</a>.
 </div>
 <div id="ref-irradiance-caching" class="csl-entry"
 role="doc-biblioentry">
@@ -8526,7 +8551,7 @@ gems.”</span> Apress. 2019. <a
 href="http://raytracinggems.com">http://raytracinggems.com</a>.
 </div>
 <div id="ref-rubik" class="csl-entry" role="doc-biblioentry">
-Hubert and Fischer, C., Meir Sadan. 2022. <span>“Rubik
+Hubert, and C. Fischer Meir Sadan. 2022. <span>“Rubik
 typography.”</span> 2022. Accessed May 7, 2022. <a
 href="https://fonts.google.com/specimen/Rubik">https://fonts.google.com/specimen/Rubik</a>.
 </div>
@@ -8535,11 +8560,6 @@ role="doc-biblioentry">
 Illana, J. I. 2013. <span>“Métodos de monte carlo.”</span> 2013.
 Accessed May 8, 2022. <a
 href="https://www.ugr.es/~jillana/Docencia/FM/mc.pdf">https://www.ugr.es/~jillana/Docencia/FM/mc.pdf</a>.
-</div>
-<div id="ref-gamma-correction" class="csl-entry" role="doc-biblioentry">
-Íñigo Quílez. 2013. <span>“Outdoors lightning.”</span> 2013. Accessed
-May 16, 2022. <a
-href="https://iquilezles.org/articles/outdoorslighting/">https://iquilezles.org/articles/outdoorslighting/</a>.
 </div>
 <div id="ref-intel-arc" class="csl-entry" role="doc-biblioentry">
 Intel. 2022a. <span>“A new player has entered the game.”</span> 2022.
@@ -8551,32 +8571,16 @@ Intel. 2022b. <span>“Xe super sampling: AI-enhanced upscaling.”</span>
 2022. Accessed May 30, 2022. <a
 href="https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/xess.html">https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/xess.html</a>.
 </div>
-<div id="ref-crimson-pro" class="csl-entry" role="doc-biblioentry">
-Jacques Le Bailly. 2022. <span>“Crimson pro typography.”</span> 2022.
-Accessed May 7, 2022. <a
-href="https://fonts.google.com/specimen/Crimson+Pro">https://fonts.google.com/specimen/Crimson+Pro</a>.
-</div>
 <div id="ref-cornell-box-glossy" class="csl-entry"
 role="doc-biblioentry">
-Jensen, H. W. 1996. <span>“Global Illumination Using Photon
-Maps.”</span> In <em>Rendering Techniques ’96</em>, edited by Xavier
-Pueyo and Peter Schröder, 21–30. Vienna: Springer Vienna.
+"Jensen, H. W. "1996". <span>“"Global Illumination Using Photon
+Maps".”</span> In <em>"Rendering Techniques ’96"</em>, edited by Xavier
+"Pueyo and Peter" Schröder, "21–30". "Vienna": "Springer Vienna".
 </div>
 <div id="ref-Jensen2001" class="csl-entry" role="doc-biblioentry">
-———. 2001. <em>Realistic Image Synthesis Using Photon Mapping</em>. A K
-Peters/<span>CRC</span> Press. <a
+Jensen, H. W. 2001. <em>Realistic Image Synthesis Using Photon
+Mapping</em>. A K Peters/<span>CRC</span> Press. <a
 href="https://doi.org/10.1201/9780429294907">https://doi.org/10.1201/9780429294907</a>.
-</div>
-<div id="ref-pandoc" class="csl-entry" role="doc-biblioentry">
-John MacFarlane. 2021. <span>“Pandoc, a universal document
-converter.”</span> 2021. Accessed May 7, 2022. <a
-href="https://pandoc.org">https://pandoc.org</a>.
-</div>
-<div id="ref-quantumfracture-2021" class="csl-entry"
-role="doc-biblioentry">
-José Luis Crespo. 2021. <span>“Ya, en serio, ¿qué es la luz?”</span>
-December 10, 2021. Accessed April 22, 2022. <a
-href="https://www.youtube.com/watch?v=DkcEAz09Buo">https://www.youtube.com/watch?v=DkcEAz09Buo</a>.
 </div>
 <div id="ref-kajiya" class="csl-entry" role="doc-biblioentry">
 Kajiya, J. T. 1986. <span>“The Rendering Equation.”</span> <em>SIGGRAPH
@@ -8589,26 +8593,20 @@ Karis, B. 2014. <span>“Unreal engine 4 - high quality temporal
 supersampling.”</span> 2014. Accessed May 30, 2022. <a
 href="https://de45xmedrsdbp.cloudfront.net/Resources/files/TemporalAA_small-59732822.pdf">https://de45xmedrsdbp.cloudfront.net/Resources/files/TemporalAA_small-59732822.pdf</a>.
 </div>
+<div id="ref-latex-complete" class="csl-entry" role="doc-biblioentry">
+Krieger, M. 2022. <span>“Latex complete - typeset math in your
+designs.”</span> 2022. Accessed May 7, 2022. <a
+href="https://www.figma.com/community/plugin/793023817364007801/LaTeX-Complete">https://www.figma.com/community/plugin/793023817364007801/LaTeX-Complete</a>.
+</div>
 <div id="ref-linear" class="csl-entry" role="doc-biblioentry">
 Linear. 2022. <span>“Linear - the issue tracking tool you’ll enjoy
 using.”</span> 2022. Accessed May 7, 2022. <a
 href="https://linear.app/">https://linear.app/</a>.
 </div>
-<div id="ref-cerny-ps5" class="csl-entry" role="doc-biblioentry">
-Mark Cerny. 2020. <span>“The road to PS5.”</span> 2020. Accessed May 30,
-2022. <a
-href="https://www.youtube.com/watch?v=ph8LyNIT9sg">https://www.youtube.com/watch?v=ph8LyNIT9sg</a>.
-</div>
-<div id="ref-quasi-monte-carlo" class="csl-entry"
-role="doc-biblioentry">
-Martin Roberts. 2018. <span>“The unreasonable effectiveness of
-quasirandom sequences.”</span> 2018. Accessed May 9, 2022. <a
-href="http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/">http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/</a>.
-</div>
-<div id="ref-latex-complete" class="csl-entry" role="doc-biblioentry">
-Max Krieger. 2022. <span>“Latex complete - typeset math in your
-designs.”</span> 2022. Accessed May 7, 2022. <a
-href="https://www.figma.com/community/plugin/793023817364007801/LaTeX-Complete">https://www.figma.com/community/plugin/793023817364007801/LaTeX-Complete</a>.
+<div id="ref-pandoc" class="csl-entry" role="doc-biblioentry">
+MacFarlane, J. 2021. <span>“Pandoc, a universal document
+converter.”</span> 2021. Accessed May 7, 2022. <a
+href="https://pandoc.org">https://pandoc.org</a>.
 </div>
 <div id="ref-McGuire2018GraphicsCodex" class="csl-entry"
 role="doc-biblioentry">
@@ -8625,6 +8623,33 @@ Microsoft. 2022. <span>“Visual studio code - code editing.
 redefined.”</span> 2022. Accessed May 7, 2022. <a
 href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>.
 </div>
+<div id="ref-khonos-best-practices" class="csl-entry"
+role="doc-biblioentry">
+Mihut, A. 2020. <span>“Vulkan ray tracing best practices for hybrid
+rendering.”</span> November 23, 2020. Accessed May 30, 2022. <a
+href="https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering">https://www.khronos.org/blog/vulkan-ray-tracing-best-practices-for-hybrid-rendering</a>.
+</div>
+<div id="ref-asmilex-raytracing-docker" class="csl-entry"
+role="doc-biblioentry">
+Millán, A. 2022a. <span>“Docker del TFG.”</span> 2022. Accessed May 7,
+2022. <a
+href="https://hub.docker.com/r/asmilex/raytracing">https://hub.docker.com/r/asmilex/raytracing</a>.
+</div>
+<div id="ref-asmilex-raytracing-repo" class="csl-entry"
+role="doc-biblioentry">
+———. 2022b. <span>“Repositorio del TFG.”</span> 2022. Accessed May 7,
+2022. <a
+href="https://github.com/Asmilex/Raytracing">https://github.com/Asmilex/Raytracing</a>.
+</div>
+<div id="ref-video" class="csl-entry" role="doc-biblioentry">
+———. 2022c. <span>“Path tracing showcase.”</span> May 18, 2022. Accessed
+May 22, 2022. <a
+href="https://www.youtube.com/watch?v=pXrD3K69MqE">https://www.youtube.com/watch?v=pXrD3K69MqE</a>.
+</div>
+<div id="ref-xkcd-size" class="csl-entry" role="doc-biblioentry">
+Munroe, R. n.d. <span>“XKCD - angular size.”</span> Accessed May 7,
+2022. <a href="https://xkcd.com/1276/">https://xkcd.com/1276/</a>.
+</div>
 <div id="ref-nature-2016" class="csl-entry" role="doc-biblioentry">
 Nature. 2016. <span>“Scientific language is becoming more
 informal.”</span> 2016. Accessed April 10, 2022. <a
@@ -8634,6 +8659,11 @@ href="https://doi.org/10.1038/539140a">https://doi.org/10.1038/539140a</a>.
 role="doc-biblioentry">
 Ncase. 2022. <span>“Explorable explanations.”</span> 2022. Accessed May
 7, 2022. <a href="https://explorabl.es/">https://explorabl.es/</a>.
+</div>
+<div id="ref-jetbrains-mono" class="csl-entry" role="doc-biblioentry">
+Nurullin, P. 2022. <span>“JetBrains mono, a typeface for
+developers.”</span> 2022. Accessed May 7, 2022. <a
+href="https://www.jetbrains.com/es-es/lp/mono/">https://www.jetbrains.com/es-es/lp/mono/</a>.
 </div>
 <div id="ref-Q2RTX" class="csl-entry" role="doc-biblioentry">
 Nvidia. 2018. <span>“Quake II RTX.”</span> 2018. Accessed May 30, 2022.
@@ -8677,25 +8707,34 @@ href="https://vulkan-tutorial.com/">https://vulkan-tutorial.com/</a>.
 Owen, A. B. 2013. <em>Monte Carlo Theory, Methods and Examples</em>. <a
 href="https://artowen.su.domains/mc/">https://artowen.su.domains/mc/</a>.
 </div>
-<div id="ref-eisvogel" class="csl-entry" role="doc-biblioentry">
-Pascal Wagler. 2022. <span>“Eisvogel pandoc template.”</span> 2022.
-Accessed May 7, 2022. <a
-href="https://github.com/Wandmalfarbe/pandoc-latex-template">https://github.com/Wandmalfarbe/pandoc-latex-template</a>.
-</div>
 <div id="ref-PBRT3e" class="csl-entry" role="doc-biblioentry">
 Pharr, M., W. Jakob, and G. Humphreys. 2016. <span>“Physically based
 rendering: From theory to implementation (3rd ed.).”</span> San
 Francisco, CA, USA: Morgan Kaufmann Publishers Inc. November 2016. <a
 href="https://www.pbr-book.org/3ed-2018/contents">https://www.pbr-book.org/3ed-2018/contents</a>.
 </div>
-<div id="ref-jetbrains-mono" class="csl-entry" role="doc-biblioentry">
-Philipp Nurullin. 2022. <span>“JetBrains mono, a typeface for
-developers.”</span> 2022. Accessed May 7, 2022. <a
-href="https://www.jetbrains.com/es-es/lp/mono/">https://www.jetbrains.com/es-es/lp/mono/</a>.
+<div id="ref-10.1145/566654.566640" class="csl-entry"
+role="doc-biblioentry">
+Purcell, T. J., I. Buck, W. R. Mark, and P. Hanrahan. 2002. <span>“Ray
+Tracing on Programmable Graphics Hardware.”</span> <em>ACM Trans.
+Graph.</em> 21 (3): 703–12. <a
+href="https://doi.org/10.1145/566654.566640">https://doi.org/10.1145/566654.566640</a>.
 </div>
-<div id="ref-xkcd-size" class="csl-entry" role="doc-biblioentry">
-Randall Munroe. n.d. <span>“XKCD - angular size.”</span> Accessed May 7,
-2022. <a href="https://xkcd.com/1276/">https://xkcd.com/1276/</a>.
+<div id="ref-gamma-correction" class="csl-entry" role="doc-biblioentry">
+Quílez, Í. 2013. <span>“Outdoors lightning.”</span> 2013. Accessed May
+16, 2022. <a
+href="https://iquilezles.org/articles/outdoorslighting/">https://iquilezles.org/articles/outdoorslighting/</a>.
+</div>
+<div id="ref-quasi-monte-carlo" class="csl-entry"
+role="doc-biblioentry">
+Roberts, M. 2018. <span>“The unreasonable effectiveness of quasirandom
+sequences.”</span> 2018. Accessed May 9, 2022. <a
+href="http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/">http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/</a>.
+</div>
+<div id="ref-3blue1brown" class="csl-entry" role="doc-biblioentry">
+Sanderson, G. 2022. <span>“3Blue1Brown.”</span> 2022. Accessed May 7,
+2022. <a
+href="https://www.3blue1brown.com/">https://www.3blue1brown.com/</a>.
 </div>
 <div id="ref-https://doi.org/10.1111/1467-8659.1330233"
 class="csl-entry" role="doc-biblioentry">
@@ -8745,20 +8784,21 @@ April 1, 2022. <a
 href="- https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html">-
 https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html</a>.
 </div>
-<div id="ref-bamboo" class="csl-entry" role="doc-biblioentry">
-Tran Ngoc Tuan Anh. 2022. <span>“Bamboo CSS.”</span> 2022. Accessed May
-7, 2022. <a
-href="https://github.com/rilwis/bamboo">https://github.com/rilwis/bamboo</a>.
-</div>
-<div id="ref-tuwien" class="csl-entry" role="doc-biblioentry">
-TU Wien, K. Z.-F. 2022. <span>“Lecture rendering.”</span> 2022. Accessed
-May 26, 2022. <a
-href="https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html">https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html</a>.
-</div>
 <div id="ref-fraunces" class="csl-entry" role="doc-biblioentry">
-Undercase Type, F. Z., Phaedra Charles. 2022. <span>“Fraunces
+Undercase Type, P. C., and F. Zimbardi. 2022. <span>“Fraunces
 typography.”</span> 2022. Accessed May 7, 2022. <a
 href="https://fonts.google.com/specimen/Fraunces">https://fonts.google.com/specimen/Fraunces</a>.
+</div>
+<div id="ref-carlos-path-tracing" class="csl-entry"
+role="doc-biblioentry">
+Ureña, C. 2021. <span>“Realismo e iluminación global.”</span> 2021. <a
+href="https://lsi2.ugr.es/curena/">https://lsi2.ugr.es/curena/</a>.
+</div>
+<div id="ref-shader-binding-table" class="csl-entry"
+role="doc-biblioentry">
+Usher, W. 2019. <span>“The RTX shader binding table three ways.”</span>
+November 20, 2019. Accessed May 13, 2022. <a
+href="https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways">https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways</a>.
 </div>
 <div id="ref-proton" class="csl-entry" role="doc-biblioentry">
 Valve Software. 2022a. <span>“Proton.”</span> 2022. Accessed May 16,
@@ -8770,10 +8810,21 @@ href="https://github.com/ValveSoftware/Proton">https://github.com/ValveSoftware/
 <a
 href="https://www.valvesoftware.com/es/">https://www.valvesoftware.com/es/</a>.
 </div>
+<div id="ref-robust-monte-carlo" class="csl-entry"
+role="doc-biblioentry">
+Veach, E. December 1997. <span>“Robust monte carlo methods for light
+transport simulation.”</span> December 1997. Accessed May 9, 2022. <a
+href="https://graphics.stanford.edu/papers/veach_thesis/">https://graphics.stanford.edu/papers/veach_thesis/</a>.
+</div>
 <div id="ref-vectary" class="csl-entry" role="doc-biblioentry">
 Vectary. 2022. <span>“Vectary - bringing unlimited creativity to 3D
 design.”</span> 2022. Accessed May 7, 2022. <a
 href="https://www.vectary.com/">https://www.vectary.com/</a>.
+</div>
+<div id="ref-eisvogel" class="csl-entry" role="doc-biblioentry">
+Wagler, P. 2022. <span>“Eisvogel pandoc template.”</span> 2022. Accessed
+May 7, 2022. <a
+href="https://github.com/Wandmalfarbe/pandoc-latex-template">https://github.com/Wandmalfarbe/pandoc-latex-template</a>.
 </div>
 <div id="ref-disney-brdfs" class="csl-entry" role="doc-biblioentry">
 Walt Disney Animation Studios. 2019. <span>“BRDF explorer.”</span> 2019.
@@ -8835,16 +8886,15 @@ role="doc-biblioentry">
 Accessed April 22, 2022. <a
 href="https://en.wikipedia.org/wiki/History_of_photography">https://en.wikipedia.org/wiki/History_of_photography</a>.
 </div>
-<div id="ref-shader-binding-table" class="csl-entry"
-role="doc-biblioentry">
-Will Usher. 2019. <span>“The RTX shader binding table three
-ways.”</span> November 20, 2019. Accessed May 13, 2022. <a
-href="https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways">https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways</a>.
-</div>
 <div id="ref-stir" class="csl-entry" role="doc-biblioentry">
 Wolfe, A. 2022. <span>“Sampling importance resampling.”</span> March 2,
 2022. Accessed May 30, 2022. <a
 href="https://blog.demofox.org/2022/03/02/sampling-importance-resampling/">https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</a>.
+</div>
+<div id="ref-tuwien" class="csl-entry" role="doc-biblioentry">
+Zsolnai-Fehér, K. 2022. <span>“Lecture rendering.”</span> 2022. Accessed
+May 26, 2022. <a
+href="https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html">https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html</a>.
 </div>
 </div>
 <section class="footnotes footnotes-end-of-document"
@@ -8855,9 +8905,9 @@ role="doc-endnotes">
 naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos
 divulgadores como <span class="citation"
 data-cites="quantumfracture-2021">(<a href="#ref-quantumfracture-2021"
-role="doc-biblioref">José Luis Crespo 2021</a>)</span> que han tratado
-el tema con suficiente profundidad.<a href="#fnref1"
-class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+role="doc-biblioref">Crespo 2021</a>)</span> que han tratado el tema con
+suficiente profundidad.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>Recuerda que estamos omitiendo la
 longitud de onda <span class="math inline">\(\lambda\)</span>.<a
 href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
