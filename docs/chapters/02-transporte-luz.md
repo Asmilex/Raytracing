@@ -28,7 +28,7 @@ En realidad, **todas estas cantidades deberían tener un subíndice $\lambda$**,
 
 ### Potencia
 
-A partir de la energía anterior, podemos estimar *la tasa de producción de energía*. A esta tasa la llamaremos **potencia**, o **flujo radiante** $\Phi$ [@PBRT3e, Radiometry]. Esta medida nos resultará más útil que la energía total, puesto que nos permite estimar la energía en un instante:
+A partir de la energía $Q$, podemos estimar la cantidad total de energía que pasa por una región del espacio por unidad de tiempo. A esta tasa la llamaremos **potencia**, o **flujo radiante** $\Phi$ [@PBRT3e, Radiometry]. Esta medida nos resultará más útil que la energía total, puesto que nos permite estimar la energía en un instante:
 
 $$
 \Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt} (J/s)
