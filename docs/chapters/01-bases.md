@@ -20,7 +20,7 @@ Estos rayos los *dispararemos* a través de una cámara virtual, que estará enf
 
 Generalmente, nos quedaremos con el primer objeto que nos encontremos en su camino. Aunque, a veces, nos interesará saber todos con los que se encuentre.
 
-cuando un rayo impacta con un objeto, adquirirá parte de las propiedades lumínicas del punto de impacto. Por ejemplo, cuánta luz proporciona la lámpara que tiene encima la esfera de la figura anterior.
+Cuando un rayo impacta con un objeto, adquirirá parte de las propiedades lumínicas del punto de impacto. Por ejemplo, cuánta luz proporciona la lámpara que tiene encima la esfera de la figura anterior.
 
 Una vez recojamos la información que nos interese, aplicaremos otro raycast desde el nuevo punto de impacto, escogiendo una nueva dirección determinada. Esta dirección dependerá del tipo de material del objeto. Y, de hecho, algunos serán capaces de invocar varios rayos.
 
@@ -28,7 +28,7 @@ Por ejemplo, los espejos reflejan la luz casi de forma perfecta; mientras que ot
 
 Usando suficientes rayos obtendremos la imagen de la escena. a este proceso de **ray casting recursivo** es lo que se conoce como ray tracing.
 
-como este proceso puede continuar indefinidamente, tendremos que controlar la profundidad de la recursión. a mayor profundidad, mayor calidad de imagen; pero también, mayor tiempo de ejecución.
+Como este proceso puede continuar indefinidamente, tendremos que controlar la profundidad de la recursión. a mayor profundidad, mayor calidad de imagen; pero también, mayor tiempo de ejecución.
 
 ## Eligiendo direcciones
 
