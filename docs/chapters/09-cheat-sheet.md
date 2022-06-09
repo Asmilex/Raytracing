@@ -10,7 +10,7 @@ Tener en mente *todos* los conceptos y sus expresiones que aparecen en un libro 
 | **Concepto**           | **Notación**                                                                                                                          |
 |:-----------------------|:--------------------------------------------------------------------------------------------------------------------------------------|
 | **Escalares**          | Letras minúsculas. Generalmente, $a, b, c, k, \dots$                                                                                  |
-| **Puntos**             | Letras minúsculas. Generalmente, $p, q, \dots$                                                                                        |
+| **Puntos**             | Letras minúsculas en negrita. Generalmente, $\mathbf{p}, \mathbf{q}, \dots$                                                                                        |
 | **Vectores**           | Letras minúsculas en negrita: $\mathbf{v, w, n}, \dots$. Si están normalizados, se les pone gorrito (por ejemplo, $\hat{\mathbf{n}}$) |
 | **Matrices**           | Letras mayúsculas en negrita: $\mathbf{M}$. Por columnas.                                                                             |
 | **Producto escalar**   | $\mathbf{v} \cdot \mathbf{w}$. Si es el producto escalar de un vector consigo mismo, a veces pondremos $\mathbf{v}^2$                 |

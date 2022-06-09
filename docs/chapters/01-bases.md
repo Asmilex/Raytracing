@@ -2,7 +2,7 @@
 
 Empecemos por definir lo que es un rayo.
 
-Un rayo [@Shirley2020RTW1] es una función $P(t) = o + td$, donde $o$ es el origin, $d$ la dirección, y $t \in \mathbb{R}$. Podemos considerarlo una interpolación entre dos puntos en el espacio, donde $t$ controla la posición en la que nos encontramos.
+Un rayo [@Shirley2020RTW1] es una función $P(t) = \mathbf{\mathbf{o}} + t\mathbf{d}$, donde $\mathbf{\mathbf{o}}$ el origen, un punto del espacio afín; $\mathbf{d}$ un vector libre, y $t \in \mathbb{R}$. Podemos considerarlo una interpolación entre dos puntos en el espacio, donde $t$ controla la posición en la que nos encontramos.
 
 Por ejemplo, si $t = 0$, obtendremos el origen. Si $t = 1$, obtendremos el punto correspondiente a la dirección. Usando valores negativos vamos *hacia atrás*.
 
@@ -24,7 +24,7 @@ cuando un rayo impacta con un objeto, adquirirá parte de las propiedades lumín
 
 Una vez recojamos la información que nos interese, aplicaremos otro raycast desde el nuevo punto de impacto, escogiendo una nueva dirección determinada. Esta dirección dependerá del tipo de material del objeto. Y, de hecho, algunos serán capaces de invocar varios rayos.
 
-Por ejemplo, los espejos reflejan la luz casi de forma perfecta; mientras que otros elementos como el agua o el cristal reflejan *y* refractan luz, así que necesitaremos generar dos nuevos raycast.
+Por ejemplo, los espejos reflejan la luz casi de forma perfecta; mientras que otros elementos como el agua \mathbf{o} el cristal reflejan *y* refractan luz, así que necesitaremos generar dos nuevos raycast.
 
 Usando suficientes rayos obtendremos la imagen de la escena. a este proceso de **ray casting recursivo** es lo que se conoce como ray tracing.
 
@@ -53,7 +53,7 @@ P(t) & = (o_x, o_y, o_z) + t (d_x, d_y, d_z) = \\
 \end{aligned}
 $$
 
-Por ejemplo, tomando $o = (1, 3, 2), d = (1, 2, 1)$:
+Por ejemplo, tomando $\mathbf{\mathbf{o}} = (1, 3, 2), \mathbf{d} = (1, 2, 1)$:
 
 - Para $t = 0$, $P(t) = (1, 3, 2)$.
 - Para $t = 1$, $P(t) = (1, 3, 2) + (1, 2, 1) = (2, 5, 3)$.
@@ -78,28 +78,28 @@ Esta ecuación implícita define una serie de puntos del espacio $\mathbb{R}^3$ 
 
 Por ejemplo, la esfera se define como $x^2 + y^2 + z^2 - 1 = 0$.
 
-consideremos una superficie $S$ y un punto regular de ella $p$; es decir, un punto tal que el gradiente de $F$ en $p$ no es 0. Se define el vector normal $\mathbf{n}$ a la superficie en ese punto como
+consideremos una superficie $S$ y un punto regular $\mathbf{\mathbf{p}}$ de ella; es decir, un punto tal que el gradiente de $F$ en $\mathbf{\mathbf{p}}$ no es 0. Se define el vector normal $\mathbf{n}$ a la superficie en ese punto como
 
 $$
-\mathbf{n} = \nabla F(p) = \left( \frac{\partial F(p)}{\partial x}, \frac{\partial F(p)}{\partial y}, \frac{\partial F(p)}{\partial z}\right )
+\mathbf{n} = \nabla F(\mathbf{p}) = \left( \frac{\partial F(\mathbf{p})}{\partial x}, \frac{\partial F(\mathbf{p})}{\partial y}, \frac{\partial F(\mathbf{p})}{\partial z}\right )
 $${#eq:normal_superficie}
 
 > TODO: dibujo de la normal a una superficie.
 
-Dado un punto $q \in \mathbb{R}^3$, queremos saber dónde interseca un rayo $P(t)$. Es decir, para qué $t$ se cumple que $F(P(t)) = 0 \iff F(o + td) = 0$.
+Dado un punto $\mathbf{q} \in \mathbb{R}^3$, queremos saber dónde interseca un rayo $P(t)$. Es decir, para qué $t$ se cumple que $F(P(t)) = 0 \iff F(\mathbf{\mathbf{o}} + t\mathbf{d}) = 0$.
 
-consideremos ahora un plano. Para ello, nos tomamos un punto $Q_0$ del plano y un vector normal a la superficie $\mathbf{n}$. La ecuación implícita del plano será [@ShirleyRRT]
+consideremos ahora un plano. Para ello, nos tomamos un punto $\mathbf{q}_0$ del plano y un vector normal a la superficie $\mathbf{n}$. La ecuación implícita del plano será [@ShirleyRRT]
 
 $$
-F(Q) = (q - q_0) \cdot \mathbf{n} = 0
+F(Q) = (\mathbf{q} - \mathbf{q}_0) \cdot \mathbf{n} = 0
 $$
 
 Si pinchamos nuestro rayo en la ecuación,
 
 $$
 \begin{aligned}
-F(P(t)) & = (P(t) - q_0) \cdot \mathbf{n} \\
-        & = (o + td - q_0) \cdot \mathbf{n} = 0 \\
+F(P(t)) & = (P(t) - \mathbf{q}_0) \cdot \mathbf{n} \\
+        & = (\mathbf{\mathbf{o}} + t\mathbf{d} - \mathbf{q}_0) \cdot \mathbf{n} = 0 \\
 \end{aligned}
 $$
 
@@ -107,9 +107,9 @@ Resolviendo para $t$, esto se da si
 
 $$
 \begin{aligned}
-o \cdot \mathbf{n} + td \cdot \mathbf{n} - Q_0 \cdot \mathbf{n} & = 0 & \iff \\
-td \cdot \mathbf{n} & = Q_0 \cdot \mathbf{n} - o \cdot \mathbf{n} & \iff \\
-t & = \frac{Q_0 \cdot \mathbf{n} - o \cdot \mathbf{n}}{d \cdot \mathbf{n}}
+\mathbf{\mathbf{o}} \cdot \mathbf{n} + t\mathbf{d} \cdot \mathbf{n} - \mathbf{q}_0 \cdot \mathbf{n} & = 0 & \iff \\
+t\mathbf{d} \cdot \mathbf{n} & = \mathbf{q}_0 \cdot \mathbf{n} - \mathbf{\mathbf{o}} \cdot \mathbf{n} & \iff \\
+t & = \frac{\mathbf{q}_0 \cdot \mathbf{n} - \mathbf{\mathbf{o}} \cdot \mathbf{n}}{\mathbf{d} \cdot \mathbf{n}}
 \end{aligned}
 $$
 
@@ -155,9 +155,11 @@ Encontrar el punto de intersección de una superficie paramétrica con un rayo e
 
 $$
 \begin{aligned}
-o_x + td_x & = f(u, v) \\
-o_y + td_y & = g(u, v) \\
-o_z + td_z & = h(u, v) \\
+\begin{cases}
+o_x + td_x = f(u, v) \\
+o_y + td_y = g(u, v) \\
+o_z + td_z = h(u, v)
+\end{cases}
 \end{aligned}
 $$
 
@@ -165,10 +167,10 @@ Es posible que el rayo no impacte en ningún punto. En ese caso, el sistema de e
 
 ### Intersecciones con esferas
 
-Estudiemos ahora cómo intersecan una esfera con nuestro rayo. Una esfera de centro $c$ y radio $r$ viene dada por aquellos puntos $p = (x, y, z)$ que cumplen
+Estudiemos ahora cómo intersecan una esfera con nuestro rayo. Una esfera de centro $\mathbf{c}$ y radio $r$ viene dada por aquellos puntos $\mathbf{p} = (x, y, z)$ que cumplen
 
 $$
-(p - c) \cdot (p - c) = r^2
+(\mathbf{p} - \mathbf{c}) \cdot (\mathbf{p} - \mathbf{c}) = r^2
 $$
 
 Podemos reescribir esta ecuación en términos de sus coordenadas para obtener
@@ -181,18 +183,18 @@ Veamos para qué valores de $t$ de nuestro rayo se cumple esa ecuación:
 
 $$
 \begin{aligned}
-(P(t) - c) \cdot (P(t) - c) & = r^2 & \iff \\
-(o + td - c) \cdot (o + td - c) & = r^2 & \iff \\
+(P(t) - \mathbf{c}) \cdot (P(t) - \mathbf{c}) & = r^2 & \iff \\
+(\mathbf{o} + t\mathbf{d} - \mathbf{c}) \cdot (\mathbf{o} + t\mathbf{d} - \mathbf{c}) & = r^2 & \iff \\
 \end{aligned}
 $$
 
-Aplicando las propiedades del producto escalar de la conmutatividad ($a \cdot b = b \cdot a$) y la distributiva ($a \cdot (b + c) = a \cdot b + a \cdot c$), podemos escribir
+Aplicando las propiedades del producto escalar de la conmutatividad ($a \cdot \mathbf{b} = \mathbf{b} \cdot a$) y la distributiva ($a \cdot (\mathbf{b} + \mathbf{c}) = a \cdot \mathbf{b} + a \cdot \mathbf{c}$), podemos escribir
 
 $$
 \begin{aligned}
-((o - c) + td) \cdot ((o - c) + td) & = r^2 & \iff \\
-(o - c)^2 + 2 \cdot (o - c) \cdot td + (td)^2 & = r^2 & \iff \\
-d^2t^2 + 2 d \cdot (o - c)t + (o - c)^2 - r^2 & = 0 & \iff \\
+((\mathbf{o} - \mathbf{c}) + t\mathbf{d}) \cdot ((\mathbf{o} - \mathbf{c}) + t\mathbf{d}) & = r^2 & \iff \\
+(\mathbf{o} - \mathbf{c})^2 + 2 \cdot (\mathbf{o} - \mathbf{c}) \cdot t\mathbf{d} + (t\mathbf{d})^2 & = r^2 & \iff \\
+d^2t^2 + 2 d \cdot (\mathbf{o} - \mathbf{c})t + (\mathbf{o} - \mathbf{c})^2 - r^2 & = 0 & \iff \\
 \end{aligned}
 $$
 
@@ -200,16 +202,16 @@ Así que tenemos una ecuación de segundo grado. Resolviéndola, nos salen nuest
 
 $$
 t = \frac{
-    - d \cdot (o - c) \pm \sqrt{(d \cdot (o - c))^2 - 4 (d^2)((o - c)^2 - r^2)}
+    - d \cdot (\mathbf{o} - \mathbf{c}) \pm \sqrt{(d \cdot (\mathbf{o} - \mathbf{c}))^2 - 4 (\mathbf{d}^2)((\mathbf{o} - \mathbf{c})^2 - r^2)}
 }{
-    2 d^2
+    2 \mathbf{d}^2
 }
 $$
 
-Debemos distinguir tres casos, atiendiendo al valor que toma el discriminante $\Delta = \small{(D \cdot (o - c))^2 - 4 (d^2)((o - c)^2 - r^2)}$:
+Debemos distinguir tres casos, atiendiendo al valor que toma el discriminante $\Delta = \small{(\mathbf{d} \cdot (\mathbf{o} - \mathbf{c}))^2 - 4 (\mathbf{d}^2)((\mathbf{o} - \mathbf{c})^2 - r^2)}$:
 
 1. Si $\Delta < 0$, $\sqrt{\Delta} \notin \mathbb{R}$, y el rayo no impacta con la esfera
-2. Si $\Delta = 0$, el rayo impacta en un punto, que toma el valor $t = \frac{-d \cdot (o - c)}{2 d \cdot d}$. Digamos que *pegaría* justo en el borde.
+2. Si $\Delta = 0$, el rayo impacta en un punto, que toma el valor $t = \frac{-d \cdot (\mathbf{o} - \mathbf{c})}{2 d \cdot d}$. Digamos que *pegaría* justo en el borde.
 3. Si $\Delta > 0$, existen dos soluciones. En ese caso, el rayo atraviesa la esfera.
 
 ![Puntos de intersección con una esfera.](./img/01/Intersección%20rayo%20-%20esfera.png){#fig:interseccion_esfera width=60%}
@@ -217,49 +219,49 @@ Debemos distinguir tres casos, atiendiendo al valor que toma el discriminante $\
 Para estos dos últimos, si consideramos $t_0$ cualquier solución válida, el vector normal resultante viene dado por
 
 $$
-\mathbf{n} = 2 (P(t_0) - c)
+\mathbf{n} = 2 (P(t_0) - \mathbf{c})
 $$
 
-o, normalizando,
+\mathbf{o}, normalizando,
 
 $$
-\hat{\mathbf{n}} = \frac{(P(t_0) - c)}{r}
+\hat{\mathbf{n}} = \frac{(P(t_0) - \mathbf{c})}{r}
 $$
 
 ### Intersecciones con triángulos
 
 Este tipo de intersecciones serán las más útiles en nuestro path tracer. Generalmente, nuestras geometrías estarán compuestas por mallas de triángulos, así que conocer dónde impacta nuestro rayo será clave. Empecemos por la base:
 
-Un triángulo viene dado por tres puntos, $a, b$, y $c$; correspondientes a sus vértices. Para evitar casos absurdos, supongamos que estos puntos son afinmente independientes; es decir, que no están alineados.
+Un triángulo viene dado por tres puntos, $a, \mathbf{b}$, y $\mathbf{c}$; correspondientes a sus vértices. Para evitar casos absurdos, supongamos que estos puntos son afinmente independientes; es decir, que no están alineados.
 
-#### coordenadas baricéntricas
+#### Coordenadas baricéntricas
 
-Podemos describir los puntos contenidos en el plano que forman estos vertices mediante **coordenadas baricéntricas**. Este sistema de coordenadas expresa cada punto del plano como una combinación convexa de los vértices [@wikipedia-contributors-2022G]. Es decir, que para cada punto $P$ del triángulo existen $\alpha, \beta$ y $\gamma$ tales que $\alpha + \beta + \gamma = 1$ y
+Podemos describir los puntos contenidos en el plano que forman estos vertices mediante **coordenadas baricéntricas**. Este sistema de coordenadas expresa cada punto del plano como una combinación convexa de los vértices $\mathbf{a}, \mathbf{b}, \mathbf{c}$ [@wikipedia-contributors-2022G]. Es decir, que para cada punto $\mathbf{p}$ del triángulo existen $\alpha, \beta$ y $\gamma$ tales que $\alpha + \beta + \gamma = 1$ y
 
 $$
-P = \alpha a + \beta b + \gamma c
+\mathbf{p} = \alpha a + \beta \mathbf{b} + \gamma \mathbf{c}
 $$
 
 > TODO: triángulo con coordenadas baricéntricas.
 
 Debemos destacar que existen dos grados de libertad debido a la restricción de que las coordenadas sumen 1.
 
-Una propiedad de estas coordenadas que nos puede resultar útil es que un punto $p$ está contenido en el triángulo si y solo si $0 < \alpha, \beta, \gamma < 1$.
+Una propiedad de estas coordenadas que nos puede resultar útil es que un punto $\mathbf{p}$ está contenido en el triángulo si y solo si $0 < \alpha, \beta, \gamma < 1$.
 
-Esta propiedad y la restricción de que sumen 1 nos da una cierta intuición de cómo funcionan. Podemos ver las coordenadas baricéntricas como la contribución de los vértices a un punto $p$. Por ejemplo, si $\alpha = 0$, eso significa que el punto viene dado por $\beta b + \gamma c$; es decir, una combinación lineal de $b$ y $c$. Se encuentra en la recta que generan.
+Esta propiedad y la restricción de que sumen 1 nos da una cierta intuición de cómo funcionan. Podemos ver las coordenadas baricéntricas como la contribución de los vértices a un punto $\mathbf{p}$. Por ejemplo, si $\alpha = 0$, eso significa que el punto viene dado por $\beta \mathbf{b} + \gamma \mathbf{c}$; es decir, una combinación lineal de $\mathbf{b}$ y $\mathbf{c}$. Se encuentra en la recta que generan.
 
 Por proponer otro ejemplo, si alguna de las coordenadas fuera mayor que 1, eso significaría que el punto estaría más allá del triángulo.
 
 > TODO: dibujo con explicación de cómo funciona (libreta Shinrin - Yoku)
 
-#### calculando la intersección
+#### Calculando la intersección
 
 Podemos eliminar una de las varibales escribiendo $\alpha = 1 - \beta - \gamma$, lo que nos dice
 
 $$
 \begin{aligned}
-p & = (1 - \beta - \gamma) a + \beta b + \gamma c \\
-  & = a + (b - a) \beta + (c - a) \gamma
+\mathbf{p} & = (1 - \beta - \gamma) \mathbf{a} + \beta \mathbf{b} + \gamma \mathbf{c} \\
+  & = \mathbf{a} + (\mathbf{b} - \mathbf{a}) \beta + (\mathbf{c} - \mathbf{a}) \gamma
 \end{aligned}
 $$
 
@@ -271,12 +273,12 @@ $$
 0 & < \beta          \\
 0 & < \gamma
 \end{aligned}
-$$ {#eq:beta_gamma}
+$${#eq:beta_gamma}
 
-Un rayo $P(t) = o + td$ impactará en un punto del triángulo si se cumple
+Un rayo $P(t) = \mathbf{o} + t\mathbf{d}$ impactará en un punto del triángulo si se cumple
 
 $$
-P(t) = o + td = a + (b - a) \beta + (c - a) \gamma
+P(t) = \mathbf{o} + t\mathbf{d} = \mathbf{a} + (\mathbf{b} - \mathbf{a}) \beta + (\mathbf{c} - \mathbf{a}) \gamma
 $$
 
 cumpliendo [@eq:beta_gamma]. Podemos expandir la ecuación anterior en sus coordenadas para obtener
@@ -321,5 +323,5 @@ calcular rápidamente la solución a un sistema de ecuaciones lineales es un pro
 Para obtener el vector normal, podemos hacer el producto vectorial de dos vectores que se encuentren en el plano del triángulo. como, por convención, los vértices se guardan en sentido antihorario visto desde fuera del objeto, entonces
 
 $$
-\mathbf{n} = (b - a) \times (c - a)
+\mathbf{n} = (\mathbf{b} - \mathbf{a}) \times (\mathbf{c} - \mathbf{a})
 $$
