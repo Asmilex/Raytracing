@@ -42,7 +42,7 @@ $$
 
 ### Irradiancia
 
-La **irradiancia** o **radiancia emitida** es el flujo radiante que recibe una superficie. Dada un área $A$, se define como
+La **irradiancia** o **radiancia emitida** es la potencia por unidad de área que recibe una región de una superficie o un punto de la misma. Si $A$ es el área de dicha superficie, la irradiancia se define como
 
 $$
 E = \frac{\Phi}{A} (\text{W/m}^2)
