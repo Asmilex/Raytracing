@@ -24,7 +24,7 @@ Cuando un rayo impacta con un objeto, adquirirá parte de las propiedades lumín
 
 Una vez recojamos la información que nos interese, aplicaremos otro raycast desde el nuevo punto de impacto, escogiendo una nueva dirección determinada. Esta dirección dependerá del tipo de material del objeto. Y, de hecho, algunos serán capaces de invocar varios rayos.
 
-Por ejemplo, los espejos reflejan la luz casi de forma perfecta; mientras que otros elementos como el agua \mathbf{o} el cristal reflejan *y* refractan luz, así que necesitaremos generar dos nuevos raycast.
+Por ejemplo, los espejos reflejan la luz casi de forma perfecta; mientras que otros elementos como el agua o el cristal reflejan *y* refractan luz, así que necesitaremos generar dos nuevos raycast.
 
 Usando suficientes rayos obtendremos la imagen de la escena. a este proceso de **ray casting recursivo** es lo que se conoce como ray tracing.
 
@@ -36,15 +36,15 @@ Una de las partes más importantes de ray tracing, y a la que quizás dedicaremo
 
 Hay varios factores que entran en juego a la hora de decidir qué hacemos cuando impactamos con un nuevo objeto:
 
-1. **¿cómo es la superficie del material?** a mayor rugosidad, mayor aleatoriedad en la dirección. Por ejemplo, no es lo mismo el asfalto de una carretera que una lámina de aluminio impecable.
-2. **¿cómo de fiel es nuestra geometría?**
+1. **¿Cómo es la superficie del material?** a mayor rugosidad, mayor aleatoriedad en la dirección. Por ejemplo, no es lo mismo el asfalto de una carretera que una lámina de aluminio impecable.
+2. **¿Cómo de fiel es nuestra geometría?**
 3. **¿Dónde se encuentran las luces en la escena?** Dependiendo de la posición, nos interesará muestrear la luz con mayor influencia.
 
 Estas cuestiones las exploraremos a fondo en las siguientes secciones.
 
 ## Intersecciones rayo - objeto
 
-como dijimos al principio del capítulo, representaremos un rayo como
+Como dijimos al principio del capítulo, representaremos un rayo como
 
 $$
 \begin{aligned}
@@ -222,7 +222,7 @@ $$
 \mathbf{n} = 2 (P(t_0) - \mathbf{c})
 $$
 
-\mathbf{o}, normalizando,
+o, normalizando,
 
 $$
 \hat{\mathbf{n}} = \frac{(P(t_0) - \mathbf{c})}{r}
