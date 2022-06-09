@@ -58,9 +58,9 @@ Por ejemplo, tomando $\mathbf{\mathbf{o}} = (1, 3, 2), \mathbf{d} = (1, 2, 1)$:
 - Para $t = 0$, $P(t) = (1, 3, 2)$.
 - Para $t = 1$, $P(t) = (1, 3, 2) + (1, 2, 1) = (2, 5, 3)$.
 
-Nos resultará especialmente útil limitar los valores que puede tomar $t$. Restringiremos los posibles puntos del dominio de forma que $t \in [t_{min}, t_{max})$, con $t_{min} < t_{max}$. En general, nos interesará separarnos de las superficies un pequeño pero no despreciable $\varepsilon$ para evitar errores de redondeo.
+Nos resultará especialmente útil limitar los valores que puede tomar $t$. Restringiremos los posibles puntos del dominio de forma que $t \in [t_{min}, t_{max})$, con $t_{min} < t_{max}$. En general, nos interesará separarnos de las superficies un pequeño pero no despreciable $\varepsilon$ para evitar intersecar con el origen.
 
-![Separarnos un poquito del origen evitará errores de coma flotante](./img/01/Límites%20de%20un%20rayo.png){#fig:limites_rayo}
+![Separarnos un poquito del origen evitará que el rayo interseque con la superficie desde la que proviene.](./img/01/Límites%20de%20un%20rayo.png){#fig:limites_rayo}
 
 Una de las principales cuestiones que debemos hacernos es saber cuándo un rayo impacta con una superficie. Lo definiremos analíticamente.
 
