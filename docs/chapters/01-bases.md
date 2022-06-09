@@ -74,11 +74,9 @@ $$
 F(x, y, z) = 0
 $$
 
-Esta ecuación implícita define una serie de puntos del espacio $\mathbb{R}^3$ que se encuentran en la superficie.
+Esta ecuación implícita define una serie de puntos del espacio $\mathbb{R}^3$ que se encuentran en la superficie. Por ejemplo, la esfera se define como $x^2 + y^2 + z^2 - 1 = 0$.
 
-Por ejemplo, la esfera se define como $x^2 + y^2 + z^2 - 1 = 0$.
-
-consideremos una superficie $S$ y un punto regular $\mathbf{\mathbf{p}}$ de ella; es decir, un punto tal que el gradiente de $F$ en $\mathbf{\mathbf{p}}$ no es 0. Se define el vector normal $\mathbf{n}$ a la superficie en ese punto como
+Consideremos una superficie $S$ y un punto regular $\mathbf{\mathbf{p}}$ de ella; es decir, un punto tal que el gradiente de $F$ en $\mathbf{\mathbf{p}}$ no es 0. Se define el vector normal $\mathbf{n}$ a la superficie en ese punto como
 
 $$
 \mathbf{n} = \nabla F(\mathbf{p}) = \left( \frac{\partial F(\mathbf{p})}{\partial x}, \frac{\partial F(\mathbf{p})}{\partial y}, \frac{\partial F(\mathbf{p})}{\partial z}\right )
@@ -88,7 +86,9 @@ $${#eq:normal_superficie}
 
 Dado un punto $\mathbf{q} \in \mathbb{R}^3$, queremos saber dónde interseca un rayo $P(t)$. Es decir, para qué $t$ se cumple que $F(P(t)) = 0 \iff F(\mathbf{\mathbf{o}} + t\mathbf{d}) = 0$.
 
-consideremos ahora un plano. Para ello, nos tomamos un punto $\mathbf{q}_0$ del plano y un vector normal a la superficie $\mathbf{n}$. La ecuación implícita del plano será [@ShirleyRRT]
+Este tipo de superficies suele requerir un cálculo numérico iterativo por lo general, pero algunos objetos presentan expresiones sencillas que permiten una resolución analítica.
+
+Este es el caso de los planos. Para comprobarlo, tomemos un punto $\mathbf{q}_0$ de un cierto plano y un vector normal a la superficie $\mathbf{n}$. La ecuación implícita del plano será [@ShirleyRRT]
 
 $$
 F(Q) = (\mathbf{q} - \mathbf{q}_0) \cdot \mathbf{n} = 0
