@@ -213,7 +213,7 @@ $$
 Debemos distinguir tres casos, atiendiendo al valor que toma el discriminante $\Delta = \small{(\mathbf{d} \cdot (\mathbf{o} - \mathbf{c}))^2 - 4 (\mathbf{d}^2)((\mathbf{o} - \mathbf{c})^2 - r^2)}$:
 
 1. Si $\Delta < 0$, $\sqrt{\Delta} \notin \mathbb{R}$, y el rayo no impacta con la esfera
-2. Si $\Delta = 0$, el rayo impacta en un punto, que toma el valor $t = \frac{-d \cdot (\mathbf{o} - \mathbf{c})}{2 d \cdot d}$. Digamos que *pegaría* justo en el borde.
+2. Si $\Delta = 0$, el rayo impacta en un punto, que toma el valor $t = \frac{-d \cdot (\mathbf{o} - \mathbf{c})}{2 d \cdot d}$. En esta situación, decimos que el rayo es tangente a la esfera.
 3. Si $\Delta > 0$, existen dos soluciones. En ese caso, el rayo atraviesa la esfera.
 
 ![Puntos de intersección con una esfera.](./img/01/Intersección%20rayo%20-%20esfera.png){#fig:interseccion_esfera width=60%}
