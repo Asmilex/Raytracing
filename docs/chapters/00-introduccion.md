@@ -40,7 +40,7 @@ Aún con todos los avances del medio, **el elefante en la sala seguía siendo el
 
 Sin embargo, el paso del tiempo es imparable. Las pinturas rupestres dieron paso al óleo sobre lienzo, mientras que las cámaras digitales reemplazaron a las oscuras. Es natural esperar que, en algún momento, rasterización se convierta en un algoritmo del pasado. Y ese momento es la actualidad.
 
-En 2018 Nvidia introdujo la arquitectura de tarjetas gráficas Turing [@turing-arquitecture]. Esta arquitectura tiene la capacidad de realizar cómputos de ray tracing acelerados por hardware en gráficas de consumidor. Esto significa que **path tracing se vuelve viable en tiempo real**. En lugar de horas, renderizar una imagen costará milisegundos.
+En 2018 Nvidia introdujo la arquitectura de tarjetas gráficas Turing [@turing-arquitecture]. Aunque por estos años ya existían implementaciones de ray tracing en gráficas (tan temprano como [@10.1145/566654.566640], [@Ertl_theray]), esta arquitectura presenta la capacidad de realizar cómputos específicos de ray tracing acelerados por hardware en gráficas de consumidor. Esto significa que **path tracing se vuelve viable en tiempo real**. En lugar de horas, renderizar una imagen costará milisegundos.
 
 Se da el pistoletazo de salida a una nueva transición.
 
