@@ -151,7 +151,7 @@ $$
         \left( \frac{\partial f}{\partial v}, \frac{\partial g}{\partial v}, \frac{\partial h}{\partial v} \right)
 $$
 
-Encontrar el punto de intersección de una superficie paramétrica con un rayo es sencillo. Basta con encontrar aquellos puntos $(u, v)$ y $t$ para los que
+El punto de intersección de una superficie paramétrica con un rayo viene dado por aquellos puntos de la superifice $(u, v)$ para los que
 
 $$
 \begin{aligned}
@@ -163,7 +163,9 @@ o_z + td_z = h(u, v)
 \end{aligned}
 $$
 
-Es posible que el rayo no impacte en ningún punto. En ese caso, el sistema de ecuaciones no tendría solución. Otra posibilidad es que intersequen en varios puntos.
+Con $t \in \mathbb{R}$. Es posible que el rayo no impacte en ningún punto. En ese caso, el sistema de ecuaciones no tendría solución. Otra posibilidad es que intersequen en varios puntos.
+
+Por regla general este tipo de superficies no permiten un cálculo fácil del punto de intersección, lo cual hace que se evitan en ray tracing. En su lugar se opta por otro tipo de estructuras como las [mallas de triángulos](#intersecciones-con-triángulos).
 
 ### Intersecciones con esferas
 
