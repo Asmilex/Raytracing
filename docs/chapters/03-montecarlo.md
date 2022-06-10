@@ -669,7 +669,7 @@ Esta técnica requiere conocer si desde el punto $p$ se puede ver $y$ en la fuen
 
 ![El muestreo directo de fuentes de luz cambia la forma de calcular la radiancia en un punto, pero mejora considerablemente el ruido de una imagen. Fuente: [@carlos-path-tracing]](./img/03/Next%20event%20estimation.png){ #fig:next_event_estimation width=67% }
 
-Si quieres informarte más sobre esta técnica, puedes leer [@Marrs2021, Importance Sampling of Many Lights on the GPU].
+Si quieres informarte más sobre esta técnica, puedes leer [@GemsI-IS].
 
 #### Quasi-Monte Carlo
 

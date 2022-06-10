@@ -432,7 +432,7 @@ Para cargar esta estructura, se debe hacer lo siguiente:
 5. Conseguir los *handlers* de los shaders usando `vkGetRayTracingShaderGroupHandlesKHR`.
 6. Alojar un buffer con el bit `VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR` y copiar los *handlers*.
 
-![La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader `raygen`, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un `closest hit`, `any hit`, o `miss` shaders. Fuente: [@Marrs2021, p. 194]](./img/04/Pipeline.png){#fig:pipeline}
+![La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader `raygen`, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un `closest hit`, `any hit`, o `miss` shaders. Fuente: [@GemsII-SBT, p. 194]](./img/04/Pipeline.png){#fig:pipeline}
 
 Cada entrada de la SBT contiene un handler y una serie de parámetros embebidos. A esto se le conoce como **Shader Record**. Estos records se clasifican en:
 
@@ -443,7 +443,7 @@ Cada entrada de la SBT contiene un handler y una serie de parámetros embebidos.
 
 Una de las partes más difíciles de la SBT es saber cómo se relacionan record y geometría. Es decir, cuando un rayo impacta en una geometría, ¿a qué record de la SBT llamamos? Esto se determina mediante los parámetros de la instancia, la llamada a *trace rays*, y el orden de la geometría en la BLAS. En particular, resulta problemático de los índices en los *hit groups*.
 
-Para conocer a fondo cómo funciona la Shader Binding Table, puedes visitar [@Marrs2021, p. 193] o [@shader-binding-table]
+Para conocer a fondo cómo funciona la Shader Binding Table, puedes visitar [@GemsII-SBT, p. 193] o [@shader-binding-table].
 
 ![Fuente: [@shader-binding-table]](./img/04/SBT.png){#fig:SBT}
 

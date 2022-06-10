@@ -420,7 +420,7 @@ Los tipos de materiales que vamos a tratar son las básicos. Entre ellos, se enc
 
 Prácticamente toda superficie, en mayor o menor medida, refleja parte de la luz incidente. Otros tipos de materiales reflejan y refractan a la vez, como puede ser un espejo o el agua.
 
-![Reflexión y refracción de luz [@Marrs2021, p. 106].](./img/02/Reflexión%20y%20refracción.png){#fig:refraccion width=50%}
+![Reflexión y refracción de luz [@GemsII-Reflexion, pp. 106].](./img/02/Reflexión%20y%20refracción.png){#fig:refraccion width=50%}
 
 > TODO: cambiar por foto propia
 
@@ -443,7 +443,7 @@ Primero, tratemos con materiales que únicamente reflejan luz; es decir, su BSDF
 
 #### Reflexión especular perfecta
 
-Para un material especular perfecto (es decir, espejos), la dirección reflejada $\mathbf{r}$ dado un rayo incidente $\mathbf{i}$ es [@Marrs2021, Reflection and refraction formulas, p. 105]:
+Para un material especular perfecto (es decir, espejos), la dirección reflejada $\mathbf{r}$ dado un rayo incidente $\mathbf{i}$ es [@GemsII-Reflexion, pp. 105]:
 
 $$
 \mathbf{r} = \mathbf{i} - 2 (\mathbf{i} \cdot \mathbf{n}) \mathbf{n}
@@ -591,8 +591,7 @@ Lo que ocurre en estos casos es que, en vez de pasar al segundo medio, los foton
 
 Aquellos materiales que refractan y reflejan luz (como el agua de la foto anterior) no pueden generar energía de la nada; por lo que la combinación de ambos efectos debe ser proporcional a la luz incidente. Es decir, una fracción de luz es reflejada, y otra es refractada. Las **ecuaciones de Fresnel** nos permiten conocer esta cantidad.
 
-La proporción de luz reflejada desde un rayo que viaja por un medio con índice de refracción $\eta_1$ y ángulo de incidencia $\theta_1$ a otro medio con índice de refracción $\eta_2$ es [@Marrs2021, The Schlick Fresnel
-approximation, p. 109]:
+La proporción de luz reflejada desde un rayo que viaja por un medio con índice de refracción $\eta_1$ y ángulo de incidencia $\theta_1$ a otro medio con índice de refracción $\eta_2$ es [@GemsII-Fresnel, p. 109]:
 
 $$
 \begin{aligned}
