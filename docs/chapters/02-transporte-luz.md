@@ -160,17 +160,13 @@ $$
 
 ### Radiancia
 
-Finalmente, llegamos al concepto más importante. La **radiancia espectral** (o radiancia a secas[^3]) [@PBRT3e, Radiometry] es una extensión de la radiancia emitida teniendo en cuenta la dirección:
+Finalmente, llegamos a uno de los conceptos más importantes de esta sección, el cual es una extensión de la radiancia emitida teniendo en cuenta la dirección de la luz. La **radiancia espectral** (o radiancia a secas[^3]) [@PBRT3e, Radiometry], denotada por $L(p, \omega)$, es la irradiancia por unidad de ángulo sólido $d\omega$ asociado a una dirección $\omega$:
 
 $$
 L(p, \omega) = \lim_{\Delta\omega \to 0}{\frac{\Delta E_\omega(p)}{\Delta\omega}} = \frac{dE_\omega(p)}{d\omega}
-$$
+$${#eq:radiancia_irradiancia}
 
-siendo $E_\omega(p)$ la radiancia emitida a la superficie perpendicular a $\omega$.
-
-> TODO: foto como la de https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, página 10.
-
-Podemos dar otra expresión de la radiancia en términos del flujo:
+Expandiendo esta expresión, se tiene que la radiancia también es la potencia que pasa por un punto $p$ y viaja en una dirección $\omega$ por unidad de área (perpendicular a $\omega$) alrededor de $p$, por unidad de ángulo sólido $d\omega$:
 
 $$
 L(p, \omega) = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} = \frac{d^2\Phi(p, \omega)}{d\omega\ dA\ \cos\theta}
@@ -179,42 +175,14 @@ $${#eq:radiancia_flujo}
 donde $dA^\bot$ es el área proyectada por $dA$ en una hipotética superficie perpendicular a $\omega$:
 
 > TODO: figura similar a pbr figura 5.10 https://www.pbr-book.org/3ed-2018/Color_and_Radiometry/Radiometry
+>
+> TODO: foto como la de https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, página 10.
 
-Cuando un rayo impacta en una superficie, $L$ puede tomar valores muy diferentes en un lado y otro de dicha superficie. Por ejemplo, si nos imaginamos un espejo, el valor un poco por encima y un poco por debajo de un punto del espejo es muy diferente. Para solucionarlo, podemos tomar límites para distinguir a ambos lados:
+Cuando un rayo impacta en una superficie, $L$ puede tomar valores muy diferentes en un lado y otro de esta. A fin de cuentas, necesitamos distinguir entre los fotones que llegan a la superficie y los que salen. Para solucionarlo podemos distinguir entre la radiancia que llega a un punto --la incidente--, y la saliente.
 
-$$
-\begin{aligned}
-L^+(p, \omega) = \lim_{t \to 0^+}{L(p + t\mathbf{n}_p, \omega)} \\
-L^-(p, \omega) = \lim_{t \to 0^-}{L(p + t\mathbf{n}_p, \omega)}
-\end{aligned}
-$${#eq:L_limit}
+A la **radiancia incidente o entrante** la llamaremos $L_i(p, \omega)$, mientras que la **radiancia saliente** se denomina $L_o(p, \omega)$.
 
-donde $\mathbf{n}_p$ es la normal en el punto $p$.
-
-Otra forma de solucionarlo (y preferible, puesto que simplifica entender lo que ocurre) es distinguir entre la radiancia que llega a un punto --la incidente--, y la saliente.
-
-La primera se llamará $L_i(p, \omega)$, mientras que la segunda será $L_o(p, \omega)$. Es importante destacar que $\omega$ apunta *hacia fuera* de la superficie. Quizás es contraintuitivo en $L_i$, puesto que $-\omega$ apunta *hacia* la superficie. Depende del autor se utiliza una concepción u otra.
-
-> **Nota**(ción): a $L_o$ también se le conoce como la radiancia reflejada. Por eso, algunas veces aparece como $L_r$ en algunas fuentes.
-
-Utilizando esta notación y usando [{@eq:L_limit}], podemos escribir $L_i$ y $L_o$ como
-
-$$
-\begin{aligned}
-    L_i(p, \omega) & =
-        \begin{cases}
-            L^+(p, -\omega) & \text{si } \omega \cdot \mathbf{n}_p > 0 \\
-            L^-(p, -\omega) & \text{si } \omega \cdot \mathbf{n}_p < 0
-        \end{cases} \\
-    L_o(p, \omega) & =
-        \begin{cases}
-            L^+(p, \omega) & \text{si } \omega \cdot \mathbf{n}_p > 0 \\
-            L^-(p, \omega) & \text{si } \omega \cdot \mathbf{n}_p < 0
-        \end{cases}
-\end{aligned}
-$$
-
-Hacemos esta distinción porque, a fin de cuentas, necesitamos distinguir entre los fotones que llegan a la superficie y los que salen.
+Es importante destacar que $\omega$ apunta *hacia fuera* de la superficie. Para $L_o(p, \omega)$ se tiene que la radiancia viaja en el sentido de $\omega$, mientras que para $L_i(p, \omega)$ se tiene que la radiancia viaja en el sentido contrario a $\omega$; es decir, hacia el punto $p$.
 
 > TODO: https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, p.36
 
