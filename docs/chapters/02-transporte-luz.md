@@ -623,11 +623,64 @@ $$
 
 Esta aproximación es 32 veces más rápida de calcular que las ecuaciones de Fresnel, generando un error medio inferior al 1% [@https://doi.org/10.1111/1467-8659.1330233]
 
-### Otros modelos
+### BRDFs basadas en modelos de microfacetas
 
-El modelo Ground Glass Unknown es una BSDF analítica que se basa en la distribución de microfacetas del material subyacente. Es una de las técnicas más avanzadas y exploradas recientemente. Los motores modernos como Unreal Engine 4 y Unity lo utilizan en sus pipelines físicamente realistas.
+La mayor parte de las superficies no son puramente lisas a nivel microscópico. En la mayoría de materiales existen microfacetas, las cuales producen que la luz no se refleje de forma especular. Esto hace que la luz pueda salir en direcciones muy diferentes dependiendo de la rugosidad de la superficie. Este tipo de materiales suele necesitar una función que caracterice la distribución de las normales de las microfacetas (denotada por $\mathbf{n_f}$).
 
-A diferencia de los otros modelos, no entraremos en detalles de la implementación.
+Un modelo que utiliza esta idea es el de **Oren-Nayar**, el cual describe la reflexión difusa de una superficie. Se basa en la idea de que las superficies rugosas aparentan ser más brillantes conforme la dirección de la luz se aproxima a la dirección de la vista. La BRDF de Oren-Nayar es [@PBRT3e, Microfacet Models]
+
+$$
+f_r(p, \omega_o \leftarrow \omega_i) = \frac{\rho}{\pi} \left(A + B\max{(0, \cos(\phi_i - \phi_o))}\sin\alpha\tan\beta\right)
+$$
+
+donde, si $\theta$ está en radianes,
+
+$$
+\begin{aligned}
+A      & = 1 - \frac{\theta^2}{2(\theta^2 + 0.33)} \\
+B      & = \frac{0.45 \theta^2}{\theta^2 + 0.09}   \\
+\alpha & = \max{(\theta_i, \theta_o)}              \\
+\beta  & = \min{(\theta_i, \theta_o)}
+\end{aligned}
+$$
+
+En la actualidad, el modelo más utilizado de microfacetas es el **GGX**. Motores modernos como Unreal Engine 4 y Unity lo utilizan en sus pipelines físicamente realistas. La BRDF se define de la siguiente manera [@McGuire2018GraphicsCodex]:
+
+$$
+\begin{aligned}
+f_r(p, \omega_o, \omega_i) & = \frac
+    {
+        D(p, \omega_h) F(p, \omega_i, \omega_o) G_{1}(p, \omega_i, \omega_h) G_{1}(p, \omega_o, \omega_h)
+    }
+    {
+        4\pi (\mathbf{n} \cdot \omega_i) (\mathbf{n} \cdot \omega_o)
+    } = \\
+    & = \frac
+    {
+        4 \alpha^2_p \left(F_0 + (1 - F_0)(1 - \max{(0, \omega_h \cdot \omega_i})^5\right)(\mathbf{n} \cdot \omega_i)(\mathbf{n} \cdot \omega_o)
+    }
+    {
+        \pi \left(1 + (\alpha^2_p - 1) \cdot (\mathbf{n} \cdot \omega_h)^2\right)^2
+        A_1
+        A_2
+    }
+\end{aligned}
+$$
+
+siendo
+
+$$
+\begin{aligned}
+A_1 & = \left((\mathbf{n} \cdot \omega_i) + \sqrt{\alpha^2_p + (1 - \alpha^2_p)(\mathbf{n} \cdot \omega_i)^2}\right) \\
+A_2 & = \left((\mathbf{n} \cdot \omega_o) + \sqrt{\alpha^2_p + (1 - \alpha^2_p)(\mathbf{n} \cdot \omega_o)^2}\right)
+\end{aligned}
+$$
+
+y donde
+
+- $\omega_h$ es el vector intermedio a $\omega_o$ y $\omega_i$, calculado como $(\omega_i + \omega_o)/\norm{\omega_i + \omega_o}$.
+- $\alpha$ es el coeficiente de rugosidad de la microfaceta, $\alpha \in [0, 1]$.
+- $F_0$ es la reflectancia medida en un ángulo de incidencia $\theta_i = 0$.
 
 ## La rendering equation
 
