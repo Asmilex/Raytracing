@@ -443,21 +443,44 @@ Primero, tratemos con materiales que únicamente reflejan luz; es decir, su BSDF
 
 #### Reflexión especular perfecta
 
-Para un material especular perfecto (es decir, espejos), la dirección reflejada $\omega_o$ dado un rayo incidente $\omega_i$ es [@GemsII-Reflexion, pp. 105; @PBRT3e, Specular Reflection and Transmission]:
+Para un material especular perfecto (es decir, espejos), la dirección reflejada $\omega_o$ dado un rayo incidente $\omega_i$ es [@GemsII-Reflexion, pp. 105; @PBRT3e, Specular Reflection and Transmission; @McGuire2018GraphicsCodex, Materials]:
 
 $$
-\omega_o = -\omega_i + 2 (\omega_i \cdot \mathbf{n}) \mathbf{n}
+\omega_o = 2 \mathbf{n} (\omega_i \cdot \mathbf{n}) -\omega_i
 $$
 
 siendo $\mathbf{n}$ la normal en el punto incidente. Con esta expresión, se necesita que $\mathbf{n}$ esté normalizado. Para los otros dos vectores no es necesario; la dirección de salida tendrá la misma norma que la de entrada.
 
-Su BRDF se define mediante una delta de Dirac [@Szirmay-Kalos00monte-carlomethods, 3.2; @McGuire2018GraphicsCodex, Materials]:
+La BRDF de un material especular perfecto se describe en términos de la proporción de radiancia reflejada hacia $\omega_o$ dependiente del vector incidente $\omega_i$, la cual puede viene descrita por $\rho_{hd}(\omega_i)$. Se da la relación
 
 $$
-f_r(\omega_o \leftarrow \omega_i ) = \frac{\delta(- \omega_i, \omega_o) k_r(\abs{- \omega_i \cdot \mathbf{n}})}{\abs{- \omega_i \cdot \mathbf{n}}}
+\rho_{hd}(\omega_i) = \int_{\mathbb{S}^2} {f_r(p, \omega_o \leftarrow \omega_i)\ d\omega_o}
 $$
 
-siendo $\rho_{hd} = k_r(\abs{- \omega_i \cdot \mathbf{n}})$ el albedo, con $k_r$ el coeficiente de reflectividad, cuyo valor se encuentra entre 0 y 1, dependiendo de la energía que se pierda.
+Puesto que en los espejos perfectos no se pierde energía, necesariamente $\rho_{hd} = 1$.
+
+Debemos tener en cuenta que la probabilidad de que un rayo tenga una dirección diferente a la del reflejo es 0, por lo que
+
+$$
+f_r(p, \omega_o \leftarrow \omega_i) = 0 \qquad \forall\  \omega_0 \ne 2 \mathbf{n} (\omega_i \cdot \mathbf{n}) -\omega_i
+$$
+
+La función de densidad evaluada en el vector reflejado es problemática. Está claro que debe integrar $\rho_{hd}$, pero el ángulo sólido en el que se integra tiene medida cero, pues toda la radiancia se refleja hacia una única dirección. Esto significa que
+
+$$
+f_r(\omega_o \leftarrow \omega_i ) = \frac{\rho_{hd}(\omega_i)}{0 \abs{\omega_i \cdot \mathbf{n}}}
+$$
+
+Podemos solucionar este problema utilizando una Delta de Dirac, obteniendo finalmente la BRDF de los materiales especulares perfectos:
+
+$$
+\begin{aligned}
+f_r(\omega_o \leftarrow \omega_i ) & = \frac{\delta(\omega_o, \omega_i) \rho_{hd}(\omega_i)}{\abs{\omega_i \cdot \mathbf{n}}} = \\
+    & = \frac{\delta(\omega_o, \omega_i) \abs{\omega_i \cdot \mathbf{n}} k_r}{\abs{\omega_i \cdot \mathbf{n}}}
+\end{aligned}
+$${#eq:brdf_especular_perfecto}
+
+siendo $\rho_{hd}(\omega_i) = \abs{\omega_i \cdot \mathbf{n}} k_r$ el albedo, con $k_r$ el coeficiente de reflectividad, cuyo valor se encuentra entre 0 y 1, dependiendo de la energía que se pierda.
 
 #### Reflexión difusa o lamberiana
 
