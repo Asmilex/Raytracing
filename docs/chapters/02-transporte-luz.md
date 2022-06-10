@@ -85,7 +85,7 @@ $$
 \sigma = \frac{A}{r^2} \text{(sr)}
 $${#eq:angulo_solido_omega}
 
-Los denotaremos por $\sigma$, aunque también se pueden encontrar en la literatura como $\Omega$. Su unidad de medida es el estereorradián ($\text{sr}$). Se tiene que $\sigma \in [0, 4\pi]$. Si $2 \pi$ radianes corresponden a la circunferencia completa, para la esfera se tiene que $4 \pi$ esteorradianes cubren toda la superficie de esta; y por lo tanto,$2\pi \text{sr}$ cubren un hemisferio. Además, un esteorradián corresponde a una superficie con área $r^2$: $1 \text{sr} = \frac{r^2}{r^2}$.
+Los denotaremos por $\sigma$, aunque también se pueden encontrar en la literatura como $\Omega$. Su unidad de medida es el estereorradián ($\text{sr}$). Se tiene que $\sigma \in [0, 4\pi]$. Un esteorradián corresponde a una superficie con área $r^2$: $1 \text{sr} = \frac{r^2}{r^2}$.
 
 ![Un ángulo sólido es la razón entre el área proyectada y el cuadrado del radio](./img/02/Ángulo%20sólido.png){#fig:angulo_solido width=80%}
 
@@ -105,23 +105,36 @@ $$
 \end{aligned}
 $${#eq:coordenadas_esféricas}
 
-A $\theta$ se le denomina ángulo polar, mientras que a $\phi$ se le llama acimut. Imaginémonos un punto en la esfera de radio $r$ ubicado en una posición $(r, \theta, \phi)$. Queremos calcular un área chiquitita $dA_h$, de forma que el ángulo sólido asociado a dicha área debe ser $d\omega$. Así, $d\omega = \frac{dA_h}{r^2}$. Si proyectamos el área, obtenemos $d\theta$ y $d\phi$: pequeños cambios en los ángulos que nos generan nuestra pequeña área [@berkeley-cs184, Radiometry & Photometry].
+A $\theta$ se le denomina ángulo polar, mientras que a $\phi$ se le llama acimut. Imaginémonos un punto en la esfera de radio $r$ ubicado en una posición $(r, \theta, \phi)$. Queremos calcular un área chiquitita $dA_h$, de forma que el ángulo sólido asociado a dicha área debe ser $d\sigma$. Así, $d\sigma = \frac{dA_h}{r^2}$. Si proyectamos el área, obtenemos $d\theta$ y $d\phi$: pequeños cambios en los ángulos que nos generan nuestra pequeña área [@berkeley-cs184, Radiometry & Photometry].
 
 $dA_h$ debe tener dos lados $lado_1$ y $lado_2$. Podemos hallar $lado_1$ si lo trasladamos al eje $z$ de nuevo. Así, $lado_1 = r \sin d\theta$. De la misma manera, $lado_2 = r d\theta$.
 
 > TODO: foto que explique todo esto, porque si no, no hay quien se entere. Quizás me sirva la de https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, p.16 siempre que adapte $\phi$.
 
-Poniendo estos valores en $d\omega$:
+Poniendo estos valores en $d\sigma$:
 
 $$
 \begin{aligned}
-d\omega & = \frac{dA_h}{r^2} = \frac{lado_1 lado_2}{r^2} = \\
+d\sigma & = \frac{dA_h}{r^2} = \frac{lado_1 lado_2}{r^2} = \\
         & = \frac{r \sin\theta\ d\phi\ r\ d\theta}{r^2} = \\
         & = \sin\theta\ d\theta\ d\phi
 \end{aligned}
 $${#eq:d_omega}
 
-¡Genial! Acabamos de añadir un recurso muy potente a nuestro inventario. Esta expresión nos permitirá convertir integrales sobre ángulos sólidos en integrales sobre ángulos esféricos.
+¡Genial! Acabamos de añadir un recurso muy potente a nuestro inventario. Esta expresión nos permitirá convertir integrales sobre ángulos sólidos en integrales sobre ángulos esféricos. Por ejemplo, este sería el caso de la esfera.
+
+Supongamos que queremos encontrar el ángulo sólido correspondiente al conjunto de todas las direcciones sobre la esfera $\mathbb{S}^2$. Se tiene que
+
+$$
+\begin{aligned}
+\sigma & = \int_{\mathbb{S}^2}{d\omega} = \int_{0}^{2\pi} \int_{0}^{\pi} {\sin\theta\ d\theta d\phi} = \\
+       & = 4\pi \text{ sr}
+\end{aligned}
+$$
+
+Además, esto nos dice que un hemisferio de la esfera corresponde a $2\pi$ estereorradianes.
+
+En la práctica es muy común considerar el ángulo sólido asociado a una dirección en la esfera $\omega$, el cual se denota por $d\omega$. A partir de este punto usaremos esa notación.
 
 ### Intensidad radiante
 
