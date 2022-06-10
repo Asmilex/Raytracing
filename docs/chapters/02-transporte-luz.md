@@ -623,36 +623,7 @@ $$
 
 Esta aproximación es 32 veces más rápida de calcular que las ecuaciones de Fresnel, generando un error medio inferior al 1% [@https://doi.org/10.1111/1467-8659.1330233]
 
-### Materiales híbridos
-
 ### Otros modelos
-
-#### Oren - Nayar
-
-Este modelo intenta aproximar superficies difusas utilizando un ratio de lambertiano, lo cual mejora el rendimiento el *white furnace test*:
-
-```
-float OrenNayar_diffuse(vec3 normal, vec3 light_dir, vec3 view_dir, material m) {
-    float L_dot_V = dot(light_dir, view_dir);
-    float N_dot_L = dot(light_dir, noral);
-    float N_dot_V = dot(normal, view_dir);
-
-    float s = L_dot_V - N_dot_L * N_dot_V;
-    float t = mix(
-        1.0,
-        ma(N_dot_L, N_dot_V),
-        step(0.0, s)
-    );
-
-    float sigma2 = m.roughness * m.roughness;
-    float A = 1.0 + sigma2 * (m.albedo / (sigma2 + 0.13) + 0.5 / (sigma2 + 0.33));
-    float B = 0.45 * sigma2 / (sigma2 + 0.09);
-
-    return m.albedo * max(0.0, N_dot_L) * (A + B * s / t) / PI;
-}
-```
-
-#### GGX
 
 El modelo Ground Glass Unknown es una BSDF analítica que se basa en la distribución de microfacetas del material subyacente. Es una de las técnicas más avanzadas y exploradas recientemente. Los motores modernos como Unreal Engine 4 y Unity lo utilizan en sus pipelines físicamente realistas.
 
