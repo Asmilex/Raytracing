@@ -2886,13 +2886,33 @@ class="math display">\[
 L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p,
 \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
 \]</span><span class="eqnos-number">(23)</span></span></p>
+<p>Esta ecuación nos proporciona una forma de calcular la radiancia
+total saliente <span class="math inline">\(L_o\)</span> en un punto.
+Esta puede ser hallada como la suma de la radiancia producida por la
+superficie en dicho punto, <span class="math inline">\(L_e\)</span> y la
+radiancia reflejada por el entorno, a la que llamaremos <span
+class="math inline">\(L_r\)</span>.</p>
+<p><span id="eq:L_r" class="eqnos"><span class="math display">\[
+L_r(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
+\omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
+\]</span><span class="eqnos-number">(24)</span></span></p>
+<p>Esta radiancia reflejada se calcula integrando <span
+class="math inline">\(f(p, \omega_o \leftarrow \omega_i) L_i(p,
+\omega_i) \cos\theta_i\)</span> sobre todas las posibles direcciones de
+luz. Este integrando viene dado por la BSDF <span
+class="math inline">\(f(p, \omega_o \leftarrow \omega_i)\)</span>, que
+describe el comportamiento del material en el punto <span
+class="math inline">\(p\)</span>; la radiancia incidente <span
+class="math inline">\(L_i\)</span> en dicho punto; y el ángulo de
+incidencia <span class="math inline">\(\theta_i\)</span> de la dirección
+de entrada con respecto a la normal.</p>
+<p>En la ecuación [<a href="#eq:rendering_equation">23</a>], si el
+material no emite luz, entonces <span class="math inline">\(L_e =
+0\)</span>; y la radiancia total de salida coincide con la radiancia
+total reflejada [<a href="#eq:L_r">24</a>].</p>
 <p>Para hacerla operativa en términos computacionales podemos
 transformarla un poco. Bien, partamos de la ecuación de para la
 radiancia reflejada:</p>
-<p><span class="math display">\[
-L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
-\omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
-\]</span></p>
 <p>Vamos a buscar expresar la radiancia incidente en términos de la
 radiancia reflejada. Para ello, usamos la propiedad de que la radiancia
 a lo largo de un rayo no cambia.</p>
@@ -2917,33 +2937,38 @@ L_i(p, \omega) = L_o(r(p, \omega), -\omega)
 <p>Esto nos permite cambiar la expresión de <span
 class="math inline">\(L_i\)</span> en la integral anterior:</p>
 <p><span class="math display">\[
-L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
+L_r(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow
 \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\ d\omega_i}
 \]</span></p>
 <p>Finalmente, la radiancia total vendrá dada por la suma de la
 radiancia emitida y la reflejada:</p>
-<p><span class="math display">\[
-L(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o
-\leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\
-d\omega_i}
-\]</span></p>
-<p>Y con esto, ¡hemos obtenido la <em>rendering equation</em>!</p>
+<p><span id="eq:rendering_equation_alt" class="eqnos"><span
+class="math display">\[
+L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p,
+\omega_o \leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i)
+\cos\theta_i\ d\omega_i}
+\]</span><span class="eqnos-number">(25)</span></span></p>
+<p>Y con esto, hemos obtenido una expresión de la <em>rendering
+equation</em> únicamente en términos de la radiancia de salida.</p>
 <p>Si quieres ver gráficamente cómo funciona, te recomiendo pasarte por
 <span class="citation" data-cites="arneback-2019">(<a
 href="#ref-arneback-2019" role="doc-biblioref">Arnebäck
 2019</a>)</span>. Es un vídeo muy intuitivo.</p>
 <iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/eo_MTI-d28s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
-<p>Si nos paramos a pensar, la ecuación de reflexión es muy similar a la
-de renderizado. Sin embargo, hay un par de matices que las hacen muy
-diferentes:</p>
+<p>Si nos paramos a pensar, la ecuación [<a
+href="#eq:rendering_equation_alt">25</a>] es muy similar a la primera
+[<a href="#eq:rendering_equation">23</a>]. Sin embargo, hay un par de
+matices que las hacen muy diferentes:</p>
 <ul>
-<li>La ecuación de reflexión describe cómo se comporta la luz reflejada
-en un cierto punto. Es decir, tiene un ámbito local. Además, para
-calcular la radiancia reflejada, se necesita conocer la radiancia
+<li>La <em>rendering equation</em> [<a
+href="#eq:rendering_equation">23</a>] describe cómo se comporta la luz
+reflejada en un cierto punto. Es decir, tiene un ámbito local. Además,
+para calcular la radiancia reflejada, se necesita conocer la radiancia
 incidente.</li>
-<li>La <em>rendering equation</em> calcula las condiciones globales de
-la luz. Además, no se conocen las radiancias de salida.</li>
+<li>La última expresión [<a href="#eq:rendering_equation_alt">25</a>]
+calcula las condiciones globales de la luz. Además, no se conocen las
+radiancias de salida.</li>
 </ul>
 <p>Este último matiz es importante. Para renderizar una imagen, se
 necesita calcular la radiancia de salida para aquellos puntos visibles
@@ -3309,7 +3334,7 @@ class="math inline">\(g\)</span>, la esperanza de <span
 class="math inline">\(g(X)\)</span> se puede calcular como</p>
 <p><span id="eq:LOTUS" class="eqnos"><span class="math display">\[
 E\left[ g(X) \right] = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}
-\]</span><span class="eqnos-number">(24)</span></span></p>
+\]</span><span class="eqnos-number">(26)</span></span></p>
 <p><strong>Ley (fuerte) de los grandes números</strong>: dada una
 muestra de <span class="math inline">\(N\)</span> valores <span
 class="math inline">\(X_1, \dots, X_N\)</span> de una variable aleatoria
@@ -3324,7 +3349,7 @@ P\left[ \lim_{N \to \infty}{\frac{1}{N} \sum_{i = 1}^{N}{X_i}} =
 <p><span id="eq:ley_numeros_grandes" class="eqnos"><span
 class="math display">\[
 P\left[ \lim_{N \to \infty}{\bar{X}_N} = \mu  \right] = 1
-\]</span><span class="eqnos-number">(25)</span></span></p>
+\]</span><span class="eqnos-number">(27)</span></span></p>
 <p>Este teorema es especialmente importante. En esencia, nos dice que
 cuando repetimos muchas veces un experimento, al promediar los
 resultados obtendremos una esperanza muy cercana a la esperanza
@@ -3347,7 +3372,7 @@ class="math inline">\(N\)</span> es suficientemente grande:</p>
 <p><span id="eq:CLT" class="eqnos"><span class="math display">\[
 \lim_{N \to \infty}{P[Z_N \le z]} = \int_{-\infty}^{z}{\frac{1}{\sqrt{2
 \pi}} e^{- \frac{x^2}{2}}dx}
-\]</span><span class="eqnos-number">(26)</span></span></p>
+\]</span><span class="eqnos-number">(28)</span></span></p>
 <h3 data-number="3.1.5" id="estimadores"><span
 class="header-section-number">3.1.5</span> Estimadores</h3>
 <p>A veces, no podremos conocer de antemano el valor que toma un cierto
@@ -3404,7 +3429,7 @@ data-cites="mcbook">(<a href="#ref-mcbook" role="doc-biblioref">Owen
 2013</a>, capítulo 2)</span> es:</p>
 <p><span id="eq:mc_simple" class="eqnos"><span class="math display">\[
 \hat\mu_N = \frac{1}{N} \sum_{i = 1}^{N}{Y_i}
-\]</span><span class="eqnos-number">(27)</span></span></p>
+\]</span><span class="eqnos-number">(29)</span></span></p>
 <p>La intuición del estimador es, esencialmente, la misma que la del
 teorema central del límite. Lo que buscamos es una forma de calcular el
 valor promedio de un cierto suceso aleatorio, pero lo único que podemos
@@ -3412,7 +3437,7 @@ usar son muestras de su variable aleatoria. Promediando esas muestras,
 sacamos información de la distribución. En este caso, la media.</p>
 <p>En cualquier caso, la existencia de este estimador viene dada por la
 ley de los grandes números (tanto débil como fuerte [<a
-href="#eq:ley_numeros_grandes">25</a>]). Si <span
+href="#eq:ley_numeros_grandes">27</a>]). Si <span
 class="math inline">\(\mu = E\left[ Y \right]\)</span>, se tiene que</p>
 <p><span class="math display">\[
 \lim_{N \to \infty}P\left[ \left\lvert \hat\mu_N - \mu \right\rvert \le
@@ -3452,7 +3477,7 @@ f = \begin{cases}
 y)}\ dxdy
 \end{aligned}
 \]</span></p>
-<p>Para usar el estimador de [<a href="#eq:mc_integral">28</a>],
+<p>Para usar el estimador de [<a href="#eq:mc_integral">30</a>],
 necesitamos saber la probabilidad de obtener un punto dentro de la
 circunferencia.</p>
 <p>Bien, consideremos que una circunferencia de radio <span
@@ -3523,7 +3548,7 @@ class="math inline">\(\hat{I}_N\)</span>:</p>
           \Rightarrow E\left[ \hat{I}_N \right] &amp; = \int_S f(x)
 p_X(x) dx
 \end{aligned}
-\]</span><span class="eqnos-number">(28)</span></span></p>
+\]</span><span class="eqnos-number">(30)</span></span></p>
 <blockquote>
 <p><strong>Nota</strong>(ción): si te preguntas por qué lo llamamos
 <span class="math inline">\(\hat{I}_N\)</span>, piensa que queremos
@@ -3545,7 +3570,7 @@ varianza</a>:</p>
     &amp; = \frac{1}{N^2} N Var\left[ f(X) \right] = \\
     &amp; = \frac{1}{N} Var\left[ f(X) \right]
 \end{aligned}
-\]</span><span class="eqnos-number">(29)</span></span></p>
+\]</span><span class="eqnos-number">(31)</span></span></p>
 <p>Como es natural, el número de muestras que usemos será clave para la
 proximidad de la estimación. ¿Cómo <em>de lejos</em> se queda del valor
 real de la integral <span class="math inline">\(E\left[ f(X)
@@ -3572,13 +3597,13 @@ p_X(t)\ dt \ge  \int_x^\infty t p_X(t)\ dt \\
       &amp; \Rightarrow P\left[ X \ge x \right] \le \frac{E\left[ X
 \right]}{x}
 \end{aligned}
-\]</span><span class="eqnos-number">(30)</span></span></p>
+\]</span><span class="eqnos-number">(32)</span></span></p>
 <p><strong>Desigualdad de Chebyshev</strong>: Sea <span
 class="math inline">\(X\)</span> una variable aleatoria con esperanza
 <span class="math inline">\(\mu = E\left[ X \right]\)</span> y varianza
 <span class="math inline">\(\sigma^2 = E\left[ (X - \mu)^2
 \right]\)</span>. Entonces, aplicando la desigualdad de Markov [<a
-href="#eq:desigualdad_markov">30</a>] a <span class="math inline">\(D^2
+href="#eq:desigualdad_markov">32</a>] a <span class="math inline">\(D^2
 = (X - \mu)^2\)</span> se tiene que</p>
 <p><span id="eq:desigualdad_chebyshev" class="eqnos"><span
 class="math display">\[
@@ -3588,9 +3613,9 @@ class="math display">\[
   \iff P\left[ \left\lvert X - \mu \right\rvert \ge x \right] &amp; \le
 \frac{\sigma^2}{x^2}
 \end{aligned}
-\]</span><span class="eqnos-number">(31)</span></span></p>
+\]</span><span class="eqnos-number">(33)</span></span></p>
 <p>Ahora que tenemos estas dos desigualdades, apliquemos la de Chebyshev
-a [<a href="#eq:mc_integral">28</a>] con <span
+a [<a href="#eq:mc_integral">30</a>] con <span
 class="math inline">\(\sigma^2 = Var\left[ \hat{I}_N \right]\)</span>,
 <span class="math inline">\(x^2 = \sigma^2/\varepsilon, \varepsilon &gt;
 0\)</span>:</p>
@@ -3608,7 +3633,7 @@ varianza:</p>
 <p><span id="eq:desviacion_estandar" class="eqnos"><span
 class="math display">\[
 \sqrt{Var[\hat{I}_N]} = \frac{\sqrt{Var\left[ f(X) \right]}}{\sqrt{N}}
-\]</span><span class="eqnos-number">(32)</span></span></p>
+\]</span><span class="eqnos-number">(34)</span></span></p>
 <p>así que, como adelantamos al inicio del capítulo, la estimación tiene
 un error del orden <span
 class="math inline">\(\mathcal{O}(N^{-1/2})\)</span>. Esto nos dice que,
@@ -3618,7 +3643,7 @@ muestras.</p>
 dimensión</strong>. Sabemos que <span class="math inline">\(X \in S
 \subset \mathbb{R}^d\)</span>, pero en ningún momento aparece <span
 class="math inline">\(d\)</span> en la expresión de la desviación
-estándar [<a href="#eq:desviacion_estandar">32</a>]. Este hecho es una
+estándar [<a href="#eq:desviacion_estandar">34</a>]. Este hecho es una
 de las ventajas de la integración de Monte Carlo.</p>
 <h4 data-number="3.2.2.1" id="un-ejemplo-práctico-en-r"><span
 class="header-section-number">3.2.2.1</span> Un ejemplo práctico en
@@ -3743,11 +3768,11 @@ importancia</strong>:</p>
 class="math display">\[
 \tilde{I}_N = \frac{1}{N} \sum_{i=1}^N{\frac{f(X_i)p_X(X_i)}{q_X(X_i)}},
 \quad X_i \sim q_X
-\]</span><span class="eqnos-number">(33)</span></span></p>
+\]</span><span class="eqnos-number">(35)</span></span></p>
 <blockquote>
 <p><strong>Nota</strong>(ción): ¡fíjate en el gusanito! <span
 class="math inline">\(\hat{I}_N\)</span> [<a
-href="#eq:mc_integral">28</a>] y <span
+href="#eq:mc_integral">30</a>] y <span
 class="math inline">\(\tilde{I}_N\)</span> tienen la misma esperanza,
 pero son estimadores diferentes.</p>
 </blockquote>
@@ -3791,7 +3816,7 @@ importancia:</p>
 <p><span id="eq:mc_integral_tl" class="eqnos"><span
 class="math display">\[
 \tilde{I}_N = \frac{1}{N} \sum_{i=1}^N{\frac{f(X_i)}{p_X(X_i)}}
-\]</span><span class="eqnos-number">(34)</span></span></p>
+\]</span><span class="eqnos-number">(36)</span></span></p>
 <p>para que, utilizando muestras <span class="math inline">\(X_i \sim
 p_X\)</span>, <span class="math inline">\(E\left[ \frac{f}{p_X} \right]
 = \int_S{\frac{f}{p_X}p_X}\)</span> y así se evalúe directamente la
@@ -4075,7 +4100,7 @@ role="doc-biblioref">Roberts 2018</a>)</span></figcaption>
 class="header-section-number">3.4</span> Escogiendo puntos
 aleatorios</h2>
 <p>Una de las partes clave del estimador de Monte Carlo [<a
-href="#eq:mc_integral">28</a>] es saber escoger la función de densidad
+href="#eq:mc_integral">30</a>] es saber escoger la función de densidad
 <span class="math inline">\(p_X\)</span> correctamente. En esta sección,
 veremos algunos métodos para conseguir distribuciones específicas
 partiendo de funciones de densidad sencillas, así como formas de elegir
@@ -4464,7 +4489,7 @@ L_o(p, \omega_o \leftarrow \omega_i) = L_e(p, \omega_o) +
 <p>Podemos aproximar el valor de la integral utilizando el estimador de
 Monte Carlo comúnmente considerado en la <a
 href="#muestreo-por-importancia-múltiple-en-transporte-de-luz">industria</a>,
-[<a href="#eq:mc_integral_importancia">33</a>]:</p>
+[<a href="#eq:mc_integral_importancia">35</a>]:</p>
 <p><span id="eq:rendering_equation_mc" class="eqnos"><span
 class="math display">\[
 \begin{aligned}
@@ -4474,7 +4499,7 @@ L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
 \omega_o \leftarrow \omega_j) L_i(p, \omega_j)
 \cos\theta_j}{p(\omega_j)}}
 \end{aligned}
-\]</span><span class="eqnos-number">(35)</span></span></p>
+\]</span><span class="eqnos-number">(37)</span></span></p>
 <p>Con <span class="math inline">\(N \in \mathbb{Z}^+\)</span>. Con
 <span class="math inline">\(N\)</span> suficientemente grande, se
 conseguiría un valor de radiancia relativamente acertado. Sin embargo,
@@ -4500,7 +4525,7 @@ class="math display">\[
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
 \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j =
 1}^{N}{L_i(p, \omega_j) \rho}
-\]</span><span class="eqnos-number">(36)</span></span></p>
+\]</span><span class="eqnos-number">(38)</span></span></p>
 <p>Lo cual nos proporciona una expresión muy agradable para los
 materiales difusos.</p>
 <p>Por lo general, no será necesario simplificar hasta tal punto la
@@ -4510,7 +4535,7 @@ class="header-section-number">4.1.2</span> Pseudocódigo de un path
 tracer</h3>
 <p>Con lo que conocemos hasta ahora, podemos empezar a programar los
 shaders. Una primera implementación inspirada en la rendering equation
-[<a href="#eq:rendering_equation_mc">35</a>] sería similar a lo
+[<a href="#eq:rendering_equation_mc">37</a>] sería similar a lo
 siguiente:</p>
 <pre><code class="language-cpp">pathtrace(Rayo r, profundidad) {
     if (profundidad == profundidad_maxima) {
@@ -6093,7 +6118,7 @@ encuentran los ya mencionados logs.</p>
 class="header-section-number">5.3.1</span> Número de muestras</h3>
 <p>El principal parámetro que podemos variar es el número de muestras
 por píxel. En un estimador de Monte Carlo [<a
-href="#eq:mc_integral">28</a>], <span class="math inline">\(\hat{I}_N =
+href="#eq:mc_integral">30</a>], <span class="math inline">\(\hat{I}_N =
 \frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}\)</span>, corresponde a <span
 class="math inline">\(N \in \mathbb{N}\)</span>.</p>
 <div id="fig:grafica_samples" class="fignos">
