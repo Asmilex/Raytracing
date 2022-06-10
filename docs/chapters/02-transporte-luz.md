@@ -396,9 +396,9 @@ $$
 
 ### Reflectancia hemisférica
 
-Puede ser útil tomar el comportamiento agregado de las BRDFs y las BTDFs y reducirlo un cierto valor que describa su comportamiento general de dispersión. Sería Algo así como un resumen de su distribución. Para conseguirlo, vamos a introducir dos nuevas funciones:
+Puede ser útil tomar el comportamiento agregado de las BRDFs y las BTDFs y reducirlo un cierto valor que describa su comportamiento general de dispersión. Sería algo así como un resumen de su distribución. Para conseguirlo, vamos a introducir dos nuevas funciones:
 
-El **albedo** [@Szirmay-Kalos00monte-carlomethods], también conocido como la **reflectancia hemisférica-direccional** (*hemispherical-directional reflectance*) [@PBRT3e, Reflection Models, Basic Interface] describe la reflexión total sobre un hemisferio debida a una fuente de luz que proviene desde la dirección $\omega_o$ :
+El **albedo** [@Szirmay-Kalos00monte-carlomethods], también conocido como la **reflectancia hemisférica-direccional** (*hemispherical-directional reflectance*) [@PBRT3e, Reflection Models, Basic Interface] describe la radiancia saliente en la dirección $\omega_o$, supuesto que la radiancia entrante desde cualquier dirección es constante e igual a la unidad:
 
 $$
 \rho_{hd}(\omega_o) = \int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \abs{\cos\theta_i}\ d\omega_i}
