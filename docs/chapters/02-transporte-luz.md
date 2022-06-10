@@ -140,7 +140,7 @@ En la práctica es muy común considerar el ángulo sólido asociado a una direc
 
 Los ángulos sólidos nos proporcionan una variedad de herramientas nuevas considerable. Gracias a ellos, podemos desarrollar algunos conceptos nuevos. Uno de ellos es la **intensidad radiante**.
 
-Imaginémonos un pequeñito punto de luz encerrado en una esfera, el cual emite fotones en todas direcciones (es decir, $\omega = 4\pi$). Nos gustaría medir cuánta energía pasa por la esfera. Podríamos entonces definir
+Imaginémonos un pequeñito punto de luz encerrado en una esfera, el cual emite fotones en todas direcciones (es decir, su ángulo sólido es el de la esfera, $4\pi$). Nos gustaría medir cuánta energía pasa por la esfera. Podríamos entonces definir
 
 $$
 I = \frac{\Phi}{4\pi} \text{(W/sr)}
@@ -152,7 +152,7 @@ $$
 I = \lim_{\Delta\omega \to 0}{\frac{\Delta\Phi}{\Delta\omega}} = \frac{d\Phi}{d\omega}
 $${#eq:intensidad_radiante}
 
-De la misma manera que con los conceptos anteriores, podemos volver a la potencia integrando sobre un conjunto de direcciones:
+De la misma manera que con los conceptos anteriores, podemos volver a la potencia integrando sobre un conjunto de direcciones $\Omega$ de la esfera:
 
 $$
 \Phi = \int_{\Omega}{I(\omega)d\omega}
@@ -233,7 +233,7 @@ Para obtener cuánta luz llega a un punto, debemos acumular la radiancia inciden
 Dado un punto $p$ que se encuentra en una superficie con normal $\mathbf{n}$ en dicho punto, la irradiancia se puede expresar como [@PBRT3e, Working with Radiometric Integrals]
 
 $$
-E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \abs{cos\theta} d\omega}
+E(p, \mathbf{n}) = \int_{\mathbb{S}^2}{L_i(p, \omega) \abs{cos\theta} d\omega}
 $${#eq:E_abs_cos}
 
 Siendo $\Omega$ un subcojunto de direcciones de la esfera $\mathbb{S}^2$. El término $\cos\theta$ aparece en la integral debido a la derivada del área proyectada, $dA^\bot$. $\theta$ es el ángulo entre la dirección $\omega$ y la normal $\mathbf{n}$.
@@ -283,7 +283,7 @@ Esto nos permite, por ejemplo, expandir algunas expresiones como la de la irradi
 
 $$
 \begin{aligned}
-    E(p, \mathbf{n}) & = \int_{\Omega}{L_i(p, \omega) \abs{\cos\theta} d\omega} = \\
+    E(p, \mathbf{n}) & = \int_{\mathbb{S}^2}{L_i(p, \omega) \abs{\cos\theta} d\omega} = \\
                      & = \int_{A}{L\cos\theta\ \frac{\cos\theta_o}{r^2}dA}
 \end{aligned}
 $$
@@ -325,7 +325,7 @@ $$
 Si lo ponemos en forma de cociente, sabremos exactamente cuál es la proporción de luz. A este cociente lo llamaremos $f_r(p, \omega_o \leftarrow \omega_i)$; la función de distribución de reflectancia bidireccional:
 
 $$
-f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i} \text{(1/sr)}
+f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i} (\text{sr}^{-1})
 $$
 
 > **Nota**(ción): dependiendo de la fuente que estés leyendo, es posible que te encuentres una integral algo diferente. Por ejemplo, en tanto en Wikipedia como en [@ShirleyRRT] se integra con respecto a los ángulos de salida $\omega_o$, en vez de los incidentes.
@@ -334,7 +334,7 @@ $$
 
 Las BRDF físicamente realistas tienen un par de propiedades importantes:
 
-1. **Reciprocidad**: para cualquier par de direcciones $\omega_i$, $\omega_o$, se tiene que $f_r(p, \omega_o \leftarrow \omega_i) =\ $ $f_r(p, \omega_o \leftarrow \omega_i)$.
+1. **Reciprocidad**: para cualquier par de direcciones $\omega_i$, $\omega_o$, se tiene que $f_r(p, \omega_i \leftarrow \omega_o) =\ $ $f_r(p, \omega_o \leftarrow \omega_i)$.
 2. **Conservación de la energía**: La energía reflejada tiene que ser menor o igual que la incidente:
 
 $$
