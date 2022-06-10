@@ -236,7 +236,7 @@ $$
 E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \abs{cos\theta} d\omega}
 $${#eq:E_abs_cos}
 
-El término $\cos\theta$ aparece en la integral debido a la derivada del área proyectada, $dA^\bot$. $\theta$ es el ángulo entre la dirección $\omega$ y la normal $\mathbf{n}$.
+Siendo $\Omega$ un subcojunto de direcciones de la esfera $\mathbb{S}^2$. El término $\cos\theta$ aparece en la integral debido a la derivada del área proyectada, $dA^\bot$. $\theta$ es el ángulo entre la dirección $\omega$ y la normal $\mathbf{n}$.
 
 Generalmente, la irradiancia se calcula únicamente en el hemisferio de direcciones asociado a la normal en el punto, $H^2(\mathbf{n})$.
 
@@ -254,7 +254,7 @@ $$
 E(p, \mathbf{n}) = \int_{0}^{2\pi}\int_{0}^{\pi/2}{L_i(p, \theta, \phi) \cos\theta\ \sin\theta\ d\theta\ d\phi}
 $$
 
-Haciendo el mismo juego con el flujo emitido de un cierto objeto al hemisferio que encapsula la normal, conseguimos:
+Si integramos esta expresión para todos los puntos de una superficie $A$, obtenemos la potencia total saliente de esa superficie en todas las direcciones:
 
 $$
 \begin{aligned}
