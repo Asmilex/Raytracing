@@ -303,9 +303,9 @@ Reflexión</a>
 <li><a href="#reflexión-especular-perfecta"><span
 class="toc-section-number">2.3.2.1</span> Reflexión especular
 perfecta</a></li>
-<li><a href="#reflexión-difusa-o-lamberiana"><span
+<li><a href="#reflexión-difusa-o-lambertiana"><span
 class="toc-section-number">2.3.2.2</span> Reflexión difusa o
-lamberiana</a></li>
+lambertiana</a></li>
 <li><a href="#reflexión-especular-no-perfecta"><span
 class="toc-section-number">2.3.2.3</span> Reflexión especular no
 perfecta</a></li>
@@ -321,16 +321,9 @@ class="toc-section-number">2.3.3.2</span> Ecuaciones de Fresnel</a></li>
 class="toc-section-number">2.3.3.3</span> La aproximación de
 Schlick</a></li>
 </ul></li>
-<li><a href="#materiales-híbridos"><span
-class="toc-section-number">2.3.4</span> Materiales híbridos</a></li>
-<li><a href="#otros-modelos"><span
-class="toc-section-number">2.3.5</span> Otros modelos</a>
-<ul>
-<li><a href="#oren---nayar"><span
-class="toc-section-number">2.3.5.1</span> Oren - Nayar</a></li>
-<li><a href="#ggx"><span class="toc-section-number">2.3.5.2</span>
-GGX</a></li>
-</ul></li>
+<li><a href="#brdfs-basadas-en-modelos-de-microfacetas"><span
+class="toc-section-number">2.3.4</span> BRDFs basadas en modelos de
+microfacetas</a></li>
 </ul></li>
 <li><a href="#la-rendering-equation"><span
 class="toc-section-number">2.4</span> La rendering equation</a></li>
@@ -2551,31 +2544,26 @@ f_r(\omega_o \leftarrow \omega_i ) &amp; = \frac{\delta(\omega_o,
 class="math inline">\(k_r\)</span> el coeficiente de reflectividad, cuyo
 valor se encuentra entre 0 y 1, dependiendo de la energía que se
 pierda.</p>
-<h4 data-number="2.3.2.2" id="reflexión-difusa-o-lamberiana"><span
+<h4 data-number="2.3.2.2" id="reflexión-difusa-o-lambertiana"><span
 class="header-section-number">2.3.2.2</span> Reflexión difusa o
-lamberiana</h4>
+lambertiana</h4>
 <p>Este es uno de los modelos más sencillos. Es conocido también como el
 modelo lambertiano. Se asume que la superficie es completamente difusa,
 lo cual implica que la luz se refleja en todas direcciones
-equiprobablemente, independientemente del punto de vista del observador.
-Esto significa que</p>
+equiprobablemente, independientemente del punto de vista del observador
+<span class="citation" data-cites="McGuire2018GraphicsCodex">(<a
+href="#ref-McGuire2018GraphicsCodex" role="doc-biblioref">McGuire
+2021</a>, Materials)</span>. Esto significa que</p>
 <p><span class="math display">\[
-f_r(\omega_o \leftarrow \omega_i) = k_d
+f_r(\omega_o \leftarrow \omega_i) = \frac{\rho_{hd}}{\pi}
 \]</span></p>
-<p>con <span class="math inline">\(k_d\)</span> el coeficiente de
-difusión.</p>
-<p>El albedo viene dado por</p>
+<p>El albedo <span class="math inline">\(0 \le \rho_{hd} \le 1\)</span>
+es la reflectividad de la superficie. El denominador es aquel
+coeficiente tal que se normalice la BRDF:</p>
 <p><span class="math display">\[
-\begin{aligned}
-\rho_{hd}(\omega_o) &amp; = \int_{H^2(n)}{k_d \cos\theta_i\ d\omega_i} =
-\\
-                    &amp; = \int_{\phi = 0}^{2\pi} \int_{\theta =
-0}^{\pi/2}{k_d \cos\theta\ d\theta\ d\phi} = \\
-                    &amp; = k_d \pi
-\end{aligned}
+\int_{\mathbb{S}^2} {\max(\mathbf{n} \cdot \omega_i, 0)\ d\omega_i} =
+\pi
 \]</span></p>
-<p>Para que se cumpla la condición de conservación de energía,
-necesariamente <span class="math inline">\(k_d \le 1/\pi\)</span>.</p>
 <p>En la práctica no se utiliza mucho, pues está muy limitado.</p>
 <h4 data-number="2.3.2.3" id="reflexión-especular-no-perfecta"><span
 class="header-section-number">2.3.2.3</span> Reflexión especular no
@@ -2583,41 +2571,26 @@ perfecta</h4>
 <h5 data-number="2.3.2.3.1" id="phong"><span
 class="header-section-number">2.3.2.3.1</span> Phong</h5>
 <p>El modelo de Phong se basa en la observación de que, cuando el punto
-de vista se alinea con la dirección del vector de luz reflejado <span
-class="math inline">\(r = i - 2(\mathbf{n} \cdot
-\mathbf{l})\mathbf{n}\)</span>, aparecen puntos muy iluminados, lo que
-se conoce como resaltado especular.</p>
-<p>Esta idea se <em>refleja</em> considerando la componente especular
-como</p>
+de vista se alinea con la dirección del vector de luz reflejado,
+aparecen puntos muy iluminados, lo que se conoce como resaltado
+especular.</p>
+<p>Su BRDF es</p>
 <p><span class="math display">\[
-L_o^s(p, \omega_o \leftarrow \omega_i) =
-      k_\alpha
-    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
-    + k_s \max\{0, \omega \cdot \omega_o\}^\alpha
+f_r(p, \omega_o \leftarrow \omega_i) = \frac{\alpha + 2}{2\pi} \max{(0,
+\omega_i \cdot \omega_o)}^\alpha
 \]</span></p>
-<p>donde <span class="math inline">\(k_\alpha\)</span> es el coeficiente
-de luz ambiental (con <span class="math inline">\(\alpha\)</span> el
-índice de brillo) <span class="math inline">\(k_s\)</span> es la
-constante de reflectancia especular (<em>specular-reflection</em>) que
-define el ratio de luz reflejada, <span
-class="math inline">\(k_d\)</span> el de radiancia difusa <span
-class="math inline">\(L_o^d\)</span>. Usualmente, <span
-class="math inline">\(k_s \vert k_d &lt; 1\)</span>.</p>
-<p>Evidentemente, este modelo no es más que una aproximación físicamente
-poco realista de la realidad; pero funciona lo suficientemente bien como
-para usarlo en ciertas partes.</p>
-<pre><code class="language-glsl">float Phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
-    return pow(
-        max(
-            0.0,
-            dot(
-                reflejar(normal, light_dir),
-                view_dir
-            )
-        ),
-        shininess
-    );
-}</code></pre>
+<p>donde <span class="math inline">\(\alpha\)</span> es índice del
+brillo del material, y <span class="math inline">\(\omega_o\)</span> el
+vector reflejado teniendo en cuenta <span
+class="math inline">\(\omega_i\)</span> y <span
+class="math inline">\(\mathbf{n}\)</span>. El coeficiente <span
+class="math inline">\(\frac{\alpha + 2}{2\pi}\)</span> se utiliza para
+normalizarla <span class="citation" data-cites="brdf-bp">(<a
+href="#ref-brdf-bp" role="doc-biblioref">Giesen 2009</a>)</span></p>
+<p>Este modelo de iluminación se suele usar en rasterización y no es
+común encontrarlo en ray tracing físicamente realista. En su versión de
+rasterización hace falta definir los coeficientes ambientales y difusos.
+Aquí solo hemos optado por el especular.</p>
 <h5 data-number="2.3.2.3.2" id="blinn---phong"><span
 class="header-section-number">2.3.2.3.2</span> Blinn - Phong</h5>
 <p>Este es una pequeña modificación al de Phong. En vez de usar el
@@ -2627,21 +2600,15 @@ observador y la luz, <span class="math inline">\(\mathbf{h} =
 \right\rVert}\)</span>. Resulta más fácil calcularlo. Además, este
 modelo es más realista.</p>
 <p><span class="math display">\[
-L_o^s(p, \omega_o \leftarrow \omega_i) =
-      k_\alpha
-    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
-    + k_s \max\{0, \mathbf{h} \cdot \mathbf{n}\}^\alpha
+f_r(p, \omega_o \leftarrow \omega_i) = \frac{8 \pi(2^{-\alpha/2} +
+\alpha)}{(\alpha + 2)(\alpha + 4)} \max\{0, \mathbf{h} \cdot
+\mathbf{n}\}^\alpha
 \]</span></p>
-<pre><code class="language-glsl">float BlingPhong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
-    vec3 h = normalize(view_dir + light_dir);
-    return pow(
-        max(
-            0.0,
-            dot(h, normal)
-        ),
-        shininess
-    );
-}</code></pre>
+<p>De la misma manera que en Phong, <span class="math inline">\(\frac{8
+\pi(2^{-\alpha/2} + \alpha)}{(\alpha + 2)(\alpha + 4)}\)</span> es el
+coeficiente de normalización de la BRDF <span class="citation"
+data-cites="brdf-bp">(<a href="#ref-brdf-bp" role="doc-biblioref">Giesen
+2009</a>)</span>.</p>
 <h3 data-number="2.3.3" id="refracción"><span
 class="header-section-number">2.3.3</span> Refracción</h3>
 <p>Algunos materiales permiten que la luz los atraviese –conocido como
@@ -2716,6 +2683,20 @@ parte inferior, ¡observamos luz solar y el edificio de
 nuevo!</figcaption>
 </figure>
 </div>
+<p>El vector refractado <span class="math inline">\(\omega_t\)</span>
+puede conseguirse a partir de la siguiente expresión <span
+class="citation" data-cites="McGuire2018GraphicsCodex">(<a
+href="#ref-McGuire2018GraphicsCodex" role="doc-biblioref">McGuire
+2021</a>)</span>:</p>
+<p><span class="math display">\[
+\omega_t =
+    - \frac{\eta_1}{\eta_2}\left(\omega_i - (\omega_i \cdot
+\mathbf{n})\mathbf{n}\right)
+    - \left(
+        \sqrt{1 - \left(\frac{\eta_1}{\eta_2}\right)^2 \left(1 -
+(\omega_i \cdot \mathbf{n}^2)\right)}
+      \right) \cdot \mathbf{n}
+\]</span></p>
 <h4 data-number="2.3.3.2" id="ecuaciones-de-fresnel"><span
 class="header-section-number">2.3.3.2</span> Ecuaciones de Fresnel</h4>
 <p>Aquellos materiales que refractan y reflejan luz (como el agua de la
@@ -2753,9 +2734,10 @@ class="math inline">\(p\)</span> denotan la polarización de la luz:
 <span class="math inline">\(s\)</span> es perpendicular a la dirección
 de propagación, mientras que <span class="math inline">\(p\)</span> es
 paralela.</p>
-<p>Generalmente en los ray tracers la polarización se ignora,
-promediando ambas expresiones, resultando en una ecuación más
-simple:</p>
+<p>Generalmente en los ray tracers se simula luz no polarizada, así que
+se deben promediar ambos valores. Por lo tanto, se debe usar el valor
+<span class="math inline">\(R\)</span> definido de la siguiente
+manera:</p>
 <p><span id="eq:fresnel_equation" class="eqnos"><span
 class="math display">\[
 R = \frac{R_s + R_p}{2}
@@ -2783,42 +2765,93 @@ class="citation"
 data-cites="https://doi.org/10.1111/1467-8659.1330233">(<a
 href="#ref-https://doi.org/10.1111/1467-8659.1330233"
 role="doc-biblioref">Schlick 1994</a>)</span></p>
-<h3 data-number="2.3.4" id="materiales-híbridos"><span
-class="header-section-number">2.3.4</span> Materiales híbridos</h3>
-<h3 data-number="2.3.5" id="otros-modelos"><span
-class="header-section-number">2.3.5</span> Otros modelos</h3>
-<h4 data-number="2.3.5.1" id="oren---nayar"><span
-class="header-section-number">2.3.5.1</span> Oren - Nayar</h4>
-<p>Este modelo intenta aproximar superficies difusas utilizando un ratio
-de lambertiano, lo cual mejora el rendimiento el <em>white furnace
-test</em>:</p>
-<pre><code>float OrenNayar_diffuse(vec3 normal, vec3 light_dir, vec3 view_dir, material m) {
-    float L_dot_V = dot(light_dir, view_dir);
-    float N_dot_L = dot(light_dir, noral);
-    float N_dot_V = dot(normal, view_dir);
-
-    float s = L_dot_V - N_dot_L * N_dot_V;
-    float t = mix(
-        1.0,
-        ma(N_dot_L, N_dot_V),
-        step(0.0, s)
-    );
-
-    float sigma2 = m.roughness * m.roughness;
-    float A = 1.0 + sigma2 * (m.albedo / (sigma2 + 0.13) + 0.5 / (sigma2 + 0.33));
-    float B = 0.45 * sigma2 / (sigma2 + 0.09);
-
-    return m.albedo * max(0.0, N_dot_L) * (A + B * s / t) / PI;
-}</code></pre>
-<h4 data-number="2.3.5.2" id="ggx"><span
-class="header-section-number">2.3.5.2</span> GGX</h4>
-<p>El modelo Ground Glass Unknown es una BSDF analítica que se basa en
-la distribución de microfacetas del material subyacente. Es una de las
-técnicas más avanzadas y exploradas recientemente. Los motores modernos
-como Unreal Engine 4 y Unity lo utilizan en sus pipelines físicamente
-realistas.</p>
-<p>A diferencia de los otros modelos, no entraremos en detalles de la
-implementación.</p>
+<h3 data-number="2.3.4"
+id="brdfs-basadas-en-modelos-de-microfacetas"><span
+class="header-section-number">2.3.4</span> BRDFs basadas en modelos de
+microfacetas</h3>
+<p>La mayor parte de las superficies no son puramente lisas a nivel
+microscópico. En la mayoría de materiales existen microfacetas, las
+cuales producen que la luz no se refleje de forma especular. Esto hace
+que la luz pueda salir en direcciones muy diferentes dependiendo de la
+rugosidad de la superficie. Este tipo de materiales suele necesitar una
+función que caracterice la distribución de las normales de las
+microfacetas (denotada por <span
+class="math inline">\(\mathbf{n_f}\)</span>).</p>
+<p>Un modelo que utiliza esta idea es el de <strong>Oren-Nayar</strong>,
+el cual describe la reflexión difusa de una superficie. Se basa en la
+idea de que las superficies rugosas aparentan ser más brillantes
+conforme la dirección de la luz se aproxima a la dirección de la vista.
+La BRDF de Oren-Nayar es <span class="citation" data-cites="PBRT3e">(<a
+href="#ref-PBRT3e" role="doc-biblioref">Pharr, Jakob, and Humphreys
+2016</a>, Microfacet Models)</span></p>
+<p><span class="math display">\[
+f_r(p, \omega_o \leftarrow \omega_i) = \frac{\rho}{\pi} \left(A +
+B\max{(0, \cos(\phi_i - \phi_o))}\sin\alpha\tan\beta\right)
+\]</span></p>
+<p>donde, si <span class="math inline">\(\theta\)</span> está en
+radianes,</p>
+<p><span class="math display">\[
+\begin{aligned}
+A      &amp; = 1 - \frac{\theta^2}{2(\theta^2 + 0.33)} \\
+B      &amp; = \frac{0.45 \theta^2}{\theta^2 + 0.09}   \\
+\alpha &amp; = \max{(\theta_i, \theta_o)}              \\
+\beta  &amp; = \min{(\theta_i, \theta_o)}
+\end{aligned}
+\]</span></p>
+<p>En la actualidad, el modelo más utilizado de microfacetas es el
+<strong>GGX</strong>. Motores modernos como Unreal Engine 4 y Unity lo
+utilizan en sus pipelines físicamente realistas. La BRDF se define de la
+siguiente manera <span class="citation"
+data-cites="McGuire2018GraphicsCodex">(<a
+href="#ref-McGuire2018GraphicsCodex" role="doc-biblioref">McGuire
+2021</a>)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+f_r(p, \omega_o, \omega_i) &amp; = \frac
+    {
+        D(p, \omega_h) F(p, \omega_i, \omega_o) G_{1}(p, \omega_i,
+\omega_h) G_{1}(p, \omega_o, \omega_h)
+    }
+    {
+        4\pi (\mathbf{n} \cdot \omega_i) (\mathbf{n} \cdot \omega_o)
+    } = \\
+    &amp; = \frac
+    {
+        4 \alpha^2_p \left(F_0 + (1 - F_0)(1 - \max{(0, \omega_h \cdot
+\omega_i})^5\right)(\mathbf{n} \cdot \omega_i)(\mathbf{n} \cdot
+\omega_o)
+    }
+    {
+        \pi \left(1 + (\alpha^2_p - 1) \cdot (\mathbf{n} \cdot
+\omega_h)^2\right)^2
+        A_1
+        A_2
+    }
+\end{aligned}
+\]</span></p>
+<p>siendo</p>
+<p><span class="math display">\[
+\begin{aligned}
+A_1 &amp; = \left((\mathbf{n} \cdot \omega_i) + \sqrt{\alpha^2_p + (1 -
+\alpha^2_p)(\mathbf{n} \cdot \omega_i)^2}\right) \\
+A_2 &amp; = \left((\mathbf{n} \cdot \omega_o) + \sqrt{\alpha^2_p + (1 -
+\alpha^2_p)(\mathbf{n} \cdot \omega_o)^2}\right)
+\end{aligned}
+\]</span></p>
+<p>y donde</p>
+<ul>
+<li><span class="math inline">\(\omega_h\)</span> es el vector
+intermedio a <span class="math inline">\(\omega_o\)</span> y <span
+class="math inline">\(\omega_i\)</span>, calculado como <span
+class="math inline">\((\omega_i + \omega_o)/\left\lVert \omega_i +
+\omega_o \right\rVert\)</span>.</li>
+<li><span class="math inline">\(\alpha\)</span> es el coeficiente de
+rugosidad de la microfaceta, <span class="math inline">\(\alpha \in [0,
+1]\)</span>.</li>
+<li><span class="math inline">\(F_0\)</span> es la reflectancia medida
+en un ángulo de incidencia <span class="math inline">\(\theta_i =
+0\)</span>.</li>
+</ul>
 <h2 data-number="2.4" id="la-rendering-equation"><span
 class="header-section-number">2.4</span> La rendering equation</h2>
 <p>Y, finalmente, tras esta introducción de los principales conceptos
@@ -8552,6 +8585,11 @@ href="https://alain.xyz/blog/ray-tracing-filtering">https://alain.xyz/blog/ray-t
 Galvin. n.d. <span>“Random variables.”</span> Accessed March 20, 2022.
 <a
 href="https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf">https://www3.nd.edu/~dgalvin1/10120/10120_S16/Topic17_8p4_Galvin_class.pdf</a>.
+</div>
+<div id="ref-brdf-bp" class="csl-entry" role="doc-biblioentry">
+Giesen, F. 2009. <span>“Phong and blinn-phong normalization
+factors.”</span> 2009. Accessed June 10, 2022. <a
+href="http://www.farbrausch.de/~fg/stuff/phong.pdf">http://www.farbrausch.de/~fg/stuff/phong.pdf</a>.
 </div>
 <div id="ref-github" class="csl-entry" role="doc-biblioentry">
 Github. 2022. <span>“Github - where the world builds software.”</span>
