@@ -334,7 +334,7 @@ $$
 
 Las BRDF físicamente realistas tienen un par de propiedades importantes:
 
-1. **Reciprocidad**: para cualquier par de direcciones $\omega_i$, $\omega_o$, se tiene que $f_r(p, \omega_i, \omega_o)=\ $ $f_r(p, \omega_o \leftarrow \omega_i)$.
+1. **Reciprocidad**: para cualquier par de direcciones $\omega_i$, $\omega_o$, se tiene que $f_r(p, \omega_o \leftarrow \omega_i) =\ $ $f_r(p, \omega_o \leftarrow \omega_i)$.
 2. **Conservación de la energía**: La energía reflejada tiene que ser menor o igual que la incidente:
 
 $$
