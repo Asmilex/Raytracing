@@ -296,11 +296,9 @@ siendo $\theta_o$ el ángulo de la radiancia de salida de la superficie del cuad
 
 ## Dispersión de luz
 
-Cuando una luz impacta en una superficie, ocurren un par de sucesos: parte de los fotones se reflejan saliendo disparados hacia alguna dirección, mientras que otros se absorben.
+Cuando la luz impacta en una superficie, ocurren un par de sucesos: parte de los fotones se reflejan saliendo disparados hacia alguna dirección, mientras que otros se absorben. La forma en la que se comportan depende de cómo sea la superficie. Específicamente, del material del que esté hecha.
 
-La forma en la que se comportan depende de cómo sea la superficie. Específicamente, del material del que esté hecha.
-
-En informática gráfica se consideran tres tipos principales de dispersión de luz: **dispersión en superficie** (*surface scattering*), **dispersión volumétrica** (*volumetric scattering*) y **dispersión bajo superficie** (*subsurface scattering*)
+En informática gráfica se consideran tres tipos principales de dispersión de luz: **dispersión y reflexión en superficies** (*surface scattering*), **dispersión volumétrica** (*volumetric scattering*) y **dispersión bajo superficie** (*subsurface scattering*)
 
 En este capítulo vamos a modelar la primera. Estudiaremos qué es lo que ocurre cuando los fotones alcanzan una superficie, en qué dirección se reflejan, y cómo cambia el comportamiento dependiendo de las propiedades del material.
 
