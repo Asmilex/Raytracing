@@ -443,21 +443,21 @@ Primero, tratemos con materiales que únicamente reflejan luz; es decir, su BSDF
 
 #### Reflexión especular perfecta
 
-Para un material especular perfecto (es decir, espejos), la dirección reflejada $\mathbf{r}$ dado un rayo incidente $\mathbf{i}$ es [@GemsII-Reflexion, pp. 105]:
+Para un material especular perfecto (es decir, espejos), la dirección reflejada $\omega_o$ dado un rayo incidente $\omega_i$ es [@GemsII-Reflexion, pp. 105; @PBRT3e, Specular Reflection and Transmission]:
 
 $$
-\mathbf{r} = \mathbf{i} - 2 (\mathbf{i} \cdot \mathbf{n}) \mathbf{n}
+\omega_o = -\omega_i + 2 (\omega_i \cdot \mathbf{n}) \mathbf{n}
 $$
 
 siendo $\mathbf{n}$ la normal en el punto incidente. Con esta expresión, se necesita que $\mathbf{n}$ esté normalizado. Para los otros dos vectores no es necesario; la dirección de salida tendrá la misma norma que la de entrada.
 
-Su BRDF se define mediante una delta de Dirac [@Szirmay-Kalos00monte-carlomethods, 3.2], [@McGuire2018GraphicsCodex, Materials]:
+Su BRDF se define mediante una delta de Dirac [@Szirmay-Kalos00monte-carlomethods, 3.2; @McGuire2018GraphicsCodex, Materials]:
 
 $$
-f_r(\mathbf{r} \leftarrow \mathbf{i} ) = \frac{\delta(\mathbf{i}, \mathbf{r}) k_r(\abs{\mathbf{i} \cdot \mathbf{n}})}{\abs{\mathbf{i} \cdot \mathbf{n}}}
+f_r(\omega_o \leftarrow \omega_i ) = \frac{\delta(- \omega_i, \omega_o) k_r(\abs{- \omega_i \cdot \mathbf{n}})}{\abs{- \omega_i \cdot \mathbf{n}}}
 $$
 
-siendo $\rho_{hd} = k_r(\abs{\mathbf{i} \cdot \mathbf{n}})$ el albedo, con $k_r$ el coeficiente de reflectividad, cuyo valor se encuentra entre 0 y 1, dependiendo de la energía que se pierda.
+siendo $\rho_{hd} = k_r(\abs{- \omega_i \cdot \mathbf{n}})$ el albedo, con $k_r$ el coeficiente de reflectividad, cuyo valor se encuentra entre 0 y 1, dependiendo de la energía que se pierda.
 
 #### Reflexión difusa o lamberiana
 
@@ -495,7 +495,7 @@ $$
 L_o^s(p, \omega_o \leftarrow \omega_i) =
       k_\alpha
     + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
-    + k_s \max\{0, \omega \cdot \mathbf{r}\}^\alpha
+    + k_s \max\{0, \omega \cdot \omega_o\}^\alpha
 $$
 
 donde $k_\alpha$ es el coeficiente de luz ambiental (con $\alpha$ el índice de brillo) $k_s$ es la constante de reflectancia especular (*specular-reflection*) que define el ratio de luz reflejada, $k_d$ el de radiancia difusa $L_o^d$. Usualmente, $k_s \vert k_d < 1$.
