@@ -570,6 +570,16 @@ Lo que ocurre en estos casos es que, en vez de pasar al segundo medio, los foton
 
 ![Como el ángulo de incidencia es considerablemente alto, por la parte de arriba la luz no puede atravesar el agua. Esto hace que podamos ver el edificio de enfrente. En el centro vemos refractado el suelo. Y, sin embargo, en la parte inferior, ¡observamos luz solar y el edificio de nuevo!](./img/02/Reflexión%20interna%20total.jpg){#fig:reflexion_interna_total width=80%}
 
+El vector refractado $\omega_t$ puede conseguirse a partir de la siguiente expresión [@McGuire2018GraphicsCodex]:
+
+$$
+\omega_t =
+    - \frac{\eta_1}{\eta_2}\left(\omega_i - (\omega_i \cdot \mathbf{n})\mathbf{n}\right)
+    - \left(
+        \sqrt{1 - \left(\frac{\eta_1}{\eta_2}\right)^2 \left(1 - (\omega_i \cdot \mathbf{n}^2)\right)}
+      \right) \cdot \mathbf{n}
+$$
+
 #### Ecuaciones de Fresnel
 
 Aquellos materiales que refractan y reflejan luz (como el agua de la foto anterior) no pueden generar energía de la nada; por lo que la combinación de ambos efectos debe ser proporcional a la luz incidente. Es decir, una fracción de luz es reflejada, y otra es refractada. Las **ecuaciones de Fresnel** nos permiten conocer esta cantidad.
@@ -591,7 +601,7 @@ $${#eq:fresnel_equations}
 
 donde los subíndices $s$ y $p$ denotan la polarización de la luz: $s$ es perpendicular a la dirección de propagación, mientras que $p$ es paralela.
 
-Generalmente en los ray tracers la polarización se ignora, promediando ambas expresiones, resultando en una ecuación más simple:
+Generalmente en los ray tracers se simula luz no polarizada, así que se deben promediar ambos valores. Por lo tanto, se debe usar el valor $R$ definido de la siguiente manera:
 
 $$
 R = \frac{R_s + R_p}{2}
