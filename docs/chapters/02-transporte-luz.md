@@ -433,7 +433,9 @@ En esencia, los reflejos se pueden clasificar en cuatro grandes tipos [@McGuire2
 
 Ten en cuenta que es muy difícil encontrar objetos físicos que imiten a la perfección un cierto modelo. Suelen recaer en un híbrido entre dos o más modelos.
 
-Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, puede ser **isotrópica** o **anisotrópica**. Los materiales isotrópicos mantienen las propiedades de reflectancia invariantes ante rotaciones; es decir, la distribución de luz es la misma en todas direcciones. Por el contrario, los anisotrópicos reflejan diferentes cantidades de luz dependiendo desde dónde los miremos. Los ejemplos más habituales de materiales anisotrópicos son las rocas y la madera.
+Fijado un cierto modelo, la función de distribución de reflectancia, BRDF, puede ser **isotrópica** o **anisotrópica**. Los materiales isotrópicos son aquellos cuya BRDF $f_r(p, \omega_o \leftarrow \omega_i)$ no cambia cuando se rotan los vectores $\omega_o, \omega_i$ un mismo ángulo alrededor de $p$. La mayor parte de los materiales son de este tipo.
+
+Por el contrario, si la BRDF sí cambia cuando se aplica dicha rotación, entonces nos encontramos ante un material anisotrópico. Esto suele ocurrir cuando tratamos con superficies pulidas con surcos. Algunos ejemplos son los discos de vinilo y los metales pulidos en una dirección.
 
 ### Reflexión
 
