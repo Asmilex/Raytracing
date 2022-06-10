@@ -484,7 +484,7 @@ siendo $\rho_{hd}(\omega_i) = \abs{\omega_i \cdot \mathbf{n}} k_r$ el albedo, co
 
 #### Reflexión difusa o lambertiana
 
-Este es uno de los modelos más sencillos. Es conocido también como el modelo lambertiano. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador [@McGuire2018GraphicsCodex, Materials]. Esto significa que [@BRDF-lambert]
+Este es uno de los modelos más sencillos. Es conocido también como el modelo lambertiano. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador [@McGuire2018GraphicsCodex, Materials]. Esto significa que
 
 $$
 f_r(\omega_o \leftarrow \omega_i) = \frac{\rho_{hd}}{\pi}
@@ -502,59 +502,27 @@ En la práctica no se utiliza mucho, pues está muy limitado.
 
 ##### Phong
 
-El modelo de Phong se basa en la observación de que, cuando el punto de vista se alinea con la dirección del vector de luz reflejado $r = i - 2(\mathbf{n} \cdot \mathbf{l})\mathbf{n}$, aparecen puntos muy iluminados, lo que se conoce como resaltado especular.
+El modelo de Phong se basa en la observación de que, cuando el punto de vista se alinea con la dirección del vector de luz reflejado, aparecen puntos muy iluminados, lo que se conoce como resaltado especular.
 
-Esta idea se *refleja* considerando la componente especular como
+Su BRDF es
 
 $$
-L_o^s(p, \omega_o \leftarrow \omega_i) =
-      k_\alpha
-    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
-    + k_s \max\{0, \omega \cdot \omega_o\}^\alpha
+f_r(p, \omega_o \leftarrow \omega_i) = \frac{\alpha + 2}{2\pi} \max{(0, \omega_i \cdot \omega_o)}^\alpha
 $$
 
-donde $k_\alpha$ es el coeficiente de luz ambiental (con $\alpha$ el índice de brillo) $k_s$ es la constante de reflectancia especular (*specular-reflection*) que define el ratio de luz reflejada, $k_d$ el de radiancia difusa $L_o^d$. Usualmente, $k_s \vert k_d < 1$.
+donde $\alpha$ es índice del brillo del material, y $\omega_o$ el vector reflejado teniendo en cuenta $\omega_i$ y $\mathbf{n}$. El coeficiente $\frac{\alpha + 2}{2\pi}$ se utiliza para normalizarla [@brdf-bp]
 
-Evidentemente, este modelo no es más que una aproximación físicamente poco realista de la realidad; pero funciona lo suficientemente bien como para usarlo en ciertas partes.
-
-```glsl
-float Phong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
-    return pow(
-        max(
-            0.0,
-            dot(
-                reflejar(normal, light_dir),
-                view_dir
-            )
-        ),
-        shininess
-    );
-}
-```
+Este modelo de iluminación se suele usar en rasterización y no es común encontrarlo en ray tracing físicamente realista. En su versión de rasterización hace falta definir los coeficientes ambientales y difusos. Aquí solo hemos optado por el especular.
 
 ##### Blinn - Phong
 
 Este es una pequeña modificación al de Phong. En vez de usar el vector reflejado de luz, se define un vector unitario entre el observador y la luz, $\mathbf{h} = \frac{\omega + \mathbf{l}}{\norm{\omega + \mathbf{l}}}$. Resulta más fácil calcularlo. Además, este modelo es más realista.
 
 $$
-L_o^s(p, \omega_o \leftarrow \omega_i) =
-      k_\alpha
-    + k_d L_o^d(p, \omega_o \leftarrow \omega_i)
-    + k_s \max\{0, \mathbf{h} \cdot \mathbf{n}\}^\alpha
+f_r(p, \omega_o \leftarrow \omega_i) = \frac{8 \pi(2^{-\alpha/2} + \alpha)}{(\alpha + 2)(\alpha + 4)} \max\{0, \mathbf{h} \cdot \mathbf{n}\}^\alpha
 $$
 
-```glsl
-float BlingPhong_specular(vec3 normal, vec3 light_dir, vec3 view_dir, float shininess) {
-    vec3 h = normalize(view_dir + light_dir);
-    return pow(
-        max(
-            0.0,
-            dot(h, normal)
-        ),
-        shininess
-    );
-}
-```
+De la misma manera que en Phong, $\frac{8 \pi(2^{-\alpha/2} + \alpha)}{(\alpha + 2)(\alpha + 4)}$ es el coeficiente de normalización de la BRDF [@brdf-bp].
 
 ### Refracción
 
