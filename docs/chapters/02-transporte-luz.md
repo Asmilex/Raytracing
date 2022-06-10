@@ -482,27 +482,19 @@ $${#eq:brdf_especular_perfecto}
 
 siendo $\rho_{hd}(\omega_i) = \abs{\omega_i \cdot \mathbf{n}} k_r$ el albedo, con $k_r$ el coeficiente de reflectividad, cuyo valor se encuentra entre 0 y 1, dependiendo de la energía que se pierda.
 
-#### Reflexión difusa o lamberiana
+#### Reflexión difusa o lambertiana
 
-Este es uno de los modelos más sencillos. Es conocido también como el modelo lambertiano. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador. Esto significa que
-
-$$
-f_r(\omega_o \leftarrow \omega_i) = k_d
-$$
-
-con $k_d$ el coeficiente de difusión.
-
-El albedo viene dado por
+Este es uno de los modelos más sencillos. Es conocido también como el modelo lambertiano. Se asume que la superficie es completamente difusa, lo cual implica que la luz se refleja en todas direcciones equiprobablemente, independientemente del punto de vista del observador [@McGuire2018GraphicsCodex, Materials]. Esto significa que [@BRDF-lambert]
 
 $$
-\begin{aligned}
-\rho_{hd}(\omega_o) & = \int_{H^2(n)}{k_d \cos\theta_i\ d\omega_i} = \\
-                    & = \int_{\phi = 0}^{2\pi} \int_{\theta = 0}^{\pi/2}{k_d \cos\theta\ d\theta\ d\phi} = \\
-                    & = k_d \pi
-\end{aligned}
+f_r(\omega_o \leftarrow \omega_i) = \frac{\rho_{hd}}{\pi}
 $$
 
-Para que se cumpla la condición de conservación de energía, necesariamente $k_d \le 1/\pi$.
+El albedo $0 \le \rho_{hd} \le 1$ es la reflectividad de la superficie. El denominador es aquel coeficiente tal que se normalice la BRDF:
+
+$$
+\int_{\mathbb{S}^2} {\max(\mathbf{n} \cdot \omega_i, 0)\ d\omega_i} = \pi
+$$
 
 En la práctica no se utiliza mucho, pues está muy limitado.
 
