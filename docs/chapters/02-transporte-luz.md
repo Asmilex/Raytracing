@@ -698,11 +698,17 @@ $$
 L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
 $${#eq:rendering_equation}
 
-Para hacerla operativa en términos computacionales podemos transformarla un poco. Bien, partamos de la ecuación de para la radiancia reflejada:
+Esta ecuación nos proporciona una forma de calcular la radiancia total saliente $L_o$ en un punto. Esta puede ser hallada como la suma de la radiancia producida por la superficie en dicho punto, $L_e$ y la radiancia reflejada por el entorno, a la que llamaremos $L_r$.
 
 $$
-L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
-$$
+L_r(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}
+$${#eq:L_r}
+
+Esta radiancia reflejada se calcula integrando $f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i$ sobre todas las posibles direcciones de luz. Este integrando viene dado por la BSDF $f(p, \omega_o \leftarrow \omega_i)$, que describe el comportamiento del material en el punto $p$; la radiancia incidente $L_i$ en dicho punto; y el ángulo de incidencia $\theta_i$ de la dirección de entrada con respecto a la normal.
+
+En la ecuación [@eq:rendering_equation], si el material no emite luz, entonces $L_e = 0$; y la radiancia total de salida coincide con la radiancia total reflejada [@eq:L_r].
+
+Para hacerla operativa en términos computacionales podemos transformarla un poco. Bien, partamos de la ecuación de para la radiancia reflejada:
 
 Vamos a buscar expresar la radiancia incidente en términos de la radiancia reflejada. Para ello, usamos la propiedad de que la radiancia a lo largo de un rayo no cambia.
 
@@ -719,25 +725,25 @@ $$
 Esto nos permite cambiar la expresión de $L_i$ en la integral anterior:
 
 $$
-L_o(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\ d\omega_i}
+L_r(p, \omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\ d\omega_i}
 $$
 
 Finalmente, la radiancia total vendrá dada por la suma de la radiancia emitida y la reflejada:
 
 $$
-L(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\ d\omega_i}
-$$
+L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_o(r(p, \omega_i), -\omega_i) \cos\theta_i\ d\omega_i}
+$${#eq:rendering_equation_alt}
 
-Y con esto, ¡hemos obtenido la *rendering equation*!
+Y con esto, hemos obtenido una expresión de la *rendering equation* únicamente en términos de la radiancia de salida.
 
 Si quieres ver gráficamente cómo funciona, te recomiendo pasarte por [@arneback-2019]. Es un vídeo muy intuitivo.
 
 <iframe width="784" height="441" src="https://www.youtube-nocookie.com/embed/eo_MTI-d28s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Si nos paramos a pensar, la ecuación de reflexión es muy similar a la de renderizado. Sin embargo, hay un par de matices que las hacen muy diferentes:
+Si nos paramos a pensar, la ecuación [@eq:rendering_equation_alt] es muy similar a la primera [@eq:rendering_equation]. Sin embargo, hay un par de matices que las hacen muy diferentes:
 
-- La ecuación de reflexión describe cómo se comporta la luz reflejada en un cierto punto. Es decir, tiene un ámbito local. Además, para calcular la radiancia reflejada, se necesita conocer la radiancia incidente.
-- La *rendering equation* calcula las condiciones globales de la luz. Además, no se conocen las radiancias de salida.
+- La *rendering equation* [@eq:rendering_equation] describe cómo se comporta la luz reflejada en un cierto punto. Es decir, tiene un ámbito local. Además, para calcular la radiancia reflejada, se necesita conocer la radiancia incidente.
+- La última expresión [@eq:rendering_equation_alt] calcula las condiciones globales de la luz. Además, no se conocen las radiancias de salida.
 
 Este último matiz es importante. Para renderizar una imagen, se necesita calcular la radiancia de salida para aquellos puntos visibles desde nuestra cámara.
 
