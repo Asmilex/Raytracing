@@ -19,10 +19,10 @@ El código ilustrado en las siguientes secciones está basado en el de [@nvpro-s
 Lo que buscamos en esta sección es aproximar el valor de la radiancia en un cierto punto, que dependerá de cada píxel dela pantalla. ¿Recuerdas la ecuación de dispersión [@eq:scattering_equation]?
 
 $$
-L_o(p, \omega_o \leftarrow \omega_i) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i
+L_o(p, \omega_o \leftarrow \omega_i) = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\abs{\cos\theta_i}\  d\omega_i}
 $$
 
-Recordemos que $L_o(p, \omega_o \leftarrow \omega_i)$ es la radiancia emitida en un punto $p$ hacia la dirección $\omega_o$ desde $\omega_i$, $f(p, \omega_o \leftarrow \omega_i)$ es la función de distribución de dispersión bidireccional (i.e., cómo refleja la luz el punto) y $\cos\theta_i$ el ángulo que forman el ángulo sólido de entrada $\omega_i$ y la normal en el punto $p$, $\mathbf{n}$: $\cos\theta_i = \omega_i \cdot \mathbf{n}$.
+Recordemos que $L_o(p, \omega_o \leftarrow \omega_i)$ es la radiancia reflejada en un punto $p$ hacia la dirección $\omega_o$ desde $\omega_i$, $f(p, \omega_o \leftarrow \omega_i)$ es la función de distribución de dispersión bidireccional (i.e., cómo refleja la luz el punto) y $\cos\theta_i$ el ángulo que forman el ángulo sólido de entrada $\omega_i$ y la normal en el punto $p$, $\mathbf{n}$: $\abs{\cos\theta_i} = \abs{\omega_i \cdot \mathbf{n}}$.
 
 Añadamos el término de radiancia emitida $L_e(p, \omega_o)$, la cantidad de randiancia emitida por el material del punto $p$:
 
