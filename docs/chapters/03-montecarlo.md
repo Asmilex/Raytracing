@@ -681,6 +681,12 @@ Se puede estudiar el tema en profundidad en [@quasi-monte-carlo]
 
 ![Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: [@quasi-monte-carlo]](./img/03/Quasi-Monte%20Carlo.png){#fig:quasimontecarlo}
 
+#### Cadenas de Markov y ecuaciones integrales de Fredholm de tipo dos
+
+> TODO: mirar issue #54. Esta sección es importantilla
+
+[@fredholm-integrals]
+
 ## Escogiendo puntos aleatorios
 
 Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber escoger la función de densidad $p_X$ correctamente. En esta sección, veremos algunos métodos para conseguir distribuciones específicas partiendo de funciones de densidad sencillas, así como formas de elegir funciones de densidad próximas a $f$. Los dos métodos principales que estudiaremos se han extraído del libro [@PBRT3e, Sampling Random Variables]
