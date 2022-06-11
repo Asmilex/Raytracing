@@ -2,7 +2,7 @@
 
 Ahora que hemos introducido toda la teoría necesaria, es hora de ponernos manos a la obra. En este capítulo escogeremos una serie de herramientas y con ellas implementaremos un pequeño motor de path tracing en tiempo real.
 
-La implementación estará basada en Vulkan, junto al pequeño framework de nvpro-samples. El motor mantendrá el mismo espíritu que la serie de [@Shirley2020RTW1], Ray Tracing In One Weekend.
+La implementación estará basada en Vulkan, junto al pequeño framework de *nvpro-samples*, que puede encontrarse en el repositorio [@nvpro-samples-tutorial]. Nuestro trabajo recogerá varias de las características que se muestran en dicho repositorio. Además, mantendremos el mismo espíritu que la serie de [@Shirley2020RTW1], Ray Tracing In One Weekend.
 
 El resultado final puede verse en el siguiente vídeo [@video]
 
