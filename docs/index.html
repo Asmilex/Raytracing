@@ -394,6 +394,10 @@ class="toc-section-number">3.3.3.2</span> Next event estimation, o
 muestreo directo de fuentes de luz</a></li>
 <li><a href="#quasi-monte-carlo"><span
 class="toc-section-number">3.3.3.3</span> Quasi-Monte Carlo</a></li>
+<li><a
+href="#cadenas-de-markov-y-ecuaciones-integrales-de-fredholm-de-tipo-dos"><span
+class="toc-section-number">3.3.3.4</span> Cadenas de Markov y ecuaciones
+integrales de Fredholm de tipo dos</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#escogiendo-puntos-aleatorios"><span
@@ -1175,9 +1179,9 @@ data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
 role="doc-biblioref">Shirley and Morley 2003</a>)</span>; así como los
 cursos <em>Computer Graphics and Imaging</em> <span class="citation"
 data-cites="berkeley-cs184">(<a href="#ref-berkeley-cs184"
-role="doc-biblioref">Berkeley cs184 2022</a>)</span>, <em>Fundamentals
-of Computer Graphics</em> <span class="citation"
-data-cites="pellacini-marschner-2017">(<a
+role="doc-biblioref"><span>“Computer graphics and imaging”</span>
+2022</a>)</span>, <em>Fundamentals of Computer Graphics</em> <span
+class="citation" data-cites="pellacini-marschner-2017">(<a
 href="#ref-pellacini-marschner-2017" role="doc-biblioref">Fabio
 Pellacini 2022</a>)</span>, y <em>Lecture Rendering</em> <span
 class="citation" data-cites="tuwien">(<a href="#ref-tuwien"
@@ -1894,8 +1898,8 @@ class="math inline">\(d\theta\)</span> y <span
 class="math inline">\(d\phi\)</span>: pequeños cambios en los ángulos
 que nos generan nuestra pequeña área <span class="citation"
 data-cites="berkeley-cs184">(<a href="#ref-berkeley-cs184"
-role="doc-biblioref">Berkeley cs184 2022</a>, Radiometry &amp;
-Photometry)</span>.</p>
+role="doc-biblioref"><span>“Computer graphics and imaging”</span>
+2022</a>, Radiometry &amp; Photometry)</span>.</p>
 <p><span class="math inline">\(dA_h\)</span> debe tener dos lados <span
 class="math inline">\(lado_1\)</span> y <span
 class="math inline">\(lado_2\)</span>. Podemos hallar <span
@@ -2420,7 +2424,7 @@ ellos, se encuentran la difusa lambertiana, materiales dieléctricos,
 espejos y algunas BSDFs compuestas. Un repertorio de implementaciones se
 encuentra en el repositorio de BRDFs de <span class="citation"
 data-cites="disney-brdfs">(<a href="#ref-disney-brdfs"
-role="doc-biblioref">Walt Disney Animation Studios 2019</a>)</span>.</p>
+role="doc-biblioref"><span>“BRDF explorer”</span> 2019</a>)</span>.</p>
 <h3 data-number="2.3.1" id="tipos-de-dispersión"><span
 class="header-section-number">2.3.1</span> Tipos de dispersión</h3>
 <p>Prácticamente toda superficie, en mayor o menor medida, refleja parte
@@ -4001,30 +4005,34 @@ class="header-section-number">3.3.3.2</span> Next event estimation, o
 muestreo directo de fuentes de luz</h4>
 <p>Esta técnica recibe dos nombres. Tradicionalmente, se la conocía como
 muestreo directo de fuentes de luz, pero en los últimos años ha adoptado
-el nombre de next event estimation. Esencialmente, se trata de utilizar
-las luces de la escena para calcular la radiancia de un punto.</p>
+el nombre de <em>next event estimation</em>. Esencialmente, se trata de
+utilizar las luces de la escena para calcular la radiancia de un
+punto.</p>
 <p>Podemos dividir la rendering equation [<a
 href="#eq:rendering_equation">23</a>] en dos sumandos <span
 class="citation" data-cites="carlos-path-tracing">(<a
 href="#ref-carlos-path-tracing" role="doc-biblioref">Ureña
 2021</a>)</span>:</p>
-<p><span class="math display">\[
-L(p, \omega_o) = L_e(p, \omega_o) + \underbrace{L_{directa}(p, \omega_o
-\leftarrow \omega_i) + L_{indirecta}(p, \omega_o \leftarrow
-\omega_i)}_{\text{La parte integral de la rendering equation}}
-\]</span></p>
+<p><span id="eq:next_event_estimation" class="eqnos"><span
+class="math display">\[
+L(p, \omega_o) = L_e(p, \omega_o) + \underbrace{L_{directa}(p, \omega_o)
++ L_{indirecta}(p, \omega_o)}_{\text{La parte integral de la rendering
+equation}}
+\]</span><span class="eqnos-number">(37)</span></span></p>
 <p>siendo <span class="math inline">\(L_e\)</span> la radiancia emitida
 por la superficie, <span class="math inline">\(L_{directa}\)</span> la
-radiancia proporcionada por las fuentes de luz y <span
+radiancia reflejada debida únicamente a la incidente proveniente de las
+fuentes de iluminación y <span
 class="math inline">\(L_{indirecta}\)</span> la radiancia indirecta.</p>
-<p><span class="math display">\[
+<p><span id="eq:l_dir_l_indir" class="eqnos"><span
+class="math display">\[
 \begin{aligned}
   L_{directa}   &amp; = \int_{S^2}{f(p, \omega_o \leftarrow \omega_i)
 L_{e}(y, -\omega_i) \cos\theta_i\ d\omega_i} \\
   L_{indirecta} &amp; = \int_{S^2}{f(p, \omega_o \leftarrow \omega_i)
-L_{i}(y \omega_o \leftarrow \omega_i) \cos\theta_i\ d\omega_i}
+L_{r}(y, \omega_o \leftarrow \omega_i) \cos\theta_i\ d\omega_i}
 \end{aligned}
-\]</span></p>
+\]</span><span class="eqnos-number">(38)</span></span></p>
 <p>siendo <span class="math inline">\(y\)</span> el primer punto visible
 desde <span class="math inline">\(p\)</span> en la dirección <span
 class="math inline">\(\omega_i\)</span> situado en una fuente de
@@ -4035,8 +4043,8 @@ class="math inline">\(y\)</span> en la fuente de luz, y calcularemos
 <span class="math inline">\(L_{directa}\)</span>. Esta integral es fácil
 de conseguir con las técnicas que ya conocemos. Sin embargo, <span
 class="math inline">\(L_{indirecta}\)</span> cuesta más trabajo. Al
-aparecer la radiancia incidente en el punto <span
-class="math inline">\(p, L_i(p, \omega_o \leftarrow \omega_i)\)</span>,
+aparecer la radiancia reflejada en el punto <span
+class="math inline">\(p, L_r(p, \omega_o \leftarrow \omega_i)\)</span>,
 necesitaremos evaluarla de forma recursiva trazando rayos en la
 escena.</p>
 <p>Aunque estamos haciendo más cálculos en cada punto de la cadena de
@@ -4096,6 +4104,16 @@ data-cites="quasi-monte-carlo">(<a href="#ref-quasi-monte-carlo"
 role="doc-biblioref">Roberts 2018</a>)</span></figcaption>
 </figure>
 </div>
+<h4 data-number="3.3.3.4"
+id="cadenas-de-markov-y-ecuaciones-integrales-de-fredholm-de-tipo-dos"><span
+class="header-section-number">3.3.3.4</span> Cadenas de Markov y
+ecuaciones integrales de Fredholm de tipo dos</h4>
+<blockquote>
+<p>TODO: mirar issue #54. Esta sección es importantilla</p>
+</blockquote>
+<p><span class="citation" data-cites="fredholm-integrals">(<a
+href="#ref-fredholm-integrals" role="doc-biblioref">Farnoosh and
+Ebrahimi 2008</a>)</span></p>
 <h2 data-number="3.4" id="escogiendo-puntos-aleatorios"><span
 class="header-section-number">3.4</span> Escogiendo puntos
 aleatorios</h2>
@@ -4161,8 +4179,8 @@ transformada inversa para <span class="math inline">\(x^2\)</span></h4>
 <p>Como ejemplo, vamos a muestrear la función <span
 class="math inline">\(f(x) = x^2,\ x \in [0, 2]\)</span> <span
 class="citation" data-cites="berkeley-cs184">(<a
-href="#ref-berkeley-cs184" role="doc-biblioref">Berkeley cs184 2022</a>,
-Monte Carlo Integration)</span>.</p>
+href="#ref-berkeley-cs184" role="doc-biblioref"><span>“Computer graphics
+and imaging”</span> 2022</a>, Monte Carlo Integration)</span>.</p>
 <p>Primero, normalizamos esta función para obtener una función de
 densidad <span class="math inline">\(p_X(x)\)</span>. Es decir, buscamos
 <span class="math inline">\(p_X(x) = c f(x)\)</span> tal que</p>
@@ -4428,10 +4446,15 @@ ponernos manos a la obra. En este capítulo escogeremos una serie de
 herramientas y con ellas implementaremos un pequeño motor de path
 tracing en tiempo real.</p>
 <p>La implementación estará basada en Vulkan, junto al pequeño framework
-de nvpro-samples. El motor mantendrá el mismo espíritu que la serie de
-<span class="citation" data-cites="Shirley2020RTW1">(<a
-href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
-2020a</a>)</span>, Ray Tracing In One Weekend.</p>
+de <em>nvpro-samples</em>, que puede encontrarse en el repositorio <span
+class="citation" data-cites="nvpro-samples-tutorial">(<a
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+2022a</a>)</span>. Nuestro trabajo recogerá varias de las
+características que se muestran en dicho repositorio. Además,
+mantendremos el mismo espíritu que la serie de <span class="citation"
+data-cites="Shirley2020RTW1">(<a href="#ref-Shirley2020RTW1"
+role="doc-biblioref">Shirley 2020a</a>)</span>, Ray Tracing In One
+Weekend.</p>
 <p>El resultado final puede verse en el siguiente vídeo <span
 class="citation" data-cites="video">(<a href="#ref-video"
 role="doc-biblioref">Millán 2022c</a>)</span></p>
@@ -4461,10 +4484,11 @@ en un cierto punto, que dependerá de cada píxel dela pantalla.
 href="#eq:scattering_equation">17</a>]?</p>
 <p><span class="math display">\[
 L_o(p, \omega_o \leftarrow \omega_i) = \int_{\mathbb{S}^2}{f(p, \omega_o
-\leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i
+\leftarrow \omega_i)L_i(p, \omega_i)\left\lvert \cos\theta_i
+\right\rvert\  d\omega_i}
 \]</span></p>
 <p>Recordemos que <span class="math inline">\(L_o(p, \omega_o \leftarrow
-\omega_i)\)</span> es la radiancia emitida en un punto <span
+\omega_i)\)</span> es la radiancia reflejada en un punto <span
 class="math inline">\(p\)</span> hacia la dirección <span
 class="math inline">\(\omega_o\)</span> desde <span
 class="math inline">\(\omega_i\)</span>, <span
@@ -4475,17 +4499,20 @@ la luz el punto) y <span class="math inline">\(\cos\theta_i\)</span> el
 class="math inline">\(\omega_i\)</span> y la normal en el punto <span
 class="math inline">\(p\)</span>, <span
 class="math inline">\(\mathbf{n}\)</span>: <span
-class="math inline">\(\cos\theta_i = \omega_i \cdot
-\mathbf{n}\)</span>.</p>
+class="math inline">\(\left\lvert \cos\theta_i \right\rvert =
+\left\lvert \omega_i \cdot \mathbf{n} \right\rvert\)</span>.</p>
 <p>Añadamos el término de radiancia emitida <span
 class="math inline">\(L_e(p, \omega_o)\)</span>, la cantidad de
 randiancia emitida por el material del punto <span
 class="math inline">\(p\)</span>:</p>
 <p><span class="math display">\[
-L_o(p, \omega_o \leftarrow \omega_i) = L_e(p, \omega_o) +
-\int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p,
-\omega_i)\cos\theta_i} d\omega_i
+L(p, \omega_o) = L_e(p, \omega_o) + \int_{\mathbb{S}^2}{f(p, \omega_o
+\leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i
 \]</span></p>
+<p>Este valor <span class="math inline">\(L(p, \omega_o)\)</span> es la
+radiancia total saliente (es decir, emitida más reflejada) desde el
+punto <span class="math inline">\(p\)</span> hacia la dirección <span
+class="math inline">\(\omega_o\)</span>.</p>
 <p>Podemos aproximar el valor de la integral utilizando el estimador de
 Monte Carlo comúnmente considerado en la <a
 href="#muestreo-por-importancia-múltiple-en-transporte-de-luz">industria</a>,
@@ -4496,14 +4523,16 @@ class="math display">\[
 L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
 \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
                  &amp; \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p,
-\omega_o \leftarrow \omega_j) L_i(p, \omega_j)
-\cos\theta_j}{p(\omega_j)}}
+\omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{P\left[
+\omega_j \right]}}
 \end{aligned}
-\]</span><span class="eqnos-number">(37)</span></span></p>
-<p>Con <span class="math inline">\(N \in \mathbb{Z}^+\)</span>. Con
-<span class="math inline">\(N\)</span> suficientemente grande, se
-conseguiría un valor de radiancia relativamente acertado. Sin embargo,
-en algunos casos, podemos simplificar más el sumando.</p>
+\]</span><span class="eqnos-number">(39)</span></span></p>
+<p>Con <span class="math inline">\(N \in \mathbb{Z}^+\)</span>, y <span
+class="math inline">\(P\left[ \omega \right]\)</span> la función de
+densidad de <span class="math inline">\(\omega\)</span>. Con <span
+class="math inline">\(N\)</span> suficientemente grande, se conseguiría
+un valor de radiancia relativamente acertado. Sin embargo, en algunos
+casos, podemos simplificar más el sumando.</p>
 <p>Fijémonos en el denominador. Lo que estamos haciendo es tomar una
 muestra de un vector en la esfera. Si trabajamos con una BRDF en vez de
 una BSDF, usaríamos un hemisferio en vez de la esfera.</p>
@@ -4513,29 +4542,32 @@ class="math inline">\(f_r(p, \omega_o \leftarrow \omega_i) =
 que</p>
 <p><span class="math display">\[
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
-\cos\theta_j}{p(\omega_j)}}
+\cos\theta_j}{P\left[ \omega_j \right]}}
 \]</span></p>
 <p>En la sección <a href="#muestreo-por-importancia">muestreo por
 importancia</a>, introducimos la idea de buscar una función proporcional
 a <span class="math inline">\(f\)</span> para con el fin de reducir el
-error. Podemos usar <span class="math inline">\(p(\omega) =
+error. Podemos usar <span class="math inline">\(P\left[ \omega \right] =
 \frac{\cos\theta}{\pi}\)</span>, de forma que</p>
 <p><span id="eq:rendering_eq_lambertian" class="eqnos"><span
 class="math display">\[
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
 \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j =
 1}^{N}{L_i(p, \omega_j) \rho}
-\]</span><span class="eqnos-number">(38)</span></span></p>
+\]</span><span class="eqnos-number">(40)</span></span></p>
 <p>Lo cual nos proporciona una expresión muy agradable para los
 materiales difusos.</p>
-<p>Por lo general, no será necesario simplificar hasta tal punto la
-expresión.</p>
+<p>Por lo general, no será posible simplificar hasta tal punto la
+expresión. Para BRDFs distintas de la difusa, algunas veces no podremos
+encontrar una forma de hacer muestreo por importancia de forma tan
+simple, en la cual la función de densidad sea proporcional a la
+BRDF.</p>
 <h3 data-number="4.1.2" id="pseudocódigo-de-un-path-tracer"><span
 class="header-section-number">4.1.2</span> Pseudocódigo de un path
 tracer</h3>
 <p>Con lo que conocemos hasta ahora, podemos empezar a programar los
 shaders. Una primera implementación inspirada en la rendering equation
-[<a href="#eq:rendering_equation_mc">37</a>] sería similar a lo
+[<a href="#eq:rendering_equation_mc">39</a>] sería similar a lo
 siguiente:</p>
 <pre><code class="language-cpp">pathtrace(Rayo r, profundidad) {
     if (profundidad == profundidad_maxima) {
@@ -4688,7 +4720,7 @@ class="math inline">\(h\)</span> estima correctamente la radiancia de un
 punto. Con esto, podemos afirmar que</p>
 <p><span class="math display">\[
 h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow
-\omega_j) L_i(p, \omega_j) \cos\theta_j}{p(\omega_j)}}
+\omega_j) L_i(p, \omega_j) \cos\theta_j}{P\left[ \omega_j \right]}}
 \]</span></p>
 <p>Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento
 que el recursivo <span class="citation"
@@ -5800,16 +5832,16 @@ texturas.</td>
 <td><code>cornell_box</code> <code>_original</code></td>
 <td>Una reconstrucción de la caja de Cornell original <span
 class="citation" data-cites="cornell-box-original">(<a
-href="#ref-cornell-box-original" role="doc-biblioref">Cornell University
-2005</a>)</span>.</td>
+href="#ref-cornell-box-original" role="doc-biblioref"><span>“Photograhic
+images of the cornell box”</span> 2005</a>)</span>.</td>
 <td><img loading="lazy" src="./img/05/cornell_box_original.png" title="fig:" /></td>
 </tr>
 <tr class="odd">
 <td><code>cornell_box</code> <code>_mirror</code></td>
 <td>Similar a la caja original, esta escena es una recreación de <span
 class="citation" data-cites="cornell-box-compare">(<a
-href="#ref-cornell-box-compare" role="doc-biblioref">Cornell University
-1998</a>)</span>.</td>
+href="#ref-cornell-box-compare" role="doc-biblioref"><span>“Cornell box
+comparison”</span> 1998</a>)</span>.</td>
 <td><img loading="lazy" src="./img/05/cornell_box_mirror.png" title="fig:" /></td>
 </tr>
 <tr class="even">
@@ -5830,7 +5862,7 @@ saturadas.</td>
 <td>En esta caja se encuentran dos esferas de diferente material. Se
 puede comparar con <span class="citation"
 data-cites="cornell-box-glossy">(<a href="#ref-cornell-box-glossy"
-role="doc-biblioref">"Jensen "1996", 17</a>, fig. 6)</span></td>
+role="doc-biblioref">Jensen 1996, 17</a>, fig. 6)</span></td>
 <td><img loading="lazy" src="./img/05/cornell_box_glossy.png" title="fig:" /></td>
 </tr>
 <tr class="odd">
@@ -7148,10 +7180,11 @@ role="doc-biblioref">2022b</a>)</span></figcaption>
 <p>Para el paso final del cálculo de la radiancia se usa un algoritmo
 basado en radiance caching presentado en <span class="citation"
 data-cites="siggraph2021">(<a href="#ref-siggraph2021"
-role="doc-biblioref">Siggraph 2021</a>)</span>. Como no resulta viable
-tirar rayos a diestro y siniestro por toda la escena, Lumen toma una
-pequeña porción de muestras y combina los cálculos de radiancia con
-información aportada por el material.</p>
+role="doc-biblioref"><span>“Advances in real-time rendering in gaming
+courses”</span> 2021</a>)</span>. Como no resulta viable tirar rayos a
+diestro y siniestro por toda la escena, Lumen toma una pequeña porción
+de muestras y combina los cálculos de radiancia con información aportada
+por el material.</p>
 <div id="fig:lumen4" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen5.png" style="width:100.0%"
@@ -8389,6 +8422,11 @@ Adam Marrs, Peter Shirley, and I. Wald, eds. 2021. <em>Ray Tracing Gems
 II</em>. Apress. <a
 href="https://doi.org/10.1007/978-1-4842-7185-8">https://doi.org/10.1007/978-1-4842-7185-8</a>.
 </div>
+<div id="ref-siggraph2021" class="csl-entry" role="doc-biblioentry">
+<span>“Advances in real-time rendering in gaming courses.”</span> 2021.
+Siggraph. 2021. Accessed May 29, 2022. <a
+href="http://advances.realtimerendering.com/s2021/index.html">http://advances.realtimerendering.com/s2021/index.html</a>.
+</div>
 <div id="ref-nvidia-blue-noise" class="csl-entry"
 role="doc-biblioentry">
 Alan Wolfe, T. A.-M., Nathan Morrical. 2021. <span>“Rendering in real
@@ -8434,10 +8472,10 @@ reservoir resampling for real-time ray tracing with dynamic direct
 lighting.”</span> July 19, 2020. Accessed May 30, 2022. <a
 href="https://research.nvidia.com/publication/2020-07_spatiotemporal-reservoir-resampling-real-time-ray-tracing-dynamic-direct">https://research.nvidia.com/publication/2020-07_spatiotemporal-reservoir-resampling-real-time-ray-tracing-dynamic-direct</a>.
 </div>
-<div id="ref-berkeley-cs184" class="csl-entry" role="doc-biblioentry">
-Berkeley cs184. 2022. <span>“Computer graphics and imaging.”</span>
-2022. Accessed March 20, 2022. <a
-href="https://cs184.eecs.berkeley.edu/sp22">https://cs184.eecs.berkeley.edu/sp22</a>.
+<div id="ref-disney-brdfs" class="csl-entry" role="doc-biblioentry">
+<span>“BRDF explorer.”</span> 2019. Walt Disney Animation Studios. 2019.
+Accessed May 7, 2022. <a
+href="https://github.com/wdas/brdf">https://github.com/wdas/brdf</a>.
 </div>
 <div id="ref-cerny-ps5" class="csl-entry" role="doc-biblioentry">
 Cerny, M. 2020. <span>“The road to PS5.”</span> 2020. Accessed May 30,
@@ -8454,6 +8492,11 @@ Ciechanowski, B. 2022. <span>“Lights and shadows.”</span> 2022. Accessed
 May 7, 2022. <a
 href="https://ciechanow.ski/lights-and-shadows/">https://ciechanow.ski/lights-and-shadows/</a>.
 </div>
+<div id="ref-berkeley-cs184" class="csl-entry" role="doc-biblioentry">
+<span>“Computer graphics and imaging.”</span> 2022. Berkeley University.
+2022. Accessed March 20, 2022. <a
+href="https://cs184.eecs.berkeley.edu/sp22">https://cs184.eecs.berkeley.edu/sp22</a>.
+</div>
 <div id="ref-julia-mono" class="csl-entry" role="doc-biblioentry">
 Cormullion. 2022. <span>“JuliaMono - a monospaced font for scientific
 and technical computing.”</span> 2022. Accessed May 7, 2022. <a
@@ -8461,15 +8504,9 @@ href="https://juliamono.netlify.app">https://juliamono.netlify.app</a>.
 </div>
 <div id="ref-cornell-box-compare" class="csl-entry"
 role="doc-biblioentry">
-Cornell University. 1998. <span>“Cornell box comparison.”</span> April
+<span>“Cornell box comparison.”</span> 1998. Cornell University. April
 30, 1998. Accessed May 16, 2022. <a
 href="http://www.graphics.cornell.edu/online/box/compare.html">http://www.graphics.cornell.edu/online/box/compare.html</a>.
-</div>
-<div id="ref-cornell-box-original" class="csl-entry"
-role="doc-biblioentry">
-———. 2005. <span>“Photograhic images of the cornell box.”</span>
-February 2, 2005. Accessed May 16, 2022. <a
-href="http://www.graphics.cornell.edu/online/box/data.html">http://www.graphics.cornell.edu/online/box/data.html</a>.
 </div>
 <div id="ref-quantumfracture-2021" class="csl-entry"
 role="doc-biblioentry">
@@ -8560,6 +8597,14 @@ role="doc-biblioentry">
 Fabio Pellacini, S. M. 2022. <span>“Fundamentals of computer
 graphics.”</span> 2022. Accessed April 9, 2022. <a
 href="https://pellacini.di.uniroma1.it/teaching/graphics17b/">https://pellacini.di.uniroma1.it/teaching/graphics17b/</a>.
+</div>
+<div id="ref-fredholm-integrals" class="csl-entry"
+role="doc-biblioentry">
+Farnoosh, R., and M. Ebrahimi. 2008. <span>“Monte Carlo Method for
+Solving Fredholm Integral Equations of the Second Kind.”</span>
+<em>Applied Mathematics and Computation</em> 195 (1): 309–15.
+https://doi.org/<a
+href="https://doi.org/10.1016/j.amc.2007.04.097">https://doi.org/10.1016/j.amc.2007.04.097</a>.
 </div>
 <div id="ref-figma" class="csl-entry" role="doc-biblioentry">
 Figma. 2022. <span>“Figma - a design tool for digital art.”</span> 2022.
@@ -8667,13 +8712,13 @@ href="https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphic
 </div>
 <div id="ref-cornell-box-glossy" class="csl-entry"
 role="doc-biblioentry">
-"Jensen, H. W. "1996". <span>“"Global Illumination Using Photon
-Maps".”</span> In <em>"Rendering Techniques ’96"</em>, edited by Xavier
-"Pueyo and Peter" Schröder, "21–30". "Vienna": "Springer Vienna".
+Jensen, H. W. 1996. <span>“Global Illumination Using Photon
+Maps.”</span> In <em>Rendering Techniques ’96</em>, edited by Xavier
+Pueyo and Peter Schröder, 21–30. Vienna: Springer Vienna.
 </div>
 <div id="ref-Jensen2001" class="csl-entry" role="doc-biblioentry">
-Jensen, H. W. 2001. <em>Realistic Image Synthesis Using Photon
-Mapping</em>. A K Peters/<span>CRC</span> Press. <a
+———. 2001. <em>Realistic Image Synthesis Using Photon Mapping</em>. A K
+Peters/<span>CRC</span> Press. <a
 href="https://doi.org/10.1201/9780429294907">https://doi.org/10.1201/9780429294907</a>.
 </div>
 <div id="ref-kajiya" class="csl-entry" role="doc-biblioentry">
@@ -8819,6 +8864,12 @@ rendering: From theory to implementation (3rd ed.).”</span> San
 Francisco, CA, USA: Morgan Kaufmann Publishers Inc. November 2016. <a
 href="https://www.pbr-book.org/3ed-2018/contents">https://www.pbr-book.org/3ed-2018/contents</a>.
 </div>
+<div id="ref-cornell-box-original" class="csl-entry"
+role="doc-biblioentry">
+<span>“Photograhic images of the cornell box.”</span> 2005. Cornell
+University. February 2, 2005. Accessed May 16, 2022. <a
+href="http://www.graphics.cornell.edu/online/box/data.html">http://www.graphics.cornell.edu/online/box/data.html</a>.
+</div>
 <div id="ref-10.1145/566654.566640" class="csl-entry"
 role="doc-biblioentry">
 Purcell, T. J., I. Buck, W. R. Mark, and P. Hanrahan. 2002. <span>“Ray
@@ -8872,11 +8923,6 @@ Shirley, P., and R. K. Morley. 2003. <em>Realistic Ray Tracing</em>. 2nd
 ed. USA: A. K. Peters, Ltd. <a
 href="https://www.taylorfrancis.com/books/mono/10.1201/9780429294891/realistic-ray-tracing-peter-shirley-keith-morley">https://www.taylorfrancis.com/books/mono/10.1201/9780429294891/realistic-ray-tracing-peter-shirley-keith-morley</a>.
 </div>
-<div id="ref-siggraph2021" class="csl-entry" role="doc-biblioentry">
-Siggraph. 2021. <span>“Advances in real-time rendering in gaming
-courses.”</span> 2021. Accessed May 29, 2022. <a
-href="http://advances.realtimerendering.com/s2021/index.html">http://advances.realtimerendering.com/s2021/index.html</a>.
-</div>
 <div id="ref-Szirmay-Kalos00monte-carlomethods" class="csl-entry"
 role="doc-biblioentry">
 Szirmay-Kalos, L. 2000. <span>“Monte-Carlo Methods in Global
@@ -8897,7 +8943,9 @@ href="https://fonts.google.com/specimen/Fraunces">https://fonts.google.com/speci
 </div>
 <div id="ref-carlos-path-tracing" class="csl-entry"
 role="doc-biblioentry">
-Ureña, C. 2021. <span>“Realismo e iluminación global.”</span> 2021. <a
+Ureña, C. 2021. <span>“Apuntes del curso: Realismo e iluminación global
+(máster en desarrollo del software).”</span> Universidad de Granada.
+2021. <a
 href="https://lsi2.ugr.es/curena/">https://lsi2.ugr.es/curena/</a>.
 </div>
 <div id="ref-shader-binding-table" class="csl-entry"
@@ -8937,11 +8985,6 @@ href="https://www.vectary.com/">https://www.vectary.com/</a>.
 Wagler, P. 2022. <span>“Eisvogel pandoc template.”</span> 2022. Accessed
 May 7, 2022. <a
 href="https://github.com/Wandmalfarbe/pandoc-latex-template">https://github.com/Wandmalfarbe/pandoc-latex-template</a>.
-</div>
-<div id="ref-disney-brdfs" class="csl-entry" role="doc-biblioentry">
-Walt Disney Animation Studios. 2019. <span>“BRDF explorer.”</span> 2019.
-Accessed May 7, 2022. <a
-href="https://github.com/wdas/brdf">https://github.com/wdas/brdf</a>.
 </div>
 <div id="ref-Whitted1979AnII" class="csl-entry" role="doc-biblioentry">
 Whitted, T. 1979. <span>“An Improved Illumination Model for Shaded
