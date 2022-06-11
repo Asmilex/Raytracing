@@ -37,21 +37,21 @@ Podemos aproximar el valor de la integral utilizando el estimador de Monte Carlo
 $$
 \begin{aligned}
 L_o(p, \omega_o \leftarrow \omega_i) & = \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
-                 & \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{p(\omega_j)}}
+                 & \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{\Prob{\omega_j}}}
 \end{aligned}
 $${#eq:rendering_equation_mc}
 
-Con $N \in \mathbb{Z}^+$. Con $N$ suficientemente grande, se conseguiría un valor de radiancia relativamente acertado. Sin embargo, en algunos casos, podemos simplificar más el sumando.
+Con $N \in \mathbb{Z}^+$, y $\Prob{\omega}$ la función de densidad de $\omega$. Con $N$ suficientemente grande, se conseguiría un valor de radiancia relativamente acertado. Sin embargo, en algunos casos, podemos simplificar más el sumando.
 
 Fijémonos en el denominador. Lo que estamos haciendo es tomar una muestra de un vector en la esfera. Si trabajamos con una BRDF en vez de una BSDF, usaríamos un hemisferio en vez de la esfera.
 
 En el caso de la componente difusa, sabemos que la BRDF es $f_r(p, \omega_o \leftarrow \omega_i) = \frac{\rho}{\pi}$ aplicando reflectancia lambertiana, así que
 
 $$
-\frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j) \cos\theta_j}{p(\omega_j)}}
+\frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j) \cos\theta_j}{\Prob{\omega_j}}}
 $$
 
-En la sección [muestreo por importancia](#muestreo-por-importancia), introducimos la idea de buscar una función proporcional a $f$ para con el fin de reducir el error. Podemos usar $p(\omega) = \frac{\cos\theta}{\pi}$, de forma que
+En la sección [muestreo por importancia](#muestreo-por-importancia), introducimos la idea de buscar una función proporcional a $f$ para con el fin de reducir el error. Podemos usar $\Prob{\omega} = \frac{\cos\theta}{\pi}$, de forma que
 
 $$
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j) \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j = 1}^{N}{L_i(p, \omega_j) \rho}
@@ -197,7 +197,7 @@ $$
 El $\textcolor{verde-oscurisimo}{\text{término que acompaña}}$ a $\frac{f_1 \cos\theta_1}{p_1}$ es la radiancia del tercer punto de impacto. Por tanto, a la larga, se tendrá que $h$ estima correctamente la radiancia de un punto. Con esto, podemos afirmar que
 
 $$
-h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{p(\omega_j)}}
+h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{\Prob{\omega_j}}}
 $$
 
 Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento que el recursivo [@nvpro-samples-tutorial, glTF Scene].
