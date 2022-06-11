@@ -27,8 +27,10 @@ Recordemos que $L_o(p, \omega_o \leftarrow \omega_i)$ es la radiancia reflejada 
 Añadamos el término de radiancia emitida $L_e(p, \omega_o)$, la cantidad de randiancia emitida por el material del punto $p$:
 
 $$
-L_o(p, \omega_o \leftarrow \omega_i) = L_e(p, \omega_o) + \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i
+L(p, \omega_o) = L_e(p, \omega_o) + \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i
 $$
+
+Este valor $L(p, \omega_o)$ es la radiancia total saliente (es decir, emitida más reflejada) desde el punto $p$ hacia la dirección $\omega_o$.
 
 Podemos aproximar el valor de la integral utilizando el estimador de Monte Carlo comúnmente considerado en la [industria](#muestreo-por-importancia-múltiple-en-transporte-de-luz), [@eq:mc_integral_importancia]:
 
