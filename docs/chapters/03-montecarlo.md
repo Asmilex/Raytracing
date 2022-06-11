@@ -642,26 +642,26 @@ Más información puede encontrarse en [@PBRT3e, Russian Roulette and Splitting]
 
 #### Next event estimation, o muestreo directo de fuentes de luz
 
-Esta técnica recibe dos nombres. Tradicionalmente, se la conocía como muestreo directo de fuentes de luz, pero en los últimos años ha adoptado el nombre de next event estimation. Esencialmente, se trata de utilizar las luces de la escena para calcular la radiancia de un punto.
+Esta técnica recibe dos nombres. Tradicionalmente, se la conocía como muestreo directo de fuentes de luz, pero en los últimos años ha adoptado el nombre de *next event estimation*. Esencialmente, se trata de utilizar las luces de la escena para calcular la radiancia de un punto.
 
 Podemos dividir la rendering equation [@eq:rendering_equation] en dos sumandos [@carlos-path-tracing]:
 
 $$
-L(p, \omega_o) = L_e(p, \omega_o) + \underbrace{L_{directa}(p, \omega_o \leftarrow \omega_i) + L_{indirecta}(p, \omega_o \leftarrow \omega_i)}_{\text{La parte integral de la rendering equation}}
-$$
+L(p, \omega_o) = L_e(p, \omega_o) + \underbrace{L_{directa}(p, \omega_o) + L_{indirecta}(p, \omega_o)}_{\text{La parte integral de la rendering equation}}
+$${#eq:next_event_estimation}
 
-siendo $L_e$ la radiancia emitida por la superficie, $L_{directa}$ la radiancia proporcionada por las fuentes de luz y $L_{indirecta}$ la radiancia indirecta.
+siendo $L_e$ la radiancia emitida por la superficie, $L_{directa}$ la radiancia reflejada debida únicamente a la incidente proveniente de las fuentes de iluminación y $L_{indirecta}$ la radiancia indirecta.
 
 $$
 \begin{aligned}
   L_{directa}   & = \int_{S^2}{f(p, \omega_o \leftarrow \omega_i) L_{e}(y, -\omega_i) \cos\theta_i\ d\omega_i} \\
-  L_{indirecta} & = \int_{S^2}{f(p, \omega_o \leftarrow \omega_i) L_{i}(y \omega_o \leftarrow \omega_i) \cos\theta_i\ d\omega_i}
+  L_{indirecta} & = \int_{S^2}{f(p, \omega_o \leftarrow \omega_i) L_{r}(y, \omega_o \leftarrow \omega_i) \cos\theta_i\ d\omega_i}
 \end{aligned}
-$$
+$${#eq:l_dir_l_indir}
 
 siendo $y$ el primer punto visible desde $p$ en la dirección $\omega_i$ situado en una fuente de luz.
 
-En cada punto de intersección $p$, escogeremos aleatoriamente un punto $y$ en la fuente de luz, y calcularemos $L_{directa}$. Esta integral es fácil de conseguir con las técnicas que ya conocemos. Sin embargo, $L_{indirecta}$ cuesta más trabajo. Al aparecer la radiancia incidente en el punto $p, L_i(p, \omega_o \leftarrow \omega_i)$, necesitaremos evaluarla de forma recursiva trazando rayos en la escena.
+En cada punto de intersección $p$, escogeremos aleatoriamente un punto $y$ en la fuente de luz, y calcularemos $L_{directa}$. Esta integral es fácil de conseguir con las técnicas que ya conocemos. Sin embargo, $L_{indirecta}$ cuesta más trabajo. Al aparecer la radiancia reflejada en el punto $p, L_r(p, \omega_o \leftarrow \omega_i)$, necesitaremos evaluarla de forma recursiva trazando rayos en la escena.
 
 Aunque estamos haciendo más cálculos en cada punto de la cadena de ray trace, al evaluar por separado $L_{directa}$ y $L_{indirecta}$ conseguimos reducir considerablemente la varianza. Por tanto, suponiendo fija la varianza, el coste computacional de un camino es mayor, pero el coste total es más bajo.
 
