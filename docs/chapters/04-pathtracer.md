@@ -59,7 +59,7 @@ $${#eq:rendering_eq_lambertian}
 
 Lo cual nos proporciona una expresión muy agradable para los materiales difusos.
 
-Por lo general, no será necesario simplificar hasta tal punto la expresión.
+Por lo general, no será posible simplificar hasta tal punto la expresión. Para BRDFs distintas de la difusa, algunas veces no podremos encontrar una forma de hacer muestreo por importancia de forma tan simple, en la cual la función de densidad sea proporcional a la BRDF.
 
 ### Pseudocódigo de un path tracer
 
