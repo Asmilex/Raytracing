@@ -179,7 +179,7 @@ Nuestro repositorio utiliza las herramientas citadas anteriormente para compilar
 
 ### Un vistazo general a la estructura
 
-La estructura final del proyecto (es decir, la carpeta `application`) es la siguiente:
+La estructura final de las carpetas del repositorio con el código fuente del proyecto (es decir, la carpeta `application`) es la siguiente:
 
 - La carpeta `application/build` contiene todo lo relacionado con CMake y el ejecutable final.
 - Las dependencias del proyecto se encuentran en el repositorio `application/nvpro_core`. Se descargan automáticamente seguir las instrucciones de compilación.
