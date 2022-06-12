@@ -119,7 +119,7 @@ Las nociones de los capítulos anteriores no distinguen entre un motor en tiempo
 
 ### Arquitecturas de gráficas
 
-El requisito más importante de todos es la gráfica. Para ser capaces de realizar cálculos de ray tracing en tiempo real, necesitaremos una arquitectura moderna con núcleos dedicados a este tipo de cáclulos [^4].
+El requisito más importante de todos es la gráfica. Para ser capaces de realizar cálculos de ray tracing en tiempo real en escenarios complejos, necesitaremos una arquitectura moderna con núcleos dedicados a este tipo de cáclulos [^4]. Aunque es posible implementar ray tracing en gráficas convencionales, el rendimiento no será lo suficientemente bueno como para adecuarse al nivel de fidelidad de los tiempos actuales.
 
 A día 17 de abril de 2022, para correr ray tracing en tiempo real, se necesita alguna de las siguientes tarjetas gráficas:
 
