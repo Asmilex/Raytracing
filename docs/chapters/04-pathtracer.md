@@ -163,7 +163,15 @@ Si se desea, se puede encontrar una comparación más a fondo de las API en el b
 
 Un proyecto de Vulkan necesita una cantidad de código inicial considerable. Para acelerar este trámite y partir de una base más sólida, se ha decidido usar un pequeño framework de trabajo de Nvidia llamado [nvpro-samples] [@nvpro-samples].
 
-Esta serie de repositorios de Nvidia DesignWorks contienen proyectos de ray tracing de Nvidia con fines didácticos. Nosotros usaremos **vk_raytracing_tutorial_KHR** [@nvpro-samples-tutorial], pues ejemplifica cómo añadir ray tracing en tiempo real a un proyecto de Vulkan. Estos frameworks contienen asimismo otras utilidades menores. Destacan **GLFW** (gestión de ventanas en C++), **imgui** (interfaz de usuario) y **tinyobjloader** (carga de `.obj` y `.mtl`).
+Esta serie de repositorios de Nvidia DesignWorks contienen proyectos de ray tracing de Nvidia con fines didácticos. Nosotros usaremos **vk_raytracing_tutorial_KHR** [@nvpro-samples-tutorial], pues ejemplifica cómo añadir ray tracing en tiempo real a un proyecto de Vulkan. En particular, nosotros seguiremos las siguientes secciones, pero extendiendo el resultado final:
+
+- El tutorial base.
+- Any hit shader.
+- Jitter Camera.
+- Reflections.
+- glTF Scene altamente modificado. A su vez, es una simplificación del repositorio `vk_raytrace`.
+
+Estos frameworks contienen asimismo otras utilidades menores. Destacan **GLFW** (gestión de ventanas en C++), **imgui** (interfaz de usuario) y **tinyobjloader** (carga de `.obj` y `.mtl`).
 
 Nuestro repositorio utiliza las herramientas citadas anteriormente para compilar su proyecto. El Makefile es una modificación del que se usa para ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una aplicación muy simple que muestra un cubo mediante rasterización, la cual modificaremos hasta añadir ray tracing en tiempo real. Por tanto, la parte inicial del desarrollo consiste en adaptar Vulkan para usar la extensión de ray tracing, extrayendo la información de la gráfica y cargando correspondientemente el dispositivo.
 
