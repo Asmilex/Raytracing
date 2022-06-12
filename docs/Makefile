@@ -33,7 +33,7 @@ SOURCES_WEB = ./headers/web.md
 SOURCES_PDF = ./headers/pdf.md
 
 PANDOC_FLAGS =\
-	--from markdown \
+	--from markdown-markdown_in_html_blocks-native_divs \
 	--listings \
 	--top-level-division="chapter" \
 	--filter pandoc-eqnos \

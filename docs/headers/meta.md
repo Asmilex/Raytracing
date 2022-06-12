@@ -6,6 +6,7 @@ link-citations: true
 header-includes: |
     \usepackage{caption}
     \usepackage{subcaption}
+    \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
 fignos-caption-name: "Figura"
 ---
 
