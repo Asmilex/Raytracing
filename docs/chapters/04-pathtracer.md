@@ -65,7 +65,32 @@ Por lo general, no será posible simplificar hasta tal punto la expresión. Para
 
 Con lo que conocemos hasta ahora, podemos empezar a programar los shaders. Una primera implementación inspirada en la rendering equation [@eq:rendering_equation_mc] sería similar a lo siguiente:
 
-```cpp
+```{=latex}
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\KwResult{Write here the result}
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\Input{Write here the input}
+\Output{Write here the output}
+\BlankLine
+\While{While condition}{
+    instructions\;
+    \eIf{condition}{
+        instructions1\;
+        instructions2\;
+    }{
+        instructions3\;
+    }
+}
+\caption{While loop with If/Else condition}
+\end{algorithm}
+```
+
+
+```{=html}
+<h3>Texto en html</h3>
+
 pathtrace(Rayo r, profundidad) {
     if (profundidad == profundidad_maxima) {
         return contribucion_ambiental;
