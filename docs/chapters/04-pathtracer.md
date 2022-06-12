@@ -256,7 +256,7 @@ Vulkan gestiona las estructuras de aceleración diviéndolas en dos partes: **To
 
 ### Botom-Level Acceleration Structure (BLAS)
 
-Las **estructuras de aceleración de bajo nivel** (*Bottom-Level Acceleration Structure*, BLAS) almacenan la geometría de un objeto individual; esto es, los vértices y los índices de los triángulos, además de una AABB que la encapsula.
+Las **estructuras de aceleración de bajo nivel** (*Bottom-Level Acceleration Structure*, BLAS) almacenan la geometría de un objeto individual; esto es, los datos de los vértices y los índices de los triángulos, además de una AABB que la encapsula.
 
 Pueden almacenar varios modelos, puesto que alojan uno o más buffers de vértices junto a sus matrices de transformación. Si un modelo es instanciado varias veces *dentro de la misma BLAS*, la geometría se duplica. Esto se hace para mejorar el rendimiento.
 
