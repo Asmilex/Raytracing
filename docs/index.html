@@ -437,9 +437,6 @@ con Monte Carlo</a></li>
 <li><a href="#pseudocódigo-de-un-path-tracer"><span
 class="toc-section-number">4.1.2</span> Pseudocódigo de un path
 tracer</a></li>
-<li><a href="#evitando-la-recursividad"><span
-class="toc-section-number">4.1.3</span> Evitando la
-recursividad</a></li>
 </ul></li>
 <li><a href="#requisitos-de-ray-tracing-en-tiempo-real"><span
 class="toc-section-number">4.2</span> Requisitos de ray tracing en
@@ -479,13 +476,13 @@ class="toc-section-number">4.6</span> La ray tracing pipeline</a>
 <li><a href="#descriptores-y-conceptos-básicos"><span
 class="toc-section-number">4.6.1</span> Descriptores y conceptos
 básicos</a></li>
-<li><a href="#la-shader-binding-table"><span
-class="toc-section-number">4.6.2</span> La Shader Binding Table</a></li>
 <li><a href="#tipos-de-shaders"><span
-class="toc-section-number">4.6.3</span> Tipos de shaders</a></li>
+class="toc-section-number">4.6.2</span> Tipos de shaders</a></li>
 <li><a href="#traspaso-de-información-entre-shaders"><span
-class="toc-section-number">4.6.4</span> Traspaso de información entre
+class="toc-section-number">4.6.3</span> Traspaso de información entre
 shaders</a></li>
+<li><a href="#la-shader-binding-table"><span
+class="toc-section-number">4.6.4</span> La Shader Binding Table</a></li>
 <li><a href="#creación-de-la-ray-tracing-pipeline"><span
 class="toc-section-number">4.6.5</span> Creación de la ray tracing
 pipeline</a></li>
@@ -495,11 +492,15 @@ class="toc-section-number">4.7</span> Materiales y objetos</a></li>
 <li><a href="#fuentes-de-luz"><span
 class="toc-section-number">4.8</span> Fuentes de luz</a></li>
 <li><a
+href="#implementación-eficiente-del-algoritmo-sin-recursividad"><span
+class="toc-section-number">4.9</span> Implementación eficiente del
+algoritmo sin recursividad</a></li>
+<li><a
 href="#antialiasing-mediante-jittering-y-acumulación-temporal"><span
-class="toc-section-number">4.9</span> Antialiasing mediante jittering y
+class="toc-section-number">4.10</span> Antialiasing mediante jittering y
 acumulación temporal</a></li>
 <li><a href="#corrección-de-gamma"><span
-class="toc-section-number">4.10</span> Corrección de gamma</a></li>
+class="toc-section-number">4.11</span> Corrección de gamma</a></li>
 </ul></li>
 <li><a href="#análisis-de-rendimiento"><span
 class="toc-section-number">5</span> Análisis de rendimiento</a>
@@ -832,9 +833,9 @@ Vulkan.</em></p>
 <h1 class="unnumbered" id="dedicatoria">Dedicatoria</h1>
 <p>A mi familia por su apoyo constante y permitirme empezar una carrera
 que ni siquiera sabía que quería.</p>
-<p>A Blanca, Cristina, Jorge, José <em>“OC”</em>, Lucas, Mari, Marina,
-Mapachana y Paula, Sergio por ayudarme con el contenido, feedback del
-desarrollo y diseño de la documentación.</p>
+<p>A Augusta, Blanca, Cristina, Jorge, José <em>“OC”</em>, Lucas, Mari,
+Marina, Mapachana y Paula, Sarah, Sergio por ayudarme con el contenido,
+feedback del desarrollo y diseño de la documentación.</p>
 <h1 class="unnumbered" id="introducción">Introducción</h1>
 <p>Este trabajo puede visualizarse en la web <a
 href="https://asmilex.github.io/Raytracing/">asmilex.github.io/Raytracing</a>
@@ -3206,10 +3207,6 @@ class="math inline">\(0 \le F_X(x) \le 1\)</span>) y sus límites
 laterales coinciden con las cotas anteriores (<span
 class="math inline">\(\lim_{x \to -\infty}{F_X} = 0\)</span>, <span
 class="math inline">\(\lim_{x \to \infty}{F_X} = 1\)</span>).</p>
-<p>Además, se cumple que <span class="math inline">\(0 \le F_X \le
-1(x)\)</span> y <span class="math inline">\(\lim_{x \to -\infty}{F_X} =
-0\)</span>, <span class="math inline">\(\lim_{x \to \infty}{F_X} =
-1\)</span>.</p>
 <p>El Teorema Fundamental del Cálculo nos permite relacionar función de
 distribución y función de densidad directamente:</p>
 <p><span class="math display">\[
@@ -3284,7 +3281,7 @@ propiedad hará que las variables aleatorias con distribución uniforme
 adquieran muchísima importancia. Generar números aleatorios en <span
 class="math inline">\([0, 1)\)</span> es muy fácil, así <a
 href="#método-de-la-transformada-inversa">que obtendremos otras vv.aa a
-partir de <span class="math inline">\(\xi\)</span></a>.</p>
+partir de <span class="math inline">\(\Xi\)</span></a>.</p>
 <p>Otra medida muy útil de una variable aleatoria es <strong>la
 varianza</strong>. Nos permitirá medir cómo de dispersa es la
 distribución con respecto a su media. La denotaremos como <span
@@ -3696,9 +3693,13 @@ lines(estimacion - z * error, col = &quot;blue&quot;, lwd = 2, lty = 3)
 lines(estimacion + z * error, col = &quot;blue&quot;, lwd = 2, lty = 3)
 abline(h = 0.4, col = 2)</code></pre>
 <p>Este código produce la siguiente gráfica:</p>
-<p><img loading="lazy" src="./img/03/Error%20simulación.png" id="fig:error_simulacion"
+<figure>
+<img loading="lazy" src="./img/03/Error%20simulación.png" style="width:80.0%"
 alt="Error de la simulación para el estimador de la integral \int_0^1{2x^4\ dx}" />
-{width=80%}</p>
+<figcaption aria-hidden="true">Error de la simulación para el estimador
+de la integral <span class="math inline">\(\int_0^1{2x^4\
+dx}\)</span></figcaption>
+</figure>
 <p>Se puede ver cómo debemos usar un número considerable de muestras,
 alrededor de 200, para que el error se mantenga bajo control. Aún así,
 aumentar el tamaño de <span class="math inline">\(N\)</span> no
@@ -4308,7 +4309,7 @@ class="math inline">\(p_X\)</span>.</p>
 p_Y\)</span>, denotada <span class="math inline">\(y\)</span>, y otra de
 <span class="math inline">\(\mathcal{U}(0, 1)\)</span>, denominada <span
 class="math inline">\(\xi\)</span>.</li>
-<li>Comprobar si <span class="math inline">\(\xi &lt;
+<li>Comprobar si <span class="math inline">\(\xi \le
 \frac{p_X(y)}{Mp_Y(y)}\)</span>.
 <ol type="1">
 <li>Si se cumple, se acepta <span class="math inline">\(y\)</span> como
@@ -4321,10 +4322,10 @@ y se vuelve al paso 1.</li>
 densidad <span class="math inline">\(p_X\)</span>:</p>
 <p>Sea <span class="math inline">\(Y \sim p_Y\)</span>, <span
 class="math inline">\(\xi \sim \mathcal{U}(0, 1)\)</span>
-independientes. Una muestra <span class="math inline">\(Y = y\)</span>
-es aceptada si se cumple que <span class="math inline">\(\xi \le
-\frac{p_X(y)}{Mp_Y(y)}\)</span>. La probabilidad de que esto ocurra
-es</p>
+independientes. Dado <span class="math inline">\(Y = y\)</span>, el
+candidato es aceptado si se cumple que <span class="math inline">\(\xi
+\le \frac{p_X(y)}{Mp_Y(y)}\)</span>. La probabilidad de que <span
+class="math inline">\(Y\)</span> sea aceptado es:</p>
 <p><span class="math display">\[
 \int_{-\infty}^{\infty}{p_Y(y) \frac{p_X(y)}{Mp_Y(y)} dy} =
 \int_{-\infty}^{\infty}{\frac{p_X(y)}{M} dy} = \frac{1}{M}
@@ -4341,7 +4342,7 @@ acepta}}
 } =  \\
   &amp; = \frac{1}{M} \int_{-\infty}^{x}{p_X(y) dy} + \left(1 -
 \frac{1}{M}\right) P\left[ X \le x \right] \\
-  &amp; = \int_{\infty}^{\infty}{p_X(y) dy}
+  &amp; = \int_{-\infty}^{\infty}{p_X(y) dy}
 \end{aligned}
 \]</span></p>
 <p>Lo que nos dice que <span class="math inline">\(X \sim p_X\)</span>
@@ -4569,164 +4570,27 @@ tracer</h3>
 shaders. Una primera implementación inspirada en la rendering equation
 [<a href="#eq:rendering_equation_mc">39</a>] sería similar a lo
 siguiente:</p>
-<pre><code class="language-cpp">pathtrace(Rayo r, profundidad) {
-    if (profundidad == profundidad_maxima) {
-        return contribucion_ambiental;
-    }
+<pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token function">L</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> omega<span class="token punctuation">,</span> profundidad<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    emision <span class="token operator">=</span> <span class="token function">L_e</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> omega<span class="token punctuation">,</span> profundidad<span class="token punctuation">)</span>
 
-    r.closest_hit()     // -&gt; Guardar información del impacto
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>profundidad <span class="token operator">&lt;=</span> profundidad_maxima<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        u <span class="token operator">=</span> <span class="token function">direccion_aleatoria</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        prob <span class="token operator">=</span> <span class="token function">pdf</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> u<span class="token punctuation">,</span> omega<span class="token punctuation">)</span>   <span class="token comment">// probabilidad de escoger la dir. u</span>
+        y <span class="token operator">=</span> <span class="token function">intersecar</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> u<span class="token punctuation">)</span>
+        theta <span class="token operator">=</span> <span class="token function">dot</span><span class="token punctuation">(</span><span class="token function">normal</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> u<span class="token punctuation">)</span>
+        L <span class="token operator">=</span>   emision
+            <span class="token operator">+</span> <span class="token function">L</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> <span class="token operator">-</span>u<span class="token punctuation">,</span> profundidad <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token function">f_r</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> u<span class="token punctuation">,</span> omega<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token function">cos</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span> <span class="token operator">/</span> prob
+    <span class="token punctuation">}</span>
 
-    if (!r.ha_impactado()) {
-        // Si no se golpea nada, añadir una pequeña contribución del entorno.
-        return contribucion_ambiental
-    }
-
-    // Sacar información del punto de impacto
-    hit_info = r.hit_info
-    material = hit_info.material
-    emision  = material.emision
-
-    // Calcular los parámetros de la ecuación
-    cos_theta = dot(r.direccion, hit_info.normal)
-    BRDF, pdf = extraer_info(material)
-
-    nuevo_rayo = Rayo(
-        origen    = hit_info.punto_impacto,
-        direccion = siguiente_direccion(hit_info.normal)
-    )
-
-    // Devolver la radiancia del punto de impacto.
-    // L_i se calcula a partir del pathtrace del nuevo rayo.
-    return emision
-        + (BRDF * pathtrace(nuevo_rayo, profundidad + 1) * cos_theta) / pdf;
-}</code></pre>
+    <span class="token keyword">return</span> L
+<span class="token punctuation">}</span></code></pre>
 <p>El término <code>emision</code> corresponde a <span
 class="math inline">\(L_e(p, \omega_o)\)</span>. Siempre lo añadimos,
 pues en caso de que el objeto no emita luz, la contribución de este
 término sería 0.</p>
 <p>La principal desventaja de esta implementación es que utiliza
 recursividad. Como bien es conocido, abusar de recursividad provoca que
-el tiempo de ejecución aumente significativamente. Además, con la
-implementación anterior, se generan rayos desde el closest hit shader,
-lo cual no es ideal.</p>
-<h3 data-number="4.1.3" id="evitando-la-recursividad"><span
-class="header-section-number">4.1.3</span> Evitando la recursividad</h3>
-<p>Podemos evitar los problemas de la implementación anterior con una
-pequeña modificación. En vez de calcular la radiancia desde el closest
-hit, nos traemos la información necesaria al raygen shader, y calculamos
-la radiancia total desde allí.</p>
-<p>Para conseguirlo, debemos hacer que el <code>HitPayload</code>
-almacene dos nuevos parámetros: <code>weight</code> y
-<code>hit_value</code>, así como el nuevo origen y la dirección del
-rayo.</p>
-<p>El pseudocódigo sería el siguiente: por una parte, una función se
-encarga de generar los rayos:</p>
-<pre><code class="language-cpp">pathtrace() {
-    // Inicializar parámetros del primer rayo
-    HitPayload prd {
-        hit_value,
-        weight,
-        ray_origin,
-        ray_direction
-    }
-
-    current_weight = vec3(1);
-    hit_value      = vec3(0);
-
-    for (profundidad in [0, profunidad_maxima]) {
-        closest_hit(prd.ray_origin, prd.ray_dir);
-        // prd actualiza sus parámetros
-
-        hit_value = hit_value + prd.hit_value * current_weight;
-        current_weight = current_weight * prd.weight;
-    }
-
-    return hit_value;
-}</code></pre>
-<p>Y por otro lado, otra función debe almacenar correctamente la
-información del punto de impacto, así como la radiancia de ese punto.
-Corresponde al closest hit:</p>
-<pre><code class="language-cpp">closest_hit() {
-    // Sacar información sobre el punto de impacto: material, normal...
-
-    // Preparar información para el raygen
-    prd.ray_origin = punto_impacto
-    prd.ray_dir = siguiente_direccion(material)
-
-    // Calcular la radiancia
-    float cos_theta = dot(prd.ray_dir, normal);
-    BRDF, pdf = extraer_info(material)
-
-    prd.hit_value = material.emision
-
-    prd.weight = (BRDF * cos_theta) / pdf
-
-    return prd
-}</code></pre>
-<p>Esta versión no es tan intuitiva. ¿Por qué este último genera el
-mismo resultado que el de <a href="#pseudocódigo-de-un-path-tracer">la
-versión recursiva</a>?</p>
-<p>Analicemos lo está ocurriendo.</p>
-<p>Sea <span class="math inline">\(h\)</span> el <em>hit value</em> (que
-simboliza la radiancia), <span class="math inline">\(w\)</span> el peso,
-<span class="math inline">\(f_i\)</span> la BRDF (o en su defecto,
-BTDF/BSDF), <span class="math inline">\(i\)</span>, <span
-class="math inline">\(e_i\)</span> la emisión, <span
-class="math inline">\(\cos\theta_i\)</span> el coseno del ángulo que
-forman la nueva dirección del rayo y la normal, y <span
-class="math inline">\(p_i\)</span> la función de densidad que, dada una
-dirección, proporciona la probabilidad de que se escoja. El subíndice
-denota el <span class="math inline">\(i\)</span>-ésimo punto de
-impacto.</p>
-<p>En esencia, este algoritmo está descomponiendo lo que recogemos en
-<code>weight</code>, que es <span class="math inline">\(f_i \cos\theta_i
-/ p_i\)</span>. Inicialmente, para el primer envío del rayo, <span
-class="math inline">\(h = (0, 0, 0)\)</span>, <span
-class="math inline">\(w = (1, 1, 1)\)</span>. Tras trazar el primer
-rayo, se tiene que</p>
-<p><span class="math display">\[
-\begin{aligned}
-    h &amp; = 0 + e_1 w = e_1 \\
-    w &amp; = \frac{f_1 \cos\theta_1}{p_1}
-\end{aligned}
-\]</span></p>
-<p>Tras el segundo rayo, obtenemos</p>
-<p><span class="math display">\[
-\begin{aligned}
-    h &amp; = e_1 + e_2 w = \\
-      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} \\
-    w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
-\end{aligned}
-\]</span></p>
-<p>Y para el tercero</p>
-<p><span class="math display">\[
-\begin{aligned}
-    h &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 w = \\
-      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 \frac{f_1
-\cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} = \\
-      &amp; = e_1 + \frac{f_1
-\cos\theta_1}{p_1}\textcolor{verde-oscurisimo}{\left(e_2 + e_3 \frac{f_2
-\cos\theta_2}{p_2}\right)} \\
-    w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
-\frac{f_3 \cos\theta_3}{p_3}
-\end{aligned}
-\]</span></p>
-<p>El <span
-class="math inline">\(\textcolor{verde-oscurisimo}{\text{término que
-acompaña}}\)</span> a <span class="math inline">\(\frac{f_1
-\cos\theta_1}{p_1}\)</span> es la radiancia del tercer punto de impacto.
-Por tanto, a la larga, se tendrá que <span
-class="math inline">\(h\)</span> estima correctamente la radiancia de un
-punto. Con esto, podemos afirmar que</p>
-<p><span class="math display">\[
-h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow
-\omega_j) L_i(p, \omega_j) \cos\theta_j}{P\left[ \omega_j \right]}}
-\]</span></p>
-<p>Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento
-que el recursivo <span class="citation"
-data-cites="nvpro-samples-tutorial">(<a
-href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
-2022a</a>, glTF Scene)</span>.</p>
+el tiempo de ejecución aumente significativamente.</p>
 <h2 data-number="4.2"
 id="requisitos-de-ray-tracing-en-tiempo-real"><span
 class="header-section-number">4.2</span> Requisitos de ray tracing en
@@ -4735,17 +4599,18 @@ tiempo real</h2>
 programa en tiempo real. Mientras que en un <em>offline renderer</em>
 disponemos de un tiempo muy considerable por frame (desde varios
 segundos hasta horas), en un programa en tiempo real necesitamos que un
-frame salga en 16 milisegundos o menos. Este concepto se suele denominar
-<em>frame budget</em>: la cantidad de tiempo que disponemos para un
-frame.</p>
+frame salga en 33.3 milisegundos o menos. Este concepto se suele
+denominar <em>frame budget</em>: la cantidad de tiempo que disponemos
+para un frame.</p>
 <blockquote>
 <p><strong>Nota</strong>: cuando hablamos del tiempo disponible para un
-frame, solemos utilizarmilisegundos (ms) o frames por segundo (FPS).
+frame, solemos utilizar milisegundos (ms) o frames por segundo (FPS).
 Para que un programa en tiempo real vaya suficientemente fluido,
 necesitaremos que el motor corra a un mínimo de 30 FPS (que equivalen a
-33 ms por frame). Hoy en día, debido al avance del área en campos como
-los videosjuegos, el estándar se está convirtiendo en 60 FPS (16
-ms/frame).</p>
+33.3 ms/frame). Hoy en día, debido al avance del área en campos como los
+videosjuegos, el estándar se está convirtiendo en 60 FPS (16.6
+ms/frame). Aún más, en los videojuegos competitivos profesionales se han
+asentado los 240 FPS (4.1 ms/frame).</p>
 </blockquote>
 <p>Las nociones de los capítulos anteriores no distinguen entre un motor
 en tiempo real y <em>offline</em>. Como es natural, necesitaremos
@@ -4756,10 +4621,13 @@ motor en tiempo real con ray tracing funcione.</p>
 class="header-section-number">4.2.1</span> Arquitecturas de
 gráficas</h3>
 <p>El requisito más importante de todos es la gráfica. Para ser capaces
-de realizar cálculos de ray tracing en tiempo real, necesitaremos una
-arquitectura moderna con núcleos dedicados a este tipo de cáclulos <a
-href="#fn4" class="footnote-ref" id="fnref4"
-role="doc-noteref"><sup>4</sup></a>.</p>
+de realizar cálculos de ray tracing en tiempo real en escenarios
+complejos, necesitaremos una arquitectura moderna con núcleos dedicados
+a este tipo de cáclulos <a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a>. Aunque es posible implementar ray
+tracing en gráficas convencionales, el rendimiento no será lo
+suficientemente bueno como para adecuarse al nivel de fidelidad de los
+tiempos actuales.</p>
 <p>A día 17 de abril de 2022, para correr ray tracing en tiempo real, se
 necesita alguna de las siguientes tarjetas gráficas:</p>
 <table>
@@ -4884,9 +4752,19 @@ de ray tracing de Nvidia con fines didácticos. Nosotros usaremos
 data-cites="nvpro-samples-tutorial">(<a
 href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
 2022a</a>)</span>, pues ejemplifica cómo añadir ray tracing en tiempo
-real a un proyecto de Vulkan. Estos frameworks contienen asimismo otras
-utilidades menores. Destacan <strong>GLFW</strong> (gestión de ventanas
-en C++), <strong>imgui</strong> (interfaz de usuario) y
+real a un proyecto de Vulkan. En particular, nosotros seguiremos las
+siguientes secciones, pero extendiendo el resultado final:</p>
+<ul>
+<li>El tutorial base.</li>
+<li>Any hit shader.</li>
+<li>Jitter Camera.</li>
+<li>Reflections.</li>
+<li>glTF Scene altamente modificado. A su vez, es una simplificación del
+repositorio <code>vk_raytrace</code>.</li>
+</ul>
+<p>Estos frameworks contienen asimismo otras utilidades menores.
+Destacan <strong>GLFW</strong> (gestión de ventanas en C++),
+<strong>imgui</strong> (interfaz de usuario) y
 <strong>tinyobjloader</strong> (carga de <code>.obj</code> y
 <code>.mtl</code>).</p>
 <p>Nuestro repositorio utiliza las herramientas citadas anteriormente
@@ -4909,8 +4787,9 @@ programa muestra un cubo rasterizado muy simple. Es, prácticamente, un
 <h3 data-number="4.3.1" id="un-vistazo-general-a-la-estructura"><span
 class="header-section-number">4.3.1</span> Un vistazo general a la
 estructura</h3>
-<p>La estructura final del proyecto (es decir, la carpeta
-<code>application</code>) es la siguiente:</p>
+<p>La estructura final de las carpetas del repositorio con el código
+fuente del proyecto (es decir, la carpeta <code>application</code>) es
+la siguiente:</p>
 <ul>
 <li>La carpeta <code>application/build</code> contiene todo lo
 relacionado con CMake y el ejecutable final.</li>
@@ -5025,8 +4904,10 @@ clave.</p>
 <p>Las <strong>estructuras de aceleración</strong> son una forma de
 representar la geometría de la escena. Aunque existen diferentes tipos,
 en esencia, todos engloban a uno o varios objetos en una estructura con
-la que resulta más eficiente hacer test de intersección. Son similares a
-los grafos de escena de un rasterizador.</p>
+la que resulta más eficiente hacer test de intersección en términos del
+tiempo. Fueron introducidos por primera vez en <span class="citation"
+data-cites="kajiya-bb">(<a href="#ref-kajiya-bb"
+role="doc-biblioref">Kay and Kajiya 1986</a>)</span>.</p>
 <p>Uno de los tipos más comunes (y el que se usa en <span
 class="citation" data-cites="Shirley2020RTW2">(<a
 href="#ref-Shirley2020RTW2" role="doc-biblioref">Shirley
@@ -5079,8 +4960,8 @@ class="header-section-number">4.5.1</span> Botom-Level Acceleration
 Structure (BLAS)</h3>
 <p>Las <strong>estructuras de aceleración de bajo nivel</strong>
 (<em>Bottom-Level Acceleration Structure</em>, BLAS) almacenan la
-geometría de un objeto individual; esto es, los vértices y los índices
-de los triángulos, además de una AABB que la encapsula.</p>
+geometría de un objeto individual; esto es, los datos de los vértices y
+los índices de los triángulos, además de una AABB que la encapsula.</p>
 <p>Pueden almacenar varios modelos, puesto que alojan uno o más buffers
 de vértices junto a sus matrices de transformación. Si un modelo es
 instanciado varias veces <em>dentro de la misma BLAS</em>, la geometría
@@ -5176,11 +5057,99 @@ material</strong> se va a usar: un rayo puede impactar en
 <em>cualquier</em> material presente en la escena, lo cual invocaría un
 shader específico. Debido a esto, empaquetaremos todos los recursos en
 un único set de descriptores.</p>
-<h3 data-number="4.6.2" id="la-shader-binding-table"><span
-class="header-section-number">4.6.2</span> La Shader Binding Table</h3>
-<p>Para solucionar esto, vamos a crear la <strong>Shader Binding
-Table</strong> (SBT). Esta estructura permitirá cargar el shader
-correspondiente dependiendo de dónde impacte un rayo.</p>
+<h3 data-number="4.6.2" id="tipos-de-shaders"><span
+class="header-section-number">4.6.2</span> Tipos de shaders</h3>
+<p>El pipeline de ray tracing soporta varios tipos de shaders diferentes
+que cubren la funcionalidad esencial de un ray tracer:</p>
+<ul>
+<li><strong>Ray generation shader</strong>: es el punto de inicio del
+viaje de un rayo. Calcula punto de inicio y procesa el resultado final.
+Idealmente, solo se invocan rayos desde aquí. La implementación se
+encuentra en
+<code>application/vulkan_ray_tracing/src/shaders/raytrace.rgen</code>.</li>
+<li><strong>Closest hit shader</strong>: este shader se ejecuta cuando
+un rayo impacta en una geometría por primera vez. Se pueden trazar rayos
+recursivamente desde aquí (por ejemplo, para calcular oclusión
+ambiental). El archivo correspondiente es
+<code>application/vulkan_ray_tracing/src/shaders/raytrace.rchit</code>.</li>
+<li><strong>Any-hit shader</strong>: similar al closest hit, pero
+invocado en cada intersección del camino del rayo que cumpla <span
+class="math inline">\(t \in [t_{min}, t_{max})\)</span>. Es comúnmente
+utilizado en los cálculos de transparencias (<em>alpha-testing</em>).
+Puedes comprobarlo en
+<code>application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl</code>.</li>
+<li><strong>Miss shader</strong>: si el rayo no choca con ninguna
+geometría –pega con el infinito–, se ejecuta este shader. Normalmente,
+añade una pequeña contribución ambiental al rayo. Se halla
+<code>application/vulkan_ray_tracing/src/shaders/raytrace.rmiss</code>.</li>
+<li><strong>Intersection shader</strong>: este shader es algo diferente
+al resto. Su función es calcular el punto de impacto de un rayo con una
+geometría. Por defecto se utiliza un test triángulo - rayo. En nuestro
+path tracer lo dejaremos por defecto, pero podríamos definir algún
+método como los que vimos en la sección <a
+href="#intersecciones-rayo---objeto">intersecciones rayo -
+objeto</a>.</li>
+</ul>
+<p>Existe otro tipo de shader adicional denominado <strong>callable
+shader</strong>. Este es un shader que se invoca desde otro shader. Por
+ejemplo, un shader de intersección puede invocar a un shader de
+oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque
+if-else por un shader para hacer cálculos de iluminación. Este tipo de
+shaders no se han implementado en el path tracer, pero se podrían añadir
+con un poco de trabajo.</p>
+<h3 data-number="4.6.3" id="traspaso-de-información-entre-shaders"><span
+class="header-section-number">4.6.3</span> Traspaso de información entre
+shaders</h3>
+<p>En ray tracing, los shaders por sí solos no pueden realizar todos los
+cálculos necesarios para conseguir la imagen final. Necesitaremos enviar
+información de uno a otro. Para conseguirlo tenemos diferentes
+mecanismos:</p>
+<p>El primero de ellos son las <strong>push constants</strong>. Estas
+son variables que se pueden traspasar a los shaders (es decir, de CPU a
+GPU), pero que no se pueden modificar entre fases. Únicamente podemos
+mandar un pequeño número de variables, el cual se puede consultar
+mediante <code>VkPhysicalDeviceLimits.maxPushConstantSize</code>.
+Además, es importante tener en cuenta el alineamiento de las estructuras
+almacenadas.</p>
+<p>Nuestro path tracer tiene implementado actualmente (19 de abril de
+2022) las siguientes constantes:</p>
+<pre><code class="language-cpp">struct PushConstantRay {
+    vec4  clearColor;     // Color ambiental
+    vec3  lightPosition;
+    float lightIntensity;
+    int   lightType;
+    int   maxDepth;       // Cuántos rebotes máximos permitimos
+    int   nb_samples;     // Para antialiasing
+    int   frame;          // Para acumulación temporal
+};</code></pre>
+<p>¿Y si queremos pasar información mutable entre shaders?</p>
+<p>Para eso están los <strong>payloads</strong>. Cada rayo puede llevar
+información adicional, que se conoce como carga. En esencia, es como una
+pequeña mochila: el rayo puede recoger información de un shader y
+pasarlo a otro. Esto resulta <em>muy</em> útil, por ejemplo, a la hora
+de calcular la radiancia de un camino, o saber desde qué punto venía el
+rayo. Se crean mediante la estructura <code>rayPayloadEXT</code>, y se
+reciben en otro shader mediante <code>rayPayloadInEXT</code>. Es
+importante controlar que el tamaño de la carga no sea excesivamente
+grande.</p>
+<p>Los payloads se definen de la siguiente manera:</p>
+<pre><code class="language-cpp">struct HitPayload
+{
+    vec3 hit_value;
+    vec3 weight;
+
+    vec3 ray_origin;
+    vec3 ray_dir;
+
+    int  depth;
+    uint seed;
+};</code></pre>
+<h3 data-number="4.6.4" id="la-shader-binding-table"><span
+class="header-section-number">4.6.4</span> La Shader Binding Table</h3>
+<p>Para solventar el problema de determinar el material de un objeto en
+ray tracing vamos usar la <strong>Shader Binding Table</strong> (SBT).
+Esta estructura permitirá cargar el shader correspondiente dependiendo
+de dónde impacte un rayo.</p>
 <p>Para cargar esta estructura, se debe hacer lo siguiente:</p>
 <ol type="1">
 <li>Cargar y compilar cada shader en un
@@ -5222,104 +5191,20 @@ generation shader.</li>
 <li><strong>Hit group record</strong>: se encargan de los handlers del
 closest hit, anyhit (opcional), e intersection (opcional).</li>
 <li><strong>Miss group record</strong>: se encarga del miss shader.</li>
-<li><strong>Callable group record</strong>.</li>
+<li><strong>Callable group record</strong>: para los shaders de tipo
+callable.</li>
 </ul>
 <p>Una de las partes más difíciles de la SBT es saber cómo se relacionan
 record y geometría. Es decir, cuando un rayo impacta en una geometría,
 ¿a qué record de la SBT llamamos? Esto se determina mediante los
 parámetros de la instancia, la llamada a <em>trace rays</em>, y el orden
-de la geometría en la BLAS. En particular, resulta problemático de los
-índices en los <em>hit groups</em>.</p>
+de la geometría en la BLAS.</p>
 <p>Para conocer a fondo cómo funciona la Shader Binding Table, puedes
 visitar <span class="citation" data-cites="GemsII-SBT">(<a
 href="#ref-GemsII-SBT" role="doc-biblioref">Usher 2021, 193</a>)</span>
 o <span class="citation" data-cites="shader-binding-table">(<a
 href="#ref-shader-binding-table" role="doc-biblioref">Usher
 2019</a>)</span>.</p>
-<div id="fig:SBT" class="fignos">
-<figure>
-<img loading="lazy" src="./img/04/SBT.png" alt="Figura 24: Fuente: (Usher 2019)" />
-<figcaption aria-hidden="true"><span>Figura 24:</span> Fuente: <span
-class="citation" data-cites="shader-binding-table">(<a
-href="#ref-shader-binding-table" role="doc-biblioref">Usher
-2019</a>)</span></figcaption>
-</figure>
-</div>
-<h3 data-number="4.6.3" id="tipos-de-shaders"><span
-class="header-section-number">4.6.3</span> Tipos de shaders</h3>
-<p>El pipeline soporta varios tipos de shaders diferentes que cubren la
-funcionalidad esencial de un ray tracer:</p>
-<ul>
-<li><strong>Ray generation shader</strong>: es el punto de inicio del
-viaje de un rayo. Calcula punto de inicio y procesa el resultado final.
-Idealmente, solo se invocan rayos desde aquí. La implementación se
-encuentra en
-<code>application/vulkan_ray_tracing/src/shaders/raytrace.rgen</code>.</li>
-<li><strong>Closest hit shader</strong>: este shader se ejecuta cuando
-un rayo impacta en una geometría por primera vez. Se pueden trazar rayos
-recursivamente desde aquí (por ejemplo, para calcular oclusión
-ambiental). El archivo correspondiente es
-<code>application/vulkan_ray_tracing/src/shaders/raytrace.rchit</code>.</li>
-<li><strong>Any-hit shader</strong>: similar al closest hit, pero
-invocado en cada intersección del camino del rayo que cumpla <span
-class="math inline">\(t \in [t_{min}, t_{max})\)</span>. Es comúnmente
-utilizado en los cálculos de transparencias (<em>alpha-testing</em>).
-Puedes comprobarlo en
-<code>application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl</code>.</li>
-<li><strong>Miss shader</strong>: si el rayo no choca con ninguna
-geometría –pega con el infinito–, se ejecuta este shader. Normalmente,
-añade una pequeña contribución ambiental al rayo. Se halla
-<code>application/vulkan_ray_tracing/src/shaders/raytrace.rmiss</code>.</li>
-<li><strong>Intersection shader</strong>: este shader es algo diferente
-al resto. Su función es calcular el punto de impacto de un rayo con una
-geometría. Por defecto se utiliza un test triángulo - rayo. En nuestro
-path tracer lo dejaremos por defecto, pero podríamos definir algún
-método como los que vimos en la sección <a
-href="#intersecciones-rayo---objeto">intersecciones rayo -
-objeto</a>.</li>
-</ul>
-<p>Existe otro tipo de shader adicional denominado <strong>callable
-shader</strong>. Este es un shader que se invoca desde otro shader. Por
-ejemplo, un shader de intersección puede invocar a un shader de
-oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque
-if-else por un shader para hacer cálculos de iluminación. Este tipo de
-shaders no se han implementado en el path tracer, pero se podrían añadir
-con un poco de trabajo.</p>
-<h3 data-number="4.6.4" id="traspaso-de-información-entre-shaders"><span
-class="header-section-number">4.6.4</span> Traspaso de información entre
-shaders</h3>
-<p>En ray tracing, los shaders por sí solos no pueden realizar todos los
-cálculos necesarios para conseguir la imagen final. Necesitaremos enviar
-información de uno a otro. Para conseguirlo tenemos diferentes
-mecanismos:</p>
-<p>El primero de ellos son las <strong>push constants</strong>. Estas
-son variables que se pueden traspasar a los shaders (es decir, de CPU a
-GPU), pero que no se pueden modificar entre fases. Únicamente podemos
-mandar un pequeño número de variables, el cual se puede consultar
-mediante <code>VkPhysicalDeviceLimits.maxPushConstantSize</code>.
-Además, es importante tener en cuenta el alineamiento de las estructuras
-almacenadas.</p>
-<p>Nuestro path tracer tiene implementado actualmente (19 de abril de
-2022) las siguientes constantes:</p>
-<pre><code class="language-cpp">struct PushConstantRay {
-    vec4  clearColor;     // Color ambiental
-    vec3  lightPosition;
-    float lightIntensity;
-    int   lightType;
-    int   maxDepth;       // Cuántos rebotes máximos permitimos
-    int   nb_samples;     // Para antialiasing
-    int   frame;          // Para acumulación temporal
-};</code></pre>
-<p>¿Y si queremos pasar información mutable entre shaders?</p>
-<p>Para eso están los <strong>payloads</strong>. Cada rayo puede llevar
-información adicional, que se conoce como carga. En esencia, es como una
-pequeña mochila: el rayo puede recoger información de un shader y
-pasarlo a otro. Esto resulta <em>muy</em> útil, por ejemplo, a la hora
-de calcular la radiancia de un camino, o saber desde qué punto venía el
-rayo. Se crean mediante la estructura <code>rayPayloadEXT</code>, y se
-reciben en otro shader mediante <code>rayPayloadInEXT</code>. Es
-importante controlar que el tamaño de la carga no sea excesivamente
-grande.</p>
 <h3 data-number="4.6.5" id="creación-de-la-ray-tracing-pipeline"><span
 class="header-section-number">4.6.5</span> Creación de la ray tracing
 pipeline</h3>
@@ -5486,7 +5371,7 @@ escena para proporcionar luz, se conozca una fuente de iluminación en
 todo momento. Dicha fuente puede ser puntual o direccional, y puede ser
 controlada mediante la interfaz. El estado de la fuente se traspasa a
 los shaders mediante una push constant:</p>
-<pre><code>struct PushConstantRay
+<pre><code class="language-cpp">struct PushConstantRay
 {
     ...
     vec3  light_position;
@@ -5577,9 +5462,144 @@ shadow rays precisamente por este motivo.</p>
 <p>Y con esto, hemos conseguido añadir dos tipos de fuentes de
 iluminación.</p>
 <h2 data-number="4.9"
+id="implementación-eficiente-del-algoritmo-sin-recursividad"><span
+class="header-section-number">4.9</span> Implementación eficiente del
+algoritmo sin recursividad</h2>
+<p>El código de la sección <a
+href="#pseudocódigo-de-un-path-tracer">“Pseudocódigo de un path
+tracer”</a> tiene el problema de que utiliza recursividad. En la
+implementación de los shaders, esto supondría generar rayos desde el
+closest hit. Para evitarlo, reestructuraremos el código de forma que
+únicamente se lancen desde el raygen y calculemos la radiancia total en
+dicho shader.</p>
+<p>El código resultante sería el siguiente: por una parte, una función
+se encarga de generar los rayos, denominada
+<code>pathtrace()</code>:</p>
+<pre><code class="language-cpp">vec3 pathtrace(vec4 ray_origin, vec4 ray_dir, float t_min, float t_max, uint ray_flags) {
+    // Inicializar el payload correctamente
+    prd.depth      = 0;
+    prd.hit_value  = vec3(0);
+    prd.ray_origin = ray_origin.xyz;
+    prd.ray_dir    = ray_dir.xyz;
+    prd.weight     = vec3(0);
+    // prd.seed ya estaba inicializado
+
+    vec3 current_weight = vec3(1);
+    vec3 hit_value      = vec3(0);
+
+    // Evitar llamadas recursivas a traceRayEXT() desde el closest hit.
+    for (; prd.depth &lt; pcRay.max_depth; prd.depth++) {
+        traceRayEXT(topLevelAS, // acceleration structure
+            ray_flags,          // rayFlags
+            0xFF,               // cullMask
+            0,                  // sbtRecordOffset
+            0,                  // sbtRecordStride
+            0,                  // missIndex
+            prd.ray_origin,     // ray origin
+            t_min,              // ray min range
+            prd.ray_dir,        // ray direction
+            t_max,              // ray max range
+            0                   // payload (location = 0)
+        );
+
+        hit_value      += prd.hit_value * current_weight;
+        current_weight *= prd.weight;
+    }
+
+    return hit_value;
+}</code></pre>
+<p>Y por otro lado, otra función debe almacenar correctamente la
+información del punto de impacto, así como la radiancia de ese punto.
+Corresponde al closest hit:</p>
+<pre><code class="language-cpp">closest_hit() {
+    // Sacar información sobre el punto de impacto: material, normal...
+    WaveFrontMaterial mat = material(world_position);
+
+    // Preparar información para el raygen
+    prd.hit_value      = material.emision;
+    prd.ray_origin     = world_position;
+    prd.ray_dir        = siguiente_direccion(material)
+    float probabilidad = pdf(prd.ray_dir);
+
+    // Calcular la radiancia
+    float cos_theta = dot(prd.ray_dir, normal);
+    vec3 BRDF       = BRDF(material)
+
+    prd.weight = (BRDF * cos_theta) / pdf
+
+    return prd
+}</code></pre>
+<p>El código final es considerablemente más complejo que este que se
+presenta. Sin embargo, se han obviado algunos detalles de implementación
+con la intención de ser explicativo.</p>
+<p>Esta versión no es tan intuitiva. ¿Por qué este último genera el
+mismo resultado que el de <a href="#pseudocódigo-de-un-path-tracer">la
+versión recursiva</a>?</p>
+<p>Analicemos lo está ocurriendo.</p>
+<p>Sea <span class="math inline">\(h\)</span> el <em>hit value</em> (que
+simboliza la radiancia), <span class="math inline">\(w\)</span> el peso,
+<span class="math inline">\(f_i\)</span> la BRDF (o en su defecto,
+BTDF/BSDF), <span class="math inline">\(i\)</span>, <span
+class="math inline">\(e_i\)</span> la emisión, <span
+class="math inline">\(\cos\theta_i\)</span> el coseno del ángulo que
+forman la nueva dirección del rayo y la normal, y <span
+class="math inline">\(p_i\)</span> la función de densidad que, dada una
+dirección, proporciona la probabilidad de que se escoja. El subíndice
+denota el <span class="math inline">\(i\)</span>-ésimo punto de
+impacto.</p>
+<p>En esencia, este algoritmo está descomponiendo lo que recogemos en
+<code>weight</code>, que es <span class="math inline">\(f_i \cos\theta_i
+/ p_i\)</span>. Inicialmente, para el primer envío del rayo, <span
+class="math inline">\(h = (0, 0, 0)\)</span>, <span
+class="math inline">\(w = (1, 1, 1)\)</span>. Tras trazar el primer
+rayo, se tiene que</p>
+<p><span class="math display">\[
+\begin{aligned}
+    h &amp; = 0 + e_1 w = e_1 \\
+    w &amp; = \frac{f_1 \cos\theta_1}{p_1}
+\end{aligned}
+\]</span></p>
+<p>Tras el segundo rayo, obtenemos</p>
+<p><span class="math display">\[
+\begin{aligned}
+    h &amp; = e_1 + e_2 w = \\
+      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} \\
+    w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
+\end{aligned}
+\]</span></p>
+<p>Y para el tercero</p>
+<p><span class="math display">\[
+\begin{aligned}
+    h &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 w = \\
+      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 \frac{f_1
+\cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} = \\
+      &amp; = e_1 + \frac{f_1
+\cos\theta_1}{p_1}\textcolor{verde-oscurisimo}{\left(e_2 + e_3 \frac{f_2
+\cos\theta_2}{p_2}\right)} \\
+    w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
+\frac{f_3 \cos\theta_3}{p_3}
+\end{aligned}
+\]</span></p>
+<p>El <span
+class="math inline">\(\textcolor{verde-oscurisimo}{\text{término que
+acompaña}}\)</span> a <span class="math inline">\(\frac{f_1
+\cos\theta_1}{p_1}\)</span> es la radiancia del tercer punto de impacto.
+Por tanto, a la larga, se tendrá que <span
+class="math inline">\(h\)</span> estima correctamente la radiancia de un
+punto. Con esto, podemos afirmar que</p>
+<p><span class="math display">\[
+h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow
+\omega_j) L_i(p, \omega_j) \cos\theta_j}{P\left[ \omega_j \right]}}
+\]</span></p>
+<p>Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento
+que el recursivo <span class="citation"
+data-cites="nvpro-samples-tutorial">(<a
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+2022a</a>, glTF Scene)</span>.</p>
+<h2 data-number="4.10"
 id="antialiasing-mediante-jittering-y-acumulación-temporal"><span
-class="header-section-number">4.9</span> Antialiasing mediante jittering
-y acumulación temporal</h2>
+class="header-section-number">4.10</span> Antialiasing mediante
+jittering y acumulación temporal</h2>
 <p>Normalmente, mandamos los rayos desde el centro de un pixel. Podemos
 conseguir una mejora sustancial de la calidad con un pequeño truco: en
 vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña
@@ -5656,8 +5676,8 @@ vec3 sample_pixel() {
 <p>En la sección de la <a
 href="#comparativa-con-in-one-weekend">comparativa</a> estudiaremos a
 fondo los efectos de esta técnica.</p>
-<h2 data-number="4.10" id="corrección-de-gamma"><span
-class="header-section-number">4.10</span> Corrección de gamma</h2>
+<h2 data-number="4.11" id="corrección-de-gamma"><span
+class="header-section-number">4.11</span> Corrección de gamma</h2>
 <p>Con el código de la sección <a
 href="#antialiasing-mediante-jittering-y-acumulación-temporal">anterior</a>,
 existe un problema con los colores finales. El algoritmo de pathtracing
@@ -5667,8 +5687,8 @@ espera que la terna RGB provista esté en <span class="math inline">\([0,
 <div id="fig:quemado" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Quemado.png" style="width:80.0%"
-alt="Figura 25: Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz." />
-<figcaption aria-hidden="true"><span>Figura 25:</span> Fíjate en la
+alt="Figura 24: Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz." />
+<figcaption aria-hidden="true"><span>Figura 24:</span> Fíjate en la
 parte de la izquierda. La pared roja aparece demasiado brillante;
 especialmente, aquella impactada por la fuente de luz.</figcaption>
 </figure>
@@ -5702,8 +5722,8 @@ if (USE_GAMMA_CORRECTION == 1) {
 <div id="fig:correccion_gamma" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Corrección%20de%20gamma.png" style="width:80.0%"
-alt="Figura 26: Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos." />
-<figcaption aria-hidden="true"><span>Figura 26:</span> Con la corección
+alt="Figura 25: Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos." />
+<figcaption aria-hidden="true"><span>Figura 25:</span> Con la corección
 de gamma aplicada, vemos que los colores de la foto no son tan
 intensos.</figcaption>
 </figure>
@@ -5745,8 +5765,8 @@ el programa.</p>
 <div id="fig:asmiray" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Asmiray.png" style="width:70.0%"
-alt="Figura 27: Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones." />
-<figcaption aria-hidden="true"><span>Figura 27:</span> Al abrir el
+alt="Figura 26: Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones." />
+<figcaption aria-hidden="true"><span>Figura 26:</span> Al abrir el
 motor, te encontrarás con una pantalla similar a esta: una escena
 cargada junto a un panel lateral con numerosas opciones.</figcaption>
 </figure>
@@ -5908,8 +5928,8 @@ original contiene dos objetos de este tipo:</p>
 <div id="fig:materiales_difusos" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20difusos.png" style="width:70.0%"
-alt="Figura 28: Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
-<figcaption aria-hidden="true"><span>Figura 28:</span> Materiales
+alt="Figura 27: Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
+<figcaption aria-hidden="true"><span>Figura 27:</span> Materiales
 difusos de la escena Cornell Box original. Vemos que la luz se esparce
 uniformemente al rebotar en el objeto.</figcaption>
 </figure>
@@ -5923,8 +5943,8 @@ href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 <div id="fig:materiales_glossy" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20glossy.png" style="width:70.0%"
-alt="Figura 29: Materiales especulares metálicos de la escena Cornell Box glossy" />
-<figcaption aria-hidden="true"><span>Figura 29:</span> Materiales
+alt="Figura 28: Materiales especulares metálicos de la escena Cornell Box glossy" />
+<figcaption aria-hidden="true"><span>Figura 28:</span> Materiales
 especulares metálicos de la escena Cornell Box glossy</figcaption>
 </figure>
 </div>
@@ -5935,8 +5955,8 @@ debemos recurrir a técnicas específicas como reflejos planares o
 <div id="fig:materiales_espejos" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20espejos.png" style="width:70.0%"
-alt="Figura 30: Una caja que actúa como un espejo prácticamente perfecto en la escena cornell_box_mirror" />
-<figcaption aria-hidden="true"><span>Figura 30:</span> Una caja que
+alt="Figura 29: Una caja que actúa como un espejo prácticamente perfecto en la escena cornell_box_mirror" />
+<figcaption aria-hidden="true"><span>Figura 29:</span> Una caja que
 actúa como un espejo prácticamente perfecto en la escena
 <code>cornell_box_mirror</code></figcaption>
 </figure>
@@ -5947,8 +5967,8 @@ modelar el comportamiento de la luz.</p>
 <div id="fig:reflectantes" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20reflectantes.png" style="width:70.0%"
-alt="Figura 31: La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera." />
-<figcaption aria-hidden="true"><span>Figura 31:</span> La esfera de la
+alt="Figura 30: La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera." />
+<figcaption aria-hidden="true"><span>Figura 30:</span> La esfera de la
 derecha refracta la luz al pasar por ella, adquiriendo en el proceso un
 color más oscuro. También podemos ver la esfera de la izquierda
 recursivamente, dentro del propio reflejo de la esfera.</figcaption>
@@ -5961,8 +5981,8 @@ algunos rayos:</p>
 <div id="fig:materiales_transparentes" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20transparentes.png" style="width:70.0%"
-alt="Figura 32: El modelo del Wuson, pero transparente." />
-<figcaption aria-hidden="true"><span>Figura 32:</span> El modelo del
+alt="Figura 31: El modelo del Wuson, pero transparente." />
+<figcaption aria-hidden="true"><span>Figura 31:</span> El modelo del
 Wuson, pero transparente.</figcaption>
 </figure>
 </div>
@@ -5972,25 +5992,25 @@ class="header-section-number">5.2.2</span> Fuentes de luz</h3>
 fuentes de luces: puntuales y direccionales.</p>
 <p>Las <strong>fuentes de luz puntuales</strong> (<em>spotlights</em> en
 inglés) emiten luz alrededor suya, como si de pequeños soles se
-trataran. La figura [<a href="#fig:spotlights">33</a>] muestra cómo se
+trataran. La figura [<a href="#fig:spotlights">32</a>] muestra cómo se
 comportan en la caja de Cornell original.</p>
 <div id="fig:spotlights" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Spotlight.png" style="width:60.0%"
-alt="Figura 33: Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared." />
-<figcaption aria-hidden="true"><span>Figura 33:</span> Una fuente de luz
+alt="Figura 32: Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared." />
+<figcaption aria-hidden="true"><span>Figura 32:</span> Una fuente de luz
 puntual iluminando la caja de Cornell original. Vemos cómo se proyectan
 sombras hacian la pared.</figcaption>
 </figure>
 </div>
 <p>Por otro lado, las <strong>luces direccionales</strong>: imitan la
 luz proporcionada por algún objeto infinitamente lejano. Puedes ver un
-ejemplo en la figura [<a href="#fig:directional_lights">34</a>].</p>
+ejemplo en la figura [<a href="#fig:directional_lights">33</a>].</p>
 <div id="fig:directional_lights" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Directional.png" style="width:60.0%"
-alt="Figura 34: La caja de Cornell original iluminada por una luz direccional" />
-<figcaption aria-hidden="true"><span>Figura 34:</span> La caja de
+alt="Figura 33: La caja de Cornell original iluminada por una luz direccional" />
+<figcaption aria-hidden="true"><span>Figura 33:</span> La caja de
 Cornell original iluminada por una <strong>luz
 direccional</strong></figcaption>
 </figure>
@@ -5998,22 +6018,22 @@ direccional</strong></figcaption>
 <p>Como las puntuales se comportan de manera muy similar en la caja de
 Cornell, podemos referirnos a la escena del edificio medieval para ver
 una diferencia más sustancial [<a
-href="#fig:spotlights_medieval">35</a>, <a
-href="#fig:directional_medieval">36</a>]. En este caso, se aprecia el
+href="#fig:spotlights_medieval">34</a>, <a
+href="#fig:directional_medieval">35</a>]. En este caso, se aprecia el
 radio de influencia de la luz puntual.</p>
 <div id="fig:spotlights_medieval" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Spotlight%202.png" style="width:60.0%"
-alt="Figura 35: Luz puntual en la escena medieval_building." />
-<figcaption aria-hidden="true"><span>Figura 35:</span> Luz puntual en la
+alt="Figura 34: Luz puntual en la escena medieval_building." />
+<figcaption aria-hidden="true"><span>Figura 34:</span> Luz puntual en la
 escena <code>medieval_building</code>.</figcaption>
 </figure>
 </div>
 <div id="fig:directional_medieval" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Directional%202.png" style="width:60.0%"
-alt="Figura 36: Luz direccional en la escena medieval_building." />
-<figcaption aria-hidden="true"><span>Figura 36:</span> Luz direccional
+alt="Figura 35: Luz direccional en la escena medieval_building." />
+<figcaption aria-hidden="true"><span>Figura 35:</span> Luz direccional
 en la escena <code>medieval_building</code>.</figcaption>
 </figure>
 </div>
@@ -6027,19 +6047,19 @@ los que rebotan.</p>
 <p>Dicho de esta forma, es difícil imaginarse cómo se comporta en la
 vida real. Para ilustrarlo, tomemos dos fotografías que se asemejan a la
 caja de Cornell.</p>
-<p>En la escena [<a href="#fig:cornell_bath_1">37</a>] observamos cómo
+<p>En la escena [<a href="#fig:cornell_bath_1">36</a>] observamos cómo
 la luz del sol entra desde la parte de la derecha, rebotando en todo el
 espacio. Notamos cómo la escena tiene una tonalidad natural y cálida.
 Sin embargo, esta impresión es fácilmente modificable si alteramos la
 forma de arrojar la luz. Cerrando la puerta (la cual no puede ser vista
 en la fotografía, pero se encuentra a la derecha y es idéntica al
 cristal), la iluminación cambia completamente [<a
-href="#fig:cornell_bath_2">38</a>].</p>
+href="#fig:cornell_bath_2">37</a>].</p>
 <div id="fig:cornell_bath_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Cornell%20bath%201.jpg" style="width:60.0%"
-alt="Figura 37: Escena similar a la caja de Cornell, en la vida real. También es mi baño." />
-<figcaption aria-hidden="true"><span>Figura 37:</span> Escena similar a
+alt="Figura 36: Escena similar a la caja de Cornell, en la vida real. También es mi baño." />
+<figcaption aria-hidden="true"><span>Figura 36:</span> Escena similar a
 la caja de Cornell, en la vida real. También es mi baño.</figcaption>
 </figure>
 </div>
@@ -6054,8 +6074,8 @@ cuales se visualizan como una tonalidad roja.</p>
 <div id="fig:cornell_bath_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Cornell%20bath%202.jpg" style="width:60.0%"
-alt="Figura 38: Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados" />
-<figcaption aria-hidden="true"><span>Figura 38:</span> Cuando cambiamos
+alt="Figura 37: Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados" />
+<figcaption aria-hidden="true"><span>Figura 37:</span> Cuando cambiamos
 la forma de iluminar la escena, los colores se ven drásticamente
 modificados</figcaption>
 </figure>
@@ -6063,32 +6083,32 @@ modificados</figcaption>
 <p><strong>Path tracing consigue este efecto de manera natural</strong>
 por diseño. Este es uno de sus mayores puntos fuertes, pero a la vez lo
 hace computacionalmente caro. Dado que la escena de [<a
-href="#fig:cornell_bath_1">37</a>] y [<a
-href="#fig:cornell_bath_2">38</a>] es, esencialmente, una caja de
+href="#fig:cornell_bath_1">36</a>] y [<a
+href="#fig:cornell_bath_2">37</a>] es, esencialmente, una caja de
 Cornell, deberíamos apreciar un efecto similar en nuestra escena,
 ¿verdad?</p>
-<p>¡Así es! La figura [<a href="#fig:global_illumination_1">39</a>] es
-muy similar a la [<a href="#fig:cornell_bath_2">38</a>]. Se pueden
+<p>¡Así es! La figura [<a href="#fig:global_illumination_1">38</a>] es
+muy similar a la [<a href="#fig:cornell_bath_2">37</a>]. Se pueden
 apreciar los mismos efectos en la caja izquierda, los cuales no ocurrían
 con tanta intensidad en la escena original [fig. <a
-href="#fig:materiales_difusos">28</a>]</p>
+href="#fig:materiales_difusos">27</a>]</p>
 <div id="fig:global_illumination_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Ambient%20occlusion%201.png" style="width:50.0%"
-alt="Figura 39: La caja de Cornell original con luz direccional apuntando a la pared de la izquierda" />
-<figcaption aria-hidden="true"><span>Figura 39:</span> La caja de
+alt="Figura 38: La caja de Cornell original con luz direccional apuntando a la pared de la izquierda" />
+<figcaption aria-hidden="true"><span>Figura 38:</span> La caja de
 Cornell original con luz direccional apuntando a la pared de la
 izquierda</figcaption>
 </figure>
 </div>
 <p>Lo mismo ocurre cuando cambiamos el foco a la pared de la derecha. Al
 ser verde, tintará el resto de los materiales de dicho color [Figura <a
-href="#fig:global_illumination_2">40</a>].</p>
+href="#fig:global_illumination_2">39</a>].</p>
 <div id="fig:global_illumination_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Ambient%20occlusion%202.png" style="width:50.0%"
-alt="Figura 40: Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena" />
-<figcaption aria-hidden="true"><span>Figura 40:</span> Enfocando a la
+alt="Figura 39: Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena" />
+<figcaption aria-hidden="true"><span>Figura 39:</span> Enfocando a la
 pared de la derecha, conseguimos un tinte verde para la
 escena</figcaption>
 </figure>
@@ -6105,8 +6125,8 @@ href="#materiales-y-objetos">componente ambiental</a> de los materiales,
 <div id="fig:lightmpas" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Shadowmap.png"
-alt="Figura 41: Los lightmaps requieren que la geometría no pueda ser movida debido a que la sombra no es calculada en tiempo real. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 41:</span> Los
+alt="Figura 40: Los lightmaps requieren que la geometría no pueda ser movida debido a que la sombra no es calculada en tiempo real. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 40:</span> Los
 <em>lightmaps</em> requieren que la geometría no pueda ser movida debido
 a que la sombra no es calculada en tiempo real. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
@@ -6156,13 +6176,13 @@ class="math inline">\(N \in \mathbb{N}\)</span>.</p>
 <div id="fig:grafica_samples" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_samples.png"
-alt="Figura 42: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
-<figcaption aria-hidden="true"><span>Figura 42:</span> Para conseguir
+alt="Figura 41: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
+<figcaption aria-hidden="true"><span>Figura 41:</span> Para conseguir
 esta gráfica, iniciamos la escena <code>cornell_box_original</code>, y
 sin mover la cámara, vamos cambiando el número de muestras.</figcaption>
 </figure>
 </div>
-<p>La figura [<a href="#fig:grafica_samples">42</a>] muestra cómo afecta
+<p>La figura [<a href="#fig:grafica_samples">41</a>] muestra cómo afecta
 al rendimiento el valor de <span class="math inline">\(N\)</span>. Vemos
 cómo un número bajo de muestras (alrededor de 5) produce un frametime de
 aproximadamente 12 milisegundos, lo cual corresponde a 83 frames por
@@ -6186,12 +6206,12 @@ href="#acumulación-temporal">acumulación temporal</a>, pues en esencia,
 proporcionaría un mayor número de muestras en el tiempo.</p>
 <p>Con una única muestra por píxel, la imagen final aparece muy ruidosa.
 Aumentarlo a 5 mejora bastante la situación, pero sigue habiendo
-demasiado ruido [<a href="#fig:samples_1">43</a>]</p>
+demasiado ruido [<a href="#fig:samples_1">42</a>]</p>
 <div id="fig:samples_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/1,%205%20samples.png"
-alt="Figura 43: Izquierda: 1 muestra. Derecha: 5 muestras" />
-<figcaption aria-hidden="true"><span>Figura 43:</span>
+alt="Figura 42: Izquierda: 1 muestra. Derecha: 5 muestras" />
+<figcaption aria-hidden="true"><span>Figura 42:</span>
 <strong>Izquierda</strong>: 1 muestra. <strong>Derecha</strong>: 5
 muestras</figcaption>
 </figure>
@@ -6201,8 +6221,8 @@ calidad visual significativa.</p>
 <div id="fig:samples_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/10,%2020%20samples.png"
-alt="Figura 44: Izquierda: 10 muestras. Derecha: 20 muestras" />
-<figcaption aria-hidden="true"><span>Figura 44:</span>
+alt="Figura 43: Izquierda: 10 muestras. Derecha: 20 muestras" />
+<figcaption aria-hidden="true"><span>Figura 43:</span>
 <strong>Izquierda</strong>: 10 muestras. <strong>Derecha</strong>: 20
 muestras</figcaption>
 </figure>
@@ -6224,13 +6244,13 @@ de un camino.</p>
 <div id="fig:grafica_depth" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_depth.png"
-alt="Figura 45: Coste de un frame en función de la profundidad de" />
-<figcaption aria-hidden="true"><span>Figura 45:</span> Coste de un frame
+alt="Figura 44: Coste de un frame en función de la profundidad de" />
+<figcaption aria-hidden="true"><span>Figura 44:</span> Coste de un frame
 en función de la profundidad de</figcaption>
 </figure>
 </div>
-<p>En esta figura [<a href="#fig:grafica_depth">45</a>] ocurre algo
-similar a [<a href="#fig:grafica_samples">42</a>]: como es evidente,
+<p>En esta figura [<a href="#fig:grafica_depth">44</a>] ocurre algo
+similar a [<a href="#fig:grafica_samples">41</a>]: como es evidente,
 aumentar la profundidad de un rayo aumenta el coste de renderizar un
 frame. Sin embargo, hay algunos matices que debemos estudiar con más
 detalle.</p>
@@ -6265,65 +6285,65 @@ pena el coste adicional?</strong>.</p>
 <p>Para responder a esta pregunta, primero debemos conocer cómo actúa
 este parámetro. Empezando con un número extremadamente bajo para los
 rebotes, vemos que parte de la escena ni siquiera se renderiza [<a
-href="#fig:depth_1">46</a>].</p>
+href="#fig:depth_1">45</a>].</p>
 <div id="fig:depth_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/1%20bounce.png" style="width:70.0%"
-alt="Figura 46: depth = 1" />
-<figcaption aria-hidden="true"><span>Figura 46:</span>
+alt="Figura 45: depth = 1" />
+<figcaption aria-hidden="true"><span>Figura 45:</span>
 <code>depth = 1</code></figcaption>
 </figure>
 </div>
 <p>Aumentar el número de rebotes progresivamente permite que el camino
 adquiera mayor información. Con dos rebotes, permitimos que un camino
 adquiera información sobre la caja por dentro, así como un reflejo
-primitivo en las esferas [<a href="#fig:depth_2">47</a>].</p>
+primitivo en las esferas [<a href="#fig:depth_2">46</a>].</p>
 <div id="fig:depth_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/2%20bounces.png" style="width:70.0%"
-alt="Figura 47: depth = 2" />
-<figcaption aria-hidden="true"><span>Figura 47:</span>
+alt="Figura 46: depth = 2" />
+<figcaption aria-hidden="true"><span>Figura 46:</span>
 <code>depth = 2</code></figcaption>
 </figure>
 </div>
 <p>Con 3 rebotes, la esfera izquierda refleja casi en su totalidad la
 esfera, pero vemos que el reflejo de la esfera derecha <em>dentro</em>
-de la izquierda está oscurecido [<a href="#fig:depth_3">48</a>].</p>
+de la izquierda está oscurecido [<a href="#fig:depth_3">47</a>].</p>
 <div id="fig:depth_3" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/3%20bounces.png" style="width:70.0%"
-alt="Figura 48: depth = 3" />
-<figcaption aria-hidden="true"><span>Figura 48:</span>
+alt="Figura 47: depth = 3" />
+<figcaption aria-hidden="true"><span>Figura 47:</span>
 <code>depth = 3</code></figcaption>
 </figure>
 </div>
-<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">49</a>] se arregla
+<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">48</a>] se arregla
 mayoritariamente esto.</p>
 <div id="fig:depth_4" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/4%20bounces.png" style="width:70.0%"
-alt="Figura 49: depth = 4" />
-<figcaption aria-hidden="true"><span>Figura 49:</span>
+alt="Figura 48: depth = 4" />
+<figcaption aria-hidden="true"><span>Figura 48:</span>
 <code>depth = 4</code></figcaption>
 </figure>
 </div>
 <p>En esta escena, aumentar más allá de 5 o 6 rebotes produce una
 situación de retornos reducidos. La calidad de imagen no aumenta
 prácticamente nada, pero el coste se vuelve muy elevado [<a
-href="#fig:depth_20">50</a>, <a href="#fig:depth_50">51</a>].</p>
+href="#fig:depth_20">49</a>, <a href="#fig:depth_50">50</a>].</p>
 <div id="fig:depth_20" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/20%20bounces.png" style="width:70.0%"
-alt="Figura 50: depth = 20" />
-<figcaption aria-hidden="true"><span>Figura 50:</span>
+alt="Figura 49: depth = 20" />
+<figcaption aria-hidden="true"><span>Figura 49:</span>
 <code>depth = 20</code></figcaption>
 </figure>
 </div>
 <div id="fig:depth_50" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/50%20bounces.png" style="width:70.0%"
-alt="Figura 51: depth = 50" />
-<figcaption aria-hidden="true"><span>Figura 51:</span>
+alt="Figura 50: depth = 50" />
+<figcaption aria-hidden="true"><span>Figura 50:</span>
 <code>depth = 50</code></figcaption>
 </figure>
 </div>
@@ -6336,24 +6356,24 @@ podría ser un motivo factor no negociable, pero en nuestro caso, nos
 servirá.</p>
 <p>Utilizando una única muestra, pero un valor de acumulación temporal
 de 100 frames máximos, proporciona una imagen sin apenas ruido [<a
-href="#fig:acumulacion_temp">52</a>].</p>
+href="#fig:acumulacion_temp">51</a>].</p>
 <div id="fig:acumulacion_temp" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%201.png" style="width:40.0%"
-alt="Figura 52: 1 muestra, acumulación temporal de 100 frames. A diferencia de 43, el resultado es impecable." />
-<figcaption aria-hidden="true"><span>Figura 52:</span> 1 muestra,
+alt="Figura 51: 1 muestra, acumulación temporal de 100 frames. A diferencia de 42, el resultado es impecable." />
+<figcaption aria-hidden="true"><span>Figura 51:</span> 1 muestra,
 acumulación temporal de 100 frames. A diferencia de <a
-href="#fig:samples_1">43</a>, el resultado es impecable.</figcaption>
+href="#fig:samples_1">42</a>, el resultado es impecable.</figcaption>
 </figure>
 </div>
 <p>Subiendo los parámetros a 200 frames de acumulación temporal y 10
 muestras, se obtiene una imagen muy buena[<a
-href="#fig:acumulacion_temp_2">53</a>].</p>
+href="#fig:acumulacion_temp_2">52</a>].</p>
 <div id="fig:acumulacion_temp_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%202.png" style="width:40.0%"
-alt="Figura 53: 10 muestras, acumulación temporal de 200 frames." />
-<figcaption aria-hidden="true"><span>Figura 53:</span> 10 muestras,
+alt="Figura 52: 10 muestras, acumulación temporal de 200 frames." />
+<figcaption aria-hidden="true"><span>Figura 52:</span> 10 muestras,
 acumulación temporal de 200 frames.</figcaption>
 </figure>
 </div>
@@ -6370,8 +6390,8 @@ escala al variarla.</p>
 <div id="fig:resolucion" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_resolucion.png"
-alt="Figura 54: Tiempo de renderización de un frame dependiendo de la resolución" />
-<figcaption aria-hidden="true"><span>Figura 54:</span> Tiempo de
+alt="Figura 53: Tiempo de renderización de un frame dependiendo de la resolución" />
+<figcaption aria-hidden="true"><span>Figura 53:</span> Tiempo de
 renderización de un frame dependiendo de la resolución</figcaption>
 </figure>
 </div>
@@ -6393,12 +6413,12 @@ integrar para reducir la varianza. Se ha implementado muestreo por
 importancia para los materiales difusos. En particular, se ha utilizado
 dos estrategias diferentes para escoger direcciones aleatorias, que
 pueden observarse en la figura [<a
-href="#fig:importance_sample">55</a>].</p>
+href="#fig:importance_sample">54</a>].</p>
 <div id="fig:importance_sample" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Importance%20sample.png"
-alt="Figura 55: Escena: cornell_box_original. 10 rebotes, acumulación temporal off, 10 muestras   Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling." />
-<figcaption aria-hidden="true"><span>Figura 55:</span> Escena:
+alt="Figura 54: Escena: cornell_box_original. 10 rebotes, acumulación temporal off, 10 muestras   Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling." />
+<figcaption aria-hidden="true"><span>Figura 54:</span> Escena:
 <code>cornell_box_original</code>. 10 rebotes, acumulación temporal off,
 10 muestras <br> <strong>Izquierda</strong>: <em>hemisphere
 sampling</em>. <strong>Derecha</strong>: <em>Cosine-Weighted Hemisphere
@@ -6549,7 +6569,7 @@ class="header-section-number">5.4.2.1</span> Por número de muestras</h4>
 primeras imágenes fijaremos la acumulación temporal a un único frame.
 Explicaremos el motivo después.</p>
 <p>Con una única muestra, se observa una diferencia enorme entre ambas
-versiones [<a href="#fig:comparativa_1s">56</a>]. En nuestra
+versiones [<a href="#fig:comparativa_1s">55</a>]. En nuestra
 implementación no se observa prácticamente nada. Solo somos capaces de
 distinguir la luz, un poco del reflejo de la caja izquierda y los
 <em>caustics</em> causados por la luz del techo. Mientras tanto, en In
@@ -6557,8 +6577,8 @@ One Weekend, la imagen es ruidosa pero definida.</p>
 <div id="fig:comparativa_1s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_1s.png" style="width:85.0%"
-alt="Figura 56: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 56:</span> 1 muestra.
+alt="Figura 55: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 55:</span> 1 muestra.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -6571,7 +6591,7 @@ la fuente. En cambio, en nuestro motor, este tipo de fuentes no se
 muestrean directamente, sino que debemos contar con el azar para que
 aporten radiancia.</p>
 <p>Una vez pasamos a 5 muestras [Figura <a
-href="#fig:comparativa_5s">57</a>], nuestro motor consigue una imagen
+href="#fig:comparativa_5s">56</a>], nuestro motor consigue una imagen
 más nítida, similar a la que In One Weekend genera con una muestra. En
 cambio, In One Weekend consigue un resultado muy bueno, aunque con
 muchas luciérnagas. Este fenómeno no ocurre en nuestra implementación
@@ -6579,8 +6599,8 @@ por el tipo de muestreo.</p>
 <div id="fig:comparativa_5s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_5s.png" style="width:85.0%"
-alt="Figura 57: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 57:</span> 5 muestras.
+alt="Figura 56: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 56:</span> 5 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -6590,8 +6610,8 @@ ruidoso. ¿Se podría hacer algo para mejorarlo?</p>
 <div id="fig:comparativa_20s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_20s.png" style="width:85.0%"
-alt="Figura 58: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 58:</span> 20 muestras.
+alt="Figura 57: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 57:</span> 20 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -6602,7 +6622,7 @@ respecto al tiempo, nuestra implementación utiliza interpolación para
 mezclar los colores de los frames. De esta forma, se consigue el efecto
 de normalización, lo cual elimina el ruido de la imagen con el tiempo.
 De esta forma conseguimos equiparar la imagen de ambas versiones [Figura
-<a href="#fig:comparativa_100s">59</a>].</p>
+<a href="#fig:comparativa_100s">58</a>].</p>
 <p>Se puede observar cómo el tipo de ruido es diferente. En In One
 Weekend, el ruido se presenta en forma de píxeles blancos, debido a las
 luciérnagas generadas por el muestreo directo de la fuente de luz. En
@@ -6611,8 +6631,8 @@ rayos que no impactan en ninguna superficie tras rebotar.</p>
 <div id="fig:comparativa_100s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_100s.png" style="width:85.0%"
-alt="Figura 59: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
-<figcaption aria-hidden="true"><span>Figura 59:</span> 100 muestras.
+alt="Figura 58: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
+<figcaption aria-hidden="true"><span>Figura 58:</span> 100 muestras.
 <strong>Izquierda</strong>: In One Weekend (100 muestras).
 <strong>Derecha</strong>: nuestro motor (7 muestras, 15 frames de
 acumulación temporal)</figcaption>
@@ -6620,14 +6640,14 @@ acumulación temporal)</figcaption>
 </div>
 <p>Por último, subiendo el número de muestras a 1000 conseguimos una
 imagen muy nítida en ambas implementaciones [Figura <a
-href="#fig:comparativa_1000s">60</a>]. Conseguimos apreciar una
+href="#fig:comparativa_1000s">59</a>]. Conseguimos apreciar una
 diferencia en los bordes de la esfera de la derecha, la cual seguramente
 se deba a un fallo en la implementación de la BRDF.</p>
 <div id="fig:comparativa_1000s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_1000s.png" style="width:100.0%"
-alt="Figura 60: La imagen final, con 1000 muestras para cada versión. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de acumulación temporal)" />
-<figcaption aria-hidden="true"><span>Figura 60:</span> La imagen final,
+alt="Figura 59: La imagen final, con 1000 muestras para cada versión. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de acumulación temporal)" />
+<figcaption aria-hidden="true"><span>Figura 59:</span> La imagen final,
 con 1000 muestras para cada versión. <strong>Izquierda</strong>: In One
 Weekend (1000 muestras). <strong>Derecha</strong>: nuestro motor (10
 muestras, 100 frames de acumulación temporal)</figcaption>
@@ -6646,7 +6666,7 @@ calidad de imagen podemos conseguir con ambas implementaciones</p>
 <p>Utilizando un presupuesto de 4000 milisegundos, In One Weekend es
 capaz de utilizar 5 muestras para la imagen, mientras que nuestro motor
 podría utilizar 10 muestras y 19 frames de acumulación temporal [Figura
-<a href="#fig:comparativa_4000ms">61</a>].</p>
+<a href="#fig:comparativa_4000ms">60</a>].</p>
 <p><span class="math display">\[
 20.4 \frac{\text{ms}}{\text{10 muestras}} \cdot 19 \text{ frames de
 temp. acum.} = 3876 \text{ ms}
@@ -6654,8 +6674,8 @@ temp. acum.} = 3876 \text{ ms}
 <div id="fig:comparativa_4000ms" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_4000ms.png" style="width:85.0%"
-alt="Figura 61: 4000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 61:</span> 4000 milisegundos
+alt="Figura 60: 4000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 60:</span> 4000 milisegundos
 de <em>frame budget</em>. <strong>Izquierda</strong>: In One Weekend.
 <strong>Derecha</strong>: nuestro motor</figcaption>
 </figure>
@@ -6671,12 +6691,12 @@ temp. acum.} = 70000 \text{ ms}
 <p>Esencialmente, la imagen que genera nuestra implementación es
 perfecta. No muestra ni un ápice de ruido; mientras que la de In One
 Weeekend presenta un resultado poco nítido [Figura <a
-href="#fig:comparativa_70000ms">62</a>].</p>
+href="#fig:comparativa_70000ms">61</a>].</p>
 <div id="fig:comparativa_70000ms" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_70000ms.png" style="width:85.0%"
-alt="Figura 62: 70000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 62:</span> 70000
+alt="Figura 61: 70000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 61:</span> 70000
 milisegundos de <em>frame budget</em>. <strong>Izquierda</strong>: In
 One Weekend. <strong>Derecha</strong>: nuestro motor</figcaption>
 </figure>
@@ -6732,8 +6752,8 @@ capaz de producir imágenes de escenas virtuales.</p>
 <div id="fig:pathtracing_showcase" class="fignos">
 <figure>
 <img loading="lazy" src="./img/06/Showcase.png"
-alt="Figura 63: El motor es capaz de producir preciosas imágenes de objetos físicamente realistas que se mueven en tiempo real" />
-<figcaption aria-hidden="true"><span>Figura 63:</span> El motor es capaz
+alt="Figura 62: El motor es capaz de producir preciosas imágenes de objetos físicamente realistas que se mueven en tiempo real" />
+<figcaption aria-hidden="true"><span>Figura 62:</span> El motor es capaz
 de producir preciosas imágenes de objetos físicamente realistas que se
 mueven en tiempo real</figcaption>
 </figure>
@@ -6898,8 +6918,8 @@ cuasi-aleatorias como las de Sobol.</p>
 <div id="fig:blue-noise" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Bluenoise.png" style="width:40.0%"
-alt="Figura 64: En comparación con el ruido blanco, el ruido azul resulta más fácil de difuminar. Fuente: Galvan (2022e)" />
-<figcaption aria-hidden="true"><span>Figura 64:</span> En comparación
+alt="Figura 63: En comparación con el ruido blanco, el ruido azul resulta más fácil de difuminar. Fuente: Galvan (2022e)" />
+<figcaption aria-hidden="true"><span>Figura 63:</span> En comparación
 con el ruido blanco, el ruido azul resulta más fácil de difuminar.
 Fuente: <span class="citation" data-cites="alain-filtering">Galvan (<a
 href="#ref-alain-filtering"
@@ -6937,8 +6957,8 @@ role="doc-biblioref">Wolfe 2022</a>)</span></p>
 <div id="fig:restir" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/restir.png"
-alt="Figura 65: ReSTIR en acción. Fuente: Benedikt Bitterli (2020)" />
-<figcaption aria-hidden="true"><span>Figura 65:</span> ReSTIR en acción.
+alt="Figura 64: ReSTIR en acción. Fuente: Benedikt Bitterli (2020)" />
+<figcaption aria-hidden="true"><span>Figura 64:</span> ReSTIR en acción.
 Fuente: <span class="citation" data-cites="restir">Benedikt Bitterli (<a
 href="#ref-restir" role="doc-biblioref">2020</a>)</span></figcaption>
 </figure>
@@ -6984,8 +7004,8 @@ antialiasing en el proceso.</p>
 <div id="fig:df-dlss" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Control.jpg" style="width:80.0%"
-alt="Figura 66: Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se duplica al utilizar DLSS. Fuente: Digital Foundry (2020a).   Izquierda: DLSS 2.0 con resolución interna a 1080p. Derecha: 4K nativo." />
-<figcaption aria-hidden="true"><span>Figura 66:</span> Control, de
+alt="Figura 65: Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se duplica al utilizar DLSS. Fuente: Digital Foundry (2020a).   Izquierda: DLSS 2.0 con resolución interna a 1080p. Derecha: 4K nativo." />
+<figcaption aria-hidden="true"><span>Figura 65:</span> Control, de
 Remedy Games. Uno de los primeros videojuegos que integraron ray tracing
 en tiempo real basado en DX12. El rendimiento se duplica al utilizar
 DLSS. Fuente: <span class="citation" data-cites="df-dlss">Digital
@@ -7012,8 +7032,8 @@ consiguiendo rendimiento superior a la resolución nativa.</p>
 <div id="fig:dlss-fsr-taa" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Comparación.jpg"
-alt="Figura 67: Comparativa entre las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo son reconstruidas las vallas, así como el texto de los globos. Fuente: Digital Foundry (2022b).   Izquierda: Nvidia DLSS 2.3. Centro: AMD FSR 2.0. Derecha: Temporal antialiasing." />
-<figcaption aria-hidden="true"><span>Figura 67:</span> Comparativa entre
+alt="Figura 66: Comparativa entre las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo son reconstruidas las vallas, así como el texto de los globos. Fuente: Digital Foundry (2022b).   Izquierda: Nvidia DLSS 2.3. Centro: AMD FSR 2.0. Derecha: Temporal antialiasing." />
+<figcaption aria-hidden="true"><span>Figura 66:</span> Comparativa entre
 las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo
 son reconstruidas las vallas, así como el texto de los globos. Fuente:
 <span class="citation" data-cites="df-fsr">Digital Foundry (<a
@@ -7050,8 +7070,8 @@ técnicas para producir la imagen final.</p>
 <div id="fig:spiderman-reflections" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/HybridRT.jpg"
-alt="Figura 68: En vez de utilizar screen-space reflections, los cuales sufren de los problemas clásicos de rasterización debido a su naturaleza (como el fallback a los cubemaps cuando el ángulo es demasiado agudo), ray tracing resuelve estos efectos de forma magistral. Fuente: (Digital Foundry 2021a)" />
-<figcaption aria-hidden="true"><span>Figura 68:</span> En vez de
+alt="Figura 67: En vez de utilizar screen-space reflections, los cuales sufren de los problemas clásicos de rasterización debido a su naturaleza (como el fallback a los cubemaps cuando el ángulo es demasiado agudo), ray tracing resuelve estos efectos de forma magistral. Fuente: (Digital Foundry 2021a)" />
+<figcaption aria-hidden="true"><span>Figura 67:</span> En vez de
 utilizar <em>screen-space reflections</em>, los cuales sufren de los
 problemas clásicos de rasterización debido a su naturaleza (como el
 <em>fallback</em> a los cubemaps cuando el ángulo es demasiado agudo),
@@ -7062,7 +7082,7 @@ role="doc-biblioref">Digital Foundry 2021a</a>)</span></figcaption>
 </div>
 <p>Algunos productos comerciales que destacan por su uso de ray tracing
 híbrido son <em>Ratchet &amp; Clank: Rift Apart</em> y
-<em>Spiderman</em> [Figura <a href="#fig:spiderman-reflections">68</a>]
+<em>Spiderman</em> [Figura <a href="#fig:spiderman-reflections">67</a>]
 de Insommiac Games, <em>Cyberpunk 2077</em> de CD Project Red, Control
 de Remedy <span class="citation" data-cites="df-dlss">(Figura <a
 href="#ref-df-dlss" role="doc-biblioref">Digital Foundry
@@ -7123,8 +7143,8 @@ data-cites="lumen">(<a href="#ref-lumen" role="doc-biblioref">Epic Games
 <div id="fig:lumen1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen3.png" style="width:85.0%"
-alt="Figura 69: Habitación interior iluminada por el sistema Lumen" />
-<figcaption aria-hidden="true"><span>Figura 69:</span> Habitación
+alt="Figura 68: Habitación interior iluminada por el sistema Lumen" />
+<figcaption aria-hidden="true"><span>Figura 68:</span> Habitación
 interior iluminada por el sistema Lumen</figcaption>
 </figure>
 </div>
@@ -7142,8 +7162,8 @@ niebla volumétrica.</p>
 <div id="fig:lumen2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen4.jpg" style="width:85.0%"
-alt="Figura 70: Una escena exterior con materiales emisivos en Unreal Engine 5. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 70:</span> Una escena
+alt="Figura 69: Una escena exterior con materiales emisivos en Unreal Engine 5. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 69:</span> Una escena
 exterior con materiales emisivos en Unreal Engine 5. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
 role="doc-biblioref">2022b</a>)</span></figcaption>
@@ -7170,8 +7190,8 @@ evaluación del material.</p>
 <div id="fig:lumen3" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen1.jpg" style="width:100.0%"
-alt="Figura 71: Visualización de Mesh Distance Fields de una escena. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 71:</span> Visualización de
+alt="Figura 70: Visualización de Mesh Distance Fields de una escena. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 70:</span> Visualización de
 <em>Mesh Distance Fields</em> de una escena. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
 role="doc-biblioref">2022b</a>)</span></figcaption>
@@ -7188,8 +7208,8 @@ por el material.</p>
 <div id="fig:lumen4" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen5.png" style="width:100.0%"
-alt="Figura 72: Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 72:</span> Lumen combina los
+alt="Figura 71: Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 71:</span> Lumen combina los
 cálculos de la iluminación global con la información del material para
 crear la imagen final. Fuente: <span class="citation"
 data-cites="lumen">Epic Games (<a href="#ref-lumen"
@@ -7215,8 +7235,8 @@ escena con mucha radiancia, por lo que el fundamento es similar.</p>
 <div id="fig:lumen5" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen6.png"
-alt="Figura 73: Lumen utiliza las partes más brillantes del último frame para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 73:</span> Lumen utiliza las
+alt="Figura 72: Lumen utiliza las partes más brillantes del último frame para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 72:</span> Lumen utiliza las
 partes más brillantes del último frame para la distribución de las
 nuevas direcciones de un rayo tras el impacto. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
@@ -7229,8 +7249,8 @@ frames para suavizar el resultado.</p>
 <div id="fig:lumen6" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen2.jpg"
-alt="Figura 74: Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 74:</span> Nuestro método
+alt="Figura 73: Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 73:</span> Nuestro método
 principal de reducción de ruido fue la acumulación temporal de frames.
 Lumen utiliza una forma mucho más avanzada para lograr el mismo
 resultado con sus reflejos. Fuente: <span class="citation"
@@ -7315,7 +7335,7 @@ class="header-section-number">8.2</span> Ciclos de desarrollo</h2>
 que estás leyendo, ya sea en PDF o en la web– y software. Podemos
 distinguir varias fases en la planificación del proyecto, que quedan
 resumidas en el diagrama de Grant [Figuras <a
-href="#fig:grantt_1">75</a>, <a href="#fig:grantt_2">76</a>]</p>
+href="#fig:grantt_1">74</a>, <a href="#fig:grantt_2">75</a>]</p>
 <p>Para comenzar, durante el verano de 2021 se implementarían los tres
 libros de Shirley de la “serie In One Weekend”: In One Weekend <span
 class="citation" data-cites="Shirley2020RTW1">(<a
@@ -7330,8 +7350,8 @@ acelerando así el aprendizaje.</p>
 <div id="fig:grantt_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%201.png"
-alt="Figura 75: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
-<figcaption aria-hidden="true"><span>Figura 75:</span> Diagrama de
+alt="Figura 74: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
+<figcaption aria-hidden="true"><span>Figura 74:</span> Diagrama de
 Grantt de la primera parte del desarrollo. Los libros de Peter Shirley
 servirían como introducción al trabajo</figcaption>
 </figure>
@@ -7343,8 +7363,8 @@ pues no se puede implementar algo que no se entiende.</p>
 <div id="fig:grantt_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%202.png"
-alt="Figura 76: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
-<figcaption aria-hidden="true"><span>Figura 76:</span> Diagrama de
+alt="Figura 75: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
+<figcaption aria-hidden="true"><span>Figura 75:</span> Diagrama de
 Grantt de la segunda parte del desarrollo. Durante el segundo
 cuatrimestre se trabajaría tanto la memoria como el
 software</figcaption>
@@ -7503,8 +7523,8 @@ Jetbrains. Se utiliza en la web para los bloques de código.</li>
 <div id="fig:tipografías" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Tipografías.png" style="width:70.0%"
-alt="Figura 77: Showcase de las tipografías utilizadas" />
-<figcaption aria-hidden="true"><span>Figura 77:</span> Showcase de las
+alt="Figura 76: Showcase de las tipografías utilizadas" />
+<figcaption aria-hidden="true"><span>Figura 76:</span> Showcase de las
 tipografías utilizadas</figcaption>
 </figure>
 </div>
@@ -7515,8 +7535,8 @@ específica.</p>
 <div id="fig:paleta_de_colores" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Paleta%20de%20colores.png" width="400"
-alt="Figura 78: La paleta de colores del proyecto" />
-<figcaption aria-hidden="true"><span>Figura 78:</span> La paleta de
+alt="Figura 77: La paleta de colores del proyecto" />
+<figcaption aria-hidden="true"><span>Figura 77:</span> La paleta de
 colores del proyecto</figcaption>
 </figure>
 </div>
@@ -7590,8 +7610,8 @@ diseños de este trabajo se han hecho con esta herramienta.</p>
 <div id="fig:figma" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Figma.png"
-alt="Figura 79: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 79:</span> Tablón principal
+alt="Figura 78: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 78:</span> Tablón principal
 del proyecto de Figma, a día 15 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -7686,8 +7706,8 @@ Github Pages.</li>
 <div id="fig:github_actions" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Github%20Actions.png"
-alt="Figura 80: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
-<figcaption aria-hidden="true"><span>Figura 80:</span> La pestaña de
+alt="Figura 79: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
+<figcaption aria-hidden="true"><span>Figura 79:</span> La pestaña de
 Github Actions permite controlar con facilidad el resultado de un
 workflow y cuánto tarda en ejecutarse</figcaption>
 </figure>
@@ -7701,8 +7721,8 @@ cada <em>release</em> que se crea.</p>
 <div id="fig:actions-workflow" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Actions.png"
-alt="Figura 81: Diagrama con los workflows" />
-<figcaption aria-hidden="true"><span>Figura 81:</span> Diagrama con los
+alt="Figura 80: Diagrama con los workflows" />
+<figcaption aria-hidden="true"><span>Figura 80:</span> Diagrama con los
 workflows</figcaption>
 </figure>
 </div>
@@ -7739,8 +7759,8 @@ objetivos pendientes de la aplicación.</p>
 <div id="fig:github_issues" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Issues.png" style="width:80.0%"
-alt="Figura 82: Pestaña de issues, día 16 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 82:</span> Pestaña de
+alt="Figura 81: Pestaña de issues, día 16 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 81:</span> Pestaña de
 issues, día 16 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -7750,8 +7770,8 @@ importante del desarrollo.</p>
 <div id="fig:github_milestones" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Milestones.png" style="width:80.0%"
-alt="Figura 83: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
-<figcaption aria-hidden="true"><span>Figura 83:</span> Los
+alt="Figura 82: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
+<figcaption aria-hidden="true"><span>Figura 82:</span> Los
 <em>milestones</em> agrupan una serie de issues relacionados con un
 punto clave del desarrollo</figcaption>
 </figure>
@@ -7764,8 +7784,8 @@ aplicación es un acompañante del repositorio estilo Asana.</p>
 <div id="fig:github_projects" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Projects.png" style="width:80.0%"
-alt="Figura 84: Projects agrupa los issues y les asigna prioridades" />
-<figcaption aria-hidden="true"><span>Figura 84:</span> Projects agrupa
+alt="Figura 83: Projects agrupa los issues y les asigna prioridades" />
+<figcaption aria-hidden="true"><span>Figura 83:</span> Projects agrupa
 los issues y les asigna prioridades</figcaption>
 </figure>
 </div>
@@ -7800,8 +7820,8 @@ sus significados:</p>
 <div id="fig:github_emojis" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Commits.png"
-alt="Figura 85: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
-<figcaption aria-hidden="true"><span>Figura 85:</span> Los emojis
+alt="Figura 84: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
+<figcaption aria-hidden="true"><span>Figura 84:</span> Los emojis
 permiten reconocer el objetivo de cada commit. Esta tabla recoge el
 significado de cada uno</figcaption>
 </figure>
@@ -8731,6 +8751,11 @@ role="doc-biblioentry">
 Karis, B. 2014. <span>“Unreal engine 4 - high quality temporal
 supersampling.”</span> 2014. Accessed May 30, 2022. <a
 href="https://de45xmedrsdbp.cloudfront.net/Resources/files/TemporalAA_small-59732822.pdf">https://de45xmedrsdbp.cloudfront.net/Resources/files/TemporalAA_small-59732822.pdf</a>.
+</div>
+<div id="ref-kajiya-bb" class="csl-entry" role="doc-biblioentry">
+Kay, T. L., and J. T. Kajiya. 1986. <span>“Ray Tracing Complex
+Scenes.”</span> <em>SIGGRAPH Comput. Graph.</em> 20 (4): 269–78. <a
+href="https://doi.org/10.1145/15886.15916">https://doi.org/10.1145/15886.15916</a>.
 </div>
 <div id="ref-latex-complete" class="csl-entry" role="doc-biblioentry">
 Krieger, M. 2022. <span>“Latex complete - typeset math in your
