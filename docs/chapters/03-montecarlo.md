@@ -141,8 +141,6 @@ Es decir, dado un $x$, ¿cuál sería la probabilidad de que $X$ se quede por de
 
 Al igual que ocurre en el caso discreto, $F_X$ toma valores entre 0 y 1 ($0 \le F_X(x) \le 1$) y sus límites laterales coinciden con las cotas anteriores ($\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$).
 
-Además, se cumple que $0 \le F_X \le 1(x)$ y $\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$.
-
 El Teorema Fundamental del Cálculo nos permite relacionar función de distribución y función de densidad directamente:
 
 $$
@@ -188,7 +186,7 @@ La esperanza tiene unas cuantas propiedades que nos resultarán muy útiles. Est
 
 Estas propiedades no necesitan que las variables aleatorias sean independientes, lo cual supondrá un punto clave para las técnicas de Monte Carlo.
 
-Será habitual encontrarnos con el problema de que no conocemos la distribución de una variable aleatoria $Y$. Sin embargo, si encontramos una transformación medible de una variable aleatoria $X$ de forma que obtengamos $Y$ (esto es, $\exists g$ función medible tal que $g(X) = Y$), entonces podemos calcular la esperanza de $Y$ fácilmente. Esta propiedad hará que las variables aleatorias con distribución uniforme adquieran muchísima importancia. Generar números aleatorios en $[0, 1)$ es muy fácil, así [que obtendremos otras vv.aa a partir de $\xi$](#método-de-la-transformada-inversa).
+Será habitual encontrarnos con el problema de que no conocemos la distribución de una variable aleatoria $Y$. Sin embargo, si encontramos una transformación medible de una variable aleatoria $X$ de forma que obtengamos $Y$ (esto es, $\exists g$ función medible tal que $g(X) = Y$), entonces podemos calcular la esperanza de $Y$ fácilmente. Esta propiedad hará que las variables aleatorias con distribución uniforme adquieran muchísima importancia. Generar números aleatorios en $[0, 1)$ es muy fácil, así [que obtendremos otras vv.aa a partir de $\Xi$](#método-de-la-transformada-inversa).
 
 Otra medida muy útil de una variable aleatoria es **la varianza**. Nos permitirá medir cómo de dispersa es la distribución con respecto a su media. La denotaremos como $Var[X]$, y se define como
 
@@ -476,7 +474,7 @@ abline(h = 0.4, col = 2)
 
 Este código produce la siguiente gráfica:
 
-![Error de la simulación para el estimador de la integral $\int_0^1{2x^4\ dx}$](./img/03/Error%20simulación.png){#fig:error_simulacion} {width=80%}
+![Error de la simulación para el estimador de la integral $\int_0^1{2x^4\ dx}$](./img/03/Error%20simulación.png){#fig:error_simulacion}{width=80%}
 
 Se puede ver cómo debemos usar un número considerable de muestras, alrededor de 200, para que el error se mantenga bajo control. Aún así, aumentar el tamaño de $N$ no disminuye necesariamente el error; nos encontramos en una situación de rendimientos decrecientes.
 
@@ -822,13 +820,13 @@ En esencia, estamos jugando a los dardos: si la muestra de $y$ que hemos obtenid
 El algoritmo consiste en:
 
 1. Obtener una muestra de $Y \sim p_Y$, denotada $y$, y otra de $\mathcal{U}(0, 1)$, denominada $\xi$.
-2. Comprobar si $\xi < \frac{p_X(y)}{Mp_Y(y)}$.
+2. Comprobar si $\xi \le \frac{p_X(y)}{Mp_Y(y)}$.
    1. Si se cumple, se acepta $y$ como muestra de $p_X$
    2. En caso contrario, se rechaza $y$ y se vuelve al paso 1.
 
 Probemos por qué este algoritmo produce una muestra de la función de densidad $p_X$:
 
-Sea $Y \sim p_Y$, $\xi \sim \mathcal{U}(0, 1)$ independientes. Una muestra $Y = y$ es aceptada si se cumple que $\xi \le \frac{p_X(y)}{Mp_Y(y)}$. La probabilidad de que esto ocurra es
+Sea $Y \sim p_Y$, $\xi \sim \mathcal{U}(0, 1)$ independientes. Dado $Y = y$, el candidato es aceptado si se cumple que $\xi \le \frac{p_X(y)}{Mp_Y(y)}$. La probabilidad de que $Y$ sea aceptado es:
 
 $$
 \int_{-\infty}^{\infty}{p_Y(y) \frac{p_X(y)}{Mp_Y(y)} dy} = \int_{-\infty}^{\infty}{\frac{p_X(y)}{M} dy} = \frac{1}{M}
@@ -843,7 +841,7 @@ $$
   + \underbrace{\left(1 - \frac{1}{M}\right) \Prob{X \le x}}_{\text{Si } y \text{ se rechaza}}
 } =  \\
   & = \frac{1}{M} \int_{-\infty}^{x}{p_X(y) dy} + \left(1 - \frac{1}{M}\right) \Prob{X \le x} \\
-  & = \int_{\infty}^{\infty}{p_X(y) dy}
+  & = \int_{-\infty}^{\infty}{p_X(y) dy}
 \end{aligned}
 $$
 
