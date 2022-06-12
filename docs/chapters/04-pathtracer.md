@@ -408,13 +408,11 @@ Cada entrada de la SBT contiene un handler y una serie de parámetros embebidos.
 - **Ray generation record**: contiene el handler del ray generation shader.
 - **Hit group record**: se encargan de los handlers del closest hit, anyhit (opcional), e intersection (opcional).
 - **Miss group record**: se encarga del miss shader.
-- **Callable group record**.
+- **Callable group record**: para los shaders de tipo callable.
 
-Una de las partes más difíciles de la SBT es saber cómo se relacionan record y geometría. Es decir, cuando un rayo impacta en una geometría, ¿a qué record de la SBT llamamos? Esto se determina mediante los parámetros de la instancia, la llamada a *trace rays*, y el orden de la geometría en la BLAS. En particular, resulta problemático de los índices en los *hit groups*.
+Una de las partes más difíciles de la SBT es saber cómo se relacionan record y geometría. Es decir, cuando un rayo impacta en una geometría, ¿a qué record de la SBT llamamos? Esto se determina mediante los parámetros de la instancia, la llamada a *trace rays*, y el orden de la geometría en la BLAS.
 
 Para conocer a fondo cómo funciona la Shader Binding Table, puedes visitar [@GemsII-SBT, p. 193] o [@shader-binding-table].
-
-![Fuente: [@shader-binding-table]](./img/04/SBT.png){#fig:SBT}
 
 ### Creación de la ray tracing pipeline
 
