@@ -109,105 +109,6 @@ El término `emision` corresponde a $L_e(p, \omega_o)$. Siempre lo añadimos, pu
 
 La principal desventaja de esta implementación es que utiliza recursividad. Como bien es conocido, abusar de recursividad provoca que el tiempo de ejecución aumente significativamente.
 
-### Evitando la recursividad
-
-Podemos evitar los problemas de la implementación anterior con una pequeña modificación. En vez de calcular la radiancia desde el closest hit, nos traemos la información necesaria al raygen shader, y calculamos la radiancia total desde allí.
-
-Para conseguirlo, debemos hacer que el `HitPayload` almacene dos nuevos parámetros: `weight` y `hit_value`, así como el nuevo origen y la dirección del rayo.
-
-El pseudocódigo sería el siguiente: por una parte, una función se encarga de generar los rayos:
-
-```cpp
-pathtrace() {
-    // Inicializar parámetros del primer rayo
-    HitPayload prd {
-        hit_value,
-        weight,
-        ray_origin,
-        ray_direction
-    }
-
-    current_weight = vec3(1);
-    hit_value      = vec3(0);
-
-    for (profundidad in [0, profunidad_maxima]) {
-        closest_hit(prd.ray_origin, prd.ray_dir);
-        // prd actualiza sus parámetros
-
-        hit_value = hit_value + prd.hit_value * current_weight;
-        current_weight = current_weight * prd.weight;
-    }
-
-    return hit_value;
-}
-```
-
-Y por otro lado, otra función debe almacenar correctamente la información del punto de impacto, así como la radiancia de ese punto. Corresponde al closest hit:
-
-```cpp
-closest_hit() {
-    // Sacar información sobre el punto de impacto: material, normal...
-
-    // Preparar información para el raygen
-    prd.ray_origin = punto_impacto
-    prd.ray_dir = siguiente_direccion(material)
-
-    // Calcular la radiancia
-    float cos_theta = dot(prd.ray_dir, normal);
-    BRDF, pdf = extraer_info(material)
-
-    prd.hit_value = material.emision
-
-    prd.weight = (BRDF * cos_theta) / pdf
-
-    return prd
-}
-```
-
-Esta versión no es tan intuitiva. ¿Por qué este último genera el mismo resultado que el de [la versión recursiva](#pseudocódigo-de-un-path-tracer)?
-
-Analicemos lo está ocurriendo.
-
-Sea $h$ el *hit value* (que simboliza la radiancia), $w$ el peso, $f_i$ la BRDF (o en su defecto, BTDF/BSDF), $i$, $e_i$ la emisión, $\cos\theta_i$ el coseno del ángulo que forman la nueva dirección del rayo y la normal, y $p_i$ la función de densidad que, dada una dirección, proporciona la probabilidad de que se escoja. El subíndice denota el $i$-ésimo punto de impacto.
-
-En esencia, este algoritmo está descomponiendo lo que recogemos en `weight`, que es $f_i \cos\theta_i / p_i$. Inicialmente, para el primer envío del rayo, $h = (0, 0, 0)$, $w = (1, 1, 1)$. Tras trazar el primer rayo, se tiene que
-
-$$
-\begin{aligned}
-    h & = 0 + e_1 w = e_1 \\
-    w & = \frac{f_1 \cos\theta_1}{p_1}
-\end{aligned}
-$$
-
-Tras el segundo rayo, obtenemos
-
-$$
-\begin{aligned}
-    h & = e_1 + e_2 w = \\
-      & = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} \\
-    w & = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
-\end{aligned}
-$$
-
-Y para el tercero
-
-$$
-\begin{aligned}
-    h & = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 w = \\
-      & = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} = \\
-      & = e_1 + \frac{f_1 \cos\theta_1}{p_1}\textcolor{verde-oscurisimo}{\left(e_2 + e_3 \frac{f_2 \cos\theta_2}{p_2}\right)} \\
-    w & = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} \frac{f_3 \cos\theta_3}{p_3}
-\end{aligned}
-$$
-
-El $\textcolor{verde-oscurisimo}{\text{término que acompaña}}$ a $\frac{f_1 \cos\theta_1}{p_1}$ es la radiancia del tercer punto de impacto. Por tanto, a la larga, se tendrá que $h$ estima correctamente la radiancia de un punto. Con esto, podemos afirmar que
-
-$$
-h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{\Prob{\omega_j}}}
-$$
-
-Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento que el recursivo [@nvpro-samples-tutorial, glTF Scene].
-
 ## Requisitos de ray tracing en tiempo real
 
 Como es natural, el tiempo es una limitación enorme para cualquier programa en tiempo real. Mientras que en un *offline renderer* disponemos de un tiempo muy considerable por frame (desde varios segundos hasta horas), en un programa en tiempo real necesitamos que un frame salga en 16 milisegundos o menos. Este concepto se suele denominar *frame budget*: la cantidad de tiempo que disponemos para un frame.
@@ -491,6 +392,22 @@ struct PushConstantRay {
 
 Para eso están los **payloads**. Cada rayo puede llevar información adicional, que se conoce como carga. En esencia, es como una pequeña mochila: el rayo puede recoger información de un shader y pasarlo a otro. Esto resulta *muy* útil, por ejemplo, a la hora de calcular la radiancia de un camino, o saber desde qué punto venía el rayo. Se crean mediante la estructura `rayPayloadEXT`, y se reciben en otro shader mediante `rayPayloadInEXT`. Es importante controlar que el tamaño de la carga no sea excesivamente grande.
 
+Los payloads se definen de la siguiente manera:
+
+```cpp
+struct HitPayload
+{
+    vec3 hit_value;
+    vec3 weight;
+
+    vec3 ray_origin;
+    vec3 ray_dir;
+
+    int  depth;
+    uint seed;
+};
+```
+
 ### Creación de la ray tracing pipeline
 
 El código de la creación de la pipeline está encapsulado en la función `Engine::createRtPipeline()`, que se puede consultar en el archivo `application/vulkan_ray_tracing/src/engine.cpp`.
@@ -559,7 +476,7 @@ Se ha reaprovechado la definición del [rasterizador por defecto](#setup-del-pro
 
 La idea básica es que, en vez de depender de los elementos de la escena para proporcionar luz, se conozca una fuente de iluminación en todo momento. Dicha fuente puede ser puntual o direccional, y puede ser controlada mediante la interfaz. El estado de la fuente se traspasa a los shaders mediante una push constant:
 
-```
+```cpp
 struct PushConstantRay
 {
     ...
@@ -646,6 +563,118 @@ if (dot(normal, L) > 0) {
 ```
 
 Y con esto, hemos conseguido añadir dos tipos de fuentes de iluminación.
+
+## Implementación eficiente del algoritmo sin recursividad
+
+El código de la sección ["Pseudocódigo de un path tracer"](#pseudocódigo-de-un-path-tracer) tiene el problema de que utiliza recursividad. En la implementación de los shaders, esto supondría generar rayos desde el closest hit. Para evitarlo, reestructuraremos el código de forma que únicamente se lancen desde el raygen y calculemos la radiancia total en dicho shader.
+
+El código resultante sería el siguiente: por una parte, una función se encarga de generar los rayos, denominada `pathtrace()`:
+
+```cpp
+vec3 pathtrace(vec4 ray_origin, vec4 ray_dir, float t_min, float t_max, uint ray_flags) {
+    // Inicializar el payload correctamente
+    prd.depth      = 0;
+    prd.hit_value  = vec3(0);
+    prd.ray_origin = ray_origin.xyz;
+    prd.ray_dir    = ray_dir.xyz;
+    prd.weight     = vec3(0);
+    // prd.seed ya estaba inicializado
+
+    vec3 current_weight = vec3(1);
+    vec3 hit_value      = vec3(0);
+
+    // Evitar llamadas recursivas a traceRayEXT() desde el closest hit.
+    for (; prd.depth < pcRay.max_depth; prd.depth++) {
+        traceRayEXT(topLevelAS, // acceleration structure
+            ray_flags,          // rayFlags
+            0xFF,               // cullMask
+            0,                  // sbtRecordOffset
+            0,                  // sbtRecordStride
+            0,                  // missIndex
+            prd.ray_origin,     // ray origin
+            t_min,              // ray min range
+            prd.ray_dir,        // ray direction
+            t_max,              // ray max range
+            0                   // payload (location = 0)
+        );
+
+        hit_value      += prd.hit_value * current_weight;
+        current_weight *= prd.weight;
+    }
+
+    return hit_value;
+}
+```
+
+Y por otro lado, otra función debe almacenar correctamente la información del punto de impacto, así como la radiancia de ese punto. Corresponde al closest hit:
+
+```cpp
+closest_hit() {
+    // Sacar información sobre el punto de impacto: material, normal...
+    WaveFrontMaterial mat = material(world_position);
+
+    // Preparar información para el raygen
+    prd.hit_value      = material.emision;
+    prd.ray_origin     = world_position;
+    prd.ray_dir        = siguiente_direccion(material)
+    float probabilidad = pdf(prd.ray_dir);
+
+    // Calcular la radiancia
+    float cos_theta = dot(prd.ray_dir, normal);
+    vec3 BRDF       = BRDF(material)
+
+    prd.weight = (BRDF * cos_theta) / pdf
+
+    return prd
+}
+```
+
+El código final es considerablemente más complejo que este que se presenta.  Sin embargo, se han obviado algunos detalles de implementación con la intención de ser explicativo.
+
+Esta versión no es tan intuitiva. ¿Por qué este último genera el mismo resultado que el de [la versión recursiva](#pseudocódigo-de-un-path-tracer)?
+
+Analicemos lo está ocurriendo.
+
+Sea $h$ el *hit value* (que simboliza la radiancia), $w$ el peso, $f_i$ la BRDF (o en su defecto, BTDF/BSDF), $i$, $e_i$ la emisión, $\cos\theta_i$ el coseno del ángulo que forman la nueva dirección del rayo y la normal, y $p_i$ la función de densidad que, dada una dirección, proporciona la probabilidad de que se escoja. El subíndice denota el $i$-ésimo punto de impacto.
+
+En esencia, este algoritmo está descomponiendo lo que recogemos en `weight`, que es $f_i \cos\theta_i / p_i$. Inicialmente, para el primer envío del rayo, $h = (0, 0, 0)$, $w = (1, 1, 1)$. Tras trazar el primer rayo, se tiene que
+
+$$
+\begin{aligned}
+    h & = 0 + e_1 w = e_1 \\
+    w & = \frac{f_1 \cos\theta_1}{p_1}
+\end{aligned}
+$$
+
+Tras el segundo rayo, obtenemos
+
+$$
+\begin{aligned}
+    h & = e_1 + e_2 w = \\
+      & = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} \\
+    w & = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
+\end{aligned}
+$$
+
+Y para el tercero
+
+$$
+\begin{aligned}
+    h & = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 w = \\
+      & = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} = \\
+      & = e_1 + \frac{f_1 \cos\theta_1}{p_1}\textcolor{verde-oscurisimo}{\left(e_2 + e_3 \frac{f_2 \cos\theta_2}{p_2}\right)} \\
+    w & = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} \frac{f_3 \cos\theta_3}{p_3}
+\end{aligned}
+$$
+
+El $\textcolor{verde-oscurisimo}{\text{término que acompaña}}$ a $\frac{f_1 \cos\theta_1}{p_1}$ es la radiancia del tercer punto de impacto. Por tanto, a la larga, se tendrá que $h$ estima correctamente la radiancia de un punto. Con esto, podemos afirmar que
+
+$$
+h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{\Prob{\omega_j}}}
+$$
+
+Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento que el recursivo [@nvpro-samples-tutorial, glTF Scene].
+
 
 ## Antialiasing mediante jittering y acumulación temporal
 
