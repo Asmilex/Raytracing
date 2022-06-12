@@ -336,37 +336,9 @@ Si necesitas más información, todos estos conceptos aparecen desarrollados ext
 
 Tradicionalmente, en rasterización se utiliza un descriptor set por tipo de material, y consecuentemente, un pipeline por cada tipo. En ray tracing esto no es posible, puesto que **no se sabe qué material** se va a usar: un rayo puede impactar en *cualquier* material presente en la escena, lo cual invocaría un shader específico. Debido a esto, empaquetaremos todos los recursos en un único set de descriptores.
 
-### La Shader Binding Table
-
-Para solucionar esto, vamos a crear la **Shader Binding Table** (SBT). Esta estructura permitirá cargar el shader correspondiente dependiendo de dónde impacte un rayo.
-
-Para cargar esta estructura, se debe hacer lo siguiente:
-
-1. Cargar y compilar cada shader en un `VkShaderModule`.
-2. Juntar los cada `VkShaderModule` en un array `VkPipelineShaderStageCreateInfo`.
-3. Crear un array de `VkRayTracingShaderGroupCreateInfoKHR`. Cada elemento se convertirá al final en una entrada de la Shader Binding Table.
-4. Compilar los dos arrays anteriores más un pipeline layout para generar un `vkCreateRayTracingPipelineKHR`.
-5. Conseguir los *handlers* de los shaders usando `vkGetRayTracingShaderGroupHandlesKHR`.
-6. Alojar un buffer con el bit `VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR` y copiar los *handlers*.
-
-![La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader `raygen`, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un `closest hit`, `any hit`, o `miss` shaders. Fuente: [@GemsII-SBT, p. 194]](./img/04/Pipeline.png){#fig:pipeline}
-
-Cada entrada de la SBT contiene un handler y una serie de parámetros embebidos. A esto se le conoce como **Shader Record**. Estos records se clasifican en:
-
-- **Ray generation record**: contiene el handler del ray generation shader.
-- **Hit group record**: se encargan de los handlers del closest hit, anyhit (opcional), e intersection (opcional).
-- **Miss group record**: se encarga del miss shader.
-- **Callable group record**.
-
-Una de las partes más difíciles de la SBT es saber cómo se relacionan record y geometría. Es decir, cuando un rayo impacta en una geometría, ¿a qué record de la SBT llamamos? Esto se determina mediante los parámetros de la instancia, la llamada a *trace rays*, y el orden de la geometría en la BLAS. En particular, resulta problemático de los índices en los *hit groups*.
-
-Para conocer a fondo cómo funciona la Shader Binding Table, puedes visitar [@GemsII-SBT, p. 193] o [@shader-binding-table].
-
-![Fuente: [@shader-binding-table]](./img/04/SBT.png){#fig:SBT}
-
 ### Tipos de shaders
 
-El pipeline soporta varios tipos de shaders diferentes que cubren la funcionalidad esencial de un ray tracer:
+El pipeline de ray tracing soporta varios tipos de shaders diferentes que cubren la funcionalidad esencial de un ray tracer:
 
 - **Ray generation shader**: es el punto de inicio del viaje de un rayo. Calcula punto de inicio y procesa el resultado final. Idealmente, solo se invocan rayos desde aquí. La implementación se encuentra en `application/vulkan_ray_tracing/src/shaders/raytrace.rgen`.
 - **Closest hit shader**: este shader se ejecuta cuando un rayo impacta en una geometría por primera vez. Se pueden trazar rayos recursivamente desde aquí (por ejemplo, para calcular oclusión ambiental). El archivo correspondiente es `application/vulkan_ray_tracing/src/shaders/raytrace.rchit`.
@@ -415,6 +387,34 @@ struct HitPayload
     uint seed;
 };
 ```
+
+### La Shader Binding Table
+
+Para solventar el problema de determinar el material de un objeto en ray tracing vamos usar la **Shader Binding Table** (SBT). Esta estructura permitirá cargar el shader correspondiente dependiendo de dónde impacte un rayo.
+
+Para cargar esta estructura, se debe hacer lo siguiente:
+
+1. Cargar y compilar cada shader en un `VkShaderModule`.
+2. Juntar los cada `VkShaderModule` en un array `VkPipelineShaderStageCreateInfo`.
+3. Crear un array de `VkRayTracingShaderGroupCreateInfoKHR`. Cada elemento se convertirá al final en una entrada de la Shader Binding Table.
+4. Compilar los dos arrays anteriores más un pipeline layout para generar un `vkCreateRayTracingPipelineKHR`.
+5. Conseguir los *handlers* de los shaders usando `vkGetRayTracingShaderGroupHandlesKHR`.
+6. Alojar un buffer con el bit `VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR` y copiar los *handlers*.
+
+![La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader `raygen`, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un `closest hit`, `any hit`, o `miss` shaders. Fuente: [@GemsII-SBT, p. 194]](./img/04/Pipeline.png){#fig:pipeline}
+
+Cada entrada de la SBT contiene un handler y una serie de parámetros embebidos. A esto se le conoce como **Shader Record**. Estos records se clasifican en:
+
+- **Ray generation record**: contiene el handler del ray generation shader.
+- **Hit group record**: se encargan de los handlers del closest hit, anyhit (opcional), e intersection (opcional).
+- **Miss group record**: se encarga del miss shader.
+- **Callable group record**.
+
+Una de las partes más difíciles de la SBT es saber cómo se relacionan record y geometría. Es decir, cuando un rayo impacta en una geometría, ¿a qué record de la SBT llamamos? Esto se determina mediante los parámetros de la instancia, la llamada a *trace rays*, y el orden de la geometría en la BLAS. En particular, resulta problemático de los índices en los *hit groups*.
+
+Para conocer a fondo cómo funciona la Shader Binding Table, puedes visitar [@GemsII-SBT, p. 193] o [@shader-binding-table].
+
+![Fuente: [@shader-binding-table]](./img/04/SBT.png){#fig:SBT}
 
 ### Creación de la ray tracing pipeline
 
