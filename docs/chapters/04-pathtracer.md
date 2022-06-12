@@ -69,64 +69,45 @@ Con lo que conocemos hasta ahora, podemos empezar a programar los shaders. Una p
 \begin{algorithm}[H]
 \DontPrintSemicolon
 \SetAlgoLined
-\KwResult{Write here the result}
-\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
-\Input{Write here the input}
-\Output{Write here the output}
+\KwResult{Radiancia total del camino}
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\Input{punto de origen $\mathbf{p}$, dirección del rayo $\omega$, profundidad del camino $profundidad$}
+\Output{$L$}
 \BlankLine
-\While{While condition}{
-    instructions\;
-    \eIf{condition}{
-        instructions1\;
-        instructions2\;
-    }{
-        instructions3\;
-    }
+$emision = L_e(\mathbf{p}, \omega, profundidad)$\;
+\If{$profundidad \le profundidad\_maxima$} {
+    $\mathbf{u} =$ dirección aleatoria hacia el siguiente punto\;
+    $prob = pdf(\mathbf{p}, \mathbf{u}, \omega)$ \tcp*{probabilidad de escoger la dirección $u$}
+    $\mathbf{y} = closest\_hit(\mathbf{p}, \mathbf{u})$\;
+    $\theta = \mathbf{n}_\mathbf{p} \cdot \mathbf{u}$\;
+    \BlankLine
+    $L = emision + L(\mathbf{y}, -\mathbf{u}, profundidad + 1) f_r(\mathbf{p}, \mathbf{u}, \omega) \cos\theta / prob$\;
 }
-\caption{While loop with If/Else condition}
+\caption{$L(\mathbf{p}, \omega, profundidad)$}
 \end{algorithm}
 ```
 
-
 ```{=html}
-<h3>Texto en html</h3>
+<pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token function">L</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> omega<span class="token punctuation">,</span> profundidad<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    emision <span class="token operator">=</span> <span class="token function">L_e</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> omega<span class="token punctuation">,</span> profundidad<span class="token punctuation">)</span>
 
-pathtrace(Rayo r, profundidad) {
-    if (profundidad == profundidad_maxima) {
-        return contribucion_ambiental;
-    }
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>profundidad <span class="token operator">&lt;=</span> profundidad_maxima<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        u <span class="token operator">=</span> <span class="token function">direccion_aleatoria</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        prob <span class="token operator">=</span> <span class="token function">pdf</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> u<span class="token punctuation">,</span> omega<span class="token punctuation">)</span>   <span class="token comment">// probabilidad de escoger la dir. u</span>
+        y <span class="token operator">=</span> <span class="token function">closest_hit</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> u<span class="token punctuation">)</span>
+        theta <span class="token operator">=</span> <span class="token function">dot</span><span class="token punctuation">(</span><span class="token function">normal</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> u<span class="token punctuation">)</span>
+        L <span class="token operator">=</span>   emision
+            <span class="token operator">+</span> <span class="token function">L</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> <span class="token operator">-</span>u<span class="token punctuation">,</span> profundidad <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token function">f_r</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> u<span class="token punctuation">,</span> omega<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token function">cos</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span> <span class="token operator">/</span> prob
+    <span class="token punctuation">}</span>
 
-    r.closest_hit()     // -> Guardar información del impacto
-
-    if (!r.ha_impactado()) {
-        // Si no se golpea nada, añadir una pequeña contribución del entorno.
-        return contribucion_ambiental
-    }
-
-    // Sacar información del punto de impacto
-    hit_info = r.hit_info
-    material = hit_info.material
-    emision  = material.emision
-
-    // Calcular los parámetros de la ecuación
-    cos_theta = dot(r.direccion, hit_info.normal)
-    BRDF, pdf = extraer_info(material)
-
-    nuevo_rayo = Rayo(
-        origen    = hit_info.punto_impacto,
-        direccion = siguiente_direccion(hit_info.normal)
-    )
-
-    // Devolver la radiancia del punto de impacto.
-    // L_i se calcula a partir del pathtrace del nuevo rayo.
-    return emision
-        + (BRDF * pathtrace(nuevo_rayo, profundidad + 1) * cos_theta) / pdf;
-}
+    <span class="token keyword">return</span> L
+<span class="token punctuation">}</span></code></pre>
 ```
 
 El término `emision` corresponde a $L_e(p, \omega_o)$. Siempre lo añadimos, pues en caso de que el objeto no emita luz, la contribución de este término sería 0.
 
-La principal desventaja de esta implementación es que utiliza recursividad. Como bien es conocido, abusar de recursividad provoca que el tiempo de ejecución aumente significativamente. Además, con la implementación anterior, se generan rayos desde el closest hit shader, lo cual no es ideal.
+La principal desventaja de esta implementación es que utiliza recursividad. Como bien es conocido, abusar de recursividad provoca que el tiempo de ejecución aumente significativamente.
 
 ### Evitando la recursividad
 
