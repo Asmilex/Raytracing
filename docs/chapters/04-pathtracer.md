@@ -79,7 +79,7 @@ $emision = L_e(\mathbf{p}, \omega, profundidad)$\;
 \If{$profundidad \le profundidad\_maxima$} {
     $\mathbf{u} =$ dirección aleatoria hacia el siguiente punto\;
     $prob = pdf(\mathbf{p}, \mathbf{u}, \omega)$ \tcp*{probabilidad de escoger la dirección $u$}
-    $\mathbf{y} = closest\_hit(\mathbf{p}, \mathbf{u})$\;
+    $\mathbf{y} = intersecar(\mathbf{p}, \mathbf{u})$ \tcp*{Encontrar la geometría más cercana en dirección $u$}
     $\theta = \mathbf{n}_\mathbf{p} \cdot \mathbf{u}$\;
     \BlankLine
     $L = emision + L(\mathbf{y}, -\mathbf{u}, profundidad + 1) f_r(\mathbf{p}, \mathbf{u}, \omega) \cos\theta / prob$\;
@@ -95,7 +95,7 @@ $emision = L_e(\mathbf{p}, \omega, profundidad)$\;
     <span class="token keyword">if</span> <span class="token punctuation">(</span>profundidad <span class="token operator">&lt;=</span> profundidad_maxima<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         u <span class="token operator">=</span> <span class="token function">direccion_aleatoria</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
         prob <span class="token operator">=</span> <span class="token function">pdf</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> u<span class="token punctuation">,</span> omega<span class="token punctuation">)</span>   <span class="token comment">// probabilidad de escoger la dir. u</span>
-        y <span class="token operator">=</span> <span class="token function">closest_hit</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> u<span class="token punctuation">)</span>
+        y <span class="token operator">=</span> <span class="token function">intersecar</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> u<span class="token punctuation">)</span>
         theta <span class="token operator">=</span> <span class="token function">dot</span><span class="token punctuation">(</span><span class="token function">normal</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">,</span> u<span class="token punctuation">)</span>
         L <span class="token operator">=</span>   emision
             <span class="token operator">+</span> <span class="token function">L</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> <span class="token operator">-</span>u<span class="token punctuation">,</span> profundidad <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token function">f_r</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> u<span class="token punctuation">,</span> omega<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token function">cos</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span> <span class="token operator">/</span> prob
