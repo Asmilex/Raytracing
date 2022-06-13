@@ -529,9 +529,29 @@ Sin embargo, esto no es suficiente. Se nos olvida comprobar un detalle sumamente
 
 Si no es así, ¡no tiene sentido que calculemos la influencia luminaria de la fuente! La carne de burro no se transparenta, después de todo. A no ser que sea un toro hecho de algún material que presente transmitancia, en cuyo caso se debería refractar acordemente el rayo de luz.
 
-Volviendo al tema: este tipo de problemas de oclusión se suelen resolver mediante algún tipo de test de visibilidad. El más habitual es usar **shadow rays**. Al preparar la [pipeline](#la-ray-tracing-pipeline) fijamos el stage de los shadow rays precisamente por este motivo.
+Volviendo al tema: este tipo de problemas de oclusión se suelen resolver mediante algún tipo de test de visibilidad. El más habitual es usar **shadow rays**. En la preparación de la [pipeline](#la-ray-tracing-pipeline) se fija este tipo de shaders junto a los del tipo miss:
 
-La continuación del código quería de la siguiente forma:
+```cpp
+// void Engine::createRtPipeline()
+// ...
+stage.module = nvvk::createShaderModule(m_device,
+    nvh::loadFile("spv/raytrace.rmiss.spv", true, defaultSearchPaths, true)
+);
+stage.stage   = VK_SHADER_STAGE_MISS_BIT_KHR;
+stages[eMiss] = stage;
+
+// El segundo miss shader se invoca cuando un shadow ray no ha colisionado con la geometría.
+// Simplemente, indica que no ha habido oclusión.
+stage.module = nvvk::createShaderModule(m_device,
+    nvh::loadFile("spv/raytraceShadow.rmiss.spv", true, defaultSearchPaths, true
+));
+stage.stage    = VK_SHADER_STAGE_MISS_BIT_KHR;
+stages[eMiss2] = stage;
+
+// Resto de shaders...
+```
+
+La continuación del código quedaría de la siguiente forma:
 
 ```glsl
 if (dot(normal, L) > 0) {
