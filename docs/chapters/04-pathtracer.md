@@ -350,7 +350,7 @@ Existe otro tipo de shader adicional denominado **callable shader**. Este es un 
 
 ### Traspaso de información entre shaders
 
-En ray tracing, los shaders por sí solos no pueden realizar todos los cálculos necesarios para conseguir la imagen final. Necesitaremos enviar información de uno a otro. Para conseguirlo tenemos diferentes mecanismos:
+En ray tracing, los shaders por sí solos no pueden realizar todos los cálculos necesarios para conseguir la imagen final. Necesitaremos enviar información externa a estos. Para conseguirlo tenemos diferentes mecanismos:
 
 El primero de ellos son las **push constants**. Estas son variables que se pueden traspasar a los shaders (es decir, de CPU a GPU), pero que no se pueden modificar entre fases. Únicamente podemos mandar un pequeño número de variables, el cual se puede consultar mediante `VkPhysicalDeviceLimits.maxPushConstantSize`. Además, es importante tener en cuenta el alineamiento de las estructuras almacenadas.
 
