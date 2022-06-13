@@ -123,12 +123,12 @@ El requisito más importante de todos es la gráfica. Para ser capaces de realiz
 
 A día 17 de abril de 2022, para correr ray tracing en tiempo real, se necesita alguna de las siguientes tarjetas gráficas:
 
-| **Arquitectura**              | **Fabricante** | **Modelos de gráficas**                                                                              |
+| **Arquitectura**              | **Fabricante** |                                       **Modelos de gráficas**                                        |
 |:------------------------------|:---------------|:----------------------------------------------------------------------------------------------------:|
 | **Turing**                    | Nvidia         | RTX 2060, RTX 2060 Super, RTX 2070, RTX 2070 Super, RTX 2080, RTX 2080 Super, RTX 2080 Ti, RTX Titan |
 | **Ampere**                    | Nvidia         | RTX 3050, RTX 3060, RTX 3060 Ti, RTX 3070, RTX 3070 Ti, RTX 3080, RTX 3080 Ti, RTX 3090, RTX 3090 Ti |
-| **RDNA2** (Navi 2X, Big Navi) | AMD            | RX 6400, RX 6500 XT, RX 6600, RX 6600 XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT                |
-| **Arc Alchemist**             | Intel          | *No reveleado aún*                                                                                   |
+| **RDNA2** (Navi 2X, Big Navi) | AMD            |        RX 6400, RX 6500 XT, RX 6600, RX 6600 XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT         |
+| **Arc Alchemist**             | Intel          |                                          *No reveleado aún*                                          |
 
 Se puede encontrar más información sobre las diferentes arquitecturas y gráficas en el siguiente artículo de AMD Radeon [@wikipedia-radeon], Nvidia [@wikipedia-nvidia], e [@intel-arc]. Solo se han incluido las gráficas de escritorio de consumidor.
 
@@ -441,6 +441,8 @@ El formato de materiales y objetos usados es el **Wavefront** (`.obj`). Aunque e
 - $K_e \in [0, 1]^3$: componente emisiva (PBR).
 - Todos los valores con tres componentes pueden presentar un *texture map*.
 
+Todos estos parámetros son opcionales y se pueden omitir, pero lo normal es incluir los tres primeros ($K_a$, $K_d$, $K_s$).
+
 Existe un parámetro adicional llamado `illum`. Controla el modelo de iluminación usado. Nosotros lo usaremos para distinguir tipos diferentes de materiales. Los códigos representan lo siguiente:
 
 | **Modelo** | **Color**                    | **Reflejos**         | **Transparencias** |
@@ -455,7 +457,7 @@ Existe un parámetro adicional llamado `illum`. Controla el modelo de iluminaci�
 | `7`        | Difusa, especular, ambiental | Ray traced (Fresnel) | Refracción         |
 | `8`        | Difusa, especular, ambiental | Sí                   | No                 |
 | `9`        | Difusa, especular, ambiental | Sí                   | Cristal            |
-| `10`       |  Sombras arrojadizas                                                     |
+| `10`       | Puede arrojar sombras a superficies invisibles.                          |
 
 ```c++
 // host_device.h
