@@ -340,13 +340,13 @@ Tradicionalmente, en rasterización se utiliza un descriptor set por tipo de mat
 
 El pipeline de ray tracing soporta varios tipos de shaders diferentes que cubren la funcionalidad esencial de un ray tracer:
 
-- **Ray generation shader**: es el punto de inicio del viaje de un rayo. Calcula punto de inicio y procesa el resultado final. Idealmente, solo se invocan rayos desde aquí. La implementación se encuentra en `application/vulkan_ray_tracing/src/shaders/raytrace.rgen`.
-- **Closest hit shader**: este shader se ejecuta cuando un rayo impacta en una geometría por primera vez. Se pueden trazar rayos recursivamente desde aquí (por ejemplo, para calcular oclusión ambiental). El archivo correspondiente es `application/vulkan_ray_tracing/src/shaders/raytrace.rchit`.
+- **Ray generation shader**: es el punto de inicio del viaje de un rayo. Calcula punto de inicio y procesa el resultado final. Idealmente, la llamada a la función `traceRayEXT()`, la cual se encarga de generar un nuevo rayo, solo ocurre desde este shader. La implementación se encuentra en `application/vulkan_ray_tracing/src/shaders/raytrace.rgen`.
+- **Closest hit shader**: este shader se ejecuta en la primera intersección con alguna geometría válida de la escena. Se pueden trazar rayos recursivamente desde aquí (por ejemplo, para calcular oclusión ambiental). El archivo correspondiente es `application/vulkan_ray_tracing/src/shaders/raytrace.rchit`.
 - **Any-hit shader**: similar al closest hit, pero invocado en cada intersección del camino del rayo que cumpla $t \in [t_{min}, t_{max})$. Es comúnmente utilizado en los cálculos de transparencias (*alpha-testing*). Puedes comprobarlo en `application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl`.
-- **Miss shader**: si el rayo no choca con ninguna geometría --pega con el infinito--, se ejecuta este shader. Normalmente, añade una pequeña contribución ambiental al rayo. Se halla `application/vulkan_ray_tracing/src/shaders/raytrace.rmiss`.
+- **Miss shader**: si el rayo no choca con ninguna geometría, se ejecuta este shader. Normalmente, añade una pequeña contribución ambiental al rayo. Se halla `application/vulkan_ray_tracing/src/shaders/raytrace.rmiss`.
 - **Intersection shader**: este shader es algo diferente al resto. Su función es calcular el punto de impacto de un rayo con una geometría. Por defecto se utiliza un test triángulo - rayo. En nuestro path tracer lo dejaremos por defecto, pero podríamos definir algún método como los que vimos en la sección [intersecciones rayo - objeto](#intersecciones-rayo---objeto).
 
-Existe otro tipo de shader adicional denominado **callable shader**. Este es un shader que se invoca desde otro shader. Por ejemplo, un shader de intersección puede invocar a un shader de oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque if-else por un shader para hacer cálculos de iluminación. Este tipo de shaders no se han implementado en el path tracer, pero se podrían añadir con un poco de trabajo.
+Existe otro tipo de shader adicional denominado **callable shader**. Este es un shader que se invoca desde otro shader, a modo de subrutina. Por ejemplo, un shader de intersección puede invocar a un shader de oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque if-else por un shader para hacer cálculos de iluminación. Este tipo de shaders no se han implementado en el path tracer, pero se podrían añadir con un poco de trabajo.
 
 ### Traspaso de información entre shaders
 
