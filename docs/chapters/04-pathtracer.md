@@ -478,7 +478,7 @@ struct WaveFrontMaterial
 
 ## Fuentes de luz
 
-La última estructura de datos importante que debemos estudiar es la utilizada para las fuentes de luces. Desafortunadamente, en este trabajo no se ha implementado una abstracción sólida.
+La última estructura de datos importante que debemos estudiar es la utilizada para las fuentes de luz. Desafortunadamente, en este trabajo no se ha implementado una abstracción sólida.
 
 Se ha reaprovechado la definición del [rasterizador por defecto](#setup-del-proyecto) para que tanto el path tracer como el anterior utilicen fácilmente iluminación estática.
 
