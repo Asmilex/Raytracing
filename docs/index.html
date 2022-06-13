@@ -5064,13 +5064,14 @@ que cubren la funcionalidad esencial de un ray tracer:</p>
 <ul>
 <li><strong>Ray generation shader</strong>: es el punto de inicio del
 viaje de un rayo. Calcula punto de inicio y procesa el resultado final.
-Idealmente, solo se invocan rayos desde aquí. La implementación se
-encuentra en
+Idealmente, la llamada a la función <code>traceRayEXT()</code>, la cual
+se encarga de generar un nuevo rayo, solo ocurre desde este shader. La
+implementación se encuentra en
 <code>application/vulkan_ray_tracing/src/shaders/raytrace.rgen</code>.</li>
-<li><strong>Closest hit shader</strong>: este shader se ejecuta cuando
-un rayo impacta en una geometría por primera vez. Se pueden trazar rayos
-recursivamente desde aquí (por ejemplo, para calcular oclusión
-ambiental). El archivo correspondiente es
+<li><strong>Closest hit shader</strong>: este shader se ejecuta en la
+primera intersección con alguna geometría válida de la escena. Se pueden
+trazar rayos recursivamente desde aquí (por ejemplo, para calcular
+oclusión ambiental). El archivo correspondiente es
 <code>application/vulkan_ray_tracing/src/shaders/raytrace.rchit</code>.</li>
 <li><strong>Any-hit shader</strong>: similar al closest hit, pero
 invocado en cada intersección del camino del rayo que cumpla <span
@@ -5079,8 +5080,8 @@ utilizado en los cálculos de transparencias (<em>alpha-testing</em>).
 Puedes comprobarlo en
 <code>application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl</code>.</li>
 <li><strong>Miss shader</strong>: si el rayo no choca con ninguna
-geometría –pega con el infinito–, se ejecuta este shader. Normalmente,
-añade una pequeña contribución ambiental al rayo. Se halla
+geometría, se ejecuta este shader. Normalmente, añade una pequeña
+contribución ambiental al rayo. Se halla
 <code>application/vulkan_ray_tracing/src/shaders/raytrace.rmiss</code>.</li>
 <li><strong>Intersection shader</strong>: este shader es algo diferente
 al resto. Su función es calcular el punto de impacto de un rayo con una
@@ -5091,18 +5092,18 @@ href="#intersecciones-rayo---objeto">intersecciones rayo -
 objeto</a>.</li>
 </ul>
 <p>Existe otro tipo de shader adicional denominado <strong>callable
-shader</strong>. Este es un shader que se invoca desde otro shader. Por
-ejemplo, un shader de intersección puede invocar a un shader de
-oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque
-if-else por un shader para hacer cálculos de iluminación. Este tipo de
-shaders no se han implementado en el path tracer, pero se podrían añadir
-con un poco de trabajo.</p>
+shader</strong>. Este es un shader que se invoca desde otro shader, a
+modo de subrutina. Por ejemplo, un shader de intersección puede invocar
+a un shader de oclusión. Otro ejemplo sería un closest hit que reemplaza
+un bloque if-else por un shader para hacer cálculos de iluminación. Este
+tipo de shaders no se han implementado en el path tracer, pero se
+podrían añadir con un poco de trabajo.</p>
 <h3 data-number="4.6.3" id="traspaso-de-información-entre-shaders"><span
 class="header-section-number">4.6.3</span> Traspaso de información entre
 shaders</h3>
 <p>En ray tracing, los shaders por sí solos no pueden realizar todos los
 cálculos necesarios para conseguir la imagen final. Necesitaremos enviar
-información de uno a otro. Para conseguirlo tenemos diferentes
+información externa a estos. Para conseguirlo tenemos diferentes
 mecanismos:</p>
 <p>El primero de ellos son las <strong>push constants</strong>. Estas
 son variables que se pueden traspasar a los shaders (es decir, de CPU a
@@ -5256,6 +5257,11 @@ emisiva (PBR).</li>
 <li>Todos los valores con tres componentes pueden presentar un
 <em>texture map</em>.</li>
 </ul>
+<p>Todos estos parámetros son opcionales y se pueden omitir, pero lo
+normal es incluir los tres primeros (<span
+class="math inline">\(K_a\)</span>, <span
+class="math inline">\(K_d\)</span>, <span
+class="math inline">\(K_s\)</span>).</p>
 <p>Existe un parámetro adicional llamado <code>illum</code>. Controla el
 modelo de iluminación usado. Nosotros lo usaremos para distinguir tipos
 diferentes de materiales. Los códigos representan lo siguiente:</p>
@@ -5337,7 +5343,7 @@ diferentes de materiales. Los códigos representan lo siguiente:</p>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>10</code></td>
-<td>Sombras arrojadizas</td>
+<td>Puede arrojar sombras a superficies invisibles.</td>
 <td></td>
 <td></td>
 </tr>
@@ -5360,7 +5366,7 @@ struct WaveFrontMaterial
 <h2 data-number="4.8" id="fuentes-de-luz"><span
 class="header-section-number">4.8</span> Fuentes de luz</h2>
 <p>La última estructura de datos importante que debemos estudiar es la
-utilizada para las fuentes de luces. Desafortunadamente, en este trabajo
+utilizada para las fuentes de luz. Desafortunadamente, en este trabajo
 no se ha implementado una abstracción sólida.</p>
 <p>Se ha reaprovechado la definición del <a
 href="#setup-del-proyecto">rasterizador por defecto</a> para que tanto
@@ -5421,10 +5427,27 @@ transmitancia, en cuyo caso se debería refractar acordemente el rayo de
 luz.</p>
 <p>Volviendo al tema: este tipo de problemas de oclusión se suelen
 resolver mediante algún tipo de test de visibilidad. El más habitual es
-usar <strong>shadow rays</strong>. Al preparar la <a
-href="#la-ray-tracing-pipeline">pipeline</a> fijamos el stage de los
-shadow rays precisamente por este motivo.</p>
-<p>La continuación del código quería de la siguiente forma:</p>
+usar <strong>shadow rays</strong>. En la preparación de la <a
+href="#la-ray-tracing-pipeline">pipeline</a> se fija este tipo de
+shaders junto a los del tipo miss:</p>
+<pre><code class="language-cpp">// void Engine::createRtPipeline()
+// ...
+stage.module = nvvk::createShaderModule(m_device,
+    nvh::loadFile(&quot;spv/raytrace.rmiss.spv&quot;, true, defaultSearchPaths, true)
+);
+stage.stage   = VK_SHADER_STAGE_MISS_BIT_KHR;
+stages[eMiss] = stage;
+
+// El segundo miss shader se invoca cuando un shadow ray no ha colisionado con la geometría.
+// Simplemente, indica que no ha habido oclusión.
+stage.module = nvvk::createShaderModule(m_device,
+    nvh::loadFile(&quot;spv/raytraceShadow.rmiss.spv&quot;, true, defaultSearchPaths, true
+));
+stage.stage    = VK_SHADER_STAGE_MISS_BIT_KHR;
+stages[eMiss2] = stage;
+
+// Resto de shaders...</code></pre>
+<p>La continuación del código quedaría de la siguiente forma:</p>
 <pre><code class="language-glsl">if (dot(normal, L) &gt; 0) {
     // Preparar la invocación del shadow ray
     float tMin = 0.001;
