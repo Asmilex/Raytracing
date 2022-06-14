@@ -592,6 +592,8 @@ if (dot(normal, L) > 0) {
 
 Y con esto, hemos conseguido añadir dos tipos de fuentes de iluminación.
 
+Debemos destacar que el programa **no conoce la posición de los objetos emisivos de la escena**. Esto significa que no podemos muestrearlos explícitamente. En la [comparativa](#análisis-de-rendimiento) comprobaremos cómo afecta esto a la calidad de imagen. Además, en la conclusión hablaremos de cómo se podría solventar este problema.
+
 ## Implementación eficiente del algoritmo sin recursividad
 
 El código de la sección ["Pseudocódigo de un path tracer"](#pseudocódigo-de-un-path-tracer) tiene el problema de que utiliza recursividad. En la implementación de los shaders, esto supondría generar rayos desde el closest hit. Para evitarlo, reestructuraremos el código de forma que únicamente se lancen desde el raygen y calculemos la radiancia total en dicho shader.
