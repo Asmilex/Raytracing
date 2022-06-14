@@ -30,7 +30,7 @@ toc-depth: 4
 numbersections: true
 colorlinks: true
 
-header-left: "\\textcolor{gray}{Los fundamentos de RT en tiempo real}"
+header-left: "\\hspace{0.1cm}"
 header-right: "\\textcolor{gray}{\\textit{\\leftmark}}"
 footer-left: "\\hspace{1cm}"
 footer-center: "\\thepage"
