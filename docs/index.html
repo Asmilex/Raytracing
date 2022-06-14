@@ -394,10 +394,6 @@ class="toc-section-number">3.3.3.2</span> Next event estimation, o
 muestreo directo de fuentes de luz</a></li>
 <li><a href="#quasi-monte-carlo"><span
 class="toc-section-number">3.3.3.3</span> Quasi-Monte Carlo</a></li>
-<li><a
-href="#cadenas-de-markov-y-ecuaciones-integrales-de-fredholm-de-tipo-dos"><span
-class="toc-section-number">3.3.3.4</span> Cadenas de Markov y ecuaciones
-integrales de Fredholm de tipo dos</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#escogiendo-puntos-aleatorios"><span
@@ -423,6 +419,20 @@ class="toc-section-number">3.4.2</span> Método del rechazo</a>
 class="toc-section-number">3.4.2.1</span> Ejemplo práctico del método
 del rechazo en R</a></li>
 </ul></li>
+</ul></li>
+<li><a
+href="#cadenas-de-markov-y-ecuaciones-integrales-de-fredholm-de-tipo-2"><span
+class="toc-section-number">3.5</span> Cadenas de Markov y ecuaciones
+integrales de Fredholm de tipo 2</a>
+<ul>
+<li><a href="#ecuaciones-de-fredholm"><span
+class="toc-section-number">3.5.1</span> Ecuaciones de Fredholm</a></li>
+<li><a href="#cadenas-de-markov"><span
+class="toc-section-number">3.5.2</span> Cadenas de Markov</a></li>
+<li><a
+href="#resolviendo-las-ecuaciones-de-fredholm-utilizando-cadenas-de-markov-continuas"><span
+class="toc-section-number">3.5.3</span> Resolviendo las ecuaciones de
+Fredholm utilizando cadenas de Markov continuas</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#construyamos-un-path-tracer"><span
@@ -4105,16 +4115,6 @@ data-cites="quasi-monte-carlo">(<a href="#ref-quasi-monte-carlo"
 role="doc-biblioref">Roberts 2018</a>)</span></figcaption>
 </figure>
 </div>
-<h4 data-number="3.3.3.4"
-id="cadenas-de-markov-y-ecuaciones-integrales-de-fredholm-de-tipo-dos"><span
-class="header-section-number">3.3.3.4</span> Cadenas de Markov y
-ecuaciones integrales de Fredholm de tipo dos</h4>
-<blockquote>
-<p>TODO: mirar issue #54. Esta sección es importantilla</p>
-</blockquote>
-<p><span class="citation" data-cites="fredholm-integrals">(<a
-href="#ref-fredholm-integrals" role="doc-biblioref">Farnoosh and
-Ebrahimi 2008</a>)</span></p>
 <h2 data-number="3.4" id="escogiendo-puntos-aleatorios"><span
 class="header-section-number">3.4</span> Escogiendo puntos
 aleatorios</h2>
@@ -4439,6 +4439,274 @@ alt="Figura 17: Histograma del método de rechazo." />
 método de rechazo.</figcaption>
 </figure>
 </div>
+<h2 data-number="3.5"
+id="cadenas-de-markov-y-ecuaciones-integrales-de-fredholm-de-tipo-2"><span
+class="header-section-number">3.5</span> Cadenas de Markov y ecuaciones
+integrales de Fredholm de tipo 2</h2>
+<p>A lo largo de este capítulo hemos descrito las técnicas que se
+utilizan para aproximar los valores de una integral. En esta sección
+vamos a dar un salto de abstracción, e introduciremos brevemente cómo
+funcionan las cadenas de Markov, y cómo se pueden usar para aproximar
+soluciones de un tipo de ecuación integral denominada “ecuación de
+Fredholm de tipo 2”. Nos basaremos en los contenidos de <span
+class="citation" data-cites="montecarlo-fredholm">(<a
+href="#ref-montecarlo-fredholm" role="doc-biblioref">Farnoosh and
+Ebrahimi 2008</a>)</span> y <span class="citation"
+data-cites="markov-chains">(<a href="#ref-markov-chains"
+role="doc-biblioref">Tolver 2016</a>)</span>.</p>
+<p>Este tipo de ecuaciones resulta de interés puesto que la ecuación del
+transporte de luz es un caso particular de estas ecuaciones, pero con
+dominio infinito-dimensional.</p>
+<h3 data-number="3.5.1" id="ecuaciones-de-fredholm"><span
+class="header-section-number">3.5.1</span> Ecuaciones de Fredholm</h3>
+<p>Una <strong>ecuación de Fredholm de tipo 2</strong> es una ecuación
+integral de la forma</p>
+<p><span id="eq:fredholm_2" class="eqnos"><span class="math display">\[
+u(x) = f(x) + \lambda \int_{a}^{b}{k(x, t)u(t)\ dt}
+\]</span><span class="eqnos-number">(39)</span></span></p>
+<p>Donde <span class="math inline">\(f(x) \in L_2\left([a,
+b]\right)\)</span>, <span class="math inline">\(k(x, t) \in L_2\left([a,
+b] \times [a, b]\right)\)</span>, el cual se denomina “kernel” de la
+ecuación de Fredholm; y <span class="math inline">\(u(x) \in
+L_2\left([a, b]\right)\)</span>, la cual es la función que queremos
+obtener.</p>
+<p>El espacio <span class="math inline">\(L_2([a, b])\)</span> se define
+como</p>
+<p><span class="math display">\[
+L_2([a, b]) = \left\{f \in L([a, b]) \,\middle|\,
+\int_{a}^{b}{\left\lvert f(t) \right\rvert^2\ dt} &lt; \infty \right\}
+\]</span></p>
+<p>Particularizaremos el caso <span class="math inline">\(a = 0, b =
+1\)</span>, <span class="math inline">\(\lambda = 1\)</span>, <span
+class="math inline">\(0 \le x \le 1\)</span> en lo que queda de
+sección.</p>
+<h3 data-number="3.5.2" id="cadenas-de-markov"><span
+class="header-section-number">3.5.2</span> Cadenas de Markov</h3>
+<p>Las cadenas de Markov son un tipo específico de proceso estocástico.
+Un <strong>proceso estocástico</strong> o aleatorio es una familia de
+variables aleatorias indexadas por otro conjunto. Si el conjunto es
+discreto, escribimos la familia como <span
+class="math inline">\(\left\{X(n)\right\}_{n \in \mathbb{N}}\)</span>,
+mientras que si es continuo, notaremos <span
+class="math inline">\(\left\{X(t)\right\}_{t \ge 0}\)</span>.</p>
+<p>La distribución de los procesos estocásticos discretos en tiempo
+sobre un conjunto numerable <span class="math inline">\(S\)</span> se
+viene caracterizado como</p>
+<p><span id="eq:proceso_estocastico_discreto" class="eqnos"><span
+class="math display">\[
+P\left[ X(n) = i_n, \dots, X(0) = i_0 \right]
+\]</span><span class="eqnos-number">(40)</span></span></p>
+<p>con <span class="math inline">\(i_n, \dots, i_0 \in S\)</span>, <span
+class="math inline">\(n \in \mathbb{N}\)</span>.</p>
+<p>De la definición elemental de la probabilidad condicionada se sigue
+que</p>
+<p><span id="eq:proceso_estocastico_discreto_prob" class="eqnos"><span
+class="math display">\[
+\begin{aligned}
+        &amp; P\left[ X(n) = i_n, \dots, X(0) = i_0 \right] = \\
+=\      &amp; P\left[ X(n) = i_n \vert X(n - 1) = i_{n - 1}, \dots, X(0)
+= i_0 \right] \cdot \\
+\cdot\  &amp; P\left[ X(n - 1) = i_{n - 1} \vert X(n - 2) = i_{n-2},
+\dots, X(0) = i_0 \right] \cdot \\
+\cdot\  &amp; \dots \\
+\cdot\  &amp; P\left[ X(1) = i_1 \vert X(0) = i_0 \right] \cdot \\
+\cdot\  &amp; P\left[ X(0) = i_0 \right]
+\end{aligned}
+\]</span><span class="eqnos-number">(41)</span></span></p>
+<p>Una <strong>cadena de Markov discreta en tiempo</strong> sobre un
+conjunto numerable <span class="math inline">\(S\)</span> es un proceso
+estocástico que satisface la <strong>propiedad de Markov</strong>; esto
+es,</p>
+<p><span id="eq:propiedad_markov" class="eqnos"><span
+class="math display">\[
+\begin{aligned}
+  &amp; P\left[ X(n) = i_n \vert X(n - 1) = i_{n - 1}, \dots, X(0) = i_0
+\right] = \\
+= &amp; P\left[ X(n) = i_n \vert X(n - 1) = i_{n - 1} \right]
+\end{aligned}
+\]</span><span class="eqnos-number">(42)</span></span></p>
+<p>para cualquier <span class="math inline">\(i_n, \dots, i_0 \in
+S\)</span>, <span class="math inline">\(n \in \mathbb{N}\)</span>. Esta
+propiedad nos dice que el estado en el paso <span
+class="math inline">\(n\)</span> solo depende del estado inmediatamente
+anterior.</p>
+<p>Resultará cómoda la siguiente notación</p>
+<p><span class="math display">\[
+P_{i, j}(n - 1) = P\left[ X(n) = j \vert X(n - 1) = i \right]
+\]</span></p>
+<p>Se puede simplificar la expresión [<a
+href="#eq:proceso_estocastico_discreto_prob">41</a>] utilizando la
+propiedad de Markov [<a href="#eq:propiedad_markov">42</a>] y la
+anterior notación, de forma que obtenemos</p>
+<p><span class="math display">\[
+\begin{aligned}
+  &amp; P\left[ X(n) = i_n, \dots, X(0) = i_0 \right] =  \\
+= &amp; P_{i_{n-1}, i_n}(n - 1) \cdot P_{i_{n-2}, i_{n-1}}(n - 2) \cdot
+\dots \cdot P_{i_0, i_{1}}(0) \cdot P\left[ X(0) = i_0 \right]
+\end{aligned}
+\]</span></p>
+<p>A cada <span class="math inline">\(P_{i, j}(n)\)</span> lo llamaremos
+<strong>probabilidad de transición</strong>, mientras que a <span
+class="math inline">\(P\left[ X(0) = i_0 \right]\)</span> se le
+denominará la <strong>distribución inicial</strong>, denotado tal
+que</p>
+<p><span class="math display">\[
+\phi(i_0) = P\left[ X(0) = i_0 \right]
+\]</span></p>
+<p>Las <strong>cadenas de Markov discretas homogéneas en tiempo</strong>
+son aquellas para las que las probabilidades de transición no dependen
+de la indexación temporal <span class="math inline">\(n \in
+\mathbb{N}\)</span>; es decir, <span class="math inline">\(P_{i, j}(n) =
+P_{i, j} \quad \forall n \in \mathbb{N}\)</span>.</p>
+<p>Por lo tanto, para este tipo de cadenas tenemos que</p>
+<p><span id="eq:cadena_markov_homogenea" class="eqnos"><span
+class="math display">\[
+\begin{aligned}
+P\left[ X(n) = i_n, \dots, X(0) = i_0 \right] = P_{i_{n-1}, i_n} \cdot
+\dots \cdot P_{i_0, i_{1}} \cdot \phi(i_0)
+\end{aligned}
+\]</span><span class="eqnos-number">(43)</span></span></p>
+<p>De manera análoga, se pueden definir las <strong>cadenas de Markov
+continuas homogéneas en tiempo</strong> sobre un conjunto numerable
+<span class="math inline">\(S\)</span> como una familia de variables
+aleatorias <span class="math inline">\(\left\{X(t)\right\}_{t \ge
+0}\)</span> sobre un espacio de probabilidad <span
+class="math inline">\((\Omega, \mathbb{F}, P)\)</span> de forma que</p>
+<p><span class="math display">\[
+\begin{aligned}
+   &amp; P\left[ X(t_{n+1}) = j \vert X(t_n) = i, X(t_{n-1}) = i_{n-1},
+\dots, X(t_0) = i_0 \right] = \\
+=\ &amp; P\left[ X(t_{n+1}) = j \vert X(t_n) = i \right] \\
+=\ &amp; P_{i, j}(t_{n+1} - t_n)
+\end{aligned}
+\]</span></p>
+<p>para <span class="math inline">\(j, i, i_{n-1}, \dots, i_0 \in
+S\)</span> y <span class="math inline">\(t_{n+1} &gt; t_n &gt; \dots
+&gt; t_0 \ge 0\)</span>. La distribución de la cadena viene determinada
+por la distribución inicial</p>
+<p><span class="math display">\[
+\phi(i) = P\left[ X(0) = i \right]
+\]</span></p>
+<p>y la probabilidad de transición</p>
+<p><span class="math display">\[
+P_{i, j} = P\left[ X(t + s) = j \vert X(s) = i \right]
+\]</span></p>
+<p>mediante la identidad</p>
+<p><span class="math display">\[
+\begin{aligned}
+    &amp; P\left[ X(t_{n+1}) = j, X(t_n) = i, X(t_{n-1}) = i_{n-1},
+\dots, X(t_0) = i_0 \right] = \\
+=\  &amp; P_{i, j}(t_{n+1} - t_n) \cdot P_{i_{n-1}, i_n}(t_n - t_{n-1})
+\cdot \dots \cdots P_{i_0, i_{1}}(t_1 - t_0) \cdot \phi(i_0)
+\end{aligned}
+\]</span></p>
+<h3 data-number="3.5.3"
+id="resolviendo-las-ecuaciones-de-fredholm-utilizando-cadenas-de-markov-continuas"><span
+class="header-section-number">3.5.3</span> Resolviendo las ecuaciones de
+Fredholm utilizando cadenas de Markov continuas</h3>
+<p>En el trabajo de <span class="citation"
+data-cites="montecarlo-fredholm">(<a href="#ref-montecarlo-fredholm"
+role="doc-biblioref">Farnoosh and Ebrahimi 2008</a>)</span> los autores
+muestran una forma de resolver las ecuaciones integrales [<a
+href="#eq:fredholm_2">39</a>] utilizando cadenas de Markov continuas en
+el espacio <span class="math inline">\([0, 1]\)</span>.</p>
+<p>Consideremos la ecuación [<a href="#eq:fredholm_2">39</a>] en forma
+de funcional</p>
+<p><span class="math display">\[
+u(x) = f(x) + (Ku)(x)
+\]</span></p>
+<p>o, directamente, omitiendo <span
+class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[
+u = f + Ku
+\]</span></p>
+<p>siendo <span class="math inline">\(K\)</span> el operador integral de
+la ecuación original:</p>
+<p><span class="math display">\[
+(Ku)(x) = \int_{0}^{1}{k(x, t)u(t)dt}
+\]</span></p>
+<p>Tenemos que <span class="math inline">\((Ku)(x)\)</span> será la
+primera iteración de <span class="math inline">\(u\)</span> con respecto
+al kernel <span class="math inline">\(k\)</span>. La segunda iteración
+viene dada por</p>
+<p><span class="math display">\[
+K((Ku))(x) = (K^2u)(x) = \int_0^1 \int_0^1 {k(x, t)k(t, t_1)u(t_1)
+dtdt_1}
+\]</span></p>
+<p>Así, de forma de recursiva, se obtiene que</p>
+<p><span class="math display">\[
+K(K^{n-1}u)(x) = (K^n u)(x) = \int_0^1 {k(x, t_{n-1})K^{n-1}u(t_{n-1})
+dt_{n-1}}
+\]</span></p>
+<p>Si asumimos que</p>
+<p><span class="math display">\[
+\left\lvert K \right\rvert = \sup_{[0, 1]}{\int_0^1{\left\lvert k(x, t)
+\right\rvert dt} &lt; 1}
+\]</span></p>
+<p>entonces, se puede resolver la ecuación de Fredholm [<a
+href="#eq:fredholm_2">39</a>] aplicando la fórmula recursiva</p>
+<p><span class="math display">\[
+u^{(n+1)} = Ku^{(n)} + f, \quad n = 1, 2, \dots
+\]</span></p>
+<p>Si <span class="math inline">\(u^{(0)} = 0\)</span>, <span
+class="math inline">\(K^0 \equiv 0\)</span>, entonces, la ecuación
+anterior se transforma en</p>
+<p><span class="math display">\[
+u^{(n + 1)} = f+ Kf + \dots + K^nf = \sum_{m = 0}^{n}{K^mf}
+\]</span></p>
+<p>Está claro que</p>
+<p><span class="math display">\[
+\lim_{n \to \infty} u^{(n)} = \lim_{n \to \infty} \sum_{m = 0}^{n}{K^mf}
+= u
+\]</span></p>
+<p>Cada <span class="math inline">\(u^n\)</span> puede calcularse
+utilizando una cadena de Markov para hallar su solución. Para ello,
+consideramos una cadena continua de Markov con probabilidad de
+transición <span class="math inline">\(P_{i, j}\)</span> y distribución
+inicial <span class="math inline">\(\phi(i)\)</span>, satisfaciendo
+que</p>
+<p><span class="math display">\[
+\begin{aligned}
+\int_0^1{P_{i, j}\ dj} &amp;  = 1 \\
+\int_0^1{\phi(i)\ di}  &amp; = 1 \\
+\end{aligned}
+\]</span></p>
+<p>Consideramos ahora una función de pesos <span
+class="math inline">\(W_m\)</span> para la cadena de Markov, que viene
+dada por la recursión</p>
+<p><span class="math display">\[
+\begin{aligned}
+W_m &amp; = W_{m-1} \frac{k(x_{m -1}, x_m)}{P_{x_{m-1}, x_m}}, \quad m =
+1, 2, \dots \\
+W_0 &amp; = 1
+\end{aligned}
+\]</span></p>
+<p>Definamos ahora una variable aleatoria <span
+class="math inline">\(\Gamma_n(h)\)</span>, la cual está asociada al
+camino <span class="math inline">\(x_0 \rightarrow x_1 \rightarrow \dots
+\rightarrow x_n\)</span>:</p>
+<p><span class="math display">\[
+\Gamma_n(h) = \frac{h(x_0)}{\phi(x_0)} = \sum_{m = 0}^{n}{W_mf(x_m)}
+\]</span></p>
+<p>donde <span class="math inline">\(h(x)\)</span> es una función
+real.</p>
+<p>Consideremos ahora el producto escalar de dos funciones <span
+class="math inline">\(h(x), u(x)\)</span>, el cual se define como</p>
+<p><span id="eq:producto_escalar_funcional" class="eqnos"><span
+class="math display">\[
+\langle h, u \rangle = \int_0^1{h(x)u(x) dx}
+\]</span><span class="eqnos-number">(44)</span></span></p>
+<p>El problema ahora se convierte en encontrar el valor del producto
+<span class="math inline">\(\langle h, u \rangle\)</span>, siendo <span
+class="math inline">\(u(x)\)</span> la función solución de la ecuación
+de Fredholm.</p>
+<p>El valor del producto escalar de <span class="math inline">\(\langle
+h, u^{(n + 1)} \rangle\)</span> puede ser estimado gracias variable
+aleatoria <span class="math inline">\(\Gamma_n(h)\)</span>; es
+decir,</p>
+<p><span class="math display">\[
+E\left[ \Gamma_n(h) \right] = \langle h, u^{(n + 1)} \rangle
+\]</span></p>
 <h1 data-number="4" id="construyamos-un-path-tracer"><span
 class="header-section-number">4</span> ¡Construyamos un path
 tracer!</h1>
@@ -4527,7 +4795,7 @@ L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
 \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{P\left[
 \omega_j \right]}}
 \end{aligned}
-\]</span><span class="eqnos-number">(39)</span></span></p>
+\]</span><span class="eqnos-number">(45)</span></span></p>
 <p>Con <span class="math inline">\(N \in \mathbb{Z}^+\)</span>, y <span
 class="math inline">\(P\left[ \omega \right]\)</span> la función de
 densidad de <span class="math inline">\(\omega\)</span>. Con <span
@@ -4555,7 +4823,7 @@ class="math display">\[
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
 \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j =
 1}^{N}{L_i(p, \omega_j) \rho}
-\]</span><span class="eqnos-number">(40)</span></span></p>
+\]</span><span class="eqnos-number">(46)</span></span></p>
 <p>Lo cual nos proporciona una expresión muy agradable para los
 materiales difusos.</p>
 <p>Por lo general, no será posible simplificar hasta tal punto la
@@ -4568,7 +4836,7 @@ class="header-section-number">4.1.2</span> Pseudocódigo de un path
 tracer</h3>
 <p>Con lo que conocemos hasta ahora, podemos empezar a programar los
 shaders. Una primera implementación inspirada en la rendering equation
-[<a href="#eq:rendering_equation_mc">39</a>] sería similar a lo
+[<a href="#eq:rendering_equation_mc">45</a>] sería similar a lo
 siguiente:</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token function">L</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> omega<span class="token punctuation">,</span> profundidad<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     emision <span class="token operator">=</span> <span class="token function">L_e</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> omega<span class="token punctuation">,</span> profundidad<span class="token punctuation">)</span>
@@ -8685,7 +8953,7 @@ Fabio Pellacini, S. M. 2022. <span>“Fundamentals of computer
 graphics.”</span> 2022. Accessed April 9, 2022. <a
 href="https://pellacini.di.uniroma1.it/teaching/graphics17b/">https://pellacini.di.uniroma1.it/teaching/graphics17b/</a>.
 </div>
-<div id="ref-fredholm-integrals" class="csl-entry"
+<div id="ref-montecarlo-fredholm" class="csl-entry"
 role="doc-biblioentry">
 Farnoosh, R., and M. Ebrahimi. 2008. <span>“Monte Carlo Method for
 Solving Fredholm Integral Equations of the Second Kind.”</span>
@@ -9027,6 +9295,11 @@ specification (with KHR extensions).”</span> March 29, 2022. Accessed
 April 1, 2022. <a
 href="- https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html">-
 https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html</a>.
+</div>
+<div id="ref-markov-chains" class="csl-entry" role="doc-biblioentry">
+Tolver, A. 2016. <span>“An introduction to markov chains.”</span>
+University of Copenhagen. 2016. Accessed June 14, 2022. <a
+href="http://web.math.ku.dk/noter/filer/stoknoter.pdf">http://web.math.ku.dk/noter/filer/stoknoter.pdf</a>.
 </div>
 <div id="ref-fraunces" class="csl-entry" role="doc-biblioentry">
 Undercase Type, P. C., and F. Zimbardi. 2022. <span>“Fraunces
