@@ -706,9 +706,11 @@ Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento que el recur
 
 ## Antialiasing mediante jittering y acumulación temporal
 
-Normalmente, mandamos los rayos desde el centro de un pixel. Podemos conseguir una mejora sustancial de la calidad con un pequeño truco: en vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña perturbación (*jittering*). Así, tendremos una variación de colores para un mismo pixel, por lo que podemos hacer una ponderación de todos ellos. A este proceso lo que llamamos **acumulación temporal**.
+Normalmente, mandamos los rayos desde el centro de un pixel. Podemos conseguir una mejora sustancial de la calidad con un pequeño truco: en vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña perturbación (*jittering*). Así, tendremos una variación de colores para un mismo pixel, por lo que podemos hacer una ponderación de todos ellos. A este proceso lo que llamamos **supersampling mediante jittering**.
 
-Es importante destacar que el efecto de esta técnica solo es válido cuando la **cámara se queda estática**. Al cambiar de posición, la información del píxel se ve alterada significativamente, por lo que debemos reconstruir las muestras desde el principio.
+Si conforme pasa el tiempo utilizamos la información de las imágenes anteriores para renderizar el frame actual, podemos conseguir un resultado aún mejor que aplicando solo *supersampling*. Es decir, promediando el color de los últimos $N$ frames para generar el frame actual. Esta técnica se llama **acumulación temporal**.
+
+Es importante destacar que la acumulación temporal solo es válido cuando la **cámara se queda estática**. Al cambiar de posición, la información del píxel se ve alterada significativamente, por lo que debemos reconstruir las muestras desde el principio.
 
 La implementación es muy sencilla. Está basada en el tutorial de [@nvpro-samples-tutorial, jitter camera]. Debemos modificar tanto el motor como los shaders para llevar el recuento del número de frames en las push constants.
 
@@ -824,3 +826,4 @@ Es importante mencionar que sin acumulación temporal, el código anterior produ
 
 [^4]: Esto no es del todo cierto. Aunque generalmente suelen ser excepciones debido al coste computacional de RT en tiempo real, existen algunas implementaciones que son capaces de correrlo por software. Notablemente, el motor de Crytek, CryEngine, es capaz de mover ray tracing basado en hardware y en software [@crytek-2020]
 [^5]: Afortunadamente, esto tampoco es completamente cierto. La compañía desarrolladora y distribuidora de videojuegos Valve Corporation [@valve] ha creado una pieza de software fascinante: Proton [@proton]. Proton utiliza Wine para emular software en Linux que solo puede correr en plataformas Windows. La versión 2.5 añadió soporte para traducción de bindings de DXR a KHR, lo que permite utilizar DirectX12 ray tracing en sistemas basados en Linux. El motivo de este software es expandir el mercado de videojuegos disponibles en su consola, la Steam Deck.
+[^6] A no ser que se utilicen *motion vectors*, los cuales codifican información sobre el movimiento de un objeto al pasar de un frame a otro. Estos permiten implementar técnicas como *temporal antialiasing*, los cuales veremos en una sección posterior.
