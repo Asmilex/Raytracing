@@ -161,13 +161,21 @@ La medición del framerate ha sido realizada mediante la combinación de los pro
 
 ### Número de muestras
 
-El principal parámetro que podemos variar es el número de muestras por píxel. En un estimador de Monte Carlo [@eq:mc_integral], $\hat{I}_N = \frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}$, corresponde a $N \in \mathbb{N}$.
+El principal parámetro que podemos variar es el número de muestras por píxel. En un estimador de Monte Carlo [@eq:mc_integral], $\hat{I}_N = \frac{1}{N} \sum_{i = 1}^{N}{f\left(X_i\right)}$, corresponde a $N \in \mathbb{N}$.
 
 ![Para conseguir esta gráfica, iniciamos la escena `cornell_box_original`, y sin mover la cámara, vamos cambiando el número de muestras.](./img/graficas/CB_original_comparativa_samples.png){#fig:grafica_samples}
 
 La figura [@fig:grafica_samples] muestra cómo afecta al rendimiento el valor de $N$. Vemos cómo un número bajo de muestras (alrededor de 5) produce un frametime de aproximadamente 12 milisegundos, lo cual corresponde a 83 frames por segundo. Duplicando $N$ hasta las 10 muestras, produce un aumento del frametime hasta los 20 ms de media (50 FPS). Algo similar pasa con el resto de valores: 15 muestras suponen una media de 28 ms (35 FPS) y 20 muestras unos 35 ms (28 FPS). Sacamos en claro que, en esta escena, **no debemos aumentar las muestras a un valor superior a 20**, pues entraríamos en terreno de renderizado en diferido. No debemos superar la barrera de los 33 milisegundos, pues supondría una tasa de refresco de imagen inferior a los 30 FPS.
 
-Podemos concluir que, en esta escena, el **coste de una muestra por píxel** es de aproximadamente **2 milisegundos**. Este valor puede ser hallado promediando el coste medio de cada frame en cada valor del parámetro.
+Podemos concluir que, en esta escena, el **coste de una muestra por píxel** es de aproximadamente **2 milisegundos** en esta escena. Este valor puede ser hallado promediando el coste medio de cada frame en cada valor del parámetro.
+
+No obstante, es importante mencionar que cada escena tiene un cierto sobrecoste particular. Generar la TLAS y la BLAS, así como la carga de objetos y materiales individuales ocupa tiempo de CPU, el cual es independiente a la generación de las muestras. Es decir, que existe una constante $a$ para la cual se da la relación
+
+$$
+\text{tiempo de renderizado} \approx a + N t \text{ (milisegundos/frame)}
+$$
+
+Donde $N \in \mathbb{N}$ es el número de muestras y $t$ es el tiempo medio que tarda en renderizarse un frame. Si bajamos el número de muestras a uno en la escena `cornell_box_original`, obtenemos que el frametime es de 2.64 ms/frame. Esto nos dice que el coste de la escena es de aproximadamente 0.600 milisegundos.
 
 El número de muestras tiene un grandísimo efecto en la calidad de imagen. Volviendo a la escena anterior, podemos ver cómo cambia el ruido al variar el parámetro `samples`. Para las siguientes imágenes, se ha deshabilitado la [acumulación temporal](#acumulación-temporal), pues en esencia, proporcionaría un mayor número de muestras en el tiempo.
 
