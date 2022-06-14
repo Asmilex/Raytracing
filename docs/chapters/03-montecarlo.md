@@ -679,12 +679,6 @@ Se puede estudiar el tema en profundidad en [@quasi-monte-carlo]
 
 ![Comparativa entre diferentes métodos de quasi-aleatoriedad. Fuente: [@quasi-monte-carlo]](./img/03/Quasi-Monte%20Carlo.png){#fig:quasimontecarlo}
 
-#### Cadenas de Markov y ecuaciones integrales de Fredholm de tipo dos
-
-> TODO: mirar issue #54. Esta sección es importantilla
-
-[@fredholm-integrals]
-
 ## Escogiendo puntos aleatorios
 
 Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber escoger la función de densidad $p_X$ correctamente. En esta sección, veremos algunos métodos para conseguir distribuciones específicas partiendo de funciones de densidad sencillas, así como formas de elegir funciones de densidad próximas a $f$. Los dos métodos principales que estudiaremos se han extraído del libro [@PBRT3e, Sampling Random Variables]
@@ -933,5 +927,128 @@ curve(dbeta(x, shape1 = a, shape2 = b), add = TRUE, col = 2)
 
 ![Histograma del método de rechazo.](./img/03/metodo_rechazo.png){#fig:metodo_rechazo_R width=70%}
 
+## Cadenas de Markov para soluciones de ecuaciones integrales de Fredholm de tipo 2
+
+A lo largo de este capítulo hemos descrito las técnicas que se utilizan para aproximar los valores de una integral. En esta sección vamos a dar un salto de abstracción, e introduciremos brevemente cómo funcionan las cadenas de Markov, y cómo se pueden usar para aproximar soluciones de un tipo de ecuación integral denominada "ecuación de Fredholm de tipo 2". Nos basaremos en los contenidos de [@montecarlo-fredholm] y [@markov-chains].
+
+### Ecuaciones de Fredholm
+
+Una **ecuación de Fredholm de tipo 2** es una ecuación integral de la forma
+
+$$
+u(x) = f(x) + \lambda \int_{a}^{b}{k(x, t)u(t)\ dt}
+$${#eq:fredholm_2}
+
+Donde $f(x) \in L_2\left([a, b]\right)$, $k(x, t) \in L_2\left([a, b] \times [a, b]\right)$, el cual se denomina "kernel" de la ecuación de Fredholm; y $u(x) \in L_2\left([a, b]\right)$, la cual es la función que queremos obtener.
+
+El espacio $L_2([a, b])$ se define como
+
+$$
+L_2([a, b]) = \set{f \in L([a, b])}{\int_{a}^{b}{\abs{f(t)}^2\ dt} < \infty}
+$$
+
+Particularizaremos el caso $a = 0, b = 1$, $\lambda = 1$, $0 \le x \le 1$.
+
+Este tipo de ecuaciones resulta de interés puesto que la ecuación del transporte de luz es un caso particular de estas ecuaciones, pero con dominio infinito-dimensional.
+
+
+### Cadenas de Markov
+
+Las cadenas de Markov son un tipo específico de proceso estocástico. Un **proceso estocástico** o aleatorio es una familia de variables aleatorias indexadas por otro conjunto. Si el conjunto es discreto, escribimos la familia como $\left\{X(n)\right\}_{n \in \mathbb{N}}$, mientras que si es continuo, notaremos $\left\{X(t)\right\}_{t \ge 0}$.
+
+La distribución de los procesos estocásticos discretos en tiempo sobre un conjunto numerable $S$ se viene caracterizado como
+
+$$
+\Prob{X(n) = i_n, \dots, X(0) = i_0}
+$${#eq:proceso_estocastico_discreto}
+
+con $i_n, \dots, i_0 \in S$, $n \in \mathbb{N}$.
+
+De la definición elemental de la probabilidad condicionada se sigue que
+
+$$
+\begin{aligned}
+        & \Prob{X(n) = i_n, \dots, X(0) = i_0} = \\
+=\      & \Prob{X(n) = i_n \vert X(n - 1) = i_{n - 1}, \dots, X(0) = i_0} \cdot \\
+\cdot\  & \Prob{X(n - 1) = i_{n - 1} \vert X(n - 2) = i_{n-2}, \dots, X(0) = i_0} \cdot \\
+\cdot\  & \dots \\
+\cdot\  & \Prob{X(1) = i_1 \vert X(0) = i_0} \cdot \\
+\cdot\  & \Prob{X(0) = i_0}
+\end{aligned}
+$${#eq:proceso_estocastico_discreto_prob}
+
+Una **cadena de Markov discreta en tiempo** sobre un conjunto numerable $S$ es un proceso estocástico que satisface la **propiedad de Markov**; esto es,
+
+$$
+\begin{aligned}
+  & \Prob{X(n) = i_n \vert X(n - 1) = i_{n - 1}, \dots, X(0) = i_0} = \\
+= & \Prob{X(n) = i_n \vert X(n - 1) = i_{n - 1}}
+\end{aligned}
+$${#eq:propiedad_markov}
+
+para cualquier $i_n, \dots, i_0 \in S$, $n \in \mathbb{N}$. Esta propiedad nos dice que el estado en el paso $n$ solo depende del estado inmediatamente anterior.
+
+
+Resultará cómoda la siguiente notación
+
+$$
+P_{i, j}(n - 1) = \Prob{X(n) = j \vert X(n - 1) = i}
+$$
+
+Se puede simplificar la expresión [@eq:proceso_estocastico_discreto_prob] utilizando la propiedad de Markov [@eq:propiedad_markov] y la anterior notación, de forma que obtenemos
+
+$$
+\begin{aligned}
+  & \Prob{X(n) = i_n, \dots, X(0) = i_0} =  \\
+= & P_{i_{n-1}, i_n}(n - 1) \cdot P_{i_{n-2}, i_{n-1}}(n - 2) \cdot \dots \cdot P_{i_0, i_{1}}(0) \cdot \Prob{X(0) = i_0}
+\end{aligned}
+$$
+
+A cada $P_{i, j}(n)$ lo llamaremos **probabilidad de transición**, mientras que a $\Prob{X(0) = i_0}$ se le denominará la **distribución inicial**, denotado tal que
+
+$$
+\phi(i_0) = \Prob{X(0) = i_0}
+$$
+
+Las **cadenas de Markov discretas homogéneas en tiempo** son aquellas para las que las probabilidades de transición no dependen de la indexación temporal $n \in \mathbb{N}$; es decir, $P_{i, j}(n) = P_{i, j} \quad \forall n \in \mathbb{N}$.
+
+Por lo tanto, para este tipo de cadenas tenemos que
+
+$$
+\begin{aligned}
+\Prob{X(n) = i_n, \dots, X(0) = i_0} = P_{i_{n-1}, i_n} \cdot \dots \cdot P_{i_0, i_{1}} \cdot \phi(i_0)
+\end{aligned}
+$${#eq:cadena_markov_homogenea}
+
+De manera análoga, se pueden definir las **cadenas de Markov continuas homogéneas en tiempo** sobre un conjunto numerable $S$ como una familia de variables aleatorias $\left\{X(t)\right\}_{t \ge 0}$ sobre un espacio de probabilidad $(\Omega, \mathbb{F}, P)$ de forma que
+
+$$
+\begin{aligned}
+   & \Prob{X(t_{n+1}) = j \vert X(t_n) = i, X(t_{n-1}) = i_{n-1}, \dots, X(t_0) = i_0} = \\
+=\ & \Prob{X(t_{n+1}) = j \vert X(t_n) = i} \\
+=\ & P_{i, j}(t_{n+1} - t_n)
+\end{aligned}
+$$
+
+para $j, i, i_{n-1}, \dots, i_0 \in S$ y $t_{n+1} > t_n > \dots > t_0 \ge 0$. La distribución de la cadena viene determinada por la distribución inicial
+
+$$
+\phi(i) = \Prob{X(0) = i}
+$$
+
+y la probabilidad de transición
+
+$$
+P_{i, j} = \Prob{X(t + s) = j \vert X(s) = i}
+$$
+
+mediante la identidad
+
+$$
+\begin{aligned}
+    & \Prob{X(t_{n+1}) = j, X(t_n) = i, X(t_{n-1}) = i_{n-1}, \dots, X(t_0) = i_0} = \\
+=\  & P_{i, j}(t_{n+1} - t_n) \cdot P_{i_{n-1}, i_n}(t_n - t_{n-1}) \cdot \dots \cdots P_{i_0, i_{1}}(t_1 - t_0) \cdot \phi(i_0)
+\end{aligned}
+$$
 
 [^1]: En su defecto, si tenemos una función de densidad $p_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{p_X(t)dt}$.
