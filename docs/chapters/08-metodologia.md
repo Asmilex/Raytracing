@@ -58,7 +58,7 @@ A la hora de desarrollar un proyecto de software, es importante realizar una est
   - Figma.
   - Docker.
 - Con respecto al **hardware**, el precio total asciende a **2214 €**. Se han utilizado dos máquinas principalmente: una *custom build* de última generación para soportar el software y un portátil para trabajar en remoto:
-  - PC *custom build* (1414 €):
+  - **PC** *custom build* (1414 €):
     - **CPU**: Intel core i5 12600K (310 €).
     - **Disipador de CPU**: Arctic Freezer 34 eSports DUO (50 €).
     - **Placa base**: B660M DS3H AX DDR4 (130 €).
