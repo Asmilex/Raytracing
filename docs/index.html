@@ -511,8 +511,8 @@ class="toc-section-number">5.1</span> Usando el motor</a>
 <li><a href="#cambio-de-escena"><span
 class="toc-section-number">5.1.1</span> Cambio de escena</a></li>
 </ul></li>
-<li><a href="#path-tracing-showcase"><span
-class="toc-section-number">5.2</span> Path tracing showcase</a>
+<li><a href="#exhibición-de-path-tracing"><span
+class="toc-section-number">5.2</span> Exhibición de path tracing</a>
 <ul>
 <li><a href="#materiales"><span class="toc-section-number">5.2.1</span>
 Materiales</a></li>
@@ -5484,6 +5484,12 @@ stages[eMiss2] = stage;
 }</code></pre>
 <p>Y con esto, hemos conseguido añadir dos tipos de fuentes de
 iluminación.</p>
+<p>Debemos destacar que el programa <strong>no conoce la posición de los
+objetos emisivos de la escena</strong>. Esto significa que no podemos
+muestrearlos explícitamente. En la <a
+href="#análisis-de-rendimiento">comparativa</a> comprobaremos cómo
+afecta esto a la calidad de imagen. Además, en la conclusión hablaremos
+de cómo se podría solventar este problema.</p>
 <h2 data-number="4.9"
 id="implementación-eficiente-del-algoritmo-sin-recursividad"><span
 class="header-section-number">4.9</span> Implementación eficiente del
@@ -5628,9 +5634,15 @@ conseguir una mejora sustancial de la calidad con un pequeño truco: en
 vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña
 perturbación (<em>jittering</em>). Así, tendremos una variación de
 colores para un mismo pixel, por lo que podemos hacer una ponderación de
-todos ellos. A este proceso lo que llamamos <strong>acumulación
-temporal</strong>.</p>
-<p>Es importante destacar que el efecto de esta técnica solo es válido
+todos ellos. A este proceso lo que llamamos <strong>supersampling
+mediante jittering</strong>.</p>
+<p>Si conforme pasa el tiempo utilizamos la información de las imágenes
+anteriores para renderizar el frame actual, podemos conseguir un
+resultado aún mejor que aplicando solo <em>supersampling</em>. Es decir,
+promediando el color de los últimos <span
+class="math inline">\(N\)</span> frames para generar el frame actual.
+Esta técnica se llama <strong>acumulación temporal</strong>.</p>
+<p>Es importante destacar que la acumulación temporal solo es válido
 cuando la <strong>cámara se queda estática</strong>. Al cambiar de
 posición, la información del píxel se ve alterada significativamente,
 por lo que debemos reconstruir las muestras desde el principio.</p>
@@ -5716,6 +5728,12 @@ parte de la izquierda. La pared roja aparece demasiado brillante;
 especialmente, aquella impactada por la fuente de luz.</figcaption>
 </figure>
 </div>
+<p>Podemos corregir este problema mediante la acotación máxima de la
+terna RGB producida por el algoritmo. Sin embargo, esto ocasiona que la
+proporción de valores finales no sea correcta. Por ejemplo, si un camino
+genera la terna <span class="math inline">\(c = (15, 5, 7)\)</span>, el
+resultado de <span class="math inline">\(\max{(1, c_i)}, i = 1, 2,
+3\)</span> sería <span class="math inline">\((1, 1, 1)\)</span>.</p>
 <p>Podemos corregir este problema mediante <strong>corrección de
 gamma</strong>. Esta es una operación no lineal utilizada en fotografía
 para corregir la luminacia, con el fin de compensar la percepción no
@@ -5772,13 +5790,16 @@ anterior produciría variaciones significativas para pequeños
 movimientos. Hay otras formas de compensarlo, como dividir por el valor
 promedio de las muestras más brillantes. Nosotros hemos optado por
 mezclar los píxeles generados a lo largo del tiempo.</p>
+<p>[^6] A no ser que se utilicen <em>motion vectors</em>, los cuales
+codifican información sobre el movimiento de un objeto al pasar de un
+frame a otro. Estos permiten implementar técnicas como <em>temporal
+antialiasing</em>, los cuales veremos en una sección posterior.</p>
 <h1 data-number="5" id="análisis-de-rendimiento"><span
 class="header-section-number">5</span> Análisis de rendimiento</h1>
 <p>En este capítulo vamos a analizar el resultado final del proyecto.
-Estudiaremos cómo se ve el motor, cómo rinde en términos de <em>frame
-time</em>, y compararemos las imágenes producidas con otras similares;
-tanto producidas por otros motores, como situaciones en la vida
-real.</p>
+Estudiaremos cómo se ve el motor, cómo rinde en términos de **frame*
+time*, y compararemos las imágenes producidas con otras similares; tanto
+producidas por otros motores, como situaciones en la vida real.</p>
 <h2 data-number="5.1" id="usando-el-motor"><span
 class="header-section-number">5.1</span> Usando el motor</h2>
 <p>Una vez se ha <a href="#compilación-y-ejecución">compilado</a> el
@@ -5936,8 +5957,8 @@ la iluminación global.</td>
 <p>Ten en cuenta que las imágenes de las escenas no son definitivas.
 Están sujetas a cambios, pues se podría cambiar el comportamiento de los
 shaders.</p>
-<h2 data-number="5.2" id="path-tracing-showcase"><span
-class="header-section-number">5.2</span> Path tracing showcase</h2>
+<h2 data-number="5.2" id="exhibición-de-path-tracing"><span
+class="header-section-number">5.2</span> Exhibición de path tracing</h2>
 <p>A lo largo de este trabajo hemos visto una gran variedad de conceptos
 desde el punto de vista teórico. Ahora es el momento de ponerlo en
 práctica.</p>
@@ -5951,10 +5972,10 @@ original contiene dos objetos de este tipo:</p>
 <div id="fig:materiales_difusos" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20difusos.png" style="width:70.0%"
-alt="Figura 27: Materiales difusos de la escena Cornell Box original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
+alt="Figura 27: Materiales difusos de la escena cornell_box_original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
 <figcaption aria-hidden="true"><span>Figura 27:</span> Materiales
-difusos de la escena Cornell Box original. Vemos que la luz se esparce
-uniformemente al rebotar en el objeto.</figcaption>
+difusos de la escena <code>cornell_box_original</code>. Vemos que la luz
+se esparce uniformemente al rebotar en el objeto.</figcaption>
 </figure>
 </div>
 <p>Los materiales <a href="#reflexión-especular-no-perfecta">especulares
@@ -5966,9 +5987,10 @@ href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 <div id="fig:materiales_glossy" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20glossy.png" style="width:70.0%"
-alt="Figura 28: Materiales especulares metálicos de la escena Cornell Box glossy" />
+alt="Figura 28: Materiales especulares metálicos de la escena cornell_box_glossy" />
 <figcaption aria-hidden="true"><span>Figura 28:</span> Materiales
-especulares metálicos de la escena Cornell Box glossy</figcaption>
+especulares metálicos de la escena
+<code>cornell_box_glossy</code></figcaption>
 </figure>
 </div>
 <p>Si hay algo en lo que destaca ray tracing, es en la simulación de <a
@@ -5998,7 +6020,7 @@ recursivamente, dentro del propio reflejo de la esfera.</figcaption>
 </figure>
 </div>
 <p>Los materiales transparentes los gestiona el shader <a
-href="#tipos-de-shaders">anyhit</a>. Permite descartar las
+href="#tipos-de-shaders"><em>anyhit</em></a>. Permite descartar las
 intersecciones con aquellos objetos transparentes para permitir pasar
 algunos rayos:</p>
 <div id="fig:materiales_transparentes" class="fignos">
@@ -6167,9 +6189,9 @@ rasterización.</p>
 class="header-section-number">5.3</span> Rendimiento</h2>
 <p>Path tracing es un algoritmo costoso. Teniendo en cuenta que tratamos
 de desarrollar una aplicación en tiempo real, debemos prestar especial
-atención al coste de renderizar un <em>frame</em>. En esta sección vamos
-a hacer una comparativa de las diferentes opciones que se han
-implementado en el motor, estudiando la relación calidad de imagen y
+atención al coste de renderizar un <strong>frame</strong>. En esta
+sección vamos a hacer una comparativa de las diferentes opciones que se
+han implementado en el motor, estudiando la relación calidad de imagen y
 rendimiento.</p>
 <p>Utilizaremos principalmente dos escenas:
 <code>cornell_box_original</code> y <code>cornell_box_esferas</code>.
@@ -6181,7 +6203,7 @@ objetos permiten estudiar los parámetros del motor.</p>
 <strong>2x8GB DDR4 3200MHz</strong> de RAM. A no ser que se diga lo
 contrario, todas las imágenes tienen una resolución de 1280 x 720. Con
 el fin de realizar una comparación justa, se ha implementado un modo de
-benchmarking que se puede activar en el archivo
+<em>benchmarking</em> que se puede activar en el archivo
 <code>globals.hpp</code>.</p>
 <p>La medición del framerate ha sido realizada mediante la combinación
 de los programas Afterburner y RTSS, los cuales han tomado muestras a
@@ -6194,8 +6216,8 @@ class="header-section-number">5.3.1</span> Número de muestras</h3>
 <p>El principal parámetro que podemos variar es el número de muestras
 por píxel. En un estimador de Monte Carlo [<a
 href="#eq:mc_integral">30</a>], <span class="math inline">\(\hat{I}_N =
-\frac{1}{N} \sum_{i = 1}^{N}{f(X_i)}\)</span>, corresponde a <span
-class="math inline">\(N \in \mathbb{N}\)</span>.</p>
+\frac{1}{N} \sum_{i = 1}^{N}{f\left(X_i\right)}\)</span>, corresponde a
+<span class="math inline">\(N \in \mathbb{N}\)</span>.</p>
 <div id="fig:grafica_samples" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_samples.png"
@@ -6207,20 +6229,38 @@ sin mover la cámara, vamos cambiando el número de muestras.</figcaption>
 </div>
 <p>La figura [<a href="#fig:grafica_samples">41</a>] muestra cómo afecta
 al rendimiento el valor de <span class="math inline">\(N\)</span>. Vemos
-cómo un número bajo de muestras (alrededor de 5) produce un frametime de
-aproximadamente 12 milisegundos, lo cual corresponde a 83 frames por
-segundo. Duplicando <span class="math inline">\(N\)</span> hasta las 10
-muestras, produce un aumento del frametime hasta los 20 ms de media (50
-FPS). Algo similar pasa con el resto de valores: 15 muestras suponen una
-media de 28 ms (35 FPS) y 20 muestras unos 35 ms (28 FPS). Sacamos en
-claro que, en esta escena, <strong>no debemos aumentar las muestras a un
-valor superior a 20</strong>, pues entraríamos en terreno de renderizado
-en diferido. No debemos superar la barrera de los 33 milisegundos, pues
+cómo un número bajo de muestras (alrededor de 5) produce un
+<em>frametime</em> de aproximadamente 12 milisegundos, lo cual
+corresponde a 83 frames por segundo. Duplicando <span
+class="math inline">\(N\)</span> hasta las 10 muestras, produce un
+aumento del <em>frametime</em> hasta los 20 ms de media (50 FPS). Algo
+similar pasa con el resto de valores: 15 muestras suponen una media de
+28 ms (35 FPS) y 20 muestras unos 35 ms (28 FPS). Sacamos en claro que,
+en esta escena, <strong>no debemos aumentar las muestras a un valor
+superior a 20</strong>, pues entraríamos en terreno de renderizado en
+diferido. No debemos superar la barrera de los 33 milisegundos, pues
 supondría una tasa de refresco de imagen inferior a los 30 FPS.</p>
 <p>Podemos concluir que, en esta escena, el <strong>coste de una muestra
-por píxel</strong> es de aproximadamente <strong>2
-milisegundos</strong>. Este valor puede ser hallado promediando el coste
-medio de cada frame en cada valor del parámetro.</p>
+por píxel</strong> es de aproximadamente <strong>2 milisegundos</strong>
+en esta escena. Este valor puede ser hallado promediando el coste medio
+de cada <em>frame</em> en cada valor del parámetro.</p>
+<p>No obstante, es importante mencionar que cada escena tiene un cierto
+sobrecoste particular. Generar la TLAS y la BLAS, así como la carga de
+objetos y materiales individuales ocupa tiempo de CPU, el cual es
+independiente a la generación de las muestras. Es decir, que existe una
+constante <span class="math inline">\(a\)</span> para la cual se da la
+relación</p>
+<p><span class="math display">\[
+\text{tiempo de renderizado} \approx a + N t \text{
+(milisegundos/*frame*)}
+\]</span></p>
+<p>Donde <span class="math inline">\(N \in \mathbb{N}\)</span> es el
+número de muestras y <span class="math inline">\(t\)</span> es el tiempo
+medio que tarda en renderizarse un <em>frame</em>. Si bajamos el número
+de muestras a uno en la escena <code>cornell_box_original</code>,
+obtenemos que el <em>frametime</em> es de 2.64 ms/<em>frame</em>. Esto
+nos dice que el coste de la escena es de aproximadamente 0.600
+milisegundos.</p>
 <p>El número de muestras tiene un grandísimo efecto en la calidad de
 imagen. Volviendo a la escena anterior, podemos ver cómo cambia el ruido
 al variar el parámetro <code>samples</code>. Para las siguientes
@@ -6268,30 +6308,30 @@ de un camino.</p>
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_depth.png"
 alt="Figura 44: Coste de un frame en función de la profundidad de" />
-<figcaption aria-hidden="true"><span>Figura 44:</span> Coste de un frame
-en función de la profundidad de</figcaption>
+<figcaption aria-hidden="true"><span>Figura 44:</span> Coste de un
+<em>frame</em> en función de la profundidad de</figcaption>
 </figure>
 </div>
 <p>En esta figura [<a href="#fig:grafica_depth">44</a>] ocurre algo
 similar a [<a href="#fig:grafica_samples">41</a>]: como es evidente,
 aumentar la profundidad de un rayo aumenta el coste de renderizar un
-frame. Sin embargo, hay algunos matices que debemos estudiar con más
-detalle.</p>
+<em>frame</em>. Sin embargo, hay algunos matices que debemos estudiar
+con más detalle.</p>
 <p>El primero es que cambiar la profundidad no es tan costoso como
 aumentar el número de muestras. Aún quintuplicando el valor por defecto
 de 10 rebotes a 50, vemos que el motor se mantiene por debajo de los 33
-milisegundos. Para una profundidad de 10, el coste de un frame es de 19
-milisegundos (52 FPS), mientras que para 50 es de 28 milisegundos (35
-FPS). Tomando un valor intermedio de 20, el coste se vuelve de 24
-milisegundos (41 FPS).</p>
-<p>Llaman la atención las variaciones en el frametime conforme aumenta
-la profundidad. Para un valor de <code>depth = 10</code>, observamos que
-oscila entre los 18 y los 20 milisegundos. Sin embargo, para los otros
-dos valores de 20 y 50 son habituales picos de varios frames, llegando
-hasta los 5 milisegundos. Además, se aprecia cierta inconsistencia. Sin
-embargo, esto no resulta un problema, pues la oscilación media es de
-unos 3 milisegundos aproximadamente, lo cual supone un decremento de
-unos 5 frames por segundo como máximo.</p>
+milisegundos. Para una profundidad de 10, el coste de un <em>frame</em>
+es de 19 milisegundos (52 FPS), mientras que para 50 es de 28
+milisegundos (35 FPS). Tomando un valor intermedio de 20, el coste se
+vuelve de 24 milisegundos (41 FPS).</p>
+<p>Llaman la atención las variaciones en el <em>frametime</em> conforme
+aumenta la profundidad. Para un valor de <code>depth = 10</code>,
+observamos que oscila entre los 18 y los 20 milisegundos. Sin embargo,
+para los otros dos valores de 20 y 50 son habituales picos de varios
+frames, llegando hasta los 5 milisegundos. Además, se aprecia cierta
+inconsistencia. Sin embargo, esto no resulta un problema, pues la
+oscilación media es de unos 3 milisegundos aproximadamente, lo cual
+supone un decremento de unos 5 frames por segundo como máximo.</p>
 <p>La naturaleza de la escena afecta en gran medida al resultado. Por
 mera probabilidad, cuando un rayo rebota <em>dentro</em> de la caja,
 puede salir disparado hacia muchas direcciones. Destacarían en este caso
@@ -6415,16 +6455,17 @@ escala al variarla.</p>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_resolucion.png"
 alt="Figura 53: Tiempo de renderización de un frame dependiendo de la resolución" />
 <figcaption aria-hidden="true"><span>Figura 53:</span> Tiempo de
-renderización de un frame dependiendo de la resolución</figcaption>
+renderización de un <em>frame</em> dependiendo de la
+resolución</figcaption>
 </figure>
 </div>
 <p>A 720p, la escena <code>cornell_box_original</code> corre a 105 FPS
-(9.6 ms/frame), mientras que a 1080p, el motor corre a 47FPS (21
-ms/frame) y a 1440p, a 28 FPS (36 ms/frame). Como vemos, la resolución
-tiene un gran impacto en el rendimiento. El cambio de 720p a 1080p
-implica un aumento del 125% en el número de píxeles a dibujar, por lo
-que es natural que el coste sea proporcional a esta cantidad. 1440p
-tiene 1.7 veces más píxeles que 1080p.</p>
+(9.6 ms/<em>frame</em>), mientras que a 1080p, el motor corre a 47FPS
+(21 ms/<em>frame</em>) y a 1440p, a 28 FPS (36 ms/<em>frame</em>). Como
+vemos, la resolución tiene un gran impacto en el rendimiento. El cambio
+de 720p a 1080p implica un aumento del 125% en el número de píxeles a
+dibujar, por lo que es natural que el coste sea proporcional a esta
+cantidad. 1440p tiene 1.7 veces más píxeles que 1080p.</p>
 <p>En la práctica, ray tracing no suele utilizar resoluciones internas
 tan grandes. Se aplican otro tipo de técnicas para reducir el ruido,
 como veremos en el capítulo de estado del arte.</p>
@@ -6469,7 +6510,7 @@ href="#ref-Shirley2020RTW3" role="doc-biblioref">Shirley
 libros es un <em>offline renderer</em>, sería interesante compararlo con
 nuestro motor que corre en tiempo real.</p>
 <p>En esta sección enseñaremos escenas similares, mostraremos cuánto
-tarda en renderizar un frame en comparación a nuestro motor, y
+tarda en renderizar un <em>frame</em> en comparación a nuestro motor, y
 estudiaremos las diferencias en la calidad visual.</p>
 <h3 data-number="5.4.1"
 id="sobre-la-implementación-de-in-one-weekend"><span
@@ -6510,8 +6551,8 @@ nuestra versión disponemos de prácticamente todos los métodos vistos en
 este trabajo, variando diferentes parámetros con el fin de ver
 resultados diferentes.</p>
 <p>La siguiente tabla muestra una comparativa entre el coste de
-renderizar un frame en In One Weekend y en nuestro motor, usando una
-profundidad de 10 rebotes y una resolución de 720p:</p>
+renderizar un <em>frame</em> en In One Weekend y en nuestro motor,
+usando una profundidad de 10 rebotes y una resolución de 720p:</p>
 <table>
 <colgroup>
 <col style="width: 20%" />
@@ -6523,9 +6564,9 @@ profundidad de 10 rebotes y una resolución de 720p:</p>
 <tr class="header">
 <th style="text-align: left;"><strong>Número de muestras</strong></th>
 <th style="text-align: left;"><strong>In One Weekend</strong>
-(ms/frame)</th>
+(ms/<em>frame</em>)</th>
 <th style="text-align: left;"><strong>Nuestra implementación</strong>
-(ms/frame)</th>
+(ms/<em>frame</em>)</th>
 <th style="text-align: left;"><strong>Veces más rápido</strong></th>
 </tr>
 </thead>
@@ -6584,13 +6625,13 @@ se utilizan todos los recursos posibles.</p>
 gráfica de cada uno?</p>
 <p>Enfocaremos la respuesta desde dos puntos de vista diferentes: en el
 primero, nos fijaremos puramente en el número de muestras; y en el
-segundo, fijaremos un cierto margen de milisegundos por frame y
+segundo, fijaremos un cierto margen de milisegundos por <em>frame</em> y
 comprobaremos el resultado en cada motor.</p>
 <h4 data-number="5.4.2.1" id="por-número-de-muestras"><span
 class="header-section-number">5.4.2.1</span> Por número de muestras</h4>
 <p>Comencemos la comparativa utilizando el número de muestras. Para las
-primeras imágenes fijaremos la acumulación temporal a un único frame.
-Explicaremos el motivo después.</p>
+primeras imágenes fijaremos la acumulación temporal a un único
+<em>frame</em>. Explicaremos el motivo después.</p>
 <p>Con una única muestra, se observa una diferencia enorme entre ambas
 versiones [<a href="#fig:comparativa_1s">55</a>]. En nuestra
 implementación no se observa prácticamente nada. Solo somos capaces de
@@ -6680,12 +6721,13 @@ muestras, 100 frames de acumulación temporal)</figcaption>
 class="header-section-number">5.4.2.2</span> Por presupuesto de
 tiempo</h4>
 <p>El presupuesto de tiempo (o <em>frame budget</em> en inglés) es la
-cantidad de milisegundos que disponemos para renderizar un frame. Este
-valor es importante cuando tratamos con aplicaciones en tiempo real. Por
-ejemplo, si queremos que nuestro motor corra a 60 imágenes por segundo,
-cada frame debe tardar un máximo de 16 milisegundos en ser generado. Una
-comparativa interesante sería fijar un valor para el tiempo, y ver qué
-calidad de imagen podemos conseguir con ambas implementaciones</p>
+cantidad de milisegundos que disponemos para renderizar un
+<em>frame</em>. Este valor es importante cuando tratamos con
+aplicaciones en tiempo real. Por ejemplo, si queremos que nuestro motor
+corra a 60 imágenes por segundo, cada <em>frame</em> debe tardar un
+máximo de 16 milisegundos en ser generado. Una comparativa interesante
+sería fijar un valor para el tiempo, y ver qué calidad de imagen podemos
+conseguir con ambas implementaciones</p>
 <p>Utilizando un presupuesto de 4000 milisegundos, In One Weekend es
 capaz de utilizar 5 muestras para la imagen, mientras que nuestro motor
 podría utilizar 10 muestras y 19 frames de acumulación temporal [Figura
@@ -7454,7 +7496,7 @@ a <strong>2214 €</strong>. Se han utilizado dos máquinas principalmente:
 una <em>custom build</em> de última generación para soportar el software
 y un portátil para trabajar en remoto:
 <ul>
-<li>PC <em>custom build</em> (1414 €):
+<li><strong>PC</strong> <em>custom build</em> (1414 €):
 <ul>
 <li><strong>CPU</strong>: Intel core i5 12600K (310 €).</li>
 <li><strong>Disipador de CPU</strong>: Arctic Freezer 34 eSports DUO (50
@@ -7863,8 +7905,8 @@ enlace a sus secciones correspondientes.</p>
 class="header-section-number">9.1</span> Notación</h2>
 <table>
 <colgroup>
-<col style="width: 15%" />
-<col style="width: 84%" />
+<col style="width: 16%" />
+<col style="width: 83%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -7887,9 +7929,7 @@ Generalmente, <span class="math inline">\(\mathbf{p}, \mathbf{q},
 <tr class="odd">
 <td style="text-align: left;"><strong>Vectores</strong></td>
 <td style="text-align: left;">Letras minúsculas en negrita: <span
-class="math inline">\(\mathbf{v, w, n}, \dots\)</span>. Si están
-normalizados, se les pone gorrito (por ejemplo, <span
-class="math inline">\(\hat{\mathbf{n}}\)</span>)</td>
+class="math inline">\(\mathbf{v, w, n}, \dots\)</span>.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Matrices</strong></td>
@@ -7999,9 +8039,9 @@ sólido</strong></a>, derivada [<a href="#eq:d_omega">11</a>] [<a
 href="#eq:diferencial_angulo_solido">16</a>]</td>
 <td style="text-align: left;">Medida del campo de visión de un objeto
 desde un cierto punto. <br> <span class="math inline">\(\sigma =
-\frac{A}{r^2}\)</span> <br> <span class="math inline">\(d\omega =
+\frac{A}{r^2}\)</span> <br> <span class="math inline">\(d\sigma =
 \sin\theta\ d\theta\ d\phi\)</span> <br> <span
-class="math inline">\(d\omega = \frac{dA\cos\theta}{r^2}\)</span></td>
+class="math inline">\(d\sigma = \frac{dA\cos\theta}{r^2}\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a
@@ -8027,29 +8067,23 @@ href="#radiancia"><strong>Radiancia</strong></a></td>
 de direcciones. <br> <span class="math inline">\(\begin{aligned} &amp;
 L(p, \omega) = \frac{dE_\omega(p)}{d\omega} \\ &amp; L(p, \omega) =
 \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} = \frac{d^2\Phi(p,
-\omega)}{d\omega\ dA\ \cos\theta} \\ &amp; L^+(p, \omega) = \lim_{t \to
-0^+}{L(p + t\mathbf{n}_p, \omega)} \\ &amp; L^-(p, \omega) = \lim_{t \to
-0^-}{L(p + t\mathbf{n}_p, \omega)} \end{aligned}\)</span></td>
+\omega)}{d\omega\ dA\ \cos\theta}\end{aligned}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><a href="#radiancia"><strong>Radiancia
 incidente</strong></a></td>
 <td style="text-align: left;">Radiancia que recibe una superficie desde
 la dirección <span class="math inline">\(\omega\)</span>. <br> <span
-class="math inline">\(\begin{aligned} L_i(p, \omega) = \begin{cases}
-L^+(p, -\omega) &amp; \text{si } \omega \cdot \mathbf{n}_p &gt; 0 \\
-L^-(p, -\omega) &amp; \text{si } \omega \cdot \mathbf{n}_p &lt; 0
-\end{cases}\end{aligned}\)</span></td>
+class="math inline">\(\begin{aligned} L_i(p, \omega)
+\end{aligned}\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="#radiancia"><strong>Radiancia
 reflejada o de salida</strong></a></td>
 <td style="text-align: left;">Radiancia que emite una superficie hacia
 una dirección <span class="math inline">\(\omega\)</span>. <br> <span
-class="math inline">\(\begin{aligned} &amp; L_o(p, \omega) =
-\begin{cases} L^+(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n}_p
-&gt; 0 \\ L^-(p, \omega) &amp; \text{si } \omega \cdot \mathbf{n}_p &lt;
-0 \end{cases} \end{aligned}\)</span></td>
+class="math inline">\(\begin{aligned} L_o(p, \omega)
+\end{aligned}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><a
@@ -8076,6 +8110,50 @@ href="#la-función-de-distribución-de-dispersión-bidireccional-bsdf"><strong>B
 \omega_i)\)</span></td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;"><strong>Hemisferio de direcciones
+alrededor de un vector</strong></td>
+<td style="text-align: left;"><span
+class="math inline">\(H^2(\mathbf{n})\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a
+href="#reflectancia-hemisférica"><strong>Albedo o reflectancia
+hemisférica</strong></a></td>
+<td style="text-align: left;">Proporción de luz reflejada por una
+superficie. <br> <span class="math inline">\(\rho_{hd}(\omega_o) =
+\int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \left\lvert
+\cos\theta_i \right\rvert\ d\omega_i}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a
+href="#tipos-de-dispersión"><strong>Tipos de
+materiales</strong></a></td>
+<td style="text-align: left;">Difusos, especulares brillantes,
+especulares perfectos, retrorreflectores</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a
+href="#reflexión"><strong>Reflexión</strong></a></td>
+<td style="text-align: left;">Efecto de la luz cuando impacta un espejo.
+<br> <span class="math inline">\(\mathbf{r} = \mathbf{i} - 2 (\mathbf{i}
+\cdot \mathbf{n}) \mathbf{n}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="#ley-de-snell"><strong>Ley de
+Snell</strong></a></td>
+<td style="text-align: left;">Relación entre los ángulos de un rayo al
+cambiar de medio. <br> <span class="math inline">\(\eta_1 \sin\theta_1 =
+\eta_2 \sin\theta_2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a
+href="#la-aproximación-de-schlick"><strong>Aproximación de
+Schlick</strong></a></td>
+<td style="text-align: left;">Simplificación de las ecuaciones de
+Fresnel.<br> <span class="math inline">\(R(\theta_1) = R_0 + (1 - R_0)(1
+- \cos\theta_1)^5\)</span></td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"><a
 href="#la-función-de-distribución-de-dispersión-bidireccional-bsdf"><strong>Ecuación
 de dispersión</strong></a></td>
@@ -8087,59 +8165,24 @@ class="math inline">\(\begin{aligned}L_o(p, \omega_o) =
 d\omega_i}\end{aligned}\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Hemisferio de direcciones
-alrededor de un vector</strong></td>
-<td style="text-align: left;"><span
-class="math inline">\(H^2(\mathbf{n})\)</span></td>
+<td style="text-align: left;"><a
+href="#la-rendering-equation"><strong>Radiancia
+reflejada</strong></a></td>
+<td style="text-align: left;">Radiancia reflejada hacia una dirección en
+un cierto punto. <br> <span class="math inline">\(\begin{aligned}L_r(p,
+\omega_o) = \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i)
+L_i(p, \omega_i) \cos\theta_i\ d\omega_i}\end{aligned}\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><a
-href="#reflectancia-hemisférica"><strong>Albedo o reflectancia
-hemisférica</strong></a></td>
-<td style="text-align: left;">Proporción de luz reflejada por una
-superficie. <br> <span class="math inline">\(\rho_{hd}(\omega_o) =
-\int_{H^2(n)}{f_r(p, \omega_o \leftarrow \omega_i) \left\lvert
-\cos\theta_i \right\rvert\ d\omega_i}\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><a
-href="#tipos-de-dispersión"><strong>Tipos de
-materiales</strong></a></td>
-<td style="text-align: left;">Difusos, especulares brillantes,
-especulares perfectos, retrorreflectores</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><a
-href="#reflexión"><strong>Reflexión</strong></a></td>
-<td style="text-align: left;">Efecto de la luz cuando impacta un espejo.
-<br> <span class="math inline">\(\mathbf{r} = \mathbf{i} - 2 (\mathbf{i}
-\cdot \mathbf{n}) \mathbf{n}\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><a href="#ley-de-snell"><strong>Ley de
-Snell</strong></a></td>
-<td style="text-align: left;">Relación entre los ángulos de un rayo al
-cambiar de medio. <br> <span class="math inline">\(\eta_1 \sin\theta_1 =
-\eta_2 \sin\theta_2\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><a
-href="#la-aproximación-de-schlick"><strong>Aproximación de
-Schlick</strong></a></td>
-<td style="text-align: left;">Simplificación de las ecuaciones de
-Fresnel.<br> <span class="math inline">\(R(\theta_1) = R_0 + (1 - R_0)(1
-- \cos\theta_1)^5\)</span></td>
-</tr>
-<tr class="even">
 <td style="text-align: left;"><a
 href="#la-rendering-equation"><strong>Rendering equation o ecuación del
 transporte de luz</strong></a></td>
 <td style="text-align: left;">La ecuación más importante de la
 informática gráfica. Describe analíticamente la cantidad de luz de un
-punto en función de su entorno. <br> <span class="math inline">\(L_o(p,
-\omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o
-\leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\
-d\omega_i}\)</span></td>
+punto en función de su entorno. <br> <span
+class="math inline">\(\begin{aligned}L_o(p, \omega_o) = L_e(p, \omega_o)
++ \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p,
+\omega_i) \cos\theta_i\ d\omega_i} \end{aligned}\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -8274,9 +8317,10 @@ se simulan múltiples caminos de luz.</td>
 <td style="text-align: left;"><a
 href="#estimando-la-rendering-equation-con-monte-carlo"><strong>Ecuación
 del transporte de luz estimada por Monte Carlo</strong></a></td>
-<td style="text-align: left;"><span class="math inline">\(\frac{1}{N}
-\sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p,
-\omega_j) \cos\theta_j}{p(\omega_j)}}\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\begin{aligned}\frac{1}{N} \sum_{j =
+1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j)
+\cos\theta_j}{P\left[ \omega_j \right]}}\end{aligned}\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Rendering engine o
