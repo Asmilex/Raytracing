@@ -927,9 +927,12 @@ curve(dbeta(x, shape1 = a, shape2 = b), add = TRUE, col = 2)
 
 ![Histograma del método de rechazo.](./img/03/metodo_rechazo.png){#fig:metodo_rechazo_R width=70%}
 
-## Cadenas de Markov para soluciones de ecuaciones integrales de Fredholm de tipo 2
+## Cadenas de Markov y ecuaciones integrales de Fredholm de tipo 2
 
 A lo largo de este capítulo hemos descrito las técnicas que se utilizan para aproximar los valores de una integral. En esta sección vamos a dar un salto de abstracción, e introduciremos brevemente cómo funcionan las cadenas de Markov, y cómo se pueden usar para aproximar soluciones de un tipo de ecuación integral denominada "ecuación de Fredholm de tipo 2". Nos basaremos en los contenidos de [@montecarlo-fredholm] y [@markov-chains].
+
+Este tipo de ecuaciones resulta de interés puesto que la ecuación del transporte de luz es un caso particular de estas ecuaciones, pero con dominio infinito-dimensional.
+
 
 ### Ecuaciones de Fredholm
 
@@ -947,10 +950,7 @@ $$
 L_2([a, b]) = \set{f \in L([a, b])}{\int_{a}^{b}{\abs{f(t)}^2\ dt} < \infty}
 $$
 
-Particularizaremos el caso $a = 0, b = 1$, $\lambda = 1$, $0 \le x \le 1$.
-
-Este tipo de ecuaciones resulta de interés puesto que la ecuación del transporte de luz es un caso particular de estas ecuaciones, pero con dominio infinito-dimensional.
-
+Particularizaremos el caso $a = 0, b = 1$, $\lambda = 1$, $0 \le x \le 1$ en lo que queda de sección.
 
 ### Cadenas de Markov
 
@@ -987,7 +987,6 @@ $$
 $${#eq:propiedad_markov}
 
 para cualquier $i_n, \dots, i_0 \in S$, $n \in \mathbb{N}$. Esta propiedad nos dice que el estado en el paso $n$ solo depende del estado inmediatamente anterior.
-
 
 Resultará cómoda la siguiente notación
 
@@ -1049,6 +1048,105 @@ $$
     & \Prob{X(t_{n+1}) = j, X(t_n) = i, X(t_{n-1}) = i_{n-1}, \dots, X(t_0) = i_0} = \\
 =\  & P_{i, j}(t_{n+1} - t_n) \cdot P_{i_{n-1}, i_n}(t_n - t_{n-1}) \cdot \dots \cdots P_{i_0, i_{1}}(t_1 - t_0) \cdot \phi(i_0)
 \end{aligned}
+$$
+
+### Resolviendo las ecuaciones de Fredholm utilizando cadenas de Markov continuas
+
+En el trabajo de [@montecarlo-fredholm] los autores muestran una forma de resolver las ecuaciones integrales [@eq:fredholm_2] utilizando cadenas de Markov continuas en el espacio $[0, 1]$.
+
+Consideremos la ecuación [@eq:fredholm_2] en forma de funcional
+
+$$
+u(x) = f(x) + (Ku)(x)
+$$
+
+o, directamente, omitiendo $x$:
+
+$$
+u = f + Ku
+$$
+
+siendo $K$ el operador integral de la ecuación original:
+
+$$
+(Ku)(x) = \int_{0}^{1}{k(x, t)u(t)dt}
+$$
+
+Tenemos que $(Ku)(x)$ será la primera iteración de $u$ con respecto al kernel $k$. La segunda iteración viene dada por
+
+$$
+K((Ku))(x) = (K^2u)(x) = \int_0^1 \int_0^1 {k(x, t)k(t, t_1)u(t_1) dtdt_1}
+$$
+
+Así, de forma de recursiva, se obtiene que
+
+$$
+K(K^{n-1}u)(x) = (K^n u)(x) = \int_0^1 {k(x, t_{n-1})K^{n-1}u(t_{n-1}) dt_{n-1}}
+$$
+
+
+Si asumimos que
+
+$$
+\abs{K} = \sup_{[0, 1]}{\int_0^1{\abs{k(x, t)} dt} < 1}
+$$
+
+entonces, se puede resolver la ecuación de Fredholm [@eq:fredholm_2] aplicando la fórmula recursiva
+
+$$
+u^{(n+1)} = Ku^{(n)} + f, \quad n = 1, 2, \dots
+$$
+
+Si $u^{(0)} = 0$, $K^0 \equiv 0$, entonces, la ecuación anterior se transforma en
+
+$$
+u^{(n + 1)} = f+ Kf + \dots + K^nf = \sum_{m = 0}^{n}{K^mf}
+$$
+
+Está claro que
+
+$$
+\lim_{n \to \infty} u^{(n)} = \lim_{n \to \infty} \sum_{m = 0}^{n}{K^mf} = u
+$$
+
+Cada $u^n$ puede calcularse utilizando una cadena de Markov para hallar su solución. Para ello, consideramos una cadena continua de Markov con probabilidad de transición $P_{i, j}$ y distribución inicial $\phi(i)$, satisfaciendo que
+
+$$
+\begin{aligned}
+\int_0^1{P_{i, j}\ dj} &  = 1 \\
+\int_0^1{\phi(i)\ di}  & = 1 \\
+\end{aligned}
+$$
+
+Consideramos ahora una función de pesos $W_m$ para la cadena de Markov, que viene dada por la recursión
+
+$$
+\begin{aligned}
+W_m & = W_{m-1} \frac{k(x_{m -1}, x_m)}{P_{x_{m-1}, x_m}}, \quad m = 1, 2, \dots \\
+W_0 & = 1
+\end{aligned}
+$$
+
+Definamos ahora una variable aleatoria $\Gamma_n(h)$, la cual está asociada al camino $x_0 \rightarrow x_1 \rightarrow \dots \rightarrow x_n$:
+
+$$
+\Gamma_n(h) = \frac{h(x_0)}{\phi(x_0)} = \sum_{m = 0}^{n}{W_mf(x_m)}
+$$
+
+donde $h(x)$ es una función real.
+
+Consideremos ahora el producto escalar de dos funciones $h(x), u(x)$, el cual se define como
+
+$$
+\langle h, u \rangle = \int_0^1{h(x)u(x) dx}
+$${#eq:producto_escalar_funcional}
+
+El problema ahora se convierte en encontrar el valor del producto $\langle h, u \rangle$, siendo $u(x)$ la función solución de la ecuación de Fredholm.
+
+El valor del producto escalar de $\langle h, u^{(n + 1)} \rangle$ puede ser estimado gracias variable aleatoria $\Gamma_n(h)$; es decir,
+
+$$
+\E{\Gamma_n(h)} = \langle h, u^{(n + 1)} \rangle
 $$
 
 [^1]: En su defecto, si tenemos una función de densidad $p_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{p_X(t)dt}$.
