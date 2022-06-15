@@ -418,7 +418,7 @@ Los tipos de materiales que vamos a tratar son las básicos. Entre ellos, se enc
 
 Prácticamente toda superficie, en mayor o menor medida, refleja parte de la luz incidente. Otros tipos de materiales reflejan y refractan a la vez, como puede ser un espejo o el agua.
 
-![Reflexión y refracción de luz. Basado en [@GemsII-Reflexion, pp. 106].](./img/02/Sandía.png){#fig:refraccion width=80%}
+![Reflexión y refracción de luz. Basado en [@GemsII-Reflexion, pp. 106].](./img/02/Sandía.png){#fig:refraccion width=65%}
 
 En esencia, los reflejos se pueden clasificar en cuatro grandes tipos [@McGuire2018GraphicsCodex, Materials]:
 
