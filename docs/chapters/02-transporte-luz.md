@@ -224,19 +224,17 @@ En esta sección, vamos a explorar las nuevas herramientas que nos proporciona l
 
 Como dijimos al final de [la sección de la irradiancia](#irradiancia), esta medida no tiene en cuenta las direcciones desde las que llegaba la luz. A diferencia de esta, la radiancia sí que las utiliza. Dado que una de las ventajas de la radiancia es que nos permite obtener el resto de medidas radiométricas, ¿por qué no desarrollamos una nueva expresión de la irradiancia?
 
-Para obtener cuánta luz llega a un punto, debemos acumular la radiancia incidente que nos llega desde cualquier dirección.
-
-> TODO: dibujo como el de la libreta roja. Me lo mandé por Telegram, por si no lo encuentro
-
-Dado un punto $p$ que se encuentra en una superficie con normal $\mathbf{n}$ en dicho punto, la irradiancia se puede expresar como [@PBRT3e, Working with Radiometric Integrals]
+Para obtener cuánta luz llega a un punto, debemos acumular la radiancia incidente que nos llega desde cualquier dirección. Dado un punto $p$ que se encuentra en una superficie con normal $\mathbf{n}$ en dicho punto, la irradiancia se puede expresar como [@PBRT3e, Working with Radiometric Integrals]
 
 $$
-E(p, \mathbf{n}) = \int_{\mathbb{S}^2}{L_i(p, \omega) \abs{cos\theta} d\omega}
+E(p, \mathbf{n}) = \int_{\Omega}{L_i(p, \omega) \abs{cos\theta} d\omega}
 $${#eq:E_abs_cos}
 
 Siendo $\Omega$ un subcojunto de direcciones de la esfera $\mathbb{S}^2$. El término $\cos\theta$ aparece en la integral debido a la derivada del área proyectada, $dA^\bot$. $\theta$ es el ángulo entre la dirección $\omega$ y la normal $\mathbf{n}$.
 
 Generalmente, la irradiancia se calcula únicamente en el hemisferio de direcciones asociado a la normal en el punto, $H^2(\mathbf{n})$.
+
+![Recolectando la luz. Basado en [@berkeley-cs184]](./img/02/Recolectando%20luz.png){#fig:recolectando_luz width=80%}
 
 Podemos eliminar el $\cos\theta$ de la integral mediante una pequeña transformación: proyectando el ángulo sólido sobre el disco alrededor del punto $p$ con normal $\mathbf{n}$, obtenemos una expresión más sencilla: como $d\omega^\bot = \abs{\cos\theta} d\omega$, entonces
 
@@ -260,8 +258,6 @@ $$
          & = \int_{A}\int_{H^2(\mathbf{n})}{L_o(p, \omega) d\omega^\bot dA}
 \end{aligned}
 $$
-
-> TODO: a lo mejor merece la pena hacer un ejemplo sobre los diferentes tipos de luz, como en https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf p.41? O a lo mejor un capítulo para hablar de luces en general.
 
 #### Integrando sobre área
 
