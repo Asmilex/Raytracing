@@ -109,7 +109,7 @@ A $\theta$ se le denomina ángulo polar, mientras que a $\phi$ se le llama acimu
 
 $dA_h$ debe tener dos lados $lado_1$ y $lado_2$. Podemos hallar $lado_1$ si lo trasladamos al eje $z$ de nuevo. Así, $lado_1 = r \sin d\phi$. De la misma manera, $lado_2 = r d\theta$.
 
-![Diferencial de un ángulo sólido.](./img/01/Diferencial%20de%20un%20ángulo%20sólido.png){#fig:diferencial_angulo_solido}
+![Diferencial de un ángulo sólido.](./img/02/Diferencial%20de%20un%20ángulo%20sólido.png){#fig:diferencial_angulo_solido}
 
 Poniendo estos valores en $d\sigma$:
 
@@ -174,9 +174,7 @@ $${#eq:radiancia_flujo}
 
 donde $dA^\bot$ es el área proyectada por $dA$ en una hipotética superficie perpendicular a $\omega$:
 
-> TODO: figura similar a pbr figura 5.10 https://www.pbr-book.org/3ed-2018/Color_and_Radiometry/Radiometry
->
-> TODO: foto como la de https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, página 10.
+![La radiancia, visualizada.](./img/02/Radiancia.png){#fig:figura_radiancia width=80%}
 
 Cuando un rayo impacta en una superficie, $L$ puede tomar valores muy diferentes en un lado y otro de esta. A fin de cuentas, necesitamos distinguir entre los fotones que llegan a la superficie y los que salen. Para solucionarlo podemos distinguir entre la radiancia que llega a un punto --la incidente--, y la saliente.
 
