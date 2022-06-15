@@ -192,9 +192,9 @@ La primera de ellas es que, dado $L$, podemos calcular cualquier otra unidad bá
 
 Veamos por qué ocurre esto:
 
-> TODO: https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf, página 18.
+Consideremos dos superficies ortogonales entre sí separadas una distancia $r$. Debido a la conservación de la energía, cualquier fotón que salga de una superficie y se encuentre bajo el ángulo sólido de la otra debe llegar impactar en dicha superficie opuesta.
 
-Consideremos dos superficies ortogonales entre sí, $S_1$ y $S_2$ separadas una distancia $r$. Debido a la conservación de la energía, cualquier fotón que salga de una superficie y se encuentre bajo el ángulo sólido de la otra debe llegar impactar en dicha superficie opuesta.
+![Situación de la prueba de la invarianza de la radiancia](./img/02/Invarianza%20de%20la%20radiancia.png){#fig:invarianza_radiancia width=80%}
 
 Por tanto:
 
