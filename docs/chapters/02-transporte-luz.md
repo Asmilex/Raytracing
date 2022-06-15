@@ -182,7 +182,7 @@ A la **radiancia incidente o entrante** la llamaremos $L_i(p, \omega)$, mientras
 
 Es importante destacar que $\omega$ apunta *hacia fuera* de la superficie. Para $L_o(p, \omega)$ se tiene que la radiancia viaja en el sentido de $\omega$, mientras que para $L_i(p, \omega)$ se tiene que la radiancia viaja en el sentido contrario a $\omega$; es decir, hacia el punto $p$.
 
-> TODO: https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-11-radiometry-and-photometry/lec-11-radiometry-and-photometry.pdf, p.36
+![Debemos distinguir entre la radiancia que llega a una superficie, $L_i$, y la que sale de ella, $L_o$. En general, no son iguales.](./img/02/Radiancia%20incidente%20y%20saliente.png){#fig:radiancia_incidente_saliente width=80%}
 
 Una propiedad a tener en cuenta es que, si cogemos un punto $p$ del espacio donde no existe ninguna superifcie, $L_o(p, \omega) = L_i(p, -\omega) = L(p, \omega)$
 
