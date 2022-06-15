@@ -271,8 +271,6 @@ $$
 d\omega = \frac{dA\cos\theta}{r^2}
 $${#eq:diferencial_angulo_solido}
 
-> TODO: figura como la de pbr book 5.16.
-
 Esto nos permite, por ejemplo, expandir algunas expresiones como la de la irradiancia [{@eq:E_abs_cos}] si partimos de un cuadrilátero $dA$:
 
 $$
@@ -286,7 +284,15 @@ siendo $\theta_o$ el ángulo de la radiancia de salida de la superficie del cuad
 
 ### Fotometría y radiometría
 
-> TODO: hablar sobre las diferencias. Hay información útil en 01_lights.pdf, p.43
+Existe un área de la física muy similar a la radiometría denominada **fotometría**. La fotometría se encarga de medir la luminosidad percibida, puesto que el ojo humano tiene una sensibilidad específica para cada longitud de onda [@tuwien]. En vez de radiancia, se suele hablar de luminancia, y todas las unidades vistas durante este capítulo tienen su análogo.
+
+| **Radiometría**     | **Símbolo y unidad**                                    | **Fotometría**      | **Símbolo y unidad**                                         |
+|:--------------------|:--------------------------------------------------------|:--------------------|:-------------------------------------------------------------|
+| Energía radiante    | $Q_e$,                   julios $(\text{J})$            | Energía lumínica    | $Q_v$,       lumen segundo $(\text{lm s})$                   |
+| Flujo radiante      | $\phi_e$,                vatios $(\text{W})$            | Flujo luminoso      | $\phi_v$,     lumen $(\text{lm} = \text{cd sr})$             |
+| Intensidad radiante | $I_e$,        vatios por estereorradián $(\text{W/sr})$ | Intensidad luminosa | $I_v$,        candela $(\text{cd} = \text{lm/sr})$           |
+| Radiancia           | $L_e$,            $(\text{W sr}^{-1}\text{m}^{-1})$     | Luminancia          | $L_v$,        candela por metro cuadrado $(\text{cd/m}^{2})$ |
+| Irradiancia         | $E_e$,                   $(\text{W/m}^{2})$             | Iluminancia         | $E_v$,        lux $\text{lx} = \text{lm/m}^2$                |
 
 ## Dispersión de luz
 
@@ -301,8 +307,6 @@ En este capítulo vamos a modelar la primera. Estudiaremos qué es lo que ocurre
 La **función de distribución de reflectancia bidireccional** (en inglés, *bidirectional reflectance distribution function*, BRDF) [@PBRT3e, Surface Reflection] describe cómo la luz se refleja en una superficie opaca. Se encarga de informarnos sobre cuánta radiancia sale en dirección $\omega_o$ debido a la radiancia incidente desde la dirección $\omega_i$, partiendo de un punto $p$ en una superficie con normal $\mathbf{n}$. Depende de la longitud de onda $\lambda$, pero, como de costumbre, la omitiremos.
 
 > **Intuición**: *¿cuál es la probabilidad de que, habiéndome llegado un fotón desde $\omega_i$, me salga disparado hacia $\omega_o$?*
-
-> TODO: esquema como el de pbr fig. 5.18, o como https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf p.20
 
 Si consideramos $\omega_i$ como un cono diferencial de direcciones, la irradiancia diferencial en $p$ viene dada por
 
@@ -414,9 +418,7 @@ Los tipos de materiales que vamos a tratar son las básicos. Entre ellos, se enc
 
 Prácticamente toda superficie, en mayor o menor medida, refleja parte de la luz incidente. Otros tipos de materiales reflejan y refractan a la vez, como puede ser un espejo o el agua.
 
-![Reflexión y refracción de luz [@GemsII-Reflexion, pp. 106].](./img/02/Reflexión%20y%20refracción.png){#fig:refraccion width=50%}
-
-> TODO: cambiar por foto propia
+![Reflexión y refracción de luz. Basado en [@GemsII-Reflexion, pp. 106].](./img/02/Sandía.png){#fig:refraccion width=80%}
 
 En esencia, los reflejos se pueden clasificar en cuatro grandes tipos [@McGuire2018GraphicsCodex, Materials]:
 
