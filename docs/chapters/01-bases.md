@@ -82,7 +82,7 @@ $$
 \mathbf{n} = \nabla F(\mathbf{p}) = \left( \frac{\partial F(\mathbf{p})}{\partial x}, \frac{\partial F(\mathbf{p})}{\partial y}, \frac{\partial F(\mathbf{p})}{\partial z}\right )
 $${#eq:normal_superficie}
 
-> TODO: dibujo de la normal a una superficie.
+![Normal en un punto](./img/01/Normal.png){#fig:normal_superficie width=60%}
 
 Dado un punto $\mathbf{q} \in \mathbb{R}^3$, queremos saber dónde interseca un rayo $P(t)$. Es decir, para qué $t$ se cumple que $F(P(t)) = 0 \iff F(\mathbf{\mathbf{o}} + t\mathbf{d}) = 0$.
 
@@ -117,7 +117,7 @@ Es decir, hemos obtenido el único valor de $t$ para el cual el rayo toca la sup
 
 Debemos tener en cuenta el caso para el cual $d \cdot \mathbf{n} = 0$. Esto solo se da si la dirección y el vector normal a la superficie son paralelos.
 
-> TODO: dibujo de dos rayos con un plano: uno corta a la superficie, mientras que el otro es paralelo.
+![Intersección con planos](./img/01/Planos.png){#fig:intersección-planos width=70%}
 
 ### Superficies paramétricas
 
@@ -137,10 +137,6 @@ G(f) = \set{(x, y, f(x, y))}{(x, y) \in S}
 $$
 define una superficie diferenciable siempre que $f$ también lo sea.
 - Usando coordenadas esféricas $(r, \theta, \phi)$, podemos parametrizar la esfera como $(x, y, z) = (\cos\phi\sin\theta, \sin\phi\sin\theta, \cos\theta)$
-
-> TODO añadir imagen de coordenadas esféricas. U otro capítulo con coordenadas.
->
-> NOTE: estoy usando (radial, polar, azimuthal). $\theta$ corresponde con la apertura con respecto a la vertical
 
 El vector normal $\mathbf{n}$ a la superficie en un punto $(u, v)$ del dominio viene dado por
 
@@ -244,7 +240,7 @@ $$
 \mathbf{p} = \alpha a + \beta \mathbf{b} + \gamma \mathbf{c}
 $$
 
-> TODO: triángulo con coordenadas baricéntricas.
+![Coordenadas baricéntricas](./img/01/Coordenadas%20Baricéntricas.png){#fig:coordenadas-baricéntricas width=70%}
 
 Debemos destacar que existen dos grados de libertad debido a la restricción de que las coordenadas sumen 1.
 
@@ -253,8 +249,6 @@ Una propiedad de estas coordenadas que nos puede resultar útil es que un punto 
 Esta propiedad y la restricción de que sumen 1 nos da una cierta intuición de cómo funcionan. Podemos ver las coordenadas baricéntricas como la contribución de los vértices a un punto $\mathbf{p}$. Por ejemplo, si $\alpha = 0$, eso significa que el punto viene dado por $\beta \mathbf{b} + \gamma \mathbf{c}$; es decir, una combinación lineal de $\mathbf{b}$ y $\mathbf{c}$. Se encuentra en la recta que generan.
 
 Por proponer otro ejemplo, si alguna de las coordenadas fuera mayor que 1, eso significaría que el punto estaría más allá del triángulo.
-
-> TODO: dibujo con explicación de cómo funciona (libreta Shinrin - Yoku)
 
 #### Calculando la intersección
 
