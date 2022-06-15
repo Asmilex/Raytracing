@@ -252,8 +252,6 @@ Vulkan gestiona las estructuras de aceleración diviéndolas en dos partes: **To
 
 ![La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: [@nvpro-samples-tutorial]](./img/04/Acceleration%20structure.png){#fig:TLAS width=70%}
 
-> TODO: Deberíamos cambiar esa foto por otra propia.
-
 ### Botom-Level Acceleration Structure (BLAS)
 
 Las **estructuras de aceleración de bajo nivel** (*Bottom-Level Acceleration Structure*, BLAS) almacenan la geometría de un objeto individual; esto es, los datos de los vértices y los índices de los triángulos, además de una AABB que la encapsula.
