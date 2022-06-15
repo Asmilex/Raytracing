@@ -706,9 +706,6 @@ Este último paso se debe a que, como $\xi$ es uniforme en $(0, 1)$, $P[\xi < x]
 2. Hallar la inversa de la función de distribución deseada $F_X$, denotada $F_X^{-1}(x)$.
 3. Calcular $F_X^{-1}(\xi) = X$.
 
-> TODO: dibujo similar a [este: p.52](https://cs184.eecs.berkeley.edu/public/sp22/lectures/lec-12-monte-carlo-integration/lec-12-monte-carlo-integration.pdf)
-
-
 #### Ejemplo práctico de la transformada inversa para $x^2$
 
 Como ejemplo, vamos a muestrear la función $f(x) =  x^2,\ x \in [0, 2]$ [@berkeley-cs184, Monte Carlo Integration].
