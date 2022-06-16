@@ -5,8 +5,9 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Andrés Millán Muñoz" />
-  <meta name="keywords" content="raytracing, ray tracing, Monte
-Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan" />
+  <meta name="keywords" content="raytracing, ray tracing, path
+tracing, métodos de Monte Carlo, integración de Monte Carlo, transporte
+de luz, iluminación global, Vulkan" />
   <title>Métodos de Monte Carlo para síntesis de imágenes.  Análisis teórico e implementaciones basadas en path tracing acelerado por hardware</title>
   <style>
     html {
@@ -681,21 +682,24 @@ Para ello, se utilizarán métodos de integración de Monte Carlo con el
 fin de disminuir el tiempo de cómputo.</p>
 <p>Se diseñará un software basado en la interfaz de programación de
 aplicaciones gráficas Vulkan, utilizando como soporte un entorno de
-desarrollo de Nvidia conocido como nvpro-samples. El software
-implementará un motor gráfico basado en <em>path tracing</em>. Este
-motor será capaz de renderizar numerosas escenas, cambiar los parámetros
-del algoritmo path tracing y modificar las fuentes de iluminación en
-tiempo de ejecución.</p>
+desarrollo de Nvidia conocido como nvpro-samples <span class="citation"
+data-cites="nvpro-samples">(<a href="#ref-nvpro-samples"
+role="doc-biblioref">Nvidia 2022b</a>)</span>. El software implementará
+un motor gráfico basado en <em>path tracing</em>. Este motor será capaz
+de renderizar numerosas escenas, cambiar los parámetros del algoritmo
+path tracing y modificar las fuentes de iluminación en tiempo de
+ejecución.</p>
 <p>Con el fin de explorar cómo afectan diferentes métodos al ruido final
 de la imagen, se estudiarán algunas técnicas de reducción de varianza
 como muestreo directo de fuentes de iluminación, muestreo por
-importancia o acumulación temporal. Además, el motor desarrollado se
-comparará con una implementación del software creado en los libros de
-<span class="citation" data-cites="Shirley2020RTW1">(<a
-href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
-2020a</a>)</span> “Ray Tracing in One Weekend series”, la cual utiliza
-exclusivamente la CPU. Se comporbarán las diferencias entre ambas
-versiones, estudiando los puntos fuertes de cada una.</p>
+importancia, <em>supersampling</em> o acumulación temporal. Además, el
+motor desarrollado se comparará con una implementación del software
+creado en los libros de <span class="citation"
+data-cites="Shirley2020RTW1">(<a href="#ref-Shirley2020RTW1"
+role="doc-biblioref">Shirley 2020a</a>)</span> “Ray Tracing in One
+Weekend series”, la cual utiliza exclusivamente la CPU. Se comprobarán
+las diferencias entre ambas versiones, estudiando los puntos fuertes de
+cada una.</p>
 <p><em>Palabras clave: raytracing, ray tracing, path tracing, métodos de
 Monte Carlo, integración de Monte Carlo, transporte de luz, iluminación
 global, Vulkan.</em></p>
@@ -754,8 +758,8 @@ achieve it, we will need to understand multiple aspects of different
 fields: from mathematics to computer imaging, with some light notions
 from physics.</p>
 <p><a href="#las-bases">Chapter 1</a> will set the <strong>fundamentals
-of what ray tracing is</strong>, how a ray works, and how a ray
-intersects with an object.</p>
+of what ray tracing is</strong>, how a ray works, and how it intersects
+with an object.</p>
 <p>In <a href="#transporte-de-luz">chapter 2</a> we will study the
 basics of <strong>radiometry and light transport</strong>, the field of
 physics that deals with the interaction between light and matter. We
@@ -833,8 +837,8 @@ interface and the main engine class, which presents a high degree of
 coupling.</p>
 <hr>
 <p>The contents of this document, the Vulkan project, an <em>In One
-Weekend</em> implementation, and other utilities, can be found in the
-following repository:</p>
+Weekend</em> implementation, as well as other utilities can be found in
+the following repository:</p>
 <p><a
 href="https://github.com/Asmilex/Raytracing">https://github.com/Asmilex/Raytracing</a></p>
 <p><em>Keywords: raytracing, ray tracing, path tracing, Monte Carlo
@@ -977,9 +981,9 @@ pasaríamos una eternidad esperando. Y para ver una imagen en nuestra
 pantalla necesitaremos estar vivos, claro. En la práctica, esto supuso
 que no todos los medios pudieron pasarse a path tracing. Aquellas
 industrias como la de los videojuegos, en las que se prioriza la rapidez
-sobre fidelidad continuaron, tuvieron que continuar usando
-rasterización. A fin de cuentas, solo disponen de unos escasos
-milisegundos para renderizar una imagen.</p>
+sobre fidelidad tuvieron que continuar usando rasterización. A fin de
+cuentas, solo disponen de unos escasos milisegundos para renderizar una
+imagen.</p>
 <p>Sin embargo, el paso del tiempo es imparable. Las pinturas rupestres
 dieron paso al óleo sobre lienzo, mientras que las cámaras digitales
 reemplazaron a las oscuras. Es natural esperar que, en algún momento,
@@ -1483,11 +1487,12 @@ href="#intersecciones-con-triángulos">mallas de triángulos</a>.</p>
 <h3 data-number="1.2.3" id="intersecciones-con-esferas"><span
 class="header-section-number">1.2.3</span> Intersecciones con
 esferas</h3>
-<p>Estudiemos ahora cómo intersecan una esfera con nuestro rayo. Una
-esfera de centro <span class="math inline">\(\mathbf{c}\)</span> y radio
-<span class="math inline">\(r\)</span> viene dada por aquellos puntos
-<span class="math inline">\(\mathbf{p} = (x, y, z)\)</span> que
-cumplen</p>
+<p>Estudiemos ahora cómo intersecan una esfera con nuestro rayo <span
+class="citation" data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
+role="doc-biblioref">Shirley and Morley 2003</a>)</span>. Una esfera de
+centro <span class="math inline">\(\mathbf{c}\)</span> y radio <span
+class="math inline">\(r\)</span> viene dada por aquellos puntos <span
+class="math inline">\(\mathbf{p} = (x, y, z)\)</span> que cumplen</p>
 <p><span class="math display">\[
 (\mathbf{p} - \mathbf{c}) \cdot (\mathbf{p} - \mathbf{c}) = r^2
 \]</span></p>
@@ -1506,10 +1511,11 @@ nuestro rayo se cumple esa ecuación:</p>
 \end{aligned}
 \]</span></p>
 <p>Aplicando las propiedades del producto escalar de la conmutatividad
-(<span class="math inline">\(a \cdot \mathbf{b} = \mathbf{b} \cdot
-a\)</span>) y la distributiva (<span class="math inline">\(a \cdot
-(\mathbf{b} + \mathbf{c}) = a \cdot \mathbf{b} + a \cdot
-\mathbf{c}\)</span>), podemos escribir</p>
+(<span class="math inline">\(\mathbf{a} \cdot \mathbf{b} = \mathbf{b}
+\cdot \mathbf{a}\)</span>) y la distributiva (<span
+class="math inline">\(\mathbf{a} \cdot (\mathbf{b} + \mathbf{c}) =
+\mathbf{a} \cdot \mathbf{b} + \mathbf{a} \cdot \mathbf{c}\)</span>),
+podemos escribir</p>
 <p><span class="math display">\[
 \begin{aligned}
 ((\mathbf{o} - \mathbf{c}) + t\mathbf{d}) \cdot ((\mathbf{o} -
@@ -1725,7 +1731,7 @@ de refracción del medio, <span class="math inline">\(n\)</span>. La
 unidad de medida de <span class="math inline">\(\lambda\)</span> es el
 nanómetro (<span class="math inline">\(\text{nm}\)</span>).</p>
 <blockquote>
-<p><strong>Nota</strong>:(ción) cuando usemos un paréntesis tras una
+<p><strong>Nota</strong>(ción): cuando usemos un paréntesis tras una
 ecuación, dentro denotaremos sus unidades de medida.</p>
 </blockquote>
 <p>Necesitaremos también definir qué es <strong>la frecuencia</strong>,
@@ -1743,15 +1749,16 @@ Q = hf = \frac{hc}{\lambda} (\text{J})
 \]</span><span class="eqnos-number">(5)</span></span></p>
 <p>donde <span class="math inline">\(h = 6.62607004 \times 10^{-34}
 \text{J} \cdot \text{s}\)</span> es la constante de Plank y <span
-class="math inline">\(c = 299 792 458 \text{m/s}\)</span> la velocidad
+class="math inline">\(c = 299 792 458 \text{ m/s}\)</span> la velocidad
 de la luz.</p>
 <p>En realidad, <strong>todas estas cantidades deberían tener un
 subíndice <span class="math inline">\(\lambda\)</span></strong>, puesto
 que dependen de la longitud de onda. La energía de un fotón <span
 class="math inline">\(Q\)</span>, por ejemplo, debería denotarse <span
 class="math inline">\(Q_\lambda\)</span>. Sin embargo, en la literatura
-de informática gráfica, <strong>se ha optado por omitirla</strong>.
-¡Tenlo en cuenta a partir de aquí!</p>
+de informática gráfica <strong>se suele optar por omitirla</strong>,
+puesto que la mayoría de motores no generalizan las particularidades de
+cada longitud de onda. ¡Tenlo en cuenta a partir de aquí!</p>
 <h3 data-number="2.1.1" id="potencia"><span
 class="header-section-number">2.1.1</span> Potencia</h3>
 <p>A partir de la energía <span class="math inline">\(Q\)</span>,
@@ -1765,7 +1772,7 @@ resultará más útil que la energía total, puesto que nos permite estimar
 la energía en un instante:</p>
 <p><span id="eq:potencia" class="eqnos"><span class="math display">\[
 \Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt}
-(J/s)
+(\text{J/s})
 \]</span><span class="eqnos-number">(6)</span></span></p>
 <p>Su unidad es julios por segundo, comúnmente denotado vatio
 (<em>watts</em>, <span class="math inline">\(\text{W}\)</span>). También
@@ -1877,11 +1884,11 @@ un punto <span class="math inline">\(p\)</span>.</p>
 <div id="fig:xkcd_1276" class="fignos">
 <figure>
 <img loading="lazy" src="./img/02/xkcd_1276.png" style="width:60.0%"
-alt="Figura 12: Como de costumbre, hay un XKCD relevante (Munroe n.d.)" />
+alt="Figura 12: Como de costumbre, hay un XKCD relevante (Munroe 2013)" />
 <figcaption aria-hidden="true"><span>Figura 12:</span> Como de
 costumbre, hay un XKCD relevante <span class="citation"
 data-cites="xkcd-size">(<a href="#ref-xkcd-size"
-role="doc-biblioref">Munroe n.d.</a>)</span></figcaption>
+role="doc-biblioref">Munroe 2013</a>)</span></figcaption>
 </figure>
 </div>
 <p>Puesto que estamos trabajando con esferas, nos resultará muy cómodo
@@ -2052,12 +2059,13 @@ class="math inline">\(p\)</span>.</p>
 <figure>
 <img loading="lazy" src="./img/02/Radiancia%20incidente%20y%20saliente.png"
 style="width:80.0%"
-alt="Figura 15: Debemos distinguir entre la radiancia que llega a una superficie, L_i, y la que sale de ella, L_o. En general, no son iguales." />
+alt="Figura 15: Debemos distinguir entre la radiancia que llega a una superficie, L_i, y la que sale de ella, L_o. En general, no son iguales. Ten en cuenta que las flechas de esta imagen muestran el sentido de la radiancia." />
 <figcaption aria-hidden="true"><span>Figura 15:</span> Debemos
 distinguir entre la radiancia que llega a una superficie, <span
 class="math inline">\(L_i\)</span>, y la que sale de ella, <span
-class="math inline">\(L_o\)</span>. En general, no son
-iguales.</figcaption>
+class="math inline">\(L_o\)</span>. En general, no son iguales. Ten en
+cuenta que las flechas de esta imagen muestran el sentido de la
+radiancia.</figcaption>
 </figure>
 </div>
 <p>Una propiedad a tener en cuenta es que, si cogemos un punto <span
@@ -2202,8 +2210,8 @@ class="math inline">\(\mathbf{n_{dA}}\)</span>, y <span
 class="math inline">\(r\)</span> la distancia entre <span
 class="math inline">\(p\)</span> y <span
 class="math inline">\(dA\)</span>.</p>
-<p>Entonces, la relación entre la diferencial de un ángulo sólido y la
-de un área es</p>
+<p>Entonces, la relación entre un ángulo sólido diferencial y un área
+diferencial es</p>
 <p><span id="eq:diferencial_angulo_solido" class="eqnos"><span
 class="math display">\[
 d\omega = \frac{dA\cos\theta}{r^2}
@@ -2291,7 +2299,8 @@ class="math inline">\((\text{cd/m}^{2})\)</span></td>
 <span class="math inline">\((\text{W/m}^{2})\)</span></td>
 <td style="text-align: left;">Iluminancia</td>
 <td style="text-align: left;"><span class="math inline">\(E_v\)</span>,
-lux <span class="math inline">\(\text{lx} = \text{lm/m}^2\)</span></td>
+lux <span class="math inline">\((\text{lx} =
+\text{lm/m}^2)\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -2444,9 +2453,9 @@ direcciones en las que puede salir disparada la luz.</em></p>
 </blockquote>
 <p>Esta forma de expresar la radiancia es muy importante. Generalmente
 se le suele llamar la <em>ecuación de dispersión</em> (<em>scattering
-equation</em>, en inglés). Dado que es una integral muy importante,
-seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte
-Carlo nos vendrán de perlas! Más adelante hablaremos de ella.</p>
+equation</em>, en inglés), y en capítulos posteriores buscaremos formas
+de evaluarla rápidamente. ¡Los métodos de Monte Carlo nos vendrán de
+perlas!</p>
 <p>Las BSDFs tienen unas propiedades interesantes:</p>
 <ul>
 <li><strong>Positividad</strong>: como los fotones no se pueden reflejar
@@ -2505,12 +2514,13 @@ punto de esta. En esta sección, vamos a tratar algunas BSDFs
 particulares e introduciremos las fórmulas fundamentales que se usan en
 los modelos de materiales (también conocidos como modelos de
 <em>shading</em>).</p>
-<p>Los tipos de materiales que vamos a tratar son las básicos. Entre
-ellos, se encuentran la difusa lambertiana, materiales dieléctricos,
+<p>Los tipos de materiales que trataremos son los más básicos. Entre
+ellos, se encuentran los difusos lambertianos, materiales dieléctricos,
 espejos y algunas BSDFs compuestas. Un repertorio de implementaciones se
-encuentra en el repositorio de BRDFs de <span class="citation"
-data-cites="disney-brdfs">(<a href="#ref-disney-brdfs"
-role="doc-biblioref"><span>“BRDF explorer”</span> 2019</a>)</span>.</p>
+encuentra en el repositorio de BRDFs de Walt Disney Animation Studios
+<span class="citation" data-cites="disney-brdfs">(<a
+href="#ref-disney-brdfs" role="doc-biblioref"><span>“BRDF
+explorer”</span> 2019</a>)</span>.</p>
 <h3 data-number="2.3.1" id="tipos-de-dispersión"><span
 class="header-section-number">2.3.1</span> Tipos de dispersión</h3>
 <p>Prácticamente toda superficie, en mayor o menor medida, refleja parte
@@ -2821,9 +2831,9 @@ class="math inline">\(p\)</span> denotan la polarización de la luz:
 <span class="math inline">\(s\)</span> es perpendicular a la dirección
 de propagación, mientras que <span class="math inline">\(p\)</span> es
 paralela.</p>
-<p>Generalmente en los ray tracers se simula luz no polarizada, así que
-se deben promediar ambos valores. Por lo tanto, se debe usar el valor
-<span class="math inline">\(R\)</span> definido de la siguiente
+<p>Generalmente en los <em>ray tracers</em> se simula luz no polarizada,
+así que se deben promediar ambos valores. Por lo tanto, se debe usar el
+valor <span class="math inline">\(R\)</span> definido de la siguiente
 manera:</p>
 <p><span id="eq:fresnel_equation" class="eqnos"><span
 class="math display">\[
@@ -2945,12 +2955,6 @@ class="header-section-number">2.4</span> La rendering equation</h2>
 radiométricos, llegamos a la ecuación más importante de todo este
 trabajo: la <strong>rendering equation</strong>; también llamada la
 <strong>ecuación del transporte de luz</strong>.</p>
-<blockquote>
-<p><strong>Nota</strong>(ción): esta vez no traduciré el concepto. Es
-cierto que afea un poco la escritura teniendo en cuenta que esto es un
-texto en castellano. Sin embargo, la otra opción es inventarme una
-traducción que nadie usa.</p>
-</blockquote>
 <p>Antes de comenzar, volvamos a plantear de nuevo la situación: nos
 encontramos observando desde nuestra pantalla una escena virtual
 mediante la cámara. Queremos saber qué color tomará un pixel específico.
@@ -3000,9 +3004,9 @@ total reflejada [<a href="#eq:L_r">24</a>].</p>
 <p>Para hacerla operativa en términos computacionales podemos
 transformarla un poco. Bien, partamos de la ecuación de para la
 radiancia reflejada:</p>
-<p>Vamos a buscar expresar la radiancia incidente en términos de la
-radiancia reflejada. Para ello, usamos la propiedad de que la radiancia
-a lo largo de un rayo no cambia.</p>
+<p>Buscamos expresar la radiancia incidente en términos de la radiancia
+reflejada. Para ello, usamos la propiedad de que la radiancia a lo largo
+de un rayo no cambia.</p>
 <p>Si a una superficie le llega un fotón desde alguna parte, debe ser
 porque <em>“alguien”</em> ha tenido que emitirlo. El fotón
 necesariamente ha llegado a partir de un rayo. La propiedad nos dice que
@@ -3069,10 +3073,12 @@ posición mediante la <em>rendering equation</em>. Sin embargo, es
 <em>muy</em> difícil resolverla; tanto computacional como
 analíticamente. Por ello, debemos atacar el problema desde otro punto de
 vista.</p>
-<p>Las técnicas de Monte Carlo nos permitirán aproximar el valor que
-toman las integrales mediante una estimación. Utilizando muestreo
-aleatorio para evaluar puntos de una función, seremos capaces de obtener
-un resultado suficientemente bueno.</p>
+<p>En este capítulo veremos los fundamentos de la <strong>integración de
+Monte Carlo</strong>, cómo muestrear distribuciones específicas y
+métodos para afinar el resultado final. Estas técnicas nos permitirán
+aproximar el valor que toman las integrales mediante una estimación.
+Utilizando muestreo aleatorio para evaluar puntos de una función,
+seremos capaces de obtener un resultado suficientemente bueno.</p>
 <p>Una de las propiedades que hacen interesantes a este tipo de métodos
 es la <strong>independencia del ratio de convergencia y la
 dimensionalidad del integrando</strong>. Sin embargo, conseguir un mejor
@@ -3081,10 +3087,9 @@ class="math inline">\(n\)</span> muestras, la convergencia a la solución
 correcta tiene un orden de <span
 class="math inline">\(\mathcal{O}\left(n^{-1/2}\right) =
 \mathcal{O}\left(\frac{1}{\sqrt{n}}\right)\)</span>. Es decir, para
-reducir el error a la mitad, necesitaríamos 4 veces más muestras.</p>
-<p>En este capítulo veremos los fundamentos de la integración de Monte
-Carlo, cómo muestrear distribuciones específicas y métodos para afinar
-el resultado final.</p>
+reducir el error a la mitad, necesitaríamos 4 veces más muestras. Esto
+hará que busquemos otras formas de reducir la varianza del
+estimador.</p>
 <h2 data-number="3.1" id="repaso-de-probabilidad"><span
 class="header-section-number">3.1</span> Repaso de probabilidad</h2>
 <p>Antes de comenzar a fondo, necesitaremos unas nociones de variable
@@ -3156,7 +3161,7 @@ adquiera un cierto valor?</p>
 <p>La <strong>función masa de probabilidad</strong> nos permite conocer
 la probabilidad de que <span class="math inline">\(X\)</span> tome un
 cierto valor <span class="math inline">\(x\)</span>. Se denota por <span
-class="math inline">\(P(X = x)\)</span>.</p>
+class="math inline">\(P\left[ X = x \right]\)</span>.</p>
 <p>También se suele usar <span class="math inline">\(p_X(x)\)</span> o,
 directamente <span class="math inline">\(p(x)\)</span>, cuando no haya
 lugar a dudas. Sin embargo, en este trabajo reservaremos este nombre a
@@ -3172,8 +3177,8 @@ class="math inline">\(X\)</span> tome el valor <span
 class="math inline">\(4\)</span> es</p>
 <p><span class="math display">\[
 \begin{aligned}
-P(X = 4) &amp; = \sum{\small{\text{nº parejas que suman 4}} \cdot
-\small{\text{probabilidad de que salga la pareja}}} \\
+P\left[ X = 4 \right] &amp; = \sum{\small{\text{nº parejas que suman 4}}
+\cdot \small{\text{probabilidad de que salga la pareja}}} \\
          &amp; = 3 \cdot \frac{1}{36} = \frac{1}{12}
 \end{aligned}
 \]</span></p>
@@ -3194,8 +3199,8 @@ cierto valor <span class="math inline">\(x\)</span> (de hecho, podemos
 caracterizar distribuciones aleatorias gracias a esto). Para ello,
 usamos la <strong>función de distribución</strong>:</p>
 <p><span class="math display">\[
-F_X(x) = P(X \le x) = \sum_{\substack{k \in \mathbb{R} \\ k \le x}}{P(X
-= k)}
+F_X(x) = P\left[ X \le x \right] = \sum_{\substack{k \in \mathbb{R} \\ k
+\le x}}{P\left[ X = k \right]}
 \]</span></p>
 <p>Es una función continua por la derecha y monótona no decreciente.
 Además, se cumple que <span class="math inline">\(0 \le F_X(x) \le
@@ -3206,8 +3211,8 @@ Además, se cumple que <span class="math inline">\(0 \le F_X(x) \le
 3\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
-F_X(x) &amp; = \sum_{i = 1}^{3}{P(X = i)} = P(X = 1) + P(X = 2) + P(X =
-3) \\
+F_X(x) &amp; = \sum_{i = 1}^{3}{P\left[ X = i \right]} = P\left[ X = 1
+\right] + P\left[ X = 2 \right] + P\left[ X = 3 \right] \\
        &amp; = \frac{1}{36} + \frac{2}{36} + \frac{3}{36} = \frac{1}{12}
 \end{aligned}
 \]</span></p>
@@ -3230,7 +3235,7 @@ no numerable, sí que podemos calcular la probabilidad de que se
 encuentre entre dos valores. Por tanto, si la función de densidad es
 <span class="math inline">\(f_X\)</span>, entonces</p>
 <p><span class="math display">\[
-P(a \le X \le b) = \int_{a}^{b}{f_X(x)dx}
+P\left[ a \le X \le b \right] = \int_{a}^{b}{f_X(x)dx}
 \]</span></p>
 <p>La función de densidad tiene dos características importantes:</p>
 <ol type="1">
@@ -3278,7 +3283,7 @@ densidad conseguiremos mejorar el rendimiento del path tracer.</p>
 <p>La función de distribución <span
 class="math inline">\(F_X(x)\)</span> podemos definirla como:</p>
 <p><span class="math display">\[
-F_X(x) = P(X \le x) = \int_{-\infty}^{x}{f_X(t)dt}
+F_X(x) = P\left[ X \le x \right] = \int_{-\infty}^{x}{f_X(t)dt}
 \]</span></p>
 <p>Es decir, dado un <span class="math inline">\(x\)</span>, ¿cuál sería
 la probabilidad de que <span class="math inline">\(X\)</span> se quede
@@ -5032,14 +5037,15 @@ empresariales de gran embergadura.</p>
 <p>Esta es una lista de las API disponibles con capacidades de Ray
 Tracing disponibles para, al menos, la arquitectura Turing:</p>
 <ul>
-<li>Vulkan, junto a los <em>bindings</em> de ray tracing, denominados
-KHR.</li>
-<li>Microsoft DirectX Ray Tracing (DXR), una extensión de DirectX 12
-<span class="citation" data-cites="directx-12">(<a
-href="#ref-directx-12" role="doc-biblioref">Wikipedia
-2022a</a>)</span>.</li>
-<li>Nvidia OptiX <span class="citation" data-cites="optix">(<a
-href="#ref-optix" role="doc-biblioref">Wikipedia 2022c</a>)</span>.</li>
+<li><strong>Vulkan</strong>, junto a los <em>bindings</em> de ray
+tracing, denominados KHR.</li>
+<li>Microsoft DirectX Ray Tracing (DXR), una extensión de
+<strong>DirectX 12</strong> <span class="citation"
+data-cites="directx-12">(<a href="#ref-directx-12"
+role="doc-biblioref">Wikipedia 2022a</a>)</span>.</li>
+<li>Nvidia <strong>OptiX</strong> <span class="citation"
+data-cites="optix">(<a href="#ref-optix" role="doc-biblioref">Wikipedia
+2022c</a>)</span>.</li>
 </ul>
 <p>De momento, no hay mucho donde elegir.</p>
 <p>OptiX es la API más vieja de todas. Su primera versión salió en 2009,
@@ -5755,8 +5761,8 @@ detalle sumamente importante:</p>
 <p>Si no es así, ¡no tiene sentido que calculemos la influencia
 luminaria de la fuente! La carne de burro no se transparenta, después de
 todo. A no ser que sea un toro hecho de algún material que presente
-transmitancia, en cuyo caso se debería refractar acordemente el rayo de
-luz.</p>
+transmitancia [<a href="#fig:materiales_transparentes">39</a>], en cuyo
+caso se debería refractar acordemente el rayo de luz.</p>
 <p>Volviendo al tema: este tipo de problemas de oclusión se suelen
 resolver mediante algún tipo de test de visibilidad. El más habitual es
 usar <strong>shadow rays</strong>. En la preparación de la <a
@@ -9222,8 +9228,8 @@ Haines and Tomas Akenine-Möller. Apress. <a
 href="https://doi.org/10.1007/978-1-4842-4427-2">https://doi.org/10.1007/978-1-4842-4427-2</a>.
 </div>
 <div id="ref-xkcd-size" class="csl-entry" role="doc-biblioentry">
-Munroe, R. n.d. <span>“XKCD - angular size.”</span> Accessed May 7,
-2022. <a href="https://xkcd.com/1276/">https://xkcd.com/1276/</a>.
+Munroe, R. 2013. <span>“XKCD - angular size.”</span> 2013. Accessed May
+7, 2022. <a href="https://xkcd.com/1276/">https://xkcd.com/1276/</a>.
 </div>
 <div id="ref-nature-2016" class="csl-entry" role="doc-biblioentry">
 Nature. 2016. <span>“Scientific language is becoming more
