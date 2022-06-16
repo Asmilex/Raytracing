@@ -1,7 +1,7 @@
 ---
 title: "Métodos de Monte Carlo para síntesis de imágenes. \\ \\newline \\Large Análisis teórico e implementaciones basadas en path tracing acelerado por hardware"
 author: Andrés Millán Muñoz
-keywords: [raytracing, ray tracing, Monte Carlo, Monte Carlo integration, radiometry, path tracing, Vulkan]
+keywords: [raytracing, ray tracing, path tracing, métodos de Monte Carlo, integración de Monte Carlo, transporte de luz, iluminación global, Vulkan]
 link-citations: true
 header-includes: |
     \usepackage{caption}
@@ -14,9 +14,9 @@ fignos-caption-name: "Figura"
 
 En este trabajo se explorarán las técnicas modernas de síntesis de imágenes físicamente realistas basadas en Path-Tracing en tiempo real. Para ello, se utilizarán métodos de integración de Monte Carlo con el fin de disminuir el tiempo de cómputo.
 
-Se diseñará un software basado en la interfaz de programación de aplicaciones gráficas Vulkan, utilizando como soporte un entorno de desarrollo de Nvidia conocido como nvpro-samples. El software implementará un motor gráfico basado en *path tracing*. Este motor será capaz de renderizar numerosas escenas, cambiar los parámetros del algoritmo path tracing y modificar las fuentes de iluminación en tiempo de ejecución.
+Se diseñará un software basado en la interfaz de programación de aplicaciones gráficas Vulkan, utilizando como soporte un entorno de desarrollo de Nvidia conocido como nvpro-samples [@nvpro-samples]. El software implementará un motor gráfico basado en *path tracing*. Este motor será capaz de renderizar numerosas escenas, cambiar los parámetros del algoritmo path tracing y modificar las fuentes de iluminación en tiempo de ejecución.
 
-Con el fin de explorar cómo afectan diferentes métodos al ruido final de la imagen, se estudiarán algunas técnicas de reducción de varianza como muestreo directo de fuentes de iluminación, muestreo por importancia o acumulación temporal. Además, el motor desarrollado se comparará con una implementación del software creado en los libros de [@Shirley2020RTW1] "Ray Tracing in One Weekend series", la cual utiliza exclusivamente la CPU. Se comporbarán las diferencias entre ambas versiones, estudiando los puntos fuertes de cada una.
+Con el fin de explorar cómo afectan diferentes métodos al ruido final de la imagen, se estudiarán algunas técnicas de reducción de varianza como muestreo directo de fuentes de iluminación, muestreo por importancia, *supersampling* o acumulación temporal. Además, el motor desarrollado se comparará con una implementación del software creado en los libros de [@Shirley2020RTW1] "Ray Tracing in One Weekend series", la cual utiliza exclusivamente la CPU. Se comprobarán las diferencias entre ambas versiones, estudiando los puntos fuertes de cada una.
 
 *Palabras clave: raytracing, ray tracing, path tracing, métodos de Monte Carlo, integración de Monte Carlo, transporte de luz, iluminación global, Vulkan.*
 
@@ -43,7 +43,7 @@ In this project we will tackle this problem. We will build a physically based re
 
 As one could imagine, this task it not an easy one. In order to achieve it, we will need to understand multiple aspects of different fields: from mathematics to computer imaging, with some light notions from physics.
 
-[Chapter 1](#las-bases) will set the **fundamentals of what ray tracing is**, how a ray works, and how a ray intersects with an object.
+[Chapter 1](#las-bases) will set the **fundamentals of what ray tracing is**, how a ray works, and how it intersects with an object.
 
 In [chapter 2](#transporte-de-luz) we will study the basics of **radiometry and light transport**, the field of physics that deals with the interaction between light and matter. We will introduce how photons work, how they are emitted from light sources and how they travel through the environment. We will also need to understand the mathematical abstractions in which we represent these radiometric quantities. Then, we will need to analyse how light interacts with matter, which, in a nutshell, can be described by the bidirectional scattering distribution function of the material surface and the outgoing direction of photons (since light can be either scattered or transmitted). At the end of the chapter we will obtain the most important equation in computer graphics: **the rendering equation**, which can be described as
 
@@ -61,15 +61,15 @@ We will end the project with the [conclusions](#conclusiones) that can be drawn 
 
 <hr>
 
-The contents of this document, the Vulkan project, an *In One Weekend* implementation, and other utilities, can be found in the following repository:
+\vspace{30pt}
+\hrule
+\vspace{20pt}
+
+The contents of this document, the Vulkan project, an *In One Weekend* implementation, as well as other utilities can be found in the following repository:
 
 [https://github.com/Asmilex/Raytracing](https://github.com/Asmilex/Raytracing)
 
 *Keywords: raytracing, ray tracing, path tracing, Monte Carlo methods, Monte Carlo integration, light transport, global illumination, Vulkan.*
-
-\newpage
-
-\vspace*{\fill}
 
 # Dedicatoria{.unnumbered}
 
