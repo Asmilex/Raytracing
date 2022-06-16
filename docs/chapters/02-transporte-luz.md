@@ -8,7 +8,7 @@ Antes de comenzar a trabajar, necesitamos conocer *qué entendemos* por luz. Aun
 
 **Un fotón** es aquella particula emitida por una fuente de iluminación. Estos fotones tienen una posición, una dirección de propagación y una longitud de onda $\lambda$ [@ShirleyRRT]; así como una velocidad $c$ que depende del índice de refracción del medio, $n$. La unidad de medida de $\lambda$ es el nanómetro ($\text{nm}$).
 
-> **Nota**:(ción) cuando usemos un paréntesis tras una ecuación, dentro denotaremos sus unidades de medida.
+> **Nota**(ción): cuando usemos un paréntesis tras una ecuación, dentro denotaremos sus unidades de medida.
 
 Necesitaremos también definir qué es **la frecuencia**, $f$. Su utilidad viene del hecho de que, cuando la luz cambia de medio al propagarse, la frecuencia se mantiene constante.
 
@@ -22,16 +22,16 @@ $$
 Q = hf = \frac{hc}{\lambda} (\text{J})
 $${#eq:carga_de_energia}
 
-donde $h = 6.62607004 \times 10^{-34} \text{J} \cdot \text{s}$ es la constante de Plank y $c = 299 792 458 \text{m/s}$ la velocidad de la luz.
+donde $h = 6.62607004 \times 10^{-34} \text{J} \cdot \text{s}$ es la constante de Plank y $c = 299 792 458 \text{ m/s}$ la velocidad de la luz.
 
-En realidad, **todas estas cantidades deberían tener un subíndice $\lambda$**, puesto que dependen de la longitud de onda. La energía de un fotón $Q$, por ejemplo, debería denotarse $Q_\lambda$. Sin embargo, en la literatura de informática gráfica, **se ha optado por omitirla**. ¡Tenlo en cuenta a partir de aquí!
+En realidad, **todas estas cantidades deberían tener un subíndice $\lambda$**, puesto que dependen de la longitud de onda. La energía de un fotón $Q$, por ejemplo, debería denotarse $Q_\lambda$. Sin embargo, en la literatura de informática gráfica **se suele optar por omitirla**, puesto que la mayoría de motores no generalizan las particularidades de cada longitud de onda. ¡Tenlo en cuenta a partir de aquí!
 
 ### Potencia
 
 A partir de la energía $Q$, podemos estimar la cantidad total de energía que pasa por una región del espacio por unidad de tiempo. A esta tasa la llamaremos **potencia**, o **flujo radiante** $\Phi$ [@PBRT3e, Radiometry]. Esta medida nos resultará más útil que la energía total, puesto que nos permite estimar la energía en un instante:
 
 $$
-\Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt} (J/s)
+\Phi = \lim_{\Delta t \to 0}{\frac{\Delta Q}{\Delta t}} = \frac{dQ}{dt} (\text{J/s})
 $${#eq:potencia}
 
 Su unidad es julios por segundo, comúnmente denotado vatio (*watts*, $\text{W}$). También se utiliza el lumen. Podemos encontrar la energía total en un periodo de tiempo $[t_0, t_1]$ integrando el flujo radiante:
@@ -182,7 +182,7 @@ A la **radiancia incidente o entrante** la llamaremos $L_i(p, \omega)$, mientras
 
 Es importante destacar que $\omega$ apunta *hacia fuera* de la superficie. Para $L_o(p, \omega)$ se tiene que la radiancia viaja en el sentido de $\omega$, mientras que para $L_i(p, \omega)$ se tiene que la radiancia viaja en el sentido contrario a $\omega$; es decir, hacia el punto $p$.
 
-![Debemos distinguir entre la radiancia que llega a una superficie, $L_i$, y la que sale de ella, $L_o$. En general, no son iguales.](./img/02/Radiancia%20incidente%20y%20saliente.png){#fig:radiancia_incidente_saliente width=80%}
+![Debemos distinguir entre la radiancia que llega a una superficie, $L_i$, y la que sale de ella, $L_o$. En general, no son iguales. Ten en cuenta que las flechas de esta imagen muestran el sentido de la radiancia.](./img/02/Radiancia%20incidente%20y%20saliente.png){#fig:radiancia_incidente_saliente width=80%}
 
 Una propiedad a tener en cuenta es que, si cogemos un punto $p$ del espacio donde no existe ninguna superifcie, $L_o(p, \omega) = L_i(p, -\omega) = L(p, \omega)$
 
@@ -265,7 +265,7 @@ Una herramienta más que nos vendrá bien será la capacidad de convertir integr
 
 Considera un punto $p$ sobre una superficie con normal en dicho punto $\mathbf{n}$. Supongamos que tenemos una pequeña área $dA$ con normal $\mathbf{n_{dA}}$. Sea $\theta$ el ángulo entre $\mathbf{n}$ y $\mathbf{n_{dA}}$, y $r$ la distancia entre $p$ y $dA$.
 
-Entonces, la relación entre la diferencial de un ángulo sólido y la de un área es
+Entonces, la relación entre un ángulo sólido diferencial y un área diferencial es
 
 $$
 d\omega = \frac{dA\cos\theta}{r^2}
@@ -292,7 +292,7 @@ Existe un área de la física muy similar a la radiometría denominada **fotomet
 | Flujo radiante      | $\phi_e$,                vatios $(\text{W})$            | Flujo luminoso      | $\phi_v$,     lumen $(\text{lm} = \text{cd sr})$             |
 | Intensidad radiante | $I_e$,        vatios por estereorradián $(\text{W/sr})$ | Intensidad luminosa | $I_v$,        candela $(\text{cd} = \text{lm/sr})$           |
 | Radiancia           | $L_e$,            $(\text{W sr}^{-1}\text{m}^{-1})$     | Luminancia          | $L_v$,        candela por metro cuadrado $(\text{cd/m}^{2})$ |
-| Irradiancia         | $E_e$,                   $(\text{W/m}^{2})$             | Iluminancia         | $E_v$,        lux $\text{lx} = \text{lm/m}^2$                |
+| Irradiancia         | $E_e$,                   $(\text{W/m}^{2})$             | Iluminancia         | $E_v$,        lux $(\text{lx} = \text{lm/m}^2)$                |
 
 ## Dispersión de luz
 
@@ -379,7 +379,7 @@ siendo $\mathbb{S}^2$ la esfera.
 
 > **Intuición:** *la BSDF son todas las posibles direcciones en las que puede salir disparada la luz.*
 
-Esta forma de expresar la radiancia es muy importante. Generalmente se le suele llamar la *ecuación de dispersión* (*scattering equation*, en inglés). Dado que es una integral muy importante, seguramente tengamos que evaluarla repetidamente. ¡Los métodos de Monte Carlo nos vendrán de perlas! Más adelante hablaremos de ella.
+Esta forma de expresar la radiancia es muy importante. Generalmente se le suele llamar la *ecuación de dispersión* (*scattering equation*, en inglés), y en capítulos posteriores buscaremos formas de evaluarla rápidamente. ¡Los métodos de Monte Carlo nos vendrán de perlas!
 
 Las BSDFs tienen unas propiedades interesantes:
 
@@ -412,7 +412,7 @@ $$
 
 En la práctica, cada superficie tendrá una BSDF característica. Esto hace que la luz adquiera una dirección particular al incidir en cada punto de esta. En esta sección, vamos a tratar algunas BSDFs particulares e introduciremos las fórmulas fundamentales que se usan en los modelos de materiales (también conocidos como modelos de *shading*).
 
-Los tipos de materiales que vamos a tratar son las básicos. Entre ellos, se encuentran la difusa lambertiana, materiales dieléctricos, espejos y algunas BSDFs compuestas. Un repertorio de implementaciones se encuentra en el repositorio de BRDFs de [@disney-brdfs].
+Los tipos de materiales que trataremos son los más básicos. Entre ellos, se encuentran los difusos lambertianos, materiales dieléctricos, espejos y algunas BSDFs compuestas. Un repertorio de implementaciones se encuentra en el repositorio de BRDFs de Walt Disney Animation Studios [@disney-brdfs].
 
 ### Tipos de dispersión
 
@@ -597,7 +597,7 @@ $${#eq:fresnel_equations}
 
 donde los subíndices $s$ y $p$ denotan la polarización de la luz: $s$ es perpendicular a la dirección de propagación, mientras que $p$ es paralela.
 
-Generalmente en los ray tracers se simula luz no polarizada, así que se deben promediar ambos valores. Por lo tanto, se debe usar el valor $R$ definido de la siguiente manera:
+Generalmente en los *ray tracers* se simula luz no polarizada, así que se deben promediar ambos valores. Por lo tanto, se debe usar el valor $R$ definido de la siguiente manera:
 
 $$
 R = \frac{R_s + R_p}{2}
@@ -682,8 +682,6 @@ y donde
 
 Y, finalmente, tras esta introducción de los principales conceptos radiométricos, llegamos a la ecuación más importante de todo este trabajo: la **rendering equation**; también llamada la **ecuación del transporte de luz**.
 
-> **Nota**(ción): esta vez no traduciré el concepto. Es cierto que afea un poco la escritura teniendo en cuenta que esto es un texto en castellano. Sin embargo, la otra opción es inventarme una traducción que nadie usa.
-
 Antes de comenzar, volvamos a plantear de nuevo la situación: nos encontramos observando desde nuestra pantalla una escena virtual mediante la cámara. Queremos saber qué color tomará un pixel específico. Para conseguirlo, dispararemos rayos desde nuestro punto de vista hacia el entorno, haciendo que reboten en los objetos. Cuando un rayo impacte en una superficie, adquirirá parte de las propiedades del material del objeto. Además, de este rayo surgirán otros nuevos (un rayo dispersado y otro refractado), que a su vez repetirán el proceso. La información que se obtiene a partir de estos caminos de rayos nos permitirá darle color al píxel. Con dicha ecuación, describiremos analíticamente cómo ocurre esto.
 
 Un último concepto más: denotemos por $L_e(p, \omega_o)$ a **la radiancia producida por los materiales emisivos**. En esencia, estos materiales son fuentes de luz, pues emiten radiancia por sí mismos.
@@ -706,7 +704,7 @@ En la ecuación [@eq:rendering_equation], si el material no emite luz, entonces 
 
 Para hacerla operativa en términos computacionales podemos transformarla un poco. Bien, partamos de la ecuación de para la radiancia reflejada:
 
-Vamos a buscar expresar la radiancia incidente en términos de la radiancia reflejada. Para ello, usamos la propiedad de que la radiancia a lo largo de un rayo no cambia.
+Buscamos expresar la radiancia incidente en términos de la radiancia reflejada. Para ello, usamos la propiedad de que la radiancia a lo largo de un rayo no cambia.
 
 Si a una superficie le llega un fotón desde alguna parte, debe ser porque *"alguien"* ha tenido que emitirlo. El fotón necesariamente ha llegado a partir de un rayo. La propiedad nos dice que la radiancia no ha podido cambiar en el camino.
 

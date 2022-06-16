@@ -165,7 +165,7 @@ Por regla general este tipo de superficies no permiten un cálculo fácil del pu
 
 ### Intersecciones con esferas
 
-Estudiemos ahora cómo intersecan una esfera con nuestro rayo. Una esfera de centro $\mathbf{c}$ y radio $r$ viene dada por aquellos puntos $\mathbf{p} = (x, y, z)$ que cumplen
+Estudiemos ahora cómo intersecan una esfera con nuestro rayo [@ShirleyRRT]. Una esfera de centro $\mathbf{c}$ y radio $r$ viene dada por aquellos puntos $\mathbf{p} = (x, y, z)$ que cumplen
 
 $$
 (\mathbf{p} - \mathbf{c}) \cdot (\mathbf{p} - \mathbf{c}) = r^2
@@ -186,7 +186,7 @@ $$
 \end{aligned}
 $$
 
-Aplicando las propiedades del producto escalar de la conmutatividad ($a \cdot \mathbf{b} = \mathbf{b} \cdot a$) y la distributiva ($a \cdot (\mathbf{b} + \mathbf{c}) = a \cdot \mathbf{b} + a \cdot \mathbf{c}$), podemos escribir
+Aplicando las propiedades del producto escalar de la conmutatividad ($\mathbf{a} \cdot \mathbf{b} = \mathbf{b} \cdot \mathbf{a}$) y la distributiva ($\mathbf{a} \cdot (\mathbf{b} + \mathbf{c}) = \mathbf{a} \cdot \mathbf{b} + \mathbf{a} \cdot \mathbf{c}$), podemos escribir
 
 $$
 \begin{aligned}

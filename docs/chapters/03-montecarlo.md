@@ -2,11 +2,9 @@
 
 Como vimos en el capítulo anterior, la clave para conseguir una imagen en nuestro ray tracer es calcular la cantidad de luz en un punto de la escena. Para ello, necesitamos hallar la radiancia en dicha posición mediante la *rendering equation*. Sin embargo, es *muy* difícil resolverla; tanto computacional como analíticamente. Por ello, debemos atacar el problema desde otro punto de vista.
 
-Las técnicas de Monte Carlo nos permitirán aproximar el valor que toman las integrales mediante una estimación. Utilizando muestreo aleatorio para evaluar puntos de una función, seremos capaces de obtener un resultado suficientemente bueno.
+En este capítulo veremos los fundamentos de la **integración de Monte Carlo**, cómo muestrear distribuciones específicas y métodos para afinar el resultado final. Estas técnicas nos permitirán aproximar el valor que toman las integrales mediante una estimación. Utilizando muestreo aleatorio para evaluar puntos de una función, seremos capaces de obtener un resultado suficientemente bueno.
 
-Una de las propiedades que hacen interesantes a este tipo de métodos es la **independencia del ratio de convergencia y la dimensionalidad del integrando**. Sin embargo, conseguir un mejor rendimiento tiene un precio a pagar. Dadas $n$ muestras, la convergencia a la solución correcta tiene un orden de $\mathcal{O}\left(n^{-1/2}\right) = \mathcal{O}\left(\frac{1}{\sqrt{n}}\right)$. Es decir, para reducir el error a la mitad, necesitaríamos 4 veces más muestras.
-
-En este capítulo veremos los fundamentos de la integración de Monte Carlo, cómo muestrear distribuciones específicas y métodos para afinar el resultado final.
+Una de las propiedades que hacen interesantes a este tipo de métodos es la **independencia del ratio de convergencia y la dimensionalidad del integrando**. Sin embargo, conseguir un mejor rendimiento tiene un precio a pagar. Dadas $n$ muestras, la convergencia a la solución correcta tiene un orden de $\mathcal{O}\left(n^{-1/2}\right) = \mathcal{O}\left(\frac{1}{\sqrt{n}}\right)$. Es decir, para reducir el error a la mitad, necesitaríamos 4 veces más muestras. Esto hará que busquemos otras formas de reducir la varianza del estimador.
 
 ## Repaso de probabilidad
 
@@ -44,7 +42,7 @@ Cada resultado tiene la misma probabilidad de ocurrir (claro está, si el dado n
 
 La v.a. $X$ denotará la suma de los valores obtenidos en cada uno. Así, por ejemplo, si al lanzar los dados hemos obtenido $(1, 3)$, $X$ tomará el valor $4$. En total, $X$ puede tomar todos los valores comprendidos entre $2$ y $12$. Cada pareja no está asociada a un único valor de $X$. Por ejemplo, $(1, 2)$ suma lo mismo que $(2, 1)$. Esto nos lleva a preguntarnos... ¿Cuál es la probabilidad de que $X$ adquiera un cierto valor?
 
-La **función masa de probabilidad** nos permite conocer la probabilidad de que $X$ tome un cierto valor $x$. Se denota por $P(X = x)$.
+La **función masa de probabilidad** nos permite conocer la probabilidad de que $X$ tome un cierto valor $x$. Se denota por $\Prob{X = x}$.
 
 También se suele usar $p_X(x)$ o, directamente $p(x)$, cuando no haya lugar a dudas. Sin embargo, en este trabajo reservaremos este nombre a otro tipo de funciones.
 
@@ -54,7 +52,7 @@ En este ejemplo, la probabilidad de que $X$ tome el valor $4$ es
 
 $$
 \begin{aligned}
-P(X = 4) & = \sum{\small{\text{nº parejas que suman 4}} \cdot \small{\text{probabilidad de que salga la pareja}}} \\
+\Prob{X = 4} & = \sum{\small{\text{nº parejas que suman 4}} \cdot \small{\text{probabilidad de que salga la pareja}}} \\
          & = 3 \cdot \frac{1}{36} = \frac{1}{12}
 \end{aligned}
 $$
@@ -72,7 +70,7 @@ Siendo $\Prob{X = x_i} \ge 0$, pues la f.m.p. es no negativa.
 Muchas veces nos interesará conocer la probabilidad de que $X$ se quede por debajo o igual que un cierto valor $x$ (de hecho, podemos caracterizar distribuciones aleatorias gracias a esto). Para ello, usamos la **función de distribución**:
 
 $$
-F_X(x) = P(X \le x) = \sum_{\substack{k \in \mathbb{R} \\ k \le x}}{P(X = k)}
+F_X(x) = \Prob{X \le x} = \sum_{\substack{k \in \mathbb{R} \\ k \le x}}{\Prob{X = k}}
 $$
 
 Es una función continua por la derecha y monótona no decreciente. Además, se cumple que $0 \le F_X(x) \le 1$ y $\lim_{x \to -\infty}{F_X} = 0$, $\lim_{x \to \infty}{F_X} = 1$.
@@ -81,7 +79,7 @@ En nuestro ejemplo, si consideramos $x = 3$:
 
 $$
 \begin{aligned}
-F_X(x) & = \sum_{i = 1}^{3}{P(X = i)} = P(X = 1) + P(X = 2) + P(X = 3) \\
+F_X(x) & = \sum_{i = 1}^{3}{\Prob{X = i}} = \Prob{X = 1} + \Prob{X = 2} + \Prob{X = 3} \\
        & = \frac{1}{36} + \frac{2}{36} + \frac{3}{36} = \frac{1}{12}
 \end{aligned}
 $$
@@ -97,7 +95,7 @@ Si en las variables aleatorias discretas teníamos funciones masa de probabilida
 Es importante mencionar que, aunque *la probabilidad de que la variable aleatoria tome un valor específico* es $0$, ya que nos encontramos en un conjunto no numerable, sí que podemos calcular la probabilidad de que se encuentre entre dos valores. Por tanto, si la función de densidad es $f_X$, entonces
 
 $$
-P(a \le X \le b) = \int_{a}^{b}{f_X(x)dx}
+\Prob{a \le X \le b} = \int_{a}^{b}{f_X(x)dx}
 $$
 
 La función de densidad tiene dos características importantes:
@@ -134,7 +132,7 @@ Como veremos más adelante, definiendo correctamente una función de densidad co
 La función de distribución $F_X(x)$ podemos definirla como:
 
 $$
-F_X(x) = P(X \le x) = \int_{-\infty}^{x}{f_X(t)dt}
+F_X(x) = \Prob{X \le x} = \int_{-\infty}^{x}{f_X(t)dt}
 $$
 
 Es decir, dado un $x$, ¿cuál sería la probabilidad de que $X$ se quede por debajo de $x$?

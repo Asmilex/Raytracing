@@ -142,9 +142,9 @@ Las API de gráficos están empezando a adaptarse a los requisitos del tiempo re
 
 Esta es una lista de las API disponibles con capacidades de Ray Tracing disponibles para, al menos, la arquitectura Turing:
 
-- Vulkan, junto a los *bindings* de ray tracing, denominados KHR.
-- Microsoft DirectX Ray Tracing (DXR), una extensión de DirectX 12 [@directx-12].
-- Nvidia OptiX [@optix].
+- **Vulkan**, junto a los *bindings* de ray tracing, denominados KHR.
+- Microsoft DirectX Ray Tracing (DXR), una extensión de **DirectX 12** [@directx-12].
+- Nvidia **OptiX** [@optix].
 
 De momento, no hay mucho donde elegir.
 
@@ -525,7 +525,7 @@ Sin embargo, esto no es suficiente. Se nos olvida comprobar un detalle sumamente
 
 ¿Se ve la fuente de luz desde el punto de intersección?
 
-Si no es así, ¡no tiene sentido que calculemos la influencia luminaria de la fuente! La carne de burro no se transparenta, después de todo. A no ser que sea un toro hecho de algún material que presente transmitancia, en cuyo caso se debería refractar acordemente el rayo de luz.
+Si no es así, ¡no tiene sentido que calculemos la influencia luminaria de la fuente! La carne de burro no se transparenta, después de todo. A no ser que sea un toro hecho de algún material que presente transmitancia [@fig:materiales_transparentes], en cuyo caso se debería refractar acordemente el rayo de luz.
 
 Volviendo al tema: este tipo de problemas de oclusión se suelen resolver mediante algún tipo de test de visibilidad. El más habitual es usar **shadow rays**. En la preparación de la [pipeline](#la-ray-tracing-pipeline) se fija este tipo de shaders junto a los del tipo miss:
 
