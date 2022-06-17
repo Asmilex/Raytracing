@@ -1080,7 +1080,7 @@ Así, de forma de recursiva, se obtiene que
 
 $$
 K(K^{n-1}u)(x) = (K^n u)(x) = \int_0^1 {k(x, t_{n-1})K^{n-1}u(t_{n-1}) dt_{n-1}}
-$$
+$${#eq:markov_recursividad_kernel}
 
 
 Si asumimos que
@@ -1099,7 +1099,7 @@ Si $u^{(0)} = 0$, $K^0 \equiv 0$, entonces, la ecuación anterior se transforma 
 
 $$
 u^{(n + 1)} = f+ Kf + \dots + K^nf = \sum_{m = 0}^{n}{K^mf}
-$$
+$${#eq:recursividad_n_mas_1}
 
 Está claro que
 
@@ -1111,10 +1111,10 @@ Cada $u^n$ puede calcularse utilizando una cadena de Markov para hallar su soluc
 
 $$
 \begin{aligned}
-\int_0^1{P_{i, j}\ dj} &  = 1 \\
-\int_0^1{\phi(i)\ di}  & = 1 \\
+  \int_0^1{P_{i, j}\ dj} &  = 1 \\
+  \int_0^1{\phi(i)\ di}  & = 1 \\
 \end{aligned}
-$$
+$${#eq:propiedad_cadenas_markov}
 
 Consideramos ahora una función de pesos $W_m$ para la cadena de Markov, que viene dada por la recursión
 
@@ -1123,13 +1123,13 @@ $$
 W_m & = W_{m-1} \frac{k(x_{m -1}, x_m)}{P_{x_{m-1}, x_m}}, \quad m = 1, 2, \dots \\
 W_0 & = 1
 \end{aligned}
-$$
+$${#eq:pesos_gamma_n}
 
-Definamos ahora una variable aleatoria $\Gamma_n(h)$, la cual está asociada al camino $x_0 \rightarrow x_1 \rightarrow \dots \rightarrow x_n$:
+Definamos ahora una variable aleatoria $\Gamma_n(h)$, la cual está asociada al camino aleatorio $x_0 \rightarrow x_1 \rightarrow \dots \rightarrow x_n$:
 
 $$
 \Gamma_n(h) = \frac{h(x_0)}{\phi(x_0)} = \sum_{m = 0}^{n}{W_mf(x_m)}
-$$
+$${#eq:gamma_n}
 
 donde $h(x)$ es una función real.
 
@@ -1141,11 +1141,159 @@ $${#eq:producto_escalar_funcional}
 
 El problema ahora se convierte en encontrar el valor del producto $\langle h, u \rangle$, siendo $u(x)$ la función solución de la ecuación de Fredholm.
 
-El valor del producto escalar de $\langle h, u^{(n + 1)} \rangle$ puede ser estimado gracias variable aleatoria $\Gamma_n(h)$; es decir,
+**Teorema:** el valor del producto escalar $\langle h, u^{(n + 1)} \rangle$ puede ser estimado mediante la esperanza de la variable aleatoria $\Gamma_n(h)$; es decir,
 
 $$
 \E{\Gamma_n(h)} = \langle h, u^{(n + 1)} \rangle
 $$
+
+Veamos por qué ocurre esto. Cada camino aleatorio $x_0 \rightarrow x_1 \rightarrow \dots \rightarrow x_n$ tiene una probabilidad de
+
+$$
+\Prob{X(0) = x_0, X(1) = x_1, \dots, X(n) = x_n} = \phi(x_0) P_{x_0, x_1} P_{x_1, x_2} \dots P_{x_{n-1}, x_n}
+$$
+
+Como la variable aleatoria $\Gamma_n(h)$ está definida a lo largo del camino anterior, se tiene que
+
+$$
+\E{\Gamma_n(h)} = \int_0^1 \int_0^1 \dotsc \int_0^1 {\Gamma_n(h) \phi(x_0) P_{x_0, x_1} P_{x_1, x_2} \dots P_{x_{n-1}, x_n} \,dx_0dx_1\dots dx_n}
+$$
+
+Usando [@eq:pesos_gamma_n] y [@eq:gamma_n], se puede obtener que
+
+$$
+\begin{aligned}
+\E{\Gamma_n(h)}
+  & = \E{\frac{h(x_0)}{\phi(x_0)} \sum_{m = 0}^{n}{W_mf(x_m)}} = \\
+  & = \int_0^1 \int_0^1 \dotsc \int_0^1 {
+        h(x_0) \sum_{m = 0}^{n} \Upsilon \Psi f(x_m) \phi(x_m) \,dx_0dx_1\dots dx_n
+      }
+\end{aligned}
+$$
+
+siendo
+
+$$
+\begin{aligned}
+  \Upsilon & = k(x_0, x_1)  k(x_1, x_2)  \dots k(x_{m-1}, x_m), \\
+  \Psi     & = P_{x_{m}, x_{m+1}} \dots P_{x_{n-1}, x_n}
+\end{aligned}
+$$
+
+Usando [@eq:propiedad_cadenas_markov], la integral anterior puede reescribirse como
+
+$$
+\E{\Gamma_n(h)} = \sum_{m = 0}^{n} \int_0^1 \int_0^1 \dotsc \int_0^1 {
+        h(x_0) \Upsilon f(x_m) \,dx_0dx_1\dots dx_n
+}
+$$
+
+Y finalmente, si tenemos en cuenta la n-ésima iteración [@eq:markov_recursividad_kernel], así como [@eq:recursividad_n_mas_1] y la definición de producto escalar $\langle h, u \rangle$, deducimos
+
+$$
+\E{\Gamma_n(h)} = \left \langle h(x), \sum_{m = 0}^n {(K^mf)(x)} \right \rangle = \langle h(x), u^{(n+1)}(x) \rangle
+$$
+
+Lo cual concluye la prueba.
+
+Este teorema nos dice que $\Gamma_n(h)$ es un estimador insesgado del producto escalar $\langle h(x), u^{(n+1)}(x) \rangle$.
+
+Los autores proponen una forma basada en Monte Carlo basado en la simulación de una cadena de Markov continua para estimar el valor de $\langle h(x), u^{(n+1)}(x) \rangle$, el cual presentaremos a continuación:
+
+Consideremos una cadena de Markov continua con función de probabilidad de transición
+
+$$
+P_{x, y} = p(x) \delta(y - x) + (1 - p(x))g(y), \qquad x, y \in [0, 1]
+$$
+
+siendo $\delta(y - x)$ la delta de Dirac en $x$, $g(x)$ una función de densidad en $[0, 1]$, y $p(x)$ una función tal que $0 < p(x) < 1$ y $\int_0^1\frac{g(x)}{1 - p(x)} dx \le \infty$.
+
+Para estimar $\langle h, u^{(n+1)}$, segumos el siguiente proceso:
+
+1. Escoger un cierto $n \in \mathbb{N}$ y simular $N$ caminos independientes de longitud $n$,
+
+$$
+x_0^{(s)} \rightarrow x_1^{(s)} \rightarrow \dots \rightarrow x_n^{(s)}, \qquad s = 1(1)/N
+$$
+
+de la cadena de Markov presentada anteriormente.
+
+2. Definir la variable aleatoria $\Gamma^{(s)}_n(h)$ asociado a este camino,  de forma que
+
+$$
+\Gamma^{(s)}_n(h) = \frac{h(x_0)}{p(x_0)} \sum_{m = 0}^n W^{(s)}_m f(x_m)
+$$
+
+donde
+
+$$
+\begin{aligned}
+  W_m & = \frac{
+    k\left(x^{(s)}_0, x^{(s)}_1\right) k\left(x^{(s)}_1, x^{(s)}_2\right) \dots k\left(x^{(s)}_{n - 1}, x^{(s)}_n\right)
+  }{
+    P_{x^{(s)}_0, x^{(s)}_1} P_{x^{(s)}_1, x^{(s)}_2} \dots P_{x^{(s)}_{n - 1}, x^{(s)}_n}
+  }, \quad m = 1, 2, \dots \\
+  W^{(s)}_0 & = 1
+\end{aligned}
+$$
+
+3. Evaluar la media muestral
+
+$$
+\frac{1}{N} \sum_{s = 1}^N \Gamma^{(s)}_n(h) \approx \langle h, u^{(n+1)} \rangle
+$$
+
+El paso (1) puede ser realizado mediante el siguiente algoritmo:
+
+```{=latex}
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetAlgoLined
+\KwResult{Generación de una cadena de Markov continua mediante Monte Carlo}
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\Input{El número de trayectoria $N$, la longitud de la cadena $n$, la función $p(x)$, la función de densidad de probabilidad $g(x)$ en $[0, 1]$}
+\Output{$x_0^{(s)} \rightarrow x_1^{(s)} \rightarrow \dots \rightarrow x_n^{(s)}, \qquad s = 1(1)/N$}
+\BlankLine
+\For{$s = 1$ \KwTo $N$}{
+  \emph{Generar una trayectoria}\;
+  Generar $x_0^{(s)}$ desde la densidad $p(x)$\;
+
+  \For{$m = 0$ \KwTo $n-1$}{
+    Generar $\xi \sim \mathcal{U}(0, 1)$\;
+
+    \eIf{$p(x_m^{(s)}) > \xi$} {
+      $x_{m+1}^{(s)} = x_m^{(s)}$\;
+    }{
+      Generar $x_{m+1}^{(s)}$ desde la función de densidad de probabilidad $g$\;
+    }
+  }
+}
+\caption{Generación de una cadena de Markov continua mediante Monte Carlo}
+\end{algorithm}
+```
+
+```{=html}
+<pre><code>Algoritmo 1
+input: el número de trayectoria N, la longitud de la cadena n, la función p(x), la función de densidad de probabilidad g(x) en [0, 1]
+output: la cadena de Markov x_0^{(s)} -&gt; x_1^{(s)} -&gt; ... -&gt; x_n^{(s)}
+
+for s = 1 to N do
+  // Generar una trayectoria
+  generar x_0^{(s)} mediante la función de densidad p(x)
+
+  for m = 1 to n-1 do
+    generar un número aleatorio u uniformemente distribuido en (0, 1)
+
+    if p(x_m^{(s)}) &gt; u then
+      calcular x_{m+1}^{(s)} = x_m^{(s)}
+    else
+      generar x_{m+1}^{(s)} desde la función de densidad de prob. g
+    fi
+  end
+end</code></pre>
+```
+
 
 [^1]: En su defecto, si tenemos una función de densidad $p_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{p_X(t)dt}$.
 [^2]: No tiene por qué ser en tiempo, pero generalmente se considera este tipo de variable.
