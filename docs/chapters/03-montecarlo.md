@@ -951,7 +951,7 @@ Particularizaremos el caso $a = 0, b = 1$, $\lambda = 1$, $0 \le x \le 1$ en lo 
 
 Las cadenas de Markov son un tipo específico de proceso estocástico. Un **proceso estocástico** o aleatorio es una familia de variables aleatorias indexadas por otro conjunto. Si el conjunto es discreto, escribimos la familia como $\left\{X(n)\right\}_{n \in \mathbb{N}}$, mientras que si es continuo, notaremos $\left\{X(t)\right\}_{t \ge 0}$.
 
-La distribución de los procesos estocásticos discretos en tiempo sobre un conjunto numerable $S$ se viene caracterizado como
+La distribución de los procesos estocásticos discretos en tiempo[^2] sobre un conjunto numerable $S$ se viene caracterizado como
 
 $$
 \Prob{X(n) = i_n, \dots, X(0) = i_0}
@@ -972,7 +972,7 @@ $$
 \end{aligned}
 $${#eq:proceso_estocastico_discreto_prob}
 
-Una **cadena de Markov discreta en tiempo** sobre un conjunto numerable $S$ es un proceso estocástico que satisface la **propiedad de Markov**; esto es,
+Una **cadena de Markov en tiempo discreto** (CMTD) sobre un conjunto numerable $S$ es un proceso estocástico que satisface la **propiedad de Markov**; esto es,
 
 $$
 \begin{aligned}
@@ -998,11 +998,13 @@ $$
 \end{aligned}
 $$
 
-A cada $P_{i, j}(n)$ lo llamaremos **probabilidad de transición**, mientras que a $\Prob{X(0) = i_0}$ se le denominará la **distribución inicial**, denotado tal que
+A cada $P_{i, j}(n)$ lo llamaremos **probabilidad de transición en un paso en el instante $n$**, mientras que a $\Prob{X(0) = i_0}$ se le denominará la **distribución inicial de probabilidades**, denotado tal que
 
 $$
 \phi(i_0) = \Prob{X(0) = i_0}
 $$
+
+La distribución inicial de probabilidades proporciona la probabilidad de que la cadena se inicie en cualquier de los estados posibles.
 
 Las **cadenas de Markov discretas homogéneas en tiempo** son aquellas para las que las probabilidades de transición no dependen de la indexación temporal $n \in \mathbb{N}$; es decir, $P_{i, j}(n) = P_{i, j} \quad \forall n \in \mathbb{N}$.
 
@@ -1014,17 +1016,16 @@ $$
 \end{aligned}
 $${#eq:cadena_markov_homogenea}
 
-De manera análoga, se pueden definir las **cadenas de Markov continuas homogéneas en tiempo** sobre un conjunto numerable $S$ como una familia de variables aleatorias $\left\{X(t)\right\}_{t \ge 0}$ sobre un espacio de probabilidad $(\Omega, \mathbb{F}, P)$ de forma que
+De manera análoga, se pueden definir las **cadenas de Markov en tiempo continuo homogéneas** (CMTC homogéneas) sobre un conjunto numerable $S$ como una familia de variables aleatorias $\left\{X(t)\right\}_{t \ge 0}$ sobre un espacio de probabilidad $(\Omega, \mathbb{F}, P)$ de forma que
 
 $$
 \begin{aligned}
-   & \Prob{X(t_{n+1}) = j \vert X(t_n) = i, X(t_{n-1}) = i_{n-1}, \dots, X(t_0) = i_0} = \\
-=\ & \Prob{X(t_{n+1}) = j \vert X(t_n) = i} \\
-=\ & P_{i, j}(t_{n+1} - t_n)
+    & \Prob{X(s+t) = j \vert X(s) = i, X(u)\ 0 \le u \le s} = \\
+  = & \Prob{X(s+t) = j \vert X(s) = i}
 \end{aligned}
 $$
 
-para $j, i, i_{n-1}, \dots, i_0 \in S$ y $t_{n+1} > t_n > \dots > t_0 \ge 0$. La distribución de la cadena viene determinada por la distribución inicial
+Con $t,s \ge 0$. La distribución de la cadena viene determinada por la distribución inicial
 
 $$
 \phi(i) = \Prob{X(0) = i}
@@ -1036,14 +1037,16 @@ $$
 P_{i, j} = \Prob{X(t + s) = j \vert X(s) = i}
 $$
 
-mediante la identidad
+Las cadenas de Markov en tiempo continuo homogéneas cumplen la siguiente propiedad:
 
 $$
 \begin{aligned}
-    & \Prob{X(t_{n+1}) = j, X(t_n) = i, X(t_{n-1}) = i_{n-1}, \dots, X(t_0) = i_0} = \\
-=\  & P_{i, j}(t_{n+1} - t_n) \cdot P_{i_{n-1}, i_n}(t_n - t_{n-1}) \cdot \dots \cdots P_{i_0, i_{1}}(t_1 - t_0) \cdot \phi(i_0)
+P_{i, j}(s + t) & = \sum_{k = 1}^{N}{P_{i, k}(s)P_{k, j}(t)} = \\
+                & = \sum_{k = 1}^{N}{P_{i, k}(t)P_{k, j}(s)}
 \end{aligned}
 $$
+
+donde $1 \le i \le N$, $t, s \ge 0$.
 
 ### Resolviendo las ecuaciones de Fredholm utilizando cadenas de Markov continuas
 
@@ -1145,3 +1148,4 @@ $$
 $$
 
 [^1]: En su defecto, si tenemos una función de densidad $p_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{p_X(t)dt}$.
+[^2]: No tiene por qué ser en tiempo, pero generalmente se considera este tipo de variable.
