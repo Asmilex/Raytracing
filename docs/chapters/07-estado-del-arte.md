@@ -32,7 +32,7 @@ Un algoritmo que se ha utilizado exitosamente en los últimos años es *Spatiote
 
 ![ReSTIR en acción. Fuente: @restir](./img/07/restir.png){ #fig:restir }
 
-La mayor parte de estas técnicas requieren el uso de un *motion buffer*, el cual calcula el cambio en la posición de un vértice de un frame a otro. En la práctica suelen venir acompañados de *motion vectors*, los cuales también son usados para técnicas como temporal antialiasing (TAA) o temporal upscaling [@temporal-supersampling] (TAA es una técnica de muestreo).
+La mayor parte de estas técnicas requieren el uso de un *motion buffer*, el cual calcula el cambio en la posición de un vértice de un *frame* a otro. En la práctica suelen venir acompañados de *motion vectors*, los cuales también son usados para técnicas como temporal antialiasing (TAA) o temporal upscaling [@temporal-supersampling] (TAA es una técnica de muestreo).
 
 ### *Machine Learning* y técnicas de *super sampling*
 
@@ -42,17 +42,17 @@ En la actualidad el propósito de las redes neuronales suele ser reconstruir la 
 
 **DLSS** recibe imágenes a baja resolución y *motion vectors*, produciendo imágenes a alta resolución mediante un autoenconder convolucional. Los resultados son espectaculares, y consiguen un rendimiento mucho mayor que a resolución nativa sin perder calidad de imagen. En algunos casos, la reconstrucción acaba teniendo mayor nitidez que la imagen original, pues la red neuronal aplica antialiasing en el proceso.
 
-![Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se duplica al utilizar DLSS. Fuente: @df-dlss. \newline <br> **Izquierda**: DLSS 2.0 con resolución interna a 1080p. **Derecha**: 4K nativo.](./img/07/Control.jpg){ #fig:df-dlss width=80%}
+![Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se duplica al utilizar DLSS. Fuente: @df-dlss. \newline <br> **Izquierda**: DLSS 2.0 con resolución interna a 1080p. **Derecha**: 4K nativo.](./img/07/Control.jpg){ #fig:df-dlss width=70%}
 
 **Intel XeSS** funciona de manera similar a DLSS, aunque todavía no se conocen los detalles. Su lanzamiento es extremadamente reciente, por lo que se están explorando los resultados. Se puede leer una entrevista realizada por Digital Foundry a los autores del proyecto en [@df-xess].
 
-Los beneficios de estas técnicas son evidentes. Tal y como descubrimos en la comparativa, la [resolución](#resolución) afecta en gran medida al rendimiento. Cuantos más píxeles tenga la imagen, mayor será el número de muestras que debamos tomar; y por lo tanto, mayor el coste de renderizar un frame. Bajando la resolución conseguimos una imagen con menos ruido pero poco apta para las pantallas de hoy en día. Haciendo *super sampling* solventamos este problema. Si la reconstrucción es de suficiente calidad, estaremos consiguiendo rendimiento superior a la resolución nativa.
+Los beneficios de estas técnicas son evidentes. Tal y como descubrimos en la comparativa, la [resolución](#resolución) afecta en gran medida al rendimiento. Cuantos más píxeles tenga la imagen, mayor será el número de muestras que debamos tomar; y por lo tanto, mayor el coste de renderizar un *frame*. Bajando la resolución conseguimos una imagen con menos ruido pero poco apta para las pantallas de hoy en día. Haciendo *super sampling* solventamos este problema. Si la reconstrucción es de suficiente calidad, estaremos consiguiendo rendimiento superior a la resolución nativa.
 
 ![Comparativa entre las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo son reconstruidas las vallas, así como el texto de los globos. Fuente: @df-fsr. \newline <br> **Izquierda**: Nvidia DLSS 2.3. **Centro**: AMD FSR 2.0. **Derecha**: Temporal antialiasing.](./img/07/Comparación.jpg){  #fig:dlss-fsr-taa }
 
 ## La industria del videojuego
 
-Con la llegada de ray tracing en tiempo gracias a la arquitectura Turing en 2018, un mundo de nuevas posibilidades se abrió ante los ojos de la industria. La más beneficiada fue, sin lugar a dudas, la de los videojuegos debido a sus limitaciones del frame budget.
+Con la llegada de ray tracing en tiempo gracias a la arquitectura Turing en 2018, un mundo de nuevas posibilidades se abrió ante los ojos de la industria. La más beneficiada fue, sin lugar a dudas, la de los videojuegos debido a sus limitaciones del *frame* budget.
 
 ### Productos comerciales
 
@@ -60,7 +60,7 @@ Es mandatorio que la imagen se produzca en un margen de tiempo muy reducido; com
 
 En vez de recaer en técnicas antiguas como reflejos en espacio de pantalla (*screen-space*) se utiliza una forma reducida de ray tracing para computar estos efectos. En el proceso final de la pipeline híbrida de rasterización y ray tracing se combina el resultado de ambas técnicas para producir la imagen final.
 
-![En vez de utilizar *screen-space reflections*, los cuales sufren de los problemas clásicos de rasterización debido a su naturaleza (como el *fallback* a los cubemaps cuando el ángulo es demasiado agudo), ray tracing resuelve estos efectos de forma magistral. Fuente: [@df-spiderman]](./img/07/HybridRT.jpg){ #fig:spiderman-reflections }
+![En vez de utilizar *screen-space reflections*, los cuales sufren de los problemas clásicos de rasterización debido a su naturaleza (como el *fallback* a los cubemaps cuando el ángulo es demasiado agudo), ray tracing resuelve estos efectos de forma magistral. Fuente: [@df-spiderman]](./img/07/HybridRT.jpg){ #fig:spiderman-reflections width=70%}
 
 Algunos productos comerciales que destacan por su uso de ray tracing híbrido son *Ratchet & Clank: Rift Apart* y *Spiderman* [Figura @fig:spiderman-reflections] de Insommiac Games, *Cyberpunk 2077* de CD Project Red, Control de Remedy [Figura @df-dlss].
 
@@ -94,21 +94,21 @@ Por defecto se ha optado una forma de ray tracing basada en software, pues de es
 
 Una optimización clave para que este sistema funcione de forma eficiente es el uso de *surface caching*. Trabajando en conjunto junto a Nanite, Lumen crea un atlas de texturas de aquellas mallas presentes alrededor del jugador de forma que se cubran las caras visibles desde algún punto de vista. Esto simplifica el coste de la evaluación del material.
 
-![Visualización de *Mesh Distance Fields* de una escena. Fuente: @lumen](./img/07/Lumen1.jpg){#fig:lumen3 width=100%}
+![Visualización de *Mesh Distance Fields* de una escena. Fuente: @lumen](./img/07/Lumen1.jpg){#fig:lumen3 width=65%}
 
 Para el paso final del cálculo de la radiancia se usa un algoritmo basado en radiance caching presentado en [@siggraph2021]. Como no resulta viable tirar rayos a diestro y siniestro por toda la escena, Lumen toma una pequeña porción de muestras y combina los cálculos de radiancia con información aportada por el material.
 
-![Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: @lumen](./img/07/Lumen5.png){#fig:lumen4 width=100%}
+![Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: @lumen](./img/07/Lumen5.png){#fig:lumen4 width=80%}
 
-Otro punto clave del sistema es la elección de las direcciones que se van a trazar. Para escogerlas, se comprueba qué partes del último frame resultaron muy brillantes. Entonces, se mandan rayos hacia esas zonas, pues esto producirá resultados menos ruidos en este frame. Esta técnica la hemos estudiado, y se llama muestreo por importancia (de la luz entrante en este caso).
+Otro punto clave del sistema es la elección de las direcciones que se van a trazar. Para escogerlas, se comprueba qué partes del último *frame* resultaron muy brillantes. Entonces, se mandan rayos hacia esas zonas, pues esto producirá resultados menos ruidos en este *frame*. Esta técnica la hemos estudiado, y se llama muestreo por importancia (de la luz entrante en este caso).
 
 > Este punto enlaza con nuestra [comparativa con In One Weekend](#comparativa-con-in-one-weekend). Una de las conclusiones más interesantes que obtuvimos fue que utilizar muestreo por importancia de las fuentes de iluminación proporcionaba unos resultados considerablemente mejores que una estrategia de muestreo basada en direcciones aleatorias. Aunque en este caso no se muestrean las fuentes de luz, sí que se utilizan partes de la escena con mucha radiancia, por lo que el fundamento es similar.
 
-![Lumen utiliza las partes más brillantes del último frame para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: @lumen](./img/07/Lumen6.png){#fig:lumen5}
+![Lumen utiliza las partes más brillantes del último *frame* para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: @lumen](./img/07/Lumen6.png){#fig:lumen5}
 
-Para calcular los reflejos de superficies se ha optado por promediar la radiancia de puntos en el mismo vecindario y acumulación temporal de frames para suavizar el resultado.
+Para calcular los reflejos de superficies se ha optado por promediar la radiancia de puntos en el mismo vecindario y acumulación temporal de *frames* para suavizar el resultado.
 
-![Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: @lumen](./img/07/Lumen2.jpg){ #fig:lumen6 }
+![Nuestro método principal de reducción de ruido fue la acumulación temporal de *frames*. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: @lumen](./img/07/Lumen2.jpg){ #fig:lumen6 }
 
 Finalmente, es importante destacar que las imágenes no son generadas a una gran resolución. Para conseguir una imagen digna de los tiempos actuales, los motores modernos utilizan una resolución interna cercana a 720p o 1080p que es escalada mediante algún método de *upsampling*. En este caso, se ha optado por *Temporal Super Resolution*, una técnica que comenzó con Unreal Engine 4 y ha evolucionado en esta versión. Su comportamiento es similar a DLSS o FSR.
 

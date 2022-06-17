@@ -24,15 +24,15 @@ Otro punto importante es la *manera* de escribir. No me gusta especialmente la e
 
 ## Ciclos de desarrollo
 
-Este proyecto está compuesto por 2 grandes pilares: documentación --lo que estás leyendo, ya sea en PDF o en la web-- y software. Podemos distinguir varias fases en la planificación del proyecto, que quedan resumidas en el diagrama de Grant [Figuras @fig:grantt_1, @fig:grantt_2]
+Este proyecto está compuesto por 2 grandes pilares: documentación --lo que estás leyendo, ya sea en PDF o en la web-- y software. Podemos distinguir varias fases en la planificación del proyecto, que quedan resumidas en el diagrama de Gantt [Figuras @fig:gantt_1, @fig:gantt_2]
 
 Para comenzar, durante el verano de 2021 se implementarían los tres libros de Shirley de la "serie In One Weekend": In One Weekend [@Shirley2020RTW1], The Next Week [@Shirley2020RTW2], y The Rest of your Life [@Shirley2020RTW3]. De esta forma, asentaríamos las bases del proyecto, acelerando así el aprendizaje.
 
-![Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo](./img/08/Diagrama%20de%20Grantt%201.png){#fig:grantt_1}
+![Diagrama de Gantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo](./img/08/Diagrama%20de%20Gantt%201.png){#fig:gantt_1}
 
 Tras esto, comenzaría a desarrollarse el motor por GPU. Cuando se consiguiera una base sólida, se empezaría a alternar entre escritura de la memoria y el software. Es importante documentar lo que se realiza, pues no se puede implementar algo que no se entiende.
 
-![Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software](./img/08/Diagrama%20de%20Grantt%202.png){#fig:grantt_2}
+![Diagrama de Gantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software](./img/08/Diagrama%20de%20Gantt%202.png){#fig:gantt_2}
 
 Sin embargo, esto era únicamente una planificación. Como todos sabemos, en la práctica los planes no suelen salir a la perfección. ¿Ha sido este un caso de una preparación desastrosa?
 
