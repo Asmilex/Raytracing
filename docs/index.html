@@ -4561,9 +4561,10 @@ discreto, escribimos la familia como <span
 class="math inline">\(\left\{X(n)\right\}_{n \in \mathbb{N}}\)</span>,
 mientras que si es continuo, notaremos <span
 class="math inline">\(\left\{X(t)\right\}_{t \ge 0}\)</span>.</p>
-<p>La distribución de los procesos estocásticos discretos en tiempo
-sobre un conjunto numerable <span class="math inline">\(S\)</span> se
-viene caracterizado como</p>
+<p>La distribución de los procesos estocásticos discretos en tiempo<a
+href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a> sobre un conjunto numerable <span
+class="math inline">\(S\)</span> se viene caracterizado como</p>
 <p><span id="eq:proceso_estocastico_discreto" class="eqnos"><span
 class="math display">\[
 P\left[ X(n) = i_n, \dots, X(0) = i_0 \right]
@@ -4585,10 +4586,10 @@ class="math display">\[
 \cdot\  &amp; P\left[ X(0) = i_0 \right]
 \end{aligned}
 \]</span><span class="eqnos-number">(41)</span></span></p>
-<p>Una <strong>cadena de Markov discreta en tiempo</strong> sobre un
-conjunto numerable <span class="math inline">\(S\)</span> es un proceso
-estocástico que satisface la <strong>propiedad de Markov</strong>; esto
-es,</p>
+<p>Una <strong>cadena de Markov en tiempo discreto</strong> (CMTD) sobre
+un conjunto numerable <span class="math inline">\(S\)</span> es un
+proceso estocástico que satisface la <strong>propiedad de
+Markov</strong>; esto es,</p>
 <p><span id="eq:propiedad_markov" class="eqnos"><span
 class="math display">\[
 \begin{aligned}
@@ -4618,13 +4619,16 @@ anterior notación, de forma que obtenemos</p>
 \end{aligned}
 \]</span></p>
 <p>A cada <span class="math inline">\(P_{i, j}(n)\)</span> lo llamaremos
-<strong>probabilidad de transición</strong>, mientras que a <span
+<strong>probabilidad de transición en un paso en el instante <span
+class="math inline">\(n\)</span></strong>, mientras que a <span
 class="math inline">\(P\left[ X(0) = i_0 \right]\)</span> se le
-denominará la <strong>distribución inicial</strong>, denotado tal
-que</p>
+denominará la <strong>distribución inicial de probabilidades</strong>,
+denotado tal que</p>
 <p><span class="math display">\[
 \phi(i_0) = P\left[ X(0) = i_0 \right]
 \]</span></p>
+<p>La distribución inicial de probabilidades proporciona la probabilidad
+de que la cadena se inicie en cualquier de los estados posibles.</p>
 <p>Las <strong>cadenas de Markov discretas homogéneas en tiempo</strong>
 son aquellas para las que las probabilidades de transición no dependen
 de la indexación temporal <span class="math inline">\(n \in
@@ -4638,24 +4642,21 @@ P\left[ X(n) = i_n, \dots, X(0) = i_0 \right] = P_{i_{n-1}, i_n} \cdot
 \dots \cdot P_{i_0, i_{1}} \cdot \phi(i_0)
 \end{aligned}
 \]</span><span class="eqnos-number">(43)</span></span></p>
-<p>De manera análoga, se pueden definir las <strong>cadenas de Markov
-continuas homogéneas en tiempo</strong> sobre un conjunto numerable
-<span class="math inline">\(S\)</span> como una familia de variables
-aleatorias <span class="math inline">\(\left\{X(t)\right\}_{t \ge
-0}\)</span> sobre un espacio de probabilidad <span
+<p>De manera análoga, se pueden definir las <strong>cadenas de Markov en
+tiempo continuo homogéneas</strong> (CMTC homogéneas) sobre un conjunto
+numerable <span class="math inline">\(S\)</span> como una familia de
+variables aleatorias <span class="math inline">\(\left\{X(t)\right\}_{t
+\ge 0}\)</span> sobre un espacio de probabilidad <span
 class="math inline">\((\Omega, \mathbb{F}, P)\)</span> de forma que</p>
 <p><span class="math display">\[
 \begin{aligned}
-   &amp; P\left[ X(t_{n+1}) = j \vert X(t_n) = i, X(t_{n-1}) = i_{n-1},
-\dots, X(t_0) = i_0 \right] = \\
-=\ &amp; P\left[ X(t_{n+1}) = j \vert X(t_n) = i \right] \\
-=\ &amp; P_{i, j}(t_{n+1} - t_n)
+    &amp; P\left[ X(s+t) = j \vert X(s) = i, X(u)\ 0 \le u \le s \right]
+= \\
+  = &amp; P\left[ X(s+t) = j \vert X(s) = i \right]
 \end{aligned}
 \]</span></p>
-<p>para <span class="math inline">\(j, i, i_{n-1}, \dots, i_0 \in
-S\)</span> y <span class="math inline">\(t_{n+1} &gt; t_n &gt; \dots
-&gt; t_0 \ge 0\)</span>. La distribución de la cadena viene determinada
-por la distribución inicial</p>
+<p>Con <span class="math inline">\(t,s \ge 0\)</span>. La distribución
+de la cadena viene determinada por la distribución inicial</p>
 <p><span class="math display">\[
 \phi(i) = P\left[ X(0) = i \right]
 \]</span></p>
@@ -4663,15 +4664,16 @@ por la distribución inicial</p>
 <p><span class="math display">\[
 P_{i, j} = P\left[ X(t + s) = j \vert X(s) = i \right]
 \]</span></p>
-<p>mediante la identidad</p>
+<p>Las cadenas de Markov en tiempo continuo homogéneas cumplen la
+siguiente propiedad:</p>
 <p><span class="math display">\[
 \begin{aligned}
-    &amp; P\left[ X(t_{n+1}) = j, X(t_n) = i, X(t_{n-1}) = i_{n-1},
-\dots, X(t_0) = i_0 \right] = \\
-=\  &amp; P_{i, j}(t_{n+1} - t_n) \cdot P_{i_{n-1}, i_n}(t_n - t_{n-1})
-\cdot \dots \cdots P_{i_0, i_{1}}(t_1 - t_0) \cdot \phi(i_0)
+P_{i, j}(s + t) &amp; = \sum_{k = 1}^{N}{P_{i, k}(s)P_{k, j}(t)} = \\
+                &amp; = \sum_{k = 1}^{N}{P_{i, k}(t)P_{k, j}(s)}
 \end{aligned}
 \]</span></p>
+<p>donde <span class="math inline">\(1 \le i \le N\)</span>, <span
+class="math inline">\(t, s \ge 0\)</span>.</p>
 <h3 data-number="3.5.3"
 id="resolviendo-las-ecuaciones-de-fredholm-utilizando-cadenas-de-markov-continuas"><span
 class="header-section-number">3.5.3</span> Resolviendo las ecuaciones de
@@ -4706,10 +4708,11 @@ K((Ku))(x) = (K^2u)(x) = \int_0^1 \int_0^1 {k(x, t)k(t, t_1)u(t_1)
 dtdt_1}
 \]</span></p>
 <p>Así, de forma de recursiva, se obtiene que</p>
-<p><span class="math display">\[
+<p><span id="eq:markov_recursividad_kernel" class="eqnos"><span
+class="math display">\[
 K(K^{n-1}u)(x) = (K^n u)(x) = \int_0^1 {k(x, t_{n-1})K^{n-1}u(t_{n-1})
 dt_{n-1}}
-\]</span></p>
+\]</span><span class="eqnos-number">(44)</span></span></p>
 <p>Si asumimos que</p>
 <p><span class="math display">\[
 \left\lvert K \right\rvert = \sup_{[0, 1]}{\int_0^1{\left\lvert k(x, t)
@@ -4723,9 +4726,10 @@ u^{(n+1)} = Ku^{(n)} + f, \quad n = 1, 2, \dots
 <p>Si <span class="math inline">\(u^{(0)} = 0\)</span>, <span
 class="math inline">\(K^0 \equiv 0\)</span>, entonces, la ecuación
 anterior se transforma en</p>
-<p><span class="math display">\[
+<p><span id="eq:recursividad_n_mas_1" class="eqnos"><span
+class="math display">\[
 u^{(n + 1)} = f+ Kf + \dots + K^nf = \sum_{m = 0}^{n}{K^mf}
-\]</span></p>
+\]</span><span class="eqnos-number">(45)</span></span></p>
 <p>Está claro que</p>
 <p><span class="math display">\[
 \lim_{n \to \infty} u^{(n)} = \lim_{n \to \infty} \sum_{m = 0}^{n}{K^mf}
@@ -4737,29 +4741,31 @@ consideramos una cadena continua de Markov con probabilidad de
 transición <span class="math inline">\(P_{i, j}\)</span> y distribución
 inicial <span class="math inline">\(\phi(i)\)</span>, satisfaciendo
 que</p>
-<p><span class="math display">\[
+<p><span id="eq:propiedad_cadenas_markov" class="eqnos"><span
+class="math display">\[
 \begin{aligned}
-\int_0^1{P_{i, j}\ dj} &amp;  = 1 \\
-\int_0^1{\phi(i)\ di}  &amp; = 1 \\
+  \int_0^1{P_{i, j}\ dj} &amp;  = 1 \\
+  \int_0^1{\phi(i)\ di}  &amp; = 1 \\
 \end{aligned}
-\]</span></p>
+\]</span><span class="eqnos-number">(46)</span></span></p>
 <p>Consideramos ahora una función de pesos <span
 class="math inline">\(W_m\)</span> para la cadena de Markov, que viene
 dada por la recursión</p>
-<p><span class="math display">\[
+<p><span id="eq:pesos_gamma_n" class="eqnos"><span
+class="math display">\[
 \begin{aligned}
 W_m &amp; = W_{m-1} \frac{k(x_{m -1}, x_m)}{P_{x_{m-1}, x_m}}, \quad m =
 1, 2, \dots \\
 W_0 &amp; = 1
 \end{aligned}
-\]</span></p>
+\]</span><span class="eqnos-number">(47)</span></span></p>
 <p>Definamos ahora una variable aleatoria <span
 class="math inline">\(\Gamma_n(h)\)</span>, la cual está asociada al
-camino <span class="math inline">\(x_0 \rightarrow x_1 \rightarrow \dots
-\rightarrow x_n\)</span>:</p>
-<p><span class="math display">\[
+camino aleatorio <span class="math inline">\(x_0 \rightarrow x_1
+\rightarrow \dots \rightarrow x_n\)</span>:</p>
+<p><span id="eq:gamma_n" class="eqnos"><span class="math display">\[
 \Gamma_n(h) = \frac{h(x_0)}{\phi(x_0)} = \sum_{m = 0}^{n}{W_mf(x_m)}
-\]</span></p>
+\]</span><span class="eqnos-number">(48)</span></span></p>
 <p>donde <span class="math inline">\(h(x)\)</span> es una función
 real.</p>
 <p>Consideremos ahora el producto escalar de dos funciones <span
@@ -4767,18 +4773,153 @@ class="math inline">\(h(x), u(x)\)</span>, el cual se define como</p>
 <p><span id="eq:producto_escalar_funcional" class="eqnos"><span
 class="math display">\[
 \langle h, u \rangle = \int_0^1{h(x)u(x) dx}
-\]</span><span class="eqnos-number">(44)</span></span></p>
+\]</span><span class="eqnos-number">(49)</span></span></p>
 <p>El problema ahora se convierte en encontrar el valor del producto
 <span class="math inline">\(\langle h, u \rangle\)</span>, siendo <span
 class="math inline">\(u(x)\)</span> la función solución de la ecuación
 de Fredholm.</p>
-<p>El valor del producto escalar de <span class="math inline">\(\langle
-h, u^{(n + 1)} \rangle\)</span> puede ser estimado gracias variable
-aleatoria <span class="math inline">\(\Gamma_n(h)\)</span>; es
-decir,</p>
+<p><strong>Teorema:</strong> el valor del producto escalar <span
+class="math inline">\(\langle h, u^{(n + 1)} \rangle\)</span> puede ser
+estimado mediante la esperanza de la variable aleatoria <span
+class="math inline">\(\Gamma_n(h)\)</span>; es decir,</p>
 <p><span class="math display">\[
 E\left[ \Gamma_n(h) \right] = \langle h, u^{(n + 1)} \rangle
 \]</span></p>
+<p>Veamos por qué ocurre esto. Cada camino aleatorio <span
+class="math inline">\(x_0 \rightarrow x_1 \rightarrow \dots \rightarrow
+x_n\)</span> tiene una probabilidad de</p>
+<p><span class="math display">\[
+P\left[ X(0) = x_0, X(1) = x_1, \dots, X(n) = x_n \right] = \phi(x_0)
+P_{x_0, x_1} P_{x_1, x_2} \dots P_{x_{n-1}, x_n}
+\]</span></p>
+<p>Como la variable aleatoria <span
+class="math inline">\(\Gamma_n(h)\)</span> está definida a lo largo del
+camino anterior, se tiene que</p>
+<p><span class="math display">\[
+E\left[ \Gamma_n(h) \right] = \int_0^1 \int_0^1 \dotsc \int_0^1
+{\Gamma_n(h) \phi(x_0) P_{x_0, x_1} P_{x_1, x_2} \dots P_{x_{n-1}, x_n}
+\,dx_0dx_1\dots dx_n}
+\]</span></p>
+<p>Usando [<a href="#eq:pesos_gamma_n">47</a>] y [<a
+href="#eq:gamma_n">48</a>], se puede obtener que</p>
+<p><span class="math display">\[
+\begin{aligned}
+E\left[ \Gamma_n(h) \right]
+  &amp; = E\left[ \frac{h(x_0)}{\phi(x_0)} \sum_{m = 0}^{n}{W_mf(x_m)}
+\right] = \\
+  &amp; = \int_0^1 \int_0^1 \dotsc \int_0^1 {
+        h(x_0) \sum_{m = 0}^{n} \Upsilon \Psi f(x_m) \phi(x_m)
+\,dx_0dx_1\dots dx_n
+      }
+\end{aligned}
+\]</span></p>
+<p>siendo</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \Upsilon &amp; = k(x_0, x_1)  k(x_1, x_2)  \dots k(x_{m-1}, x_m), \\
+  \Psi     &amp; = P_{x_{m}, x_{m+1}} \dots P_{x_{n-1}, x_n}
+\end{aligned}
+\]</span></p>
+<p>Usando [<a href="#eq:propiedad_cadenas_markov">46</a>], la integral
+anterior puede reescribirse como</p>
+<p><span class="math display">\[
+E\left[ \Gamma_n(h) \right] = \sum_{m = 0}^{n} \int_0^1 \int_0^1 \dotsc
+\int_0^1 {
+        h(x_0) \Upsilon f(x_m) \,dx_0dx_1\dots dx_n
+}
+\]</span></p>
+<p>Y finalmente, si tenemos en cuenta la n-ésima iteración [<a
+href="#eq:markov_recursividad_kernel">44</a>], así como [<a
+href="#eq:recursividad_n_mas_1">45</a>] y la definición de producto
+escalar <span class="math inline">\(\langle h, u \rangle\)</span>,
+deducimos</p>
+<p><span class="math display">\[
+E\left[ \Gamma_n(h) \right] = \left \langle h(x), \sum_{m = 0}^n
+{(K^mf)(x)} \right \rangle = \langle h(x), u^{(n+1)}(x) \rangle
+\]</span></p>
+<p>Lo cual concluye la prueba.</p>
+<p>Este teorema nos dice que <span
+class="math inline">\(\Gamma_n(h)\)</span> es un estimador insesgado del
+producto escalar <span class="math inline">\(\langle h(x), u^{(n+1)}(x)
+\rangle\)</span>.</p>
+<p>Los autores proponen una forma basada en Monte Carlo basado en la
+simulación de una cadena de Markov continua para estimar el valor de
+<span class="math inline">\(\langle h(x), u^{(n+1)}(x) \rangle\)</span>,
+el cual presentaremos a continuación:</p>
+<p>Consideremos una cadena de Markov continua con función de
+probabilidad de transición</p>
+<p><span class="math display">\[
+P_{x, y} = p(x) \delta(y - x) + (1 - p(x))g(y), \qquad x, y \in [0, 1]
+\]</span></p>
+<p>siendo <span class="math inline">\(\delta(y - x)\)</span> la delta de
+Dirac en <span class="math inline">\(x\)</span>, <span
+class="math inline">\(g(x)\)</span> una función de densidad en <span
+class="math inline">\([0, 1]\)</span>, y <span
+class="math inline">\(p(x)\)</span> una función tal que <span
+class="math inline">\(0 &lt; p(x) &lt; 1\)</span> y <span
+class="math inline">\(\int_0^1\frac{g(x)}{1 - p(x)} dx \le
+\infty\)</span>.</p>
+<p>Para estimar <span class="math inline">\(\langle h,
+u^{(n+1)}\)</span>, segumos el siguiente proceso:</p>
+<ol type="1">
+<li>Escoger un cierto <span class="math inline">\(n \in
+\mathbb{N}\)</span> y simular <span class="math inline">\(N\)</span>
+caminos independientes de longitud <span
+class="math inline">\(n\)</span>,</li>
+</ol>
+<p><span class="math display">\[
+x_0^{(s)} \rightarrow x_1^{(s)} \rightarrow \dots \rightarrow x_n^{(s)},
+\qquad s = 1(1)/N
+\]</span></p>
+<p>de la cadena de Markov presentada anteriormente.</p>
+<ol start="2" type="1">
+<li>Definir la variable aleatoria <span
+class="math inline">\(\Gamma^{(s)}_n(h)\)</span> asociado a este camino,
+de forma que</li>
+</ol>
+<p><span class="math display">\[
+\Gamma^{(s)}_n(h) = \frac{h(x_0)}{p(x_0)} \sum_{m = 0}^n W^{(s)}_m
+f(x_m)
+\]</span></p>
+<p>donde</p>
+<p><span class="math display">\[
+\begin{aligned}
+  W_m &amp; = \frac{
+    k\left(x^{(s)}_0, x^{(s)}_1\right) k\left(x^{(s)}_1,
+x^{(s)}_2\right) \dots k\left(x^{(s)}_{n - 1}, x^{(s)}_n\right)
+  }{
+    P_{x^{(s)}_0, x^{(s)}_1} P_{x^{(s)}_1, x^{(s)}_2} \dots
+P_{x^{(s)}_{n - 1}, x^{(s)}_n}
+  }, \quad m = 1, 2, \dots \\
+  W^{(s)}_0 &amp; = 1
+\end{aligned}
+\]</span></p>
+<ol start="3" type="1">
+<li>Evaluar la media muestral</li>
+</ol>
+<p><span class="math display">\[
+\frac{1}{N} \sum_{s = 1}^N \Gamma^{(s)}_n(h) \approx \langle h,
+u^{(n+1)} \rangle
+\]</span></p>
+<p>El paso (1) puede ser realizado mediante el siguiente algoritmo:</p>
+<pre><code>Algoritmo 1
+input: el número de trayectoria N, la longitud de la cadena n, la función p(x), la función de densidad de probabilidad g(x) en [0, 1]
+output: la cadena de Markov x_0^{(s)} -&gt; x_1^{(s)} -&gt; ... -&gt; x_n^{(s)}
+
+for s = 1 to N do
+  // Generar una trayectoria
+  generar x_0^{(s)} mediante la función de densidad p(x)
+
+  for m = 1 to n-1 do
+    generar un número aleatorio u uniformemente distribuido en (0, 1)
+
+    if p(x_m^{(s)}) &gt; u then
+      calcular x_{m+1}^{(s)} = x_m^{(s)}
+    else
+      generar x_{m+1}^{(s)} desde la función de densidad de prob. g
+    fi
+  end
+end</code></pre>
 <h1 data-number="4" id="construyamos-un-path-tracer"><span
 class="header-section-number">4</span> ¡Construyamos un path
 tracer!</h1>
@@ -4867,7 +5008,7 @@ L_o(p, \omega_o \leftarrow \omega_i) &amp; = \int_{\mathbb{S}^2}{f(p,
 \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{P\left[
 \omega_j \right]}}
 \end{aligned}
-\]</span><span class="eqnos-number">(45)</span></span></p>
+\]</span><span class="eqnos-number">(50)</span></span></p>
 <p>Con <span class="math inline">\(N \in \mathbb{Z}^+\)</span>, y <span
 class="math inline">\(P\left[ \omega \right]\)</span> la función de
 densidad de <span class="math inline">\(\omega\)</span>. Con <span
@@ -4895,7 +5036,7 @@ class="math display">\[
 \frac{1}{N} \sum_{j = 1}^{N}{\frac{(\rho / \pi) L_i(p, \omega_j)
 \cos\theta_j}{(\cos\theta_j / \pi)}} = \frac{1}{N} \sum_{j =
 1}^{N}{L_i(p, \omega_j) \rho}
-\]</span><span class="eqnos-number">(46)</span></span></p>
+\]</span><span class="eqnos-number">(51)</span></span></p>
 <p>Lo cual nos proporciona una expresión muy agradable para los
 materiales difusos.</p>
 <p>Por lo general, no será posible simplificar hasta tal punto la
@@ -4908,7 +5049,7 @@ class="header-section-number">4.1.2</span> Pseudocódigo de un path
 tracer</h3>
 <p>Con lo que conocemos hasta ahora, podemos empezar a programar los
 shaders. Una primera implementación inspirada en la rendering equation
-[<a href="#eq:rendering_equation_mc">45</a>] sería similar a lo
+[<a href="#eq:rendering_equation_mc">50</a>] sería similar a lo
 siguiente:</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token function">L</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> omega<span class="token punctuation">,</span> profundidad<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     emision <span class="token operator">=</span> <span class="token function">L_e</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> omega<span class="token punctuation">,</span> profundidad<span class="token punctuation">)</span>
@@ -4963,8 +5104,8 @@ gráficas</h3>
 <p>El requisito más importante de todos es la gráfica. Para ser capaces
 de realizar cálculos de ray tracing en tiempo real en escenarios
 complejos, necesitaremos una arquitectura moderna con núcleos dedicados
-a este tipo de cáclulos <a href="#fn4" class="footnote-ref" id="fnref4"
-role="doc-noteref"><sup>4</sup></a>. Aunque es posible implementar ray
+a este tipo de cáclulos <a href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a>. Aunque es posible implementar ray
 tracing en gráficas convencionales, el rendimiento no será lo
 suficientemente bueno como para adecuarse al nivel de fidelidad de los
 tiempos actuales.</p>
@@ -5060,8 +5201,8 @@ Vulkan</strong> por los siguientes motivos:</p>
 <ul>
 <li>DirectX 12 está destinado principalmente a plataformas de Microsoft.
 Es decir, está pensado para sistemas operativos Windows 10 o mayor <a
-href="#fn5" class="footnote-ref" id="fnref5"
-role="doc-noteref"><sup>5</sup></a>.</li>
+href="#fn6" class="footnote-ref" id="fnref6"
+role="doc-noteref"><sup>6</sup></a>.</li>
 <li>Vulkan, al estar apoyado principalmente por AMD y desarrollado por
 Khonos, es un proyecto de código. Su principal aliciente es la capacidad
 de correr en múltiples sistemas operativos, como Windows, distribuciones
@@ -8933,12 +9074,6 @@ role="doc-biblioentry">
 30, 1998. Accessed May 16, 2022. <a
 href="http://www.graphics.cornell.edu/online/box/compare.html">http://www.graphics.cornell.edu/online/box/compare.html</a>.
 </div>
-<div id="ref-quantumfracture-2021" class="csl-entry"
-role="doc-biblioentry">
-Crespo, J. L. 2021. <span>“Ya, en serio, ¿qué es la luz?”</span>
-December 10, 2021. Accessed April 22, 2022. <a
-href="https://www.youtube.com/watch?v=DkcEAz09Buo">https://www.youtube.com/watch?v=DkcEAz09Buo</a>.
-</div>
 <div id="ref-crytek-2020" class="csl-entry" role="doc-biblioentry">
 Crytek. 2020. <span>“Crysis remastered brings ray tracing to current-gen
 consoles.”</span> September 11, 2020. Accessed April 17, 2022. <a
@@ -9492,13 +9627,9 @@ href="https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html">https://www.
 role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>No entraremos en detalle sobre la
-naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos
-divulgadores como <span class="citation"
-data-cites="quantumfracture-2021">(<a href="#ref-quantumfracture-2021"
-role="doc-biblioref">Crespo 2021</a>)</span> que han tratado el tema con
-suficiente profundidad.<a href="#fnref1" class="footnote-back"
-role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>No tiene por qué ser en tiempo, pero
+generalmente se considera este tipo de variable.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>Recuerda que estamos omitiendo la
 longitud de onda <span class="math inline">\(\lambda\)</span>.<a
 href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -9507,15 +9638,18 @@ de densidad <span class="math inline">\(p_X\)</span>, podemos hallar la
 función de distribución haciendo <span class="math inline">\(F_X(x) =
 P[X &lt; x] = \int_{x_{min}}^{x}{p_X(t)dt}\)</span>.<a href="#fnref3"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>Esto no es del todo cierto. Aunque
+<li id="fn4" role="doc-endnote"><p>No tiene por qué ser en tiempo, pero
+generalmente se considera este tipo de variable.<a href="#fnref4"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>Esto no es del todo cierto. Aunque
 generalmente suelen ser excepciones debido al coste computacional de RT
 en tiempo real, existen algunas implementaciones que son capaces de
 correrlo por software. Notablemente, el motor de Crytek, CryEngine, es
 capaz de mover ray tracing basado en hardware y en software <span
 class="citation" data-cites="crytek-2020">(<a href="#ref-crytek-2020"
-role="doc-biblioref">Crytek 2020</a>)</span><a href="#fnref4"
+role="doc-biblioref">Crytek 2020</a>)</span><a href="#fnref5"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>Afortunadamente, esto tampoco es
+<li id="fn6" role="doc-endnote"><p>Afortunadamente, esto tampoco es
 completamente cierto. La compañía desarrolladora y distribuidora de
 videojuegos Valve Corporation <span class="citation"
 data-cites="valve">(<a href="#ref-valve" role="doc-biblioref">Valve
@@ -9526,7 +9660,7 @@ Wine para emular software en Linux que solo puede correr en plataformas
 Windows. La versión 2.5 añadió soporte para traducción de bindings de
 DXR a KHR, lo que permite utilizar DirectX12 ray tracing en sistemas
 basados en Linux. El motivo de este software es expandir el mercado de
-videojuegos disponibles en su consola, la Steam Deck.<a href="#fnref5"
+videojuegos disponibles en su consola, la Steam Deck.<a href="#fnref6"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
