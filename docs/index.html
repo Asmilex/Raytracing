@@ -7509,10 +7509,10 @@ href="#ref-restir" role="doc-biblioref">2020</a>)</span></figcaption>
 </div>
 <p>La mayor parte de estas técnicas requieren el uso de un <em>motion
 buffer</em>, el cual calcula el cambio en la posición de un vértice de
-un frame a otro. En la práctica suelen venir acompañados de <em>motion
-vectors</em>, los cuales también son usados para técnicas como temporal
-antialiasing (TAA) o temporal upscaling <span class="citation"
-data-cites="temporal-supersampling">(<a
+un <em>frame</em> a otro. En la práctica suelen venir acompañados de
+<em>motion vectors</em>, los cuales también son usados para técnicas
+como temporal antialiasing (TAA) o temporal upscaling <span
+class="citation" data-cites="temporal-supersampling">(<a
 href="#ref-temporal-supersampling" role="doc-biblioref">Karis
 2014</a>)</span> (TAA es una técnica de muestreo).</p>
 <h3 data-number="7.1.2"
@@ -7547,7 +7547,7 @@ mayor nitidez que la imagen original, pues la red neuronal aplica
 antialiasing en el proceso.</p>
 <div id="fig:df-dlss" class="fignos">
 <figure>
-<img loading="lazy" src="./img/07/Control.jpg" style="width:80.0%"
+<img loading="lazy" src="./img/07/Control.jpg" style="width:70.0%"
 alt="Figura 73: Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se duplica al utilizar DLSS. Fuente: Digital Foundry (2020a).   Izquierda: DLSS 2.0 con resolución interna a 1080p. Derecha: 4K nativo." />
 <figcaption aria-hidden="true"><span>Figura 73:</span> Control, de
 Remedy Games. Uno de los primeros videojuegos que integraron ray tracing
@@ -7568,11 +7568,12 @@ role="doc-biblioref">Digital Foundry 2021c</a>)</span>.</p>
 descubrimos en la comparativa, la <a href="#resolución">resolución</a>
 afecta en gran medida al rendimiento. Cuantos más píxeles tenga la
 imagen, mayor será el número de muestras que debamos tomar; y por lo
-tanto, mayor el coste de renderizar un frame. Bajando la resolución
-conseguimos una imagen con menos ruido pero poco apta para las pantallas
-de hoy en día. Haciendo <em>super sampling</em> solventamos este
-problema. Si la reconstrucción es de suficiente calidad, estaremos
-consiguiendo rendimiento superior a la resolución nativa.</p>
+tanto, mayor el coste de renderizar un <em>frame</em>. Bajando la
+resolución conseguimos una imagen con menos ruido pero poco apta para
+las pantallas de hoy en día. Haciendo <em>super sampling</em>
+solventamos este problema. Si la reconstrucción es de suficiente
+calidad, estaremos consiguiendo rendimiento superior a la resolución
+nativa.</p>
 <div id="fig:dlss-fsr-taa" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Comparación.jpg"
@@ -7593,7 +7594,7 @@ videojuego</h2>
 <p>Con la llegada de ray tracing en tiempo gracias a la arquitectura
 Turing en 2018, un mundo de nuevas posibilidades se abrió ante los ojos
 de la industria. La más beneficiada fue, sin lugar a dudas, la de los
-videojuegos debido a sus limitaciones del frame budget.</p>
+videojuegos debido a sus limitaciones del <em>frame</em> budget.</p>
 <h3 data-number="7.2.1" id="productos-comerciales"><span
 class="header-section-number">7.2.1</span> Productos comerciales</h3>
 <p>Es mandatorio que la imagen se produzca en un margen de tiempo muy
@@ -7613,7 +7614,7 @@ híbrida de rasterización y ray tracing se combina el resultado de ambas
 técnicas para producir la imagen final.</p>
 <div id="fig:spiderman-reflections" class="fignos">
 <figure>
-<img loading="lazy" src="./img/07/HybridRT.jpg"
+<img loading="lazy" src="./img/07/HybridRT.jpg" style="width:70.0%"
 alt="Figura 75: En vez de utilizar screen-space reflections, los cuales sufren de los problemas clásicos de rasterización debido a su naturaleza (como el fallback a los cubemaps cuando el ángulo es demasiado agudo), ray tracing resuelve estos efectos de forma magistral. Fuente: (Digital Foundry 2021a)" />
 <figcaption aria-hidden="true"><span>Figura 75:</span> En vez de
 utilizar <em>screen-space reflections</em>, los cuales sufren de los
@@ -7733,7 +7734,7 @@ visibles desde algún punto de vista. Esto simplifica el coste de la
 evaluación del material.</p>
 <div id="fig:lumen3" class="fignos">
 <figure>
-<img loading="lazy" src="./img/07/Lumen1.jpg" style="width:100.0%"
+<img loading="lazy" src="./img/07/Lumen1.jpg" style="width:65.0%"
 alt="Figura 78: Visualización de Mesh Distance Fields de una escena. Fuente: Epic Games (2022b)" />
 <figcaption aria-hidden="true"><span>Figura 78:</span> Visualización de
 <em>Mesh Distance Fields</em> de una escena. Fuente: <span
@@ -7751,7 +7752,7 @@ de muestras y combina los cálculos de radiancia con información aportada
 por el material.</p>
 <div id="fig:lumen4" class="fignos">
 <figure>
-<img loading="lazy" src="./img/07/Lumen5.png" style="width:100.0%"
+<img loading="lazy" src="./img/07/Lumen5.png" style="width:80.0%"
 alt="Figura 79: Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: Epic Games (2022b)" />
 <figcaption aria-hidden="true"><span>Figura 79:</span> Lumen combina los
 cálculos de la iluminación global con la información del material para
@@ -7761,11 +7762,11 @@ role="doc-biblioref">2022b</a>)</span></figcaption>
 </figure>
 </div>
 <p>Otro punto clave del sistema es la elección de las direcciones que se
-van a trazar. Para escogerlas, se comprueba qué partes del último frame
-resultaron muy brillantes. Entonces, se mandan rayos hacia esas zonas,
-pues esto producirá resultados menos ruidos en este frame. Esta técnica
-la hemos estudiado, y se llama muestreo por importancia (de la luz
-entrante en este caso).</p>
+van a trazar. Para escogerlas, se comprueba qué partes del último
+<em>frame</em> resultaron muy brillantes. Entonces, se mandan rayos
+hacia esas zonas, pues esto producirá resultados menos ruidos en este
+<em>frame</em>. Esta técnica la hemos estudiado, y se llama muestreo por
+importancia (de la luz entrante en este caso).</p>
 <blockquote>
 <p>Este punto enlaza con nuestra <a
 href="#comparativa-con-in-one-weekend">comparativa con In One
@@ -7781,23 +7782,23 @@ escena con mucha radiancia, por lo que el fundamento es similar.</p>
 <img loading="lazy" src="./img/07/Lumen6.png"
 alt="Figura 80: Lumen utiliza las partes más brillantes del último frame para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: Epic Games (2022b)" />
 <figcaption aria-hidden="true"><span>Figura 80:</span> Lumen utiliza las
-partes más brillantes del último frame para la distribución de las
-nuevas direcciones de un rayo tras el impacto. Fuente: <span
+partes más brillantes del último <em>frame</em> para la distribución de
+las nuevas direcciones de un rayo tras el impacto. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
 role="doc-biblioref">2022b</a>)</span></figcaption>
 </figure>
 </div>
 <p>Para calcular los reflejos de superficies se ha optado por promediar
 la radiancia de puntos en el mismo vecindario y acumulación temporal de
-frames para suavizar el resultado.</p>
+<em>frames</em> para suavizar el resultado.</p>
 <div id="fig:lumen6" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen2.jpg"
 alt="Figura 81: Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: Epic Games (2022b)" />
 <figcaption aria-hidden="true"><span>Figura 81:</span> Nuestro método
-principal de reducción de ruido fue la acumulación temporal de frames.
-Lumen utiliza una forma mucho más avanzada para lograr el mismo
-resultado con sus reflejos. Fuente: <span class="citation"
+principal de reducción de ruido fue la acumulación temporal de
+<em>frames</em>. Lumen utiliza una forma mucho más avanzada para lograr
+el mismo resultado con sus reflejos. Fuente: <span class="citation"
 data-cites="lumen">Epic Games (<a href="#ref-lumen"
 role="doc-biblioref">2022b</a>)</span></figcaption>
 </figure>
@@ -7878,8 +7879,8 @@ class="header-section-number">8.2</span> Ciclos de desarrollo</h2>
 <p>Este proyecto está compuesto por 2 grandes pilares: documentación –lo
 que estás leyendo, ya sea en PDF o en la web– y software. Podemos
 distinguir varias fases en la planificación del proyecto, que quedan
-resumidas en el diagrama de Grant [Figuras <a
-href="#fig:grantt_1">82</a>, <a href="#fig:grantt_2">83</a>]</p>
+resumidas en el diagrama de Gantt [Figuras <a
+href="#fig:gantt_1">82</a>, <a href="#fig:gantt_2">83</a>]</p>
 <p>Para comenzar, durante el verano de 2021 se implementarían los tres
 libros de Shirley de la “serie In One Weekend”: In One Weekend <span
 class="citation" data-cites="Shirley2020RTW1">(<a
@@ -7891,12 +7892,12 @@ role="doc-biblioref">Shirley 2020b</a>)</span>, y The Rest of your Life
 href="#ref-Shirley2020RTW3" role="doc-biblioref">Shirley
 2020c</a>)</span>. De esta forma, asentaríamos las bases del proyecto,
 acelerando así el aprendizaje.</p>
-<div id="fig:grantt_1" class="fignos">
+<div id="fig:gantt_1" class="fignos">
 <figure>
-<img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%201.png"
-alt="Figura 82: Diagrama de Grantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
-<figcaption aria-hidden="true"><span>Figura 82:</span> Diagrama de
-Grantt de la primera parte del desarrollo. Los libros de Peter Shirley
+<img loading="lazy" src="./img/08/Diagrama%20de%20Gantt%201.png"
+alt="Figura 82: Diagrama de Gantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
+<figcaption aria-hidden="true"><span>Figura 82:</span> Diagrama de Gantt
+de la primera parte del desarrollo. Los libros de Peter Shirley
 servirían como introducción al trabajo</figcaption>
 </figure>
 </div>
@@ -7904,14 +7905,13 @@ servirían como introducción al trabajo</figcaption>
 consiguiera una base sólida, se empezaría a alternar entre escritura de
 la memoria y el software. Es importante documentar lo que se realiza,
 pues no se puede implementar algo que no se entiende.</p>
-<div id="fig:grantt_2" class="fignos">
+<div id="fig:gantt_2" class="fignos">
 <figure>
-<img loading="lazy" src="./img/08/Diagrama%20de%20Grantt%202.png"
-alt="Figura 83: Diagrama de Grantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
-<figcaption aria-hidden="true"><span>Figura 83:</span> Diagrama de
-Grantt de la segunda parte del desarrollo. Durante el segundo
-cuatrimestre se trabajaría tanto la memoria como el
-software</figcaption>
+<img loading="lazy" src="./img/08/Diagrama%20de%20Gantt%202.png"
+alt="Figura 83: Diagrama de Gantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
+<figcaption aria-hidden="true"><span>Figura 83:</span> Diagrama de Gantt
+de la segunda parte del desarrollo. Durante el segundo cuatrimestre se
+trabajaría tanto la memoria como el software</figcaption>
 </figure>
 </div>
 <p>Sin embargo, esto era únicamente una planificación. Como todos
