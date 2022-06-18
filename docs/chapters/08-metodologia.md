@@ -1,6 +1,6 @@
 # Metodología de trabajo
 
-Cualquier proyecto de una envergadura considerable necesita ser planificado con antelación. En este capítulo vamos a hablar de cómo se ha realizado este trabajo: mostraremos las herramientas usadas, los ciclos de desarrollo, integración entre documentación y path tracer, y otras influencias que han afectado al producto final.
+Cualquier proyecto de una envergadura considerable necesita ser planificado con antelación. En este capítulo vamos a hablar de cómo se ha gestionado este trabajo: mostraremos las herramientas usadas, influencias, los ciclos de desarrollo, el uso de integración continua, y compenetración entre documentación y path tracer
 
 ## Influencias
 
@@ -10,7 +10,7 @@ Antes de comenzar con la labor, primero uno se debe hacer una simple pregunta:
 
 Dar una respuesta contundente a este tipo de cuestiones nunca es fácil. Sin embargo, sí que puedo proporcionar motivos por los que he querido escribir sobre ray tracing.
 
-Una de las principales influencias ha sido [@digital-foundry]. Este grupo de divulgación se dedica al estudio de las técnicas utilizadas en el mundo de los videojuegos. El inicio de la era del ray tracing en tiempo real les llevó a dedicar una serie de vídeos y artículos a esta tecnología, y a las diferentes maneras en las que se ha implementado. Se puede ver un ejemplo en [@digital-foundry-2020].
+Una de las principales inspiraciones del proyecto ha sido [@digital-foundry]. Este grupo de divulgación se dedica al estudio de las técnicas utilizadas en el mundo de los videojuegos. El inicio de la era del ray tracing en tiempo real les llevó a dedicar una serie de vídeos y artículos a esta tecnología, y a las diferentes maneras en las que se ha implementado. Se puede ver un ejemplo en [@digital-foundry-2020].
 
 <iframe width="784" height="441" src="https://www.youtube.com/embed/6bqA8F6B6NQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -18,9 +18,11 @@ Dado que esta área combina tanto informática, matemáticas y una visión artí
 
 Ahora que se ha decidido el tema, es hora de ver cómo atacarlo.
 
-Soy un fiel creyente del aprendizaje mediante el juego. Páginas como *Explorable Explanations* [@explorable-explanations], el blog de [@ciechanowski], el proyecto *The napkin* [@napkin] o el divulgador 3Blue1Brown [@3blue1brown] repercuten inevitablemente en la manera en la que te planteas cómo comunicar textos científicos. Por ello, aunque esto a fin de cuentas es un trabajo de fin de grado de una carrera, quería ver hasta dónde era capaz de llevarlo.
+Soy un fiel creyente del aprendizaje mediante la exploración. Conceptos que resulten tangibles, que se pueda jugar con ellos. Páginas como *Explorable Explanations* [@explorable-explanations], el blog de [@ciechanowski], el proyecto *The napkin* [@napkin] o el divulgador 3Blue1Brown [@3blue1brown] repercuten inevitablemente en la manera en la que te planteas cómo comunicar textos científicos. Por ello, aunque esto no deja de ser un mero trabajo de fin de grado de una carrera, quería ver hasta dónde era capaz de llevarlo.
 
-Otro punto importante es la *manera* de escribir. No me gusta especialmente la escritura formal. Prefiero ser distendido. Por suerte, parece que el mundo científico se está volviendo más informal [@nature-2016], así que no soy el único que aprueba esta tendencia. Además, la estructura clásica de un escrito matemático de "teorema, lema, demostración, corolario" no me agrada especialmente. He intentado preservar su estructura, pero sin ser tan explícito. Estos dos puntos, en conjunto, suponen un balance entre formalidad y distensión difícil de mantener.
+Otro punto importante es la *manera* de escribir. No me gusta especialmente la escritura formal. Prefiero ser distendido. Por suerte, parece que el mundo científico se está volviendo más familiar [@nature-2016], una tendencia a la que yo me he sumado. Además, la estructura clásica de un escrito matemático de "teorema, lema, demostración, corolario" no me agrada especialmente. He intentado preservar su estructura, pero sin ser tan explícito. Durante esta memoria he intentado introducir cada concepto de la manera más natural posible, y que las demostraciones se integren con el desarrollo.
+
+Estos dos puntos, en conjunto, suponen un balance entre formalidad y distensión difícil de mantener.
 
 ## Ciclos de desarrollo
 
@@ -36,17 +38,17 @@ Tras esto, comenzaría a desarrollarse el motor por GPU. Cuando se consiguiera u
 
 Sin embargo, esto era únicamente una planificación. Como todos sabemos, en la práctica los planes no suelen salir a la perfección. ¿Ha sido este un caso de una preparación desastrosa?
 
-Por fortuna, la idea inicial **se ha asemejado mucho a la realidad**. Algunas fases han sido más rápidas que otras, mientras que otras partes han costado más trabajo. Los tipos de commits hechos al repositorio ayudan a clasificar el tipo de trabajo, pero, en resumidas cuentas:
+Por fortuna, la idea inicial **se ha asemejado mucho a la realidad**. Algunas fases han sido más rápidas que otras, mientras que otras partes han costado más trabajo. Los commits del repositorio ayudan a clasificar el tipo de trabajo, pero, en resumidas cuentas:
 
-- In One Weekend terminó de desarrollarse considerablemente antes, el 21 de agosto. A excepción de la última parte del desarrollo de la memoria, no requiso más tiempo.
-- El diseño y la integración continua tuvieron dos fases: un sprint inicial donde se deja asentado el 70% del trabajo, y pequeñas mejoras incrementales en los siguientes meses. Debemos destacar que, conforme se mejoraba el diseño de la memoria, se añadían nuevas herramientras necesarias para su construcción. Es por ello que la integración continua requiso de varios arreglos, tanto al dockerfile como a los Actions.
+- In One Weekend terminó de desarrollarse considerablemente antes, el 21 de agosto. A excepción de la última parte del desarrollo de la memoria, no requirió de más tiempo.
+- El diseño de la memoria y la integración continua tuvieron dos fases: un sprint inicial donde se deja asentado el 70% del trabajo, y pequeñas mejoras incrementales en los siguientes meses. Debemos destacar que, conforme se mejoraba el diseño, se añadían nuevas herramientras necesarias para su construcción. Es por ello que la integración continua necesitó varios arreglos, tanto al dockerfile como a los Actions.
 - La implementación inicial del motor necesitó un tiempo considerablemente menor del previsto. No obstante, el tiempo de perfeccionamiento aumentó, y el desarrollo final concluyó cerca del 20 de mayo de 2022. Prácticamente todas las características básicas fueron implementadas, a excepción de algunos detalles. No dio mucho tiempo a extenderlo más allá de esto.
 
 Con respecto a la metodología de trabajo que se ha seguido es podemos decir que es, esencialmente, **una versión de Agile muy laxa** [@beck2001agile]. Apoyándonos en las herramientas ofrecidas por [Github](#github), diseñamos un sistema de requisitos mediante issues, tanto para la memoria como para el software. Más adelante veremos más a fondo cómo esta herramienta ha facilitado enormemente el desarrollo.
 
 ## Presupuesto
 
-A la hora de desarrollar un proyecto de software, es importante realizar una estimación del coste del trabajo. En otro caso, se corre el riesgo de que no se pueda llegar a cumplir el objetivo. En este caso, **el proyecto ha tenido un coste de 10314 euros**, que puede desglosarse de la siguiente manera:
+A la hora de desarrollar un proyecto de software, es importante realizar una estimación del coste del trabajo. En otro caso, se corre el riesgo de que no se pueda llegar a cumplir el objetivo. En este caso, **el proyecto ha tenido un coste de 10314 €**, que puede desglosarse de la siguiente manera:
 
 - El **coste del software** en total ha sido de **0 €**. Las herramientas utilizadas para el desarrollo son todas de código abierto, por lo que su uso es gratuito. Aunque se comentarán individualmente en una sección posterior, las más importantes han sido:
   - Pandoc.
@@ -74,19 +76,17 @@ A la hora de desarrollar un proyecto de software, es importante realizar una est
 
 ## Diseño
 
-El diseño juega un papel fundamental en este proyecto. Todos los elementos visuales han sido escogidos con cuidado, de forma que se preserve la estética.
-
-Se ha creado **un diseño que preserve el equilibrio entre la profesionalidad y la distensión**.
+El diseño gráfico juega un papel fundamental en este proyecto. Todos los elementos visuales han sido escogidos con cuidado, de forma que se logre un **equilibrio entre la profesionalidad y la distensión**. Esta identidad visual se extiende a todos los aspectos del trabajo.
 
 ### Bases del diseño
 
-Para la documentación en versión PDF, usamos como base la *template* [@eisvogel]. Esta es una elegante plantilla fácil de usar para LaTeX. Uno de sus puntos fuertes es la personalización, la cual aprovecharemos para darle un toque diferente.
+Para la documentación en versión PDF, usamos como base la plantilla Eisvogel, de [@eisvogel]. Uno de sus puntos fuertes es la personalización, la cual aprovecharemos para darle un toque diferente.
 
-La web utiliza como base el estilo generado por Pandoc, el microframework de CSS [@bamboo] y unas modificaciones personales.
+La web utiliza como base el estilo generado por Pandoc, el microframework de CSS Bamboo de [@bamboo] y unas modificaciones personales.
 
 ### Tipografías
 
-Un apartado al que se le debe prestar especial énfasis es a la combinación de tipografías. A fin de cuentas, esto es un libro; así que escoger un tipo de letra correcto facilitará al lector comprender los conceptos. Puede parecer trivial a priori, pero es importante.
+Un apartado al que se le debe prestar especial énfasis es a la combinación de tipografías. A fin de cuentas, nuestro objetivo es comunicar al lector nuevos conceptos de la manera más amigable posible. Escoger un tipo de letra correcto, aunque pueda parecer irrelevante a priori, facilitará la compresión de estas nociones.
 
 Para este trabajo, se han escogido las siguientes tipografías:
 
