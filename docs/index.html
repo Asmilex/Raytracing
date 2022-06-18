@@ -6123,7 +6123,9 @@ Esta técnica se llama <strong>acumulación temporal</strong>.</p>
 <p>Es importante destacar que la acumulación temporal solo es válido
 cuando la <strong>cámara se queda estática</strong>. Al cambiar de
 posición, la información del píxel se ve alterada significativamente,
-por lo que debemos reconstruir las muestras desde el principio.</p>
+por lo que debemos reconstruir las muestras desde el principio<a
+href="#fn7" class="footnote-ref" id="fnref7"
+role="doc-noteref"><sup>7</sup></a>.</p>
 <p>La implementación es muy sencilla. Está basada en el tutorial de
 <span class="citation" data-cites="nvpro-samples-tutorial">(<a
 href="#ref-nvpro-samples-tutorial" role="doc-biblioref">NVIDIA
@@ -6268,10 +6270,6 @@ anterior produciría variaciones significativas para pequeños
 movimientos. Hay otras formas de compensarlo, como dividir por el valor
 promedio de las muestras más brillantes. Nosotros hemos optado por
 mezclar los píxeles generados a lo largo del tiempo.</p>
-<p>[^6] A no ser que se utilicen <em>motion vectors</em>, los cuales
-codifican información sobre el movimiento de un objeto al pasar de un
-frame a otro. Estos permiten implementar técnicas como <em>temporal
-antialiasing</em>, los cuales veremos en una sección posterior.</p>
 <h1 data-number="5" id="análisis-de-rendimiento"><span
 class="header-section-number">5</span> Análisis de rendimiento</h1>
 <p>En este capítulo vamos a analizar el resultado final del proyecto.
@@ -7406,14 +7404,15 @@ algunas herramientras muy útiles para este propósito.</p>
 class="header-section-number">7</span> El presente y futuro de Ray
 Tracing</h1>
 <p>Después de un esfuerzo monumental como el que supone el desarrollo de
-un motor de rendering es satisfactorio ver el resultado; y más sabiendo
-que tratamos con tecnología puntera. Sin embargo, en el fondo, este
-trabajo no es más que un juguete. Mientras que este proyecto ha durado
-escasos meses, los profesionales llevan años trabajando en transporte de
-luz. Así que, ¡veamos qué se cuece en la industria!</p>
+un motor de renderizado es satisfactorio ver el resultado, y más
+sabiendo que tratamos con tecnología de última generación. Sin embargo,
+en el fondo, este trabajo no es más que un juguete. Mientras que este
+proyecto ha durado escasos meses, los profesionales llevan años
+trabajando en transporte de luz. Así que, ¡veamos qué se cuece en la
+industria!</p>
 <p>En esta sección vamos a explorar ligeralmente el estado del arte.
 Veremos algunas de las técnicas que están cobrando fuerza en los últimos
-años, así como algunos renderers profesionales. Le pondremos especial
+años, así como algunos motores profesionales. Le pondremos especial
 atención a cómo funciona el sistema de iluminación global de Unreal
 Engine 5, conocido como <em>Lumen</em>.</p>
 <h2 data-number="7.1" id="denoising"><span
@@ -7421,7 +7420,7 @@ class="header-section-number">7.1</span> <em>Denoising</em></h2>
 <p>Durante el desarrollo del trabajo aprendimos que el número de
 muestras no lo es todo. De hecho, es una de las partes menos
 importantes. Para reducir el ruido de la imagen final, resulta muchísimo
-más eficiente usar una buena estrategia de muestreo.</p>
+más eficiente diseñar una buena estrategia de muestreo.</p>
 <p>Con los avances de ray tracing en tiempo real surgió una nueva rama
 del tratamiento de la computación gráfica conocida como
 <em>denoising</em>. Este proceso consiste en eliminar el ruido de la
@@ -7455,8 +7454,8 @@ href="#ref-nvidia-blue-noise" role="doc-biblioref">Alan Wolfe
 menos instancias de errores de alta frecuencia, lo cual hace que sean
 fáciles de difuminar y acumular <span class="citation"
 data-cites="alain-filtering">(<a href="#ref-alain-filtering"
-role="doc-biblioref">Galvan 2022e</a>)</span>. Este tipo de ruido puede
-ser creado eficientemente mediante generadores de secuencias
+role="doc-biblioref">Galvan 2022e</a>)</span>. El ruido azul puede ser
+creado eficientemente mediante generadores de secuencias
 cuasi-aleatorias como las de Sobol.</p>
 <div id="fig:blue-noise" class="fignos">
 <figure>
@@ -7469,11 +7468,11 @@ href="#ref-alain-filtering"
 role="doc-biblioref">2022e</a>)</span></figcaption>
 </figure>
 </div>
-<p>Del área del <strong>procesamiento de señales</strong> se han filtros
-Gaussianos, Medianos y Guiados para promediar regiones de baja varianza.
-En los últimos años, una nueva variante de este tipo de técnicas ha
-surgido como consecuencia del <em>machine learning</em>, el cual
-estudiaremos más tarde.</p>
+<p>Del área del <strong>procesamiento de señales</strong> se han
+transferido filtros Gaussianos, medianos y guiados para promediar
+regiones de baja varianza. En los últimos años, una nueva variante de
+este tipo de técnicas ha surgido como consecuencia del <em>machine
+learning</em>, el cual estudiaremos más tarde.</p>
 <p>Las <strong>técnicas de acumulación</strong> permiten reutilizar
 información anterior para suavizar el resultado final. Este tipo de
 técnicas empezaron originalmente en 1988 con <em>irradiance caching</em>
@@ -7483,20 +7482,28 @@ href="#ref-irradiance-caching" role="doc-biblioref">Greg Ward
 <p>Un método muy sencillo que hemos estudiado es la <a
 href="#antialiasing-mediante-jittering-y-acumulación-temporal">acumulación
 temporal</a>, pero requiere que la cámara se quede estática. En la
-práctica se puede lo mismo con una escena en movimiento. Algunos de los
-algoritmos más famosos son <em>Spatio-Temporal Variance Guided
-Filter</em> (SVGF), <em>Spatial Denoising</em>, Adaptive SVGF (A-SVGF) y
-<em>Temporally dense ray tracing</em>.</p>
-<p>Un algoritmo que se ha utilizado exitosamente en los últimos años es
-<em>Spatiotemporal importance Resampling</em> (ReSTIR) <span
-class="citation" data-cites="restir">(<a href="#ref-restir"
-role="doc-biblioref">Benedikt Bitterli 2020</a>)</span>, el cual es
-capaz de procesar millones de luces dinámicas en tiempo real en alta
-calidad sin necesidad de introducir estructuras de datos excesivamente
-complejas. Está basado en el algoritmo <em>Sampling Importance
-Resampling</em> (STIR). Este último se puede estudiar a fondo en <span
-class="citation" data-cites="stir">(<a href="#ref-stir"
-role="doc-biblioref">Wolfe 2022</a>)</span></p>
+actualidad, los algoritmos más avanzados consiguen el mismo efecto con
+una cámara en movimiento. Para lograrlo, se requiere el uso de un
+<em>motion buffer</em>, el cual calcula el cambio en la posición de un
+vértice de un <em>frame</em> a otro. En la práctica suelen venir
+acompañados de <em>motion vectors</em>, los cuales también son usados
+para técnicas como temporal antialiasing (TAA) o temporal upscaling
+<span class="citation" data-cites="temporal-supersampling">(<a
+href="#ref-temporal-supersampling" role="doc-biblioref">Karis
+2014</a>)</span> (TAA es una técnica de muestreo).</p>
+<p>Algunos de los métodos más famosos son <em>Spatio-Temporal Variance
+Guided Filter</em> (SVGF), <em>Spatial Denoising</em>, Adaptive SVGF
+(A-SVGF) y <em>Temporally dense ray tracing</em>. Un algoritmo que se ha
+utilizado exitosamente en los últimos años es <em>Spatiotemporal
+importance Resampling</em> (ReSTIR) <span class="citation"
+data-cites="restir">(<a href="#ref-restir" role="doc-biblioref">Benedikt
+Bitterli 2020</a>)</span>, el cual es capaz de procesar millones de
+luces dinámicas en tiempo real en alta calidad sin necesidad de
+introducir estructuras de datos excesivamente complejas. Está basado en
+el algoritmo <em>Sampling Importance Resampling</em> (STIR). Este último
+se puede estudiar a fondo en <span class="citation"
+data-cites="stir">(<a href="#ref-stir" role="doc-biblioref">Wolfe
+2022</a>)</span></p>
 <div id="fig:restir" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/restir.png"
@@ -7506,33 +7513,26 @@ Fuente: <span class="citation" data-cites="restir">Benedikt Bitterli (<a
 href="#ref-restir" role="doc-biblioref">2020</a>)</span></figcaption>
 </figure>
 </div>
-<p>La mayor parte de estas técnicas requieren el uso de un <em>motion
-buffer</em>, el cual calcula el cambio en la posición de un vértice de
-un <em>frame</em> a otro. En la práctica suelen venir acompañados de
-<em>motion vectors</em>, los cuales también son usados para técnicas
-como temporal antialiasing (TAA) o temporal upscaling <span
-class="citation" data-cites="temporal-supersampling">(<a
-href="#ref-temporal-supersampling" role="doc-biblioref">Karis
-2014</a>)</span> (TAA es una técnica de muestreo).</p>
 <h3 data-number="7.1.2"
 id="machine-learning-y-técnicas-de-super-sampling"><span
 class="header-section-number">7.1.2</span> <em>Machine Learning</em> y
 técnicas de <em>super sampling</em></h3>
 <p>Para cualquier persona que haya seguido el mundo de la tecnología en
-los últimos años, no debe resultarle sorprendente la afirmación de que
-las técnicas basadas en machine learning están de moda. Nuestro campo de
-investigación, el transporte de luz, también se ha visto beneficiado por
-ellas.</p>
+los últimos años, no debe resultarle sorprendente que <em>machine
+learning</em> haya influido en este campo. La industria de la tecnología
+está explorando su funcionamiento a fondo, y el transporte de luz se ha
+beneficiado de ello.</p>
 <p>En la actualidad el propósito de las redes neuronales suele ser
 reconstruir la imagen desde una resolución considerablemente menor: en
 vez de renderizar una imagen a, por ejemplo, 4K, se computa primero a
-1080p o menor y luego se reescala mediante inteligencia artificial. Las
-tecnologías más famosas que existen de este estilo son Nvidia Deep
-Learning Super Sampling 2.0 <span class="citation" data-cites="dlss">(<a
-href="#ref-dlss" role="doc-biblioref">NVIDIA 2020a</a>)</span> e Intel
-XeSS <span class="citation" data-cites="xess">(<a href="#ref-xess"
-role="doc-biblioref">Intel 2022b</a>)</span>. AMD lanzó recientemente
-FidelityFX Super Resolution 2.0 (FSR) <span class="citation"
+1080p o menos y luego se reescala mediante inteligencia artificial. Las
+tecnologías más famosas que operan de esta manera son <strong>Nvidia
+Deep Learning Super Sampling</strong> (DLSS) <span class="citation"
+data-cites="dlss">(<a href="#ref-dlss" role="doc-biblioref">NVIDIA
+2020a</a>)</span> e Intel <strong>XeSS</strong> <span class="citation"
+data-cites="xess">(<a href="#ref-xess" role="doc-biblioref">Intel
+2022b</a>)</span>. AMD lanzó recientemente <strong>FidelityFX Super
+Resolution</strong> 2.0 (FSR) <span class="citation"
 data-cites="fsr">(<a href="#ref-fsr" role="doc-biblioref">AMD
 2022</a>)</span>, pero no utiliza redes neuronales. Sin embargo, la
 consideraremos en esta sección, pues sus resultados son muy
@@ -7543,18 +7543,19 @@ autoenconder convolucional. Los resultados son espectaculares, y
 consiguen un rendimiento mucho mayor que a resolución nativa sin perder
 calidad de imagen. En algunos casos, la reconstrucción acaba teniendo
 mayor nitidez que la imagen original, pues la red neuronal aplica
-antialiasing en el proceso.</p>
+<em>antialiasing</em> en el proceso.</p>
 <div id="fig:df-dlss" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Control.jpg" style="width:70.0%"
-alt="Figura 73: Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se duplica al utilizar DLSS. Fuente: Digital Foundry (2020a).   Izquierda: DLSS 2.0 con resolución interna a 1080p. Derecha: 4K nativo." />
+alt="Figura 73: Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se llega a duplica al utilizar DLSS sin perder fidelidad de imagen. Fuente: Digital Foundry (2020a).   Izquierda: DLSS 2.0 con resolución interna a 1080p. Derecha: 4K nativo." />
 <figcaption aria-hidden="true"><span>Figura 73:</span> Control, de
 Remedy Games. Uno de los primeros videojuegos que integraron ray tracing
-en tiempo real basado en DX12. El rendimiento se duplica al utilizar
-DLSS. Fuente: <span class="citation" data-cites="df-dlss">Digital
-Foundry (<a href="#ref-df-dlss" role="doc-biblioref">2020a</a>)</span>.
-<br> <strong>Izquierda</strong>: DLSS 2.0 con resolución interna a
-1080p. <strong>Derecha</strong>: 4K nativo.</figcaption>
+en tiempo real basado en DX12. El rendimiento se llega a duplica al
+utilizar DLSS sin perder fidelidad de imagen. Fuente: <span
+class="citation" data-cites="df-dlss">Digital Foundry (<a
+href="#ref-df-dlss" role="doc-biblioref">2020a</a>)</span>. <br>
+<strong>Izquierda</strong>: DLSS 2.0 con resolución interna a 1080p.
+<strong>Derecha</strong>: 4K nativo.</figcaption>
 </figure>
 </div>
 <p><strong>Intel XeSS</strong> funciona de manera similar a DLSS, aunque
@@ -7576,10 +7577,10 @@ nativa.</p>
 <div id="fig:dlss-fsr-taa" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Comparación.jpg"
-alt="Figura 74: Comparativa entre las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo son reconstruidas las vallas, así como el texto de los globos. Fuente: Digital Foundry (2022b).   Izquierda: Nvidia DLSS 2.3. Centro: AMD FSR 2.0. Derecha: Temporal antialiasing." />
+alt="Figura 74: Comparativa entre las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo son reconstruidas las vallas, así como al texto de los globos. Fuente: Digital Foundry (2022b).   Izquierda: Nvidia DLSS 2.3. Centro: AMD FSR 2.0. Derecha: Temporal antialiasing." />
 <figcaption aria-hidden="true"><span>Figura 74:</span> Comparativa entre
 las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo
-son reconstruidas las vallas, así como el texto de los globos. Fuente:
+son reconstruidas las vallas, así como al texto de los globos. Fuente:
 <span class="citation" data-cites="df-fsr">Digital Foundry (<a
 href="#ref-df-fsr" role="doc-biblioref">2022b</a>)</span>. <br>
 <strong>Izquierda</strong>: Nvidia DLSS 2.3. <strong>Centro</strong>:
@@ -7597,31 +7598,34 @@ videojuegos debido a sus limitaciones del <em>frame</em> budget.</p>
 <h3 data-number="7.2.1" id="productos-comerciales"><span
 class="header-section-number">7.2.1</span> Productos comerciales</h3>
 <p>Es mandatorio que la imagen se produzca en un margen de tiempo muy
-reducido; como máximo, de 33 milisegundos. Teniendo en cuenta esta
+reducido; como máximo, de 33 milisegundos. Teniendo en cuenta este
 estrechísimo margen, la mayor parte de las empresas se optó por una
 <strong>solución híbrida</strong>: en vez de utilizar ray tracing
-puramente, este algoritmo se reserva para ciertas partes de la pipeline
-de procesamiento. Entre estas se encuentran los
+puramente, este algoritmo se reserva para ciertas partes de la
+<em>pipeline</em> de procesamiento. Entre estas se encuentran los
 <strong>reflejos</strong> y la <strong>iluminación global</strong> <span
 class="citation" data-cites="khonos-best-practices">(<a
 href="#ref-khonos-best-practices" role="doc-biblioref">Mihut
 2020</a>)</span>.</p>
 <p>En vez de recaer en técnicas antiguas como reflejos en espacio de
-pantalla (<em>screen-space</em>) se utiliza una forma reducida de ray
-tracing para computar estos efectos. En el proceso final de la pipeline
-híbrida de rasterización y ray tracing se combina el resultado de ambas
-técnicas para producir la imagen final.</p>
+pantalla (<em>screen-space reflections</em>) se utiliza una forma
+reducida de ray tracing para computar estos efectos. En el proceso final
+de la <em>pipeline</em> híbrida de rasterización y ray tracing se
+combina el resultado de ambas técnicas para producir la imagen
+final.</p>
 <div id="fig:spiderman-reflections" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/HybridRT.jpg" style="width:70.0%"
-alt="Figura 75: En vez de utilizar screen-space reflections, los cuales sufren de los problemas clásicos de rasterización debido a su naturaleza (como el fallback a los cubemaps cuando el ángulo es demasiado agudo), ray tracing resuelve estos efectos de forma magistral. Fuente: (Digital Foundry 2021a)" />
+alt="Figura 75: En vez de utilizar screen-space reflections, los cuales sufren de los problemas clásicos de rasterización debido a su naturaleza (como el fallback a los cubemaps cuando el ángulo es demasiado agudo), ray tracing resuelve estos efectos de forma magistral. Fuente: (Digital Foundry 2021a)   Izquierda: Rasterización con ray tracing para reflejos. Derecha: Rasterización." />
 <figcaption aria-hidden="true"><span>Figura 75:</span> En vez de
 utilizar <em>screen-space reflections</em>, los cuales sufren de los
 problemas clásicos de rasterización debido a su naturaleza (como el
 <em>fallback</em> a los cubemaps cuando el ángulo es demasiado agudo),
 ray tracing resuelve estos efectos de forma magistral. Fuente: <span
 class="citation" data-cites="df-spiderman">(<a href="#ref-df-spiderman"
-role="doc-biblioref">Digital Foundry 2021a</a>)</span></figcaption>
+role="doc-biblioref">Digital Foundry 2021a</a>)</span> <br>
+<strong>Izquierda</strong>: Rasterización con ray tracing para reflejos.
+<strong>Derecha</strong>: Rasterización.</figcaption>
 </figure>
 </div>
 <p>Algunos productos comerciales que destacan por su uso de ray tracing
@@ -7639,8 +7643,8 @@ data-cites="Q2RTX">(<a href="#ref-Q2RTX" role="doc-biblioref">NVIDIA
 un análisis técnico en el blog de <span class="citation"
 data-cites="alain-minecraft">(<a href="#ref-alain-minecraft"
 role="doc-biblioref">Galvan 2020</a>)</span>. Los resultados gráficos
-son espectaculares, aunque se necesita un hardware gráfico considerable
-para poder ejecutarlos.</p>
+son espectaculares, aunque se necesita un hardware gráfico
+considerablemente potente para poder correrlos.</p>
 <h3 data-number="7.2.2" id="consolas-de-nueva-generación"><span
 class="header-section-number">7.2.2</span> Consolas de nueva
 generación</h3>
@@ -7654,10 +7658,10 @@ role="doc-biblioref">Wikipedia 2022g</a>)</span>. Ambas fueron lanzadas
 a finales del año 2020. Las dos consolas utilizan la arquitectura de AMD
 denominada RDNA 2 de AMD, la misma que se usa en sus gráficas de
 escritorio de última generación. PS5 empaqueta 36 unidades de cómputo
-(<em>Compute Units</em> CUs), con una potencia de 10.23 TFLOPS para
+(<em>Compute Units</em>, CUs), con una potencia de 10.23 TFLOPS para
 operaciones en coma flotante de 32 bits y 21.46 TFLOPS para las de 16.
 Por otra parte, Series X monta 52 CUs con una potencia teórica de 12.16
-TFLOPSl, mientras que Series S reduce el número de CUs a 20.</p>
+TFLOPS, mientras que Series S reduce el número de CUs a 20.</p>
 <p>En verano de 2020 Mark Cerny habló sobre cómo se utilizaría las
 capacidades de la arquitectura en el futuro de la consola <span
 class="citation" data-cites="cerny-ps5">(<a href="#ref-cerny-ps5"
@@ -7719,12 +7723,12 @@ simplificada de la escena en la cual resulta más fácil hacer
 intersecciones de rayos con objetos.</p>
 <p>Por defecto se ha optado una forma de ray tracing basada en software,
 pues de esta manera se soporta más tipos de hardware. Se combinan
-<em>Mesh Distance Fields</em> (mallas de polígonos que resultan
-eficientes a la hora de intersecar) mezcladas en un <em>Global Distance
-Field</em> en este tipo de ray tracing. No obstante, su versión de ray
-tracing basado en hardware es mandatoria para conseguir algunos efectos
-como reflejos especulares perfectos, pues de otra manera no se podrían
-conseguir en tiempo real.</p>
+<em>Mesh Distance Fields</em> [<a href="#fig:lumen3">78</a>] (mallas de
+polígonos que resultan eficientes a la hora de intersecar) mezcladas en
+un <em>Global Distance Field</em> en este tipo de ray tracing. No
+obstante, su versión de ray tracing basado en hardware es mandatoria
+para conseguir algunos efectos como reflejos especulares perfectos, pues
+de otra manera no se podrían conseguir en tiempo real.</p>
 <p>Una optimización clave para que este sistema funcione de forma
 eficiente es el uso de <em>surface caching</em>. Trabajando en conjunto
 junto a Nanite, Lumen crea un atlas de texturas de aquellas mallas
@@ -7774,7 +7778,7 @@ que utilizar muestreo por importancia de las fuentes de iluminación
 proporcionaba unos resultados considerablemente mejores que una
 estrategia de muestreo basada en direcciones aleatorias. Aunque en este
 caso no se muestrean las fuentes de luz, sí que se utilizan partes de la
-escena con mucha radiancia, por lo que el fundamento es similar.</p>
+escena con mucha radiancia, por lo que el fundamento es el mismo.</p>
 </blockquote>
 <div id="fig:lumen5" class="fignos">
 <figure>
@@ -7819,9 +7823,9 @@ consolas de la generación actual.</p>
 class="header-section-number">8</span> Metodología de trabajo</h1>
 <p>Cualquier proyecto de una envergadura considerable necesita ser
 planificado con antelación. En este capítulo vamos a hablar de cómo se
-ha realizado este trabajo: mostraremos las herramientas usadas, los
-ciclos de desarrollo, integración entre documentación y path tracer, y
-otras influencias que han afectado al producto final.</p>
+ha gestionado este trabajo: mostraremos las herramientas usadas,
+influencias, los ciclos de desarrollo, el uso de integración continua, y
+compenetración entre documentación y path tracer</p>
 <h2 data-number="8.1" id="influencias"><span
 class="header-section-number">8.1</span> Influencias</h2>
 <p>Antes de comenzar con la labor, primero uno se debe hacer una simple
@@ -7832,23 +7836,24 @@ pregunta:</p>
 <p>Dar una respuesta contundente a este tipo de cuestiones nunca es
 fácil. Sin embargo, sí que puedo proporcionar motivos por los que he
 querido escribir sobre ray tracing.</p>
-<p>Una de las principales influencias ha sido <span class="citation"
-data-cites="digital-foundry">(<a href="#ref-digital-foundry"
-role="doc-biblioref">Digital Foundry 2022a</a>)</span>. Este grupo de
-divulgación se dedica al estudio de las técnicas utilizadas en el mundo
-de los videojuegos. El inicio de la era del ray tracing en tiempo real
-les llevó a dedicar una serie de vídeos y artículos a esta tecnología, y
-a las diferentes maneras en las que se ha implementado. Se puede ver un
-ejemplo en <span class="citation" data-cites="digital-foundry-2020">(<a
-href="#ref-digital-foundry-2020" role="doc-biblioref">Digital Foundry
-2020b</a>)</span>.</p>
+<p>Una de las principales inspiraciones del proyecto ha sido <span
+class="citation" data-cites="digital-foundry">(<a
+href="#ref-digital-foundry" role="doc-biblioref">Digital Foundry
+2022a</a>)</span>. Este grupo de divulgación se dedica al estudio de las
+técnicas utilizadas en el mundo de los videojuegos. El inicio de la era
+del ray tracing en tiempo real les llevó a dedicar una serie de vídeos y
+artículos a esta tecnología, y a las diferentes maneras en las que se ha
+implementado. Se puede ver un ejemplo en <span class="citation"
+data-cites="digital-foundry-2020">(<a href="#ref-digital-foundry-2020"
+role="doc-biblioref">Digital Foundry 2020b</a>)</span>.</p>
 <iframe width="784" height="441" src="https://www.youtube.com/embed/6bqA8F6B6NQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <p>Dado que esta área combina tanto informática, matemáticas y una
 visión artística, ¿por qué no explorarlo a fondo?</p>
 <p>Ahora que se ha decidido el tema, es hora de ver cómo atacarlo.</p>
-<p>Soy un fiel creyente del aprendizaje mediante el juego. Páginas como
-<em>Explorable Explanations</em> <span class="citation"
+<p>Soy un fiel creyente del aprendizaje mediante la exploración.
+Conceptos que resulten tangibles, que se pueda jugar con ellos. Páginas
+como <em>Explorable Explanations</em> <span class="citation"
 data-cites="explorable-explanations">(<a
 href="#ref-explorable-explanations" role="doc-biblioref">Ncase
 2022</a>)</span>, el blog de <span class="citation"
@@ -7860,19 +7865,22 @@ divulgador 3Blue1Brown <span class="citation"
 data-cites="3blue1brown">(<a href="#ref-3blue1brown"
 role="doc-biblioref">Sanderson 2022</a>)</span> repercuten
 inevitablemente en la manera en la que te planteas cómo comunicar textos
-científicos. Por ello, aunque esto a fin de cuentas es un trabajo de fin
+científicos. Por ello, aunque esto no deja de ser un mero trabajo de fin
 de grado de una carrera, quería ver hasta dónde era capaz de
 llevarlo.</p>
 <p>Otro punto importante es la <em>manera</em> de escribir. No me gusta
 especialmente la escritura formal. Prefiero ser distendido. Por suerte,
-parece que el mundo científico se está volviendo más informal <span
+parece que el mundo científico se está volviendo más familiar <span
 class="citation" data-cites="nature-2016">(<a href="#ref-nature-2016"
-role="doc-biblioref">Nature 2016</a>)</span>, así que no soy el único
-que aprueba esta tendencia. Además, la estructura clásica de un escrito
-matemático de “teorema, lema, demostración, corolario” no me agrada
-especialmente. He intentado preservar su estructura, pero sin ser tan
-explícito. Estos dos puntos, en conjunto, suponen un balance entre
-formalidad y distensión difícil de mantener.</p>
+role="doc-biblioref">Nature 2016</a>)</span>, una tendencia a la que yo
+me he sumado. Además, la estructura clásica de un escrito matemático de
+“teorema, lema, demostración, corolario” no me agrada especialmente. He
+intentado preservar su estructura, pero sin ser tan explícito. Durante
+esta memoria he intentado introducir cada concepto de la manera más
+natural posible, y que las demostraciones se integren con el
+desarrollo.</p>
+<p>Estos dos puntos, en conjunto, suponen un balance entre formalidad y
+distensión difícil de mantener.</p>
 <h2 data-number="8.2" id="ciclos-de-desarrollo"><span
 class="header-section-number">8.2</span> Ciclos de desarrollo</h2>
 <p>Este proyecto está compuesto por 2 grandes pilares: documentación –lo
@@ -7918,19 +7926,19 @@ sabemos, en la práctica los planes no suelen salir a la perfección. ¿Ha
 sido este un caso de una preparación desastrosa?</p>
 <p>Por fortuna, la idea inicial <strong>se ha asemejado mucho a la
 realidad</strong>. Algunas fases han sido más rápidas que otras,
-mientras que otras partes han costado más trabajo. Los tipos de commits
-hechos al repositorio ayudan a clasificar el tipo de trabajo, pero, en
-resumidas cuentas:</p>
+mientras que otras partes han costado más trabajo. Los commits del
+repositorio ayudan a clasificar el tipo de trabajo, pero, en resumidas
+cuentas:</p>
 <ul>
 <li>In One Weekend terminó de desarrollarse considerablemente antes, el
 21 de agosto. A excepción de la última parte del desarrollo de la
-memoria, no requiso más tiempo.</li>
-<li>El diseño y la integración continua tuvieron dos fases: un sprint
-inicial donde se deja asentado el 70% del trabajo, y pequeñas mejoras
-incrementales en los siguientes meses. Debemos destacar que, conforme se
-mejoraba el diseño de la memoria, se añadían nuevas herramientras
+memoria, no requirió de más tiempo.</li>
+<li>El diseño de la memoria y la integración continua tuvieron dos
+fases: un sprint inicial donde se deja asentado el 70% del trabajo, y
+pequeñas mejoras incrementales en los siguientes meses. Debemos destacar
+que, conforme se mejoraba el diseño, se añadían nuevas herramientras
 necesarias para su construcción. Es por ello que la integración continua
-requiso de varios arreglos, tanto al dockerfile como a los Actions.</li>
+necesitó varios arreglos, tanto al dockerfile como a los Actions.</li>
 <li>La implementación inicial del motor necesitó un tiempo
 considerablemente menor del previsto. No obstante, el tiempo de
 perfeccionamiento aumentó, y el desarrollo final concluyó cerca del 20
@@ -7952,8 +7960,8 @@ class="header-section-number">8.3</span> Presupuesto</h2>
 <p>A la hora de desarrollar un proyecto de software, es importante
 realizar una estimación del coste del trabajo. En otro caso, se corre el
 riesgo de que no se pueda llegar a cumplir el objetivo. En este caso,
-<strong>el proyecto ha tenido un coste de 10314 euros</strong>, que
-puede desglosarse de la siguiente manera:</p>
+<strong>el proyecto ha tenido un coste de 10314 €</strong>, que puede
+desglosarse de la siguiente manera:</p>
 <ul>
 <li>El <strong>coste del software</strong> en total ha sido de <strong>0
 €</strong>. Las herramientas utilizadas para el desarrollo son todas de
@@ -8002,29 +8010,29 @@ proyecto.</li>
 </ul>
 <h2 data-number="8.4" id="diseño"><span
 class="header-section-number">8.4</span> Diseño</h2>
-<p>El diseño juega un papel fundamental en este proyecto. Todos los
-elementos visuales han sido escogidos con cuidado, de forma que se
-preserve la estética.</p>
-<p>Se ha creado <strong>un diseño que preserve el equilibrio entre la
-profesionalidad y la distensión</strong>.</p>
+<p>El diseño gráfico juega un papel fundamental en este proyecto. Todos
+los elementos visuales han sido escogidos con cuidado, de forma que se
+logre un <strong>equilibrio entre la profesionalidad y la
+distensión</strong>. Esta identidad visual se extiende a todos los
+aspectos del trabajo.</p>
 <h3 data-number="8.4.1" id="bases-del-diseño"><span
 class="header-section-number">8.4.1</span> Bases del diseño</h3>
-<p>Para la documentación en versión PDF, usamos como base la
-<em>template</em> <span class="citation" data-cites="eisvogel">(<a
-href="#ref-eisvogel" role="doc-biblioref">Wagler 2022</a>)</span>. Esta
-es una elegante plantilla fácil de usar para LaTeX. Uno de sus puntos
-fuertes es la personalización, la cual aprovecharemos para darle un
-toque diferente.</p>
+<p>Para la documentación en versión PDF, usamos como base la plantilla
+Eisvogel, de <span class="citation" data-cites="eisvogel">(<a
+href="#ref-eisvogel" role="doc-biblioref">Wagler 2022</a>)</span>. Uno
+de sus puntos fuertes es la personalización, la cual aprovecharemos para
+darle un toque diferente.</p>
 <p>La web utiliza como base el estilo generado por Pandoc, el
-microframework de CSS <span class="citation" data-cites="bamboo">(<a
-href="#ref-bamboo" role="doc-biblioref">Anh 2022</a>)</span> y unas
-modificaciones personales.</p>
+microframework de CSS Bamboo de <span class="citation"
+data-cites="bamboo">(<a href="#ref-bamboo" role="doc-biblioref">Anh
+2022</a>)</span> y unas modificaciones personales.</p>
 <h3 data-number="8.4.2" id="tipografías"><span
 class="header-section-number">8.4.2</span> Tipografías</h3>
 <p>Un apartado al que se le debe prestar especial énfasis es a la
-combinación de tipografías. A fin de cuentas, esto es un libro; así que
-escoger un tipo de letra correcto facilitará al lector comprender los
-conceptos. Puede parecer trivial a priori, pero es importante.</p>
+combinación de tipografías. A fin de cuentas, nuestro objetivo es
+comunicar al lector nuevos conceptos de la manera más amigable posible.
+Escoger un tipo de letra correcto, aunque pueda parecer irrelevante a
+priori, facilitará la compresión de estas nociones.</p>
 <p>Para este trabajo, se han escogido las siguientes tipografías:</p>
 <ul>
 <li><strong>Crimson Pro</strong>, por <span class="citation"
@@ -9073,6 +9081,12 @@ role="doc-biblioentry">
 30, 1998. Accessed May 16, 2022. <a
 href="http://www.graphics.cornell.edu/online/box/compare.html">http://www.graphics.cornell.edu/online/box/compare.html</a>.
 </div>
+<div id="ref-quantumfracture-2021" class="csl-entry"
+role="doc-biblioentry">
+Crespo, J. L. 2021. <span>“Ya, en serio, ¿qué es la luz?”</span>
+December 10, 2021. Accessed April 22, 2022. <a
+href="https://www.youtube.com/watch?v=DkcEAz09Buo">https://www.youtube.com/watch?v=DkcEAz09Buo</a>.
+</div>
 <div id="ref-crytek-2020" class="csl-entry" role="doc-biblioentry">
 Crytek. 2020. <span>“Crysis remastered brings ray tracing to current-gen
 consoles.”</span> September 11, 2020. Accessed April 17, 2022. <a
@@ -9627,9 +9641,13 @@ href="https://www.cg.tuwien.ac.at/courses/Rendering/VU.SS2019.html">https://www.
 role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>No tiene por qué ser en tiempo, pero
-generalmente se considera este tipo de variable.<a href="#fnref1"
-class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>No entraremos en detalle sobre la
+naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos
+divulgadores como <span class="citation"
+data-cites="quantumfracture-2021">(<a href="#ref-quantumfracture-2021"
+role="doc-biblioref">Crespo 2021</a>)</span> que han tratado el tema con
+suficiente profundidad.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>Recuerda que estamos omitiendo la
 longitud de onda <span class="math inline">\(\lambda\)</span>.<a
 href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -9662,6 +9680,12 @@ DXR a KHR, lo que permite utilizar DirectX12 ray tracing en sistemas
 basados en Linux. El motivo de este software es expandir el mercado de
 videojuegos disponibles en su consola, la Steam Deck.<a href="#fnref6"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>A no ser que se utilicen <em>motion
+vectors</em>, los cuales codifican información sobre el movimiento de un
+objeto al pasar de un frame a otro. Estos permiten implementar técnicas
+como <em>temporal antialiasing</em>, los cuales veremos en una sección
+posterior.<a href="#fnref7" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </body>
