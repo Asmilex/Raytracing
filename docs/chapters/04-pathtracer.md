@@ -2,7 +2,7 @@
 
 Ahora que hemos introducido toda la teoría necesaria, es hora de ponernos manos a la obra. En este capítulo escogeremos una serie de herramientas y con ellas implementaremos un pequeño motor de path tracing en tiempo real.
 
-La implementación estará basada en Vulkan, junto al pequeño framework de *nvpro-samples*, que puede encontrarse en el repositorio [@nvpro-samples-tutorial]. Nuestro trabajo recogerá varias de las características que se muestran en dicho repositorio. Además, mantendremos el mismo espíritu que la serie de [@Shirley2020RTW1], Ray Tracing In One Weekend.
+La implementación estará basada en Vulkan, junto al pequeño *framework* de *nvpro-samples*, que puede encontrarse en el repositorio [@nvpro-samples-tutorial]. Nuestro trabajo recogerá varias de las características que se muestran en dicho repositorio. Además, mantendremos el mismo espíritu que la serie de [@Shirley2020RTW1], Ray Tracing In One Weekend.
 
 El resultado final puede verse en el siguiente vídeo [@video]
 
@@ -111,9 +111,9 @@ La principal desventaja de esta implementación es que utiliza recursividad. Com
 
 ## Requisitos de ray tracing en tiempo real
 
-Como es natural, el tiempo es una limitación enorme para cualquier programa en tiempo real. Mientras que en un *offline renderer* disponemos de un tiempo muy considerable por frame (desde varios segundos hasta horas), en un programa en tiempo real necesitamos que un frame salga en 33.3 milisegundos o menos. Este concepto se suele denominar *frame budget*: la cantidad de tiempo que disponemos para un frame.
+Como es natural, el tiempo es una limitación enorme para cualquier programa en tiempo real. Mientras que en un *offline renderer* disponemos de un tiempo muy considerable por *frame* (desde varios segundos hasta horas), en un programa en tiempo real necesitamos que un *frame* salga en 33.3 milisegundos o menos. Este concepto se suele denominar *frame budget*: la cantidad de tiempo que disponemos para un *frame*.
 
-> **Nota**: cuando hablamos del tiempo disponible para un frame, solemos utilizar milisegundos (ms) o frames por segundo (FPS). Para que un programa en tiempo real vaya suficientemente fluido, necesitaremos que el motor corra a un mínimo de 30 FPS (que equivalen a 33.3 ms/frame). Hoy en día, debido al avance del área en campos como los videosjuegos, el estándar se está convirtiendo en 60 FPS (16.6 ms/frame). Aún más, en los videojuegos competitivos profesionales se han asentado los 240 FPS (4.1 ms/frame).
+> **Nota**: cuando hablamos del tiempo disponible para un *frame*, solemos utilizar milisegundos (ms) o *frames* por segundo (FPS). Para que un programa en tiempo real vaya suficientemente fluido, necesitaremos que el motor corra a un mínimo de 30 FPS (que equivalen a 33.3 ms/*frame*). Hoy en día, debido al avance del área en campos como los videosjuegos, el estándar se está convirtiendo en 60 FPS (16.6 ms/*frame*). Aún más, en los videojuegos competitivos profesionales se han asentado los 240 FPS (4.1 ms/*frame*).
 
 Las nociones de los capítulos anteriores no distinguen entre un motor en tiempo real y *offline*. Como es natural, necesitaremos introducir unos pocos conceptos más para llevarlo a tiempo real. Además, existen una serie de requisitos hardware que debemos cumplir para que un motor en tiempo real con ray tracing funcione.
 
@@ -136,7 +136,7 @@ Para este trabajo se ha utilizado una **RTX 2070 Super**. En el capítulo de an�
 
 ### Frameworks y API de ray tracing en tiempo real
 
-Una vez hemos cumplido los requisitos de hardware, es hora de escoger los frameworks de trabajo.
+Una vez hemos cumplido los requisitos de hardware, es hora de escoger los *frameworks* de trabajo.
 
 Las API de gráficos están empezando a adaptarse a los requisitos del tiempo real, por lo que cambian frecuentemente. La mayoría adquirieron las directivas necesarias muy recientemente. Aun así, son lo suficientemente sólidas para que se pueda usar en aplicaciones empresariales de gran embergadura.
 
@@ -161,7 +161,7 @@ Si se desea, se puede encontrar una comparación más a fondo de las API en el b
 
 ## Setup del proyecto
 
-Un proyecto de Vulkan necesita una cantidad de código inicial considerable. Para acelerar este trámite y partir de una base más sólida, se ha decidido usar un pequeño framework de trabajo de Nvidia llamado [nvpro-samples] [@nvpro-samples].
+Un proyecto de Vulkan necesita una cantidad de código inicial considerable. Para acelerar este trámite y partir de una base más sólida, se ha decidido usar un pequeño *framework* de trabajo de Nvidia llamado [nvpro-samples] [@nvpro-samples].
 
 Esta serie de repositorios de Nvidia DesignWorks contienen proyectos de ray tracing de Nvidia con fines didácticos. Nosotros usaremos **vk_raytracing_tutorial_KHR** [@nvpro-samples-tutorial], pues ejemplifica cómo añadir ray tracing en tiempo real a un proyecto de Vulkan. En particular, nosotros seguiremos las siguientes secciones, pero extendiendo el resultado final:
 
@@ -171,7 +171,7 @@ Esta serie de repositorios de Nvidia DesignWorks contienen proyectos de ray trac
 - Reflections.
 - glTF Scene altamente modificado. A su vez, es una simplificación del repositorio `vk_raytrace`.
 
-Estos frameworks contienen asimismo otras utilidades menores. Destacan **GLFW** (gestión de ventanas en C++), **imgui** (interfaz de usuario) y **tinyobjloader** (carga de `.obj` y `.mtl`).
+Estos *frameworks* contienen asimismo otras utilidades menores. Destacan **GLFW** (gestión de ventanas en C++), **imgui** (interfaz de usuario) y **tinyobjloader** (carga de `.obj` y `.mtl`).
 
 Nuestro repositorio utiliza las herramientas citadas anteriormente para compilar su proyecto. El Makefile es una modificación del que se usa para ejecutar los ejemplos de Nvidia. Por defecto, ejecuta una aplicación muy simple que muestra un cubo mediante rasterización, la cual modificaremos hasta añadir ray tracing en tiempo real. Por tanto, la parte inicial del desarrollo consiste en adaptar Vulkan para usar la extensión de ray tracing, extrayendo la información de la gráfica y cargando correspondientemente el dispositivo.
 
@@ -185,7 +185,7 @@ La estructura final de las carpetas del repositorio con el código fuente del pr
 - Las dependencias del proyecto se encuentran en el repositorio `application/nvpro_core`. Se descargan automáticamente seguir las instrucciones de compilación.
 - En `application/vulkan_ray_tracing/media/` se encuentran todos los archivos `.obj`, `.mtl` y las texturas.
 - La subcarpeta `application/vulkan_ray_tracing/src` contiene el código fuente de la propia aplicación.
-  - Toda la implementación relacionada con el motor (y por tanto, Vulkan), se halla en `engine.h/cpp`. Una de las desventajas de seguir un framework "de juguete" es que el acoplamiento es considerablemente alto. Más adelante comentaremos los motivos.
+  - Toda la implementación relacionada con el motor (y por tanto, Vulkan), se halla en `engine.h/cpp`. Una de las desventajas de seguir un *framework* "de juguete" es que el acoplamiento es considerablemente alto. Más adelante comentaremos los motivos.
   - Los parámetros de la aplicación (como tamaño de pantalla y otras estructuras comunes) se encuetran en `globals.hpp`.
   - La carga de escenas y los objetos se gestionan en `scene.hpp`.
   - En `main.cpp` se gestiona tanto el punto de entrada de la aplicación como la actualización de la interfaz gráfica.
@@ -201,7 +201,7 @@ El diagrama {@fig:estructura_repo} permite visualizar los puntos anteriores, as�
 
 ### Diagramas
 
-Teniendo en cuenta que utilizamos un framework que no está pensado para producción y la naturaleza de Vulkan, realizar un diagrama de clase es muy complicado. Sin embargo, podemos ilustrar las clases más importantes de la aplicación: la el motor [@fig:diagrama-clases-engine] y la de escenas [@fig:diagrama-clases-scenes] . En las secciones posteriores detallaremos algunos de los miembros de estas.
+Teniendo en cuenta que utilizamos un *framework* que no está pensado para producción y la naturaleza de Vulkan, realizar un diagrama de clase es muy complicado. Sin embargo, podemos ilustrar las clases más importantes de la aplicación: la el motor [@fig:diagrama-clases-engine] y la de escenas [@fig:diagrama-clases-scenes] . En las secciones posteriores detallaremos algunos de los miembros de estas.
 
 Una figura que se asemeja a un diagrama de secuencia específico para el loop de ray tracing puede encontrarse en [@fig:pipeline].
 
@@ -220,18 +220,18 @@ Las dependencias necesarias son:
 Ejecuta los siguientes comandos desde la terminal para compilar el proyecto:
 
 ```sh
-$ git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git
-$ cd .\Raytracing\application\vulkan_ray_tracing\
-$ mkdir build
-$ cd build
-$ cmake ..
-$ cmake --build .
+git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git
+cd .\Raytracing\application\vulkan_ray_tracing\
+mkdir build
+cd build
+cmake ..
+cmake --build .
 ```
 
 Si todo funciona correctamente, debería generarse un binario en `./application/bin_x64/Debug` llamado `asmiray.exe`. Desde la carpeta en la que deberías encontrarte tras seguir las instrucciones, puedes conseguir ejecutarlo con
 
 ```sh
-$ ..\..\bin_x64\Debug\asmiray.exe
+..\..\bin_x64\Debug\asmiray.exe
 ```
 
 ## Estructuras de aceleración
@@ -240,7 +240,7 @@ El principal coste de ray tracing es el cálculo de las intersecciones con objet
 
 Las **estructuras de aceleración** son una forma de representar la geometría de la escena. Aunque existen diferentes tipos, en esencia, todos engloban a uno o varios objetos en una estructura con la que resulta más eficiente hacer test de intersección en términos del tiempo. Fueron introducidos por primera vez en [@kajiya-bb].
 
-Uno de los tipos más comunes (y el que se usa en [@Shirley2020RTW2]) es la **Bounding Volume Hierarchy (BVH)**. Fue una técnica desarrollada por Kay y Kajilla en 1986. Este método encierra un objeto en una caja (denomina una **bounding box**), de forma que el test de intersección principal se hace con la caja y no con la geometría. Si un rayo impacta en la *bounding box*, entonces se pasa a testear la geometría.
+Uno de los tipos más comunes (y el que se usa en [@Shirley2020RTW2]) es la **Bounding Volume Hierarchy (BVH)**. Fue una técnica desarrollada por [@kajiya-bb]. Este método encierra un objeto en una caja (denomina una **bounding box**), de forma que el test de intersección principal se hace con la caja y no con la geometría. Si un rayo impacta en la *bounding box*, entonces se pasa a testear la geometría.
 
 Se puede repetir esta idea repetidamente, de forma que agrupemos varias *bounding boxes*. Así, creamos una jerarquía de objetos --como si nodos de un árbol se trataran--. A esta jerarquía es a la que llamamos BVH.
 
@@ -339,10 +339,10 @@ Tradicionalmente, en rasterización se utiliza un descriptor set por tipo de mat
 El pipeline de ray tracing soporta varios tipos de shaders diferentes que cubren la funcionalidad esencial de un ray tracer:
 
 - **Ray generation shader**: es el punto de inicio del viaje de un rayo. Calcula punto de inicio y procesa el resultado final. Idealmente, la llamada a la función `traceRayEXT()`, la cual se encarga de generar un nuevo rayo, solo ocurre desde este shader. La implementación se encuentra en `application/vulkan_ray_tracing/src/shaders/raytrace.rgen`.
-- **Closest hit shader**: este shader se ejecuta en la primera intersección con alguna geometría válida de la escena. Se pueden trazar rayos recursivamente desde aquí (por ejemplo, para calcular oclusión ambiental). El archivo correspondiente es `application/vulkan_ray_tracing/src/shaders/raytrace.rchit`.
+- **Closest hit shader**: se ejecuta en la primera intersección con alguna geometría válida de la escena. Se pueden trazar rayos recursivamente desde aquí (por ejemplo, para calcular oclusión ambiental). El archivo correspondiente es `application/vulkan_ray_tracing/src/shaders/raytrace.rchit`.
 - **Any-hit shader**: similar al closest hit, pero invocado en cada intersección del camino del rayo que cumpla $t \in [t_{min}, t_{max})$. Es comúnmente utilizado en los cálculos de transparencias (*alpha-testing*). Puedes comprobarlo en `application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl`.
-- **Miss shader**: si el rayo no choca con ninguna geometría, se ejecuta este shader. Normalmente, añade una pequeña contribución ambiental al rayo. Se halla `application/vulkan_ray_tracing/src/shaders/raytrace.rmiss`.
-- **Intersection shader**: este shader es algo diferente al resto. Su función es calcular el punto de impacto de un rayo con una geometría. Por defecto se utiliza un test triángulo - rayo. En nuestro path tracer lo dejaremos por defecto, pero podríamos definir algún método como los que vimos en la sección [intersecciones rayo - objeto](#intersecciones-rayo---objeto).
+- **Miss shader**: si el rayo no choca con ninguna geometría, se ejecuta este shader. Normalmente, añade una pequeña contribución ambiental al rayo. Se halla en `application/vulkan_ray_tracing/src/shaders/raytrace.rmiss`.
+- **Intersection shader**: este shader es algo diferente al resto. Su función es calcular el punto de impacto de un rayo con una geometría. Por defecto se utiliza un test triángulo-rayo. En nuestro path tracer lo dejaremos por defecto, pero podríamos definir algún método como los que vimos en la sección [intersecciones rayo-objeto](#intersecciones-rayo---objeto).
 
 Existe otro tipo de shader adicional denominado **callable shader**. Este es un shader que se invoca desde otro shader, a modo de subrutina. Por ejemplo, un shader de intersección puede invocar a un shader de oclusión. Otro ejemplo sería un closest hit que reemplaza un bloque if-else por un shader para hacer cálculos de iluminación. Este tipo de shaders no se han implementado en el path tracer, pero se podrían añadir con un poco de trabajo.
 
@@ -395,20 +395,20 @@ Para cargar esta estructura, se debe hacer lo siguiente:
 1. Cargar y compilar cada shader en un `VkShaderModule`.
 2. Juntar los cada `VkShaderModule` en un array `VkPipelineShaderStageCreateInfo`.
 3. Crear un array de `VkRayTracingShaderGroupCreateInfoKHR`. Cada elemento se convertirá al final en una entrada de la Shader Binding Table.
-4. Compilar los dos arrays anteriores más un pipeline layout para generar un `vkCreateRayTracingPipelineKHR`.
+4. Compilar los dos arrays anteriores más un pipeline layout para generar pipeline de ray tracing mediante la función `vkCreateRayTracingPipelineKHR`.
 5. Conseguir los *handlers* de los shaders usando `vkGetRayTracingShaderGroupHandlesKHR`.
 6. Alojar un buffer con el bit `VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR` y copiar los *handlers*.
 
 ![La Shader Binding Table permite selccionar un tipo de shader dependiendo del objeto en el que se impacte. Para ello, se genera un rayo desde el shader `raygen`, el cual viaja a través de la Acceleration Structure. Dependiendo de dónde impacte, se utiliza un `closest hit`, `any hit`, o `miss` shaders. Fuente: [@GemsII-SBT, p. 194]](./img/04/Pipeline.png){#fig:pipeline}
 
-Cada entrada de la SBT contiene un handler y una serie de parámetros embebidos. A esto se le conoce como **Shader Record**. Estos records se clasifican en:
+Cada entrada de la SBT contiene un *handler* y una serie de parámetros embebidos. A esto se le conoce como **Shader Record**. Estos records se clasifican en:
 
-- **Ray generation record**: contiene el handler del ray generation shader.
-- **Hit group record**: se encargan de los handlers del closest hit, anyhit (opcional), e intersection (opcional).
+- **Ray generation record**: contiene el *handler* del ray generation shader.
+- **Hit group record**: se encargan de los *handler*s del closest hit, anyhit (opcional), e intersection (opcional).
 - **Miss group record**: se encarga del miss shader.
 - **Callable group record**: para los shaders de tipo callable.
 
-Una de las partes más difíciles de la SBT es saber cómo se relacionan record y geometría. Es decir, cuando un rayo impacta en una geometría, ¿a qué record de la SBT llamamos? Esto se determina mediante los parámetros de la instancia, la llamada a *trace rays*, y el orden de la geometría en la BLAS.
+Una de las partes más difíciles de la SBT es saber cómo se relacionan *record* y geometría. Es decir, cuando un rayo impacta en una geometría, ¿a qué record de la SBT llamamos? Esto se determina mediante los parámetros de la instancia, la llamada a *trace rays*, y el orden de la geometría en la BLAS.
 
 Para conocer a fondo cómo funciona la Shader Binding Table, puedes visitar [@GemsII-SBT, p. 193] o [@shader-binding-table].
 
@@ -423,12 +423,12 @@ En esencia, este método realiza las siguientes tareas:
 3. Carga cada archivo de shader compilado `.spv` en la estructura junto con sus parámetros correctos.
 4. Configura correctamente cada *shader group*.
 5. Prepara las *push constants*.
-6. Hace el setup del *pipeline layout* junto a sus descriptor sets.
+6. Hace el setup del *pipeline layout* junto a sus *descriptor sets*.
 7. Limpia la información innecesaria creada por la función.
 
 ## Materiales y objetos
 
-El formato de materiales y objetos usados es el **Wavefront** (`.obj`). Aunque es un sistema relativamente antiguo y sencillo, se han usado definiciones específicas en los materiales para adaptarlo a Physically Based Rendering. Entre los parámetros del archivo de materiales `.mtl`, destacan:
+El formato de materiales y objetos usados es el **Wavefront** (`.obj`). Aunque es un sistema relativamente antiguo y sencillo, se han usado definiciones específicas en los materiales para adaptarlo a *Physically Based Rendering*. Entre los parámetros del archivo de materiales `.mtl`, destacan:
 
 - $K_a \in [0, 1]^3$: representa el color ambiental. Dado que esto es un path tracer físicamente realista, no se usará.
 - $K_d \in [0, 1]^3$: componente difusa.
@@ -669,7 +669,7 @@ En esencia, este algoritmo está descomponiendo lo que recogemos en `weight`, qu
 
 $$
 \begin{aligned}
-    h & = 0 + e_1 w = e_1 \\
+    h & = 0 + e_1 w = e_1, \\
     w & = \frac{f_1 \cos\theta_1}{p_1}
 \end{aligned}
 $$
@@ -679,7 +679,7 @@ Tras el segundo rayo, obtenemos
 $$
 \begin{aligned}
     h & = e_1 + e_2 w = \\
-      & = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} \\
+      & = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1}, \\
     w & = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
 \end{aligned}
 $$
@@ -690,7 +690,7 @@ $$
 \begin{aligned}
     h & = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 w = \\
       & = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} + e_3 \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} = \\
-      & = e_1 + \frac{f_1 \cos\theta_1}{p_1}\textcolor{verde-oscurisimo}{\left(e_2 + e_3 \frac{f_2 \cos\theta_2}{p_2}\right)} \\
+      & = e_1 + \frac{f_1 \cos\theta_1}{p_1}\textcolor{verde-oscurisimo}{\left(e_2 + e_3 \frac{f_2 \cos\theta_2}{p_2}\right)}, \\
     w & = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} \frac{f_3 \cos\theta_3}{p_3}
 \end{aligned}
 $$
@@ -708,13 +708,13 @@ Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento que el recur
 
 Normalmente, mandamos los rayos desde el centro de un pixel. Podemos conseguir una mejora sustancial de la calidad con un pequeño truco: en vez de generarlos siempre desde el mismo sitio, le aplicamos una pequeña perturbación (*jittering*). Así, tendremos una variación de colores para un mismo pixel, por lo que podemos hacer una ponderación de todos ellos. A este proceso lo que llamamos **supersampling mediante jittering**.
 
-Si conforme pasa el tiempo utilizamos la información de las imágenes anteriores para renderizar el frame actual, podemos conseguir un resultado aún mejor que aplicando solo *supersampling*. Es decir, promediando el color de los últimos $N$ frames para generar el frame actual. Esta técnica se llama **acumulación temporal**.
+Si conforme pasa el tiempo utilizamos la información de las imágenes anteriores para renderizar el frame actual, podemos conseguir un resultado aún mejor que aplicando solo *supersampling*. Es decir, promediando el color de los últimos $N$ *frames* para generar el frame actual. Esta técnica se llama **acumulación temporal**.
 
 Es importante destacar que la acumulación temporal solo es válido cuando la **cámara se queda estática**. Al cambiar de posición, la información del píxel se ve alterada significativamente, por lo que debemos reconstruir las muestras desde el principio[^7].
 
-La implementación es muy sencilla. Está basada en el tutorial de [@nvpro-samples-tutorial, jitter camera]. Debemos modificar tanto el motor como los shaders para llevar el recuento del número de frames en las push constants.
+La implementación es muy sencilla. Está basada en el tutorial de [@nvpro-samples-tutorial, jitter camera]. Debemos modificar tanto el motor como los shaders para llevar el recuento del número de *frames* en las push constants.
 
-Definimos el número máximo de frames que se pueden acumular:
+Definimos el número máximo de *frames* que se pueden acumular:
 
 ```cpp
 // engine.h
@@ -724,7 +724,7 @@ class Engine {
 }
 ```
 
-Las push constant deberán llevar un registro del frame en el que se encuentran, así como un número máximo de muestras a acumular para un pixel:
+Las push constant deberán llevar un registro del *frame* en el que se encuentran, así como un número máximo de muestras a acumular para un pixel:
 
 ```cpp
 // host_device.h
@@ -735,7 +735,7 @@ struct PushConstantRay {
 }
 ```
 
-El número de frame se reseteará cuando la cámara se mueva, la ventana se reescale, o se produzca algún efecto similar en la aplicación.
+El número de *frame* se reseteará cuando la cámara se mueva, la ventana se reescale, o se produzca algún efecto similar en la aplicación.
 
 Finalmente, en los shaders podemos implementar lo siguiente:
 
@@ -818,7 +818,7 @@ if (USE_GAMMA_CORRECTION == 1) {
 
 ¡Bien visto! Es cierto que los colores se ven significativamente alterados. Esto es debido a la conversión de un espacio lineal de respuesta de radiancia a uno logarítmico. Algunos autores como Íñigo Quílez (coautor de la página Shader Toy) prefieren asumir esta deficiencia, y modificar los materiales acordemente a esto [@gamma-correction, The Color Space].
 
-Nosotros no nos preocuparemos especialmente por esto. Este no es un trabajo sobre teoría del color, aunque nos metamos en varias partes en ella. El área de tone mapping es extensa y merecería su propio estudio.
+Nosotros no nos preocuparemos especialmente por esto. Este no es un trabajo sobre teoría del color, aunque nos metamos en varias partes en ella. El área de *tone mapping* es extensa y merecería su propio estudio.
 
 Es importante mencionar que sin acumulación temporal, el código anterior produciría variaciones significativas para pequeños movimientos. Hay otras formas de compensarlo, como dividir por el valor promedio de las muestras más brillantes. Nosotros hemos optado por mezclar los píxeles generados a lo largo del tiempo.
 
@@ -828,4 +828,4 @@ Es importante mencionar que sin acumulación temporal, el código anterior produ
 
 [^5]: Esto no es del todo cierto. Aunque generalmente suelen ser excepciones debido al coste computacional de RT en tiempo real, existen algunas implementaciones que son capaces de correrlo por software. Notablemente, el motor de Crytek, CryEngine, es capaz de mover ray tracing basado en hardware y en software [@crytek-2020]
 [^6]: Afortunadamente, esto tampoco es completamente cierto. La compañía desarrolladora y distribuidora de videojuegos Valve Corporation [@valve] ha creado una pieza de software fascinante: Proton [@proton]. Proton utiliza Wine para emular software en Linux que solo puede correr en plataformas Windows. La versión 2.5 añadió soporte para traducción de bindings de DXR a KHR, lo que permite utilizar DirectX12 ray tracing en sistemas basados en Linux. El motivo de este software es expandir el mercado de videojuegos disponibles en su consola, la Steam Deck.
-[^7]: A no ser que se utilicen *motion vectors*, los cuales codifican información sobre el movimiento de un objeto al pasar de un frame a otro. Estos permiten implementar técnicas como *temporal antialiasing*, los cuales veremos en una sección posterior.
+[^7]: A no ser que se utilicen *motion vectors*, los cuales codifican información sobre el movimiento de un objeto al pasar de un *frame* a otro. Estos permiten implementar técnicas como *temporal antialiasing*, los cuales veremos en una sección posterior.
