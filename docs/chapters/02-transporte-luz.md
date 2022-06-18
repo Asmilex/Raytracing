@@ -4,7 +4,7 @@ En este capítulo estudiaremos las bases de la radiometría. Esta área de la ó
 
 ## Introducción a la radiometría
 
-Antes de comenzar a trabajar, necesitamos conocer *qué entendemos* por luz. Aunque hay muchas formas de trabajar con ella (a fin de cuentas, todavía seguimos discutiendo sobre qué es exactamente la luz [^2]), nosotros nos quedaremos con la definición clásica y algunas pinceladas de la cuántica. Nos será suficiente utilizar el concepto de fotón.
+Antes de comenzar a trabajar, necesitamos conocer *qué entendemos* por luz. Aunque hay muchas formas de trabajar con ella (a fin de cuentas, todavía seguimos discutiendo sobre qué es exactamente la luz [^1]), nosotros nos quedaremos con la definición clásica y algunas pinceladas de la cuántica. Nos será suficiente utilizar el concepto de fotón.
 
 **Un fotón** es aquella particula emitida por una fuente de iluminación. Estos fotones tienen una posición, una dirección de propagación y una longitud de onda $\lambda$ [@ShirleyRRT]; así como una velocidad $c$ que depende del índice de refracción del medio, $n$. La unidad de medida de $\lambda$ es el nanómetro ($\text{nm}$).
 
@@ -160,7 +160,7 @@ $$
 
 ### Radiancia
 
-Finalmente, llegamos a uno de los conceptos más importantes de esta sección, el cual es una extensión de la radiancia emitida teniendo en cuenta la dirección de la luz. La **radiancia espectral** (o radiancia a secas[^3]) [@PBRT3e, Radiometry], denotada por $L(p, \omega)$, es la irradiancia por unidad de ángulo sólido $d\omega$ asociado a una dirección $\omega$:
+Finalmente, llegamos a uno de los conceptos más importantes de esta sección, el cual es una extensión de la radiancia emitida teniendo en cuenta la dirección de la luz. La **radiancia espectral** (o radiancia a secas[^2]) [@PBRT3e, Radiometry], denotada por $L(p, \omega)$, es la irradiancia por unidad de ángulo sólido $d\omega$ asociado a una dirección $\omega$:
 
 $$
 L(p, \omega) = \lim_{\Delta\omega \to 0}{\frac{\Delta E_\omega(p)}{\Delta\omega}} = \frac{dE_\omega(p)}{d\omega}
@@ -741,5 +741,5 @@ Si nos paramos a pensar, la ecuación [@eq:rendering_equation_alt] es muy simila
 
 Este último matiz es importante. Para renderizar una imagen, se necesita calcular la radiancia de salida para aquellos puntos visibles desde nuestra cámara.
 
-[^2]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores como [@quantumfracture-2021] que han tratado el tema con suficiente profundidad.
-[^3]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.
+[^1]: No entraremos en detalle sobre la naturaleza de la luz. Sin embargo, si te pica la curiosidad, hay muchos divulgadores como [@quantumfracture-2021] que han tratado el tema con suficiente profundidad.
+[^2]: Recuerda que estamos omitiendo la longitud de onda $\lambda$.

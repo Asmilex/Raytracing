@@ -685,7 +685,7 @@ Una de las partes clave del estimador de Monte Carlo [@eq:mc_integral] es saber 
 
 Este método nos permite conseguir muestras de cualquier distribución continua a partir de variables aleatorias uniformes, siempre que se conozca la inversa de la función de distribución.
 
-Sea $X$ una variable aleatoria con función de distribución $F_X$[^1]. Queremos buscar una transformación $T: [0, 1] \rightarrow \mathbb{R}$ tal que $T(\xi) \stackrel{\text{\small d}}{=} X$, siendo $\xi$ una v.a. uniformemente distribuida. Para que esto se cumpla, se debe dar
+Sea $X$ una variable aleatoria con función de distribución $F_X$[^3]. Queremos buscar una transformación $T: [0, 1] \rightarrow \mathbb{R}$ tal que $T(\xi) \stackrel{\text{\small d}}{=} X$, siendo $\xi$ una v.a. uniformemente distribuida. Para que esto se cumpla, se debe dar
 
 $$
 \begin{aligned}
@@ -951,7 +951,7 @@ Particularizaremos el caso $a = 0, b = 1$, $\lambda = 1$, $0 \le x \le 1$ en lo 
 
 Las cadenas de Markov son un tipo específico de proceso estocástico. Un **proceso estocástico** o aleatorio es una familia de variables aleatorias indexadas por otro conjunto. Si el conjunto es discreto, escribimos la familia como $\left\{X(n)\right\}_{n \in \mathbb{N}}$, mientras que si es continuo, notaremos $\left\{X(t)\right\}_{t \ge 0}$.
 
-La distribución de los procesos estocásticos discretos en tiempo[^2] sobre un conjunto numerable $S$ se viene caracterizado como
+La distribución de los procesos estocásticos discretos en tiempo[^4] sobre un conjunto numerable $S$ se viene caracterizado como
 
 $$
 \Prob{X(n) = i_n, \dots, X(0) = i_0}
@@ -1295,5 +1295,5 @@ end</code></pre>
 ```
 
 
-[^1]: En su defecto, si tenemos una función de densidad $p_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{p_X(t)dt}$.
-[^2]: No tiene por qué ser en tiempo, pero generalmente se considera este tipo de variable.
+[^3]: En su defecto, si tenemos una función de densidad $p_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{p_X(t)dt}$.
+[^4]: No tiene por qué ser en tiempo, pero generalmente se considera este tipo de variable.

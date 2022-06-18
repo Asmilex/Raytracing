@@ -119,7 +119,7 @@ Las nociones de los capítulos anteriores no distinguen entre un motor en tiempo
 
 ### Arquitecturas de gráficas
 
-El requisito más importante de todos es la gráfica. Para ser capaces de realizar cálculos de ray tracing en tiempo real en escenarios complejos, necesitaremos una arquitectura moderna con núcleos dedicados a este tipo de cáclulos [^4]. Aunque es posible implementar ray tracing en gráficas convencionales, el rendimiento no será lo suficientemente bueno como para adecuarse al nivel de fidelidad de los tiempos actuales.
+El requisito más importante de todos es la gráfica. Para ser capaces de realizar cálculos de ray tracing en tiempo real en escenarios complejos, necesitaremos una arquitectura moderna con núcleos dedicados a este tipo de cáclulos [^5]. Aunque es posible implementar ray tracing en gráficas convencionales, el rendimiento no será lo suficientemente bueno como para adecuarse al nivel de fidelidad de los tiempos actuales.
 
 A día 17 de abril de 2022, para correr ray tracing en tiempo real, se necesita alguna de las siguientes tarjetas gráficas:
 
@@ -152,7 +152,7 @@ OptiX es la API más vieja de todas. Su primera versión salió en 2009, mientra
 
 Tanto DXR como Vulkan son los candidatos más sólidos. DXR salió en 2018, con la llegada de Turing. Es un par de años más reciente que Vulkan KHR. Cualquiera de las dos cumpliría su cometido de forma exitosa. Sin embargo, para este trabajo, **hemos escogido Vulkan** por los siguientes motivos:
 
-- DirectX 12 está destinado principalmente a plataformas de Microsoft. Es decir, está pensado para sistemas operativos Windows 10 o mayor [^5].
+- DirectX 12 está destinado principalmente a plataformas de Microsoft. Es decir, está pensado para sistemas operativos Windows 10 o mayor [^6].
 - Vulkan, al estar apoyado principalmente por AMD y desarrollado por Khonos, es un proyecto de código. Su principal aliciente es la capacidad de correr en múltiples sistemas operativos, como Windows, distribuciones de Linux o Android.
 
 Ambas API se comportan de manera muy similar, y no existe una gran diferencia entre ellas; tanto en rendimiento como en complejidad de desarrollo. Actualmente el proyecto solo compila en Windows 10 o mayor, por lo que estos dos puntos no resultan especialmente relevantes para el trabajo.
@@ -710,7 +710,7 @@ Normalmente, mandamos los rayos desde el centro de un pixel. Podemos conseguir u
 
 Si conforme pasa el tiempo utilizamos la información de las imágenes anteriores para renderizar el frame actual, podemos conseguir un resultado aún mejor que aplicando solo *supersampling*. Es decir, promediando el color de los últimos $N$ frames para generar el frame actual. Esta técnica se llama **acumulación temporal**.
 
-Es importante destacar que la acumulación temporal solo es válido cuando la **cámara se queda estática**. Al cambiar de posición, la información del píxel se ve alterada significativamente, por lo que debemos reconstruir las muestras desde el principio.
+Es importante destacar que la acumulación temporal solo es válido cuando la **cámara se queda estática**. Al cambiar de posición, la información del píxel se ve alterada significativamente, por lo que debemos reconstruir las muestras desde el principio[^7].
 
 La implementación es muy sencilla. Está basada en el tutorial de [@nvpro-samples-tutorial, jitter camera]. Debemos modificar tanto el motor como los shaders para llevar el recuento del número de frames en las push constants.
 
@@ -826,6 +826,6 @@ Es importante mencionar que sin acumulación temporal, el código anterior produ
 
 
 
-[^4]: Esto no es del todo cierto. Aunque generalmente suelen ser excepciones debido al coste computacional de RT en tiempo real, existen algunas implementaciones que son capaces de correrlo por software. Notablemente, el motor de Crytek, CryEngine, es capaz de mover ray tracing basado en hardware y en software [@crytek-2020]
-[^5]: Afortunadamente, esto tampoco es completamente cierto. La compañía desarrolladora y distribuidora de videojuegos Valve Corporation [@valve] ha creado una pieza de software fascinante: Proton [@proton]. Proton utiliza Wine para emular software en Linux que solo puede correr en plataformas Windows. La versión 2.5 añadió soporte para traducción de bindings de DXR a KHR, lo que permite utilizar DirectX12 ray tracing en sistemas basados en Linux. El motivo de este software es expandir el mercado de videojuegos disponibles en su consola, la Steam Deck.
-[^6] A no ser que se utilicen *motion vectors*, los cuales codifican información sobre el movimiento de un objeto al pasar de un frame a otro. Estos permiten implementar técnicas como *temporal antialiasing*, los cuales veremos en una sección posterior.
+[^5]: Esto no es del todo cierto. Aunque generalmente suelen ser excepciones debido al coste computacional de RT en tiempo real, existen algunas implementaciones que son capaces de correrlo por software. Notablemente, el motor de Crytek, CryEngine, es capaz de mover ray tracing basado en hardware y en software [@crytek-2020]
+[^6]: Afortunadamente, esto tampoco es completamente cierto. La compañía desarrolladora y distribuidora de videojuegos Valve Corporation [@valve] ha creado una pieza de software fascinante: Proton [@proton]. Proton utiliza Wine para emular software en Linux que solo puede correr en plataformas Windows. La versión 2.5 añadió soporte para traducción de bindings de DXR a KHR, lo que permite utilizar DirectX12 ray tracing en sistemas basados en Linux. El motivo de este software es expandir el mercado de videojuegos disponibles en su consola, la Steam Deck.
+[^7]: A no ser que se utilicen *motion vectors*, los cuales codifican información sobre el movimiento de un objeto al pasar de un frame a otro. Estos permiten implementar técnicas como *temporal antialiasing*, los cuales veremos en una sección posterior.
