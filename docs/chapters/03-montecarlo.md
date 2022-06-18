@@ -568,7 +568,7 @@ $$
 
 En la práctica, esto es inviable. El problema que queremos resolver es calcular la integral de $f$. Y para sacar $s$, necesitaríamos el valor de la integral de $f$. ¡Estamos dando vueltas!
 
-Por fortuna, hay algoritmos que son capaces de proporcionar la constante $s$ sin necesidad de calcular la integral. Uno de los más conocidos es **Metropolis-Hastings**, el cual se basa en cadenas de Markov de Monte Carlo. Sin embargo, su complejidad hace que se escape del ámbito de este trabajo. Se puede encontrar más información en [@PBRT3e, Metropolis Light Transport].
+Por fortuna, hay algoritmos que son capaces de proporcionar la constante $s$ sin necesidad de calcular la integral. Uno de los más conocidos es **Metropolis-Hastings**, del cual hablaremos posteriormente.
 
 En este trabajo nos centraremos en buscar funciones de densidad $p_X$ que se aproximen a $f$ lo más fielmente posible, dentro del contexto del transporte de luz.
 
@@ -1048,6 +1048,8 @@ $$
 
 donde $1 \le i \le N$, $t, s \ge 0$.
 
+Un algoritmo basado en cadenas de Markov muy famoso es el **muestreo de Metrópolis** [@PBRT3e, Metropolis Light Transport]. Una de sus grandes ventajas es que puede generar muestras que sigan la distribución de valores de una función $f$. Para hacerlo, no necesita nada más que evaluar dicha función, sin necesidad de integrarla. Además, en cada iteración del algoritmo se consiguen muestras usables, a diferencia de otros método como aceptación-rechazo. Tal es su potencia que ha creado un área específica en la informática gráfica, denominado *Metropolis light transport*.
+
 ### Resolviendo las ecuaciones de Fredholm utilizando cadenas de Markov continuas
 
 En el trabajo de [@montecarlo-fredholm] los autores muestran una forma de resolver las ecuaciones integrales [@eq:fredholm_2] utilizando cadenas de Markov continuas en el espacio $[0, 1]$.
@@ -1293,7 +1295,6 @@ for s = 1 to N do
   end
 end</code></pre>
 ```
-
 
 [^3]: En su defecto, si tenemos una función de densidad $p_X$, podemos hallar la función de distribución haciendo $F_X(x) = P[X < x] = \int_{x_{min}}^{x}{p_X(t)dt}$.
 [^4]: No tiene por qué ser en tiempo, pero generalmente se considera este tipo de variable.

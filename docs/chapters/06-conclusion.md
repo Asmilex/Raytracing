@@ -4,7 +4,7 @@ Al inicio de este trabajo nos propusimos crear un motor de path tracing en tiemp
 
 Primero estudiamos qué es exactamente el **algoritmo path tracing**, el cual es una forma de crear imágenes virtuales de entornos tridimensionales. Dado que es un método físicamente realista, necesitábamos comprender **cómo se comporta la luz**, con el fin de conocer de qué color pintar un píxel de nuestra imagen. Esencialmente, entendimos que los fotones emitidos por las fuentes de iluminación rebotan por los diferentes objetos de un entorno, adquiriendo partes de sus propiedades en el impacto.
 
-No obstante, imitar a la realidad es una tarea titánica. Las ecuaciones radiométricas resultan computacionalmente complejas, por lo que no es posible crear una simulación perfecta de la luz. Por ese motivo recurrimos a las **técnicas de Monte Carlo**, las cuales utilizan sucesos aleatorios para estimar la cantidad de luz de un punto. Estos métodos hicieron viables ciertos cálculos necesarios para el algoritmo. Sin embargo, su naturaleza inexacta implica que existe un error de estimación. Esto nos hizo explorar algunas formas de reducir el ruido generado por las técnicas de integración de Monte Carlo.
+No obstante, imitar a la realidad es una tarea titánica. Las ecuaciones radiométricas resultan computacionalmente complejas, por lo que no es posible crear una simulación perfecta de la luz. Por ese motivo recurrimos a las **técnicas de Monte Carlo**, las cuales utilizan sucesos aleatorios para estimar la cantidad de luz de un punto. Estos métodos hicieron viables ciertos cálculos necesarios para el algoritmo. Sin embargo, su naturaleza inexacta implica que existe un error de estimación. Esto nos hizo explorar algunas formas de reducir el ruido generado por las técnicas de integración de Monte Carlo, como el muestreo por importancia. En esencia, el muestreo por importancia es una mejor estrategia de muestreo que se adapta mejor a la distribución de los valores del integrando.
 
 Una vez adquirimos el fundamento teórico, **diseñamos un software** que nos permitiera poner en práctica nuestros conocimientos. Escogimos la API gráfica Vulkan y un framework de Nvidia como base para el desarrollo. Debido a la complejidad del algoritmo tuvimos que construir numerosas abstracciones que aceleraran el proceso de renderizado, basándonos en tarjetas gráficas modernas. Aprender a programar en tarjetas gráficas no es sencillo, así que tuvimos que diseñar unos programas específicos de éstas llamados *shaders*; específicamente, los shaders de ray tracing.
 
@@ -14,7 +14,9 @@ Al final, obtuvimos el resultado deseado: un motor de path tracing capaz de prod
 
 Como en cualquier otro trabajo, durante el proceso de desarrollo tuvimos que algunas tomar decisiones técnicas que alteran la calidad del producto. Por ello, realizamos un **análisis del rendimiento** basándonos en el *frame time* --tiempo que tarda en un frame en renderizarse--, variando los parámetros de path tracing en el proceso. De esta forma, pudimos comprobar cuánto nos cuesta sacar imágenes de gran nitidez.
 
-Finalmente, para poner en contexto el motor, comparamos nuestra implementación con el de otros autores. En este caso, con el path tracer de Peter Shirley creado en Ray Tracing In One Weekend [@Shirley2020RTW1]. Nos dimos cuenta de que, aunque nuestra versión genera las muestras de forma más naïve, la rapidez con la que rinde consigue compensar el ruido de la imagen, produciendo así resultados más nítidos.
+Finalmente, para poner en contexto el motor, comparamos nuestra implementación con el de otros autores. En este caso, con el path tracer de Peter Shirley creado en Ray Tracing In One Weekend [@Shirley2020RTW1]. Nos dimos cuenta de que, aunque nuestra versión genera las muestras de forma más tosca, la rapidez con la que rinde consigue compensar el ruido de la imagen, produciendo así resultados más nítidos.
+
+Por todos estos motivos, podemos afirmar que el trabajo ha sido un éxito. Se han logrado todos los objetivos que nos propusimos de forma satisfactoria, y gracias a la naturaleza del proyecto, hemos podido observar los resultados gráficamente.
 
 ## Posibles mejoras
 
@@ -22,15 +24,15 @@ Crear un software de este calibre es una tarea de una complejidad enorme. Los mo
 
 ### Interfaces
 
-La parte que más margen de mejora presenta es **la interfaz de las fuentes de luz**. En su estado actual, únicamente es posible utilizar dos tipos de fuentes externas a la escena: luces puntuales y direccionales. Aunque se muestrean de forma directa. Además, solo puede existir una única fuente de este tipo.
+La parte que más margen de mejora presenta es **la interfaz de las fuentes de luz**. En su estado actual, únicamente es posible utilizar dos tipos de fuentes externas a la escena: luces puntuales y direccionales, las cuales se muestrean de forma directa. Además, solo puede existir una única fuente de este tipo.
 
 Este diseño propicia un error relacionado con la nitidez de la imagen. Una de las ideas clave de path tracing es generar muestras de *forma inteligente*: dado que calcular caminos es caro, tira rayos hacia zonas que aporten mucha información. En dichas zonas deben encontrarse, esencialmente, fuentes de luz. ¡Pero la interfaz **no conoce dónde se encuentran los materiales emisivos de la escena**! Eso implica que algunos rayos toman direcciones que no aportan nada. Esto lo pudimos comprobar empíricamente en la [comparativa](#comparativa-con-in-one-weekend).
 
-Otro tipo de interfaz que necesita una mejora sustancial es la de materiales y objetos. En el estado actual del programa, los elementos de la escena son cargados desde un fichero `.obj`. Las propiedades del material son determinadas en el momento del impacto de un rayo basándonos en los parámetros del archivo de materiales asociado `.mtl`. Esta estrategia funciona suficientemente bien en este caso, pues el ámbito de desarrollo es bastante reducido.
+Otro tipo de interfaz que necesita una mejora sustancial es la de **materiales y objetos**. En el estado actual del programa, los elementos de la escena son cargados desde un fichero `.obj`. Las propiedades del material son determinadas en el momento del impacto de un rayo basándonos en los parámetros del archivo de materiales asociado `.mtl`. Esta estrategia funciona suficientemente bien en este caso, pues el ámbito de desarrollo es bastante reducido.
 
 Sin embargo, a la larga sería beneficioso **reestructurar la carga y almacenamiento de los objetos**. De esta forma, atacamos el problema anterior relacionado con los materiales emisivos, conseguiríamos mayor granularidad en los tipos de objetos y podríamos diseñar estrategias específicas para algunos tipos de materiales (como separar en diferentes capas de impacto los objetos transparentes). Esto también nos permitiría añadir nuevos tipos de materiales más fácilmente, como pueden ser objetos dieléctricos, plásticos, mezclas entre varios tipos, *subsurface scattering*...
 
-Estas nuevas interfaces deberían ir acompañadas de una **refactorización de la clase `Engine`**. El framework que escogimos, Nvidia nvpro-samples [@nvpro-samples], está destinado a ser didáctico y no eficiente. Por tanto, el software presenta un alto acoplamiento. Separar en varias clases más reducidas, como una clase para rasterización y otra para ray tracing, sería esencial. Sin embargo, Vulkan es una API muy compleja, por lo que requeriría de una gran cantidad de trabajo.
+Estas nuevas interfaces deberían ir acompañadas de una **refactorización de la clase `Engine`**. El framework que escogimos, nvpro-samples [@nvpro-samples], está destinado a ser didáctico. Por tanto, el software presenta un alto acoplamiento. Separar en varias clases más reducidas, como una clase para rasterización y otra para ray tracing, sería esencial. Sin embargo, Vulkan es una API muy compleja, por lo que requeriría de una gran cantidad de trabajo.
 
 ### Nuevas técnicas de reducción de ruido
 
@@ -38,9 +40,11 @@ En este trabajo hemos implementado algunas técnicas de reducción de varianza d
 
 Sin embargo, existen numerosas técnicas que no se han desarrollado. Entre estas, se encuentran el uso de ruido como *blue noise*, muestreo por importancia múltiple, ruleta rusa o secuencias de baja discrepancia (métodos de quasi-Monte Carlo).  Resultaría interesante ver cómo estas técnicas se comportan en comparación con las que sí hemos usado.
 
+El siguiente nivel sería implementar algunas técnicas basadas en cadenas de Markov que vimos al final del capítulo de Monte Carlo. Destaca el algoritmo Metropolis-Hastings [@PBRT3e, Metropolis Light Transport]. Este tipo de técnicas resultan complejas y se escapan del ámbito introductorio de este proyecto.
+
 ### Otras mejoras varias
 
-Como es evidente, nos hemos dejado muchos detalles en el tintero. Otro aspecto que me hubiera gustado explorar, pero que no ha sido posible, es la capcacidad de hacer tests unitarios (lo que se conoce como *Test Driven Development*). Debido a la gran velocidad de desarrollo que ha sido requerida para sacar este proyecto adelante, integrar test unitarios hubiera supuesto una inversión de tiempo considerable.
+Como es evidente, nos hemos dejado muchos detalles en el tintero. Un aspecto que hubiera sido *casi* mandatorio desarrollar, pero que no se ha podido, es la capcacidad de hacer tests unitarios (lo que se conoce como *Test Driven Development*). Desafortunadamente los límites de tiempo no han permitido implementar este tipo de pruebas. Debido a la gran velocidad de desarrollo que ha sido requerida para sacar este proyecto adelante, integrar test unitarios hubiera supuesto una inversión de tiempo considerable.
 
 Esto, evidentemente, es un gran problema. Hoy en día un software profesional requiere la comprobación de que el código funciona. En este caso, se podrían hacer algunas comprobaciones como el *white furnace test*. Aun así, integrar test en un ray tracer resulta algo más complicado que de costumbre teniendo en cuenta la naturaleza del programa.
 
