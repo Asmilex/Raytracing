@@ -93,7 +93,7 @@ Para este trabajo, se han escogido las siguientes tipografías:
 - **Crimson Pro**, por [@crimson-pro]: una tipografía serif clara, legible y contemporánea. Funciona muy bien en densidades más bajas, como 11pt. Es ideal para la versión en PDF. Además, liga estupendamente con Source Sans Pro, utilizada para los títulos en la plantilla Eisvogel.
 - **Fraunces**, por [@fraunces]: de lejos, la fuente más interesante de todo este proyecto. Es una soft-serif *old style*, pensada para títulos y similares (lo que se conoce como *display*). Es usada en los títulos de la web. Una de sus propiedades más curiosas es que modifica activamente los glifos dependiendo del valor del *optical size axis*, el peso y similares. Recomiendo echarle un ojo a su repositorio de Github, pues incluyen detalles sobre la implementación.
 - **Rubik**, por [@rubik]: La elección de Rubik es peculiar. Por sí sola, no casa con el proyecto. Sin embargo, combinada con Fraunces, proporcionan un punto de elegancia y familiaridad a la web. Su principal fuerte es la facilidad para la comprensión lectora en pantallas, algo que buscamos para la página web.
-- **Julia Mono**, por [@julia-mono]: monoespaciada, pensada para computación científica. Llevo usándola bastante tiempo, y combia bien con Crimson Pro.
+- **Julia Mono**, por [@julia-mono]: monoespaciada, pensada para computación científica. Combia bien con Crimson Pro.
 - **Jetbrains Mono**, por [@jetbrains-mono]: otra tipografía monoespaciada open source muy sólida, producida por la compañía Jetbrains. Se utiliza en la web para los bloques de código.
 
 Todas estas fuentes permiten un uso no comercial gratuito.
@@ -133,7 +133,7 @@ Un fichero Makefile (`docs/Makefile`) contiene varias órdenes para generar ambo
 
 ### Figma
 
-**Figma** [@figma] es otro de esos programas que te hace preguntarte por qué es gratis. Es una aplicación en la web usada para diseño gráfico. Es muy potente, intuitiva, y genera unos resultados muy buenos en poco tiempo. Todos los diseños de este trabajo se han hecho con esta herramienta.
+**Figma** [@figma] es otro de esos programas que te hace preguntarte por qué es gratis. Es una aplicación web usada para diseño gráfico. Es muy potente, intuitiva, y genera unos resultados muy buenos en poco tiempo. Todos los diseños de este trabajo se han hecho con esta herramienta.
 
 ![Tablón principal del proyecto de Figma, a día 15 de abril de 2022](./img/08/Figma.png){#fig:figma}
 
@@ -143,21 +143,21 @@ Una de las características más útiles es poder exportar rápidamente la image
 
 Como es normal, hay muchos otros programas que han intervenido en el desarrollo. Estos son algunos de ellos:
 
-- El editor por excelencia Visual Studio Code [@vscode]. Ha facilitado en gran medida el desarrollo de la aplicación y la documentación. En particular, se ha usado una extensión denominada *Trigger Task on Save* [@trigger-task] que compila la documentación HTML automáticamente al guardar un fichero. ¡Muy útil y rápido!
+- El editor por excelencia **Visual Studio Code** [@vscode]. Ha facilitado en gran medida el desarrollo de la aplicación y la documentación. En particular, se ha usado una extensión denominada *Trigger Task on Save* [@trigger-task] que compila la documentación HTML automáticamente al guardar un fichero. ¡Muy útil y rápido!
 - **Vectary** [@vectary] para hacer los diseños en 3D fácilmente. Permite exportar una escena rápidamente a png para editarla en Figma.
 - Como veremos más adelante, la documentación se compila en el repositorio usando un contenedor de **Docker** [@docker]
-- Cualquier proyecto informático debería usar `git`. Este no es una excepción.
+- Cualquier proyecto informático debería usar **git**. Este no es una excepción.
 
 ## Github
 
 La página **Github** [@github] ha alojado prácticamente todo el contenido del trabajo; desde el programa, hasta la documentación online. El repositorio se puede consultar en `github.com/Asmilex/Raytracing` [@asmilex-raytracing-repo].
 
-Se ha escogido Github en vez de sus competidores por los siguientes motivos:
+Se ha escogido Github en vez de sus competidores (como Gitlab o Bitbucket) por los siguientes motivos:
 
-1. Llevo usándola toda la carrera. Es mi página de hosting de repositorios favorita.
+1. Llevo usándola toda la carrera.
 2. Los repositorios de Nvidia se encontraban en Github, por lo que resulta más fácil sincronizarlos.
 3. La documentación se puede desplegar usando Github Pages.
-4. Las Github Actions son particularmente cómodas y sencillas de usar.
+4. Los Github Actions son particularmente cómodos y sencillos de usar.
 
 Entremos en detalle en algunos de los puntos anteriores:
 
@@ -175,11 +175,11 @@ Tendremos dos tipos de `Actions`: uno que se encarga de compilar la web, y otro 
    2. El PDF se crea en `docs/TFG.pdf`
 3. Commitea los archivos y termina.
 
-![La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse](./img/08/Github%20Actions.png){#fig:github_actions}
+![La pestaña de Github Actions permite controlar con facilidad el resultado de un *workflow* y cuánto tarda en ejecutarse](./img/08/Github%20Actions.png){#fig:github_actions}
 
-El workflow de la web corre automáticamente, mientras que para generar el PDF hace falta activación manual. Aunque no es *del todo* correcto almacenar ficheros binarios en un repositorio de git, no me resulta molesto personalmente. Así que, cuando considero que es el momento oportuno, lo hago manualmente. Además, también se activa por cada *release* que se crea.
+El *workflow* de la web corre automáticamente, mientras que para generar el PDF hace falta activación manual. Aunque no es *del todo* correcto almacenar ficheros binarios en un repositorio de git, no me resulta molesto personalmente. Así que, cuando considero que es el momento oportuno, lo hago manualmente. Además, también se activa por cada *release* que se crea.
 
-![Diagrama con los workflows](./img/08/Actions.png){#fig:actions-workflow}
+![Diagrama con los *workflows*](./img/08/Actions.png){#fig:actions-workflow}
 
 Volviendo a la web, Github permite alojar páginas web para un repositorio. Activando el parámetro correcto en las opciones del repositorio, y configurándolo debidamente, conseguimos que lea el archivo `index.html` generado por el Action y lo despliegue. Esto es potentísimo: con solo editar una línea de código y subir los cambios, conseguimos que la web se actualice al instante.
 
@@ -203,7 +203,7 @@ Para añadir mayor granularidad a la gestión de tareas y proporcionar una vista
 
 ![Projects agrupa los issues y les asigna prioridades](./img/08/Projects.png){   #fig:github_projects width=80% }
 
-Una de las alternativas que se planteó al inicio fue **Linear** [@linear], una aplicación de gestión de issues similar a Projects. Sin embargo, la conveniencia de tener Projects integrado en Github supuso un punto a favor para este gestor. De todas formas, el equipo de desarrollo se compone de una persona, así que no hace falta complicar excesivamente el workflow.
+Una de las alternativas que se planteó al inicio fue **Linear** [@linear], una aplicación de gestión de issues similar a Projects. Sin embargo, la conveniencia de tener Projects integrado en Github supuso un punto a favor para este gestor. De todas formas, el equipo de desarrollo se compone de una persona, así que no hace falta complicar excesivamente el *workflow*.
 
 El desarrollo general de la documentación no ha seguido este sistema de issues, pues está sujeta a cambios constantes y cada commit está marcado con `[:notebook:]`. No obstante, ciertos problemas relacionados con ella, como puede ser el formato de entrega, sí que quedan recogidos como un issue.
 
