@@ -1,6 +1,6 @@
 # Análisis de rendimiento
 
-En este capítulo vamos a analizar el resultado final del proyecto. Estudiaremos cómo se ve el motor, cómo rinde en términos de **frame* time*, y compararemos las imágenes producidas con otras similares; tanto producidas por otros motores, como situaciones en la vida real.
+En este capítulo vamos a analizar el resultado final del proyecto. Estudiaremos cómo se ve el motor, cómo rinde en términos de tiempo de procesado de un *frame*, y compararemos las imágenes producidas con otras similares; tanto producidas por otros motores, como situaciones en la vida real.
 
 ## Usando el motor
 
@@ -36,7 +36,8 @@ Las escenas son las siguientes:
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 | `any_hit`            | Desmostración de las capacidades del shader *anyhit*.                                                                    | ![](./img/05/any_hit.png)              |
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
-| `cube_reflective`    | Ejemplifica *ray traced reflections*.                                                                                    | ![](./img/05/cube_reflective.png)      |
+| `cube_`              | Ejemplifica *ray traced reflections*.                                                                                    | ![](./img/05/cube_reflective.png)      |
+| `reflective`         |                                                                                                                          |                                        |
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 | `medieval`           | Una sencilla escena que contiene una casa medieval con texturas.                                                         | ![](./img/05/medieval_building.png)    |
 | `_building`          |                                                                                                                          |                                        |
@@ -71,7 +72,7 @@ Las escenas son las siguientes:
 | `_blanca`            |                                                                                                                          |                                        |
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 
-Ten en cuenta que las imágenes de las escenas no son definitivas. Están sujetas a cambios, pues se podría cambiar el comportamiento de los shaders.
+Ten en cuenta que las imágenes de las escenas no son definitivas. Están sujetas a cambios, pues los shaders todavía se encuentran en desarrollo.
 
 ## Exhibición de path tracing
 
@@ -81,7 +82,7 @@ A lo largo de este trabajo hemos visto una gran variedad de conceptos desde el p
 
 Empecemos por materiales. Se han implementado unos cuantos tipos diferentes, los cuales veremos ilustrados a continuación.
 
-Los más simples son los [difusos](#reflexión-difusa-o-lamberiana). La caja de Cornell original contiene dos objetos de este tipo:
+Los más simples son los [difusos](#reflexión-difusa-o-lambertiana). La caja de Cornell original contiene dos objetos de este tipo:
 
 ![Materiales difusos de la escena `cornell_box_original`. Vemos que la luz se esparce uniformemente al rebotar en el objeto.](./img/05/Materiales%20difusos.png){#fig:materiales_difusos width=70%}
 
@@ -121,7 +122,7 @@ Como las puntuales se comportan de manera muy similar en la caja de Cornell, pod
 
 ### Iluminación global
 
-La **iluminación global** es un fenómeno físico que se refiere a luz que proviene de *todas* direcciones. Es el efecto que propicia el rebote constante de los fotones emitidos por fuentes de luz hacia una escena, adquiriendo las propiedades de los materiales en los que rebotan.
+La **iluminación global** es un fenómeno físico referente a luz que proviene de *todas* direcciones. Es el efecto que propicia el rebote constante de los fotones emitidos por fuentes de luz hacia una escena, adquiriendo las propiedades de los materiales en los que rebotan.
 
 Dicho de esta forma, es difícil imaginarse cómo se comporta en la vida real. Para ilustrarlo, tomemos dos fotografías que se asemejan a la caja de Cornell.
 
@@ -145,7 +146,7 @@ Lo mismo ocurre cuando cambiamos el foco a la pared de la derecha. Al ser verde,
 
 Este efecto es esencial para proporcionar realismo a una imagen digital. Sin iluminación global, los motores presentan un aspecto que podríamos considerar *videojueguil*: imágenes planas, con sombras abruptas y un aire de falsedad al que nos hemos llegado a acostumbrar. Por ello se han implementado varias técnicas en rasterización para suplir este efecto. Destacan los *lightmaps*, la [componente ambiental](#materiales-y-objetos) de los materiales, *cubemaps*, oclusión ambiental e iluminación indirecta basada en *probes*.
 
-![Los *lightmaps* requieren que la geometría no pueda ser movida debido a que la sombra no es calculada en tiempo real. Fuente: @lumen](./img/05/Shadowmap.png){ #fig:lightmpas }
+![Los *lightmaps* requieren que la geometría no pueda ser movida. Esto se debe a que la sombra no es calculada en tiempo real. Fuente: [@lumen]](./img/05/Shadowmap.png){ #fig:lightmpas }
 
 Para un vistazo más a fondo de la iluminación global, puedes referirte al vídeo de Alex Battaglia en [@df-global-illumination], en el cual cubre diferentes formas de resolver este problema, tanto en el caso de ray tracing como en el de rasterización.
 
@@ -165,14 +166,14 @@ El principal parámetro que podemos variar es el número de muestras por píxel.
 
 ![Para conseguir esta gráfica, iniciamos la escena `cornell_box_original`, y sin mover la cámara, vamos cambiando el número de muestras.](./img/graficas/CB_original_comparativa_samples.png){#fig:grafica_samples}
 
-La figura [@fig:grafica_samples] muestra cómo afecta al rendimiento el valor de $N$. Vemos cómo un número bajo de muestras (alrededor de 5) produce un *frametime* de aproximadamente 12 milisegundos, lo cual corresponde a 83 frames por segundo. Duplicando $N$ hasta las 10 muestras, produce un aumento del *frametime* hasta los 20 ms de media (50 FPS). Algo similar pasa con el resto de valores: 15 muestras suponen una media de 28 ms (35 FPS) y 20 muestras unos 35 ms (28 FPS). Sacamos en claro que, en esta escena, **no debemos aumentar las muestras a un valor superior a 20**, pues entraríamos en terreno de renderizado en diferido. No debemos superar la barrera de los 33 milisegundos, pues supondría una tasa de refresco de imagen inferior a los 30 FPS.
+La figura [@fig:grafica_samples] muestra cómo afecta al rendimiento el valor de $N$. Vemos cómo un número bajo de muestras (alrededor de 5) produce un *frametime* de aproximadamente 12 milisegundos, lo cual corresponde a 83 *frames* por segundo. Duplicando $N$ hasta las 10 muestras, produce un aumento del *frametime* hasta los 20 ms de media (50 FPS). Algo similar pasa con el resto de valores: 15 muestras suponen una media de 28 ms (35 FPS) y 20 muestras unos 35 ms (28 FPS). Sacamos en claro que, en esta escena, **no debemos aumentar las muestras a un valor superior a 20**, pues entraríamos en terreno de renderizado en diferido. No debemos superar la barrera de los 33 milisegundos, pues supondría una tasa de refresco de imagen inferior a los 30 FPS.
 
 Podemos concluir que, en esta escena, el **coste de una muestra por píxel** es de aproximadamente **2 milisegundos** en esta escena. Este valor puede ser hallado promediando el coste medio de cada *frame* en cada valor del parámetro.
 
 No obstante, es importante mencionar que cada escena tiene un cierto sobrecoste particular. Generar la TLAS y la BLAS, así como la carga de objetos y materiales individuales ocupa tiempo de CPU, el cual es independiente a la generación de las muestras. Es decir, que existe una constante $a$ para la cual se da la relación
 
 $$
-\text{tiempo de renderizado} \approx a + N t \text{ (milisegundos/*frame*)}
+\text{tiempo de renderizado} \approx a + N t \text{ (milisegundos/frame)}
 $$
 
 Donde $N \in \mathbb{N}$ es el número de muestras y $t$ es el tiempo medio que tarda en renderizarse un *frame*. Si bajamos el número de muestras a uno en la escena `cornell_box_original`, obtenemos que el *frametime* es de 2.64 ms/*frame*. Esto nos dice que el coste de la escena es de aproximadamente 0.600 milisegundos.
@@ -187,7 +188,7 @@ De forma similar, aumentarlo a 10 y a 20 implica un aumento de la calidad visual
 
 ![**Izquierda**: 10 muestras. **Derecha**: 20 muestras](./img/05/10,%2020%20samples.png){#fig:samples_2}
 
-No obstante, el cambio de 10 a 20 no es tan significativo como de 1 a 5. Esto sugiere que debemos usar otras técnicas para reducir la varianza del estimador. ¡La fuerza bruta no suele ser la solución!
+No obstante, el cambio de 10 a 20 no supone un salto tan grande como el de 1 a 5. Esto sugiere que debemos usar otras técnicas para reducir la varianza del estimador. ¡La fuerza bruta no es la solución!
 
 ### Profundidad de un rayo
 
@@ -195,13 +196,13 @@ Una de las decisiones que tenemos que tomar en el diseño del algoritmo es saber
 
 Analicemos la primera opción, que es la que hemos implementado nosotros. Para ello, usaremos a la escena `cornell_box_esferas`, pues los materiales reflectivos y refractantes de las esferas nos servirán de ayuda para estudiar el coste de un camino.
 
-![Coste de un *frame* en función de la profundidad de ](./img/graficas/CB_original_comparativa_depth.png){#fig:grafica_depth}
+![Coste de un *frame* en función de la profundidad del camino](./img/graficas/CB_original_comparativa_depth.png){#fig:grafica_depth}
 
 En esta figura [@fig:grafica_depth] ocurre algo similar a [@fig:grafica_samples]: como es evidente, aumentar la profundidad de un rayo aumenta el coste de renderizar un *frame*. Sin embargo, hay algunos matices que debemos estudiar con más detalle.
 
 El primero es que cambiar la profundidad no es tan costoso como aumentar el número de muestras. Aún quintuplicando el valor por defecto de 10 rebotes a 50, vemos que el motor se mantiene por debajo de los 33 milisegundos. Para una profundidad de 10, el coste de un *frame* es de 19 milisegundos (52 FPS), mientras que para 50 es de 28 milisegundos (35 FPS). Tomando un valor intermedio de 20, el coste se vuelve de 24 milisegundos (41 FPS).
 
-Llaman la atención las variaciones en el *frametime* conforme aumenta la profundidad. Para un valor de `depth = 10`, observamos que oscila entre los 18 y los 20 milisegundos. Sin embargo, para los otros dos valores de 20 y 50 son habituales picos de varios frames, llegando hasta los 5 milisegundos. Además, se aprecia cierta inconsistencia. Sin embargo, esto no resulta un problema, pues la oscilación media es de unos 3 milisegundos aproximadamente, lo cual supone un decremento de unos 5 frames por segundo como máximo.
+Llaman la atención las variaciones en el *frametime* conforme aumenta la profundidad. Para un valor de `depth = 10`, observamos que oscila entre los 18 y los 20 milisegundos. Sin embargo, para los otros dos valores de 20 y 50 son habituales picos de varios *frames*, llegando hasta los 5 milisegundos. Además, se aprecia cierta inconsistencia. Sin embargo, esto no resulta un problema, pues la oscilación media es de unos 3 milisegundos aproximadamente, lo cual supone un decremento de unos 5 *frames* por segundo como máximo.
 
 La naturaleza de la escena afecta en gran medida al resultado. Por mera probabilidad, cuando un rayo rebota *dentro* de la caja, puede salir disparado hacia muchas direcciones. Destacarían en este caso dos situaciones:
 
@@ -236,15 +237,15 @@ En esta escena, aumentar más allá de 5 o 6 rebotes produce una situación de r
 
 La acumulación temporal proporcionará una mejora enorme de la calidad visual sin perder rendimiento. Sin embargo, tiene como contrapartida que necesita dejar la cámara estática. Dependiendo de la situación esto podría ser un motivo factor no negociable, pero en nuestro caso, nos servirá.
 
-Utilizando una única muestra, pero un valor de acumulación temporal de 100 frames máximos, proporciona una imagen sin apenas ruido [@fig:acumulacion_temp].
+Utilizando una única muestra, pero un valor de acumulación temporal de 100 *frames* máximos, proporciona una imagen sin apenas ruido [@fig:acumulacion_temp].
 
-![1 muestra, acumulación temporal de 100 frames. A diferencia de @fig:samples_1, el resultado es impecable.](./img/05/Acumulación%20temporal%201.png){#fig:acumulacion_temp width=40%}
+![1 muestra, acumulación temporal de 100 *frames*. A diferencia de @fig:samples_1, el resultado es impecable.](./img/05/Acumulación%20temporal%201.png){#fig:acumulacion_temp width=40%}
 
-Subiendo los parámetros a 200 frames de acumulación temporal y 10 muestras, se obtiene una imagen muy buena[@fig:acumulacion_temp_2].
+Subiendo los parámetros a 200 *frames* de acumulación temporal y 10 muestras, se obtiene una imagen muy buena[@fig:acumulacion_temp_2].
 
-![10 muestras, acumulación temporal de 200 frames.](./img/05/Acumulación%20temporal%202.png){#fig:acumulacion_temp_2 width=40%}
+![10 muestras, acumulación temporal de 200 *frames*.](./img/05/Acumulación%20temporal%202.png){#fig:acumulacion_temp_2 width=40%}
 
-El tremendo efecto de esta técnica es debido a que actúa como normalización entre imágenes. Interpolando linealmente los resultados de diferentes frames, con el tiempo se conseguirá una foto de lo que se debe ver realmente, eliminando así el ruido y las luciérnagas.
+El tremendo efecto de esta técnica es debido a que actúa como normalización entre imágenes. Interpolando linealmente los resultados de diferentes *frames*, con el tiempo se conseguirá una foto de lo que se debe ver realmente, eliminando así el ruido y las luciérnagas.
 
 ### Resolución
 
@@ -320,21 +321,21 @@ Con 20 muestras nuestra implementación aún muestra un resultado algo ruidoso. 
 
 ![20 muestras. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_20s.png){#fig:comparativa_20s width=85%}
 
-La respuesta es la acumulación temporal. Aunque, en esencia, la acumulación temporal es una forma de aumentar el número de muestras con respecto al tiempo, nuestra implementación utiliza interpolación para mezclar los colores de los frames. De esta forma, se consigue el efecto de normalización, lo cual elimina el ruido de la imagen con el tiempo. De esta forma conseguimos equiparar la imagen de ambas versiones [Figura @fig:comparativa_100s].
+La respuesta es la acumulación temporal. Aunque, en esencia, la acumulación temporal es una forma de aumentar el número de muestras con respecto al tiempo, nuestra implementación utiliza interpolación para mezclar los colores de los *frames*. De esta forma, se consigue el efecto de normalización, lo cual elimina el ruido de la imagen con el tiempo. De esta forma conseguimos equiparar la imagen de ambas versiones [Figura @fig:comparativa_100s].
 
 Se puede observar cómo el tipo de ruido es diferente. En In One Weekend, el ruido se presenta en forma de píxeles blancos, debido a las luciérnagas generadas por el muestreo directo de la fuente de luz. En contrapartida, en nuestra implementación el ruido es negro debido a los rayos que no impactan en ninguna superficie tras rebotar.
 
-![100 muestras. **Izquierda**: In One Weekend (100 muestras). **Derecha**: nuestro motor (7 muestras, 15 frames de acumulación temporal)](./img/05/Comparativa_100s.png){#fig:comparativa_100s width=85%}
+![100 muestras. **Izquierda**: In One Weekend (100 muestras). **Derecha**: nuestro motor (7 muestras, 15 *frames* de acumulación temporal)](./img/05/Comparativa_100s.png){#fig:comparativa_100s width=85%}
 
 Por último, subiendo el número de muestras a 1000 conseguimos una imagen muy nítida en ambas implementaciones [Figura @fig:comparativa_1000s]. Conseguimos apreciar una diferencia en los bordes de la esfera de la derecha, la cual seguramente se deba a un fallo en la implementación de la BRDF.
 
-![La imagen final, con 1000 muestras para cada versión. **Izquierda**: In One Weekend (1000 muestras). **Derecha**: nuestro motor (10 muestras, 100 frames de acumulación temporal)](./img/05/Comparativa_1000s.png){#fig:comparativa_1000s width=100%}
+![La imagen final, con 1000 muestras para cada versión. **Izquierda**: In One Weekend (1000 muestras). **Derecha**: nuestro motor (10 muestras, 100 *frames* de acumulación temporal)](./img/05/Comparativa_1000s.png){#fig:comparativa_1000s width=100%}
 
 #### Por presupuesto de tiempo
 
 El presupuesto de tiempo (o *frame budget* en inglés) es la cantidad de milisegundos que disponemos para renderizar un *frame*. Este valor es importante cuando tratamos con aplicaciones en tiempo real. Por ejemplo, si queremos que nuestro motor corra a 60 imágenes por segundo, cada *frame* debe tardar un máximo de 16 milisegundos en ser generado. Una comparativa interesante sería fijar un valor para el tiempo, y ver qué calidad de imagen podemos conseguir con ambas implementaciones
 
-Utilizando un presupuesto de 4000 milisegundos, In One Weekend es capaz de utilizar 5 muestras para la imagen, mientras que nuestro motor podría utilizar 10 muestras y 19 frames de acumulación temporal [Figura @fig:comparativa_4000ms].
+Utilizando un presupuesto de 4000 milisegundos, In One Weekend es capaz de utilizar 5 muestras para la imagen, mientras que nuestro motor podría utilizar 10 muestras y 19 *frames* de acumulación temporal [Figura @fig:comparativa_4000ms].
 
 $$
 20.4 \frac{\text{ms}}{\text{10 muestras}} \cdot 19 \text{ frames de temp. acum.} = 3876 \text{ ms}
@@ -344,7 +345,7 @@ $$
 
 Como podemos observar, nuestra implementación consigue un resultado abismalmente mejor en el mismo periodo de tiempo.
 
-Usando un valor mucho más alto de 70000 milisegundos, nuestra implementación se puede permitir utilizar 20 muestras y 1750 frames de acumulación temporal:
+Usando un valor mucho más alto de 70000 milisegundos, nuestra implementación se puede permitir utilizar 20 muestras y 1750 *frames* de acumulación temporal:
 $$
 40 \frac{\text{ms}}{\text{20 muestras}} \cdot 1750 \text{ frames de temp. acum.} = 70000 \text{ ms}
 $$
