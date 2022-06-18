@@ -2,7 +2,7 @@
 # lang: spanish     # Roto. (https://github.com/Wandmalfarbe/pandoc-latex-template/issues/278)
 date: \today
 book: true
-classoption: [oneside]
+classoption: [twoside]
 
 mainfont: 'Crimson Pro Regular'
 mainfontoptions:
