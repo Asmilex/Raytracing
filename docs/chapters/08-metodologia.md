@@ -44,7 +44,7 @@ Por fortuna, la idea inicial **se ha asemejado mucho a la realidad**. Algunas fa
 - El diseño de la memoria y la integración continua tuvieron dos fases: un sprint inicial donde se deja asentado el 70% del trabajo, y pequeñas mejoras incrementales en los siguientes meses. Debemos destacar que, conforme se mejoraba el diseño, se añadían nuevas herramientras necesarias para su construcción. Es por ello que la integración continua necesitó varios arreglos, tanto al dockerfile como a los Actions.
 - La implementación inicial del motor necesitó un tiempo considerablemente menor del previsto. No obstante, el tiempo de perfeccionamiento aumentó, y el desarrollo final concluyó cerca del 20 de mayo de 2022. Prácticamente todas las características básicas fueron implementadas, a excepción de algunos detalles. No dio mucho tiempo a extenderlo más allá de esto.
 
-Con respecto a la metodología de trabajo que se ha seguido es podemos decir que es, esencialmente, **una versión de Agile muy laxa** [@beck2001agile]. Apoyándonos en las herramientas ofrecidas por [Github](#github), diseñamos un sistema de requisitos mediante issues, tanto para la memoria como para el software. Más adelante veremos más a fondo cómo esta herramienta ha facilitado enormemente el desarrollo.
+Con respecto a la metodología de trabajo que se ha seguido es podemos decir que es, esencialmente, **una versión de Agile muy laxa** [@beck2001agile]. Apoyándonos en las herramientas ofrecidas por [Github](#github), diseñamos un sistema de requisitos mediante *issues*, tanto para la memoria como para el software. Más adelante veremos más a fondo cómo esta herramienta ha facilitado enormemente el desarrollo.
 
 ## Presupuesto
 
@@ -165,15 +165,15 @@ Entremos en detalle en algunos de los puntos anteriores:
 
 Cuando hablamos de **integración continua**, nos referimos a ciertos programas que corren en un repositorio y se encargan de hacer ciertas transformaciones al código, de forma que este se prepare para su presentación final. En esencia, automatizan algunas tareas habituales de un desarrollo de software. [@jj]
 
-En este trabajo lo usaremos para compilar la documentación. De esta forma, no necesitamos lidiar con "proyecto final", "proyecto final definitivo", "proyecto final final v2", etc. Simplemente, cuando registremos un cambio en los ficheros Markdown (lo que se conoce en git como un `commit`), y lo subamos a Github (acción de `push`), se ejecutará un denominado `Action` que operará sobre nuestros archivos.
+En este trabajo lo usaremos para compilar la documentación. De esta forma, no necesitamos lidiar con "proyecto final", "proyecto final definitivo", "proyecto final final v2", etc. Simplemente, cuando registremos un cambio en los ficheros Markdown (lo que se conoce en git como un *commit*), y lo subamos a Github (acción de *push*), se ejecutará un denominado *action* que operará sobre nuestros archivos.
 
-Tendremos dos tipos de `Actions`: uno que se encarga de compilar la web, y otro el PDF. En esencia, operan de la siguiente manera:
+Tendremos dos tipos de *Actions*: uno que se encarga de compilar la web, y otro el PDF. En esencia, operan de la siguiente manera:
 
-1. Comprueba si se ha modificado algún fichero `.md` en el último commit subido. Si no es el caso, para.
+1. Comprueba si se ha modificado algún fichero `.md` en el último *commit* subido. Si no es el caso, para.
 2. Si sí se ha modificado, accede a la carpeta del repositorio y compila la documentación mediante `pandoc`.
    1. La web se genera en `docs/index.html`. Publica la web a Github Pages.
    2. El PDF se crea en `docs/TFG.pdf`
-3. Commitea los archivos y termina.
+3. Añade los archivos al *commit* y termina.
 
 ![La pestaña de Github Actions permite controlar con facilidad el resultado de un *workflow* y cuánto tarda en ejecutarse](./img/08/Github%20Actions.png){#fig:github_actions}
 
@@ -187,32 +187,32 @@ Para generar los archivos nos hace falta una distribución de LaTeX, Pandoc, y t
 
 ### Issues y Github Projects
 
-Las tareas pendientes se gestionan mediante issues. Cada vez que se tenga un objetivo particular para el desarrollo, se anota un issue. Cuando se genere un commit que avance dicha tarea, se etiqueta con el número correspondiente al issue. De esta forma, todas las confirmaciones relacionadas con la tarea quedan recogidas en la página web.
+Las tareas pendientes se gestionan mediante *issues*. Cada vez que se tenga un objetivo particular para el desarrollo, se anota un issue. Cuando se genere un *commit* que avance dicha tarea, se etiqueta con el número correspondiente al issue. De esta forma, todas las confirmaciones relacionadas con la tarea quedan recogidas en la página web.
 
 Esto permite una gestión muy eficiente de los principales problemas y objetivos pendientes de la aplicación.
 
-![Pestaña de issues, día 16 de abril de 2022](./img/08/Issues.png){ #fig:github_issues width=80%}
+![Pestaña de *issues*, día 16 de abril de 2022](./img/08/Issues.png){ #fig:github_issues width=80%}
 
-Los issues se agrupan en *milestones*, o productos mínimamente viables. Estos issues suelen estar relacionados con algún apartado importante del desarrollo.
+Los *issues* se agrupan en *milestones*, o productos mínimamente viables. Estos *issues* suelen estar relacionados con algún apartado importante del desarrollo.
 
-![Los *milestones* agrupan una serie de issues relacionados con un punto clave del desarrollo](./img/08/Milestones.png){ #fig:github_milestones width=80% }
+![Los *milestones* agrupan una serie de *issues* relacionados con un punto clave del desarrollo](./img/08/Milestones.png){ #fig:github_milestones width=80% }
 
 De esta forma, podemos ver todo lo que queda pendiente para la fecha de entrega.
 
 Para añadir mayor granularidad a la gestión de tareas y proporcionar una vista informativa, se utiliza Github Projects. En esencia, esta aplicación es un acompañante del repositorio estilo Asana.
 
-![Projects agrupa los issues y les asigna prioridades](./img/08/Projects.png){   #fig:github_projects width=80% }
+![Projects agrupa los *issues* y les asigna prioridades](./img/08/Projects.png){   #fig:github_projects width=80% }
 
-Una de las alternativas que se planteó al inicio fue **Linear** [@linear], una aplicación de gestión de issues similar a Projects. Sin embargo, la conveniencia de tener Projects integrado en Github supuso un punto a favor para este gestor. De todas formas, el equipo de desarrollo se compone de una persona, así que no hace falta complicar excesivamente el *workflow*.
+Una de las alternativas que se planteó al inicio fue **Linear** [@linear], una aplicación de gestión de *issues* similar a Projects. Sin embargo, la conveniencia de tener Projects integrado en Github supuso un punto a favor para este gestor. De todas formas, el equipo de desarrollo se compone de una persona, así que no hace falta complicar excesivamente el *workflow*.
 
-El desarrollo general de la documentación no ha seguido este sistema de issues, pues está sujeta a cambios constantes y cada commit está marcado con `[:notebook:]`. No obstante, ciertos problemas relacionados con ella, como puede ser el formato de entrega, sí que quedan recogidos como un issue.
+El desarrollo general de la documentación no ha seguido este sistema de *issues*, pues está sujeta a cambios constantes y cada *commit* está marcado con `[:notebook:]`. No obstante, ciertos problemas relacionados con ella, como puede ser el formato de entrega, sí que quedan recogidos como un issue.
 
 Finalmente, cuando se produce un cambio significativo en la aplicación (como puede ser una refactorización, una implementación considerablemente más compleja...) se genera una nueva rama. Cuando se ha cumplido el objetivo, se *mergea* la rama con la principal `main` mediante un *pull request*. Esto proporciona un mecanismo de robustez ante cambios complejos.
 
 ### Estilo de commits
 
-Una de los detalles que has podido apreciar si has entrado al repositorio es un estilo de commit un tanto inusual. Aunque parece un detalle de lo más insustancial, añadir emojis a los mensajes de commits añade un toque particular al repositorio, y permite identificar rápidamente el tipo de cambio.
+Una de los detalles que has podido apreciar si has entrado al repositorio es un estilo de *commit* un tanto inusual. Aunque parece un detalle de lo más insustancial, añadir emojis a los mensajes de *commits* añade un toque particular al repositorio, y permite identificar rápidamente el tipo de cambio.
 
 Cada uno tiene un significado particular. En esta tabla se recogen sus significados:
 
-![Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno](./img/08/Commits.png){#fig:github_emojis}
+![Los emojis permiten reconocer el objetivo de cada *commit*. Esta tabla recoge el significado de cada uno](./img/08/Commits.png){#fig:github_emojis}
