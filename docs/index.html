@@ -3961,12 +3961,8 @@ dando vueltas!</p>
 <p>Por fortuna, hay algoritmos que son capaces de proporcionar la
 constante <span class="math inline">\(s\)</span> sin necesidad de
 calcular la integral. Uno de los más conocidos es
-<strong>Metropolis-Hastings</strong>, el cual se basa en cadenas de
-Markov de Monte Carlo. Sin embargo, su complejidad hace que se escape
-del ámbito de este trabajo. Se puede encontrar más información en <span
-class="citation" data-cites="PBRT3e">(<a href="#ref-PBRT3e"
-role="doc-biblioref">Pharr, Jakob, and Humphreys 2016</a>, Metropolis
-Light Transport)</span>.</p>
+<strong>Metropolis-Hastings</strong>, del cual hablaremos
+posteriormente.</p>
 <p>En este trabajo nos centraremos en buscar funciones de densidad <span
 class="math inline">\(p_X\)</span> que se aproximen a <span
 class="math inline">\(f\)</span> lo más fielmente posible, dentro del
@@ -4673,6 +4669,18 @@ P_{i, j}(s + t) &amp; = \sum_{k = 1}^{N}{P_{i, k}(s)P_{k, j}(t)} = \\
 \]</span></p>
 <p>donde <span class="math inline">\(1 \le i \le N\)</span>, <span
 class="math inline">\(t, s \ge 0\)</span>.</p>
+<p>Un algoritmo basado en cadenas de Markov muy famoso es el
+<strong>muestreo de Metrópolis</strong> <span class="citation"
+data-cites="PBRT3e">(<a href="#ref-PBRT3e" role="doc-biblioref">Pharr,
+Jakob, and Humphreys 2016</a>, Metropolis Light Transport)</span>. Una
+de sus grandes ventajas es que puede generar muestras que sigan la
+distribución de valores de una función <span
+class="math inline">\(f\)</span>. Para hacerlo, no necesita nada más que
+evaluar dicha función, sin necesidad de integrarla. Además, en cada
+iteración del algoritmo se consiguen muestras usables, a diferencia de
+otros método como aceptación-rechazo. Tal es su potencia que ha creado
+un área específica en la informática gráfica, denominado <em>Metropolis
+light transport</em>.</p>
 <h3 data-number="3.5.3"
 id="resolviendo-las-ecuaciones-de-fredholm-utilizando-cadenas-de-markov-continuas"><span
 class="header-section-number">3.5.3</span> Resolviendo las ecuaciones de
@@ -4926,9 +4934,10 @@ tracer!</h1>
 ponernos manos a la obra. En este capítulo escogeremos una serie de
 herramientas y con ellas implementaremos un pequeño motor de path
 tracing en tiempo real.</p>
-<p>La implementación estará basada en Vulkan, junto al pequeño framework
-de <em>nvpro-samples</em>, que puede encontrarse en el repositorio <span
-class="citation" data-cites="nvpro-samples-tutorial">(<a
+<p>La implementación estará basada en Vulkan, junto al pequeño
+<em>framework</em> de <em>nvpro-samples</em>, que puede encontrarse en
+el repositorio <span class="citation"
+data-cites="nvpro-samples-tutorial">(<a
 href="#ref-nvpro-samples-tutorial" role="doc-biblioref">NVIDIA
 2022a</a>)</span>. Nuestro trabajo recogerá varias de las
 características que se muestran en dicho repositorio. Además,
@@ -5077,20 +5086,21 @@ class="header-section-number">4.2</span> Requisitos de ray tracing en
 tiempo real</h2>
 <p>Como es natural, el tiempo es una limitación enorme para cualquier
 programa en tiempo real. Mientras que en un <em>offline renderer</em>
-disponemos de un tiempo muy considerable por frame (desde varios
-segundos hasta horas), en un programa en tiempo real necesitamos que un
-frame salga en 33.3 milisegundos o menos. Este concepto se suele
-denominar <em>frame budget</em>: la cantidad de tiempo que disponemos
-para un frame.</p>
+disponemos de un tiempo muy considerable por <em>frame</em> (desde
+varios segundos hasta horas), en un programa en tiempo real necesitamos
+que un <em>frame</em> salga en 33.3 milisegundos o menos. Este concepto
+se suele denominar <em>frame budget</em>: la cantidad de tiempo que
+disponemos para un <em>frame</em>.</p>
 <blockquote>
 <p><strong>Nota</strong>: cuando hablamos del tiempo disponible para un
-frame, solemos utilizar milisegundos (ms) o frames por segundo (FPS).
-Para que un programa en tiempo real vaya suficientemente fluido,
-necesitaremos que el motor corra a un mínimo de 30 FPS (que equivalen a
-33.3 ms/frame). Hoy en día, debido al avance del área en campos como los
-videosjuegos, el estándar se está convirtiendo en 60 FPS (16.6
-ms/frame). Aún más, en los videojuegos competitivos profesionales se han
-asentado los 240 FPS (4.1 ms/frame).</p>
+<em>frame</em>, solemos utilizar milisegundos (ms) o <em>frames</em> por
+segundo (FPS). Para que un programa en tiempo real vaya suficientemente
+fluido, necesitaremos que el motor corra a un mínimo de 30 FPS (que
+equivalen a 33.3 ms/<em>frame</em>). Hoy en día, debido al avance del
+área en campos como los videosjuegos, el estándar se está convirtiendo
+en 60 FPS (16.6 ms/<em>frame</em>). Aún más, en los videojuegos
+competitivos profesionales se han asentado los 240 FPS (4.1
+ms/<em>frame</em>).</p>
 </blockquote>
 <p>Las nociones de los capítulos anteriores no distinguen entre un motor
 en tiempo real y <em>offline</em>. Como es natural, necesitaremos
@@ -5168,7 +5178,7 @@ id="frameworks-y-api-de-ray-tracing-en-tiempo-real"><span
 class="header-section-number">4.2.2</span> Frameworks y API de ray
 tracing en tiempo real</h3>
 <p>Una vez hemos cumplido los requisitos de hardware, es hora de escoger
-los frameworks de trabajo.</p>
+los <em>frameworks</em> de trabajo.</p>
 <p>Las API de gráficos están empezando a adaptarse a los requisitos del
 tiempo real, por lo que cambian frecuentemente. La mayoría adquirieron
 las directivas necesarias muy recientemente. Aun así, son lo
@@ -5223,8 +5233,8 @@ href="#ref-vulkan" role="doc-biblioref">The Khronos Vulkan Working Group
 class="header-section-number">4.3</span> Setup del proyecto</h2>
 <p>Un proyecto de Vulkan necesita una cantidad de código inicial
 considerable. Para acelerar este trámite y partir de una base más
-sólida, se ha decidido usar un pequeño framework de trabajo de Nvidia
-llamado [nvpro-samples] <span class="citation"
+sólida, se ha decidido usar un pequeño <em>framework</em> de trabajo de
+Nvidia llamado [nvpro-samples] <span class="citation"
 data-cites="nvpro-samples">(<a href="#ref-nvpro-samples"
 role="doc-biblioref">NVIDIA 2022b</a>)</span>.</p>
 <p>Esta serie de repositorios de Nvidia DesignWorks contienen proyectos
@@ -5243,8 +5253,8 @@ siguientes secciones, pero extendiendo el resultado final:</p>
 <li>glTF Scene altamente modificado. A su vez, es una simplificación del
 repositorio <code>vk_raytrace</code>.</li>
 </ul>
-<p>Estos frameworks contienen asimismo otras utilidades menores.
-Destacan <strong>GLFW</strong> (gestión de ventanas en C++),
+<p>Estos <em>frameworks</em> contienen asimismo otras utilidades
+menores. Destacan <strong>GLFW</strong> (gestión de ventanas en C++),
 <strong>imgui</strong> (interfaz de usuario) y
 <strong>tinyobjloader</strong> (carga de <code>.obj</code> y
 <code>.mtl</code>).</p>
@@ -5285,7 +5295,7 @@ contiene el código fuente de la propia aplicación.
 <ul>
 <li>Toda la implementación relacionada con el motor (y por tanto,
 Vulkan), se halla en <code>engine.h/cpp</code>. Una de las desventajas
-de seguir un framework “de juguete” es que el acoplamiento es
+de seguir un <em>framework</em> “de juguete” es que el acoplamiento es
 considerablemente alto. Más adelante comentaremos los motivos.</li>
 <li>Los parámetros de la aplicación (como tamaño de pantalla y otras
 estructuras comunes) se encuetran en <code>globals.hpp</code>.</li>
@@ -5325,9 +5335,9 @@ repositorio</figcaption>
 </div>
 <h3 data-number="4.3.2" id="diagramas"><span
 class="header-section-number">4.3.2</span> Diagramas</h3>
-<p>Teniendo en cuenta que utilizamos un framework que no está pensado
-para producción y la naturaleza de Vulkan, realizar un diagrama de clase
-es muy complicado. Sin embargo, podemos ilustrar las clases más
+<p>Teniendo en cuenta que utilizamos un <em>framework</em> que no está
+pensado para producción y la naturaleza de Vulkan, realizar un diagrama
+de clase es muy complicado. Sin embargo, podemos ilustrar las clases más
 importantes de la aplicación: la el motor [<a
 href="#fig:diagrama-clases-engine">28</a>] y la de escenas [<a
 href="#fig:diagrama-clases-scenes">29</a>] . En las secciones
@@ -5362,18 +5372,18 @@ class="header-section-number">4.4</span> Compilación y ejecución</h2>
 </ol>
 <p>Ejecuta los siguientes comandos desde la terminal para compilar el
 proyecto:</p>
-<pre class="sh"><code>$ git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git
-$ cd .\Raytracing\application\vulkan_ray_tracing\
-$ mkdir build
-$ cd build
-$ cmake ..
-$ cmake --build .</code></pre>
+<pre class="sh"><code>git clone --recursive --shallow-submodules https://github.com/Asmilex/Raytracing.git
+cd .\Raytracing\application\vulkan_ray_tracing\
+mkdir build
+cd build
+cmake ..
+cmake --build .</code></pre>
 <p>Si todo funciona correctamente, debería generarse un binario en
 <code>./application/bin_x64/Debug</code> llamado
 <code>asmiray.exe</code>. Desde la carpeta en la que deberías
 encontrarte tras seguir las instrucciones, puedes conseguir ejecutarlo
 con</p>
-<pre class="sh"><code>$ ..\..\bin_x64\Debug\asmiray.exe</code></pre>
+<pre class="sh"><code>..\..\bin_x64\Debug\asmiray.exe</code></pre>
 <h2 data-number="4.5" id="estructuras-de-aceleración"><span
 class="header-section-number">4.5</span> Estructuras de aceleración</h2>
 <p>El principal coste de ray tracing es el cálculo de las intersecciones
@@ -5393,12 +5403,13 @@ role="doc-biblioref">Kay and Kajiya 1986</a>)</span>.</p>
 class="citation" data-cites="Shirley2020RTW2">(<a
 href="#ref-Shirley2020RTW2" role="doc-biblioref">Shirley
 2020b</a>)</span>) es la <strong>Bounding Volume Hierarchy
-(BVH)</strong>. Fue una técnica desarrollada por Kay y Kajilla en 1986.
-Este método encierra un objeto en una caja (denomina una
-<strong>bounding box</strong>), de forma que el test de intersección
-principal se hace con la caja y no con la geometría. Si un rayo impacta
-en la <em>bounding box</em>, entonces se pasa a testear la
-geometría.</p>
+(BVH)</strong>. Fue una técnica desarrollada por <span class="citation"
+data-cites="kajiya-bb">(<a href="#ref-kajiya-bb"
+role="doc-biblioref">Kay and Kajiya 1986</a>)</span>. Este método
+encierra un objeto en una caja (denomina una <strong>bounding
+box</strong>), de forma que el test de intersección principal se hace
+con la caja y no con la geometría. Si un rayo impacta en la <em>bounding
+box</em>, entonces se pasa a testear la geometría.</p>
 <p>Se puede repetir esta idea repetidamente, de forma que agrupemos
 varias <em>bounding boxes</em>. Así, creamos una jerarquía de objetos
 –como si nodos de un árbol se trataran–. A esta jerarquía es a la que
@@ -5546,10 +5557,10 @@ Idealmente, la llamada a la función <code>traceRayEXT()</code>, la cual
 se encarga de generar un nuevo rayo, solo ocurre desde este shader. La
 implementación se encuentra en
 <code>application/vulkan_ray_tracing/src/shaders/raytrace.rgen</code>.</li>
-<li><strong>Closest hit shader</strong>: este shader se ejecuta en la
-primera intersección con alguna geometría válida de la escena. Se pueden
-trazar rayos recursivamente desde aquí (por ejemplo, para calcular
-oclusión ambiental). El archivo correspondiente es
+<li><strong>Closest hit shader</strong>: se ejecuta en la primera
+intersección con alguna geometría válida de la escena. Se pueden trazar
+rayos recursivamente desde aquí (por ejemplo, para calcular oclusión
+ambiental). El archivo correspondiente es
 <code>application/vulkan_ray_tracing/src/shaders/raytrace.rchit</code>.</li>
 <li><strong>Any-hit shader</strong>: similar al closest hit, pero
 invocado en cada intersección del camino del rayo que cumpla <span
@@ -5559,15 +5570,15 @@ Puedes comprobarlo en
 <code>application/vulkan_ray_tracing/src/shaders/raytrace_rahit.glsl</code>.</li>
 <li><strong>Miss shader</strong>: si el rayo no choca con ninguna
 geometría, se ejecuta este shader. Normalmente, añade una pequeña
-contribución ambiental al rayo. Se halla
+contribución ambiental al rayo. Se halla en
 <code>application/vulkan_ray_tracing/src/shaders/raytrace.rmiss</code>.</li>
 <li><strong>Intersection shader</strong>: este shader es algo diferente
 al resto. Su función es calcular el punto de impacto de un rayo con una
-geometría. Por defecto se utiliza un test triángulo - rayo. En nuestro
+geometría. Por defecto se utiliza un test triángulo-rayo. En nuestro
 path tracer lo dejaremos por defecto, pero podríamos definir algún
 método como los que vimos en la sección <a
-href="#intersecciones-rayo---objeto">intersecciones rayo -
-objeto</a>.</li>
+href="#intersecciones-rayo---objeto">intersecciones
+rayo-objeto</a>.</li>
 </ul>
 <p>Existe otro tipo de shader adicional denominado <strong>callable
 shader</strong>. Este es un shader que se invoca desde otro shader, a
@@ -5639,7 +5650,8 @@ de dónde impacte un rayo.</p>
 Cada elemento se convertirá al final en una entrada de la Shader Binding
 Table.</li>
 <li>Compilar los dos arrays anteriores más un pipeline layout para
-generar un <code>vkCreateRayTracingPipelineKHR</code>.</li>
+generar pipeline de ray tracing mediante la función
+<code>vkCreateRayTracingPipelineKHR</code>.</li>
 <li>Conseguir los <em>handlers</em> de los shaders usando
 <code>vkGetRayTracingShaderGroupHandlesKHR</code>.</li>
 <li>Alojar un buffer con el bit
@@ -5661,23 +5673,24 @@ href="#ref-GemsII-SBT" role="doc-biblioref">Usher 2021,
 194</a>)</span></figcaption>
 </figure>
 </div>
-<p>Cada entrada de la SBT contiene un handler y una serie de parámetros
-embebidos. A esto se le conoce como <strong>Shader Record</strong>.
-Estos records se clasifican en:</p>
+<p>Cada entrada de la SBT contiene un <em>handler</em> y una serie de
+parámetros embebidos. A esto se le conoce como <strong>Shader
+Record</strong>. Estos records se clasifican en:</p>
 <ul>
-<li><strong>Ray generation record</strong>: contiene el handler del ray
-generation shader.</li>
-<li><strong>Hit group record</strong>: se encargan de los handlers del
-closest hit, anyhit (opcional), e intersection (opcional).</li>
+<li><strong>Ray generation record</strong>: contiene el <em>handler</em>
+del ray generation shader.</li>
+<li><strong>Hit group record</strong>: se encargan de los
+<em>handler</em>s del closest hit, anyhit (opcional), e intersection
+(opcional).</li>
 <li><strong>Miss group record</strong>: se encarga del miss shader.</li>
 <li><strong>Callable group record</strong>: para los shaders de tipo
 callable.</li>
 </ul>
 <p>Una de las partes más difíciles de la SBT es saber cómo se relacionan
-record y geometría. Es decir, cuando un rayo impacta en una geometría,
-¿a qué record de la SBT llamamos? Esto se determina mediante los
-parámetros de la instancia, la llamada a <em>trace rays</em>, y el orden
-de la geometría en la BLAS.</p>
+<em>record</em> y geometría. Es decir, cuando un rayo impacta en una
+geometría, ¿a qué record de la SBT llamamos? Esto se determina mediante
+los parámetros de la instancia, la llamada a <em>trace rays</em>, y el
+orden de la geometría en la BLAS.</p>
 <p>Para conocer a fondo cómo funciona la Shader Binding Table, puedes
 visitar <span class="citation" data-cites="GemsII-SBT">(<a
 href="#ref-GemsII-SBT" role="doc-biblioref">Usher 2021, 193</a>)</span>
@@ -5700,8 +5713,8 @@ para almacenar la información de cada fase.</li>
 estructura junto con sus parámetros correctos.</li>
 <li>Configura correctamente cada <em>shader group</em>.</li>
 <li>Prepara las <em>push constants</em>.</li>
-<li>Hace el setup del <em>pipeline layout</em> junto a sus descriptor
-sets.</li>
+<li>Hace el setup del <em>pipeline layout</em> junto a sus
+<em>descriptor sets</em>.</li>
 <li>Limpia la información innecesaria creada por la función.</li>
 </ol>
 <h2 data-number="4.7" id="materiales-y-objetos"><span
@@ -5709,8 +5722,9 @@ class="header-section-number">4.7</span> Materiales y objetos</h2>
 <p>El formato de materiales y objetos usados es el
 <strong>Wavefront</strong> (<code>.obj</code>). Aunque es un sistema
 relativamente antiguo y sencillo, se han usado definiciones específicas
-en los materiales para adaptarlo a Physically Based Rendering. Entre los
-parámetros del archivo de materiales <code>.mtl</code>, destacan:</p>
+en los materiales para adaptarlo a <em>Physically Based Rendering</em>.
+Entre los parámetros del archivo de materiales <code>.mtl</code>,
+destacan:</p>
 <ul>
 <li><span class="math inline">\(K_a \in [0, 1]^3\)</span>: representa el
 color ambiental. Dado que esto es un path tracer físicamente realista,
@@ -6062,7 +6076,7 @@ class="math inline">\(w = (1, 1, 1)\)</span>. Tras trazar el primer
 rayo, se tiene que</p>
 <p><span class="math display">\[
 \begin{aligned}
-    h &amp; = 0 + e_1 w = e_1 \\
+    h &amp; = 0 + e_1 w = e_1, \\
     w &amp; = \frac{f_1 \cos\theta_1}{p_1}
 \end{aligned}
 \]</span></p>
@@ -6070,7 +6084,7 @@ rayo, se tiene que</p>
 <p><span class="math display">\[
 \begin{aligned}
     h &amp; = e_1 + e_2 w = \\
-      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1} \\
+      &amp; = e_1 + e_2 \frac{f_1 \cos\theta_1}{p_1}, \\
     w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
 \end{aligned}
 \]</span></p>
@@ -6082,7 +6096,7 @@ rayo, se tiene que</p>
 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2} = \\
       &amp; = e_1 + \frac{f_1
 \cos\theta_1}{p_1}\textcolor{verde-oscurisimo}{\left(e_2 + e_3 \frac{f_2
-\cos\theta_2}{p_2}\right)} \\
+\cos\theta_2}{p_2}\right)}, \\
     w &amp; = \frac{f_1 \cos\theta_1}{p_1} \frac{f_2 \cos\theta_2}{p_2}
 \frac{f_3 \cos\theta_3}{p_3}
 \end{aligned}
@@ -6118,8 +6132,8 @@ mediante jittering</strong>.</p>
 anteriores para renderizar el frame actual, podemos conseguir un
 resultado aún mejor que aplicando solo <em>supersampling</em>. Es decir,
 promediando el color de los últimos <span
-class="math inline">\(N\)</span> frames para generar el frame actual.
-Esta técnica se llama <strong>acumulación temporal</strong>.</p>
+class="math inline">\(N\)</span> <em>frames</em> para generar el frame
+actual. Esta técnica se llama <strong>acumulación temporal</strong>.</p>
 <p>Es importante destacar que la acumulación temporal solo es válido
 cuando la <strong>cámara se queda estática</strong>. Al cambiar de
 posición, la información del píxel se ve alterada significativamente,
@@ -6130,25 +6144,27 @@ role="doc-noteref"><sup>7</sup></a>.</p>
 <span class="citation" data-cites="nvpro-samples-tutorial">(<a
 href="#ref-nvpro-samples-tutorial" role="doc-biblioref">NVIDIA
 2022a</a>, jitter camera)</span>. Debemos modificar tanto el motor como
-los shaders para llevar el recuento del número de frames en las push
-constants.</p>
-<p>Definimos el número máximo de frames que se pueden acumular:</p>
+los shaders para llevar el recuento del número de <em>frames</em> en las
+push constants.</p>
+<p>Definimos el número máximo de <em>frames</em> que se pueden
+acumular:</p>
 <pre><code class="language-cpp">// engine.h
 class Engine {
     //...
     int m_maxAcumFrames {100};
 }</code></pre>
-<p>Las push constant deberán llevar un registro del frame en el que se
-encuentran, así como un número máximo de muestras a acumular para un
-pixel:</p>
+<p>Las push constant deberán llevar un registro del <em>frame</em> en el
+que se encuentran, así como un número máximo de muestras a acumular para
+un pixel:</p>
 <pre><code class="language-cpp">// host_device.h
 struct PushConstantRay {
     //...
     int   frame;
     int   nb_samples
 }</code></pre>
-<p>El número de frame se reseteará cuando la cámara se mueva, la ventana
-se reescale, o se produzca algún efecto similar en la aplicación.</p>
+<p>El número de <em>frame</em> se reseteará cuando la cámara se mueva,
+la ventana se reescale, o se produzca algún efecto similar en la
+aplicación.</p>
 <p>Finalmente, en los shaders podemos implementar lo siguiente:</p>
 <pre><code class="language-glsl">// raytrace.rgen
 vec3 pixel_color = vec3(0);
@@ -6263,7 +6279,7 @@ href="#ref-gamma-correction" role="doc-biblioref">Quílez 2013</a>, The
 Color Space)</span>.</p>
 <p>Nosotros no nos preocuparemos especialmente por esto. Este no es un
 trabajo sobre teoría del color, aunque nos metamos en varias partes en
-ella. El área de tone mapping es extensa y merecería su propio
+ella. El área de <em>tone mapping</em> es extensa y merecería su propio
 estudio.</p>
 <p>Es importante mencionar que sin acumulación temporal, el código
 anterior produciría variaciones significativas para pequeños
@@ -6273,9 +6289,10 @@ mezclar los píxeles generados a lo largo del tiempo.</p>
 <h1 data-number="5" id="análisis-de-rendimiento"><span
 class="header-section-number">5</span> Análisis de rendimiento</h1>
 <p>En este capítulo vamos a analizar el resultado final del proyecto.
-Estudiaremos cómo se ve el motor, cómo rinde en términos de **frame*
-time*, y compararemos las imágenes producidas con otras similares; tanto
-producidas por otros motores, como situaciones en la vida real.</p>
+Estudiaremos cómo se ve el motor, cómo rinde en términos de tiempo de
+procesado de un <em>frame</em>, y compararemos las imágenes producidas
+con otras similares; tanto producidas por otros motores, como
+situaciones en la vida real.</p>
 <h2 data-number="5.1" id="usando-el-motor"><span
 class="header-section-number">5.1</span> Usando el motor</h2>
 <p>Una vez se ha <a href="#compilación-y-ejecución">compilado</a> el
@@ -6353,7 +6370,7 @@ que se encuentra en el archivo <code>main.cpp</code>.</li>
 <td><img loading="lazy" src="./img/05/any_hit.png" title="fig:" /></td>
 </tr>
 <tr class="odd">
-<td><code>cube_reflective</code></td>
+<td><code>cube_</code> <code>reflective</code></td>
 <td>Ejemplifica <em>ray traced reflections</em>.</td>
 <td><img loading="lazy" src="./img/05/cube_reflective.png" title="fig:" /></td>
 </tr>
@@ -6431,8 +6448,8 @@ la iluminación global.</td>
 </tbody>
 </table>
 <p>Ten en cuenta que las imágenes de las escenas no son definitivas.
-Están sujetas a cambios, pues se podría cambiar el comportamiento de los
-shaders.</p>
+Están sujetas a cambios, pues los shaders todavía se encuentran en
+desarrollo.</p>
 <h2 data-number="5.2" id="exhibición-de-path-tracing"><span
 class="header-section-number">5.2</span> Exhibición de path tracing</h2>
 <p>A lo largo de este trabajo hemos visto una gran variedad de conceptos
@@ -6443,7 +6460,7 @@ class="header-section-number">5.2.1</span> Materiales</h3>
 <p>Empecemos por materiales. Se han implementado unos cuantos tipos
 diferentes, los cuales veremos ilustrados a continuación.</p>
 <p>Los más simples son los <a
-href="#reflexión-difusa-o-lamberiana">difusos</a>. La caja de Cornell
+href="#reflexión-difusa-o-lambertiana">difusos</a>. La caja de Cornell
 original contiene dos objetos de este tipo:</p>
 <div id="fig:materiales_difusos" class="fignos">
 <figure>
@@ -6560,8 +6577,8 @@ en la escena <code>medieval_building</code>.</figcaption>
 </div>
 <h3 data-number="5.2.3" id="iluminación-global"><span
 class="header-section-number">5.2.3</span> Iluminación global</h3>
-<p>La <strong>iluminación global</strong> es un fenómeno físico que se
-refiere a luz que proviene de <em>todas</em> direcciones. Es el efecto
+<p>La <strong>iluminación global</strong> es un fenómeno físico
+referente a luz que proviene de <em>todas</em> direcciones. Es el efecto
 que propicia el rebote constante de los fotones emitidos por fuentes de
 luz hacia una escena, adquiriendo las propiedades de los materiales en
 los que rebotan.</p>
@@ -6646,12 +6663,12 @@ href="#materiales-y-objetos">componente ambiental</a> de los materiales,
 <div id="fig:lightmpas" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Shadowmap.png"
-alt="Figura 48: Los lightmaps requieren que la geometría no pueda ser movida debido a que la sombra no es calculada en tiempo real. Fuente: Epic Games (2022b)" />
+alt="Figura 48: Los lightmaps requieren que la geometría no pueda ser movida. Esto se debe a que la sombra no es calculada en tiempo real. Fuente: (Epic Games 2022b)" />
 <figcaption aria-hidden="true"><span>Figura 48:</span> Los
-<em>lightmaps</em> requieren que la geometría no pueda ser movida debido
-a que la sombra no es calculada en tiempo real. Fuente: <span
-class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
-role="doc-biblioref">2022b</a>)</span></figcaption>
+<em>lightmaps</em> requieren que la geometría no pueda ser movida. Esto
+se debe a que la sombra no es calculada en tiempo real. Fuente: <span
+class="citation" data-cites="lumen">(<a href="#ref-lumen"
+role="doc-biblioref">Epic Games 2022b</a>)</span></figcaption>
 </figure>
 </div>
 <p>Para un vistazo más a fondo de la iluminación global, puedes
@@ -6707,7 +6724,7 @@ sin mover la cámara, vamos cambiando el número de muestras.</figcaption>
 al rendimiento el valor de <span class="math inline">\(N\)</span>. Vemos
 cómo un número bajo de muestras (alrededor de 5) produce un
 <em>frametime</em> de aproximadamente 12 milisegundos, lo cual
-corresponde a 83 frames por segundo. Duplicando <span
+corresponde a 83 <em>frames</em> por segundo. Duplicando <span
 class="math inline">\(N\)</span> hasta las 10 muestras, produce un
 aumento del <em>frametime</em> hasta los 20 ms de media (50 FPS). Algo
 similar pasa con el resto de valores: 15 muestras suponen una media de
@@ -6728,7 +6745,7 @@ constante <span class="math inline">\(a\)</span> para la cual se da la
 relación</p>
 <p><span class="math display">\[
 \text{tiempo de renderizado} \approx a + N t \text{
-(milisegundos/*frame*)}
+(milisegundos/frame)}
 \]</span></p>
 <p>Donde <span class="math inline">\(N \in \mathbb{N}\)</span> es el
 número de muestras y <span class="math inline">\(t\)</span> es el tiempo
@@ -6766,9 +6783,9 @@ alt="Figura 51: Izquierda: 10 muestras. Derecha: 20 muestras" />
 muestras</figcaption>
 </figure>
 </div>
-<p>No obstante, el cambio de 10 a 20 no es tan significativo como de 1 a
-5. Esto sugiere que debemos usar otras técnicas para reducir la varianza
-del estimador. ¡La fuerza bruta no suele ser la solución!</p>
+<p>No obstante, el cambio de 10 a 20 no supone un salto tan grande como
+el de 1 a 5. Esto sugiere que debemos usar otras técnicas para reducir
+la varianza del estimador. ¡La fuerza bruta no es la solución!</p>
 <h3 data-number="5.3.2" id="profundidad-de-un-rayo"><span
 class="header-section-number">5.3.2</span> Profundidad de un rayo</h3>
 <p>Una de las decisiones que tenemos que tomar en el diseño del
@@ -6783,9 +6800,9 @@ de un camino.</p>
 <div id="fig:grafica_depth" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_depth.png"
-alt="Figura 52: Coste de un frame en función de la profundidad de" />
+alt="Figura 52: Coste de un frame en función de la profundidad del camino" />
 <figcaption aria-hidden="true"><span>Figura 52:</span> Coste de un
-<em>frame</em> en función de la profundidad de</figcaption>
+<em>frame</em> en función de la profundidad del camino</figcaption>
 </figure>
 </div>
 <p>En esta figura [<a href="#fig:grafica_depth">52</a>] ocurre algo
@@ -6804,10 +6821,11 @@ vuelve de 24 milisegundos (41 FPS).</p>
 aumenta la profundidad. Para un valor de <code>depth = 10</code>,
 observamos que oscila entre los 18 y los 20 milisegundos. Sin embargo,
 para los otros dos valores de 20 y 50 son habituales picos de varios
-frames, llegando hasta los 5 milisegundos. Además, se aprecia cierta
-inconsistencia. Sin embargo, esto no resulta un problema, pues la
+<em>frames</em>, llegando hasta los 5 milisegundos. Además, se aprecia
+cierta inconsistencia. Sin embargo, esto no resulta un problema, pues la
 oscilación media es de unos 3 milisegundos aproximadamente, lo cual
-supone un decremento de unos 5 frames por segundo como máximo.</p>
+supone un decremento de unos 5 <em>frames</em> por segundo como
+máximo.</p>
 <p>La naturaleza de la escena afecta en gran medida al resultado. Por
 mera probabilidad, cuando un rayo rebota <em>dentro</em> de la caja,
 puede salir disparado hacia muchas direcciones. Destacarían en este caso
@@ -6894,32 +6912,33 @@ necesita dejar la cámara estática. Dependiendo de la situación esto
 podría ser un motivo factor no negociable, pero en nuestro caso, nos
 servirá.</p>
 <p>Utilizando una única muestra, pero un valor de acumulación temporal
-de 100 frames máximos, proporciona una imagen sin apenas ruido [<a
-href="#fig:acumulacion_temp">59</a>].</p>
+de 100 <em>frames</em> máximos, proporciona una imagen sin apenas ruido
+[<a href="#fig:acumulacion_temp">59</a>].</p>
 <div id="fig:acumulacion_temp" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%201.png" style="width:40.0%"
 alt="Figura 59: 1 muestra, acumulación temporal de 100 frames. A diferencia de 50, el resultado es impecable." />
 <figcaption aria-hidden="true"><span>Figura 59:</span> 1 muestra,
-acumulación temporal de 100 frames. A diferencia de <a
+acumulación temporal de 100 <em>frames</em>. A diferencia de <a
 href="#fig:samples_1">50</a>, el resultado es impecable.</figcaption>
 </figure>
 </div>
-<p>Subiendo los parámetros a 200 frames de acumulación temporal y 10
-muestras, se obtiene una imagen muy buena[<a
+<p>Subiendo los parámetros a 200 <em>frames</em> de acumulación temporal
+y 10 muestras, se obtiene una imagen muy buena[<a
 href="#fig:acumulacion_temp_2">60</a>].</p>
 <div id="fig:acumulacion_temp_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%202.png" style="width:40.0%"
 alt="Figura 60: 10 muestras, acumulación temporal de 200 frames." />
 <figcaption aria-hidden="true"><span>Figura 60:</span> 10 muestras,
-acumulación temporal de 200 frames.</figcaption>
+acumulación temporal de 200 <em>frames</em>.</figcaption>
 </figure>
 </div>
 <p>El tremendo efecto de esta técnica es debido a que actúa como
 normalización entre imágenes. Interpolando linealmente los resultados de
-diferentes frames, con el tiempo se conseguirá una foto de lo que se
-debe ver realmente, eliminando así el ruido y las luciérnagas.</p>
+diferentes <em>frames</em>, con el tiempo se conseguirá una foto de lo
+que se debe ver realmente, eliminando así el ruido y las
+luciérnagas.</p>
 <h3 data-number="5.3.4" id="resolución"><span
 class="header-section-number">5.3.4</span> Resolución</h3>
 <p>Como se ha mencionado en la introducción, todas las escenas
@@ -7159,10 +7178,10 @@ nuestro motor</figcaption>
 <p>La respuesta es la acumulación temporal. Aunque, en esencia, la
 acumulación temporal es una forma de aumentar el número de muestras con
 respecto al tiempo, nuestra implementación utiliza interpolación para
-mezclar los colores de los frames. De esta forma, se consigue el efecto
-de normalización, lo cual elimina el ruido de la imagen con el tiempo.
-De esta forma conseguimos equiparar la imagen de ambas versiones [Figura
-<a href="#fig:comparativa_100s">66</a>].</p>
+mezclar los colores de los <em>frames</em>. De esta forma, se consigue
+el efecto de normalización, lo cual elimina el ruido de la imagen con el
+tiempo. De esta forma conseguimos equiparar la imagen de ambas versiones
+[Figura <a href="#fig:comparativa_100s">66</a>].</p>
 <p>Se puede observar cómo el tipo de ruido es diferente. En In One
 Weekend, el ruido se presenta en forma de píxeles blancos, debido a las
 luciérnagas generadas por el muestreo directo de la fuente de luz. En
@@ -7174,8 +7193,8 @@ rayos que no impactan en ninguna superficie tras rebotar.</p>
 alt="Figura 66: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
 <figcaption aria-hidden="true"><span>Figura 66:</span> 100 muestras.
 <strong>Izquierda</strong>: In One Weekend (100 muestras).
-<strong>Derecha</strong>: nuestro motor (7 muestras, 15 frames de
-acumulación temporal)</figcaption>
+<strong>Derecha</strong>: nuestro motor (7 muestras, 15 <em>frames</em>
+de acumulación temporal)</figcaption>
 </figure>
 </div>
 <p>Por último, subiendo el número de muestras a 1000 conseguimos una
@@ -7190,7 +7209,7 @@ alt="Figura 67: La imagen final, con 1000 muestras para cada versión. Izquierd
 <figcaption aria-hidden="true"><span>Figura 67:</span> La imagen final,
 con 1000 muestras para cada versión. <strong>Izquierda</strong>: In One
 Weekend (1000 muestras). <strong>Derecha</strong>: nuestro motor (10
-muestras, 100 frames de acumulación temporal)</figcaption>
+muestras, 100 <em>frames</em> de acumulación temporal)</figcaption>
 </figure>
 </div>
 <h4 data-number="5.4.2.2" id="por-presupuesto-de-tiempo"><span
@@ -7206,8 +7225,8 @@ sería fijar un valor para el tiempo, y ver qué calidad de imagen podemos
 conseguir con ambas implementaciones</p>
 <p>Utilizando un presupuesto de 4000 milisegundos, In One Weekend es
 capaz de utilizar 5 muestras para la imagen, mientras que nuestro motor
-podría utilizar 10 muestras y 19 frames de acumulación temporal [Figura
-<a href="#fig:comparativa_4000ms">68</a>].</p>
+podría utilizar 10 muestras y 19 <em>frames</em> de acumulación temporal
+[Figura <a href="#fig:comparativa_4000ms">68</a>].</p>
 <p><span class="math display">\[
 20.4 \frac{\text{ms}}{\text{10 muestras}} \cdot 19 \text{ frames de
 temp. acum.} = 3876 \text{ ms}
@@ -7224,8 +7243,8 @@ de <em>frame budget</em>. <strong>Izquierda</strong>: In One Weekend.
 <p>Como podemos observar, nuestra implementación consigue un resultado
 abismalmente mejor en el mismo periodo de tiempo.</p>
 <p>Usando un valor mucho más alto de 70000 milisegundos, nuestra
-implementación se puede permitir utilizar 20 muestras y 1750 frames de
-acumulación temporal: <span class="math display">\[
+implementación se puede permitir utilizar 20 muestras y 1750
+<em>frames</em> de acumulación temporal: <span class="math display">\[
 40 \frac{\text{ms}}{\text{20 muestras}} \cdot 1750 \text{ frames de
 temp. acum.} = 70000 \text{ ms}
 \]</span></p>
@@ -7278,7 +7297,10 @@ cuales utilizan sucesos aleatorios para estimar la cantidad de luz de un
 punto. Estos métodos hicieron viables ciertos cálculos necesarios para
 el algoritmo. Sin embargo, su naturaleza inexacta implica que existe un
 error de estimación. Esto nos hizo explorar algunas formas de reducir el
-ruido generado por las técnicas de integración de Monte Carlo.</p>
+ruido generado por las técnicas de integración de Monte Carlo, como el
+muestreo por importancia. En esencia, el muestreo por importancia es una
+mejor estrategia de muestreo que se adapta mejor a la distribución de
+los valores del integrando.</p>
 <p>Una vez adquirimos el fundamento teórico, <strong>diseñamos un
 software</strong> que nos permitiera poner en práctica nuestros
 conocimientos. Escogimos la API gráfica Vulkan y un framework de Nvidia
@@ -7312,9 +7334,13 @@ de Peter Shirley creado en Ray Tracing In One Weekend <span
 class="citation" data-cites="Shirley2020RTW1">(<a
 href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 2020a</a>)</span>. Nos dimos cuenta de que, aunque nuestra versión
-genera las muestras de forma más naïve, la rapidez con la que rinde
+genera las muestras de forma más tosca, la rapidez con la que rinde
 consigue compensar el ruido de la imagen, produciendo así resultados más
 nítidos.</p>
+<p>Por todos estos motivos, podemos afirmar que el trabajo ha sido un
+éxito. Se han logrado todos los objetivos que nos propusimos de forma
+satisfactoria, y gracias a la naturaleza del proyecto, hemos podido
+observar los resultados gráficamente.</p>
 <h2 data-number="6.1" id="posibles-mejoras"><span
 class="header-section-number">6.1</span> Posibles mejoras</h2>
 <p>Crear un software de este calibre es una tarea de una complejidad
@@ -7328,8 +7354,8 @@ class="header-section-number">6.1.1</span> Interfaces</h3>
 <p>La parte que más margen de mejora presenta es <strong>la interfaz de
 las fuentes de luz</strong>. En su estado actual, únicamente es posible
 utilizar dos tipos de fuentes externas a la escena: luces puntuales y
-direccionales. Aunque se muestrean de forma directa. Además, solo puede
-existir una única fuente de este tipo.</p>
+direccionales, las cuales se muestrean de forma directa. Además, solo
+puede existir una única fuente de este tipo.</p>
 <p>Este diseño propicia un error relacionado con la nitidez de la
 imagen. Una de las ideas clave de path tracing es generar muestras de
 <em>forma inteligente</em>: dado que calcular caminos es caro, tira
@@ -7340,12 +7366,13 @@ escena</strong>! Eso implica que algunos rayos toman direcciones que no
 aportan nada. Esto lo pudimos comprobar empíricamente en la <a
 href="#comparativa-con-in-one-weekend">comparativa</a>.</p>
 <p>Otro tipo de interfaz que necesita una mejora sustancial es la de
-materiales y objetos. En el estado actual del programa, los elementos de
-la escena son cargados desde un fichero <code>.obj</code>. Las
-propiedades del material son determinadas en el momento del impacto de
-un rayo basándonos en los parámetros del archivo de materiales asociado
-<code>.mtl</code>. Esta estrategia funciona suficientemente bien en este
-caso, pues el ámbito de desarrollo es bastante reducido.</p>
+<strong>materiales y objetos</strong>. En el estado actual del programa,
+los elementos de la escena son cargados desde un fichero
+<code>.obj</code>. Las propiedades del material son determinadas en el
+momento del impacto de un rayo basándonos en los parámetros del archivo
+de materiales asociado <code>.mtl</code>. Esta estrategia funciona
+suficientemente bien en este caso, pues el ámbito de desarrollo es
+bastante reducido.</p>
 <p>Sin embargo, a la larga sería beneficioso <strong>reestructurar la
 carga y almacenamiento de los objetos</strong>. De esta forma, atacamos
 el problema anterior relacionado con los materiales emisivos,
@@ -7357,14 +7384,13 @@ como pueden ser objetos dieléctricos, plásticos, mezclas entre varios
 tipos, <em>subsurface scattering</em>…</p>
 <p>Estas nuevas interfaces deberían ir acompañadas de una
 <strong>refactorización de la clase <code>Engine</code></strong>. El
-framework que escogimos, Nvidia nvpro-samples <span class="citation"
+framework que escogimos, nvpro-samples <span class="citation"
 data-cites="nvpro-samples">(<a href="#ref-nvpro-samples"
 role="doc-biblioref">NVIDIA 2022b</a>)</span>, está destinado a ser
-didáctico y no eficiente. Por tanto, el software presenta un alto
-acoplamiento. Separar en varias clases más reducidas, como una clase
-para rasterización y otra para ray tracing, sería esencial. Sin embargo,
-Vulkan es una API muy compleja, por lo que requeriría de una gran
-cantidad de trabajo.</p>
+didáctico. Por tanto, el software presenta un alto acoplamiento. Separar
+en varias clases más reducidas, como una clase para rasterización y otra
+para ray tracing, sería esencial. Sin embargo, Vulkan es una API muy
+compleja, por lo que requeriría de una gran cantidad de trabajo.</p>
 <h3 data-number="6.1.2" id="nuevas-técnicas-de-reducción-de-ruido"><span
 class="header-section-number">6.1.2</span> Nuevas técnicas de reducción
 de ruido</h3>
@@ -7380,15 +7406,23 @@ muestreo por importancia múltiple, ruleta rusa o secuencias de baja
 discrepancia (métodos de quasi-Monte Carlo). Resultaría interesante ver
 cómo estas técnicas se comportan en comparación con las que sí hemos
 usado.</p>
+<p>El siguiente nivel sería implementar algunas técnicas basadas en
+cadenas de Markov que vimos al final del capítulo de Monte Carlo.
+Destaca el algoritmo Metropolis-Hastings <span class="citation"
+data-cites="PBRT3e">(<a href="#ref-PBRT3e" role="doc-biblioref">Pharr,
+Jakob, and Humphreys 2016</a>, Metropolis Light Transport)</span>. Este
+tipo de técnicas resultan complejas y se escapan del ámbito
+introductorio de este proyecto.</p>
 <h3 data-number="6.1.3" id="otras-mejoras-varias"><span
 class="header-section-number">6.1.3</span> Otras mejoras varias</h3>
-<p>Como es evidente, nos hemos dejado muchos detalles en el tintero.
-Otro aspecto que me hubiera gustado explorar, pero que no ha sido
-posible, es la capcacidad de hacer tests unitarios (lo que se conoce
-como <em>Test Driven Development</em>). Debido a la gran velocidad de
-desarrollo que ha sido requerida para sacar este proyecto adelante,
-integrar test unitarios hubiera supuesto una inversión de tiempo
-considerable.</p>
+<p>Como es evidente, nos hemos dejado muchos detalles en el tintero. Un
+aspecto que hubiera sido <em>casi</em> mandatorio desarrollar, pero que
+no se ha podido, es la capcacidad de hacer tests unitarios (lo que se
+conoce como <em>Test Driven Development</em>). Desafortunadamente los
+límites de tiempo no han permitido implementar este tipo de pruebas.
+Debido a la gran velocidad de desarrollo que ha sido requerida para
+sacar este proyecto adelante, integrar test unitarios hubiera supuesto
+una inversión de tiempo considerable.</p>
 <p>Esto, evidentemente, es un gran problema. Hoy en día un software
 profesional requiere la comprobación de que el código funciona. En este
 caso, se podrían hacer algunas comprobaciones como el <em>white furnace
@@ -7952,9 +7986,9 @@ laxa</strong> <span class="citation" data-cites="beck2001agile">(<a
 href="#ref-beck2001agile" role="doc-biblioref">Beck et al.
 2001</a>)</span>. Apoyándonos en las herramientas ofrecidas por <a
 href="#github">Github</a>, diseñamos un sistema de requisitos mediante
-issues, tanto para la memoria como para el software. Más adelante
-veremos más a fondo cómo esta herramienta ha facilitado enormemente el
-desarrollo.</p>
+<em>issues</em>, tanto para la memoria como para el software. Más
+adelante veremos más a fondo cómo esta herramienta ha facilitado
+enormemente el desarrollo.</p>
 <h2 data-number="8.3" id="presupuesto"><span
 class="header-section-number">8.3</span> Presupuesto</h2>
 <p>A la hora de desarrollar un proyecto de software, es importante
@@ -8234,15 +8268,15 @@ data-cites="jj">(<a href="#ref-jj" role="doc-biblioref">Merelo
 forma, no necesitamos lidiar con “proyecto final”, “proyecto final
 definitivo”, “proyecto final final v2”, etc. Simplemente, cuando
 registremos un cambio en los ficheros Markdown (lo que se conoce en git
-como un <code>commit</code>), y lo subamos a Github (acción de
-<code>push</code>), se ejecutará un denominado <code>Action</code> que
-operará sobre nuestros archivos.</p>
-<p>Tendremos dos tipos de <code>Actions</code>: uno que se encarga de
+como un <em>commit</em>), y lo subamos a Github (acción de
+<em>push</em>), se ejecutará un denominado <em>action</em> que operará
+sobre nuestros archivos.</p>
+<p>Tendremos dos tipos de <em>Actions</em>: uno que se encarga de
 compilar la web, y otro el PDF. En esencia, operan de la siguiente
 manera:</p>
 <ol type="1">
 <li>Comprueba si se ha modificado algún fichero <code>.md</code> en el
-último commit subido. Si no es el caso, para.</li>
+último <em>commit</em> subido. Si no es el caso, para.</li>
 <li>Si sí se ha modificado, accede a la carpeta del repositorio y
 compila la documentación mediante <code>pandoc</code>.
 <ol type="1">
@@ -8250,7 +8284,7 @@ compila la documentación mediante <code>pandoc</code>.
 Github Pages.</li>
 <li>El PDF se crea en <code>docs/TFG.pdf</code></li>
 </ol></li>
-<li>Commitea los archivos y termina.</li>
+<li>Añade los archivos al <em>commit</em> y termina.</li>
 </ol>
 <div id="fig:github_actions" class="fignos">
 <figure>
@@ -8298,11 +8332,12 @@ con este <em>overhead</em>. Puedes encontrar el Dockerfile en
 <code>./Dockerfile</code>.</p>
 <h3 data-number="8.6.2" id="issues-y-github-projects"><span
 class="header-section-number">8.6.2</span> Issues y Github Projects</h3>
-<p>Las tareas pendientes se gestionan mediante issues. Cada vez que se
-tenga un objetivo particular para el desarrollo, se anota un issue.
-Cuando se genere un commit que avance dicha tarea, se etiqueta con el
-número correspondiente al issue. De esta forma, todas las confirmaciones
-relacionadas con la tarea quedan recogidas en la página web.</p>
+<p>Las tareas pendientes se gestionan mediante <em>issues</em>. Cada vez
+que se tenga un objetivo particular para el desarrollo, se anota un
+issue. Cuando se genere un <em>commit</em> que avance dicha tarea, se
+etiqueta con el número correspondiente al issue. De esta forma, todas
+las confirmaciones relacionadas con la tarea quedan recogidas en la
+página web.</p>
 <p>Esto permite una gestión muy eficiente de los principales problemas y
 objetivos pendientes de la aplicación.</p>
 <div id="fig:github_issues" class="fignos">
@@ -8310,19 +8345,19 @@ objetivos pendientes de la aplicación.</p>
 <img loading="lazy" src="./img/08/Issues.png" style="width:80.0%"
 alt="Figura 89: Pestaña de issues, día 16 de abril de 2022" />
 <figcaption aria-hidden="true"><span>Figura 89:</span> Pestaña de
-issues, día 16 de abril de 2022</figcaption>
+<em>issues</em>, día 16 de abril de 2022</figcaption>
 </figure>
 </div>
-<p>Los issues se agrupan en <em>milestones</em>, o productos mínimamente
-viables. Estos issues suelen estar relacionados con algún apartado
-importante del desarrollo.</p>
+<p>Los <em>issues</em> se agrupan en <em>milestones</em>, o productos
+mínimamente viables. Estos <em>issues</em> suelen estar relacionados con
+algún apartado importante del desarrollo.</p>
 <div id="fig:github_milestones" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Milestones.png" style="width:80.0%"
 alt="Figura 90: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
 <figcaption aria-hidden="true"><span>Figura 90:</span> Los
-<em>milestones</em> agrupan una serie de issues relacionados con un
-punto clave del desarrollo</figcaption>
+<em>milestones</em> agrupan una serie de <em>issues</em> relacionados
+con un punto clave del desarrollo</figcaption>
 </figure>
 </div>
 <p>De esta forma, podemos ver todo lo que queda pendiente para la fecha
@@ -8335,22 +8370,22 @@ aplicación es un acompañante del repositorio estilo Asana.</p>
 <img loading="lazy" src="./img/08/Projects.png" style="width:80.0%"
 alt="Figura 91: Projects agrupa los issues y les asigna prioridades" />
 <figcaption aria-hidden="true"><span>Figura 91:</span> Projects agrupa
-los issues y les asigna prioridades</figcaption>
+los <em>issues</em> y les asigna prioridades</figcaption>
 </figure>
 </div>
 <p>Una de las alternativas que se planteó al inicio fue
 <strong>Linear</strong> <span class="citation" data-cites="linear">(<a
 href="#ref-linear" role="doc-biblioref">Linear 2022</a>)</span>, una
-aplicación de gestión de issues similar a Projects. Sin embargo, la
-conveniencia de tener Projects integrado en Github supuso un punto a
-favor para este gestor. De todas formas, el equipo de desarrollo se
-compone de una persona, así que no hace falta complicar excesivamente el
-<em>workflow</em>.</p>
+aplicación de gestión de <em>issues</em> similar a Projects. Sin
+embargo, la conveniencia de tener Projects integrado en Github supuso un
+punto a favor para este gestor. De todas formas, el equipo de desarrollo
+se compone de una persona, así que no hace falta complicar excesivamente
+el <em>workflow</em>.</p>
 <p>El desarrollo general de la documentación no ha seguido este sistema
-de issues, pues está sujeta a cambios constantes y cada commit está
-marcado con <code>[:notebook:]</code>. No obstante, ciertos problemas
-relacionados con ella, como puede ser el formato de entrega, sí que
-quedan recogidos como un issue.</p>
+de <em>issues</em>, pues está sujeta a cambios constantes y cada
+<em>commit</em> está marcado con <code>[:notebook:]</code>. No obstante,
+ciertos problemas relacionados con ella, como puede ser el formato de
+entrega, sí que quedan recogidos como un issue.</p>
 <p>Finalmente, cuando se produce un cambio significativo en la
 aplicación (como puede ser una refactorización, una implementación
 considerablemente más compleja…) se genera una nueva rama. Cuando se ha
@@ -8360,10 +8395,10 @@ mecanismo de robustez ante cambios complejos.</p>
 <h3 data-number="8.6.3" id="estilo-de-commits"><span
 class="header-section-number">8.6.3</span> Estilo de commits</h3>
 <p>Una de los detalles que has podido apreciar si has entrado al
-repositorio es un estilo de commit un tanto inusual. Aunque parece un
-detalle de lo más insustancial, añadir emojis a los mensajes de commits
-añade un toque particular al repositorio, y permite identificar
-rápidamente el tipo de cambio.</p>
+repositorio es un estilo de <em>commit</em> un tanto inusual. Aunque
+parece un detalle de lo más insustancial, añadir emojis a los mensajes
+de <em>commits</em> añade un toque particular al repositorio, y permite
+identificar rápidamente el tipo de cambio.</p>
 <p>Cada uno tiene un significado particular. En esta tabla se recogen
 sus significados:</p>
 <div id="fig:github_emojis" class="fignos">
@@ -8371,8 +8406,8 @@ sus significados:</p>
 <img loading="lazy" src="./img/08/Commits.png"
 alt="Figura 92: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
 <figcaption aria-hidden="true"><span>Figura 92:</span> Los emojis
-permiten reconocer el objetivo de cada commit. Esta tabla recoge el
-significado de cada uno</figcaption>
+permiten reconocer el objetivo de cada <em>commit</em>. Esta tabla
+recoge el significado de cada uno</figcaption>
 </figure>
 </div>
 <h1 data-number="9" id="glosario-de-términos"><span
@@ -9680,9 +9715,9 @@ videojuegos disponibles en su consola, la Steam Deck.<a href="#fnref6"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7" role="doc-endnote"><p>A no ser que se utilicen <em>motion
 vectors</em>, los cuales codifican información sobre el movimiento de un
-objeto al pasar de un frame a otro. Estos permiten implementar técnicas
-como <em>temporal antialiasing</em>, los cuales veremos en una sección
-posterior.<a href="#fnref7" class="footnote-back"
+objeto al pasar de un <em>frame</em> a otro. Estos permiten implementar
+técnicas como <em>temporal antialiasing</em>, los cuales veremos en una
+sección posterior.<a href="#fnref7" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
