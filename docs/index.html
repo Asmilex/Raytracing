@@ -684,7 +684,7 @@ fin de disminuir el tiempo de cómputo.</p>
 aplicaciones gráficas Vulkan, utilizando como soporte un entorno de
 desarrollo de Nvidia conocido como nvpro-samples <span class="citation"
 data-cites="nvpro-samples">(<a href="#ref-nvpro-samples"
-role="doc-biblioref">Nvidia 2022b</a>)</span>. El software implementará
+role="doc-biblioref">NVIDIA 2022b</a>)</span>. El software implementará
 un motor gráfico basado en <em>path tracing</em>. Este motor será capaz
 de renderizar numerosas escenas, cambiar los parámetros del algoritmo
 path tracing y modificar las fuentes de iluminación en tiempo de
@@ -797,7 +797,7 @@ cover the <strong>implementation of the engine</strong>. We will first
 introduce our main set of tools, which will be Vulkan graphics API and
 Nvidia DesignWorks’ nvpro-samples framework <span class="citation"
 data-cites="nvpro-samples">(<a href="#ref-nvpro-samples"
-role="doc-biblioref">Nvidia 2022b</a>)</span>. Then, we will learn about
+role="doc-biblioref">NVIDIA 2022b</a>)</span>. Then, we will learn about
 the structures that make real time ray tracing possible, such as the Top
 and Bottom-Level Acceleration Structures (TLAS and BLAS respectively)
 and the Shader Binding Table (SBT). We will also understand how the ray
@@ -991,18 +991,17 @@ rasterización se convierta en un algoritmo del pasado. Y ese momento es
 la actualidad.</p>
 <p>En 2018 Nvidia introdujo la arquitectura de tarjetas gráficas Turing
 <span class="citation" data-cites="turing-arquitecture">(<a
-href="#ref-turing-arquitecture" role="doc-biblioref">H. M. Nvidia Emmett
-Kilgariff 2018</a>)</span>. Aunque por estos años ya existían
-implementaciones de ray tracing en gráficas (tan temprano como <span
-class="citation" data-cites="10.1145/566654.566640">(<a
-href="#ref-10.1145/566654.566640" role="doc-biblioref">Purcell et al.
-2002</a>)</span>, <span class="citation" data-cites="Ertl_theray">(<a
-href="#ref-Ertl_theray" role="doc-biblioref">Ertl et al.
-2022</a>)</span>), esta arquitectura presenta la capacidad de realizar
-cómputos específicos de ray tracing acelerados por hardware en gráficas
-de consumidor. Esto significa que <strong>path tracing se vuelve viable
-en tiempo real</strong>. En lugar de horas, renderizar una imagen
-costará milisegundos.</p>
+href="#ref-turing-arquitecture" role="doc-biblioref">Emmett Kilgariff
+2018</a>)</span>. Aunque por estos años ya existían implementaciones de
+ray tracing en gráficas (tan temprano como <span class="citation"
+data-cites="10.1145/566654.566640">(<a href="#ref-10.1145/566654.566640"
+role="doc-biblioref">Purcell et al. 2002</a>)</span>, <span
+class="citation" data-cites="Ertl_theray">(<a href="#ref-Ertl_theray"
+role="doc-biblioref">Ertl et al. 2022</a>)</span>), esta arquitectura
+presenta la capacidad de realizar cómputos específicos de ray tracing
+acelerados por hardware en gráficas de consumidor. Esto significa que
+<strong>path tracing se vuelve viable en tiempo real</strong>. En lugar
+de horas, renderizar una imagen costará milisegundos.</p>
 <p>Se da el pistoletazo de salida a una nueva transición.</p>
 <h2 class="unnumbered" id="objetivos-del-trabajo">Objetivos del
 trabajo</h2>
@@ -1085,7 +1084,7 @@ problema; entre las que se encuentran Vulkan, una interfaz de
 programación de aplicaciones gráfica, y el framework para Vulkan Ray
 tracing de Nvidia DesignWorks denominado <em>nvpro-samples</em> <span
 class="citation" data-cites="nvpro-samples-tutorial">(<a
-href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">NVIDIA
 2022a</a>)</span>.</p>
 <p>Debido a la gran complejidad del problema, será necesario introducir
 algunas estructuras clave que habilitan la ejecución de ray tracing en
@@ -4930,7 +4929,7 @@ tracing en tiempo real.</p>
 <p>La implementación estará basada en Vulkan, junto al pequeño framework
 de <em>nvpro-samples</em>, que puede encontrarse en el repositorio <span
 class="citation" data-cites="nvpro-samples-tutorial">(<a
-href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">NVIDIA
 2022a</a>)</span>. Nuestro trabajo recogerá varias de las
 características que se muestran en dicho repositorio. Además,
 mantendremos el mismo espíritu que la serie de <span class="citation"
@@ -4953,7 +4952,7 @@ ecuaciones vistas en <a href="#transporte-de-luz">radiometría</a>,
 teniendo en cuenta las propiedades de los diferentes materiales.</p>
 <p>El código ilustrado en las siguientes secciones está basado en el de
 <span class="citation" data-cites="nvpro-samples-tutorial">(<a
-href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">NVIDIA
 2022a</a>)</span>, aunque se pueden encontrar numerosísimas
 modificaciones en la literatura del sector.</p>
 <h3 data-number="4.1.1"
@@ -5227,12 +5226,12 @@ considerable. Para acelerar este trámite y partir de una base más
 sólida, se ha decidido usar un pequeño framework de trabajo de Nvidia
 llamado [nvpro-samples] <span class="citation"
 data-cites="nvpro-samples">(<a href="#ref-nvpro-samples"
-role="doc-biblioref">Nvidia 2022b</a>)</span>.</p>
+role="doc-biblioref">NVIDIA 2022b</a>)</span>.</p>
 <p>Esta serie de repositorios de Nvidia DesignWorks contienen proyectos
 de ray tracing de Nvidia con fines didácticos. Nosotros usaremos
 <strong>vk_raytracing_tutorial_KHR</strong> <span class="citation"
 data-cites="nvpro-samples-tutorial">(<a
-href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">NVIDIA
 2022a</a>)</span>, pues ejemplifica cómo añadir ray tracing en tiempo
 real a un proyecto de Vulkan. En particular, nosotros seguiremos las
 siguientes secciones, pero extendiendo el resultado final:</p>
@@ -5424,12 +5423,12 @@ partes: <strong>Top-Level Acceleration Structure</strong> (TLAS) y
 <div id="fig:TLAS" class="fignos">
 <figure>
 <img loading="lazy" src="./img/04/Acceleration%20structure.png" style="width:70.0%"
-alt="Figura 30: La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: (Nvidia 2022a)" />
+alt="Figura 30: La TLAS guarda información de las instancias de un objeto, así como una referencia a BLAS que contiene la geometría correspondiente. Fuente: (NVIDIA 2022a)" />
 <figcaption aria-hidden="true"><span>Figura 30:</span> La TLAS guarda
 información de las instancias de un objeto, así como una referencia a
 BLAS que contiene la geometría correspondiente. Fuente: <span
 class="citation" data-cites="nvpro-samples-tutorial">(<a
-href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">NVIDIA
 2022a</a>)</span></figcaption>
 </figure>
 </div>
@@ -5447,7 +5446,7 @@ instanciado varias veces <em>dentro de la misma BLAS</em>, la geometría
 se duplica. Esto se hace para mejorar el rendimiento.</p>
 <p>Como regla general, cuantas menos BLAS, mejor <span class="citation"
 data-cites="nvidia-best-practices">(<a href="#ref-nvidia-best-practices"
-role="doc-biblioref">Nvidia 2020b</a>)</span>.</p>
+role="doc-biblioref">NVIDIA 2020b</a>)</span>.</p>
 <p>El código correspondiente a la creación de la BLAS en el programa es
 el siguiente:</p>
 <pre><code class="language-cpp">void Engine::createBottomLevelAS() {
@@ -6102,7 +6101,7 @@ h \approx \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow
 <p>Este algoritmo supone una mejora de hasta 3 veces mayor rendimiento
 que el recursivo <span class="citation"
 data-cites="nvpro-samples-tutorial">(<a
-href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">NVIDIA
 2022a</a>, glTF Scene)</span>.</p>
 <h2 data-number="4.10"
 id="antialiasing-mediante-jittering-y-acumulación-temporal"><span
@@ -6127,7 +6126,7 @@ posición, la información del píxel se ve alterada significativamente,
 por lo que debemos reconstruir las muestras desde el principio.</p>
 <p>La implementación es muy sencilla. Está basada en el tutorial de
 <span class="citation" data-cites="nvpro-samples-tutorial">(<a
-href="#ref-nvpro-samples-tutorial" role="doc-biblioref">Nvidia
+href="#ref-nvpro-samples-tutorial" role="doc-biblioref">NVIDIA
 2022a</a>, jitter camera)</span>. Debemos modificar tanto el motor como
 los shaders para llevar el recuento del número de frames en las push
 constants.</p>
@@ -7362,7 +7361,7 @@ tipos, <em>subsurface scattering</em>…</p>
 <strong>refactorización de la clase <code>Engine</code></strong>. El
 framework que escogimos, Nvidia nvpro-samples <span class="citation"
 data-cites="nvpro-samples">(<a href="#ref-nvpro-samples"
-role="doc-biblioref">Nvidia 2022b</a>)</span>, está destinado a ser
+role="doc-biblioref">NVIDIA 2022b</a>)</span>, está destinado a ser
 didáctico y no eficiente. Por tanto, el software presenta un alto
 acoplamiento. Separar en varias clases más reducidas, como una clase
 para rasterización y otra para ray tracing, sería esencial. Sin embargo,
@@ -7530,7 +7529,7 @@ vez de renderizar una imagen a, por ejemplo, 4K, se computa primero a
 1080p o menor y luego se reescala mediante inteligencia artificial. Las
 tecnologías más famosas que existen de este estilo son Nvidia Deep
 Learning Super Sampling 2.0 <span class="citation" data-cites="dlss">(<a
-href="#ref-dlss" role="doc-biblioref">Nvidia 2020a</a>)</span> e Intel
+href="#ref-dlss" role="doc-biblioref">NVIDIA 2020a</a>)</span> e Intel
 XeSS <span class="citation" data-cites="xess">(<a href="#ref-xess"
 role="doc-biblioref">Intel 2022b</a>)</span>. AMD lanzó recientemente
 FidelityFX Super Resolution 2.0 (FSR) <span class="citation"
@@ -7635,7 +7634,7 @@ href="#ref-df-dlss" role="doc-biblioref">Digital Foundry
 <p>No obstante, existen algunas implementaciones de motores que utilizan
 únicamente path tracing como algoritmo de renderizado. Entre estos, se
 cuentran <em>Quake II RTX</em> <span class="citation"
-data-cites="Q2RTX">(<a href="#ref-Q2RTX" role="doc-biblioref">Nvidia
+data-cites="Q2RTX">(<a href="#ref-Q2RTX" role="doc-biblioref">NVIDIA
 2018</a>)</span> o <em>Minecraft RTX</em>, del cual se puede encontrar
 un análisis técnico en el blog de <span class="citation"
 data-cites="alain-minecraft">(<a href="#ref-alain-minecraft"
@@ -8996,8 +8995,8 @@ href="http://advances.realtimerendering.com/s2021/index.html">http://advances.re
 <div id="ref-nvidia-blue-noise" class="csl-entry"
 role="doc-biblioentry">
 Alan Wolfe, T. A.-M., Nathan Morrical. 2021. <span>“Rendering in real
-time with spatiotemporal blue noise textures, part 1.”</span> 2021.
-Accessed May 30, 2022. <a
+time with spatiotemporal blue noise textures, part 1.”</span> NVIDIA.
+2021. Accessed May 30, 2022. <a
 href="https://developer.nvidia.com/blog/rendering-in-real-time-with-spatiotemporal-blue-noise-textures-part-1/">https://developer.nvidia.com/blog/rendering-in-real-time-with-spatiotemporal-blue-noise-textures-part-1/</a>.
 </div>
 <div id="ref-fsr" class="csl-entry" role="doc-biblioentry">
@@ -9035,7 +9034,7 @@ href="http://www.agilemanifesto.org/">http://www.agilemanifesto.org/</a>.
 <div id="ref-restir" class="csl-entry" role="doc-biblioentry">
 Benedikt Bitterli, M. P., Chris Wyman. 2020. <span>“Spatiotemporal
 reservoir resampling for real-time ray tracing with dynamic direct
-lighting.”</span> July 19, 2020. Accessed May 30, 2022. <a
+lighting.”</span> NVIDIA. July 19, 2020. Accessed May 30, 2022. <a
 href="https://research.nvidia.com/publication/2020-07_spatiotemporal-reservoir-resampling-real-time-ray-tracing-dynamic-direct">https://research.nvidia.com/publication/2020-07_spatiotemporal-reservoir-resampling-real-time-ray-tracing-dynamic-direct</a>.
 </div>
 <div id="ref-disney-brdfs" class="csl-entry" role="doc-biblioentry">
@@ -9131,6 +9130,13 @@ Dockershelf. 2022. <span>“Repository for docker images of latex. Test
 driven, lightweight and reliable. Rebuilt daily.”</span> 2022. Accessed
 May 7, 2022. <a
 href="https://hub.docker.com/r/dockershelf/latex">https://hub.docker.com/r/dockershelf/latex</a>.
+</div>
+<div id="ref-turing-arquitecture" class="csl-entry"
+role="doc-biblioentry">
+Emmett Kilgariff, N. S., Henry Moreton. 2018. <span>“NVIDIA turing
+architecture in-depth.”</span> NVIDIA. September 14, 2018. Accessed May
+26, 2022. <a
+href="https://developer.nvidia.com/blog/nvidia-turing-architecture-in-depth/">https://developer.nvidia.com/blog/nvidia-turing-architecture-in-depth/</a>.
 </div>
 <div id="ref-UE5" class="csl-entry" role="doc-biblioentry">
 Epic Games. 2022a. <span>“Unreal engine 5.”</span> 2022. Accessed May
@@ -9266,7 +9272,7 @@ Accessed May 13, 2022. <a
 href="https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/overview.html">https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/overview.html</a>.
 </div>
 <div id="ref-xess" class="csl-entry" role="doc-biblioentry">
-Intel. 2022b. <span>“Xe super sampling: AI-enhanced upscaling.”</span>
+———. 2022b. <span>“Xe super sampling: AI-enhanced upscaling.”</span>
 2022. Accessed May 30, 2022. <a
 href="https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/xess.html">https://www.intel.com/content/www/us/en/products/docs/arc-discrete-graphics/xess.html</a>.
 </div>
@@ -9382,37 +9388,31 @@ developers.”</span> 2022. Accessed May 7, 2022. <a
 href="https://www.jetbrains.com/es-es/lp/mono/">https://www.jetbrains.com/es-es/lp/mono/</a>.
 </div>
 <div id="ref-Q2RTX" class="csl-entry" role="doc-biblioentry">
-Nvidia. 2018. <span>“Quake II RTX.”</span> 2018. Accessed May 30, 2022.
+NVIDIA. 2018. <span>“Quake II RTX.”</span> 2018. Accessed May 30, 2022.
 <a
 href="https://github.com/NVIDIA/Q2RTX">https://github.com/NVIDIA/Q2RTX</a>.
 </div>
 <div id="ref-dlss" class="csl-entry" role="doc-biblioentry">
-Nvidia. 2020a. <span>“NVIDIA DLSS 2.0: A big leap in AI
-rendering.”</span> 2020. Accessed May 30, 2022. <a
+———. 2020a. <span>“NVIDIA DLSS 2.0: A big leap in AI rendering.”</span>
+2020. Accessed May 30, 2022. <a
 href="https://www.nvidia.com/en-us/geforce/news/nvidia-dlss-2-0-a-big-leap-in-ai-rendering/">https://www.nvidia.com/en-us/geforce/news/nvidia-dlss-2-0-a-big-leap-in-ai-rendering/</a>.
 </div>
 <div id="ref-nvidia-best-practices" class="csl-entry"
 role="doc-biblioentry">
-Nvidia. 2020b. <span>“Best practices: Using nvidia RTX ray
-tracing.”</span> October 10, 2020. Accessed May 13, 2022. <a
+———. 2020b. <span>“Best practices: Using NVIDIA RTX ray tracing.”</span>
+October 10, 2020. Accessed May 13, 2022. <a
 href="https://developer.nvidia.com/blog/best-practices-using-nvidia-rtx-ray-tracing/">https://developer.nvidia.com/blog/best-practices-using-nvidia-rtx-ray-tracing/</a>.
 </div>
 <div id="ref-nvpro-samples-tutorial" class="csl-entry"
 role="doc-biblioentry">
-———. 2022a. <span>“Nvidia DesignWorks KHR tutorial.”</span> 2022.
+———. 2022a. <span>“NVIDIA DesignWorks KHR tutorial.”</span> 2022.
 Accessed May 13, 2022. <a
 href="https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR">https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR</a>.
 </div>
 <div id="ref-nvpro-samples" class="csl-entry" role="doc-biblioentry">
-———. 2022b. <span>“Nvidia DesignWorks samples.”</span> 2022. Accessed
+———. 2022b. <span>“NVIDIA DesignWorks samples.”</span> 2022. Accessed
 May 13, 2022. <a
 href="https://github.com/nvpro-samples">https://github.com/nvpro-samples</a>.
-</div>
-<div id="ref-turing-arquitecture" class="csl-entry"
-role="doc-biblioentry">
-Nvidia, H. M., Emmett Kilgariff. 2018. <span>“NVIDIA turing architecture
-in-depth.”</span> September 14, 2018. Accessed May 26, 2022. <a
-href="https://developer.nvidia.com/blog/nvidia-turing-architecture-in-depth/">https://developer.nvidia.com/blog/nvidia-turing-architecture-in-depth/</a>.
 </div>
 <div id="ref-overvoorde-2022" class="csl-entry" role="doc-biblioentry">
 Overvoorde, A. 2022. <span>“Introduction - vulkan tutorial.”</span>
@@ -9566,17 +9566,17 @@ Wikipedia. 2022a. <span>“DirectX raytracing.”</span> 2022. Accessed May
 href="https://en.wikipedia.org/wiki/DirectX_Raytracing">https://en.wikipedia.org/wiki/DirectX_Raytracing</a>.
 </div>
 <div id="ref-wikipedia-nvidia" class="csl-entry" role="doc-biblioentry">
-Wikipedia. 2022b. <span>“List of nvidia graphics processing
-units.”</span> 2022. Accessed May 13, 2022. <a
-href="https://en.wikipedia.org/wiki/List_of_Nvidia_graphics_processing_units">https://en.wikipedia.org/wiki/List_of_Nvidia_graphics_processing_units</a>.
+———. 2022b. <span>“List of NVIDIA graphics processing units.”</span>
+2022. Accessed May 13, 2022. <a
+href="https://en.wikipedia.org/wiki/List_of_NVIDIA_graphics_processing_units">https://en.wikipedia.org/wiki/List_of_NVIDIA_graphics_processing_units</a>.
 </div>
 <div id="ref-optix" class="csl-entry" role="doc-biblioentry">
-Wikipedia. 2022c. <span>“OptiX.”</span> 2022. Accessed May 16, 2022. <a
+———. 2022c. <span>“OptiX.”</span> 2022. Accessed May 16, 2022. <a
 href="https://en.wikipedia.org/wiki/OptiX">https://en.wikipedia.org/wiki/OptiX</a>.
 </div>
 <div id="ref-pinhole" class="csl-entry" role="doc-biblioentry">
-Wikipedia. 2022d. <span>“Pinhole camera.”</span> 2022. Accessed May 26,
-2022. <a
+———. 2022d. <span>“Pinhole camera.”</span> 2022. Accessed May 26, 2022.
+<a
 href="https://en.wikipedia.org/wiki/Pinhole_camera">https://en.wikipedia.org/wiki/Pinhole_camera</a>.
 </div>
 <div id="ref-ps5" class="csl-entry" role="doc-biblioentry">
