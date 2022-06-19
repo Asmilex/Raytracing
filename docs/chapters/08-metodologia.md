@@ -191,17 +191,17 @@ Las tareas pendientes se gestionan mediante *issues*. Cada vez que se tenga un o
 
 Esto permite una gestión muy eficiente de los principales problemas y objetivos pendientes de la aplicación.
 
-![Pestaña de *issues*, día 16 de abril de 2022](./img/08/Issues.png){ #fig:github_issues width=80%}
+![Pestaña de *issues*, día 16 de abril de 2022](./img/08/Issues.png){ #fig:github_issues width=90%}
 
 Los *issues* se agrupan en *milestones*, o productos mínimamente viables. Estos *issues* suelen estar relacionados con algún apartado importante del desarrollo.
 
-![Los *milestones* agrupan una serie de *issues* relacionados con un punto clave del desarrollo](./img/08/Milestones.png){ #fig:github_milestones width=80% }
+![Los *milestones* agrupan una serie de *issues* relacionados con un punto clave del desarrollo](./img/08/Milestones.png){ #fig:github_milestones width=90% }
 
 De esta forma, podemos ver todo lo que queda pendiente para la fecha de entrega.
 
 Para añadir mayor granularidad a la gestión de tareas y proporcionar una vista informativa, se utiliza Github Projects. En esencia, esta aplicación es un acompañante del repositorio estilo Asana.
 
-![Projects agrupa los *issues* y les asigna prioridades](./img/08/Projects.png){   #fig:github_projects width=80% }
+![Projects agrupa los *issues* y les asigna prioridades](./img/08/Projects.png){#fig:github_projects width=86% }
 
 Una de las alternativas que se planteó al inicio fue **Linear** [@linear], una aplicación de gestión de *issues* similar a Projects. Sin embargo, la conveniencia de tener Projects integrado en Github supuso un punto a favor para este gestor. De todas formas, el equipo de desarrollo se compone de una persona, así que no hace falta complicar excesivamente el *workflow*.
 

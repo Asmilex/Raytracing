@@ -92,7 +92,7 @@ Empecemos por materiales. Se han implementado unos cuantos tipos diferentes, los
 
 Los más simples son los [difusos](#reflexión-difusa-o-lambertiana). La caja de Cornell original contiene dos objetos de este tipo:
 
-![Materiales difusos de la escena `cornell_box_original`. Vemos que la luz se esparce uniformemente al rebotar en el objeto.](./img/05/Materiales%20difusos.png){#fig:materiales_difusos width=70%}
+![Materiales difusos de la escena `cornell_box_original`. Vemos que la luz se esparce uniformemente al rebotar en el objeto.](./img/05/Materiales%20difusos.png){#fig:materiales_difusos width=90%}
 
 Los materiales [especulares *glossy*](#reflexión-especular-no-perfecta) han sido modificados ligeramente para simular el parámetro de *roughness* de los metales, para compararlos con los de [@Shirley2020RTW1]:
 
@@ -136,21 +136,21 @@ Dicho de esta forma, es difícil imaginarse cómo se comporta en la vida real. P
 
 En la escena [@fig:cornell_bath_1] observamos cómo la luz del sol entra desde la parte de la derecha, rebotando en todo el espacio. Notamos cómo la escena tiene una tonalidad natural y cálida. Sin embargo, esta impresión es fácilmente modificable si alteramos la forma de arrojar la luz. Cerrando la puerta (la cual no puede ser vista en la fotografía, pero se encuentra a la derecha y es idéntica al cristal), la iluminación cambia completamente [@fig:cornell_bath_2].
 
-![Escena similar a la caja de Cornell, en la vida real. También es mi baño. ](./img/05/Cornell%20bath%201.jpg){#fig:cornell_bath_1 width=60%}
+![Escena similar a la caja de Cornell, en la vida real. También es mi baño. ](./img/05/Cornell%20bath%201.jpg){#fig:cornell_bath_1 width=68%}
 
 Podemos observar cómo todos los materiales adquieren un tinte rojizo, debido a la influencia tanto difusa como especular de la pared de la izquierda. Objetos que antes eran blancos inmaculados se vuelven rojos, como el inodoro. Incluso aquellas zonas en sombra consiguen un color rojizo. Esto es debido a que los fotones rebotan en el cristal rojo cuando más energía tienen. De esta forma, en la siguiente dirección tomada, los rayos transportan esta propiedad al resto de materiales, los cuales se visualizan como una tonalidad roja.
 
-![Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados](./img/05/Cornell%20bath%202.jpg){#fig:cornell_bath_2 width=60%}
+![Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados](./img/05/Cornell%20bath%202.jpg){#fig:cornell_bath_2 width=68%}
 
 **Path tracing consigue este efecto de manera natural** por diseño. Este es uno de sus mayores puntos fuertes, pero a la vez lo hace computacionalmente caro. Dado que la escena de [@fig:cornell_bath_1] y [@fig:cornell_bath_2] es, esencialmente, una caja de Cornell, deberíamos apreciar un efecto similar en nuestra escena, ¿verdad?
 
 ¡Así es! La figura [@fig:global_illumination_1] es muy similar a la [@fig:cornell_bath_2]. Se pueden apreciar los mismos efectos en la caja izquierda, los cuales no ocurrían con tanta intensidad en la escena original [fig. @fig:materiales_difusos]
 
-![La caja de Cornell original con luz direccional apuntando a la pared de la izquierda](./img/05/Ambient%20occlusion%201.png){#fig:global_illumination_1 width=50%}
+![La caja de Cornell original con luz direccional apuntando a la pared de la izquierda](./img/05/Ambient%20occlusion%201.png){#fig:global_illumination_1 width=55%}
 
 Lo mismo ocurre cuando cambiamos el foco a la pared de la derecha. Al ser verde, tintará el resto de los materiales de dicho color [Figura @fig:global_illumination_2].
 
-![Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena](./img/05/Ambient%20occlusion%202.png){#fig:global_illumination_2 width=50%}
+![Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena](./img/05/Ambient%20occlusion%202.png){#fig:global_illumination_2 width=55%}
 
 Este efecto es esencial para proporcionar realismo a una imagen digital. Sin iluminación global, los motores presentan un aspecto que podríamos considerar *videojueguil*: imágenes planas, con sombras abruptas y un aire de falsedad al que nos hemos llegado a acostumbrar. Por ello se han implementado varias técnicas en rasterización para suplir este efecto. Destacan los *lightmaps*, la [componente ambiental](#materiales-y-objetos) de los materiales, *cubemaps*, oclusión ambiental e iluminación indirecta basada en *probes*.
 
@@ -221,25 +221,25 @@ La diferencia de rendimiento es sustancial. Pero, **¿merece la pena el coste ad
 
 Para responder a esta pregunta, primero debemos conocer cómo actúa este parámetro. Empezando con un número extremadamente bajo para los rebotes, vemos que parte de la escena ni siquiera se renderiza [@fig:depth_1].
 
-![`depth = 1`](./img/05/1%20bounce.png){#fig:depth_1 width=70%}
+![`depth = 1`.](./img/05/1%20bounce.png){#fig:depth_1 width=70%}
 
 Aumentar el número de rebotes progresivamente permite que el camino adquiera mayor información. Con dos rebotes, permitimos que un camino adquiera información sobre la caja por dentro, así como un reflejo primitivo en las esferas [@fig:depth_2].
 
-![`depth = 2`](./img/05/2%20bounces.png){#fig:depth_2 width=70%}
+![`depth = 2`.](./img/05/2%20bounces.png){#fig:depth_2 width=70%}
 
 Con 3 rebotes, la esfera izquierda refleja casi en su totalidad la esfera, pero vemos que el reflejo de la esfera derecha *dentro* de la izquierda está oscurecido [@fig:depth_3].
 
-![`depth = 3`](./img/05/3%20bounces.png){#fig:depth_3 width=70%}
+![`depth = 3`.](./img/05/3%20bounces.png){#fig:depth_3 width=70%}
 
 Subiéndolo a 4 rebotes [@fig:depth_4] se arregla mayoritariamente esto.
 
-![`depth = 4`](./img/05/4%20bounces.png){#fig:depth_4 width=70%}
+![`depth = 4`.](./img/05/4%20bounces.png){#fig:depth_4 width=70%}
 
 En esta escena, aumentar más allá de 5 o 6 rebotes produce una situación de retornos reducidos. La calidad de imagen no aumenta prácticamente nada, pero el coste se vuelve muy elevado [@fig:depth_20, @fig:depth_50].
 
-![`depth = 20`](./img/05/20%20bounces.png){#fig:depth_20 width=70%}
+![`depth = 20`.](./img/05/20%20bounces.png){#fig:depth_20 width=70%}
 
-![`depth = 50`](./img/05/50%20bounces.png){#fig:depth_50 width=70%}
+![`depth = 50`.](./img/05/50%20bounces.png){#fig:depth_50 width=100%}
 
 ### Acumulación temporal
 
@@ -317,23 +317,23 @@ Comencemos la comparativa utilizando el número de muestras. Para las primeras i
 
 Con una única muestra, se observa una diferencia enorme entre ambas versiones [@fig:comparativa_1s]. En nuestra implementación no se observa prácticamente nada. Solo somos capaces de distinguir la luz, un poco del reflejo de la caja izquierda y los *caustics* causados por la luz del techo. Mientras tanto, en In One Weekend, la imagen es ruidosa pero definida.
 
-![1 muestra. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_1s.png){#fig:comparativa_1s width=85%}
+![1 muestra. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_1s.png){#fig:comparativa_1s width=100%}
 
 El **motivo de esta diferencia** es la **forma de muestrear la escena**. In One Weekend implementa muestreo directo de las fuentes de luz. Para conseguirlo, almacena la posición de la lámpara del techo, y en cada intersección muestrea un punto aleatorio de la fuente. En cambio, en nuestro motor, este tipo de fuentes no se muestrean directamente, sino que debemos contar con el azar para que aporten radiancia.
 
 Una vez pasamos a 5 muestras [Figura @fig:comparativa_5s], nuestro motor consigue una imagen más nítida, similar a la que In One Weekend genera con una muestra. En cambio, In One Weekend consigue un resultado muy bueno, aunque con muchas luciérnagas. Este fenómeno no ocurre en nuestra implementación por el tipo de muestreo.
 
-![5 muestras. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_5s.png){#fig:comparativa_5s width=85%}
+![5 muestras. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_5s.png){#fig:comparativa_5s width=95%}
 
 Con 20 muestras nuestra implementación aún muestra un resultado algo ruidoso. ¿Se podría hacer algo para mejorarlo?
 
-![20 muestras. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_20s.png){#fig:comparativa_20s width=85%}
+![20 muestras. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_20s.png){#fig:comparativa_20s width=95%}
 
 La respuesta es la acumulación temporal. Aunque, en esencia, la acumulación temporal es una forma de aumentar el número de muestras con respecto al tiempo, nuestra implementación utiliza interpolación para mezclar los colores de los *frames*. De esta forma, se consigue el efecto de normalización, lo cual elimina el ruido de la imagen con el tiempo. De esta forma conseguimos equiparar la imagen de ambas versiones [Figura @fig:comparativa_100s].
 
 Se puede observar cómo el tipo de ruido es diferente. En In One Weekend, el ruido se presenta en forma de píxeles blancos, debido a las luciérnagas generadas por el muestreo directo de la fuente de luz. En contrapartida, en nuestra implementación el ruido es negro debido a los rayos que no impactan en ninguna superficie tras rebotar.
 
-![100 muestras. **Izquierda**: In One Weekend (100 muestras). **Derecha**: nuestro motor (7 muestras, 15 *frames* de acumulación temporal)](./img/05/Comparativa_100s.png){#fig:comparativa_100s width=85%}
+![100 muestras. **Izquierda**: In One Weekend (100 muestras). **Derecha**: nuestro motor (7 muestras, 15 *frames* de acumulación temporal)](./img/05/Comparativa_100s.png){#fig:comparativa_100s width=100%}
 
 Por último, subiendo el número de muestras a 1000 conseguimos una imagen muy nítida en ambas implementaciones [Figura @fig:comparativa_1000s]. Conseguimos apreciar una diferencia en los bordes de la esfera de la derecha, la cual seguramente se deba a un fallo en la implementación de la BRDF.
 
@@ -349,7 +349,7 @@ $$
 20.4 \frac{\text{ms}}{\text{10 muestras}} \cdot 19 \text{ frames de temp. acum.} = 3876 \text{ ms}
 $$
 
-![4000 milisegundos de *frame budget*. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_4000ms.png){#fig:comparativa_4000ms width=85%}
+![4000 milisegundos de *frame budget*. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_4000ms.png){#fig:comparativa_4000ms width=100%}
 
 Como podemos observar, nuestra implementación consigue un resultado abismalmente mejor en el mismo periodo de tiempo.
 
@@ -360,7 +360,7 @@ $$
 
 Esencialmente, la imagen que genera nuestra implementación es perfecta. No muestra ni un ápice de ruido; mientras que la de In One Weeekend presenta un resultado poco nítido [Figura @fig:comparativa_70000ms].
 
-![70000 milisegundos de *frame budget*. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_70000ms.png){#fig:comparativa_70000ms width=85%}
+![70000 milisegundos de *frame budget*. **Izquierda**: In One Weekend. **Derecha**: nuestro motor](./img/05/Comparativa_70000ms.png){#fig:comparativa_70000ms width=100%}
 
 
 #### Conclusiones de la comparativa

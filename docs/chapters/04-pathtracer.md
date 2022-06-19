@@ -789,7 +789,7 @@ En la sección de la [comparativa](#comparativa-con-in-one-weekend) estudiaremos
 
 Con el código de la sección [anterior](#antialiasing-mediante-jittering-y-acumulación-temporal), existe un problema con los colores finales. El algoritmo de pathtracing no limita el máximo valor que puede tomar un camino. Sin embargo, Vulkan espera que la terna RGB provista esté en $[0, 1]^3$. Esto implica que los colores acabarán quemados.
 
-![Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz.](./img/04/Quemado.png){#fig:quemado width=80%}
+![Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz.](./img/04/Quemado.png){#fig:quemado width=50%}
 
 Podemos corregir este problema mediante la acotación máxima de la terna RGB producida por el algoritmo. Sin embargo, esto ocasiona que la proporción de valores finales no sea correcta. Por ejemplo, si un camino genera la terna $c = (15, 5, 7)$, el resultado de $\max{(1, c_i)}, i = 1, 2, 3$ sería $(1, 1, 1)$.
 
@@ -812,7 +812,7 @@ if (USE_GAMMA_CORRECTION == 1) {
 }
 ```
 
-![Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos.](./img/04/Corrección%20de%20gamma.png){#fig:correccion_gamma width=80%}
+![Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos.](./img/04/Corrección%20de%20gamma.png){#fig:correccion_gamma width=50%}
 
 > Espera. Esa no parece la misma escena. ¿No han cambiado los colores demasiado?
 
