@@ -847,9 +847,10 @@ Vulkan.</em></p>
 <h1 class="unnumbered" id="dedicatoria">Dedicatoria</h1>
 <p>A mi familia por su apoyo constante y permitirme empezar una carrera
 que ni siquiera sabía que quería.</p>
-<p>A Augusta, Blanca, Cristina, Jorge, José <em>“OC”</em>, Lucas, Mari,
-Marina, Mapachana y Paula, Sarah, Sergio por ayudarme con el contenido,
-feedback del desarrollo y diseño de la documentación.</p>
+<p>A Augusta, Blanca, Cristina, Jorge, José <em>“OC”</em>, Juan Antonio,
+Lucas, Manu <em>“Nomad”</em>, Mari, Marina, Mapachana, Paula, Sarah, y
+Sergio por el apoyo, así como por ayudarme con el contenido, feedback
+del desarrollo y diseño de la documentación.</p>
 <h1 class="unnumbered" id="introducción">Introducción</h1>
 <p>Este trabajo puede visualizarse en la web <a
 href="https://asmilex.github.io/Raytracing/">asmilex.github.io/Raytracing</a>
@@ -868,17 +869,15 @@ las paredes de sus hogares.</p>
 realistas de representar la realidad. El físico árabe Ibn al-Haytham, a
 finales de los años 900, describió el efecto de la cámara oscura <span
 class="citation" data-cites="pinhole">(<a href="#ref-pinhole"
-role="doc-biblioref">Wikipedia 2022d</a>)</span>, un efecto óptico
+role="doc-biblioref">Encyclopedia 2022</a>)</span>, un efecto óptico
 mediante el cual se puede proyectar una imagen invertida en una pared. A
 inicios del siglo XVIII, Nicéphore Niépce consiguió arreglar una imagen
-capturada por las primeras cámaras <span class="citation"
-data-cites="history-photography">(<a href="#ref-history-photography"
-role="doc-biblioref">Wikipedia 2022j</a>)</span>. Era una impresión
-primitiva, por supuesto; pero funcional. A finales de este siglo, sobre
-los años 1890, la fotografía se extendió rápidamente en el espacio del
-consumidor gracias a la compañía Kodak. Finalmente, a mediados del siglo
-XX la fotografía digital, la cual simplificaría muchos de los problemas
-de las cámaras tradicionales.</p>
+capturada por las primeras cámaras. Era una impresión primitiva, por
+supuesto; pero funcional. A finales de este siglo, sobre los años 1890,
+la fotografía se extendió rápidamente en el espacio del consumidor
+gracias a la compañía Kodak. Finalmente, a mediados del siglo XX la
+fotografía digital, la cual simplificaría muchos de los problemas de las
+cámaras tradicionales.</p>
 <p>Una vez entró de lleno la era digital, los ordenadores personales se
 volvieron una herramienta indispensable. Con ellos, los usuarios eran
 capaces de mostrar imágenes en pantalla, que cambiaban bajo demanda.
@@ -1338,11 +1337,8 @@ analíticamente.</p>
 <h3 data-number="1.2.1" id="superficies-implícitas"><span
 class="header-section-number">1.2.1</span> Superficies implícitas</h3>
 <p>Generalmente, cuando hablemos de superficies, nos referiremos
-superficies diferenciables <span class="citation"
-data-cites="wikipedia-contributors-2022O">(<a
-href="#ref-wikipedia-contributors-2022O" role="doc-biblioref">Wikipedia
-2022h</a>)</span>, pues nos interesará conocer el vector normal en cada
-punto.</p>
+superficies diferenciables, pues nos interesará conocer el vector normal
+en cada punto.</p>
 <p>Una superficie implícita es una superficie en un espacio euclidiano
 definida como</p>
 <p><span class="math display">\[
@@ -1589,12 +1585,11 @@ vertices mediante <strong>coordenadas baricéntricas</strong>. Este
 sistema de coordenadas expresa cada punto del plano como una combinación
 convexa de los vértices <span class="math inline">\(\mathbf{a},
 \mathbf{b}, \mathbf{c}\)</span> <span class="citation"
-data-cites="wikipedia-contributors-2022G">(<a
-href="#ref-wikipedia-contributors-2022G" role="doc-biblioref">Wikipedia
-2022i</a>)</span>. Es decir, que para cada punto <span
-class="math inline">\(\mathbf{p}\)</span> del triángulo existen <span
-class="math inline">\(\alpha, \beta\)</span> y <span
-class="math inline">\(\gamma\)</span> tales que <span
+data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
+role="doc-biblioref">Shirley and Morley 2003</a>)</span>. Es decir, que
+para cada punto <span class="math inline">\(\mathbf{p}\)</span> del
+triángulo existen <span class="math inline">\(\alpha, \beta\)</span> y
+<span class="math inline">\(\gamma\)</span> tales que <span
 class="math inline">\(\alpha + \beta + \gamma = 1\)</span> y</p>
 <p><span class="math display">\[
 \mathbf{p} = \alpha a + \beta \mathbf{b} + \gamma \mathbf{c}
@@ -2238,7 +2233,10 @@ data-cites="tuwien">(<a href="#ref-tuwien"
 role="doc-biblioref">Zsolnai-Fehér and Celarek 2022</a>)</span>. En vez
 de radiancia, se suele hablar de luminancia, y todas las unidades vistas
 durante este capítulo tienen su análogo.</p>
-<table>
+<div id="tbl:fotometria_radiometria" class="tablenos">
+<table id="tbl:fotometria_radiometria">
+<caption><span>Tabla 2.1:</span> Relación entre las unidades
+fundamentales radiométricas y fotométricas. </caption>
 <colgroup>
 <col style="width: 13%" />
 <col style="width: 35%" />
@@ -2303,6 +2301,7 @@ lux <span class="math inline">\((\text{lx} =
 </tr>
 </tbody>
 </table>
+</div>
 <h2 data-number="2.2" id="dispersión-de-luz"><span
 class="header-section-number">2.2</span> Dispersión de luz</h2>
 <p>Cuando la luz impacta en una superficie, ocurren un par de sucesos:
@@ -2368,10 +2367,9 @@ d\omega_i} (\text{sr}^{-1})
 <blockquote>
 <p><strong>Nota</strong>(ción): dependiendo de la fuente que estés
 leyendo, es posible que te encuentres una integral algo diferente. Por
-ejemplo, en tanto en Wikipedia como en <span class="citation"
-data-cites="ShirleyRRT">(<a href="#ref-ShirleyRRT"
-role="doc-biblioref">Shirley and Morley 2003</a>)</span> se integra con
-respecto a los ángulos de salida <span
+ejemplo, en <span class="citation" data-cites="ShirleyRRT">(<a
+href="#ref-ShirleyRRT" role="doc-biblioref">Shirley and Morley
+2003</a>)</span> se integra con respecto a los ángulos de salida <span
 class="math inline">\(\omega_o\)</span>, en vez de los incidentes.</p>
 <p>Aquí, usaremos la notación de integrar con respecto a los incidentes,
 como se hace en <span class="citation" data-cites="PBRT3e">(<a
@@ -5120,7 +5118,10 @@ suficientemente bueno como para adecuarse al nivel de fidelidad de los
 tiempos actuales.</p>
 <p>A día 17 de abril de 2022, para correr ray tracing en tiempo real, se
 necesita alguna de las siguientes tarjetas gráficas:</p>
-<table>
+<div id="tbl:arquitecturas" class="tablenos">
+<table id="tbl:arquitecturas">
+<caption><span>Tabla 4.1:</span> Arquitecturas capaces de realizar
+cómputos de ray tracing acelerados por hardware. </caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 10%" />
@@ -5161,15 +5162,17 @@ XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT</td>
 </tr>
 </tbody>
 </table>
+</div>
 <p>Se puede encontrar más información sobre las diferentes arquitecturas
 y gráficas en el siguiente artículo de AMD Radeon <span class="citation"
-data-cites="wikipedia-radeon">(<a href="#ref-wikipedia-radeon"
-role="doc-biblioref">Wikipedia 2022f</a>)</span>, Nvidia <span
-class="citation" data-cites="wikipedia-nvidia">(<a
-href="#ref-wikipedia-nvidia" role="doc-biblioref">Wikipedia
-2022b</a>)</span>, e <span class="citation" data-cites="intel-arc">(<a
-href="#ref-intel-arc" role="doc-biblioref">Intel 2022a</a>)</span>. Solo
-se han incluido las gráficas de escritorio de consumidor.</p>
+data-cites="RDNA2">(<a href="#ref-RDNA2" role="doc-biblioref">AMD
+2021</a>)</span>, Nvidia <span class="citation"
+data-cites="turing-arquitecture"><span>“Nvidia ampere
+architecture”</span> (<a href="#ref-ampere-arquitecture"
+role="doc-biblioref">2021</a>)</span>, e <span class="citation"
+data-cites="intel-arc">(<a href="#ref-intel-arc"
+role="doc-biblioref">Intel 2022a</a>)</span>. Solo se han incluido las
+gráficas de escritorio de consumidor.</p>
 <p>Para este trabajo se ha utilizado una <strong>RTX 2070
 Super</strong>. En el capítulo de análisis del rendimiento se hablará
 con mayor profundidad de este apartado.</p>
@@ -5192,10 +5195,11 @@ tracing, denominados KHR.</li>
 <li>Microsoft DirectX Ray Tracing (DXR), una extensión de
 <strong>DirectX 12</strong> <span class="citation"
 data-cites="directx-12">(<a href="#ref-directx-12"
-role="doc-biblioref">Wikipedia 2022a</a>)</span>.</li>
+role="doc-biblioref"><span>“DirectX raytracing”</span>
+2022</a>)</span>.</li>
 <li>Nvidia <strong>OptiX</strong> <span class="citation"
-data-cites="optix">(<a href="#ref-optix" role="doc-biblioref">Wikipedia
-2022c</a>)</span>.</li>
+data-cites="optix">(<a href="#ref-optix"
+role="doc-biblioref"><span>“OptiX”</span> 2022</a>)</span>.</li>
 </ul>
 <p>De momento, no hay mucho donde elegir.</p>
 <p>OptiX es la API más vieja de todas. Su primera versión salió en 2009,
@@ -5754,10 +5758,27 @@ normal es incluir los tres primeros (<span
 class="math inline">\(K_a\)</span>, <span
 class="math inline">\(K_d\)</span>, <span
 class="math inline">\(K_s\)</span>).</p>
+<pre><code class="language-cpp">// host_device.h
+struct WaveFrontMaterial
+{
+  vec3  ambient;
+  vec3  diffuse;
+  vec3  specular;
+  vec3  transmittance;
+  vec3  emission;
+  float shininess;
+  float ior;
+  float dissolve;
+  int   illum;
+  int   textureId;
+};</code></pre>
 <p>Existe un parámetro adicional llamado <code>illum</code>. Controla el
 modelo de iluminación usado. Nosotros lo usaremos para distinguir tipos
 diferentes de materiales. Los códigos representan lo siguiente:</p>
-<table>
+<div id="tbl:illum" class="tablenos">
+<table id="tbl:illum">
+<caption><span>Tabla 4.2:</span> tabla de valores para el parámetro
+<code>illum</code>. </caption>
 <colgroup>
 <col style="width: 14%" />
 <col style="width: 35%" />
@@ -5841,20 +5862,7 @@ diferentes de materiales. Los códigos representan lo siguiente:</p>
 </tr>
 </tbody>
 </table>
-<pre><code class="language-cpp">// host_device.h
-struct WaveFrontMaterial
-{
-  vec3  ambient;
-  vec3  diffuse;
-  vec3  specular;
-  vec3  transmittance;
-  vec3  emission;
-  float shininess;
-  float ior;       // index of refraction
-  float dissolve;  // 1 == opaque; 0 == fully transparent
-  int   illum;     // illumination model (see http://www.fileformat.info/format/material/)
-  int   textureId;
-};</code></pre>
+</div>
 <h2 data-number="4.8" id="fuentes-de-luz"><span
 class="header-section-number">4.8</span> Fuentes de luz</h2>
 <p>La última estructura de datos importante que debemos estudiar es la
@@ -5915,7 +5923,7 @@ detalle sumamente importante:</p>
 <p>Si no es así, ¡no tiene sentido que calculemos la influencia
 luminaria de la fuente! La carne de burro no se transparenta, después de
 todo. A no ser que sea un toro hecho de algún material que presente
-transmitancia [<a href="#fig:materiales_transparentes">39</a>], en cuyo
+transmitancia [<a href="#fig:materiales_transparentes">40</a>], en cuyo
 caso se debería refractar acordemente el rayo de luz.</p>
 <p>Volviendo al tema: este tipo de problemas de oclusión se suelen
 resolver mediante algún tipo de test de visibilidad. El más habitual es
@@ -6217,7 +6225,7 @@ espera que la terna RGB provista esté en <span class="math inline">\([0,
 1]^3\)</span>. Esto implica que los colores acabarán quemados.</p>
 <div id="fig:quemado" class="fignos">
 <figure>
-<img loading="lazy" src="./img/04/Quemado.png" style="width:80.0%"
+<img loading="lazy" src="./img/04/Quemado.png" style="width:50.0%"
 alt="Figura 32: Fíjate en la parte de la izquierda. La pared roja aparece demasiado brillante; especialmente, aquella impactada por la fuente de luz." />
 <figcaption aria-hidden="true"><span>Figura 32:</span> Fíjate en la
 parte de la izquierda. La pared roja aparece demasiado brillante;
@@ -6258,7 +6266,7 @@ if (USE_GAMMA_CORRECTION == 1) {
 }</code></pre>
 <div id="fig:correccion_gamma" class="fignos">
 <figure>
-<img loading="lazy" src="./img/04/Corrección%20de%20gamma.png" style="width:80.0%"
+<img loading="lazy" src="./img/04/Corrección%20de%20gamma.png" style="width:50.0%"
 alt="Figura 33: Con la corección de gamma aplicada, vemos que los colores de la foto no son tan intensos." />
 <figcaption aria-hidden="true"><span>Figura 33:</span> Con la corección
 de gamma aplicada, vemos que los colores de la foto no son tan
@@ -6302,10 +6310,10 @@ el programa.</p>
 <div id="fig:asmiray" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Asmiray.png" style="width:70.0%"
-alt="Figura 34: Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones." />
+alt="Figura 34: Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones" />
 <figcaption aria-hidden="true"><span>Figura 34:</span> Al abrir el
 motor, te encontrarás con una pantalla similar a esta: una escena
-cargada junto a un panel lateral con numerosas opciones.</figcaption>
+cargada junto a un panel lateral con numerosas opciones</figcaption>
 </figure>
 </div>
 <p>Si alguna vez has usado un motor de renderización en 3D (como
@@ -6326,9 +6334,35 @@ rueda del ratón</strong> y múevete.</li>
 shooter</em> se tratara, pulsa <strong>alt + click
 izquierdo</strong>.</li>
 </ul>
-<p>Puedes cambiar el modo de cámara en la pestaña “Extra” de la interfaz
-gráfica. Los diferentes modos alternan entre las acciones listadas
-anteriormente.</p>
+<p>La interfaz permite cambiar parámetros de diversos tipos. Enumeremos
+algunas de las opciones:</p>
+<div id="fig:parametros-motor" class="fignos">
+<figure>
+<img loading="lazy" src="./img/05/Parámetros.png" style="width:30.0%"
+alt="Figura 35: Parámetros del motor." />
+<figcaption aria-hidden="true"><span>Figura 35:</span> Parámetros del
+motor.</figcaption>
+</figure>
+</div>
+<ul>
+<li>En la parte superior se puede cambiar el color de fondo (por
+defecto, <code>(0.808, 0.839, 0.878)</code>) y deshabilitar el modo ray
+tracing.</li>
+<li>La primera pestaña muestra información sobre la posición de la
+cámara, así como el <em>field of view</em> (FOV).</li>
+<li>Las principales opciones están relacionadas con ray tracing. Entre
+las opciones posibles que se pueden cambiar, se encuentran la
+profundidad de un camino, el número de <em>frames</em> de acumulación
+temporal y el número de muestras tomadas por píxel. También se muestra
+el número total de muestras, que se calculan a partir de los dos últimos
+parámetros. Además, se enseña el <em>frametime</em> y los FPS.</li>
+<li>La iluminación permite cambiar el tipo de luz (puntual o infinita),
+así como ajustar su posición y la intensidad.</li>
+<li>En la pestaña <code>extras</code> se puede modificar el modo de
+navegación (<code>Examine</code>, <code>Fly</code> o <code>Walk</code>
+como comentábamos anteriormente), la distancia de renderizado y la
+velocidad de movimiento.</li>
+</ul>
 <p>Para ocultar la interfaz gráfica, pulsa <strong>F10</strong>.</p>
 <h3 data-number="5.1.1" id="cambio-de-escena"><span
 class="header-section-number">5.1.1</span> Cambio de escena</h3>
@@ -6344,8 +6378,11 @@ que se encuentra en el archivo <code>main.cpp</code>.</li>
 <code>Scenes.hpp</code>.</li>
 <li>Recompila el programa.</li>
 </ul>
-<p>Las escenas son las siguientes:</p>
-<table>
+<p>Se puede ver la lista de escenas disponibles en la tabla [<a
+href="#tbl:escenas">5.1</a>]</p>
+<div id="tbl:escenas" class="tablenos">
+<table id="tbl:escenas">
+<caption><span>Tabla 5.1:</span> Escenas del motor. </caption>
 <colgroup>
 <col style="width: 12%" />
 <col style="width: 65%" />
@@ -6447,6 +6484,7 @@ la iluminación global.</td>
 </tr>
 </tbody>
 </table>
+</div>
 <p>Ten en cuenta que las imágenes de las escenas no son definitivas.
 Están sujetas a cambios, pues los shaders todavía se encuentran en
 desarrollo.</p>
@@ -6464,9 +6502,9 @@ href="#reflexión-difusa-o-lambertiana">difusos</a>. La caja de Cornell
 original contiene dos objetos de este tipo:</p>
 <div id="fig:materiales_difusos" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Materiales%20difusos.png" style="width:70.0%"
-alt="Figura 35: Materiales difusos de la escena cornell_box_original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
-<figcaption aria-hidden="true"><span>Figura 35:</span> Materiales
+<img loading="lazy" src="./img/05/Materiales%20difusos.png" style="width:90.0%"
+alt="Figura 36: Materiales difusos de la escena cornell_box_original. Vemos que la luz se esparce uniformemente al rebotar en el objeto." />
+<figcaption aria-hidden="true"><span>Figura 36:</span> Materiales
 difusos de la escena <code>cornell_box_original</code>. Vemos que la luz
 se esparce uniformemente al rebotar en el objeto.</figcaption>
 </figure>
@@ -6480,8 +6518,8 @@ href="#ref-Shirley2020RTW1" role="doc-biblioref">Shirley
 <div id="fig:materiales_glossy" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20glossy.png" style="width:70.0%"
-alt="Figura 36: Materiales especulares metálicos de la escena cornell_box_glossy" />
-<figcaption aria-hidden="true"><span>Figura 36:</span> Materiales
+alt="Figura 37: Materiales especulares metálicos de la escena cornell_box_glossy" />
+<figcaption aria-hidden="true"><span>Figura 37:</span> Materiales
 especulares metálicos de la escena
 <code>cornell_box_glossy</code></figcaption>
 </figure>
@@ -6493,8 +6531,8 @@ debemos recurrir a técnicas específicas como reflejos planares o
 <div id="fig:materiales_espejos" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20espejos.png" style="width:70.0%"
-alt="Figura 37: Una caja que actúa como un espejo prácticamente perfecto en la escena cornell_box_mirror" />
-<figcaption aria-hidden="true"><span>Figura 37:</span> Una caja que
+alt="Figura 38: Una caja que actúa como un espejo prácticamente perfecto en la escena cornell_box_mirror" />
+<figcaption aria-hidden="true"><span>Figura 38:</span> Una caja que
 actúa como un espejo prácticamente perfecto en la escena
 <code>cornell_box_mirror</code></figcaption>
 </figure>
@@ -6505,8 +6543,8 @@ modelar el comportamiento de la luz.</p>
 <div id="fig:reflectantes" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20reflectantes.png" style="width:70.0%"
-alt="Figura 38: La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera." />
-<figcaption aria-hidden="true"><span>Figura 38:</span> La esfera de la
+alt="Figura 39: La esfera de la derecha refracta la luz al pasar por ella, adquiriendo en el proceso un color más oscuro. También podemos ver la esfera de la izquierda recursivamente, dentro del propio reflejo de la esfera." />
+<figcaption aria-hidden="true"><span>Figura 39:</span> La esfera de la
 derecha refracta la luz al pasar por ella, adquiriendo en el proceso un
 color más oscuro. También podemos ver la esfera de la izquierda
 recursivamente, dentro del propio reflejo de la esfera.</figcaption>
@@ -6519,8 +6557,8 @@ algunos rayos:</p>
 <div id="fig:materiales_transparentes" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Materiales%20transparentes.png" style="width:70.0%"
-alt="Figura 39: El modelo del Wuson, pero transparente." />
-<figcaption aria-hidden="true"><span>Figura 39:</span> El modelo del
+alt="Figura 40: El modelo del Wuson, pero transparente." />
+<figcaption aria-hidden="true"><span>Figura 40:</span> El modelo del
 Wuson, pero transparente.</figcaption>
 </figure>
 </div>
@@ -6530,25 +6568,25 @@ class="header-section-number">5.2.2</span> Fuentes de luz</h3>
 fuentes de luces: puntuales y direccionales.</p>
 <p>Las <strong>fuentes de luz puntuales</strong> (<em>spotlights</em> en
 inglés) emiten luz alrededor suya, como si de pequeños soles se
-trataran. La figura [<a href="#fig:spotlights">40</a>] muestra cómo se
+trataran. La figura [<a href="#fig:spotlights">41</a>] muestra cómo se
 comportan en la caja de Cornell original.</p>
 <div id="fig:spotlights" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Spotlight.png" style="width:60.0%"
-alt="Figura 40: Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared." />
-<figcaption aria-hidden="true"><span>Figura 40:</span> Una fuente de luz
+alt="Figura 41: Una fuente de luz puntual iluminando la caja de Cornell original. Vemos cómo se proyectan sombras hacian la pared." />
+<figcaption aria-hidden="true"><span>Figura 41:</span> Una fuente de luz
 puntual iluminando la caja de Cornell original. Vemos cómo se proyectan
 sombras hacian la pared.</figcaption>
 </figure>
 </div>
 <p>Por otro lado, las <strong>luces direccionales</strong>: imitan la
 luz proporcionada por algún objeto infinitamente lejano. Puedes ver un
-ejemplo en la figura [<a href="#fig:directional_lights">41</a>].</p>
+ejemplo en la figura [<a href="#fig:directional_lights">42</a>].</p>
 <div id="fig:directional_lights" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Directional.png" style="width:60.0%"
-alt="Figura 41: La caja de Cornell original iluminada por una luz direccional" />
-<figcaption aria-hidden="true"><span>Figura 41:</span> La caja de
+alt="Figura 42: La caja de Cornell original iluminada por una luz direccional" />
+<figcaption aria-hidden="true"><span>Figura 42:</span> La caja de
 Cornell original iluminada por una <strong>luz
 direccional</strong></figcaption>
 </figure>
@@ -6556,22 +6594,22 @@ direccional</strong></figcaption>
 <p>Como las puntuales se comportan de manera muy similar en la caja de
 Cornell, podemos referirnos a la escena del edificio medieval para ver
 una diferencia más sustancial [<a
-href="#fig:spotlights_medieval">42</a>, <a
-href="#fig:directional_medieval">43</a>]. En este caso, se aprecia el
+href="#fig:spotlights_medieval">43</a>, <a
+href="#fig:directional_medieval">44</a>]. En este caso, se aprecia el
 radio de influencia de la luz puntual.</p>
 <div id="fig:spotlights_medieval" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Spotlight%202.png" style="width:60.0%"
-alt="Figura 42: Luz puntual en la escena medieval_building." />
-<figcaption aria-hidden="true"><span>Figura 42:</span> Luz puntual en la
+alt="Figura 43: Luz puntual en la escena medieval_building." />
+<figcaption aria-hidden="true"><span>Figura 43:</span> Luz puntual en la
 escena <code>medieval_building</code>.</figcaption>
 </figure>
 </div>
 <div id="fig:directional_medieval" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Directional%202.png" style="width:60.0%"
-alt="Figura 43: Luz direccional en la escena medieval_building." />
-<figcaption aria-hidden="true"><span>Figura 43:</span> Luz direccional
+alt="Figura 44: Luz direccional en la escena medieval_building." />
+<figcaption aria-hidden="true"><span>Figura 44:</span> Luz direccional
 en la escena <code>medieval_building</code>.</figcaption>
 </figure>
 </div>
@@ -6585,19 +6623,19 @@ los que rebotan.</p>
 <p>Dicho de esta forma, es difícil imaginarse cómo se comporta en la
 vida real. Para ilustrarlo, tomemos dos fotografías que se asemejan a la
 caja de Cornell.</p>
-<p>En la escena [<a href="#fig:cornell_bath_1">44</a>] observamos cómo
+<p>En la escena [<a href="#fig:cornell_bath_1">45</a>] observamos cómo
 la luz del sol entra desde la parte de la derecha, rebotando en todo el
 espacio. Notamos cómo la escena tiene una tonalidad natural y cálida.
 Sin embargo, esta impresión es fácilmente modificable si alteramos la
 forma de arrojar la luz. Cerrando la puerta (la cual no puede ser vista
 en la fotografía, pero se encuentra a la derecha y es idéntica al
 cristal), la iluminación cambia completamente [<a
-href="#fig:cornell_bath_2">45</a>].</p>
+href="#fig:cornell_bath_2">46</a>].</p>
 <div id="fig:cornell_bath_1" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Cornell%20bath%201.jpg" style="width:60.0%"
-alt="Figura 44: Escena similar a la caja de Cornell, en la vida real. También es mi baño." />
-<figcaption aria-hidden="true"><span>Figura 44:</span> Escena similar a
+<img loading="lazy" src="./img/05/Cornell%20bath%201.jpg" style="width:68.0%"
+alt="Figura 45: Escena similar a la caja de Cornell, en la vida real. También es mi baño." />
+<figcaption aria-hidden="true"><span>Figura 45:</span> Escena similar a
 la caja de Cornell, en la vida real. También es mi baño.</figcaption>
 </figure>
 </div>
@@ -6611,9 +6649,9 @@ tomada, los rayos transportan esta propiedad al resto de materiales, los
 cuales se visualizan como una tonalidad roja.</p>
 <div id="fig:cornell_bath_2" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Cornell%20bath%202.jpg" style="width:60.0%"
-alt="Figura 45: Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados" />
-<figcaption aria-hidden="true"><span>Figura 45:</span> Cuando cambiamos
+<img loading="lazy" src="./img/05/Cornell%20bath%202.jpg" style="width:68.0%"
+alt="Figura 46: Cuando cambiamos la forma de iluminar la escena, los colores se ven drásticamente modificados" />
+<figcaption aria-hidden="true"><span>Figura 46:</span> Cuando cambiamos
 la forma de iluminar la escena, los colores se ven drásticamente
 modificados</figcaption>
 </figure>
@@ -6621,32 +6659,32 @@ modificados</figcaption>
 <p><strong>Path tracing consigue este efecto de manera natural</strong>
 por diseño. Este es uno de sus mayores puntos fuertes, pero a la vez lo
 hace computacionalmente caro. Dado que la escena de [<a
-href="#fig:cornell_bath_1">44</a>] y [<a
-href="#fig:cornell_bath_2">45</a>] es, esencialmente, una caja de
+href="#fig:cornell_bath_1">45</a>] y [<a
+href="#fig:cornell_bath_2">46</a>] es, esencialmente, una caja de
 Cornell, deberíamos apreciar un efecto similar en nuestra escena,
 ¿verdad?</p>
-<p>¡Así es! La figura [<a href="#fig:global_illumination_1">46</a>] es
-muy similar a la [<a href="#fig:cornell_bath_2">45</a>]. Se pueden
+<p>¡Así es! La figura [<a href="#fig:global_illumination_1">47</a>] es
+muy similar a la [<a href="#fig:cornell_bath_2">46</a>]. Se pueden
 apreciar los mismos efectos en la caja izquierda, los cuales no ocurrían
 con tanta intensidad en la escena original [fig. <a
-href="#fig:materiales_difusos">35</a>]</p>
+href="#fig:materiales_difusos">36</a>]</p>
 <div id="fig:global_illumination_1" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Ambient%20occlusion%201.png" style="width:50.0%"
-alt="Figura 46: La caja de Cornell original con luz direccional apuntando a la pared de la izquierda" />
-<figcaption aria-hidden="true"><span>Figura 46:</span> La caja de
+<img loading="lazy" src="./img/05/Ambient%20occlusion%201.png" style="width:55.0%"
+alt="Figura 47: La caja de Cornell original con luz direccional apuntando a la pared de la izquierda" />
+<figcaption aria-hidden="true"><span>Figura 47:</span> La caja de
 Cornell original con luz direccional apuntando a la pared de la
 izquierda</figcaption>
 </figure>
 </div>
 <p>Lo mismo ocurre cuando cambiamos el foco a la pared de la derecha. Al
 ser verde, tintará el resto de los materiales de dicho color [Figura <a
-href="#fig:global_illumination_2">47</a>].</p>
+href="#fig:global_illumination_2">48</a>].</p>
 <div id="fig:global_illumination_2" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Ambient%20occlusion%202.png" style="width:50.0%"
-alt="Figura 47: Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena" />
-<figcaption aria-hidden="true"><span>Figura 47:</span> Enfocando a la
+<img loading="lazy" src="./img/05/Ambient%20occlusion%202.png" style="width:55.0%"
+alt="Figura 48: Enfocando a la pared de la derecha, conseguimos un tinte verde para la escena" />
+<figcaption aria-hidden="true"><span>Figura 48:</span> Enfocando a la
 pared de la derecha, conseguimos un tinte verde para la
 escena</figcaption>
 </figure>
@@ -6663,8 +6701,8 @@ href="#materiales-y-objetos">componente ambiental</a> de los materiales,
 <div id="fig:lightmpas" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Shadowmap.png"
-alt="Figura 48: Los lightmaps requieren que la geometría no pueda ser movida. Esto se debe a que la sombra no es calculada en tiempo real. Fuente: (Epic Games 2022b)" />
-<figcaption aria-hidden="true"><span>Figura 48:</span> Los
+alt="Figura 49: Los lightmaps requieren que la geometría no pueda ser movida. Esto se debe a que la sombra no es calculada en tiempo real. Fuente: (Epic Games 2022b)" />
+<figcaption aria-hidden="true"><span>Figura 49:</span> Los
 <em>lightmaps</em> requieren que la geometría no pueda ser movida. Esto
 se debe a que la sombra no es calculada en tiempo real. Fuente: <span
 class="citation" data-cites="lumen">(<a href="#ref-lumen"
@@ -6714,13 +6752,13 @@ href="#eq:mc_integral">30</a>], <span class="math inline">\(\hat{I}_N =
 <div id="fig:grafica_samples" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_samples.png"
-alt="Figura 49: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
-<figcaption aria-hidden="true"><span>Figura 49:</span> Para conseguir
+alt="Figura 50: Para conseguir esta gráfica, iniciamos la escena cornell_box_original, y sin mover la cámara, vamos cambiando el número de muestras." />
+<figcaption aria-hidden="true"><span>Figura 50:</span> Para conseguir
 esta gráfica, iniciamos la escena <code>cornell_box_original</code>, y
 sin mover la cámara, vamos cambiando el número de muestras.</figcaption>
 </figure>
 </div>
-<p>La figura [<a href="#fig:grafica_samples">49</a>] muestra cómo afecta
+<p>La figura [<a href="#fig:grafica_samples">50</a>] muestra cómo afecta
 al rendimiento el valor de <span class="math inline">\(N\)</span>. Vemos
 cómo un número bajo de muestras (alrededor de 5) produce un
 <em>frametime</em> de aproximadamente 12 milisegundos, lo cual
@@ -6762,12 +6800,12 @@ href="#acumulación-temporal">acumulación temporal</a>, pues en esencia,
 proporcionaría un mayor número de muestras en el tiempo.</p>
 <p>Con una única muestra por píxel, la imagen final aparece muy ruidosa.
 Aumentarlo a 5 mejora bastante la situación, pero sigue habiendo
-demasiado ruido [<a href="#fig:samples_1">50</a>]</p>
+demasiado ruido [<a href="#fig:samples_1">51</a>]</p>
 <div id="fig:samples_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/1,%205%20samples.png"
-alt="Figura 50: Izquierda: 1 muestra. Derecha: 5 muestras" />
-<figcaption aria-hidden="true"><span>Figura 50:</span>
+alt="Figura 51: Izquierda: 1 muestra. Derecha: 5 muestras" />
+<figcaption aria-hidden="true"><span>Figura 51:</span>
 <strong>Izquierda</strong>: 1 muestra. <strong>Derecha</strong>: 5
 muestras</figcaption>
 </figure>
@@ -6777,8 +6815,8 @@ calidad visual significativa.</p>
 <div id="fig:samples_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/10,%2020%20samples.png"
-alt="Figura 51: Izquierda: 10 muestras. Derecha: 20 muestras" />
-<figcaption aria-hidden="true"><span>Figura 51:</span>
+alt="Figura 52: Izquierda: 10 muestras. Derecha: 20 muestras" />
+<figcaption aria-hidden="true"><span>Figura 52:</span>
 <strong>Izquierda</strong>: 10 muestras. <strong>Derecha</strong>: 20
 muestras</figcaption>
 </figure>
@@ -6800,13 +6838,13 @@ de un camino.</p>
 <div id="fig:grafica_depth" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_depth.png"
-alt="Figura 52: Coste de un frame en función de la profundidad del camino" />
-<figcaption aria-hidden="true"><span>Figura 52:</span> Coste de un
+alt="Figura 53: Coste de un frame en función de la profundidad del camino" />
+<figcaption aria-hidden="true"><span>Figura 53:</span> Coste de un
 <em>frame</em> en función de la profundidad del camino</figcaption>
 </figure>
 </div>
-<p>En esta figura [<a href="#fig:grafica_depth">52</a>] ocurre algo
-similar a [<a href="#fig:grafica_samples">49</a>]: como es evidente,
+<p>En esta figura [<a href="#fig:grafica_depth">53</a>] ocurre algo
+similar a [<a href="#fig:grafica_samples">50</a>]: como es evidente,
 aumentar la profundidad de un rayo aumenta el coste de renderizar un
 <em>frame</em>. Sin embargo, hay algunos matices que debemos estudiar
 con más detalle.</p>
@@ -6842,66 +6880,66 @@ pena el coste adicional?</strong>.</p>
 <p>Para responder a esta pregunta, primero debemos conocer cómo actúa
 este parámetro. Empezando con un número extremadamente bajo para los
 rebotes, vemos que parte de la escena ni siquiera se renderiza [<a
-href="#fig:depth_1">53</a>].</p>
+href="#fig:depth_1">54</a>].</p>
 <div id="fig:depth_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/1%20bounce.png" style="width:70.0%"
-alt="Figura 53: depth = 1" />
-<figcaption aria-hidden="true"><span>Figura 53:</span>
-<code>depth = 1</code></figcaption>
+alt="Figura 54: depth = 1." />
+<figcaption aria-hidden="true"><span>Figura 54:</span>
+<code>depth = 1</code>.</figcaption>
 </figure>
 </div>
 <p>Aumentar el número de rebotes progresivamente permite que el camino
 adquiera mayor información. Con dos rebotes, permitimos que un camino
 adquiera información sobre la caja por dentro, así como un reflejo
-primitivo en las esferas [<a href="#fig:depth_2">54</a>].</p>
+primitivo en las esferas [<a href="#fig:depth_2">55</a>].</p>
 <div id="fig:depth_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/2%20bounces.png" style="width:70.0%"
-alt="Figura 54: depth = 2" />
-<figcaption aria-hidden="true"><span>Figura 54:</span>
-<code>depth = 2</code></figcaption>
+alt="Figura 55: depth = 2." />
+<figcaption aria-hidden="true"><span>Figura 55:</span>
+<code>depth = 2</code>.</figcaption>
 </figure>
 </div>
 <p>Con 3 rebotes, la esfera izquierda refleja casi en su totalidad la
 esfera, pero vemos que el reflejo de la esfera derecha <em>dentro</em>
-de la izquierda está oscurecido [<a href="#fig:depth_3">55</a>].</p>
+de la izquierda está oscurecido [<a href="#fig:depth_3">56</a>].</p>
 <div id="fig:depth_3" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/3%20bounces.png" style="width:70.0%"
-alt="Figura 55: depth = 3" />
-<figcaption aria-hidden="true"><span>Figura 55:</span>
-<code>depth = 3</code></figcaption>
+alt="Figura 56: depth = 3." />
+<figcaption aria-hidden="true"><span>Figura 56:</span>
+<code>depth = 3</code>.</figcaption>
 </figure>
 </div>
-<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">56</a>] se arregla
+<p>Subiéndolo a 4 rebotes [<a href="#fig:depth_4">57</a>] se arregla
 mayoritariamente esto.</p>
 <div id="fig:depth_4" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/4%20bounces.png" style="width:70.0%"
-alt="Figura 56: depth = 4" />
-<figcaption aria-hidden="true"><span>Figura 56:</span>
-<code>depth = 4</code></figcaption>
+alt="Figura 57: depth = 4." />
+<figcaption aria-hidden="true"><span>Figura 57:</span>
+<code>depth = 4</code>.</figcaption>
 </figure>
 </div>
 <p>En esta escena, aumentar más allá de 5 o 6 rebotes produce una
 situación de retornos reducidos. La calidad de imagen no aumenta
 prácticamente nada, pero el coste se vuelve muy elevado [<a
-href="#fig:depth_20">57</a>, <a href="#fig:depth_50">58</a>].</p>
+href="#fig:depth_20">58</a>, <a href="#fig:depth_50">59</a>].</p>
 <div id="fig:depth_20" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/20%20bounces.png" style="width:70.0%"
-alt="Figura 57: depth = 20" />
-<figcaption aria-hidden="true"><span>Figura 57:</span>
-<code>depth = 20</code></figcaption>
+alt="Figura 58: depth = 20." />
+<figcaption aria-hidden="true"><span>Figura 58:</span>
+<code>depth = 20</code>.</figcaption>
 </figure>
 </div>
 <div id="fig:depth_50" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/50%20bounces.png" style="width:70.0%"
-alt="Figura 58: depth = 50" />
-<figcaption aria-hidden="true"><span>Figura 58:</span>
-<code>depth = 50</code></figcaption>
+<img loading="lazy" src="./img/05/50%20bounces.png" style="width:100.0%"
+alt="Figura 59: depth = 50." />
+<figcaption aria-hidden="true"><span>Figura 59:</span>
+<code>depth = 50</code>.</figcaption>
 </figure>
 </div>
 <h3 data-number="5.3.3" id="acumulación-temporal"><span
@@ -6913,24 +6951,24 @@ podría ser un motivo factor no negociable, pero en nuestro caso, nos
 servirá.</p>
 <p>Utilizando una única muestra, pero un valor de acumulación temporal
 de 100 <em>frames</em> máximos, proporciona una imagen sin apenas ruido
-[<a href="#fig:acumulacion_temp">59</a>].</p>
+[<a href="#fig:acumulacion_temp">60</a>].</p>
 <div id="fig:acumulacion_temp" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%201.png" style="width:40.0%"
-alt="Figura 59: 1 muestra, acumulación temporal de 100 frames. A diferencia de 50, el resultado es impecable." />
-<figcaption aria-hidden="true"><span>Figura 59:</span> 1 muestra,
+alt="Figura 60: 1 muestra, acumulación temporal de 100 frames. A diferencia de 51, el resultado es impecable." />
+<figcaption aria-hidden="true"><span>Figura 60:</span> 1 muestra,
 acumulación temporal de 100 <em>frames</em>. A diferencia de <a
-href="#fig:samples_1">50</a>, el resultado es impecable.</figcaption>
+href="#fig:samples_1">51</a>, el resultado es impecable.</figcaption>
 </figure>
 </div>
 <p>Subiendo los parámetros a 200 <em>frames</em> de acumulación temporal
 y 10 muestras, se obtiene una imagen muy buena[<a
-href="#fig:acumulacion_temp_2">60</a>].</p>
+href="#fig:acumulacion_temp_2">61</a>].</p>
 <div id="fig:acumulacion_temp_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Acumulación%20temporal%202.png" style="width:40.0%"
-alt="Figura 60: 10 muestras, acumulación temporal de 200 frames." />
-<figcaption aria-hidden="true"><span>Figura 60:</span> 10 muestras,
+alt="Figura 61: 10 muestras, acumulación temporal de 200 frames." />
+<figcaption aria-hidden="true"><span>Figura 61:</span> 10 muestras,
 acumulación temporal de 200 <em>frames</em>.</figcaption>
 </figure>
 </div>
@@ -6948,8 +6986,8 @@ escala al variarla.</p>
 <div id="fig:resolucion" class="fignos">
 <figure>
 <img loading="lazy" src="./img/graficas/CB_original_comparativa_resolucion.png"
-alt="Figura 61: Tiempo de renderización de un frame dependiendo de la resolución" />
-<figcaption aria-hidden="true"><span>Figura 61:</span> Tiempo de
+alt="Figura 62: Tiempo de renderización de un frame dependiendo de la resolución" />
+<figcaption aria-hidden="true"><span>Figura 62:</span> Tiempo de
 renderización de un <em>frame</em> dependiendo de la
 resolución</figcaption>
 </figure>
@@ -6972,12 +7010,12 @@ integrar para reducir la varianza. Se ha implementado muestreo por
 importancia para los materiales difusos. En particular, se ha utilizado
 dos estrategias diferentes para escoger direcciones aleatorias, que
 pueden observarse en la figura [<a
-href="#fig:importance_sample">62</a>].</p>
+href="#fig:importance_sample">63</a>].</p>
 <div id="fig:importance_sample" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Importance%20sample.png"
-alt="Figura 62: Escena: cornell_box_original. 10 rebotes, acumulación temporal off, 10 muestras   Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling." />
-<figcaption aria-hidden="true"><span>Figura 62:</span> Escena:
+alt="Figura 63: Escena: cornell_box_original. 10 rebotes, acumulación temporal off, 10 muestras   Izquierda: hemisphere sampling. Derecha: Cosine-Weighted Hemisphere Sampling." />
+<figcaption aria-hidden="true"><span>Figura 63:</span> Escena:
 <code>cornell_box_original</code>. 10 rebotes, acumulación temporal off,
 10 muestras <br> <strong>Izquierda</strong>: <em>hemisphere
 sampling</em>. <strong>Derecha</strong>: <em>Cosine-Weighted Hemisphere
@@ -7048,7 +7086,10 @@ resultados diferentes.</p>
 <p>La siguiente tabla muestra una comparativa entre el coste de
 renderizar un <em>frame</em> en In One Weekend y en nuestro motor,
 usando una profundidad de 10 rebotes y una resolución de 720p:</p>
-<table>
+<div id="tbl:comparativa" class="tablenos">
+<table id="tbl:comparativa">
+<caption><span>Tabla 5.2:</span> Comparativa de tiempos de renderizado
+entre Ray Tracing In One Weekend y nuestra implementación. </caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 26%" />
@@ -7110,6 +7151,7 @@ class="math inline">\(\times\)</span> <code>344.194</code></td>
 </tr>
 </tbody>
 </table>
+</div>
 <p>Como podemos observar, la diferencia es abismal. En el tiempo que
 tarda In One Weekend en producir una imagen con una única muestra,
 nuestro motor es capaz de generar una imagen de 500 muestras. Sin
@@ -7128,16 +7170,16 @@ class="header-section-number">5.4.2.1</span> Por número de muestras</h4>
 primeras imágenes fijaremos la acumulación temporal a un único
 <em>frame</em>. Explicaremos el motivo después.</p>
 <p>Con una única muestra, se observa una diferencia enorme entre ambas
-versiones [<a href="#fig:comparativa_1s">63</a>]. En nuestra
+versiones [<a href="#fig:comparativa_1s">64</a>]. En nuestra
 implementación no se observa prácticamente nada. Solo somos capaces de
 distinguir la luz, un poco del reflejo de la caja izquierda y los
 <em>caustics</em> causados por la luz del techo. Mientras tanto, en In
 One Weekend, la imagen es ruidosa pero definida.</p>
 <div id="fig:comparativa_1s" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Comparativa_1s.png" style="width:85.0%"
-alt="Figura 63: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 63:</span> 1 muestra.
+<img loading="lazy" src="./img/05/Comparativa_1s.png" style="width:100.0%"
+alt="Figura 64: 1 muestra. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 64:</span> 1 muestra.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -7150,16 +7192,16 @@ la fuente. En cambio, en nuestro motor, este tipo de fuentes no se
 muestrean directamente, sino que debemos contar con el azar para que
 aporten radiancia.</p>
 <p>Una vez pasamos a 5 muestras [Figura <a
-href="#fig:comparativa_5s">64</a>], nuestro motor consigue una imagen
+href="#fig:comparativa_5s">65</a>], nuestro motor consigue una imagen
 más nítida, similar a la que In One Weekend genera con una muestra. En
 cambio, In One Weekend consigue un resultado muy bueno, aunque con
 muchas luciérnagas. Este fenómeno no ocurre en nuestra implementación
 por el tipo de muestreo.</p>
 <div id="fig:comparativa_5s" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Comparativa_5s.png" style="width:85.0%"
-alt="Figura 64: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 64:</span> 5 muestras.
+<img loading="lazy" src="./img/05/Comparativa_5s.png" style="width:95.0%"
+alt="Figura 65: 5 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 65:</span> 5 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -7168,9 +7210,9 @@ nuestro motor</figcaption>
 ruidoso. ¿Se podría hacer algo para mejorarlo?</p>
 <div id="fig:comparativa_20s" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Comparativa_20s.png" style="width:85.0%"
-alt="Figura 65: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 65:</span> 20 muestras.
+<img loading="lazy" src="./img/05/Comparativa_20s.png" style="width:95.0%"
+alt="Figura 66: 20 muestras. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 66:</span> 20 muestras.
 <strong>Izquierda</strong>: In One Weekend. <strong>Derecha</strong>:
 nuestro motor</figcaption>
 </figure>
@@ -7181,7 +7223,7 @@ respecto al tiempo, nuestra implementación utiliza interpolación para
 mezclar los colores de los <em>frames</em>. De esta forma, se consigue
 el efecto de normalización, lo cual elimina el ruido de la imagen con el
 tiempo. De esta forma conseguimos equiparar la imagen de ambas versiones
-[Figura <a href="#fig:comparativa_100s">66</a>].</p>
+[Figura <a href="#fig:comparativa_100s">67</a>].</p>
 <p>Se puede observar cómo el tipo de ruido es diferente. En In One
 Weekend, el ruido se presenta en forma de píxeles blancos, debido a las
 luciérnagas generadas por el muestreo directo de la fuente de luz. En
@@ -7189,9 +7231,9 @@ contrapartida, en nuestra implementación el ruido es negro debido a los
 rayos que no impactan en ninguna superficie tras rebotar.</p>
 <div id="fig:comparativa_100s" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Comparativa_100s.png" style="width:85.0%"
-alt="Figura 66: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
-<figcaption aria-hidden="true"><span>Figura 66:</span> 100 muestras.
+<img loading="lazy" src="./img/05/Comparativa_100s.png" style="width:100.0%"
+alt="Figura 67: 100 muestras. Izquierda: In One Weekend (100 muestras). Derecha: nuestro motor (7 muestras, 15 frames de acumulación temporal)" />
+<figcaption aria-hidden="true"><span>Figura 67:</span> 100 muestras.
 <strong>Izquierda</strong>: In One Weekend (100 muestras).
 <strong>Derecha</strong>: nuestro motor (7 muestras, 15 <em>frames</em>
 de acumulación temporal)</figcaption>
@@ -7199,14 +7241,14 @@ de acumulación temporal)</figcaption>
 </div>
 <p>Por último, subiendo el número de muestras a 1000 conseguimos una
 imagen muy nítida en ambas implementaciones [Figura <a
-href="#fig:comparativa_1000s">67</a>]. Conseguimos apreciar una
+href="#fig:comparativa_1000s">68</a>]. Conseguimos apreciar una
 diferencia en los bordes de la esfera de la derecha, la cual seguramente
 se deba a un fallo en la implementación de la BRDF.</p>
 <div id="fig:comparativa_1000s" class="fignos">
 <figure>
 <img loading="lazy" src="./img/05/Comparativa_1000s.png" style="width:100.0%"
-alt="Figura 67: La imagen final, con 1000 muestras para cada versión. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de acumulación temporal)" />
-<figcaption aria-hidden="true"><span>Figura 67:</span> La imagen final,
+alt="Figura 68: La imagen final, con 1000 muestras para cada versión. Izquierda: In One Weekend (1000 muestras). Derecha: nuestro motor (10 muestras, 100 frames de acumulación temporal)" />
+<figcaption aria-hidden="true"><span>Figura 68:</span> La imagen final,
 con 1000 muestras para cada versión. <strong>Izquierda</strong>: In One
 Weekend (1000 muestras). <strong>Derecha</strong>: nuestro motor (10
 muestras, 100 <em>frames</em> de acumulación temporal)</figcaption>
@@ -7226,16 +7268,16 @@ conseguir con ambas implementaciones</p>
 <p>Utilizando un presupuesto de 4000 milisegundos, In One Weekend es
 capaz de utilizar 5 muestras para la imagen, mientras que nuestro motor
 podría utilizar 10 muestras y 19 <em>frames</em> de acumulación temporal
-[Figura <a href="#fig:comparativa_4000ms">68</a>].</p>
+[Figura <a href="#fig:comparativa_4000ms">69</a>].</p>
 <p><span class="math display">\[
 20.4 \frac{\text{ms}}{\text{10 muestras}} \cdot 19 \text{ frames de
 temp. acum.} = 3876 \text{ ms}
 \]</span></p>
 <div id="fig:comparativa_4000ms" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Comparativa_4000ms.png" style="width:85.0%"
-alt="Figura 68: 4000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 68:</span> 4000 milisegundos
+<img loading="lazy" src="./img/05/Comparativa_4000ms.png" style="width:100.0%"
+alt="Figura 69: 4000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 69:</span> 4000 milisegundos
 de <em>frame budget</em>. <strong>Izquierda</strong>: In One Weekend.
 <strong>Derecha</strong>: nuestro motor</figcaption>
 </figure>
@@ -7251,12 +7293,12 @@ temp. acum.} = 70000 \text{ ms}
 <p>Esencialmente, la imagen que genera nuestra implementación es
 perfecta. No muestra ni un ápice de ruido; mientras que la de In One
 Weeekend presenta un resultado poco nítido [Figura <a
-href="#fig:comparativa_70000ms">69</a>].</p>
+href="#fig:comparativa_70000ms">70</a>].</p>
 <div id="fig:comparativa_70000ms" class="fignos">
 <figure>
-<img loading="lazy" src="./img/05/Comparativa_70000ms.png" style="width:85.0%"
-alt="Figura 69: 70000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
-<figcaption aria-hidden="true"><span>Figura 69:</span> 70000
+<img loading="lazy" src="./img/05/Comparativa_70000ms.png" style="width:100.0%"
+alt="Figura 70: 70000 milisegundos de frame budget. Izquierda: In One Weekend. Derecha: nuestro motor" />
+<figcaption aria-hidden="true"><span>Figura 70:</span> 70000
 milisegundos de <em>frame budget</em>. <strong>Izquierda</strong>: In
 One Weekend. <strong>Derecha</strong>: nuestro motor</figcaption>
 </figure>
@@ -7315,8 +7357,8 @@ capaz de producir imágenes de escenas virtuales.</p>
 <div id="fig:pathtracing_showcase" class="fignos">
 <figure>
 <img loading="lazy" src="./img/06/Showcase.png"
-alt="Figura 70: El motor es capaz de producir preciosas imágenes de objetos físicamente realistas que se mueven en tiempo real" />
-<figcaption aria-hidden="true"><span>Figura 70:</span> El motor es capaz
+alt="Figura 71: El motor es capaz de producir preciosas imágenes de objetos físicamente realistas que se mueven en tiempo real" />
+<figcaption aria-hidden="true"><span>Figura 71:</span> El motor es capaz
 de producir preciosas imágenes de objetos físicamente realistas que se
 mueven en tiempo real</figcaption>
 </figure>
@@ -7494,8 +7536,8 @@ cuasi-aleatorias como las de Sobol.</p>
 <div id="fig:blue-noise" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Bluenoise.png" style="width:40.0%"
-alt="Figura 71: En comparación con el ruido blanco, el ruido azul resulta más fácil de difuminar. Fuente: Galvan (2022e)" />
-<figcaption aria-hidden="true"><span>Figura 71:</span> En comparación
+alt="Figura 72: En comparación con el ruido blanco, el ruido azul resulta más fácil de difuminar. Fuente: Galvan (2022e)" />
+<figcaption aria-hidden="true"><span>Figura 72:</span> En comparación
 con el ruido blanco, el ruido azul resulta más fácil de difuminar.
 Fuente: <span class="citation" data-cites="alain-filtering">Galvan (<a
 href="#ref-alain-filtering"
@@ -7541,8 +7583,8 @@ data-cites="stir">(<a href="#ref-stir" role="doc-biblioref">Wolfe
 <div id="fig:restir" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/restir.png"
-alt="Figura 72: ReSTIR en acción. Fuente: Benedikt Bitterli (2020)" />
-<figcaption aria-hidden="true"><span>Figura 72:</span> ReSTIR en acción.
+alt="Figura 73: ReSTIR en acción. Fuente: Benedikt Bitterli (2020)" />
+<figcaption aria-hidden="true"><span>Figura 73:</span> ReSTIR en acción.
 Fuente: <span class="citation" data-cites="restir">Benedikt Bitterli (<a
 href="#ref-restir" role="doc-biblioref">2020</a>)</span></figcaption>
 </figure>
@@ -7581,8 +7623,8 @@ mayor nitidez que la imagen original, pues la red neuronal aplica
 <div id="fig:df-dlss" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Control.jpg" style="width:70.0%"
-alt="Figura 73: Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se llega a duplica al utilizar DLSS sin perder fidelidad de imagen. Fuente: Digital Foundry (2020a).   Izquierda: DLSS 2.0 con resolución interna a 1080p. Derecha: 4K nativo." />
-<figcaption aria-hidden="true"><span>Figura 73:</span> Control, de
+alt="Figura 74: Control, de Remedy Games. Uno de los primeros videojuegos que integraron ray tracing en tiempo real basado en DX12. El rendimiento se llega a duplica al utilizar DLSS sin perder fidelidad de imagen. Fuente: Digital Foundry (2020a).   Izquierda: DLSS 2.0 con resolución interna a 1080p. Derecha: 4K nativo." />
+<figcaption aria-hidden="true"><span>Figura 74:</span> Control, de
 Remedy Games. Uno de los primeros videojuegos que integraron ray tracing
 en tiempo real basado en DX12. El rendimiento se llega a duplica al
 utilizar DLSS sin perder fidelidad de imagen. Fuente: <span
@@ -7611,8 +7653,8 @@ nativa.</p>
 <div id="fig:dlss-fsr-taa" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Comparación.jpg"
-alt="Figura 74: Comparativa entre las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo son reconstruidas las vallas, así como al texto de los globos. Fuente: Digital Foundry (2022b).   Izquierda: Nvidia DLSS 2.3. Centro: AMD FSR 2.0. Derecha: Temporal antialiasing." />
-<figcaption aria-hidden="true"><span>Figura 74:</span> Comparativa entre
+alt="Figura 75: Comparativa entre las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo son reconstruidas las vallas, así como al texto de los globos. Fuente: Digital Foundry (2022b).   Izquierda: Nvidia DLSS 2.3. Centro: AMD FSR 2.0. Derecha: Temporal antialiasing." />
+<figcaption aria-hidden="true"><span>Figura 75:</span> Comparativa entre
 las diferentes técnicas de reconstrucción a 4K. Presta atención a cómo
 son reconstruidas las vallas, así como al texto de los globos. Fuente:
 <span class="citation" data-cites="df-fsr">Digital Foundry (<a
@@ -7650,8 +7692,8 @@ final.</p>
 <div id="fig:spiderman-reflections" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/HybridRT.jpg" style="width:70.0%"
-alt="Figura 75: En vez de utilizar screen-space reflections, los cuales sufren de los problemas clásicos de rasterización debido a su naturaleza (como el fallback a los cubemaps cuando el ángulo es demasiado agudo), ray tracing resuelve estos efectos de forma magistral. Fuente: (Digital Foundry 2021a)   Izquierda: Rasterización con ray tracing para reflejos. Derecha: Rasterización." />
-<figcaption aria-hidden="true"><span>Figura 75:</span> En vez de
+alt="Figura 76: En vez de utilizar screen-space reflections, los cuales sufren de los problemas clásicos de rasterización debido a su naturaleza (como el fallback a los cubemaps cuando el ángulo es demasiado agudo), ray tracing resuelve estos efectos de forma magistral. Fuente: (Digital Foundry 2021a)   Izquierda: Rasterización con ray tracing para reflejos. Derecha: Rasterización." />
+<figcaption aria-hidden="true"><span>Figura 76:</span> En vez de
 utilizar <em>screen-space reflections</em>, los cuales sufren de los
 problemas clásicos de rasterización debido a su naturaleza (como el
 <em>fallback</em> a los cubemaps cuando el ángulo es demasiado agudo),
@@ -7664,7 +7706,7 @@ role="doc-biblioref">Digital Foundry 2021a</a>)</span> <br>
 </div>
 <p>Algunos productos comerciales que destacan por su uso de ray tracing
 híbrido son <em>Ratchet &amp; Clank: Rift Apart</em> y
-<em>Spiderman</em> [Figura <a href="#fig:spiderman-reflections">75</a>]
+<em>Spiderman</em> [Figura <a href="#fig:spiderman-reflections">76</a>]
 de Insommiac Games, <em>Cyberpunk 2077</em> de CD Project Red, Control
 de Remedy <span class="citation" data-cites="df-dlss">(Figura <a
 href="#ref-df-dlss" role="doc-biblioref">Digital Foundry
@@ -7685,17 +7727,18 @@ generación</h3>
 <p>Parte de la transición de la industria a ray tracing se debe a las
 capacidades de las consolas de la actual generación: <strong>Playstation
 5</strong> de Sony <span class="citation" data-cites="ps5">(<a
-href="#ref-ps5" role="doc-biblioref">Wikipedia 2022e</a>)</span>, y
-<strong>Xbox Series X</strong> y <strong>Series S</strong> de Microsoft
-<span class="citation" data-cites="series-x">(<a href="#ref-series-x"
-role="doc-biblioref">Wikipedia 2022g</a>)</span>. Ambas fueron lanzadas
-a finales del año 2020. Las dos consolas utilizan la arquitectura de AMD
-denominada RDNA 2 de AMD, la misma que se usa en sus gráficas de
-escritorio de última generación. PS5 empaqueta 36 unidades de cómputo
-(<em>Compute Units</em>, CUs), con una potencia de 10.23 TFLOPS para
-operaciones en coma flotante de 32 bits y 21.46 TFLOPS para las de 16.
-Por otra parte, Series X monta 52 CUs con una potencia teórica de 12.16
-TFLOPS, mientras que Series S reduce el número de CUs a 20.</p>
+href="#ref-ps5" role="doc-biblioref"><span>“PlayStation 5”</span>
+2021</a>)</span>, y <strong>Xbox Series X</strong> y <strong>Series
+S</strong> de Microsoft <span class="citation" data-cites="series-x">(<a
+href="#ref-series-x" role="doc-biblioref"><span>“Xbox series x and
+series s”</span> 2022</a>)</span>. Ambas fueron lanzadas a finales del
+año 2020. Las dos consolas utilizan la arquitectura de AMD denominada
+RDNA 2 de AMD, la misma que se usa en sus gráficas de escritorio de
+última generación. PS5 empaqueta 36 unidades de cómputo (<em>Compute
+Units</em>, CUs), con una potencia de 10.23 TFLOPS para operaciones en
+coma flotante de 32 bits y 21.46 TFLOPS para las de 16. Por otra parte,
+Series X monta 52 CUs con una potencia teórica de 12.16 TFLOPS, mientras
+que Series S reduce el número de CUs a 20.</p>
 <p>En verano de 2020 Mark Cerny habló sobre cómo se utilizaría las
 capacidades de la arquitectura en el futuro de la consola <span
 class="citation" data-cites="cerny-ps5">(<a href="#ref-cerny-ps5"
@@ -7725,8 +7768,8 @@ data-cites="lumen">(<a href="#ref-lumen" role="doc-biblioref">Epic Games
 <div id="fig:lumen1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen3.png" style="width:85.0%"
-alt="Figura 76: Habitación interior iluminada por el sistema Lumen" />
-<figcaption aria-hidden="true"><span>Figura 76:</span> Habitación
+alt="Figura 77: Habitación interior iluminada por el sistema Lumen" />
+<figcaption aria-hidden="true"><span>Figura 77:</span> Habitación
 interior iluminada por el sistema Lumen</figcaption>
 </figure>
 </div>
@@ -7744,8 +7787,8 @@ niebla volumétrica.</p>
 <div id="fig:lumen2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen4.jpg" style="width:85.0%"
-alt="Figura 77: Una escena exterior con materiales emisivos en Unreal Engine 5. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 77:</span> Una escena
+alt="Figura 78: Una escena exterior con materiales emisivos en Unreal Engine 5. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 78:</span> Una escena
 exterior con materiales emisivos en Unreal Engine 5. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
 role="doc-biblioref">2022b</a>)</span></figcaption>
@@ -7757,7 +7800,7 @@ simplificada de la escena en la cual resulta más fácil hacer
 intersecciones de rayos con objetos.</p>
 <p>Por defecto se ha optado una forma de ray tracing basada en software,
 pues de esta manera se soporta más tipos de hardware. Se combinan
-<em>Mesh Distance Fields</em> [<a href="#fig:lumen3">78</a>] (mallas de
+<em>Mesh Distance Fields</em> [<a href="#fig:lumen3">79</a>] (mallas de
 polígonos que resultan eficientes a la hora de intersecar) mezcladas en
 un <em>Global Distance Field</em> en este tipo de ray tracing. No
 obstante, su versión de ray tracing basado en hardware es mandatoria
@@ -7772,8 +7815,8 @@ evaluación del material.</p>
 <div id="fig:lumen3" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen1.jpg" style="width:65.0%"
-alt="Figura 78: Visualización de Mesh Distance Fields de una escena. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 78:</span> Visualización de
+alt="Figura 79: Visualización de Mesh Distance Fields de una escena. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 79:</span> Visualización de
 <em>Mesh Distance Fields</em> de una escena. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
 role="doc-biblioref">2022b</a>)</span></figcaption>
@@ -7790,8 +7833,8 @@ por el material.</p>
 <div id="fig:lumen4" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen5.png" style="width:80.0%"
-alt="Figura 79: Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 79:</span> Lumen combina los
+alt="Figura 80: Lumen combina los cálculos de la iluminación global con la información del material para crear la imagen final. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 80:</span> Lumen combina los
 cálculos de la iluminación global con la información del material para
 crear la imagen final. Fuente: <span class="citation"
 data-cites="lumen">Epic Games (<a href="#ref-lumen"
@@ -7817,8 +7860,8 @@ escena con mucha radiancia, por lo que el fundamento es el mismo.</p>
 <div id="fig:lumen5" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen6.png"
-alt="Figura 80: Lumen utiliza las partes más brillantes del último frame para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 80:</span> Lumen utiliza las
+alt="Figura 81: Lumen utiliza las partes más brillantes del último frame para la distribución de las nuevas direcciones de un rayo tras el impacto. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 81:</span> Lumen utiliza las
 partes más brillantes del último <em>frame</em> para la distribución de
 las nuevas direcciones de un rayo tras el impacto. Fuente: <span
 class="citation" data-cites="lumen">Epic Games (<a href="#ref-lumen"
@@ -7831,8 +7874,8 @@ la radiancia de puntos en el mismo vecindario y acumulación temporal de
 <div id="fig:lumen6" class="fignos">
 <figure>
 <img loading="lazy" src="./img/07/Lumen2.jpg"
-alt="Figura 81: Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: Epic Games (2022b)" />
-<figcaption aria-hidden="true"><span>Figura 81:</span> Nuestro método
+alt="Figura 82: Nuestro método principal de reducción de ruido fue la acumulación temporal de frames. Lumen utiliza una forma mucho más avanzada para lograr el mismo resultado con sus reflejos. Fuente: Epic Games (2022b)" />
+<figcaption aria-hidden="true"><span>Figura 82:</span> Nuestro método
 principal de reducción de ruido fue la acumulación temporal de
 <em>frames</em>. Lumen utiliza una forma mucho más avanzada para lograr
 el mismo resultado con sus reflejos. Fuente: <span class="citation"
@@ -7921,7 +7964,7 @@ class="header-section-number">8.2</span> Ciclos de desarrollo</h2>
 que estás leyendo, ya sea en PDF o en la web– y software. Podemos
 distinguir varias fases en la planificación del proyecto, que quedan
 resumidas en el diagrama de Gantt [Figuras <a
-href="#fig:gantt_1">82</a>, <a href="#fig:gantt_2">83</a>]</p>
+href="#fig:gantt_1">83</a>, <a href="#fig:gantt_2">84</a>]</p>
 <p>Para comenzar, durante el verano de 2021 se implementarían los tres
 libros de Shirley de la “serie In One Weekend”: In One Weekend <span
 class="citation" data-cites="Shirley2020RTW1">(<a
@@ -7936,8 +7979,8 @@ acelerando así el aprendizaje.</p>
 <div id="fig:gantt_1" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Gantt%201.png"
-alt="Figura 82: Diagrama de Gantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
-<figcaption aria-hidden="true"><span>Figura 82:</span> Diagrama de Gantt
+alt="Figura 83: Diagrama de Gantt de la primera parte del desarrollo. Los libros de Peter Shirley servirían como introducción al trabajo" />
+<figcaption aria-hidden="true"><span>Figura 83:</span> Diagrama de Gantt
 de la primera parte del desarrollo. Los libros de Peter Shirley
 servirían como introducción al trabajo</figcaption>
 </figure>
@@ -7949,8 +7992,8 @@ pues no se puede implementar algo que no se entiende.</p>
 <div id="fig:gantt_2" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Diagrama%20de%20Gantt%202.png"
-alt="Figura 83: Diagrama de Gantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
-<figcaption aria-hidden="true"><span>Figura 83:</span> Diagrama de Gantt
+alt="Figura 84: Diagrama de Gantt de la segunda parte del desarrollo. Durante el segundo cuatrimestre se trabajaría tanto la memoria como el software" />
+<figcaption aria-hidden="true"><span>Figura 84:</span> Diagrama de Gantt
 de la segunda parte del desarrollo. Durante el segundo cuatrimestre se
 trabajaría tanto la memoria como el software</figcaption>
 </figure>
@@ -8107,8 +8150,8 @@ Jetbrains. Se utiliza en la web para los bloques de código.</li>
 <div id="fig:tipografías" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Tipografías.png" style="width:70.0%"
-alt="Figura 84: Showcase de las tipografías utilizadas" />
-<figcaption aria-hidden="true"><span>Figura 84:</span> Showcase de las
+alt="Figura 85: Showcase de las tipografías utilizadas" />
+<figcaption aria-hidden="true"><span>Figura 85:</span> Showcase de las
 tipografías utilizadas</figcaption>
 </figure>
 </div>
@@ -8119,8 +8162,8 @@ específica.</p>
 <div id="fig:paleta_de_colores" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Paleta%20de%20colores.png" width="400"
-alt="Figura 85: La paleta de colores del proyecto" />
-<figcaption aria-hidden="true"><span>Figura 85:</span> La paleta de
+alt="Figura 86: La paleta de colores del proyecto" />
+<figcaption aria-hidden="true"><span>Figura 86:</span> La paleta de
 colores del proyecto</figcaption>
 </figure>
 </div>
@@ -8194,8 +8237,8 @@ este trabajo se han hecho con esta herramienta.</p>
 <div id="fig:figma" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Figma.png"
-alt="Figura 86: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 86:</span> Tablón principal
+alt="Figura 87: Tablón principal del proyecto de Figma, a día 15 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 87:</span> Tablón principal
 del proyecto de Figma, a día 15 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -8289,8 +8332,8 @@ Github Pages.</li>
 <div id="fig:github_actions" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Github%20Actions.png"
-alt="Figura 87: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
-<figcaption aria-hidden="true"><span>Figura 87:</span> La pestaña de
+alt="Figura 88: La pestaña de Github Actions permite controlar con facilidad el resultado de un workflow y cuánto tarda en ejecutarse" />
+<figcaption aria-hidden="true"><span>Figura 88:</span> La pestaña de
 Github Actions permite controlar con facilidad el resultado de un
 <em>workflow</em> y cuánto tarda en ejecutarse</figcaption>
 </figure>
@@ -8304,8 +8347,8 @@ cada <em>release</em> que se crea.</p>
 <div id="fig:actions-workflow" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Actions.png"
-alt="Figura 88: Diagrama con los workflows" />
-<figcaption aria-hidden="true"><span>Figura 88:</span> Diagrama con los
+alt="Figura 89: Diagrama con los workflows" />
+<figcaption aria-hidden="true"><span>Figura 89:</span> Diagrama con los
 <em>workflows</em></figcaption>
 </figure>
 </div>
@@ -8342,9 +8385,9 @@ página web.</p>
 objetivos pendientes de la aplicación.</p>
 <div id="fig:github_issues" class="fignos">
 <figure>
-<img loading="lazy" src="./img/08/Issues.png" style="width:80.0%"
-alt="Figura 89: Pestaña de issues, día 16 de abril de 2022" />
-<figcaption aria-hidden="true"><span>Figura 89:</span> Pestaña de
+<img loading="lazy" src="./img/08/Issues.png" style="width:90.0%"
+alt="Figura 90: Pestaña de issues, día 16 de abril de 2022" />
+<figcaption aria-hidden="true"><span>Figura 90:</span> Pestaña de
 <em>issues</em>, día 16 de abril de 2022</figcaption>
 </figure>
 </div>
@@ -8353,9 +8396,9 @@ mínimamente viables. Estos <em>issues</em> suelen estar relacionados con
 algún apartado importante del desarrollo.</p>
 <div id="fig:github_milestones" class="fignos">
 <figure>
-<img loading="lazy" src="./img/08/Milestones.png" style="width:80.0%"
-alt="Figura 90: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
-<figcaption aria-hidden="true"><span>Figura 90:</span> Los
+<img loading="lazy" src="./img/08/Milestones.png" style="width:90.0%"
+alt="Figura 91: Los milestones agrupan una serie de issues relacionados con un punto clave del desarrollo" />
+<figcaption aria-hidden="true"><span>Figura 91:</span> Los
 <em>milestones</em> agrupan una serie de <em>issues</em> relacionados
 con un punto clave del desarrollo</figcaption>
 </figure>
@@ -8367,9 +8410,9 @@ una vista informativa, se utiliza Github Projects. En esencia, esta
 aplicación es un acompañante del repositorio estilo Asana.</p>
 <div id="fig:github_projects" class="fignos">
 <figure>
-<img loading="lazy" src="./img/08/Projects.png" style="width:80.0%"
-alt="Figura 91: Projects agrupa los issues y les asigna prioridades" />
-<figcaption aria-hidden="true"><span>Figura 91:</span> Projects agrupa
+<img loading="lazy" src="./img/08/Projects.png" style="width:86.0%"
+alt="Figura 92: Projects agrupa los issues y les asigna prioridades" />
+<figcaption aria-hidden="true"><span>Figura 92:</span> Projects agrupa
 los <em>issues</em> y les asigna prioridades</figcaption>
 </figure>
 </div>
@@ -8404,8 +8447,8 @@ sus significados:</p>
 <div id="fig:github_emojis" class="fignos">
 <figure>
 <img loading="lazy" src="./img/08/Commits.png"
-alt="Figura 92: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
-<figcaption aria-hidden="true"><span>Figura 92:</span> Los emojis
+alt="Figura 93: Los emojis permiten reconocer el objetivo de cada commit. Esta tabla recoge el significado de cada uno" />
+<figcaption aria-hidden="true"><span>Figura 93:</span> Los emojis
 permiten reconocer el objetivo de cada <em>commit</em>. Esta tabla
 recoge el significado de cada uno</figcaption>
 </figure>
@@ -9040,6 +9083,10 @@ time with spatiotemporal blue noise textures, part 1.”</span> NVIDIA.
 2021. Accessed May 30, 2022. <a
 href="https://developer.nvidia.com/blog/rendering-in-real-time-with-spatiotemporal-blue-noise-textures-part-1/">https://developer.nvidia.com/blog/rendering-in-real-time-with-spatiotemporal-blue-noise-textures-part-1/</a>.
 </div>
+<div id="ref-RDNA2" class="csl-entry" role="doc-biblioentry">
+AMD. 2021. <span>“RDNA2.”</span> 2021. Accessed May 13, 2022. <a
+href="https://www.amd.com/es/technologies/rdna-2">https://www.amd.com/es/technologies/rdna-2</a>.
+</div>
 <div id="ref-fsr" class="csl-entry" role="doc-biblioentry">
 AMD. 2022. <span>“AMD FidelityFX™ super resolution.”</span> 2022.
 Accessed May 30, 2022. <a
@@ -9167,6 +9214,11 @@ native vs DLSS - the DF tech review.”</span> May 13, 2022. Accessed May
 30, 2022. <a
 href="https://www.youtube.com/watch?v=y2RR2770H8E">https://www.youtube.com/watch?v=y2RR2770H8E</a>.
 </div>
+<div id="ref-directx-12" class="csl-entry" role="doc-biblioentry">
+<span>“DirectX raytracing.”</span> 2022. NVIDIA. 2022. Accessed May 16,
+2022. <a
+href="https://www.nvidia.com/es-es/geforce/technologies/dx12/">https://www.nvidia.com/es-es/geforce/technologies/dx12/</a>.
+</div>
 <div id="ref-docker" class="csl-entry" role="doc-biblioentry">
 Docker. 2022. <span>“Docker - the world’s most popular container
 platform.”</span> 2022. Accessed May 7, 2022. <a
@@ -9184,6 +9236,11 @@ Emmett Kilgariff, N. S., Henry Moreton. 2018. <span>“NVIDIA turing
 architecture in-depth.”</span> NVIDIA. September 14, 2018. Accessed May
 26, 2022. <a
 href="https://developer.nvidia.com/blog/nvidia-turing-architecture-in-depth/">https://developer.nvidia.com/blog/nvidia-turing-architecture-in-depth/</a>.
+</div>
+<div id="ref-pinhole" class="csl-entry" role="doc-biblioentry">
+Encyclopedia. 2022. <span>“Camera obscura: Ancestor of modern
+photography.”</span> 2022. Accessed May 26, 2022. <a
+href="https://www.encyclopedia.com/science/encyclopedias-almanacs-transcripts-and-maps/camera-obscura-ancestor-modern-photography">https://www.encyclopedia.com/science/encyclopedias-almanacs-transcripts-and-maps/camera-obscura-ancestor-modern-photography</a>.
 </div>
 <div id="ref-UE5" class="csl-entry" role="doc-biblioentry">
 Epic Games. 2022a. <span>“Unreal engine 5.”</span> 2022. Accessed May
@@ -9461,6 +9518,16 @@ href="https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR">https://githu
 May 13, 2022. <a
 href="https://github.com/nvpro-samples">https://github.com/nvpro-samples</a>.
 </div>
+<div id="ref-ampere-arquitecture" class="csl-entry"
+role="doc-biblioentry">
+<span>“Nvidia ampere architecture.”</span> 2021. NVIDIA. 2021. Accessed
+May 26, 2022. <a
+href="https://www.nvidia.com/en-us/data-center/ampere-architecture/">https://www.nvidia.com/en-us/data-center/ampere-architecture/</a>.
+</div>
+<div id="ref-optix" class="csl-entry" role="doc-biblioentry">
+<span>“OptiX.”</span> 2022. NVIDIA. 2022. Accessed May 16, 2022. <a
+href="https://developer.nvidia.com/rtx/ray-tracing/optix">https://developer.nvidia.com/rtx/ray-tracing/optix</a>.
+</div>
 <div id="ref-overvoorde-2022" class="csl-entry" role="doc-biblioentry">
 Overvoorde, A. 2022. <span>“Introduction - vulkan tutorial.”</span>
 2022. Accessed April 18, 2022. <a
@@ -9481,6 +9548,11 @@ role="doc-biblioentry">
 <span>“Photograhic images of the cornell box.”</span> 2005. Cornell
 University. February 2, 2005. Accessed May 16, 2022. <a
 href="http://www.graphics.cornell.edu/online/box/data.html">http://www.graphics.cornell.edu/online/box/data.html</a>.
+</div>
+<div id="ref-ps5" class="csl-entry" role="doc-biblioentry">
+<span>“PlayStation 5.”</span> 2021. Sony. 2021. Accessed May 30, 2022.
+<a
+href="https://developer.nvidia.com/rtx/ray-tracing/optix">https://developer.nvidia.com/rtx/ray-tracing/optix</a>.
 </div>
 <div id="ref-10.1145/566654.566640" class="csl-entry"
 role="doc-biblioentry">
@@ -9607,61 +9679,15 @@ href="https://github.com/Wandmalfarbe/pandoc-latex-template">https://github.com/
 Whitted, T. 1979. <span>“An Improved Illumination Model for Shaded
 Display.”</span> In <em>SIGGRAPH ’79</em>.
 </div>
-<div id="ref-directx-12" class="csl-entry" role="doc-biblioentry">
-Wikipedia. 2022a. <span>“DirectX raytracing.”</span> 2022. Accessed May
-16, 2022. <a
-href="https://en.wikipedia.org/wiki/DirectX_Raytracing">https://en.wikipedia.org/wiki/DirectX_Raytracing</a>.
-</div>
-<div id="ref-wikipedia-nvidia" class="csl-entry" role="doc-biblioentry">
-———. 2022b. <span>“List of NVIDIA graphics processing units.”</span>
-2022. Accessed May 13, 2022. <a
-href="https://en.wikipedia.org/wiki/List_of_NVIDIA_graphics_processing_units">https://en.wikipedia.org/wiki/List_of_NVIDIA_graphics_processing_units</a>.
-</div>
-<div id="ref-optix" class="csl-entry" role="doc-biblioentry">
-———. 2022c. <span>“OptiX.”</span> 2022. Accessed May 16, 2022. <a
-href="https://en.wikipedia.org/wiki/OptiX">https://en.wikipedia.org/wiki/OptiX</a>.
-</div>
-<div id="ref-pinhole" class="csl-entry" role="doc-biblioentry">
-———. 2022d. <span>“Pinhole camera.”</span> 2022. Accessed May 26, 2022.
-<a
-href="https://en.wikipedia.org/wiki/Pinhole_camera">https://en.wikipedia.org/wiki/Pinhole_camera</a>.
-</div>
-<div id="ref-ps5" class="csl-entry" role="doc-biblioentry">
-———. 2022e. <span>“PlayStation 5.”</span> 2022. Accessed May 30, 2022.
-<a
-href="https://en.wikipedia.org/wiki/PlayStation_5?oldformat=true">https://en.wikipedia.org/wiki/PlayStation_5?oldformat=true</a>.
-</div>
-<div id="ref-wikipedia-radeon" class="csl-entry" role="doc-biblioentry">
-———. 2022f. <span>“Radeon.”</span> 2022. Accessed May 13, 2022. <a
-href="https://en.wikipedia.org/wiki/Radeon">https://en.wikipedia.org/wiki/Radeon</a>.
-</div>
-<div id="ref-series-x" class="csl-entry" role="doc-biblioentry">
-———. 2022g. <span>“Xbox series x and series s.”</span> 2022. Accessed
-May 30, 2022. <a
-href="https://en.wikipedia.org/wiki/Xbox_Series_X_and_Series_S?oldformat=true">https://en.wikipedia.org/wiki/Xbox_Series_X_and_Series_S?oldformat=true</a>.
-</div>
-<div id="ref-wikipedia-contributors-2022O" class="csl-entry"
-role="doc-biblioentry">
-———. 2022h. <span>“Differential geometry of surfaces.”</span> January
-14, 2022. Accessed April 22, 2022. <a
-href="https://en.wikipedia.org/wiki/Differential_geometry_of_surfaces">https://en.wikipedia.org/wiki/Differential_geometry_of_surfaces</a>.
-</div>
-<div id="ref-wikipedia-contributors-2022G" class="csl-entry"
-role="doc-biblioentry">
-———. 2022i. <span>“Barycentric coordinate system.”</span> March 14,
-2022. Accessed April 22, 2022. <a
-href="https://en.wikipedia.org/wiki/Barycentric_coordinate_system">https://en.wikipedia.org/wiki/Barycentric_coordinate_system</a>.
-</div>
-<div id="ref-history-photography" class="csl-entry"
-role="doc-biblioentry">
-———. 2022j. <span>“History of photography.”</span> March 18, 2022.
-Accessed April 22, 2022. <a
-href="https://en.wikipedia.org/wiki/History_of_photography">https://en.wikipedia.org/wiki/History_of_photography</a>.
-</div>
 <div id="ref-stir" class="csl-entry" role="doc-biblioentry">
 Wolfe, A. 2022. <span>“Sampling importance resampling.”</span> March 2,
 2022. Accessed May 30, 2022. <a
 href="https://blog.demofox.org/2022/03/02/sampling-importance-resampling/">https://blog.demofox.org/2022/03/02/sampling-importance-resampling/</a>.
+</div>
+<div id="ref-series-x" class="csl-entry" role="doc-biblioentry">
+<span>“Xbox series x and series s.”</span> 2022. Microsoft. 2022.
+Accessed May 30, 2022. <a
+href="https://www.microsoft.com/es-es/d/xbox-series-x/8wj714n3rbtl?activetab=pivot:especificacionest%C3%A9cnicastab#tab1d9396689-7b26-427c-a667-ff3e5499ee3b">https://www.microsoft.com/es-es/d/xbox-series-x/8wj714n3rbtl?activetab=pivot:especificacionest%C3%A9cnicastab#tab1d9396689-7b26-427c-a667-ff3e5499ee3b</a>.
 </div>
 <div id="ref-tuwien" class="csl-entry" role="doc-biblioentry">
 Zsolnai-Fehér, K., and A. Celarek. 2022. <span>“Lecture
