@@ -8,6 +8,8 @@ header-includes: |
     \usepackage{subcaption}
     \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
 fignos-caption-name: "Figura"
+tablenos-caption-name: "Tabla"
+tablenos-number-by-section: true
 ---
 
 # Sinopsis{.unnumbered}

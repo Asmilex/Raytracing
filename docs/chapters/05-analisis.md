@@ -35,7 +35,7 @@ El programa viene acompañado de varios mapas. Desafortunadamente, para cambiar 
 - Cambia el valor del primer parámetro: reemplaza `Scene::escena` por alguna entrada del enumerado `Scene`. Puedes encontrar sus posiblidades en el archivo `Scenes.hpp`.
 - Recompila el programa.
 
-Las escenas son las siguientes:
+Se puede ver la lista de escenas disponibles en la tabla [@tbl:escenas]
 
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
 | **Nombre de escena** | **Descripción**                                                                                                          | **Imagen**                             |
@@ -79,6 +79,8 @@ Las escenas son las siguientes:
 | `cornell_box`        | Una caja vacía. Es un benchmark infernal para el ruido generado por la iluminación global.                               | ![](./img/05/cornell_box_blanca.png)   |
 | `_blanca`            |                                                                                                                          |                                        |
 +----------------------+--------------------------------------------------------------------------------------------------------------------------+----------------------------------------+
+
+Table: Escenas del motor. {#tbl:escenas}
 
 Ten en cuenta que las imágenes de las escenas no son definitivas. Están sujetas a cambios, pues los shaders todavía se encuentran en desarrollo.
 
@@ -303,6 +305,8 @@ La siguiente tabla muestra una comparativa entre el coste de renderizar un *fram
 | 20                     | `14516`                       | `39`                                  | $\times$ `372.20`    |
 | 100                    | `69573`                       | `~200`                                | $\times$ `347.87`    |
 | 1000                   | `688388`                      | `~2000`                               | $\times$ `344.194`   |
+
+Table: Comparativa de tiempos de renderizado entre Ray Tracing In One Weekend y nuestra implementación. {#tbl:comparativa}
 
 Como podemos observar, la diferencia es abismal. En el tiempo que tarda In One Weekend en producir una imagen con una única muestra, nuestro motor es capaz de generar una imagen de 500 muestras. Sin embargo, este resultado es esperable, pues a fin de cuentas, In One Weekend corre en la CPU con un único hilo, mientras que en nuestro motor se utilizan todos los recursos posibles.
 

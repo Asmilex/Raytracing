@@ -130,6 +130,8 @@ A día 17 de abril de 2022, para correr ray tracing en tiempo real, se necesita 
 | **RDNA2** (Navi 2X, Big Navi) | AMD            |        RX 6400, RX 6500 XT, RX 6600, RX 6600 XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT         |
 | **Arc Alchemist**             | Intel          |                                          *No reveleado aún*                                          |
 
+Table: Arquitecturas capaces de realizar cómputos de ray tracing acelerados por hardware. {#tbl:arquitecturas}
+
 Se puede encontrar más información sobre las diferentes arquitecturas y gráficas en el siguiente artículo de AMD Radeon [@RDNA2], Nvidia [@turing-arquitecture, @ampere-arquitecture], e [@intel-arc]. Solo se han incluido las gráficas de escritorio de consumidor.
 
 Para este trabajo se ha utilizado una **RTX 2070 Super**. En el capítulo de análisis del rendimiento se hablará con mayor profundidad de este apartado.
@@ -441,6 +443,23 @@ El formato de materiales y objetos usados es el **Wavefront** (`.obj`). Aunque e
 
 Todos estos parámetros son opcionales y se pueden omitir, pero lo normal es incluir los tres primeros ($K_a$, $K_d$, $K_s$).
 
+```c++
+// host_device.h
+struct WaveFrontMaterial
+{
+  vec3  ambient;
+  vec3  diffuse;
+  vec3  specular;
+  vec3  transmittance;
+  vec3  emission;
+  float shininess;
+  float ior;
+  float dissolve;
+  int   illum;
+  int   textureId;
+};
+```
+
 Existe un parámetro adicional llamado `illum`. Controla el modelo de iluminación usado. Nosotros lo usaremos para distinguir tipos diferentes de materiales. Los códigos representan lo siguiente:
 
 | **Modelo** | **Color**                    | **Reflejos**         | **Transparencias** |
@@ -457,22 +476,7 @@ Existe un parámetro adicional llamado `illum`. Controla el modelo de iluminaci�
 | `9`        | Difusa, especular, ambiental | Sí                   | Cristal            |
 | `10`       | Puede arrojar sombras a superficies invisibles.                          |
 
-```c++
-// host_device.h
-struct WaveFrontMaterial
-{
-  vec3  ambient;
-  vec3  diffuse;
-  vec3  specular;
-  vec3  transmittance;
-  vec3  emission;
-  float shininess;
-  float ior;       // index of refraction
-  float dissolve;  // 1 == opaque; 0 == fully transparent
-  int   illum;     // illumination model (see http://www.fileformat.info/format/material/)
-  int   textureId;
-};
-```
+Table: tabla de valores para el parámetro `illum`. {#tbl:illum}
 
 ## Fuentes de luz
 

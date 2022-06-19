@@ -294,6 +294,8 @@ Existe un área de la física muy similar a la radiometría denominada **fotomet
 | Radiancia           | $L_e$,            $(\text{W sr}^{-1}\text{m}^{-1})$     | Luminancia          | $L_v$,        candela por metro cuadrado $(\text{cd/m}^{2})$ |
 | Irradiancia         | $E_e$,                   $(\text{W/m}^{2})$             | Iluminancia         | $E_v$,        lux $(\text{lx} = \text{lm/m}^2)$                |
 
+Table: Relación entre las unidades fundamentales radiométricas y fotométricas. {#tbl:fotometria_radiometria}
+
 ## Dispersión de luz
 
 Cuando la luz impacta en una superficie, ocurren un par de sucesos: parte de los fotones se reflejan saliendo disparados hacia alguna dirección, mientras que otros se absorben. La forma en la que se comportan depende de cómo sea la superficie. Específicamente, del material del que esté hecha.
