@@ -130,7 +130,7 @@ A día 17 de abril de 2022, para correr ray tracing en tiempo real, se necesita 
 | **RDNA2** (Navi 2X, Big Navi) | AMD            |        RX 6400, RX 6500 XT, RX 6600, RX 6600 XT, RX 6700 XT, RX 6800, RX 6800 XT, RX 6900 XT         |
 | **Arc Alchemist**             | Intel          |                                          *No reveleado aún*                                          |
 
-Se puede encontrar más información sobre las diferentes arquitecturas y gráficas en el siguiente artículo de AMD Radeon [@wikipedia-radeon], Nvidia [@wikipedia-nvidia], e [@intel-arc]. Solo se han incluido las gráficas de escritorio de consumidor.
+Se puede encontrar más información sobre las diferentes arquitecturas y gráficas en el siguiente artículo de AMD Radeon [@RDNA2], Nvidia [@turing-arquitecture, @ampere-arquitecture], e [@intel-arc]. Solo se han incluido las gráficas de escritorio de consumidor.
 
 Para este trabajo se ha utilizado una **RTX 2070 Super**. En el capítulo de análisis del rendimiento se hablará con mayor profundidad de este apartado.
 

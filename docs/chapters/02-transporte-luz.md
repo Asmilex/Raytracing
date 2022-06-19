@@ -326,7 +326,7 @@ $$
 f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i} (\text{sr}^{-1})
 $$
 
-> **Nota**(ción): dependiendo de la fuente que estés leyendo, es posible que te encuentres una integral algo diferente. Por ejemplo, en tanto en Wikipedia como en [@ShirleyRRT] se integra con respecto a los ángulos de salida $\omega_o$, en vez de los incidentes.
+> **Nota**(ción): dependiendo de la fuente que estés leyendo, es posible que te encuentres una integral algo diferente. Por ejemplo, en [@ShirleyRRT] se integra con respecto a los ángulos de salida $\omega_o$, en vez de los incidentes.
 >
 > Aquí, usaremos la notación de integrar con respecto a los incidentes, como se hace en [@PBRT3e].
 

@@ -66,7 +66,7 @@ Una de las principales cuestiones que debemos hacernos es saber cuándo un rayo 
 
 ### Superficies implícitas
 
-Generalmente, cuando hablemos de superficies, nos referiremos superficies diferenciables [@wikipedia-contributors-2022O], pues nos interesará conocer el vector normal en cada punto.
+Generalmente, cuando hablemos de superficies, nos referiremos superficies diferenciables, pues nos interesará conocer el vector normal en cada punto.
 
 Una superficie implícita es una superficie en un espacio euclidiano definida como
 
@@ -234,7 +234,7 @@ Un triángulo viene dado por tres puntos, $a, \mathbf{b}$, y $\mathbf{c}$; corre
 
 #### Coordenadas baricéntricas
 
-Podemos describir los puntos contenidos en el plano que forman estos vertices mediante **coordenadas baricéntricas**. Este sistema de coordenadas expresa cada punto del plano como una combinación convexa de los vértices $\mathbf{a}, \mathbf{b}, \mathbf{c}$ [@wikipedia-contributors-2022G]. Es decir, que para cada punto $\mathbf{p}$ del triángulo existen $\alpha, \beta$ y $\gamma$ tales que $\alpha + \beta + \gamma = 1$ y
+Podemos describir los puntos contenidos en el plano que forman estos vertices mediante **coordenadas baricéntricas**. Este sistema de coordenadas expresa cada punto del plano como una combinación convexa de los vértices $\mathbf{a}, \mathbf{b}, \mathbf{c}$ [@ShirleyRRT]. Es decir, que para cada punto $\mathbf{p}$ del triángulo existen $\alpha, \beta$ y $\gamma$ tales que $\alpha + \beta + \gamma = 1$ y
 
 $$
 \mathbf{p} = \alpha a + \beta \mathbf{b} + \gamma \mathbf{c}
