@@ -1,9 +1,6 @@
 name: Construir PDF
 
 on:
-  push:
-    tags:
-      - '*'
   workflow_dispatch: {}
 
 
