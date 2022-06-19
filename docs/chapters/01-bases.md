@@ -240,7 +240,7 @@ $$
 \mathbf{p} = \alpha a + \beta \mathbf{b} + \gamma \mathbf{c}
 $$
 
-![Coordenadas baricéntricas](./img/01/Coordenadas%20Baricéntricas.png){#fig:coordenadas-baricéntricas width=70%}
+![Coordenadas baricéntricas](./img/01/Coordenadas%20baricéntricas.png){#fig:coordenadas-baricéntricas width=70%}
 
 Debemos destacar que existen dos grados de libertad debido a la restricción de que las coordenadas sumen 1.
 
