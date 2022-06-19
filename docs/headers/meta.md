@@ -75,6 +75,6 @@ The contents of this document, the Vulkan project, an *In One Weekend* implement
 
 A mi familia por su apoyo constante y permitirme empezar una carrera que ni siquiera sabía que quería.
 
-A Augusta, Blanca, Cristina, Jorge, José *"OC"*, Lucas, Mari, Marina, Mapachana y Paula, Sarah, Sergio por ayudarme con el contenido, feedback del desarrollo y diseño de la documentación.
+A Augusta, Blanca, Cristina, Jorge, José *"OC"*, Lucas, Mari, Marina, Mapachana, Paula, Sarah, y Sergio por ayudarme con el contenido, feedback del desarrollo y diseño de la documentación.
 
 \vspace*{\fill}
