@@ -6,7 +6,7 @@ En este capítulo vamos a analizar el resultado final del proyecto. Estudiaremos
 
 Una vez se ha [compilado](#compilación-y-ejecución) el proyecto, puedes encontrar el ejecutable en `./application/bin_x64/Debug`. Abre el binario para entrar en el programa.
 
-![Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones.](./img/05/Asmiray.png){#fig:asmiray width=70%}
+![Al abrir el motor, te encontrarás con una pantalla similar a esta: una escena cargada junto a un panel lateral con numerosas opciones](./img/05/Asmiray.png){#fig:asmiray width=70%}
 
 Si alguna vez has usado un motor de renderización en 3D (como Blender, Unity, Unreal Engine o AutoCAD), el comportamiento debería resultarte familiar. El uso de nuestro progama es muy similar al de los anteriores:
 
@@ -15,7 +15,15 @@ Si alguna vez has usado un motor de renderización en 3D (como Blender, Unity, U
 - Si quieres moverte lateralmente, mantén pulsado la tecla **control** y utiliza el **botón izquierdo + arrastrar**. Alternativamente, **aprieta el click de la rueda del ratón** y múevete.
 - Para girar la cámara alderedor como si de un *first person shooter* se tratara, pulsa **alt + click izquierdo**.
 
-Puedes cambiar el modo de cámara en la pestaña "Extra" de la interfaz gráfica. Los diferentes modos alternan entre las acciones listadas anteriormente.
+La interfaz permite cambiar parámetros de diversos tipos. Enumeremos algunas de las opciones:
+
+![Parámetros del motor.](./img/05/Parámetros.png){#fig:parametros-motor width=30%}
+
+- En la parte superior se puede cambiar el color de fondo (por defecto, `(0.808, 0.839, 0.878)`) y deshabilitar el modo ray tracing.
+- La primera pestaña muestra información sobre la posición de la cámara, así como el *field of view* (FOV).
+- Las principales opciones están relacionadas con ray tracing. Entre las opciones posibles que se pueden cambiar, se encuentran la profundidad de un camino, el número de *frames* de acumulación temporal y el número de muestras tomadas por píxel. También se muestra el número total de muestras, que se calculan a partir de los dos últimos parámetros. Además, se enseña el *frametime* y los FPS.
+- La iluminación permite cambiar el tipo de luz (puntual o infinita), así como ajustar su posición y la intensidad.
+- En la pestaña `extras` se puede modificar el modo de navegación (`Examine`, `Fly` o `Walk` como comentábamos anteriormente), la distancia de renderizado y la velocidad de movimiento.
 
 Para ocultar la interfaz gráfica, pulsa **F10**.
 
