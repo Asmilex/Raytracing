@@ -9,7 +9,6 @@ output:
     yolo: false
     css: ["default", "presentation_style.css"]
 ---
-
 class: center middle
 # La ecuación del transporte de luz
 
@@ -125,7 +124,7 @@ Esto funciona en cualquier dimensión.
 
 ---
 
-# Hasta el infinito y más allá
+# Error del estimador
 
 Propiedad del estimador de Monte Carlo:
 
@@ -154,13 +153,136 @@ $\Rightarrow$ Para reducir el error a la mitad, habría que tomar 4 veces más m
 $\Rightarrow$ Muestreo por importancia: buscar distribuciones que agrupen valores en torno a $f(x) p_X(x)$.
 
 ---
+
 class:inverse middle center
-# Volviendo a la rendering equation
+# Path tracing
 
 ---
-class: center middle
+
+# ¿Qué es path tracing?
+
+Una forma de ray tracing recursivo
+
+--
+
+En cada punto se debe estimar el valor de la _rendering equation_:
+
+--
+
 
 $$\begin{aligned}
 L(p, \omega) & = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
-                 & \approx L_e(p, \omega_o) + \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{P\left[\omega_j\right]}}
+                 & \approx L_e(p, \omega_j) + \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{P\left[\omega_j\right]}}
 \end{aligned}$$
+
+--
+
+- Muestrear una dirección $\omega_j$ dependiendo de las propiedades del material.
+
+--
+
+- $L(p, \omega)$: cantidad de luz en un punto $p$.
+
+--
+
+- $L_e(p, \omega_o)$: cantidad de luz emitida desde $p$ en la dirección $\omega_o$.
+
+--
+
+- $f(p, \omega_o \leftarrow \omega_i)$: BSDF.. Distribución de la luz que va desde $\omega_i$ hacia $\omega_o$.
+
+--
+
+- $\cos\theta_i = \left \vert \omega_i \cdot \mathbf{n} \right \vert$.
+
+--
+
+- $P\left[\omega_j \right]$: Probabilidad de escoger la dirección $\omega_j$.
+
+---
+class: inverse middle center
+
+# Construyendo un path tracer en tiempo real
+
+---
+
+# ¿Qué necesitamos?
+
+.pull-left[
+- Una gráfica de última generación.
+
+$\quad \rightsquigarrow$ Nvidia RTX 2070 Super.
+]
+.pull-right[
+```{r, echo = FALSE, out.width = "270px"}
+knitr::include_graphics("./img/2070S.png")
+```
+]
+
+--
+
+.pull-left[
+- Una API que soporte dicha gráfica.
+
+$\quad\rightsquigarrow$ Vulkan con KHR bindings.
+]
+.pull-right[
+```{r, echo = FALSE, out.width = "320px"}
+knitr::include_graphics("./img/Vulkan.png")
+```
+]
+
+--
+
+.pull-left[
+- Un framework para facilitarnos el trabajo.
+
+$\quad\rightsquigarrow$ Nvidia DesignWorks `nvpro-samples`.
+]
+.pull-right[
+```{r, echo = FALSE, out.width = "350px"}
+knitr::include_graphics("./img/DesignWorks.png")
+```
+]
+
+---
+
+# Cómo funciona ray tracing acelerado por hardware
+
+- La geometría se carga en la GPU gracias a la API.
+- Los cálculos de intersecciones se aceleran mediante ciertas **estructuras**.
+- Controlados por **shaders**
+
+--
+
+## Shaders
+
+Programa que corre en la tarjeta gráfica.
+
+--
+
+Tipos:
+
+- **Ray generation**: inicio de los caminos de rayos.
+- **Closest hit**: en la primera intersección con una geometría válida.
+- **Any hit**: en cualquier intersección.
+- **Miss**: el rayo se pierde en el infinito.
+
+---
+class: middle center
+
+# La **Shader Binding Table**
+![](../img/04/Pipeline.png)
+
+---
+class: inverse middle center
+
+# Exhibición de ray tracing
+
+---
+
+class: middle center
+
+# El programa
+
+![](../img/05/Asmiray.png)
