@@ -285,4 +285,72 @@ class: middle center
 
 # El programa
 
-![](../img/05/Asmiray.png)
+![](../img/06/Showcase.png)
+
+---
+
+# Iluminación global
+
+Fotones rebotando en una habitación influencian al entorno.
+
+<video controls autoplay muted loop>
+  <source src="./img/GI.mov" type="video/mp4">
+</video>
+
+---
+
+# Número de muestras
+
+Dispara $N$ rayos por píxel y combina el resultado.
+
+<video controls autoplay muted loop>
+  <source src="./img/Muestras.mov" type="video/mp4">
+</video>
+
+---
+
+# Profundidad máxima de un rayo
+
+Rebotes máximos permitidos.
+
+<video controls autoplay muted loop>
+  <source src="./img/Depth.mov" type="video/mp4">
+</video>
+
+---
+
+# Acumulación temporal
+
+Mezclar los últimos frames mientras la cámara no esté en movimiento.
+
+<video controls autoplay muted loop>
+  <source src="./img/Acum.mov" type="video/mp4">
+</video>
+
+---
+class: inverse middle center
+
+# Rendimiento
+
+---
+
+# Número de muestras
+
+![](../img/graficas/CB_original_comparativa_samples.png)
+
+---
+
+# Profundidad de un rayo
+
+![](../img/graficas/CB_original_comparativa_depth.png)
+
+---
+
+# Resolución
+
+![](../img/graficas/CB_original_comparativa_resolucion.png)
+
+---
+class: middle center
+
+Fin.
