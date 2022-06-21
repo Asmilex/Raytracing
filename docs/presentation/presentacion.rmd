@@ -1,0 +1,21 @@
+---
+title: "Métodos de Monte Carlo para síntesis de imágenes"
+author: "Andrés Millán Muñoz"
+institute: "Universidad de Granada"
+# Use R to generate the date
+date: "`r format(Sys.time(), '%d de %B de %Y')`"
+output:
+  xaringan::moon_reader:
+    yolo: false
+    css: ["default", "presentation_style.css"]
+---
+
+# Hola soy un título
+
+Se supone que aquí viene texto
+
+---
+class: center middle
+# La ecuación del transporte de luz
+
+$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$
