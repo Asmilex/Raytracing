@@ -83,13 +83,27 @@
 }
 
 
+/*
+ * ────────────────────────────────────────────────────────────────── TITULOS ─────
+ */
+
 .remark-slide-content h1, h2, h3, h4, h5, h6 {
     font-family: "Fraunces", sans-serif;
-    font-weight: normal;
-    font-size: 3.5rem;
 }
-
-.title-slide h1 {
+.remark-slide-content h1 {
+    font-weight: normal;
+    font-size: 2.8rem;
+}
+.remark-slide-content h2 {
+    font-weight: normal;
+    font-size: 2.2rem;
+}
+.remark-slide-content h3, h4, h5, h6 {
+    font-weight: normal;
+    font-size: 1.5rem;
+}
+/* Inversas => portada también */
+.inverse h1 {
     font-family: "Fraunces", sans-serif;
     font-weight: bold;
     font-size: 4.5rem;

@@ -28,15 +28,160 @@ class: center, middle, inverse, title-slide
 ---
 
 
-# Hola soy un título
-
-Se supone que aquí viene texto
-
----
 class: center middle
 # La ecuación del transporte de luz
 
 `$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$`
+
+---
+class:inverse center middle
+
+# Un poco de radiometría
+
+---
+
+# Ángulos sólidos
+
+![](../img/02/Ángulo%20sólido.png)
+
+---
+
+# Radiancia
+
+`$$L(p, \omega) = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} = \frac{d^2\Phi(p, \omega)}{d\omega\ dA\ \cos\theta}$$`
+
+![](../img/02/Radiancia%20incidente%20y%20saliente.png)
+
+---
+
+# Funciones de distribución bidireccionales
+
+### Reflectancia (_**B**idirectional **R**eflectance **D**istribution **F**unction_)
+
+`$$f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i} (\text{sr}^{-1})$$`
+
+### Transmitancia (_**B**idirectional **T**ransmittance **D**istribution **F**unction_)
+
+`$$f_t(p, \omega_o \leftarrow \omega_i)$$`
+
+### Combinándolas (_**B**idirectional **S**cattering **D**istribution **F**unction_)
+
+`$$f(p, \omega_o \leftarrow \omega_i)$$`
+
+---
+
+# Reflexión y refracción
+
+.pull-left[
+- **Difusos** (*Diffuse*): luz en todas direcciones casi equiprobablemente.
+- **Especulares brillantes** (*Glossy specular*): la distribución de luz es un cono.
+- **Especulares perfectos** (*Perfect specular*): espejos.
+- **Retrorreflectores** (*Retro reflective*): luz reflejada en dirección contraria.
+]
+.pull-right[
+    ![](../img/02/Sandía.png)
+]
+
+Debería meter aquí algunas imágenes guapas de los objetos.
+
+---
+class: inverse center middle
+
+# Monte Carlo al rescate
+
+---
+
+Queremos calcular
+
+`$$I = \int_S f(x) dx$$`
+
+con `\(f: S\subset \mathbb{R}^d \rightarrow \mathbb{R}\)`.
+
+--
+
+Generalmente `\(I\)` no resulta fácil de calcular.
+
+--
+
+.right[(Como la _rendering equation_)]
+
+--
+
+Los estimadores de Monte Carlo nos pueden ayudar a estimar su valor.
+
+---
+
+# Fundamento teórico
+
+En esencia, esta teoría se basa en dos teoremas:
+
+--
+
+- **Ley del estadístico insconciente**: `\(X \sim f_X\)` variable aleatoria, `\(g\)` función medible
+
+`$$E\left[g(X)\right] = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}$$`
+
+--
+
+- **Ley (fuerte) de los grandes números**: `\(X_1, \dots, X_N\)` muestras de una v.a. `\(X \sim f_X\)` con esperanza `\(E[X] = \mu\)`
+
+`$$P\left[\lim_{N \to \infty}{\frac{1}{N} \sum_{i = 1}^{N}{X_i}} = \mu \right] = 1$$`
+
+--
+
+(Y como siempre, el **Teorema Central del Límite**).
+
+---
+
+# Vale, ¿y cómo lo hacemos?
+
+[Diapositiva 48 de este PDF](https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf)
+
+--
+
+Esto funciona en cualquier dimensión.
+
+---
+
+# Hasta el infinito y más allá
+
+Propiedad del estimador de Monte Carlo:
+
+`$$\text{error} =   Var\left[\hat{I}_N\right] = \frac{\sqrt{Var\left[f(X)\right]}}{\sqrt{N}}$$`
+
+¡No depende de la dimensión del integrando!
+
+--
+
+Posibilidades para reducir el error:
+
+--
+
+**1. Aumentar el número de muestras** `\(N\)`.
+
+--
+
+`\(\Rightarrow\)` Para reducir el error a la mitad, habría que tomar 4 veces más muestras.
+
+--
+
+**2. Reducir** `\(Var\left[f(X)\right]\)`.
+
+--
+
+`\(\Rightarrow\)` Muestreo por importancia: buscar distribuciones que agrupen valores en torno a `\(f(x) p_X(x)\)`.
+
+---
+class:inverse middle center
+# Volviendo a la rendering equation
+
+---
+class: center middle
+
+`$$\begin{aligned}
+L(p, \omega) &amp; = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
+                 &amp; \approx L_e(p, \omega_o) + \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{P\left[\omega_j\right]}}
+\end{aligned}$$`
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
