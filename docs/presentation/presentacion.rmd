@@ -9,10 +9,18 @@ output:
     yolo: false
     css: ["default", "presentation_style.css"]
 ---
+# Problemas de rasterización
+
+Blablabla errores de bakeo y cosas así.
+
+---
 class: center middle
+
 # La ecuación del transporte de luz
 
 $$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$
+
+![](./img/ETL.JPG)
 
 ---
 class:inverse center middle
@@ -98,13 +106,13 @@ En esencia, esta teoría se basa en dos teoremas:
 
 --
 
-- **Ley del estadístico insconciente**: $X \sim f_X$ variable aleatoria, $g$ función medible
+- **Ley del estadístico insconciente**: $X \sim p_X$ variable aleatoria, $g$ función medible
 
-$$E\left[g(X)\right] = \int_{-\infty}^{\infty}{g(x) f_X(x) dx}$$
+$$E\left[g(X)\right] = \int_{-\infty}^{\infty}{g(x) p_X(x) dx}$$
 
 --
 
-- **Ley (fuerte) de los grandes números**: $X_1, \dots, X_N$ muestras de una v.a. $X \sim f_X$ con esperanza $E[X] = \mu$
+- **Ley (fuerte) de los grandes números**: $X_1, \dots, X_N$ muestras de una v.a. $X \sim p_X$ con esperanza $E[X] = \mu$
 
 $$P\left[\lim_{N \to \infty}{\frac{1}{N} \sum_{i = 1}^{N}{X_i}} = \mu \right] = 1$$
 
@@ -116,11 +124,35 @@ $$P\left[\lim_{N \to \infty}{\frac{1}{N} \sum_{i = 1}^{N}{X_i}} = \mu \right] = 
 
 # Vale, ¿y cómo lo hacemos?
 
-[Diapositiva 48 de este PDF](https://pellacini.di.uniroma1.it/teaching/graphics17b/lectures/12_pathtracing.pdf)
+Queremos evaluar $I = \int_a^b{f(x)dx}$.
 
 --
 
-Esto funciona en cualquier dimensión.
+Por la ley ley del estadístico inconciente, $E\left[g(X)\right] = \int_{a}^{b}{g(x) p_X(x) dx}$.
+
+--
+
+Dicha esperanza puede estimarse como $E\left[g(X)\right] \approx \frac{1}{N} \sum_{i = 1}^{N}{g(X_i)} =: \hat{I}_N$.
+
+--
+
+Poniendo $g(x) = \frac{f(x)}{p_X(x)}$ con $p_X(x) = \frac{1}{b - a}$ función de densidad uniforme.
+
+--
+
+Obtenemos que
+
+$$I = \int_{a}^{b}{\frac{f(x)}{p_X(x)}p_X(x) dx}$$
+
+--
+
+Y por lo tanto,
+
+$$I \approx \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}} = \frac{b-a}{N}\sum_{i = 1}^{N}{f(X_i)}$$
+
+--
+
+El estimador funciona en cualquier dimensión.
 
 ---
 
@@ -128,7 +160,7 @@ Esto funciona en cualquier dimensión.
 
 Propiedad del estimador de Monte Carlo:
 
-$$\text{error} = \sqrt{Var\left[\hat{I}_N\right]} = \frac{\sqrt{Var\left[f(X)\right]}}{\sqrt{N}}$$
+$$\text{error} = \sqrt{Var\left[\hat{I}_N\right]} = \frac{\sqrt{Var\left[g(X)\right]}}{\sqrt{N}}$$
 
 ¡No depende de la dimensión del integrando!
 
@@ -142,15 +174,15 @@ Posibilidades para reducir el error:
 
 --
 
-$\Rightarrow$ Para reducir el error a la mitad, habría que tomar 4 veces más muestras.
+$\rightsquigarrow$ Para reducir el error a la mitad, habría que tomar 4 veces más muestras.
 
 --
 
-**2. Reducir** $Var\left[f(X)\right]$.
+**2. Reducir** $Var\left[g(X)\right]$.
 
 --
 
-$\Rightarrow$ Muestreo por importancia: buscar distribuciones que agrupen valores en torno a $f(x) p_X(x)$.
+$\rightsquigarrow$ Muestreo por importancia: buscar funciones de densidad $p_X(x)$ cercanas a $f(x)$.
 
 ---
 
@@ -171,7 +203,7 @@ En cada punto se debe estimar el valor de la _rendering equation_:
 
 
 $$\begin{aligned}
-L(p, \omega) & = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
+L(p, \omega_o) & = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
                  & \approx L_e(p, \omega_j) + \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{P\left[\omega_j\right]}}
 \end{aligned}$$
 
@@ -326,30 +358,6 @@ Mezclar los últimos frames mientras la cámara no esté en movimiento.
 <video controls autoplay muted loop>
   <source src="./img/Acum.mov" type="video/mp4">
 </video>
-
----
-class: inverse middle center
-
-# Rendimiento
-
----
-
-# Número de muestras
-
-![](../img/graficas/CB_original_comparativa_samples.png)
-
----
-
-# Profundidad de un rayo
-
-![](../img/graficas/CB_original_comparativa_depth.png)
-
----
-
-# Resolución
-
-![](../img/graficas/CB_original_comparativa_resolucion.png)
-
 ---
 class: middle center
 
