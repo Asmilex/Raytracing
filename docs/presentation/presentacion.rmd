@@ -9,9 +9,76 @@ output:
     yolo: false
     css: ["default", "presentation_style.css"]
 ---
-# Problemas de rasterización
+# ¿Cómo se renderiza una imagen por ordenador?
 
-Blablabla errores de bakeo y cosas así.
+```{r setup, include=FALSE}
+library(RefManageR)
+BibOptions(
+  check.entries = FALSE,
+  #bib.style = "authoryear",
+  cite.style = "numeric",
+  style = "markdown",
+  hyperlink = FALSE,
+  dashed = FALSE
+)
+bib <- ReadBib("../chapters/bibliography.bib", check = TRUE)
+```
+
+**Rasterización**: proyecta la geometría de la escena en una malla bidimensional de píxeles.
+
+.center[
+```{r, echo = FALSE, out.width = "600px"}
+knitr::include_graphics("./img/rasterizacion.gif")
+```
+]
+
+---
+
+.pull-left[
+## Ventajas
+
+- Computacionalmente **muy barato**.
+- Gran conocimiento por parte de la industria.
+]
+
+--
+
+.pull-right[
+  ## Donde falla
+
+  - Increíblemente limitado.
+  - Genera **imágenes físicamente poco realistas**: no puede calcular iluminación, reflejos, etc. con facilidad.
+
+  $\rightsquigarrow$ necesidad de crear *hacks*.
+]
+
+--
+
+.pull-left[
+![](../img/05/Shadowmap.png)
+¿Sombra?
+]
+.pull-right[
+![](./img/cubemap.jpg)
+
+¿Reflejos?
+]
+
+---
+
+# Ray tracing al rescate
+
+--
+
+En vez de proyectar la geometría, lanza rayos y hazlos impactar con los objetos de la escena.
+
+En cada impacto, obtén información del objeto y su entorno.
+
+.center[
+```{r, echo = FALSE, out.width = "600px"}
+knitr::include_graphics("../img/01/Ray casting.png")
+```
+]
 
 ---
 class: center middle
@@ -362,3 +429,11 @@ Mezclar los últimos frames mientras la cámara no esté en movimiento.
 class: middle center
 
 Fin.
+
+---
+
+# References
+
+```{r, results='asis', echo=FALSE}
+PrintBibliography(bib)
+```

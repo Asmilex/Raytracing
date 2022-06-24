@@ -22,14 +22,66 @@ class: center, middle, inverse, title-slide
 ### Universidad de Granada
 ]
 .date[
-### 23 de junio de 2022
+### 24 de junio de 2022
 ]
 
 ---
 
-# Problemas de rasterización
+# ¿Cómo se renderiza una imagen por ordenador?
 
-Blablabla errores de bakeo y cosas así.
+
+
+**Rasterización**: proyecta la geometría de la escena en una malla bidimensional de píxeles.
+
+.center[
+&lt;img src="./img/rasterizacion.gif" width="600px" /&gt;
+]
+
+---
+
+.pull-left[
+## Ventajas
+
+- Computacionalmente **muy barato**.
+- Gran conocimiento por parte de la industria.
+]
+
+--
+
+.pull-right[
+  ## Donde falla
+
+  - Increíblemente limitado.
+  - Genera **imágenes físicamente poco realistas**: no puede calcular iluminación, reflejos, etc. con facilidad.
+
+  `\(\rightsquigarrow\)` necesidad de crear *hacks*.
+]
+
+--
+
+.pull-left[
+![](../img/05/Shadowmap.png)
+¿Sombra?
+]
+.pull-right[
+![](./img/cubemap.jpg)
+
+¿Reflejos?
+]
+
+---
+
+# Ray tracing al rescate
+
+--
+
+En vez de proyectar la geometría, lanza rayos y hazlos impactar con los objetos de la escena.
+
+En cada impacto, obtén información del objeto y su entorno.
+
+.center[
+&lt;img src="../img/01/Ray casting.png" width="600px" /&gt;
+]
 
 ---
 class: center middle
@@ -374,6 +426,17 @@ Mezclar los últimos frames mientras la cámara no esté en movimiento.
 class: middle center
 
 Fin.
+
+---
+
+# References
+
+
+```
+## You haven't cited any references in this bibliography yet.
+```
+
+NULL
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
