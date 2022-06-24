@@ -65,10 +65,13 @@ knitr::include_graphics("./img/rasterizacion.gif")
 ]
 
 ---
+class:inverse middle center
 
 # Ray tracing al rescate
 
---
+---
+
+# ¿Qué es ray tracing?
 
 En vez de proyectar la geometría, lanza rayos y hazlos impactar con los objetos de la escena.
 
@@ -79,6 +82,14 @@ En cada impacto, obtén información del objeto y su entorno.
 knitr::include_graphics("../img/01/Ray casting.png")
 ```
 ]
+
+---
+
+# Path tracing
+
+Una forma de ray tracing recursivo. Tras cada impacto, sigue generando rayos recursivamente.
+
+![](./img/PT.jpg)
 
 ---
 class: center middle
