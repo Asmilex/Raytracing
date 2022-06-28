@@ -8,6 +8,9 @@ output:
   xaringan::moon_reader:
     yolo: false
     css: ["default", "presentation_style.css"]
+    nature:
+      countIncrementalSlides: false
+      slideNumberFormat: "%current%"
 ---
 
 ```{r setup, include=FALSE}
@@ -102,6 +105,56 @@ knitr::include_graphics("../img/01/Ray casting.png")
 
 ---
 
+# La ecuación del transporte de luz
+
+*Rendering equation* en inglés. Propuesta por Kajiya `r AutoCite(bib, "kajiya")`.
+
+$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$
+
+--
+
+- $L(p, \omega)$, **radiancia espectral**. Irradiancia $E(p, \omega)$ por unidad de ángulo sólido $d\omega$ asociado a una dirección $\omega$:
+
+$$L(p, \omega) = \frac{dE_\omega(p)}{d\omega} = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot}  (\text{W sr}^{-1}\text{m}^{-1})$$
+
+.center[
+```{r, echo = FALSE, out.width = "370px"}
+knitr::include_graphics("../img/02/Radiancia incidente y saliente.png")
+```
+]
+
+
+---
+
+# La ecuación del transporte de luz
+
+*Rendering equation* en inglés. Propuesta por Kajiya `r AutoCite(bib, "kajiya")`.
+
+$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$
+
+- $L(p, \omega)$, **radiancia espectral** $\rightsquigarrow$ Cantidad de luz en un punto $p$ hacia una dirección $\omega$.
+
+--
+
+  - $L_e(p, \omega_o)$: radiancia **emitida** por el material desde $p$ en la dirección $\omega_o$
+  - $L_i(p, \omega_i)$: radiancia **incidente** en $p$ desde la dirección $\omega_i$.
+  - $L_o(p, \omega_o)$: radiancia **de salida** desde $p$ hacia $\omega_o$.
+
+--
+
+- $f(p, \omega_o \leftarrow \omega_i)$: *Bidirectional Scattering Distribution Function* (BSDF). Proporción de luz procedente de $\omega_i$ y sale hacia $\omega_o$.
+
+--
+
+- $H^2(\mathbf{n})$: Conjunto de direcciones $\omega$ posibles. Hemisferio superior de la esfera $\mathbb{S}^2$.
+
+--
+
+- $\cos\theta_i = \left \vert \omega_i \cdot \mathbf{n} \right \vert$, con $\mathbf{n}$ normal en $p$.
+
+
+---
+
 # Path tracing
 
 Una forma de ray tracing recursivo. Tras cada impacto, sigue generando rayos recursivamente.
@@ -109,48 +162,13 @@ Una forma de ray tracing recursivo. Tras cada impacto, sigue generando rayos rec
 ![](./img/PT.jpg)
 
 ---
-class: center middle
 
-# La ecuación del transporte de luz
+# Path tracing
 
 $$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$
 
+
 ![](./img/ETL.JPG)
-
----
-class:inverse center middle
-
-# Un poco de radiometría
-
----
-
-# Ángulos sólidos
-
-![](../img/02/Ángulo%20sólido.png)
-
----
-
-# Radiancia
-
-$$L(p, \omega) = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} = \frac{d^2\Phi(p, \omega)}{d\omega\ dA\ \cos\theta}$$
-
-![](../img/02/Radiancia%20incidente%20y%20saliente.png)
-
----
-
-# Funciones de distribución bidireccionales
-
-### Reflectancia (_**B**idirectional **R**eflectance **D**istribution **F**unction_)
-
-$$f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i} (\text{sr}^{-1})$$
-
-### Transmitancia (_**B**idirectional **T**ransmittance **D**istribution **F**unction_)
-
-$$f_t(p, \omega_o \leftarrow \omega_i)$$
-
-### Combinándolas (_**B**idirectional **S**cattering **D**istribution **F**unction_)
-
-$$f(p, \omega_o \leftarrow \omega_i)$$
 
 ---
 
@@ -166,8 +184,20 @@ $$f(p, \omega_o \leftarrow \omega_i)$$
     ![](../img/02/Sandía.png)
 ]
 
-Debería meter aquí algunas imágenes guapas de los objetos.
+--
 
+.pull-left[
+Materiales difusos
+```{r, echo = FALSE, out.width = "320px"}
+knitr::include_graphics("../img/05/Materiales difusos.png")
+```
+]
+.pull-right[
+Especular perfecto
+```{r, echo = FALSE, out.width = "320px"}
+knitr::include_graphics("../img/05/Materiales espejos.png")
+```
+]
 ---
 class: inverse center middle
 
@@ -279,22 +309,10 @@ $\rightsquigarrow$ Para reducir el error a la mitad, habría que tomar 4 veces m
 
 $\rightsquigarrow$ Muestreo por importancia: buscar funciones de densidad $p_X(x)$ cercanas a $f(x)$.
 
----
-
-class:inverse middle center
-# Path tracing
 
 ---
 
-# ¿Qué es path tracing?
-
-Una forma de ray tracing recursivo
-
---
-
-En cada punto se debe estimar el valor de la _rendering equation_:
-
---
+# Ecuación del transporte de luz aproximada por Monte Carlo
 
 
 $$\begin{aligned}
@@ -305,22 +323,6 @@ L(p, \omega_o) & = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \left
 --
 
 - Muestrear una dirección $\omega_j$ dependiendo de las propiedades del material.
-
---
-
-- $L(p, \omega)$: cantidad de luz en un punto $p$.
-
---
-
-- $L_e(p, \omega_o)$: cantidad de luz emitida desde $p$ en la dirección $\omega_o$.
-
---
-
-- $f(p, \omega_o \leftarrow \omega_i)$: BSDF. Distribución de la luz que va desde $\omega_i$ hacia $\omega_o$.
-
---
-
-- $\cos\theta_i = \left \vert \omega_i \cdot \mathbf{n} \right \vert$, con $\mathbf{n}$ normal en $p$.
 
 --
 
@@ -406,13 +408,9 @@ class: inverse middle center
 
 # Exhibición de ray tracing
 
----
-
-class: middle center
-
-# El programa
-
-![](../img/06/Showcase.png)
+```{r, echo = FALSE, out.width = "620px"}
+knitr::include_graphics("../img/06/Showcase.png")
+```
 
 ---
 

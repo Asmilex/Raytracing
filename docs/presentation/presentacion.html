@@ -105,6 +105,54 @@ En cada impacto, obtén información del objeto y su entorno.
 
 ---
 
+# La ecuación del transporte de luz
+
+*Rendering equation* en inglés. Propuesta por Kajiya [3].
+
+`$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$`
+
+--
+
+- `\(L(p, \omega)\)`, **radiancia espectral**. Irradiancia `\(E(p, \omega)\)` por unidad de ángulo sólido `\(d\omega\)` asociado a una dirección `\(\omega\)`:
+
+`$$L(p, \omega) = \frac{dE_\omega(p)}{d\omega} = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot}  (\text{W sr}^{-1}\text{m}^{-1})$$`
+
+.center[
+&lt;img src="../img/02/Radiancia incidente y saliente.png" width="370px" /&gt;
+]
+
+
+---
+
+# La ecuación del transporte de luz
+
+*Rendering equation* en inglés. Propuesta por Kajiya [3].
+
+`$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$`
+
+- `\(L(p, \omega)\)`, **radiancia espectral** `\(\rightsquigarrow\)` Cantidad de luz en un punto `\(p\)` hacia una dirección `\(\omega\)`.
+
+--
+
+  - `\(L_e(p, \omega_o)\)`: radiancia **emitida** por el material desde `\(p\)` en la dirección `\(\omega_o\)`
+  - `\(L_i(p, \omega_i)\)`: radiancia **incidente** en `\(p\)` desde la dirección `\(\omega_i\)`.
+  - `\(L_o(p, \omega_o)\)`: radiancia **de salida** desde `\(p\)` hacia `\(\omega_o\)`.
+
+--
+
+- `\(f(p, \omega_o \leftarrow \omega_i)\)`: *Bidirectional Scattering Distribution Function* (BSDF). Proporción de luz procedente de `\(\omega_i\)` y sale hacia `\(\omega_o\)`.
+
+--
+
+- `\(H^2(\mathbf{n})\)`: Conjunto de direcciones `\(\omega\)` posibles. Hemisferio superior de la esfera `\(\mathbb{S}^2\)`.
+
+--
+
+- `\(\cos\theta_i = \left \vert \omega_i \cdot \mathbf{n} \right \vert\)`, con `\(\mathbf{n}\)` normal en `\(p\)`.
+
+
+---
+
 # Path tracing
 
 Una forma de ray tracing recursivo. Tras cada impacto, sigue generando rayos recursivamente.
@@ -112,48 +160,13 @@ Una forma de ray tracing recursivo. Tras cada impacto, sigue generando rayos rec
 ![](./img/PT.jpg)
 
 ---
-class: center middle
 
-# La ecuación del transporte de luz
+# Path tracing
 
 `$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$`
 
+
 ![](./img/ETL.JPG)
-
----
-class:inverse center middle
-
-# Un poco de radiometría
-
----
-
-# Ángulos sólidos
-
-![](../img/02/Ángulo%20sólido.png)
-
----
-
-# Radiancia
-
-`$$L(p, \omega) = \frac{d^2\Phi(p, \omega)}{d\omega\ dA^\bot} = \frac{d^2\Phi(p, \omega)}{d\omega\ dA\ \cos\theta}$$`
-
-![](../img/02/Radiancia%20incidente%20y%20saliente.png)
-
----
-
-# Funciones de distribución bidireccionales
-
-### Reflectancia (_**B**idirectional **R**eflectance **D**istribution **F**unction_)
-
-`$$f_r(p, \omega_o \leftarrow \omega_i) = \frac{dL_o(p, \omega_o)}{dE(p, \omega_i)} = \frac{dL_o(p, \omega_o)}{L_i(p, \omega_i) \cos\theta_i\ d\omega_i} (\text{sr}^{-1})$$`
-
-### Transmitancia (_**B**idirectional **T**ransmittance **D**istribution **F**unction_)
-
-`$$f_t(p, \omega_o \leftarrow \omega_i)$$`
-
-### Combinándolas (_**B**idirectional **S**cattering **D**istribution **F**unction_)
-
-`$$f(p, \omega_o \leftarrow \omega_i)$$`
 
 ---
 
@@ -169,8 +182,16 @@ class:inverse center middle
     ![](../img/02/Sandía.png)
 ]
 
-Debería meter aquí algunas imágenes guapas de los objetos.
+--
 
+.pull-left[
+Materiales difusos
+&lt;img src="../img/05/Materiales difusos.png" width="320px" /&gt;
+]
+.pull-right[
+Especular perfecto
+&lt;img src="../img/05/Materiales espejos.png" width="320px" /&gt;
+]
 ---
 class: inverse center middle
 
@@ -200,7 +221,7 @@ Los estimadores de Monte Carlo nos permiten aproximar su valor.
 
 # Fundamento teórico
 
-En esencia, esta teoría se basa en dos teoremas [3]:
+En esencia, esta teoría se basa en dos teoremas [4]:
 
 --
 
@@ -250,7 +271,7 @@ Y por lo tanto,
 
 --
 
-El estimador funciona en cualquier dimensión [4].
+El estimador funciona en cualquier dimensión [5].
 
 ---
 
@@ -282,22 +303,10 @@ Posibilidades para reducir el error:
 
 `\(\rightsquigarrow\)` Muestreo por importancia: buscar funciones de densidad `\(p_X(x)\)` cercanas a `\(f(x)\)`.
 
----
-
-class:inverse middle center
-# Path tracing
 
 ---
 
-# ¿Qué es path tracing?
-
-Una forma de ray tracing recursivo
-
---
-
-En cada punto se debe estimar el valor de la _rendering equation_:
-
---
+# Ecuación del transporte de luz aproximada por Monte Carlo
 
 
 `$$\begin{aligned}
@@ -308,22 +317,6 @@ L(p, \omega_o) &amp; = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \
 --
 
 - Muestrear una dirección `\(\omega_j\)` dependiendo de las propiedades del material.
-
---
-
-- `\(L(p, \omega)\)`: cantidad de luz en un punto `\(p\)`.
-
---
-
-- `\(L_e(p, \omega_o)\)`: cantidad de luz emitida desde `\(p\)` en la dirección `\(\omega_o\)`.
-
---
-
-- `\(f(p, \omega_o \leftarrow \omega_i)\)`: BSDF. Distribución de la luz que va desde `\(\omega_i\)` hacia `\(\omega_o\)`.
-
---
-
-- `\(\cos\theta_i = \left \vert \omega_i \cdot \mathbf{n} \right \vert\)`, con `\(\mathbf{n}\)` normal en `\(p\)`.
 
 --
 
@@ -352,7 +345,7 @@ class: inverse middle center
 .pull-left[
 - Una API que soporte dicha gráfica.
 
-`\(\quad\rightsquigarrow\)` Vulkan con KHR bindings [5].
+`\(\quad\rightsquigarrow\)` Vulkan con KHR bindings [6].
 ]
 .pull-right[
 &lt;img src="./img/Vulkan.png" width="320px" /&gt;
@@ -363,7 +356,7 @@ class: inverse middle center
 .pull-left[
 - Un framework para facilitarnos el trabajo.
 
-`\(\quad\rightsquigarrow\)` Nvidia DesignWorks `nvpro-samples` [6].
+`\(\quad\rightsquigarrow\)` Nvidia DesignWorks `nvpro-samples` [7].
 ]
 .pull-right[
 &lt;img src="./img/DesignWorks.png" width="350px" /&gt;
@@ -381,7 +374,7 @@ class: inverse middle center
 
 ## Shaders
 
-Programa que corre en la tarjeta gráfica [7], [8].
+Programa que corre en la tarjeta gráfica [8], [9].
 
 --
 
@@ -403,13 +396,7 @@ class: inverse middle center
 
 # Exhibición de ray tracing
 
----
-
-class: middle center
-
-# El programa
-
-![](../img/06/Showcase.png)
+&lt;img src="../img/06/Showcase.png" width="620px" /&gt;
 
 ---
 
@@ -469,39 +456,47 @@ Performance Ray Tracing 60fps Mode Tested!_ 2021. URL:
 [https://www.youtube.com/watch?v=o2HrOxwH0_Q](https://www.youtube.com/watch?v=o2HrOxwH0_Q)
 (visited on 05/30/2022).
 
-[3] A. B. Owen. _Monte Carlo theory, methods and examples_. 2013. URL:
+[3] J. T. Kajiya. "The Rendering Equation". In: _SIGGRAPH Comput.
+Graph._ 20.4 (ago.. 1986), pp. 143-150. ISSN: 0097-8930. DOI:
+[10.1145/15886.15902](https://doi.org/10.1145%2F15886.15902). URL:
+[https://doi.org/10.1145/15886.15902](https://doi.org/10.1145/15886.15902).
+
+[4] A. B. Owen. _Monte Carlo theory, methods and examples_. 2013. URL:
 [https://artowen.su.domains/mc/](https://artowen.su.domains/mc/).
 
-[4] S. M. Fabio Pellacini. _Fundamentals of Computer Graphics_. 2022.
+[5] S. M. Fabio Pellacini. _Fundamentals of Computer Graphics_. 2022.
 URL:
 [https://pellacini.di.uniroma1.it/teaching/graphics17b/](https://pellacini.di.uniroma1.it/teaching/graphics17b/)
 (visited on 04/09/2022).
 
-[5] The Khronos Vulkan Working Group. _Vulkan® 1.2.210 - A
+[6] The Khronos Vulkan Working Group. _Vulkan® 1.2.210 - A
 Specification (with KHR Extensions)_. mar.. 29, 2022. URL: [-
 https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html](-
 https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html)
 (visited on 04/01/2022).
 
-[6] NVIDIA. _NVIDIA DesignWorks samples_. 2022. URL:
+---
+
+[7] NVIDIA. _NVIDIA DesignWorks samples_. 2022. URL:
 [https://github.com/nvpro-samples](https://github.com/nvpro-samples)
 (visited on 05/13/2022).
 
----
-
-[7] E. Haines and T. Akenine-Möller, ed. _Ray Tracing Gems_. Apress,
+[8] E. Haines and T. Akenine-Möller, ed. _Ray Tracing Gems_. Apress,
 2019. DOI:
 [10.1007/978-1-4842-4427-2](https://doi.org/10.1007%2F978-1-4842-4427-2).
 URL: [http://raytracinggems.com](http://raytracinggems.com).
 
-[8] P. S. Adam Marrs and I. Wald, ed. _Ray Tracing Gems II_. Apress,
+[9] P. S. Adam Marrs and I. Wald, ed. _Ray Tracing Gems II_. Apress,
 2021. ISBN: 978-1-4842-7184-1. DOI:
 [10.1007/978-1-4842-7185-8](https://doi.org/10.1007%2F978-1-4842-7185-8).
 URL: [http://raytracinggems.com/rtg2](http://raytracinggems.com/rtg2).
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script>var slideshow = remark.create();
+<script>var slideshow = remark.create({
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%"
+});
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
