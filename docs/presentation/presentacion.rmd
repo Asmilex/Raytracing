@@ -30,13 +30,9 @@ bib <- ReadBib("../chapters/bibliography.bib", check = TRUE)
 
 - Análisis de algoritmos de visualización 3D basados en Monte Carlo.
 
-- Estudiar error en la reconstrucción de la imagen y tiempo de ejecución.
-
-- Implementar los algoritmos en una GPU con aceleración de ray tracing.
-
 - Diseño e implementación de un path tracer por GPU.
 
-- Análisis del rendimiento y calidad de imagen.
+- Estudiar el tiempo de ejecución y el error en la reconstrucción de la imagen.
 
 - Comparación del motor con una implementación en CPU.
 
@@ -201,23 +197,15 @@ class: inverse center middle
 
 ---
 
+Las técnicas de Monte Carlo permiten calcular integrales numéricamente mediante muestreo aleatorio.
+
+--
+
 Queremos calcular
 
 $$I = \int_S f(x) dx$$
 
 con $f: S\subset \mathbb{R}^d \rightarrow \mathbb{R}$.
-
---
-
-Generalmente $I$ no resulta fácil de calcular.
-
---
-
-.right[(Como la _rendering equation_)]
-
---
-
-Los estimadores de Monte Carlo nos permiten aproximar su valor.
 
 ---
 
@@ -227,7 +215,7 @@ En esencia, esta teoría se basa en dos teoremas `r AutoCite(bib, "mcbook")`:
 
 --
 
-- **Ley del estadístico insconciente**: $X$ variable aleatoria con función de densidad de probabilidad $p_X$, $g$ función medible
+- **Ley del estadístico inconsciente**: $X$ variable aleatoria con función de densidad de probabilidad $p_X$, $g$ función medible
 
 $$E\left[g(X)\right] = \int_{-\infty}^{\infty}{g(x) p_X(x) dx}$$
 
@@ -245,7 +233,7 @@ Queremos evaluar $I = \int_a^b{f(x)dx}$ `r AutoCite(bib, "pellacini-marschner-20
 
 --
 
-Por la ley del estadístico inconciente, $E\left[g(X)\right] = \int_{a}^{b}{g(x) p_X(x) dx}$.
+Por la ley del estadístico inconsciente, $E\left[g(X)\right] = \int_{a}^{b}{g(x) p_X(x) dx}$.
 
 --
 
