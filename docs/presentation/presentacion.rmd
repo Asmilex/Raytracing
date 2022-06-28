@@ -9,7 +9,6 @@ output:
     yolo: false
     css: ["default", "presentation_style.css"]
 ---
-# ¿Cómo se renderiza una imagen por ordenador?
 
 ```{r setup, include=FALSE}
 library(RefManageR)
@@ -23,6 +22,24 @@ BibOptions(
 )
 bib <- ReadBib("../chapters/bibliography.bib", check = TRUE)
 ```
+
+# Objetivos del trabajo
+
+- Análisis de algoritmos de visualización 3D basados en Monte Carlo.
+
+- Estudiar error en la reconstrucción de la imagen y tiempo de ejecución.
+
+- Implementar los algoritmos en una GPU con aceleración de ray tracing.
+
+- Diseño e implementación de un path tracer por GPU.
+
+- Análisis del rendimiento y calidad de imagen.
+
+- Comparación del motor con una implementación en CPU.
+
+---
+
+# ¿Cómo se renderiza una imagen por ordenador?
 
 **Rasterización**: proyecta la geometría de la escena en una malla bidimensional de píxeles.
 
@@ -56,12 +73,12 @@ knitr::include_graphics("./img/rasterizacion.gif")
 
 .pull-left[
 ![](../img/05/Shadowmap.png)
-¿Sombra?
+¿Sombra? `r AutoCite(bib, "lumen")`
 ]
 .pull-right[
 ![](./img/cubemap.jpg)
 
-¿Reflejos?
+¿Reflejos? `r AutoCite(bib, "df-spiderman")`
 ]
 
 ---
@@ -174,13 +191,13 @@ Generalmente $I$ no resulta fácil de calcular.
 
 --
 
-Los estimadores de Monte Carlo nos pueden ayudar a estimar su valor.
+Los estimadores de Monte Carlo nos permiten aproximar su valor.
 
 ---
 
 # Fundamento teórico
 
-En esencia, esta teoría se basa en dos teoremas:
+En esencia, esta teoría se basa en dos teoremas `r AutoCite(bib, "mcbook")`:
 
 --
 
@@ -230,7 +247,7 @@ $$I \approx \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}} = \frac{b-a}{N
 
 --
 
-El estimador funciona en cualquier dimensión.
+El estimador funciona en cualquier dimensión `r AutoCite(bib, "pellacini-marschner-2017")`.
 
 ---
 
@@ -299,11 +316,11 @@ L(p, \omega_o) & = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \left
 
 --
 
-- $f(p, \omega_o \leftarrow \omega_i)$: BSDF.. Distribución de la luz que va desde $\omega_i$ hacia $\omega_o$.
+- $f(p, \omega_o \leftarrow \omega_i)$: BSDF. Distribución de la luz que va desde $\omega_i$ hacia $\omega_o$.
 
 --
 
-- $\cos\theta_i = \left \vert \omega_i \cdot \mathbf{n} \right \vert$.
+- $\cos\theta_i = \left \vert \omega_i \cdot \mathbf{n} \right \vert$, con $\mathbf{n}$ normal en $p$.
 
 --
 
@@ -334,7 +351,7 @@ knitr::include_graphics("./img/2070S.png")
 .pull-left[
 - Una API que soporte dicha gráfica.
 
-$\quad\rightsquigarrow$ Vulkan con KHR bindings.
+$\quad\rightsquigarrow$ Vulkan con KHR bindings `r AutoCite(bib, "vulkan")`.
 ]
 .pull-right[
 ```{r, echo = FALSE, out.width = "320px"}
@@ -347,7 +364,7 @@ knitr::include_graphics("./img/Vulkan.png")
 .pull-left[
 - Un framework para facilitarnos el trabajo.
 
-$\quad\rightsquigarrow$ Nvidia DesignWorks `nvpro-samples`.
+$\quad\rightsquigarrow$ Nvidia DesignWorks `nvpro-samples` `r AutoCite(bib, "nvpro-samples")`.
 ]
 .pull-right[
 ```{r, echo = FALSE, out.width = "350px"}
@@ -367,7 +384,7 @@ knitr::include_graphics("./img/DesignWorks.png")
 
 ## Shaders
 
-Programa que corre en la tarjeta gráfica.
+Programa que corre en la tarjeta gráfica `r AutoCite(bib, "Haines2019")`, `r AutoCite(bib, "Marrs2021")`.
 
 --
 
@@ -446,5 +463,11 @@ Fin.
 # References
 
 ```{r, results='asis', echo=FALSE}
-PrintBibliography(bib)
+PrintBibliography(bib, start = 1, end = 6)
+```
+
+---
+
+```{r, results='asis', echo=FALSE}
+PrintBibliography(bib, start = 7)
 ```

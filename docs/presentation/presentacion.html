@@ -22,14 +22,31 @@ class: center, middle, inverse, title-slide
 ### Universidad de Granada
 ]
 .date[
-### 24 de junio de 2022
+### 28 de junio de 2022
 ]
 
 ---
 
+
+
+
+# Objetivos del trabajo
+
+- Análisis de algoritmos de visualización 3D basados en Monte Carlo.
+
+- Estudiar error en la reconstrucción de la imagen y tiempo de ejecución.
+
+- Implementar los algoritmos en una GPU con aceleración de ray tracing.
+
+- Diseño e implementación de un path tracer por GPU.
+
+- Análisis del rendimiento y calidad de imagen.
+
+- Comparación del motor con una implementación en CPU.
+
+---
+
 # ¿Cómo se renderiza una imagen por ordenador?
-
-
 
 **Rasterización**: proyecta la geometría de la escena en una malla bidimensional de píxeles.
 
@@ -61,12 +78,12 @@ class: center, middle, inverse, title-slide
 
 .pull-left[
 ![](../img/05/Shadowmap.png)
-¿Sombra?
+¿Sombra? [1]
 ]
 .pull-right[
 ![](./img/cubemap.jpg)
 
-¿Reflejos?
+¿Reflejos? [2]
 ]
 
 ---
@@ -177,13 +194,13 @@ Generalmente `\(I\)` no resulta fácil de calcular.
 
 --
 
-Los estimadores de Monte Carlo nos pueden ayudar a estimar su valor.
+Los estimadores de Monte Carlo nos permiten aproximar su valor.
 
 ---
 
 # Fundamento teórico
 
-En esencia, esta teoría se basa en dos teoremas:
+En esencia, esta teoría se basa en dos teoremas [3]:
 
 --
 
@@ -233,7 +250,7 @@ Y por lo tanto,
 
 --
 
-El estimador funciona en cualquier dimensión.
+El estimador funciona en cualquier dimensión [4].
 
 ---
 
@@ -302,11 +319,11 @@ L(p, \omega_o) &amp; = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \
 
 --
 
-- `\(f(p, \omega_o \leftarrow \omega_i)\)`: BSDF.. Distribución de la luz que va desde `\(\omega_i\)` hacia `\(\omega_o\)`.
+- `\(f(p, \omega_o \leftarrow \omega_i)\)`: BSDF. Distribución de la luz que va desde `\(\omega_i\)` hacia `\(\omega_o\)`.
 
 --
 
-- `\(\cos\theta_i = \left \vert \omega_i \cdot \mathbf{n} \right \vert\)`.
+- `\(\cos\theta_i = \left \vert \omega_i \cdot \mathbf{n} \right \vert\)`, con `\(\mathbf{n}\)` normal en `\(p\)`.
 
 --
 
@@ -335,7 +352,7 @@ class: inverse middle center
 .pull-left[
 - Una API que soporte dicha gráfica.
 
-`\(\quad\rightsquigarrow\)` Vulkan con KHR bindings.
+`\(\quad\rightsquigarrow\)` Vulkan con KHR bindings [5].
 ]
 .pull-right[
 &lt;img src="./img/Vulkan.png" width="320px" /&gt;
@@ -346,7 +363,7 @@ class: inverse middle center
 .pull-left[
 - Un framework para facilitarnos el trabajo.
 
-`\(\quad\rightsquigarrow\)` Nvidia DesignWorks `nvpro-samples`.
+`\(\quad\rightsquigarrow\)` Nvidia DesignWorks `nvpro-samples` [6].
 ]
 .pull-right[
 &lt;img src="./img/DesignWorks.png" width="350px" /&gt;
@@ -364,7 +381,7 @@ class: inverse middle center
 
 ## Shaders
 
-Programa que corre en la tarjeta gráfica.
+Programa que corre en la tarjeta gráfica [7], [8].
 
 --
 
@@ -442,12 +459,45 @@ Fin.
 
 # References
 
+[1] Epic Games. _Unreal Engine 5 goes all-in on dynamic global
+illumination with Lumen_. may.. 27, 2022. URL:
+[https://www.unrealengine.com/en-US/tech-blog/unreal-engine-5-goes-all-in-on-dynamic-global-illumination-with-lumen](https://www.unrealengine.com/en-US/tech-blog/unreal-engine-5-goes-all-in-on-dynamic-global-illumination-with-lumen)
+(visited on 05/29/2022).
 
-```
-## You haven't cited any references in this bibliography yet.
-```
+[2] Digital Foundry. _Spider-Man Remastered PS5 vs PS4 Pro +
+Performance Ray Tracing 60fps Mode Tested!_ 2021. URL:
+[https://www.youtube.com/watch?v=o2HrOxwH0_Q](https://www.youtube.com/watch?v=o2HrOxwH0_Q)
+(visited on 05/30/2022).
 
-NULL
+[3] A. B. Owen. _Monte Carlo theory, methods and examples_. 2013. URL:
+[https://artowen.su.domains/mc/](https://artowen.su.domains/mc/).
+
+[4] S. M. Fabio Pellacini. _Fundamentals of Computer Graphics_. 2022.
+URL:
+[https://pellacini.di.uniroma1.it/teaching/graphics17b/](https://pellacini.di.uniroma1.it/teaching/graphics17b/)
+(visited on 04/09/2022).
+
+[5] The Khronos Vulkan Working Group. _Vulkan® 1.2.210 - A
+Specification (with KHR Extensions)_. mar.. 29, 2022. URL: [-
+https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html](-
+https://www.khronos.org/registry/vulkan/specs/1.2-khr-extensions/html/chap1.html)
+(visited on 04/01/2022).
+
+[6] NVIDIA. _NVIDIA DesignWorks samples_. 2022. URL:
+[https://github.com/nvpro-samples](https://github.com/nvpro-samples)
+(visited on 05/13/2022).
+
+---
+
+[7] E. Haines and T. Akenine-Möller, ed. _Ray Tracing Gems_. Apress,
+2019. DOI:
+[10.1007/978-1-4842-4427-2](https://doi.org/10.1007%2F978-1-4842-4427-2).
+URL: [http://raytracinggems.com](http://raytracinggems.com).
+
+[8] P. S. Adam Marrs and I. Wald, ed. _Ray Tracing Gems II_. Apress,
+2021. ISBN: 978-1-4842-7184-1. DOI:
+[10.1007/978-1-4842-7185-8](https://doi.org/10.1007%2F978-1-4842-7185-8).
+URL: [http://raytracinggems.com/rtg2](http://raytracinggems.com/rtg2).
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
