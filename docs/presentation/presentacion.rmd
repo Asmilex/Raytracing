@@ -227,7 +227,7 @@ En esencia, esta teoría se basa en dos teoremas `r AutoCite(bib, "mcbook")`:
 
 --
 
-- **Ley del estadístico insconciente**: $X \sim p_X$ variable aleatoria, $g$ función medible
+- **Ley del estadístico insconciente**: $X$ variable aleatoria con función de densidad de probabilidad $p_X$, $g$ función medible
 
 $$E\left[g(X)\right] = \int_{-\infty}^{\infty}{g(x) p_X(x) dx}$$
 
@@ -237,19 +237,15 @@ $$E\left[g(X)\right] = \int_{-\infty}^{\infty}{g(x) p_X(x) dx}$$
 
 $$P\left[\lim_{N \to \infty}{\frac{1}{N} \sum_{i = 1}^{N}{X_i}} = \mu \right] = 1$$
 
---
-
-(Y como siempre, el **Teorema Central del Límite**).
-
 ---
 
 # Vale, ¿y cómo lo hacemos?
 
-Queremos evaluar $I = \int_a^b{f(x)dx}$.
+Queremos evaluar $I = \int_a^b{f(x)dx}$ `r AutoCite(bib, "pellacini-marschner-2017")`.
 
 --
 
-Por la ley ley del estadístico inconciente, $E\left[g(X)\right] = \int_{a}^{b}{g(x) p_X(x) dx}$.
+Por la ley del estadístico inconciente, $E\left[g(X)\right] = \int_{a}^{b}{g(x) p_X(x) dx}$.
 
 --
 
@@ -263,7 +259,7 @@ Poniendo $g(x) = \frac{f(x)}{p_X(x)}$ con $p_X(x) = \frac{1}{b - a}$ función de
 
 Obtenemos que
 
-$$I = \int_{a}^{b}{\frac{f(x)}{p_X(x)}p_X(x) dx}$$
+$$E\left[g(x)\right] = \int_{a}^{b}{\frac{f(x)}{p_X(x)}p_X(x) dx} = \int_a^b{f(x)dx} = I$$
 
 --
 
@@ -271,23 +267,23 @@ Y por lo tanto,
 
 $$I \approx \frac{1}{N} \sum_{i = 1}^{N}{\frac{f(X_i)}{p_X(X_i)}} = \frac{b-a}{N}\sum_{i = 1}^{N}{f(X_i)}$$
 
---
-
-El estimador funciona en cualquier dimensión `r AutoCite(bib, "pellacini-marschner-2017")`.
-
 ---
 
-# Error del estimador
+# Propiedad de la integración de Monte Carlo
 
-Propiedad del estimador de Monte Carlo:
+**El estimador funciona en cualquier dimensión**. Basta con cambiar desde qué distribución se muestrea.
+
+--
+
+El error viene dado por
 
 $$\text{error} = \sqrt{Var\left[\hat{I}_N\right]} = \frac{\sqrt{Var\left[g(X)\right]}}{\sqrt{N}}$$
 
-¡No depende de la dimensión del integrando!
+**¡No depende de la dimensión del integrando!**
 
 --
 
-Posibilidades para reducir el error:
+Opciones para reducir el error:
 
 --
 
@@ -312,17 +308,33 @@ $\rightsquigarrow$ Muestreo por importancia: buscar funciones de densidad $p_X(x
 
 
 $$\begin{aligned}
+L(p, \omega_o) & = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i
+\end{aligned}$$
+
+---
+
+# Ecuación del transporte de luz aproximada por Monte Carlo
+
+
+$$\begin{aligned}
 L(p, \omega_o) & = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i)L_i(p, \omega_i)\cos\theta_i} d\omega_i \\
                  & \approx L_e(p, \omega_j) + \frac{1}{N} \sum_{j = 1}^{N}{\frac{f(p, \omega_o \leftarrow \omega_j) L_i(p, \omega_j) \cos\theta_j}{P\left[\omega_j\right]}}
 \end{aligned}$$
 
 --
 
-- Muestrear una dirección $\omega_j$ dependiendo de las propiedades del material.
+$P\left[\omega_j \right]$: Probabilidad de escoger la dirección $\omega_j$.
 
 --
 
-- $P\left[\omega_j \right]$: Probabilidad de escoger la dirección $\omega_j$.
+¿Qué dirección $\omega_j$ escogemos?
+
+--
+
+Utilizar información de...
+
+- El material de la superficie.
+- Luces del entorno.
 
 ---
 class: inverse middle center
@@ -382,7 +394,7 @@ knitr::include_graphics("./img/DesignWorks.png")
 
 ## Shaders
 
-Programa que corre en la tarjeta gráfica `r AutoCite(bib, "Haines2019")`, `r AutoCite(bib, "Marrs2021")`.
+Programa que corre en la tarjeta gráfica.
 
 --
 
@@ -392,6 +404,8 @@ Tipos:
 - **Closest hit**: en la primera intersección con una geometría válida.
 - **Any hit**: en cualquier intersección.
 - **Miss**: el rayo se pierde en el infinito.
+
+`r AutoCite(bib, "Haines2019")` `r AutoCite(bib, "Marrs2021")`
 
 ---
 class: middle center
