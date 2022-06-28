@@ -66,7 +66,7 @@ knitr::include_graphics("./img/rasterizacion.gif")
 .pull-right[
   ## Donde falla
 
-  - Increíblemente limitado.
+  - Técnicamente limitado.
   - Genera **imágenes físicamente poco realistas**: no puede calcular iluminación, reflejos, etc. con facilidad.
 
   $\rightsquigarrow$ necesidad de crear *hacks*.
@@ -87,7 +87,7 @@ knitr::include_graphics("./img/rasterizacion.gif")
 ---
 class:inverse middle center
 
-# Ray tracing al rescate
+# Ray tracing, la panacea de la informática gráfica
 
 ---
 
@@ -105,11 +105,18 @@ knitr::include_graphics("../img/01/Ray casting.png")
 
 ---
 
+# Path tracing
+
+Una forma de ray tracing recursivo. Tras cada impacto, sigue generando rayos recursivamente.
+
+![](./img/PT.jpg)
+---
+
 # La ecuación del transporte de luz
 
-*Rendering equation* en inglés. Propuesta por Kajiya `r AutoCite(bib, "kajiya")`.
+*Rendering equation* en inglés. Propuesta por Kajiya en 1986 `r AutoCite(bib, "kajiya")`.
 
-$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$
+$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \lvert \cos\theta_i \rvert d\omega_i}$$
 
 --
 
@@ -123,14 +130,13 @@ knitr::include_graphics("../img/02/Radiancia incidente y saliente.png")
 ```
 ]
 
-
 ---
 
 # La ecuación del transporte de luz
 
-*Rendering equation* en inglés. Propuesta por Kajiya `r AutoCite(bib, "kajiya")`.
+*Rendering equation* en inglés. Propuesta por Kajiya en 1986 `r AutoCite(bib, "kajiya")`.
 
-$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$
+$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \lvert \cos\theta_i \rvert d\omega_i}$$
 
 - $L(p, \omega)$, **radiancia espectral** $\rightsquigarrow$ Cantidad de luz en un punto $p$ hacia una dirección $\omega$.
 
@@ -144,26 +150,37 @@ $$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \le
 
 - $f(p, \omega_o \leftarrow \omega_i)$: *Bidirectional Scattering Distribution Function* (BSDF). Proporción de luz procedente de $\omega_i$ y sale hacia $\omega_o$.
 
---
-
-- $H^2(\mathbf{n})$: Conjunto de direcciones $\omega$ posibles. Hemisferio superior de la esfera $\mathbb{S}^2$.
-
---
-
-- $\cos\theta_i = \left \vert \omega_i \cdot \mathbf{n} \right \vert$, con $\mathbf{n}$ normal en $p$.
-
+.center[
+```{r, echo = FALSE, out.width = "600px"}
+knitr::include_graphics("./img/BSDF.jpg")
+```
+]
 
 ---
 
-# Path tracing
+# La ecuación del transporte de luz
 
-Una forma de ray tracing recursivo. Tras cada impacto, sigue generando rayos recursivamente.
+*Rendering equation* en inglés. Propuesta por Kajiya en 1986 `r AutoCite(bib, "kajiya")`.
 
-![](./img/PT.jpg)
+$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{\mathbb{S}^2}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \lvert \cos\theta_i \rvert d\omega_i}$$
+
+- $L(p, \omega)$, **radiancia espectral** $\rightsquigarrow$ Cantidad de luz en un punto $p$ hacia una dirección $\omega$.
+
+  - $L_e(p, \omega_o)$: radiancia **emitida** por el material desde $p$ en la dirección $\omega_o$
+  - $L_i(p, \omega_i)$: radiancia **incidente** en $p$ desde la dirección $\omega_i$.
+  - $L_o(p, \omega_o)$: radiancia **de salida** desde $p$ hacia $\omega_o$.
+
+- $f(p, \omega_o \leftarrow \omega_i)$: *Bidirectional Scattering Distribution Function* (BSDF). Proporción de luz procedente de $\omega_i$ y sale hacia $\omega_o$.
+
+- Recinto de integración $\Omega \subset \mathbb{S}^2$. Usualmente, $H^2(\mathbf{n})$, hemisferio que engloba a la normal $\mathbf{n}$ en $p$.
+
+--
+
+- $\lvert \cos\theta_i \rvert = \left \vert \omega_i \cdot \mathbf{n} \right \vert$, con $\mathbf{n}$ normal en $p$.
 
 ---
 
-# Path tracing
+# La ecuación del transporte de luz
 
 $$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$
 
@@ -171,33 +188,12 @@ $$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \le
 ![](./img/ETL.JPG)
 
 ---
+class: center middle
 
-# Reflexión y refracción
+# La ecuación del transporte de luz
 
-.pull-left[
-- **Difusos** (*Diffuse*): luz en todas direcciones casi equiprobablemente.
-- **Especulares brillantes** (*Glossy specular*): la distribución de luz es un cono.
-- **Especulares perfectos** (*Perfect specular*): espejos.
-- **Retrorreflectores** (*Retro reflective*): luz reflejada en dirección contraria.
-]
-.pull-right[
-    ![](../img/02/Sandía.png)
-]
+¿Cómo estimamos su valor?
 
---
-
-.pull-left[
-Materiales difusos
-```{r, echo = FALSE, out.width = "320px"}
-knitr::include_graphics("../img/05/Materiales difusos.png")
-```
-]
-.pull-right[
-Especular perfecto
-```{r, echo = FALSE, out.width = "320px"}
-knitr::include_graphics("../img/05/Materiales espejos.png")
-```
-]
 ---
 class: inverse center middle
 
