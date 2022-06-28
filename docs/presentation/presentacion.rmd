@@ -456,7 +456,7 @@ Fin.
 
 ---
 
-# References
+# Referencias
 
 ```{r, results='asis', echo=FALSE}
 PrintBibliography(bib, start = 1, end = 6)
