@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,400&family=JetBrains+Mono&family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=JetBrains+Mono:ital@0;1&family=Rubik:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 
 :root {
     --b-bg-1: #fdfcfc;
@@ -49,19 +50,18 @@
 
 .remark-slide-content {
     background-color: var(--blanco-100);
-    color: var(--negro-900)
+    color: var(--negro-900);
+    font-family: "Rubik", sans-serif;
+    font-variant-ligatures: common-ligatures;
+    font-size: 1.25rem;
+    background: #fdfcfc;
 }
+
 .inverse {
     background-color: var(--negro-800);
     color: var(--blanco-100)
 }
 
-.remark-slide-content body {
-    font-family: "Rubik", sans-serif;
-    font-variant-ligatures: common-ligatures;
-    font-size: 2.5rem;
-    background: #fdfcfc;
-}
 
 .author h3 {
     font-family: "Rubik", sans-serif;
