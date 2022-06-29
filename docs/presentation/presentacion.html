@@ -22,7 +22,7 @@ class: center, middle, inverse, title-slide
 ### Universidad de Granada
 ]
 .date[
-### 28 de junio de 2022
+### 30 de junio de 2022
 ]
 
 ---
@@ -32,13 +32,16 @@ class: center, middle, inverse, title-slide
 
 # Objetivos del trabajo
 
-- Análisis de algoritmos de visualización 3D basados en Monte Carlo.
+- Análisis de algoritmos de visualización 3D **basados en Monte Carlo**.
 
-- Diseño e implementación de un path tracer por GPU.
+- **Diseño e implementación de un path tracer** físicamente realista por GPU.
+  - Debe ser capaz de muestrear directamente las fuentes de iluminación.
 
-- Estudiar el tiempo de ejecución y el error en la reconstrucción de la imagen.
+- Estudiar el **tiempo de ejecución** y el error en la **reconstrucción de la imagen**.
 
-- Comparación del motor con una implementación en CPU.
+- **Comparación** del motor con una implementación en CPU.
+
+- Investigación de las técnicas modernas y el futuro del área.
 
 ---
 
@@ -85,7 +88,8 @@ class: center, middle, inverse, title-slide
 ---
 class:inverse middle center
 
-# Ray tracing, la panacea de la informática gráfica
+# **Ray tracing**
+## la panacea de la informática gráfica
 
 ---
 
@@ -176,8 +180,8 @@ Una forma de ray tracing recursivo. Tras cada impacto, sigue generando rayos rec
 
 `$$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$`
 
+![](./img/ETL.jpg)&lt;!-- --&gt;
 
-![](./img/ETL.JPG)
 
 ---
 class: center middle
@@ -323,7 +327,7 @@ Utilizar información de...
 ---
 class: inverse middle center
 
-# Construyendo un path tracer en tiempo real
+# Implementación de un path tracer en tiempo real por GPU
 
 ---
 
@@ -365,8 +369,20 @@ class: inverse middle center
 # Cómo funciona ray tracing acelerado por hardware
 
 - La geometría se carga en la GPU gracias a la API.
-- Los cálculos de intersecciones se aceleran mediante ciertas **estructuras**.
-- Controlados por **shaders**
+- Objetos de la escena englobados en estructuras de aceleración `\(\rightsquigarrow\)` **Bounding Volume Hierarchy**.
+
+.center[
+&lt;img src="./img/BVH.png" width="680px" /&gt;
+]
+
+---
+
+# Cómo funciona ray tracing acelerado por hardware
+
+- La geometría se carga en la GPU gracias a la API.
+- Objetos de la escena englobados en estructuras de aceleración `\(\rightsquigarrow\)` **Bounding Volume Hierarchy**.
+- Cálculos de intersecciones realizados en núcleos específicos para ray tracing.
+- Comportamiento controlado mediante **shaders**
 
 --
 
@@ -394,7 +410,7 @@ class: middle center
 ---
 class: inverse middle center
 
-# Exhibición de ray tracing
+# Demostración de nuestro ray tracer
 
 &lt;img src="../img/06/Showcase.png" width="620px" /&gt;
 
@@ -437,6 +453,42 @@ Mezclar los últimos frames mientras la cámara no esté en movimiento.
 &lt;video controls autoplay muted loop&gt;
   &lt;source src="./img/Acum.mov" type="video/mp4"&gt;
 &lt;/video&gt;
+
+---
+
+# ¿Qué hemos aprendido?
+
+- El color de un píxel en ray tracing puede calcularse mediante la ecuación del transporte de luz.
+
+--
+
+- Podemos estimar su valor mediante integración de Monte Carlo.
+
+--
+
+- Reducir el error del estimador `\(\Rightarrow\)` reducir el ruido de la imagen.
+
+--
+
+- Ray tracing en tiempo real requiere de una GPU moderna y una API gráfica específica.
+
+--
+
+- &lt;u&gt;No se trata del número de muestras, sino *qué* muestras usamos&lt;/u&gt;.
+
+---
+
+## Código y memoria
+
+El código y la documentación puede encontrarse en el repositorio de Github.
+
+![](./img/Github.png)
+
+.center[
+https://github.com/Asmilex/Raytracing/
+]
+
+
 ---
 class: middle center
 
@@ -444,7 +496,7 @@ Fin.
 
 ---
 
-# References
+# Referencias
 
 [1] Epic Games. _Unreal Engine 5 goes all-in on dynamic global
 illumination with Lumen_. may.. 27, 2022. URL:

@@ -3,7 +3,7 @@ title: "Métodos de Monte Carlo para síntesis de imágenes"
 author: "Andrés Millán Muñoz"
 institute: "Universidad de Granada"
 # Use R to generate the date
-date: "`r format(Sys.time(), '%d de %B de %Y')`"
+date: "30 de junio de 2022"
 output:
   xaringan::moon_reader:
     yolo: false
@@ -28,13 +28,16 @@ bib <- ReadBib("../chapters/bibliography.bib", check = TRUE)
 
 # Objetivos del trabajo
 
-- Análisis de algoritmos de visualización 3D basados en Monte Carlo.
+- Análisis de algoritmos de visualización 3D **basados en Monte Carlo**.
 
-- Diseño e implementación de un path tracer por GPU.
+- **Diseño e implementación de un path tracer** físicamente realista por GPU.
+  - Debe ser capaz de muestrear directamente las fuentes de iluminación.
 
-- Estudiar el tiempo de ejecución y el error en la reconstrucción de la imagen.
+- Estudiar el **tiempo de ejecución** y el error en la **reconstrucción de la imagen**.
 
-- Comparación del motor con una implementación en CPU.
+- **Comparación** del motor con una implementación en CPU.
+
+- Investigación de las técnicas modernas y el futuro del área.
 
 ---
 
@@ -83,7 +86,8 @@ knitr::include_graphics("./img/rasterizacion.gif")
 ---
 class:inverse middle center
 
-# Ray tracing, la panacea de la informática gráfica
+# **Ray tracing**
+## la panacea de la informática gráfica
 
 ---
 
@@ -180,8 +184,10 @@ $$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{\mathbb{S}^2}{f(p, \omega_o \lefta
 
 $$L_o(p, \omega_o) = L_e(p, \omega_o) + \int_{H^2(\mathbf{n})}{f(p, \omega_o \leftarrow \omega_i) L_i(p, \omega_i) \cos\theta_i\ d\omega_i}$$
 
+```{r, echo = FALSE}
+knitr::include_graphics("./img/ETL.jpg")
+```
 
-![](./img/ETL.JPG)
 
 ---
 class: center middle
@@ -327,7 +333,7 @@ Utilizar información de...
 ---
 class: inverse middle center
 
-# Construyendo un path tracer en tiempo real
+# Implementación de un path tracer en tiempo real por GPU
 
 ---
 
@@ -375,8 +381,22 @@ knitr::include_graphics("./img/DesignWorks.png")
 # Cómo funciona ray tracing acelerado por hardware
 
 - La geometría se carga en la GPU gracias a la API.
-- Los cálculos de intersecciones se aceleran mediante ciertas **estructuras**.
-- Controlados por **shaders**
+- Objetos de la escena englobados en estructuras de aceleración $\rightsquigarrow$ **Bounding Volume Hierarchy**.
+
+.center[
+```{r, echo = FALSE, out.width = "680px"}
+knitr::include_graphics("./img/BVH.png")
+```
+]
+
+---
+
+# Cómo funciona ray tracing acelerado por hardware
+
+- La geometría se carga en la GPU gracias a la API.
+- Objetos de la escena englobados en estructuras de aceleración $\rightsquigarrow$ **Bounding Volume Hierarchy**.
+- Cálculos de intersecciones realizados en núcleos específicos para ray tracing.
+- Comportamiento controlado mediante **shaders**
 
 --
 
@@ -404,7 +424,7 @@ class: middle center
 ---
 class: inverse middle center
 
-# Exhibición de ray tracing
+# Demostración de nuestro ray tracer
 
 ```{r, echo = FALSE, out.width = "620px"}
 knitr::include_graphics("../img/06/Showcase.png")
@@ -449,6 +469,42 @@ Mezclar los últimos frames mientras la cámara no esté en movimiento.
 <video controls autoplay muted loop>
   <source src="./img/Acum.mov" type="video/mp4">
 </video>
+
+---
+
+# ¿Qué hemos aprendido?
+
+- El color de un píxel en ray tracing puede calcularse mediante la ecuación del transporte de luz.
+
+--
+
+- Podemos estimar su valor mediante integración de Monte Carlo.
+
+--
+
+- Reducir el error del estimador $\Rightarrow$ reducir el ruido de la imagen.
+
+--
+
+- Ray tracing en tiempo real requiere de una GPU moderna y una API gráfica específica.
+
+--
+
+- <u>No se trata del número de muestras, sino *qué* muestras usamos</u>.
+
+---
+
+## Código y memoria
+
+El código y la documentación puede encontrarse en el repositorio de Github.
+
+![](./img/Github.png)
+
+.center[
+https://github.com/Asmilex/Raytracing/
+]
+
+
 ---
 class: middle center
 
